@@ -1,0 +1,396 @@
+<!DOCTYPE html><html lang="ja-jp"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="mianlyst"><meta name="copyright" content="mianlyst"><meta name="generator" content="Hexo 5.4.0"><meta name="theme" content="hexo-theme-yun"><title>HTML | mulinki</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.24/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_j5gk85dg4pf.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link class="aplayer-style-marker" rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script class="aplayer-script-marker" src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" defer></script><script class="meting-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js" defer></script><link rel="icon" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"hostname":"example.com","root":"/","title":"まひろ的小站","version":"1.6.1","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"検索...","empty":"${query} が見つかりませんでした.","hits":"${hits} 件見つかりました","hits_time":"${hits} 件見つかりました, ${time} ミリ秒"},"anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://cdn.jsdelivr.net/gh/ElpsyCN/say@gh-pages/sentences.json"},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/utils.js"></script><script src="/js/hexo-theme-yun.js"></script><meta name="description" content="HTML 标题（Heading）是通过标签来定义的。 &lt;h1&gt;这是一个标题&lt;&#x2F;h1&gt;  &lt;h2&gt;这是一个标题&lt;&#x2F;h2&gt;  &lt;h3&gt;这是一个标题&lt;&#x2F;h3&gt;  因为用户可以通过标题来快速浏览您的网页，所以用标题来呈现文档结构是很重要的。应该将 h1 用作主标题（最重要的），其后是 h2（次重要的），再其次是 h3，以此类推 HTM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML">
+<meta property="og:url" content="http://example.com/2021/05/18/HTML/index.html">
+<meta property="og:site_name" content="mulinki">
+<meta property="og:description" content="HTML 标题（Heading）是通过标签来定义的。 &lt;h1&gt;这是一个标题&lt;&#x2F;h1&gt;  &lt;h2&gt;这是一个标题&lt;&#x2F;h2&gt;  &lt;h3&gt;这是一个标题&lt;&#x2F;h3&gt;  因为用户可以通过标题来快速浏览您的网页，所以用标题来呈现文档结构是很重要的。应该将 h1 用作主标题（最重要的），其后是 h2（次重要的），再其次是 h3，以此类推 HTM">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="http://example.com/images/logo.png">
+<meta property="article:published_time" content="2021-05-18T12:05:07.000Z">
+<meta property="article:modified_time" content="2021-05-18T12:14:24.977Z">
+<meta property="article:author" content="mianlyst">
+<meta property="article:tag" content="前端学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/logo.png"><script src="/js/ui/mode.js"></script></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="見出し"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="概要"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="mianlyst"><img width="96" loading="lazy" src="/1.jpg" alt="mianlyst"></a><div class="site-author-name"><a href="/about/">mianlyst</a></div><span class="site-name">mulinki</span><sub class="site-subtitle"></sub><div class="site-desciption"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="ホーム"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="アーカイブ"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">1</span></a></div><div class="site-state-item"><a href="/categories/" title="カテゴリ"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">0</span></a></div><div class="site-state-item"><a href="/tags/" title="タグ"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">1</span></a></div><a class="site-state-item hty-icon-button" href="/null" title="文档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" title="RSS" target="_blank" style="color:orange"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-rss-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://ti.qq.com/open_qq/index2.html?url=mqqapi%3a%2f%2fuserprofile%2ffriend_profile_card%3fsrc_type%3dweb%26version%3d1.0%26source%3d2%26uin%3d3337579798" title="QQ" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/mlinku" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://music.163.com/#/user/home?id=1302098014" title="网易云音乐" target="_blank" style="color:#C20C0C"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-netease-cloud-music-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/274945201" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:3337579798@qq.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" target="_blank" rel="noopener" href="https://ac.yunyoujun.cn/" title="空调" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-genderless-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-%E6%A0%87%E9%A2%98%EF%BC%88Heading%EF%BC%89%E6%98%AF%E9%80%9A%E8%BF%87%E6%A0%87%E7%AD%BE%E6%9D%A5%E5%AE%9A%E4%B9%89%E7%9A%84%E3%80%82"><span class="toc-number">1.</span> <span class="toc-text">HTML 标题（Heading）是通过标签来定义的。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-%E6%AE%B5%E8%90%BD%E6%98%AF%E9%80%9A%E8%BF%87%E6%A0%87%E7%AD%BE-%E6%9D%A5%E5%AE%9A%E4%B9%89%E7%9A%84%E3%80%82"><span class="toc-number">2.</span> <span class="toc-text">HTML 段落是通过标签  来定义的。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-%E9%93%BE%E6%8E%A5%E6%98%AF%E9%80%9A%E8%BF%87%E6%A0%87%E7%AD%BE-%E6%9D%A5%E5%AE%9A%E4%B9%89%E7%9A%84%E3%80%82"><span class="toc-number">3.</span> <span class="toc-text">HTML 链接是通过标签  来定义的。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-%E5%9B%BE%E5%83%8F%E6%98%AF%E9%80%9A%E8%BF%87%E6%A0%87%E7%AD%BE-%E6%9D%A5%E5%AE%9A%E4%B9%89%E7%9A%84"><span class="toc-number">4.</span> <span class="toc-text">HTML 图像是通过标签  来定义的.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-%E6%B0%B4%E5%B9%B3%E7%BA%BF"><span class="toc-number">6.</span> <span class="toc-text">HTML 水平线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML%E6%B3%A8%E9%87%8A"><span class="toc-number">7.</span> <span class="toc-text">HTML注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-%E6%8B%86%E8%A1%8C"><span class="toc-number">8.</span> <span class="toc-text">HTML 拆行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%A0%87%E7%AD%BE"><span class="toc-number">9.</span> <span class="toc-text">HTML 格式化标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-%E8%B6%85%E9%93%BE%E6%8E%A5%EF%BC%88%E9%93%BE%E6%8E%A5%EF%BC%89"><span class="toc-number">10.</span> <span class="toc-text">HTML 超链接（链接）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E6%96%87%E6%9C%AC"><span class="toc-number">10.1.</span> <span class="toc-text">链接文本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-target-%E5%B1%9E%E6%80%A7%EF%BC%8C%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%AE%9A%E4%B9%89%E8%A2%AB%E9%93%BE%E6%8E%A5%E7%9A%84%E6%96%87%E6%A1%A3%E5%9C%A8%E4%BD%95%E5%A4%84%E6%98%BE%E7%A4%BA%E3%80%82"><span class="toc-number">10.2.</span> <span class="toc-text">使用 target 属性，你可以定义被链接的文档在何处显示。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#id%E5%B1%9E%E6%80%A7"><span class="toc-number">10.3.</span> <span class="toc-text">id属性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-%E5%85%83%E7%B4%A0"><span class="toc-number">11.</span> <span class="toc-text">HTML 元素</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="http://example.com/2021/05/18/HTML/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="mianlyst"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="mulinki"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">HTML</h1><div class="post-meta"><div class="post-time" style="display:inline-block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="作成日：2021-05-18 20:05:07" itemprop="dateCreated datePublished" datetime="2021-05-18T20:05:07+08:00">2021-05-18</time></div><div class="post-classify"><span class="post-tag"><a class="tag-item" href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">前端学习</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><h3 id="HTML-标题（Heading）是通过标签来定义的。"><a href="#HTML-标题（Heading）是通过标签来定义的。" class="headerlink" title="HTML 标题（Heading）是通过标签来定义的。"></a>HTML 标题（Heading）是通过标签来定义的。</h3><pre><code> &lt;h1&gt;这是一个标题&lt;/h1&gt;
+ &lt;h2&gt;这是一个标题&lt;/h2&gt;
+ &lt;h3&gt;这是一个标题&lt;/h3&gt;
+</code></pre>
+<p>因为用户可以通过标题来快速浏览您的网页，所以用标题来呈现文档结构是很重要的。<br>应该将 h1 用作主标题（最重要的），其后是 h2（次重要的），再其次是 h3，以此类推</p>
+<h3 id="HTML-段落是通过标签-来定义的。"><a href="#HTML-段落是通过标签-来定义的。" class="headerlink" title="HTML 段落是通过标签  来定义的。"></a>HTML 段落是通过标签 <p> 来定义的。</h3><pre><code> &lt;p&gt;这是一个段落。&lt;/p&gt;
+ &lt;p&gt;这是另外一个段落。&lt;/p&gt;
+</code></pre>
+<h3 id="HTML-链接是通过标签-来定义的。"><a href="#HTML-链接是通过标签-来定义的。" class="headerlink" title="HTML 链接是通过标签  来定义的。"></a>HTML 链接是通过标签 <a> 来定义的。</h3><p><a target="_blank" rel="noopener" href="https://www.runoob.com">这是一个链接</a></p>
+<h3 id="HTML-图像是通过标签-来定义的"><a href="#HTML-图像是通过标签-来定义的" class="headerlink" title="HTML 图像是通过标签  来定义的."></a>HTML 图像是通过标签 <img> 来定义的.</h3 loading="lazy"><p>alt 属性用来为图像定义一串预备的可替换的文本。<br>替换文本属性的值是用户定义的。<br>在HTML 4中 align 属性已废弃，HTML5 已不支持该属性，可以使用 CSS 代替。<br><img loading="lazy" src="/images/logo.png" width="258" height="39" / loading="lazy"></p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>在某些个别的情况下，比如属性值本身就含有双引号，那么您必须使用单引号，例如：name=’John “ShotGun” Nelson’</p>
+<h3 id="HTML-水平线"><a href="#HTML-水平线" class="headerlink" title="HTML 水平线"></a>HTML 水平线</h3><hr> 标签在 HTML 页面中创建水平线。
+hr 元素可用于分隔内容。
+
+
+<h3 id="HTML注释"><a href="#HTML注释" class="headerlink" title="HTML注释"></a>HTML注释</h3><!-- 这是一个注释 -->
+
+<h3 id="HTML-拆行"><a href="#HTML-拆行" class="headerlink" title="HTML 拆行"></a>HTML 拆行</h3><p>如果您希望在不产生一个新段落的情况下进行换行（新行），请使用 <br> 标签：</p>
+<p>这个<br>段落<br>演示了分行的效果</p></br>
+
+<p>元素是一个空的 HTML 元素。由于关闭标签没有任何意义，因此它没有结束标签。</p>
+<h3 id="HTML-格式化标签"><a href="#HTML-格式化标签" class="headerlink" title="HTML 格式化标签"></a>HTML 格式化标签</h3><p>￼<b>这个文本是加粗的</b><br>￼<br><code>计算机输出</code><br><br /><br><kbd>键盘输入</kbd><br>￼</p>
+<p><bdo dir="rtl">该段落文字从右到左显示。</bdo></p> 
+
+
+
+
+<p>WWF's goal is to: 
+<q>Build a future where people live in harmony with nature.</q>
+We hope they succeed.</p>
+
+<p><abbr title="etcetera">etc.</abbr></p>
+<h3 id="HTML-超链接（链接）"><a href="#HTML-超链接（链接）" class="headerlink" title="HTML 超链接（链接）"></a>HTML 超链接（链接）</h3><h4 id="链接文本"><a href="#链接文本" class="headerlink" title="链接文本"></a><a href="url">链接文本</a></h4><h4 id="使用-target-属性，你可以定义被链接的文档在何处显示。"><a href="#使用-target-属性，你可以定义被链接的文档在何处显示。" class="headerlink" title="使用 target 属性，你可以定义被链接的文档在何处显示。"></a>使用 target 属性，你可以定义被链接的文档在何处显示。</h4><p>下面的这行会在新窗口打开文档：<br>在a标签下添加rel=”noopener noreferrer”来防止钓鱼网站，因为它获取的window.opener的值为null<br><a href="https://www.runoob.com/" target="_blank">访问菜鸟教程!</a><br>target=”_top”//跳出框架</p>
+<p>如果你将 target 属性设置为 &quot;_blank&quot;, 链接将在新窗口打开。</p>//quot为注释
+
+<h4 id="id属性"><a href="#id属性" class="headerlink" title="id属性"></a>id属性</h4><p>id属性可用于创建在一个HTML文档书签标记。<br>提示: 书签是不以任何特殊的方式显示，在HTML文档中是不显示的，所以对于读者来说是隐藏的<br><a id="tips">有用的提示部分</a><br><a href="#tips">访问有用的提示部分</a><br><a target="_blank" rel="noopener" href="https://www.runoob.com/html/html-links.html#tips"><br>访问有用的提示部分</a></p>
+<h3 id="HTML-元素"><a href="#HTML-元素" class="headerlink" title="HTML 元素"></a>HTML<head> 元素</h3><head> 元素包含了所有的头部标签元素。在 <head>元素中你可以插入脚本（scripts）, 样式文件（CSS），及各种meta信息。
+可以添加在头部区域的元素标签为: <title>, <style>, <meta>, <link>, <script>, <noscript> 和 <base>。
+#### title
+
+<title> 标签定义了不同文档的标题。
+<title> 在 HTML/XHTML 文档中是必须的。
+<title> 元素:
+定义了浏览器工具栏的标题
+当网页添加到收藏夹时，显示在收藏夹中的标题
+显示在搜索引擎结果页面的标题
+例：
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>文档标题</title>
+</head>
+#### b.base
+
+<base> 标签描述了基本的链接地址/链接目标，该标签作为HTML文档中所有的链接标签的默认链接:
+<head>
+<base href="http://www.runoob.com/images/" target="_blank">
+</head>
+//可用于引用地址内图片啥的
+#### c.link
+<link> 标签定义了文档与外部资源之间的关系。
+<link> 标签通常用于链接到样式表:
+
+
+<head>
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<p>￼</p>
+<p>HTML <style> 元素</p>
+<style> 标签定义了HTML文档的样式文件引用地址.
+在<style> 元素中你也可以直接添加样式来渲染 HTML 文档:
+例：
+<head>
+<style type="text/css">
+body {background-color:yellow}
+p {color:blue}
+</style>
+</head>
+#### e.HTML <meta> 元素
+meta标签描述了一些基本的元数据。
+
+
+<meta> 标签提供了元数据.元数据也不显示在页面上，但会被浏览器解析。
+META 元素通常用于指定网页的描述，关键词，文件的最后修改时间，作者，和其他元数据。
+元数据可以使用于浏览器（如何显示内容或重新加载页面），搜索引擎（关键词），或其他Web服务。
+<meta> 一般放置于 <head> 区域
+￼
+#### f.HTML <script> 元素
+
+
+<script>标签用于加载脚本文件，如： JavaScript。
+<script> 元素在以后的章节中会详细描述。
+￼
+
+
+### HTML 表格
+
+表格由 <table> 标签来定义。每个表格均有若干行（由 <tr> 标签定义），每行被分割为若干单元格（由 <td> 标签定义）。字母 td 指表格数据（table data），即数据单元格的内容。数据单元格可以包含文本、图片、列表、段落、表单、水平线、表格等等。
+例：
+
+<table border="1">
+    <tr>
+        <td>row 1, cell 1</td>
+        <td>row 1, cell 2</td>
+    </tr>
+    <tr>
+        <td>row 2, cell 1</td>
+        <td>row 2, cell 2</td>
+    </tr>
+</table>
+
+
+<th>Header 1</th>
+<th>Header 2</th>
+
+#### 加粗字体可用于表头
+
+<caption>Monthly savings</caption>
+
+#### 标题
+
+ <th colspan="2">Telephone</th>
+
+#### 单元横跨两列
+
+   <ul>
+    <li>apples</li>
+    <li>bananas</li>
+    <li>pineapples</li>
+   </ul>
+
+#### 列表
+
+<table border="1" 
+cellpadding="10">
+ #### 边距
+
+cellspacing="0"
+单元格间距
+
+### HTML 列表
+
+#### 无序列表
+
+<h4>无序列表:</h4>
+<ul>
+  <li>Coffee</li>
+  <li>Tea</li>
+  <li>Milk</li>
+</ul>
+
+￼< ul style="list-style-type:disc">
+
+< ul style="list-style-type:circle">//⭕
+< ul style="list-style-type:square">//正方形
+
+#### 有序列表
+
+<ol>
+  <li>Coffee</li>
+  <li>Tea</li>
+  <li>Milk</li>
+</ol>
+
+
+<ol start="50">
+  <li>Coffee</li>
+  <li>Tea</li>
+  <li>Milk</li>
+</ol>
+
+< ol type="A">
+< ol type="a">
+< ol type="I">
+< ol type="i">
+
+自定义列表
+自定义列表不仅仅是一列项目，而是项目及其注释的组合。
+自定义列表以 <dl> 标签开始。每个自定义列表项以 <dt> 开始。每个自定义列表项的定义以 <dd> 开始。
+例：
+
+<dl>
+<dt>Coffee</dt>
+<dd>- black hot drink</dd>
+<dt>Milk</dt>
+<dd>- white cold drink</dd>
+</dl>
+
+￼
+嵌套效果次序
+￼
+
+### HTML < div> 和< span>
+
+HTML <div> 元素
+
+HTML <div> 元素是块级元素，它可用于组合其他 HTML 元素的容器。
+
+<div> 元素没有特定的含义。除此之外，由于它属于块级元素，浏览器会在其前后显示折行。
+如果与 CSS 一同使用，<div> 元素可用于对大的内容块设置样式属性。
+<div> 元素的另一个常见的用途是文档布局。它取代了使用表格定义布局的老式方法。使用 <table> 元素进行文档布局不是表格的正确用法。<table> 元素的作用是显示表格化的数据。
+HTML <span> 元素
+HTML <span> 元素是内联元素，可用作文本的容器
+<span> 元素也没有特定的含义。
+当与 CSS 一同使用时，<span> 元素可用于为部分文本设置样式属性。
+
+
+### HTML 表单
+
+表单是一个包含表单元素的区域。
+表单元素是允许用户在表单中输入内容,比如：文本域(textarea)、下拉列表、单选框(radio-buttons)、复选框(checkboxes)等等。
+表单使用表单标签 <form> 来设置:
+
+#### HTML 表单 - 输入元素
+
+###### 多数情况下被用到的表单标签是输入标签（<input>）。
+
+输入类型是由类型属性（type）定义的。
+
+<form>
+First name: <input type="text" name="firstname"><br>
+Last name: <input type="text" name="lastname">
+</form>
+
+￼
+
+###### 密码字段  密码字段通过标签<input type="password"> 来定义:
+
+###### 单选按钮（Radio Buttons） <input type="radio"> 标签定义了表单单选框选项
+
+###### 复选框（Checkboxes） <input type="checkbox"> 定义了复选框. 用户需要从若干给定的选择中选取一个或若干选项。￼
+
+###### 提交按钮(Submit Button) <input type="submit"> 定义了提交按钮.
+
+当用户单击确认按钮时，表单的内容会被传送到另一个文件。表单的动作属性定义了目的文件的文件名。由动作属性定义的这个文件通常会对接收到的输入数据进行相关的处理。
+
+<form name="input" action="html_form_action.php" method="get">
+Username: <input type="text" name="user">
+<input type="submit" value="Submit">
+</form>
+
+###### 下拉列表
+
+例：
+
+<form action="">
+<select name="cars">
+<option value="volvo">Volvo</option>
+<option value="saab">Saab</option>
+<option value="fiat">Fiat</option>
+<option value="audi">Audi</option>
+</select>
+</form>
+
+
+<option value="fiat" selected>Fiat</option>预选
+
+###### 文本域 
+
+<textarea rows="10" cols="30">
+我是一个文本框。
+</textarea>
+
+
+例:
+
+<form action="">
+<fieldset>
+<legend>Personal information:</legend>
+Name: <input type="text" size="30"><br>
+E-mail: <input type="text" size="30"><br>
+Date of birth: <input type="text" size="10">
+</fieldset>
+</form>
+
+
+
+<h3>发送邮件到 someone@example.com:</h3>
+
+<form action="MAILTO:someone@example.com" method="post" enctype="text/plain">
+//application/x-www-form-urlencoded：在发送前编码所有字符（默认）
+
+
+multipart/form-data：不对字符编码。在使用包含文件上传控件的表单时，必须使用该值。
+
+text/plain：空格转换为 "+" 加号，但不对特殊字符编码。
+Name:<br>
+<input type="text" name="name" value="your name"><br>
+E-mail:<br>
+<input type="text" name="mail" value="your email"><br>
+Comment:<br>
+<input type="text" name="comment" value="your comment" size="50"><br><br>
+<input type="submit" value="发送">
+<input type="reset" value="重置">
+</form>
+
+
+
+### HTML 框架
+
+#### iframe语法：
+
+##### iframe-网站设置
+
+<iframe src="URL"></iframe>
+
+##### Iframe - 设置高度与宽度
+
+<iframe loading="lazy" src="demo_iframe.htm" width="200" height="200"></iframe>
+
+##### Iframe - 移除边框
+
+frameborder 属性用于定义iframe表示是否显示边框。
+
+设置属性值为 "0" 移除iframe的边框:
+
+<iframe src="demo_iframe.htm" frameborder="0"></iframe>
+
+##### 使用iframe来显示目标链接页面
+
+<iframe src="demo_iframe.htm" name="iframe_a"></iframe> <p><a href="http://www.runoob.com" target="iframe_a" rel="noopener">RUNOOB.COM</a></p>
+
+### HTML 颜色
+
+<p style="background-color:#FFFF00">
+通过十六进制设置背景颜色
+</p>
+
+
+<p style="background-color:rgb(255,255,0)">
+通过 rbg 值设置背景颜色
+</p>
+
+
+### HTML脚本
+
+<noscript>抱歉，你的浏览器不支持 JavaScript!</noscript>
+
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+
+
+<h1>我的第一个 JavaScript </h1>
+
+<p id="demo">
+JavaScript 可以触发事件，就像按钮点击。</p>
+
+
+<script>
+function myFunction()
+{
+    document.getElementById("demo").innerHTML="Hello JavaScript!";
+}
+</script>
+
+<p><button type="button" onclick="myFunction()">点我</button></p>
+</body>
+</html>
+
+</div><ul class="post-copyright"><li class="post-copyright-author"><strong>著者：</strong>mianlyst</li><li class="post-copyright-link"><strong>記事へのリンク：</strong><a href="http://example.com/2021/05/18/HTML/" title="HTML">http://example.com/2021/05/18/HTML/</a></li><li class="post-copyright-license"><strong>著作権表示：</strong>このブログ内のすべての記事は、特別な記載がない限り <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.ja" target="_blank" rel="noopener" title="CC BY-NC 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg></a> の下のライセンスで保護されています。</li></ul><script>document.addEventListener('copy', function (event) {
+  const clipboardData = event.clipboardData || window.clipboardData;
+  if (!clipboardData) { return; }
+  const text = window.getSelection().toString();
+  if (text) {
+    event.preventDefault();
+    clipboardData.setData('text/plain', text + '\n\n著者：mianlyst\n記事へのリンク：http://example.com/2021/05/18/HTML/\n著作権表示：このブログ内のすべての記事は、特別な記載がない限り CC BY-NC 4.0 の下のライセンスで保護されています。');
+  }
+});</script></section></article></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>要不要和我说些什么？</span><br></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2021 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> mianlyst</span></div></footer><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><div class="aplayer no-destroy" id="aplayer" data-id="6762866428" data-server="netease" data-type="playlist" data-fixed="true" data-theme="#0078E7" data-loop="all" data-order="list" data-preload="auto" data-volume="0.7" data-mutex data-lrctype="0" data-listmaxheight="340px" data-storagename="metingjs"></div></div></body></html>
