@@ -1741,7 +1741,7 @@ body::before {
   left: 0;
   width: 20rem;
   background-color: #fff;
-  background-image: url("/background.jpg");
+  background-image: url("/background2.jpg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom 1rem center;
@@ -1992,7 +1992,7 @@ body {
   color: var(--hty-text-color);
 }
 body::before {
-  background-image: url("/background.jpg");
+  background-image: url("/background2.jpg");
 }
 .char {
   background-color: rgba(0,0,0,0.5);
