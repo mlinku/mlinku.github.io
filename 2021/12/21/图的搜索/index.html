@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="mianlyst"><meta name="copyright" content="mianlyst"><meta name="generator" content="Hexo 5.4.0"><meta name="theme" content="hexo-theme-yun"><title>图的搜索 | mlinku</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.24/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_j5gk85dg4pf.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link class="aplayer-style-marker" rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script class="aplayer-script-marker" src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" defer></script><script class="meting-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/pjax@latest/pjax.min.js" defer></script><script src="/js/pjax.js" defer></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><link id="light-prism-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@latest/themes/prism.css" media="(prefers-color-scheme: light)"><link id="dark-prism-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@latest/themes/prism-tomorrow.css" media="(prefers-color-scheme: dark)"><link rel="icon" href="/yun1.svg"><link rel="mask-icon" href="/yun1.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"hostname":"mlinku.top","root":"/","title":"まひろ的小站","version":"1.6.1","mode":"dark","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://cdn.jsdelivr.net/gh/ElpsyCN/say@gh-pages/sentences.json"},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/utils.js"></script><script src="/js/hexo-theme-yun.js"></script><meta name="description" content="图的基本术语边点相关 顶点 ：也称为节点&#x2F;结点(node)。 边 ： 也称为弧(arc)，链路(link)。 边与两个顶点有关(head和tail)。 度 ： 与顶点相连的边的数目(或与之邻接的顶点数目)。也称价。 自环 ： 如果一条边的头和尾都是同一个顶点，则称为自环。 邻接 ：顶点u和v之间有边相连，则称u和v邻接（adjacent）。 可达 ： 两个顶点之间如果存在路径，则称这两个顶点可达(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图的搜索">
+<meta property="og:url" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/">
+<meta property="og:site_name" content="mlinku">
+<meta property="og:description" content="图的基本术语边点相关 顶点 ：也称为节点&#x2F;结点(node)。 边 ： 也称为弧(arc)，链路(link)。 边与两个顶点有关(head和tail)。 度 ： 与顶点相连的边的数目(或与之邻接的顶点数目)。也称价。 自环 ： 如果一条边的头和尾都是同一个顶点，则称为自环。 邻接 ：顶点u和v之间有边相连，则称u和v邻接（adjacent）。 可达 ： 两个顶点之间如果存在路径，则称这两个顶点可达(">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/1.png">
+<meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/2.png">
+<meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/3.png">
+<meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/4.png">
+<meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/5.png">
+<meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/6.png">
+<meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/7.png">
+<meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/8.png">
+<meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/9.png">
+<meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/10.png">
+<meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/11.png">
+<meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/9.png">
+<meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/12.png">
+<meta property="article:published_time" content="2021-12-21T06:31:08.000Z">
+<meta property="article:modified_time" content="2021-12-21T06:15:31.171Z">
+<meta property="article:author" content="mianlyst">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/1.png"><script src="/js/ui/mode.js"></script></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="mianlyst"><img width="96" loading="lazy" src="/1.jpg" alt="mianlyst"></a><div class="site-author-name"><a href="/about/">mianlyst</a></div><span class="site-name">mlinku</span><sub class="site-subtitle"></sub><div class="site-desciption"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" target="_blank" rel="noopener" href="http://www.mlinku.top/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">8</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">4</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">5</span></a></div><a class="site-state-item hty-icon-button" href="/null" title="文档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" title="RSS" target="_blank" style="color:orange"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-rss-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://ti.qq.com/open_qq/index2.html?url=mqqapi%3a%2f%2fuserprofile%2ffriend_profile_card%3fsrc_type%3dweb%26version%3d1.0%26source%3d2%26uin%3d3337579798" title="QQ" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/mlinku" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://music.163.com/#/user/home?id=1302098014" title="网易云音乐" target="_blank" style="color:#C20C0C"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-netease-cloud-music-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/274945201" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:3337579798@qq.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" target="_blank" rel="noopener" href="https://ac.yunyoujun.cn/" title="空调" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-genderless-line"></use></svg></a></div></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9C%AF%E8%AF%AD"><span class="toc-number">1.</span> <span class="toc-text">图的基本术语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%9A%84%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">图的表示方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5"><span class="toc-number">2.1.</span> <span class="toc-text">邻接矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%BB%E6%8E%A5%E9%93%BE%E8%A1%A8"><span class="toc-number">2.2.</span> <span class="toc-text">邻接链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E9%80%89%E6%8B%A9"><span class="toc-number">2.3.</span> <span class="toc-text">方法选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%8C%96%E7%AE%80"><span class="toc-number">2.4.</span> <span class="toc-text">复杂度化简</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">图的搜索算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="toc-number">3.1.</span> <span class="toc-text">问题分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5%E5%AE%9A%E4%B9%89"><span class="toc-number">3.2.</span> <span class="toc-text">概念定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BFS-%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2"><span class="toc-number">3.3.</span> <span class="toc-text">BFS 广度优先搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DFS-%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2"><span class="toc-number">3.4.</span> <span class="toc-text">DFS 深度优先搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB"><span class="toc-number">3.5.</span> <span class="toc-text">区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="toc-number">3.6.</span> <span class="toc-text">复杂度分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%9A%84%E8%BF%9E%E9%80%9A%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">图的连通性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E5%90%91%E5%9B%BE%E7%9A%84%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F"><span class="toc-number">4.1.</span> <span class="toc-text">无向图的连通分量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">4.1.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B1%82%E8%A7%A3%E6%96%B9%E6%B3%95"><span class="toc-number">4.1.2.</span> <span class="toc-text">求解方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E5%90%91%E5%9B%BE%E7%9A%84%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F"><span class="toc-number">4.2.</span> <span class="toc-text">有向图的强连通分量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5-1"><span class="toc-number">4.2.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%96%E7%AE%80%E6%96%B9%E6%B3%95"><span class="toc-number">4.2.2.</span> <span class="toc-text">化简方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B1%82%E8%A7%A3%E6%96%B9%E6%B3%95%E2%80%94%E2%80%94TWO-PASS%E7%AE%97%E6%B3%95"><span class="toc-number">4.2.3.</span> <span class="toc-text">求解方法——TWO-PASS算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">4.2.4.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="toc-number">4.2.4.1.</span> <span class="toc-text">算法流程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF-%E6%AD%A3%E7%A1%AE%E6%80%A7%E8%AF%81%E6%98%8E"><span class="toc-number">4.2.4.2.</span> <span class="toc-text">算法思路&#x2F;正确性证明</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90"><span class="toc-number">4.2.4.3.</span> <span class="toc-text">实例分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90-1"><span class="toc-number">4.2.4.4.</span> <span class="toc-text">复杂度分析</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div><div class="tag-cloud"><div class="tag-cloud-tags"><a href="/tags/Python/" style="font-size: 12px; color: #999">Python</a> <a href="/tags/RYU/" style="font-size: 12px; color: #999">RYU</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" style="font-size: 12px; color: #999">前端学习</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 30px; color: #0078e7">算法</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%80%9D%E7%BB%B4/" style="font-size: 12px; color: #999">设计思维</a></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="mianlyst"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="mlinku"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">图的搜索</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2021-12-21 14:31:08" itemprop="dateCreated datePublished" datetime="2021-12-21T14:31:08+08:00">2021-12-21</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">3k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">11m</span></span></span><span class="leancloud_visitors" id="/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/" data-flag-title="图的搜索"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span class="leancloud-visitors-count"></span></span></span><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E7%BD%91%E7%BB%9C%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">网络算法基础课程总结</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/%E7%AE%97%E6%B3%95/" style="--text-color:#4fc08d"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">算法</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><h2 id="图的基本术语"><a href="#图的基本术语" class="headerlink" title="图的基本术语"></a>图的基本术语</h2><p>边点相关</p>
+<p><strong>顶点</strong> ：也称为节点/结点(node)。</p>
+<p><strong>边</strong> ： 也称为弧(arc)，链路(link)。 边与两个顶点有关(head和tail)。</p>
+<p><strong>度</strong> ： 与顶点相连的边的数目(或与之邻接的顶点数目)。也称价。</p>
+<p><strong>自环</strong> ： 如果一条边的头和尾都是同一个顶点，则称为自环。</p>
+<p><strong>邻接</strong> ：顶点u和v之间有边相连，则称u和v邻接（adjacent）。</p>
+<p><strong>可达</strong> ： 两个顶点之间如果存在路径，则称这两个顶点可达(reachable)。</p>
+<p><strong>关联</strong> ：与顶点u直接相连的边与u关联；反之，u也与这些边关联。</p>
+<p>图相关</p>
+<p><strong>全连通图</strong> ：如果图中任意两个顶点之间都邻接，则称该图为全连通图。</p>
+<p><strong>连通图</strong> : 如果图中任意两个顶点之间都可达，则称该图为连通。</p>
+<p>路径相关</p>
+<p><strong>路径</strong> :  路径由首尾相连的一系列边构成。起点和终点。</p>
+<p><strong>圈</strong> : 如果路径的起点和终点是同一个顶点，称为圈，或回路，环路。</p>
+<p><strong>简单路径</strong> ： 不含圈的路径。</p>
+<p>有向图相关</p>
+<p><strong>有向边</strong> ： 可用有序顶点对表示，前者表示边的尾/起始，后者表示边的头/终止。作图时，用箭头表示有向边的头/终止。</p>
+<p><strong>出度</strong> ： 以顶点v为起始的有向边数目。称为v的出度。</p>
+<p><strong>入度</strong> ： 以顶点v为终止的有向边数目。称为v的入度。</p>
+<p>加权图相关</p>
+<p><strong>加权图</strong> ：加权图中，每条边都赋予了一个或多个权重。 权重可以代表各种物理意义。也称为网络。</p>
+<p><strong>路径权重</strong> ： 加性权重：路径的权重等于路径所经过的所有边的权重之和。 也可能存在其它类型的权重，比如乘性权重，最大最小权重等。</p>
+<p>树相关</p>
+<p><strong>树</strong> ：不包含任何圈的连通图。</p>
+<p><strong>树的判决条件</strong> ：</p>
+<ol>
+<li>边的数目为顶点数目减1，且不含圈。</li>
+<li>边的数目为顶点数目减1，且连通。</li>
+<li>任意两顶点间存在唯一路径。</li>
+<li>删除任意一条边，图就不连通了。</li>
+</ol>
+<p><strong>生成树</strong> ：如果图G的一个子图包含了G的全部顶点，且为树，则称之为G的生成树(Spanning Tree)</p>
+<h2 id="图的表示方法"><a href="#图的表示方法" class="headerlink" title="图的表示方法"></a>图的表示方法</h2><p>一般地，我们用n表示图中节点的数目，用m表示图中边的数目。</p>
+<p>即给定图G(V, E)，n = | V |, m = | E | </p>
+<p>对图的表示，我们一般有两种方法——邻接矩阵和邻接链表。</p>
+<p>注：这里只对基本思想以及空间复杂度进行分析，不对方法的具体实现进行分析。</p>
+<h3 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h3><p><img src="1.png" alt="1" loading="lazy"><em>无向图的邻接矩阵</em></p>
+<p><img src="2.png" alt="2" loading="lazy"><em>有向图的邻接矩阵</em></p>
+<p>**邻接矩阵的空间复杂度 **—— 𝚯(𝒏<sup>2</sup>)</p>
+<h3 id="邻接链表"><a href="#邻接链表" class="headerlink" title="邻接链表"></a>邻接链表</h3><p><img src="3.png" alt="3" loading="lazy"><em>邻接链表</em></p>
+<p>**邻接链表的空间复杂度 **—— 𝚯(𝒏+𝒎)</p>
+<h3 id="方法选择"><a href="#方法选择" class="headerlink" title="方法选择"></a>方法选择</h3><p>这门课程一般使用邻接链表，邻接矩阵适用于密集图，邻接链表适用于稀疏图。但是在通信网中，很多有价值的应用场景中，都是大规模稀疏图。</p>
+<h3 id="复杂度化简"><a href="#复杂度化简" class="headerlink" title="复杂度化简"></a>复杂度化简</h3><p>而且如果G是连通的，𝒎≥𝒏−𝟏 ,𝒎=𝛀(𝒏)。因此假定图连通，则有𝑶(𝒎+𝒏)=𝑶(𝒎)。不做该假设，则𝑶(𝒎+𝒏)会更清晰些。</p>
+<h2 id="图的搜索算法"><a href="#图的搜索算法" class="headerlink" title="图的搜索算法"></a>图的搜索算法</h2><h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><ul>
+<li><p>目标：给定一个起点，标记完图中所有顶点或搜索出到某个结点的路径。</p>
+</li>
+<li><p>要求：每个点只标记一次。</p>
+</li>
+<li><p>基本模式：“访问扩展” —— 将顶点分为已标记、已访问、未访问三类，并不断从未访问中挑选一个点进行访问拓展直至全部标记。</p>
+</li>
+</ul>
+<h3 id="概念定义"><a href="#概念定义" class="headerlink" title="概念定义"></a>概念定义</h3><p>我们将已标记的点定义为黑色，已访问的点标记为灰色，未访问的点标记为白色。也就是说每次都从灰色中挑选一个点去扩展访问白色的邻接点，当灰色的点没有白色的邻接点时，则将该点变为已标记点（黑色）。</p>
+<p><img src="4.png" alt="4" loading="lazy"><em>三种结点集合</em></p>
+<h3 id="BFS-广度优先搜索"><a href="#BFS-广度优先搜索" class="headerlink" title="BFS 广度优先搜索"></a>BFS 广度优先搜索</h3><ul>
+<li>从灰色点中，优先选择对拓展广度有帮助的点。</li>
+<li>先发现到s距离为k的所有节点，再发现到s距离为k+1的节点。</li>
+<li>“层”的概念。</li>
+</ul>
+<p><img src="5.png" alt="5" loading="lazy"><em>BFS算法实例流程</em></p>
+<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F; BFS伪码 使用了队列的数据结构
+&#x2F;&#x2F; BFS 树上的从源到每个节点的路径都是最短路径（包含边最少的路径）。
+&#x2F;&#x2F; B&#x3D;所有灰色点构成的集合
+将所有V中的点标记为白色
+将s标记为灰色
+B.EnQueue(s);
+WHILE B非空
+    d&#x3D;B.DeQueue();
+    FOR d的所有邻居t
+        IF t的标记为“白色”
+            B.EnQueue(t);
+            将t标记为灰色
+    ENDFOR
+将d标记为“黑色”；
+ENDWHILE</code></pre>
+
+<h3 id="DFS-深度优先搜索"><a href="#DFS-深度优先搜索" class="headerlink" title="DFS 深度优先搜索"></a>DFS 深度优先搜索</h3><ul>
+<li>从灰色点中，优先选择对拓展深度有帮助的点。</li>
+<li>先一直拓展直到发现第一个没有白色邻接点的灰色结点，再回到上一个灰色结点，直至所有结点都被标记。</li>
+<li>“回溯”的概念：走不通了才会回退。</li>
+</ul>
+<p><img src="6.png" alt="6" loading="lazy"><em>BFS算法实例流程</em></p>
+<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F; DFS伪码 使用了栈的数据结构
+&#x2F;&#x2F; B&#x3D;所有灰色点构成的集合
+将所有V中的点标记为白色
+将s标记为灰色
+B.Push(s);
+WHILE B非空
+    d&#x3D;B.Front();
+    Flag &#x3D; 0；
+    FOR d的所有邻居t
+        IF t的标记为白色
+            B.Push(t);
+            将t标记为灰色
+            Flag&#x3D;1;
+             break;
+      ENDFOR
+       IF Flag &#x3D; 0
+           d&#x3D;B.Pop()
+           将t标记为黑色
+    ENDWHILE</code></pre>
+
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p>BFS和DFS的区别在于选择灰色点的策略不同。</p>
+<p>对BFS 选择的灰色点是灰色点集合中最早成为灰色点的点 </p>
+<p>对DFS 选择的灰色点是灰色点集合中最晚成为灰色点的点</p>
+<p>因此BFS用队列(FIFO)；DFS用堆栈(LIFO)。</p>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>采用聚合分析，以BFS维护的队列为核心进行考察。</p>
+<ul>
+<li>总的入队次数是n次 总的出队次数是n次</li>
+<li>图中一共有m条边 无向图每条边检查2次 有向图每条边检查1次</li>
+<li> 最坏情况 O(n+m)</li>
+</ul>
+<p>DFS的分析与BFS相同，时间复杂度都为O(n+m)。</p>
+<h2 id="图的连通性"><a href="#图的连通性" class="headerlink" title="图的连通性"></a>图的连通性</h2><h3 id="无向图的连通分量"><a href="#无向图的连通分量" class="headerlink" title="无向图的连通分量"></a>无向图的连通分量</h3><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><p>在无向图中，下述等价关系的等价类：当且仅当图中具有u-v路径时，称𝒖~𝒗.</p>
+<p>即无向图中，相互之间有路径的结点集合称为连通分量。    </p>
+<h4 id="求解方法"><a href="#求解方法" class="headerlink" title="求解方法"></a>求解方法</h4><pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># Loop-BFS(G)</span>
+<span class="token comment"># 选个未标记的结点调用BFS，直至图中所有结点被标记。</span>
+<span class="token keyword">def</span> <span class="token function">Loop_BFS</span><span class="token punctuation">(</span>G<span class="token punctuation">,</span>i<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    	<span class="token keyword">if</span> i的标记为白色<span class="token punctuation">:</span>
+        	BFS<span class="token punctuation">(</span>G<span class="token punctuation">,</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>复杂度——O(n+m)</p>
+<h3 id="有向图的强连通分量"><a href="#有向图的强连通分量" class="headerlink" title="有向图的强连通分量"></a>有向图的强连通分量</h3><h4 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h4><p>在有向图中，下述等价关系的等价类：当且仅当有向图G中具有uv路径且具有vu路径时，称𝒖~𝒗.</p>
+<p>即有向图中，相互之间有往返路径的结点集合称为强连通分量（Strongly Connected<br>Component, SCC）。当只有一个结点时，自己也可以是一个强连通分量。</p>
+<p>下图为有4个强连通分量的有向图。</p>
+<p><img src="7.png" alt="7" loading="lazy"><em>4个强连通分量的有向图</em></p>
+<h4 id="化简方法"><a href="#化简方法" class="headerlink" title="化简方法"></a>化简方法</h4><p>所有的SCC构成一个有向无环的“meta-graph”。其中每个SCC （记为𝑪<sub>𝟏</sub>,𝑪<sub>2</sub>,…,𝑪<sub>k</sub>）对应一个meta-node，如果原图中存在边(𝒖,𝒗), 𝒖∈<sub>𝟏</sub>,𝒗∈𝑪<sub>j</sub>,𝒊≠𝒋，则meta-graph中存在一条meta-edge(𝑪<sub>i</sub>,𝑪<sub>j</sub>)。</p>
+<p>由此我们可以将所有图中SCC用𝑪<sub>𝟏</sub>、𝑪<sub>2</sub>…𝑪<sub>k</sub>表示，便可化简为一个新的有向无环图。</p>
+<p>为啥无环？ =&gt; 多个成环的SCCs会坍缩成一个SCC。</p>
+<p>下图为上图化简而来的有向无环图</p>
+<p><img src="8.png" alt="8" loading="lazy"><em>化简后的有向无环图</em></p>
+<h4 id="求解方法——TWO-PASS算法"><a href="#求解方法——TWO-PASS算法" class="headerlink" title="求解方法——TWO-PASS算法"></a>求解方法——TWO-PASS算法</h4><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>由于该算法中调用的DFS算法有所改动，因此先给出改动后的代码。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># Loop-DFS(G)</span>
+<span class="token comment"># 选个未标记的结点调用DFS，直至图中所有结点被标记。</span>
+<span class="token keyword">def</span> <span class="token function">Loop_DFS</span><span class="token punctuation">(</span>G<span class="token punctuation">,</span>i<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    	<span class="token keyword">if</span> i的标记为白色<span class="token punctuation">:</span>
+            s <span class="token operator">=</span> i<span class="token punctuation">;</span> <span class="token comment"># s用于标记同一个强连通分量内的结点</span>
+        	DFS<span class="token punctuation">(</span>G<span class="token punctuation">,</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment"># DFS(G)  比普通的DFS多了leader(i)=s 标记同一个强连通分量的结点</span>
+<span class="token keyword">def</span> <span class="token function">DFS</span><span class="token punctuation">(</span>G<span class="token punctuation">,</span>i<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	Leader<span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">=</span> s
+	<span class="token keyword">for</span> i的所有邻居j<span class="token punctuation">:</span>
+    	<span class="token keyword">if</span> j的标记为白色<span class="token punctuation">:</span>
+        	DFS<span class="token punctuation">(</span>G<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	将顶点i设置为黑色
+	t<span class="token operator">+</span><span class="token operator">+</span>；
+	f<span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">=</span> t<span class="token punctuation">;</span> <span class="token comment"># 完成时间 </span></code></pre>
+
+<h5 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h5><ol>
+<li> 在原图G运行Loop-DFS，记录每个结点的完成时间f(v)</li>
+<li> 将原图G的每条边都反向，得到G<sup>rev</sup></li>
+<li> 按f(v)的降序，在G<sup>rev</sup>中运行Loop-DFS，记录每个顶点的Leader l(v).</li>
+</ol>
+<h5 id="算法思路-正确性证明"><a href="#算法思路-正确性证明" class="headerlink" title="算法思路/正确性证明"></a>算法思路/正确性证明</h5><p>为了更好的理解为什么需要将G转化为G<sup>rev</sup>进行Loop-DFS，我们先试着想想如果是下面这个有向图，你会怎样去找强连通分量？</p>
+<p><img src="9.png" alt="9" loading="lazy"><em>3个强连通分量的有向图</em></p>
+<p>首先将 2，3，4 定义为C<sub>1</sub> ； 1，5，6 定义为C<sub>2</sub> ；7，8，9定义C<sub>3</sub></p>
+<p>你会发现，如果你一开始选取的结点是C<sub>1</sub>或C<sub>2</sub>中的结点，我们无法很好的将结点分为正确的强连通分量集合，比如从2出发，经过3到达4时，其实我们就已经找到一个强连通分量了（2，3，4），但是4还是会继续向5遍历，无法终止寻找或者说把前面几个数归结为同一个强连通分量再重新寻找新的强连通分量。然而如果我们一开始选取的结点是C<sub>3</sub>中的结点，便可以成功的找出强连通分量（7，8，9）。因此能否成功快速地找出强连通分量的关键在于选择合适的结点进行DFS遍历。</p>
+<p>而进行两次DFS正是为了解决这个问题。下面给出正确性的证明。</p>
+<p>定义： 一个强连通分量C<sub>k</sub>，f (C<sub>k</sub>) = max { f(v<sub>i</sub>) , v<sub>i</sub>∈C<sub>k </sub>}</p>
+<p>定理： （利用完成时间和SCC的性质自行证明或参考算法导论P<sub>358</sub>）</p>
+<ol>
+<li>  在图G化简后的有向无环图中，如果对结点u和v，有u∈C<sub>i</sub>，v∈C<sub>j</sub>，存在边&lt;u,v&gt;,则f (C<sub>i</sub>) &gt; f (C<sub>j</sub>)</li>
+<li>  在图G<sup>rev</sup>化简后的有向无环图中，如果对结点u和v，有u∈C<sub>i</sub>，v∈C<sub>j</sub>，存在边&lt;u,v&gt;,则f (C<sub>i</sub>) &lt; f (C<sub>j</sub>) （这里的完成时间是指在G中遍历得到的完成时间）</li>
+<li>  对两个强连通分量C<sub>i</sub>和C<sub>j</sub>，若有结点u和v，且u∈C<sub>i</sub>，v∈C<sub>j</sub>，存在边&lt;u,v&gt;，则一定不存在u<sup>‘</sup>∈C<sub>i</sub>，v’∈C<sub>j</sub>，使得边&lt;v’,u’&gt;存在。</li>
+</ol>
+<p>根据上面两条定理，我们可以得知当我们按f(v)的降序，在G<sup>rev</sup>中运行Loop-DFS时，实际上我们便是从图中剩余结点中完成时间最大的强连通分量的一个结点出发进行遍历，根据定理2和定理3，我们可以保证我们可以得到跟前面例子中的C<sub>3</sub>一样的强连通分量，使得每次从选择的结点出发进行DFS遍历都能得到唯一且正确的强连通分量。</p>
+<h5 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h5><p>还是以上图为例我们进行分析。这里给出的分析是先在G<sup>rev</sup>进行Loop-DFS，再在G进行Loop-DFS的过程，原理与上面的方法一致（提供另一个思路），上面方法的分析请自行尝试。</p>
+<p>假定下图为原图反向后得到的G<sup>rev</sup>。</p>
+<p><img src="10.png" alt="10" loading="lazy"><em>反向后的有向图</em></p>
+<p>Loop-DFS 运行过程 （DFS遍历有多种情况，可能对完成时间有影响，但是对总的结果没有影响）</p>
+<p><img src="11.png" alt="11" loading="lazy"><em>反向图中完成时间分析</em></p>
+<p>按照f值重新编号，并用原图分析。</p>
+<p><img src="9.png" alt="12" loading="lazy"><em>有向图原图</em></p>
+<p><img src="12.png" alt="12" loading="lazy"><em>强连通分量选取过程</em></p>
+<p>可以看到我们正确的找出了图中的三个强连通分量。你应该也更好的理解了两次DFS的目的——找出正确的DFS调用起点。</p>
+<h5 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h5><p>采用聚合分析的方法。</p>
+<ul>
+<li>对图反向：O(m)</li>
+<li>第一遍Loop-DFS：O(n+m)</li>
+<li>第二遍Loop-DFS：O(n+m)</li>
+</ul>
+<p>总的时间复杂度—— O(n+m)</p>
+</div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>mianlyst</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/" title="图的搜索">http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.ja" target="_blank" rel="noopener" title="CC BY-NC 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg></a> 许可协议。</li></ul><script>document.addEventListener('copy', function (event) {
+  const clipboardData = event.clipboardData || window.clipboardData;
+  if (!clipboardData) { return; }
+  const text = window.getSelection().toString();
+  if (text) {
+    event.preventDefault();
+    clipboardData.setData('text/plain', text + '\n\n本文作者：mianlyst\n本文链接：http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/\n版权声明：本博客所有文章除特别声明外，均默认采用 CC BY-NC 4.0 许可协议。');
+  }
+});</script></section></article><div class="post-nav"><div class="post-nav-item"></div><div class="post-nav-item"><a class="post-nav-next" href="/2021/12/20/%E5%88%86%E6%B2%BB/" rel="next" title="分治"><span class="post-nav-text">分治</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>要不要和我说些什么？</span><br></div><div id="waline"></div><script>Yun.utils.getScript("https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js", () => {
+  const walineConfig = {"enable":true,"serverURL":"https://hexo-bice-delta.vercel.app/","comment":false,"visitor":true,"el":"#waline","lang":"zh-CN"}
+  walineConfig.path = "/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/"
+  new Waline(walineConfig)
+}, window.Waline);</script></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2021 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> mianlyst</span></div></footer><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><div class="aplayer no-destroy" id="aplayer" data-id="6762866428" data-server="netease" data-type="playlist" data-fixed="true" data-theme="#0078E7" data-loop="all" data-order="list" data-preload="auto" data-volume="0.7" data-mutex data-lrctype="0" data-listfolded data-listmaxheight="340px" data-storagename="metingjs"></div></div></body></html>
