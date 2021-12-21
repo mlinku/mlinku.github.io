@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/9.png">
 <meta property="og:image" content="http://mlinku.top/2021/12/21/%E5%9B%BE%E7%9A%84%E6%90%9C%E7%B4%A2/12.png">
 <meta property="article:published_time" content="2021-12-21T06:31:08.000Z">
-<meta property="article:modified_time" content="2021-12-21T06:15:31.171Z">
+<meta property="article:modified_time" content="2021-12-21T06:16:49.850Z">
 <meta property="article:author" content="mianlyst">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -187,7 +187,7 @@ WHILE B非空
 </ol>
 <h5 id="算法思路-正确性证明"><a href="#算法思路-正确性证明" class="headerlink" title="算法思路/正确性证明"></a>算法思路/正确性证明</h5><p>为了更好的理解为什么需要将G转化为G<sup>rev</sup>进行Loop-DFS，我们先试着想想如果是下面这个有向图，你会怎样去找强连通分量？</p>
 <p><img src="9.png" alt="9" loading="lazy"><em>3个强连通分量的有向图</em></p>
-<p>首先将 2，3，4 定义为C<sub>1</sub> ； 1，5，6 定义为C<sub>2</sub> ；7，8，9定义C<sub>3</sub></p>
+<p>首先将 2，3，4 定义为C<sub>1</sub> ； 1，5，6 定义为C<sub>2</sub> ；7，8，9定义为C<sub>3</sub></p>
 <p>你会发现，如果你一开始选取的结点是C<sub>1</sub>或C<sub>2</sub>中的结点，我们无法很好的将结点分为正确的强连通分量集合，比如从2出发，经过3到达4时，其实我们就已经找到一个强连通分量了（2，3，4），但是4还是会继续向5遍历，无法终止寻找或者说把前面几个数归结为同一个强连通分量再重新寻找新的强连通分量。然而如果我们一开始选取的结点是C<sub>3</sub>中的结点，便可以成功的找出强连通分量（7，8，9）。因此能否成功快速地找出强连通分量的关键在于选择合适的结点进行DFS遍历。</p>
 <p>而进行两次DFS正是为了解决这个问题。下面给出正确性的证明。</p>
 <p>定义： 一个强连通分量C<sub>k</sub>，f (C<sub>k</sub>) = max { f(v<sub>i</sub>) , v<sub>i</sub>∈C<sub>k </sub>}</p>
