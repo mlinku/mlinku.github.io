@@ -1,0 +1,827 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="mianlyst"><meta name="copyright" content="mianlyst"><meta name="generator" content="Hexo 5.4.0"><meta name="theme" content="hexo-theme-yun"><title>Project 2 代码讲解 | mlinku</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.24/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_j5gk85dg4pf.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link class="aplayer-style-marker" rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script class="aplayer-script-marker" src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" defer></script><script class="meting-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/pjax@latest/pjax.min.js" defer></script><script src="/js/pjax.js" defer></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><link id="light-prism-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@latest/themes/prism.css" media="(prefers-color-scheme: light)"><link id="dark-prism-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@latest/themes/prism-tomorrow.css" media="(prefers-color-scheme: dark)"><link rel="icon" href="/yun1.svg"><link rel="mask-icon" href="/yun1.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"hostname":"mlinku.top","root":"/","title":"まひろ的小站","version":"1.6.1","mode":"dark","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://cdn.jsdelivr.net/gh/ElpsyCN/say@gh-pages/sentences.json"},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/utils.js"></script><script src="/js/hexo-theme-yun.js"></script><meta name="description" content="概述由于Project2的代码是在Project1的基础上修改的，所以代码讲解就只针对增加和修改的部分。 头文件import random  引入random模块用于随机生成边之间的权重 Topo类类的初始化class Topo(object):     # 当创建一个类时进行数据初始化     def __init__(self):         # self.switches 存放所有的交换">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Project 2 代码讲解">
+<meta property="og:url" content="http://mlinku.top/2021/11/08/Project%202%20%E4%BB%A3%E7%A0%81%E8%AE%B2%E8%A7%A3/">
+<meta property="og:site_name" content="mlinku">
+<meta property="og:description" content="概述由于Project2的代码是在Project1的基础上修改的，所以代码讲解就只针对增加和修改的部分。 头文件import random  引入random模块用于随机生成边之间的权重 Topo类类的初始化class Topo(object):     # 当创建一个类时进行数据初始化     def __init__(self):         # self.switches 存放所有的交换">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-07T16:21:08.000Z">
+<meta property="article:modified_time" content="2022-01-08T07:31:54.417Z">
+<meta property="article:author" content="mianlyst">
+<meta property="article:tag" content="Ryu">
+<meta name="twitter:card" content="summary"><script src="/js/ui/mode.js"></script></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="mianlyst"><img width="96" loading="lazy" src="/1.jpg" alt="mianlyst"></a><div class="site-author-name"><a href="/about/">mianlyst</a></div><span class="site-name">mlinku</span><sub class="site-subtitle"></sub><div class="site-desciption"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" target="_blank" rel="noopener" href="http://www.mlinku.top/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">15</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">4</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">5</span></a></div><a class="site-state-item hty-icon-button" href="/null" title="文档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" title="RSS" target="_blank" style="color:orange"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-rss-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://ti.qq.com/open_qq/index2.html?url=mqqapi%3a%2f%2fuserprofile%2ffriend_profile_card%3fsrc_type%3dweb%26version%3d1.0%26source%3d2%26uin%3d3337579798" title="QQ" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/mlinku" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://music.163.com/#/user/home?id=1302098014" title="网易云音乐" target="_blank" style="color:#C20C0C"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-netease-cloud-music-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/274945201" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:3337579798@qq.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" target="_blank" rel="noopener" href="https://ac.yunyoujun.cn/" title="空调" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-genderless-line"></use></svg></a></div></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">头文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Topo%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text">Topo类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">3.1.</span> <span class="toc-text">类的初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%87%8D%E8%BE%B9%E9%9B%86%E5%90%88%E7%9A%84%E7%94%9F%E6%88%90"><span class="toc-number">3.2.</span> <span class="toc-text">权重边集合的生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kruskal%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.3.</span> <span class="toc-text">Kruskal算法的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2"><span class="toc-number">3.4.</span> <span class="toc-text">路径格式转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Controller%E7%B1%BB"><span class="toc-number">4.</span> <span class="toc-text">Controller类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96-1"><span class="toc-number">4.1.</span> <span class="toc-text">类的初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">4.1.1.</span> <span class="toc-text">路径的配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%81%E5%8C%85%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-number">4.1.2.</span> <span class="toc-text">封包的处理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%98%E5%9B%BE"><span class="toc-number">5.</span> <span class="toc-text">绘图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E6%BA%90%E7%A0%81"><span class="toc-number">6.</span> <span class="toc-text">完整源码</span></a></li></ol></div></div></div><div class="tag-cloud"><div class="tag-cloud-tags"><a href="/tags/Python/" style="font-size: 12px; color: #999">Python</a> <a href="/tags/Ryu/" style="font-size: 30px; color: #0078e7">Ryu</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" style="font-size: 12px; color: #999">前端学习</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 21px; color: #4d89c0">算法</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%80%9D%E7%BB%B4/" style="font-size: 12px; color: #999">设计思维</a></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="http://mlinku.top/2021/11/08/Project%202%20%E4%BB%A3%E7%A0%81%E8%AE%B2%E8%A7%A3/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="mianlyst"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="mlinku"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Project 2 代码讲解</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2021-11-08 00:21:08" itemprop="dateCreated datePublished" datetime="2021-11-08T00:21:08+08:00">2021-11-08</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-2-line"></use></svg></span> <time title="修改时间：2022-01-08 15:31:54" itemprop="dateModified" datetime="2022-01-08T15:31:54+08:00">2022-01-08</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">6.2k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">29m</span></span></span><span class="leancloud_visitors" id="/2021/11/08/Project%202%20%E4%BB%A3%E7%A0%81%E8%AE%B2%E8%A7%A3/" data-flag-title="Project 2 代码讲解"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span class="leancloud-visitors-count"></span></span></span><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E7%BD%91%E7%BB%9C%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">网络算法基础课程项目</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/Ryu/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">Ryu</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>由于Project2的代码是在Project1的基础上修改的，所以代码讲解就只针对增加和修改的部分。</p>
+<h2 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h2><pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> random</code></pre>
+
+<p>引入random模块用于随机生成边之间的权重</p>
+<h2 id="Topo类"><a href="#Topo类" class="headerlink" title="Topo类"></a>Topo类</h2><h3 id="类的初始化"><a href="#类的初始化" class="headerlink" title="类的初始化"></a>类的初始化</h3><pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Topo</span><span class="token punctuation">(</span><span class="token builtin">object</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 当创建一个类时进行数据初始化</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># self.switches 存放所有的交换机的dpid</span>
+        self<span class="token punctuation">.</span>switches <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token comment"># self.adjdict 存放所有交换机之间的端口连接 但是这里要注意keyerrors</span>
+        self<span class="token punctuation">.</span>adjdict <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+        self<span class="token punctuation">.</span>adjlist <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token comment"># 并查集</span>
+        self<span class="token punctuation">.</span>father <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        self<span class="token punctuation">.</span>rank <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token comment"># 记录最小生成树路径上每个结点附近的结点</span>
+        self<span class="token punctuation">.</span>path <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span></code></pre>
+
+
+
+<p>类的初始化中增加self.father和self.rank用于使用按秩合并的并查集找出最小生成树，self.path用于记录最小生成树上每个结点附近的结点。</p>
+<h3 id="权重边集合的生成"><a href="#权重边集合的生成" class="headerlink" title="权重边集合的生成"></a>权重边集合的生成</h3><pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># 得到所有边和权重的边集</span>
+<span class="token keyword">def</span> <span class="token function">get_list</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 用于判断该交换机是否被遍历过 </span>
+    isFlag <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token boolean">False</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>switches<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token comment"># 遍历所有交换机的边 给所有交换机之间的边随机赋一个权值加入边集adjlist中</span>
+    <span class="token keyword">for</span> sw1 <span class="token keyword">in</span> self<span class="token punctuation">.</span>adjdict<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> sw2 <span class="token keyword">in</span> self<span class="token punctuation">.</span>adjdict<span class="token punctuation">[</span>sw1<span class="token punctuation">]</span><span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> isFlag<span class="token punctuation">[</span>sw2<span class="token punctuation">]</span> <span class="token keyword">is</span> <span class="token boolean">False</span><span class="token punctuation">:</span>
+                w <span class="token operator">=</span> random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
+                self<span class="token punctuation">.</span>adjlist<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span>sw1<span class="token punctuation">,</span> sw2<span class="token punctuation">,</span> w<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                self<span class="token punctuation">.</span>adjlist<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span>sw2<span class="token punctuation">,</span> sw1<span class="token punctuation">,</span> w<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        isFlag<span class="token punctuation">[</span>sw1<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span></code></pre>
+
+
+
+<p>调用该函数遍历所有交换机之间的边，并随机赋一个权重，将边加入到边的集合self.adjlist中。</p>
+<h3 id="Kruskal算法的实现"><a href="#Kruskal算法的实现" class="headerlink" title="Kruskal算法的实现"></a>Kruskal算法的实现</h3><pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># 并查集的寻找父亲结点函数</span>
+<span class="token keyword">def</span> <span class="token function">find_father</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> sw<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> sw <span class="token keyword">if</span> sw <span class="token operator">==</span> self<span class="token punctuation">.</span>father<span class="token punctuation">[</span>sw<span class="token punctuation">]</span> <span class="token keyword">else</span> self<span class="token punctuation">.</span>find_father<span class="token punctuation">(</span>self<span class="token punctuation">.</span>father<span class="token punctuation">[</span>sw<span class="token punctuation">]</span><span class="token punctuation">)</span>
+ 
+<span class="token comment"># 并查集的归并函数 按按秩合并 将简单的簇并入复杂的簇</span>
+<span class="token keyword">def</span> <span class="token function">union</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> new_sw<span class="token punctuation">,</span> pre_sw<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    new <span class="token operator">=</span> self<span class="token punctuation">.</span>father<span class="token punctuation">[</span>new_sw<span class="token punctuation">]</span>
+    pre <span class="token operator">=</span> self<span class="token punctuation">.</span>find_father<span class="token punctuation">(</span>pre_sw<span class="token punctuation">)</span>
+    <span class="token comment"># 简单的并入复杂的，防止高度变长太多</span>
+    <span class="token keyword">if</span> self<span class="token punctuation">.</span>rank<span class="token punctuation">[</span>new<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> self<span class="token punctuation">.</span>rank<span class="token punctuation">[</span>pre<span class="token punctuation">]</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>father<span class="token punctuation">[</span>new<span class="token punctuation">]</span> <span class="token operator">=</span> pre
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>father<span class="token punctuation">[</span>pre<span class="token punctuation">]</span> <span class="token operator">=</span> new
+    <span class="token keyword">if</span> self<span class="token punctuation">.</span>rank<span class="token punctuation">[</span>new<span class="token punctuation">]</span> <span class="token operator">==</span> self<span class="token punctuation">.</span>rank<span class="token punctuation">[</span>pre<span class="token punctuation">]</span> <span class="token keyword">and</span> new <span class="token operator">!=</span> pre<span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>rank<span class="token punctuation">[</span>pre<span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token number">1</span></code></pre>
+
+
+
+<p>并查集是实现Kruskal算法重要的数据结构，这里是并查集的两个主要函数：寻找父亲结点，归并两个簇函数的实现。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># 使用Kruskal算法 返回的是最小生成树的边</span>
+<span class="token keyword">def</span> <span class="token function">kruskal</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 初始化father和rank</span>
+    self<span class="token punctuation">.</span>father <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token boolean">None</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>switches<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>rank <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>switches<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> sw <span class="token keyword">in</span> self<span class="token punctuation">.</span>adjdict<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>father<span class="token punctuation">[</span>sw<span class="token punctuation">]</span> <span class="token operator">=</span> sw
+    <span class="token comment"># 判断所有交换机是否连通 如果不连通直接返回</span>
+    <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>switches<span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token number">0</span> <span class="token keyword">or</span> <span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>adjlist<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>switches<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span>
+    <span class="token comment"># 按权重排序 得到权重从小到大的边列表 self.adjlist -> (sw1,sw2,weight) 所以x[2]为权重</span>
+    self<span class="token punctuation">.</span>adjlist<span class="token punctuation">.</span>sort<span class="token punctuation">(</span>key<span class="token operator">=</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> x<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token comment"># tree_links用于存储画图用的最小生成树边</span>
+    tree_links <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token comment"># all_links用于存储交换机之间所有的边</span>
+    all_links <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">(</span>adj<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> adj<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">for</span> adj <span class="token keyword">in</span> self<span class="token punctuation">.</span>adjlist<span class="token punctuation">]</span>
+    <span class="token comment"># weight用于存储所有交换机之间边的权重</span>
+    weights <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span><span class="token builtin">zip</span><span class="token punctuation">(</span>all_links<span class="token punctuation">,</span> <span class="token punctuation">[</span>adj<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token keyword">for</span> adj <span class="token keyword">in</span> self<span class="token punctuation">.</span>adjlist<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment"># kruskal算法的核心部分 从权重最小的边开始选择 保证每个结点只加入一次 直到所有结点都被选择</span>
+    <span class="token keyword">for</span> List <span class="token keyword">in</span> self<span class="token punctuation">.</span>adjlist<span class="token punctuation">:</span>
+        <span class="token comment"># 用并查集判断两个结点是否在同一个簇里面</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>find_father<span class="token punctuation">(</span>List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">!=</span> self<span class="token punctuation">.</span>find_father<span class="token punctuation">(</span>List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token comment"># 将两个结点合并为同一个簇</span>
+            self<span class="token punctuation">.</span>union<span class="token punctuation">(</span>List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token comment"># 初始化队列防止出现error</span>
+            <span class="token keyword">if</span> List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">not</span> <span class="token keyword">in</span> self<span class="token punctuation">.</span>path<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                self<span class="token punctuation">.</span>path<span class="token punctuation">[</span>List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+            <span class="token keyword">if</span> List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token keyword">not</span> <span class="token keyword">in</span> self<span class="token punctuation">.</span>path<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                self<span class="token punctuation">.</span>path<span class="token punctuation">[</span>List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+            <span class="token comment"># self.path存储最小生成树的边</span>
+            self<span class="token punctuation">.</span>path<span class="token punctuation">[</span>List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">.</span>append<span class="token punctuation">(</span>List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>path<span class="token punctuation">[</span>List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">.</span>append<span class="token punctuation">(</span>List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            tree_links<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span>List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            tree_links<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span>List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment"># 画出最小生成树</span>
+    draw_graph<span class="token punctuation">(</span>all_links<span class="token punctuation">,</span> tree_links<span class="token punctuation">,</span> weights<span class="token punctuation">)</span></code></pre>
+
+<p>使用并查集实现Kruskal算法，得到最小生成树的边集合存储到self.path。同时实现最小生成树图片的绘制，这个函数放到后面讲解。</p>
+<h3 id="路径格式转换"><a href="#路径格式转换" class="headerlink" title="路径格式转换"></a>路径格式转换</h3><pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># 实现选定任意交换机根据最小生成树的路径得到这个交换机广播到其他交换机的配置路径</span>
+<span class="token comment"># 我们想要得到 (switch,inport,outport) 用于配置路径 我们现有边隔壁的所有点</span>
+<span class="token keyword">def</span> <span class="token function">compute_flowTables</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> src_sw<span class="token punctuation">,</span> first_port<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 调用函数得到最小生成树的边集</span>
+    self<span class="token punctuation">.</span>get_list<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>kruskal<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment"># result 用于存储要配置的路径 格式 -> (switch,inport,outport)</span>
+    result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token comment"># 设计一个栈用遍历算法遍历出从源节点出发的所有的路径</span>
+    stack <span class="token operator">=</span> <span class="token punctuation">[</span>src_sw<span class="token punctuation">]</span>
+    <span class="token comment"># 记录每个交换机对应的inport</span>
+    inports <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token boolean">None</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>switches<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    inports<span class="token punctuation">[</span>src_sw<span class="token punctuation">]</span> <span class="token operator">=</span> first_port
+    <span class="token comment"># 记录每个交换机对应的outport</span>
+    outports <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token comment"># 记录是否结点已经被遍历过 都初始化为false</span>
+    isFlag <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token boolean">False</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>switches<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">while</span> <span class="token builtin">len</span><span class="token punctuation">(</span>stack<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        cur <span class="token operator">=</span> stack<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        isFlag<span class="token punctuation">[</span>cur<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span>
+        <span class="token comment"># 把该结点的相邻结点加进去 同时加入到配置路径里面</span>
+        <span class="token keyword">for</span> sw <span class="token keyword">in</span> self<span class="token punctuation">.</span>path<span class="token punctuation">[</span>cur<span class="token punctuation">]</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> isFlag<span class="token punctuation">[</span>sw<span class="token punctuation">]</span> <span class="token keyword">is</span> <span class="token boolean">False</span><span class="token punctuation">:</span>
+                <span class="token comment"># 注意交换机的inport和上一个交换机连接过来的outport并不一样 嗯 在这里出错过</span>
+                inports<span class="token punctuation">[</span>sw<span class="token punctuation">]</span> <span class="token operator">=</span> self<span class="token punctuation">.</span>get_adjdict<span class="token punctuation">(</span>sw<span class="token punctuation">)</span><span class="token punctuation">[</span>cur<span class="token punctuation">]</span>
+                outports<span class="token punctuation">.</span>append<span class="token punctuation">(</span>self<span class="token punctuation">.</span>get_adjdict<span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">[</span>sw<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                stack<span class="token punctuation">.</span>append<span class="token punctuation">(</span>sw<span class="token punctuation">)</span>
+        result<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span>cur<span class="token punctuation">,</span> inports<span class="token punctuation">[</span>cur<span class="token punctuation">]</span><span class="token punctuation">,</span> outports<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># 除了广播交换器，其他每个交换机都要配置一个1的outport实现广播</span>
+        outports <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> result</code></pre>
+
+<p>因为我们调用Kruskal得到的最小生成树路径是(src_sw,dst_sw)，而配置路径需要的是 (switch,inport,outport)。根据得到的最小生成树路径还有topo类中边之间的端口关系实现将最小生成树路径转换为配置路径。</p>
+<h2 id="Controller类"><a href="#Controller类" class="headerlink" title="Controller类"></a>Controller类</h2><h3 id="类的初始化-1"><a href="#类的初始化-1" class="headerlink" title="类的初始化"></a>类的初始化</h3><pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>Controller<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>sw_to_mac <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">'1'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:01'</span><span class="token punctuation">,</span>
+                          <span class="token string">'2'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:02'</span><span class="token punctuation">,</span>
+                          <span class="token string">'3'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:03'</span><span class="token punctuation">,</span>
+                          <span class="token string">'4'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:04'</span><span class="token punctuation">,</span>
+                          <span class="token string">'5'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:05'</span><span class="token punctuation">,</span>
+                          <span class="token string">'6'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:06'</span><span class="token punctuation">,</span>
+                          <span class="token string">'7'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:07'</span><span class="token punctuation">,</span>
+                          <span class="token string">'8'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:08'</span><span class="token punctuation">,</span>
+                          <span class="token string">'9'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:09'</span><span class="token punctuation">,</span>
+                          <span class="token string">'10'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:10'</span><span class="token punctuation">,</span>
+                          <span class="token string">'11'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:11'</span><span class="token punctuation">,</span>
+                          <span class="token string">'12'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:12'</span><span class="token punctuation">,</span>
+                          <span class="token string">'13'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:ff'</span><span class="token punctuation">&#125;</span>
+        self<span class="token punctuation">.</span>topo <span class="token operator">=</span> Topo<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>datapaths <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        self<span class="token punctuation">.</span>arp_history <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+        self<span class="token punctuation">.</span>arp_table <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">'192.168.0.1'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:01'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.2'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:02'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.3'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:03'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.4'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:04'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.5'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:05'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.6'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:06'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.7'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:07'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.8'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:08'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.9'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:09'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.10'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:10'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.11'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:11'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.12'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:12'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.255'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:ff'</span>
+                          <span class="token punctuation">&#125;</span>
+        <span class="token comment"># 初始化时选定要广播和灌包的交换机</span>
+        self<span class="token punctuation">.</span>bro_sw <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"请输入要对外广播的交换机（1-13）:"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">assert</span> <span class="token number">0</span> <span class="token operator">&lt;</span> self<span class="token punctuation">.</span>bro_sw <span class="token operator">&lt;</span> <span class="token number">14</span>
+        self<span class="token punctuation">.</span>bor_sw <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"请输入要灌包的交换机（1-13）:"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">assert</span> <span class="token number">0</span> <span class="token operator">&lt;</span> self<span class="token punctuation">.</span>bor_sw  <span class="token operator">&lt;</span> <span class="token number">14</span> <span class="token keyword">and</span> self<span class="token punctuation">.</span>bor_sw <span class="token operator">!=</span> self<span class="token punctuation">.</span>bro_sw
+        <span class="token comment"># 判断广播路径是否已经设定</span>
+        self<span class="token punctuation">.</span>flag <span class="token operator">=</span> <span class="token boolean">False</span></code></pre>
+
+<p>由于这次项目主要是实现广播功能，所以提前将arp表和mac表配置好，同时在ryu控制器初始化的时候便选择对外广播的交换机和要灌包的交换机便于后面进行验证。self.flag用于判断是否配置过广播路径。</p>
+<h4 id="路径的配置"><a href="#路径的配置" class="headerlink" title="路径的配置"></a>路径的配置</h4><p>这里只选取了部分改动的代码。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">configure_path</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> path<span class="token punctuation">,</span> event<span class="token punctuation">,</span> src_mac<span class="token punctuation">,</span> dst_mac<span class="token punctuation">)</span><span class="token punctuation">:</span>
+ 
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">(</span>此处省略与projec1相同部分<span class="token punctuation">)</span>
+ 
+            actions <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+            <span class="token comment"># actions是一个列表，表示流表向哪些端口转发 与project1的不同之处在于配置路径时,传入的path中的outport是列表 需要配置多个输出端口</span>
+            <span class="token keyword">for</span> outport <span class="token keyword">in</span> outportList<span class="token punctuation">:</span>
+                actions<span class="token punctuation">.</span>append<span class="token punctuation">(</span>parser<span class="token punctuation">.</span>OFPActionOutput<span class="token punctuation">(</span>outport<span class="token punctuation">)</span><span class="token punctuation">)</span>
+ 
+         <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">(</span>此处省略与projec1相同部分<span class="token punctuation">)</span></code></pre>
+
+<p>由于广播时要从一个交换机发包到周围多个交换机，路径的配置要实现多个输出端口的配置。</p>
+<h4 id="封包的处理"><a href="#封包的处理" class="headerlink" title="封包的处理"></a>封包的处理</h4><pre class="language-python" data-language="python"><code class="language-python">    <span class="token comment"># 参考simple_switch_13改编</span>
+    <span class="token decorator annotation punctuation">@set_ev_cls</span><span class="token punctuation">(</span>ofp_event<span class="token punctuation">.</span>EventOFPPacketIn<span class="token punctuation">,</span> MAIN_DISPATCHER<span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">_packet_in_handler</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> ev<span class="token punctuation">)</span><span class="token punctuation">:</span>
+ 
+      …<span class="token punctuation">(</span>此处省略与projec1相同部分<span class="token punctuation">)</span>
+ 
+        <span class="token comment"># 如果还没配置过广播路径 进行配置</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> self<span class="token punctuation">.</span>flag<span class="token punctuation">:</span>
+            <span class="token comment"># 所有最小生成树配置路径的集合</span>
+            path <span class="token operator">=</span> self<span class="token punctuation">.</span>topo<span class="token punctuation">.</span>compute_flowTables<span class="token punctuation">(</span>self<span class="token punctuation">.</span>bro_sw<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'最小生成树路径:  '</span><span class="token punctuation">,</span> path<span class="token punctuation">)</span>
+            <span class="token comment"># 给路径中交换机下发流表</span>
+            <span class="token comment"># print(bro_sw,type(bro_sw))</span>
+            <span class="token comment"># print("mac:",self.sw_to_mac[str(bro_sw)])</span>
+            <span class="token comment"># print("mac:",self.sw_to_mac[str(bor_sw)])</span>
+            <span class="token comment"># 对路径进行配置</span>
+            self<span class="token punctuation">.</span>configure_path<span class="token punctuation">(</span>path<span class="token punctuation">,</span> ev<span class="token punctuation">,</span> self<span class="token punctuation">.</span>sw_to_mac<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>bro_sw<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>sw_to_mac<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>bor_sw<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'***********************路径设置完成************************'</span><span class="token punctuation">)</span>
+            <span class="token comment"># print(self.topo.find_bor_path(self.bor_sw, self.bro_sw))</span>
+            <span class="token comment"># 下发回路</span>
+            <span class="token comment"># 由于前面的配置只实现了对外广播的交换机到其他交换机的路径配置，而灌包时需要两个交换机能ping通 所以同时也要配置灌包交换机到广播交换机的路径</span>
+            <span class="token comment"># 这里路径是通过project1的BFS算法得到的</span>
+            self<span class="token punctuation">.</span>configure_path<span class="token punctuation">(</span>self<span class="token punctuation">.</span>topo<span class="token punctuation">.</span>find_bor_path<span class="token punctuation">(</span>self<span class="token punctuation">.</span>bor_sw<span class="token punctuation">,</span> self<span class="token punctuation">.</span>bro_sw<span class="token punctuation">)</span><span class="token punctuation">,</span> ev<span class="token punctuation">,</span> self<span class="token punctuation">.</span>sw_to_mac<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>bor_sw<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                self<span class="token punctuation">.</span>sw_to_mac<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>bro_sw<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'***********************路径设置完成************************'</span><span class="token punctuation">)</span>
+            <span class="token comment"># 路径配置完成，将flag标志为true，防止重复配置出错</span>
+            self<span class="token punctuation">.</span>flag <span class="token operator">=</span> <span class="token boolean">True</span>
+ 
+      …<span class="token punctuation">(</span>此处省略与projec1相同部分<span class="token punctuation">)</span></code></pre>
+
+<p>在配置广播业务时，我们在配置选定的广播交换机到其他交换机路径的同时，由于我们最后是通过灌包来验证广播业务的，而灌包时被灌包的交换机需要与广播交换机ping通，因此我们通过BFS算法找到被灌包交换机到广播交换机的路径并配置。由于只需要实现广播业务，所以在处理封包时不需要对封包进行发放处理，因此删除了多余的处理封包代码。</p>
+<h2 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h2><pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># draw</span>
+<span class="token keyword">def</span> <span class="token function">draw_graph</span><span class="token punctuation">(</span>sw<span class="token punctuation">,</span> link<span class="token punctuation">,</span> weight<span class="token punctuation">)</span><span class="token punctuation">:</span>
+ 
+     <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">(</span>此处省略与projec1相同部分<span class="token punctuation">)</span>
+ 
+nx<span class="token punctuation">.</span>draw_networkx_edge_labels<span class="token punctuation">(</span>G<span class="token punctuation">,</span> pos<span class="token punctuation">,</span> weight<span class="token punctuation">,</span> font_size<span class="token operator">=</span><span class="token number">8</span><span class="token punctuation">)</span>
+ 
+    plt<span class="token punctuation">.</span>axis<span class="token punctuation">(</span><span class="token string">'off'</span><span class="token punctuation">)</span>
+    <span class="token comment"># show graph</span>
+    <span class="token comment"># 尽量不要用中文</span>
+    plt<span class="token punctuation">.</span>savefig<span class="token punctuation">(</span><span class="token string">"最小生成树.jpg"</span><span class="token punctuation">)</span></code></pre>
+
+<p>与project1不同之处在于增加绘制边之间的权重，其他基本保持不变。</p>
+<h2 id="完整源码"><a href="#完整源码" class="headerlink" title="完整源码"></a>完整源码</h2><p>也可见<a target="_blank" rel="noopener" href="https://github.com/mlinku/Ryu-Course_Project/tree/main/Project2%E5%86%85%E7%9A%84%E4%BB%A3%E7%A0%81%E3%80%82">https://github.com/mlinku/Ryu-Course_Project/tree/main/Project2内的代码。</a></p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> copy
+<span class="token keyword">from</span> collections <span class="token keyword">import</span> defaultdict
+<span class="token keyword">import</span> random
+<span class="token keyword">import</span> networkx <span class="token keyword">as</span> nx
+<span class="token keyword">from</span> ryu<span class="token punctuation">.</span>base <span class="token keyword">import</span> app_manager
+<span class="token keyword">from</span> ryu<span class="token punctuation">.</span>controller <span class="token keyword">import</span> ofp_event
+<span class="token keyword">from</span> ryu<span class="token punctuation">.</span>controller<span class="token punctuation">.</span>handler <span class="token keyword">import</span> set_ev_cls<span class="token punctuation">,</span> CONFIG_DISPATCHER<span class="token punctuation">,</span> MAIN_DISPATCHER
+<span class="token keyword">from</span> ryu<span class="token punctuation">.</span>lib<span class="token punctuation">.</span>packet <span class="token keyword">import</span> ethernet<span class="token punctuation">,</span> ether_types<span class="token punctuation">,</span> arp<span class="token punctuation">,</span> ipv6
+<span class="token keyword">from</span> ryu<span class="token punctuation">.</span>ofproto <span class="token keyword">import</span> ofproto_v1_3
+<span class="token keyword">from</span> ryu<span class="token punctuation">.</span>topology <span class="token keyword">import</span> event
+<span class="token keyword">from</span> ryu<span class="token punctuation">.</span>topology<span class="token punctuation">.</span>api <span class="token keyword">import</span> get_switch<span class="token punctuation">,</span> get_link
+<span class="token keyword">from</span> ryu<span class="token punctuation">.</span>lib<span class="token punctuation">.</span>packet <span class="token keyword">import</span> packet
+<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
+<span class="token keyword">import</span> os<span class="token punctuation">.</span>path
+
+
+<span class="token keyword">class</span> <span class="token class-name">Topo</span><span class="token punctuation">(</span><span class="token builtin">object</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 当创建一个类时进行数据初始化</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># self.switches 存放所有的交换机的dpid</span>
+        self<span class="token punctuation">.</span>switches <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token comment"># self.adjdict 存放所有交换机之间的端口连接 但是这里要注意keyerrors</span>
+        self<span class="token punctuation">.</span>adjdict <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+        self<span class="token punctuation">.</span>adjlist <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token comment"># 并查集</span>
+        self<span class="token punctuation">.</span>father <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        self<span class="token punctuation">.</span>rank <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token comment"># 记录最小生成树路径上每个结点附近的结点</span>
+        self<span class="token punctuation">.</span>path <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+    <span class="token comment"># 初始化adjdict的get和set方法</span>
+    <span class="token keyword">def</span> <span class="token function">set_adjdict</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> s1<span class="token punctuation">,</span> s2<span class="token punctuation">,</span> port<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> s1 <span class="token keyword">not</span> <span class="token keyword">in</span> self<span class="token punctuation">.</span>adjdict<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>adjdict<span class="token punctuation">[</span>s1<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+        self<span class="token punctuation">.</span>adjdict<span class="token punctuation">[</span>s1<span class="token punctuation">]</span><span class="token punctuation">[</span>s2<span class="token punctuation">]</span> <span class="token operator">=</span> port
+
+    <span class="token keyword">def</span> <span class="token function">get_adjdict</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> s1<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>adjdict<span class="token punctuation">[</span>s1<span class="token punctuation">]</span>
+
+    <span class="token comment"># 并查集的寻找父亲结点函数</span>
+    <span class="token keyword">def</span> <span class="token function">find_father</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> sw<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> sw <span class="token keyword">if</span> sw <span class="token operator">==</span> self<span class="token punctuation">.</span>father<span class="token punctuation">[</span>sw<span class="token punctuation">]</span> <span class="token keyword">else</span> self<span class="token punctuation">.</span>find_father<span class="token punctuation">(</span>self<span class="token punctuation">.</span>father<span class="token punctuation">[</span>sw<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># 并查集的归并函数 按按秩合并 将简单的簇并入复杂的簇</span>
+    <span class="token keyword">def</span> <span class="token function">union</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> new_sw<span class="token punctuation">,</span> pre_sw<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        new <span class="token operator">=</span> self<span class="token punctuation">.</span>father<span class="token punctuation">[</span>new_sw<span class="token punctuation">]</span>
+        pre <span class="token operator">=</span> self<span class="token punctuation">.</span>find_father<span class="token punctuation">(</span>pre_sw<span class="token punctuation">)</span>
+        <span class="token comment"># 简单的并入复杂的，防止高度变长太多</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>rank<span class="token punctuation">[</span>new<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> self<span class="token punctuation">.</span>rank<span class="token punctuation">[</span>pre<span class="token punctuation">]</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>father<span class="token punctuation">[</span>new<span class="token punctuation">]</span> <span class="token operator">=</span> pre
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>father<span class="token punctuation">[</span>pre<span class="token punctuation">]</span> <span class="token operator">=</span> new
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>rank<span class="token punctuation">[</span>new<span class="token punctuation">]</span> <span class="token operator">==</span> self<span class="token punctuation">.</span>rank<span class="token punctuation">[</span>pre<span class="token punctuation">]</span> <span class="token keyword">and</span> new <span class="token operator">!=</span> pre<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>rank<span class="token punctuation">[</span>pre<span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token number">1</span>
+
+    <span class="token comment"># # 返回最小生成树的边集合</span>
+    <span class="token comment"># 初始化（按秩合并）</span>
+    <span class="token comment"># inline void init(int n)</span>
+    <span class="token comment"># &#123;</span>
+    <span class="token comment"># for (int i = 1; i &lt;= n; ++i)</span>
+    <span class="token comment"># &#123;</span>
+    <span class="token comment">#     fa[i] = i;</span>
+    <span class="token comment"># rank[i] = 1;</span>
+    <span class="token comment"># &#125;</span>
+    <span class="token comment"># &#125;</span>
+
+    <span class="token comment"># 得到所有边和权重的边集</span>
+    <span class="token keyword">def</span> <span class="token function">get_list</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 用于判断该交换机是否被遍历过</span>
+        isFlag <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token boolean">False</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>switches<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token comment"># 遍历所有交换机的边 给所有交换机之间的边随机赋一个权值加入边集adjlist中</span>
+        <span class="token keyword">for</span> sw1 <span class="token keyword">in</span> self<span class="token punctuation">.</span>adjdict<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">for</span> sw2 <span class="token keyword">in</span> self<span class="token punctuation">.</span>adjdict<span class="token punctuation">[</span>sw1<span class="token punctuation">]</span><span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> isFlag<span class="token punctuation">[</span>sw2<span class="token punctuation">]</span> <span class="token keyword">is</span> <span class="token boolean">False</span><span class="token punctuation">:</span>
+                    w <span class="token operator">=</span> random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
+                    self<span class="token punctuation">.</span>adjlist<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span>sw1<span class="token punctuation">,</span> sw2<span class="token punctuation">,</span> w<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                    self<span class="token punctuation">.</span>adjlist<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span>sw2<span class="token punctuation">,</span> sw1<span class="token punctuation">,</span> w<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            isFlag<span class="token punctuation">[</span>sw1<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span>
+
+    <span class="token comment"># 使用Kruskal算法 返回的是最小生成树的边</span>
+    <span class="token keyword">def</span> <span class="token function">kruskal</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 初始化father和rank</span>
+        <span class="token comment"># print(self.switches)</span>
+        self<span class="token punctuation">.</span>father <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token boolean">None</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>switches<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>rank <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>switches<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token comment"># print(self.adjdict.keys())</span>
+        <span class="token keyword">for</span> sw <span class="token keyword">in</span> self<span class="token punctuation">.</span>adjdict<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token comment"># print(self.father)</span>
+            self<span class="token punctuation">.</span>father<span class="token punctuation">[</span>sw<span class="token punctuation">]</span> <span class="token operator">=</span> sw
+        <span class="token comment"># 判断所有交换机是否连通 如果不连通直接返回</span>
+        <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>switches<span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token number">0</span> <span class="token keyword">or</span> <span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>adjlist<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>switches<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span>
+        <span class="token comment"># 按权重排序 得到权重从小到大的边列表 self.adjlist -> (sw1,sw2,weight) 所以x[2]为权重</span>
+        self<span class="token punctuation">.</span>adjlist<span class="token punctuation">.</span>sort<span class="token punctuation">(</span>key<span class="token operator">=</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> x<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token comment"># print(self.adjlist)</span>
+        <span class="token comment"># tree_links用于存储画图用的最小生成树边</span>
+        tree_links <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token comment"># all_links用于存储交换机之间所有的边</span>
+        all_links <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">(</span>adj<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> adj<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">for</span> adj <span class="token keyword">in</span> self<span class="token punctuation">.</span>adjlist<span class="token punctuation">]</span>
+        <span class="token comment"># print(all_links)</span>
+        <span class="token comment"># weight用于存储所有交换机之间边的权重</span>
+        weights <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span><span class="token builtin">zip</span><span class="token punctuation">(</span>all_links<span class="token punctuation">,</span> <span class="token punctuation">[</span>adj<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token keyword">for</span> adj <span class="token keyword">in</span> self<span class="token punctuation">.</span>adjlist<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># print(weights)</span>
+        <span class="token comment"># kruskal算法的核心部分 从权重最小的边开始选择 保证每个结点只加入一次 直到所有结点都被选择</span>
+        <span class="token keyword">for</span> List <span class="token keyword">in</span> self<span class="token punctuation">.</span>adjlist<span class="token punctuation">:</span>
+            <span class="token comment"># 用并查集判断两个结点是否在同一个簇里面</span>
+            <span class="token keyword">if</span> self<span class="token punctuation">.</span>find_father<span class="token punctuation">(</span>List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">!=</span> self<span class="token punctuation">.</span>find_father<span class="token punctuation">(</span>List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token comment"># 将两个结点合并为同一个簇</span>
+                self<span class="token punctuation">.</span>union<span class="token punctuation">(</span>List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                <span class="token comment"># 初始化队列防止出现error</span>
+                <span class="token keyword">if</span> List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">not</span> <span class="token keyword">in</span> self<span class="token punctuation">.</span>path<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    self<span class="token punctuation">.</span>path<span class="token punctuation">[</span>List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+                <span class="token keyword">if</span> List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token keyword">not</span> <span class="token keyword">in</span> self<span class="token punctuation">.</span>path<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    self<span class="token punctuation">.</span>path<span class="token punctuation">[</span>List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+                <span class="token comment"># self.path存储最小生成树的边</span>
+                self<span class="token punctuation">.</span>path<span class="token punctuation">[</span>List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">.</span>append<span class="token punctuation">(</span>List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                self<span class="token punctuation">.</span>path<span class="token punctuation">[</span>List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">.</span>append<span class="token punctuation">(</span>List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                tree_links<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span>List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                tree_links<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span>List<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> List<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># 画出最小生成树</span>
+        draw_graph<span class="token punctuation">(</span>all_links<span class="token punctuation">,</span> tree_links<span class="token punctuation">,</span> weights<span class="token punctuation">)</span>
+        <span class="token comment"># print("---------------------",self.path)</span>
+
+    <span class="token comment"># 实现找到一个交换机邻接的交换机 并调用kruskal</span>
+    <span class="token comment"># def find_borsw(self, sw):</span>
+    <span class="token comment">#     # 给边集赋值</span>
+    <span class="token comment">#     if len(self.adjlist) is 0:</span>
+    <span class="token comment">#         self.get_list()</span>
+    <span class="token comment">#     if len(self.path) is 0:</span>
+    <span class="token comment">#         self.kruskal()</span>
+    <span class="token comment">#     if sw not in self.path.keys():</span>
+    <span class="token comment">#         print("广播交换机输入错误,请重新开始程序")</span>
+    <span class="token comment">#         return</span>
+    <span class="token comment">#</span>
+    <span class="token comment">#     return self.path[sw]</span>
+
+    <span class="token comment"># def choice_borsw(self, sw):</span>
+    <span class="token comment">#     bor_sw = self.find_borsw(sw)</span>
+    <span class="token comment">#     print("请选择灌包的主机（显示的是选定的广播主机最小生成树上邻接的主机）:（", end=' ')</span>
+    <span class="token comment">#     for x in bor_sw:</span>
+    <span class="token comment">#         print(x, end=' ')</span>
+    <span class="token comment">#     print('）')</span>
+    <span class="token comment">#     choice = int(input())</span>
+    <span class="token comment">#     # print(bor_sw,'  ',type(bor_sw[0]))</span>
+    <span class="token comment">#     if choice not in bor_sw:</span>
+    <span class="token comment">#         print("灌包输入错误,请重新开始程序")</span>
+    <span class="token comment">#         return None</span>
+    <span class="token comment">#     return choice</span>
+
+    <span class="token comment"># 返回两个相邻交换机的路径</span>
+    <span class="token comment"># def find_bor_path(self, src_sw, dst_sw):</span>
+    <span class="token comment">#     return [(src_sw, 1, [self.get_adjdict(src_sw)[dst_sw]]), (dst_sw, self.get_adjdict(dst_sw)[src_sw], [1])]</span>
+
+    <span class="token comment"># 实现选定任意交换机根据最小生成树的路径得到这个交换机广播到其他交换机的配置路径</span>
+    <span class="token comment"># 我们想要得到 (switch,inport,outport) 用于配置路径 我们现有边隔壁的所有点</span>
+    <span class="token keyword">def</span> <span class="token function">compute_flowTables</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> src_sw<span class="token punctuation">,</span> first_port<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 调用函数得到最小生成树的边集</span>
+        self<span class="token punctuation">.</span>get_list<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>kruskal<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment"># result 用于存储要配置的路径 格式 -> (switch,inport,outport)</span>
+        result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token comment"># 设计一个栈用遍历算法遍历出从源节点出发的所有的路径</span>
+        stack <span class="token operator">=</span> <span class="token punctuation">[</span>src_sw<span class="token punctuation">]</span>
+        <span class="token comment"># 记录每个交换机对应的inport</span>
+        inports <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token boolean">None</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>switches<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        inports<span class="token punctuation">[</span>src_sw<span class="token punctuation">]</span> <span class="token operator">=</span> first_port
+        <span class="token comment"># 记录每个交换机对应的outport</span>
+        outports <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token comment"># 记录是否结点已经被遍历过 都初始化为false</span>
+        isFlag <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token boolean">False</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>switches<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token keyword">while</span> <span class="token builtin">len</span><span class="token punctuation">(</span>stack<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            cur <span class="token operator">=</span> stack<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            isFlag<span class="token punctuation">[</span>cur<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span>
+            <span class="token comment"># 把该结点的相邻结点加进去 同时加入到配置路径里面</span>
+            <span class="token comment"># print(self.path[cur])</span>
+            <span class="token keyword">for</span> sw <span class="token keyword">in</span> self<span class="token punctuation">.</span>path<span class="token punctuation">[</span>cur<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> isFlag<span class="token punctuation">[</span>sw<span class="token punctuation">]</span> <span class="token keyword">is</span> <span class="token boolean">False</span><span class="token punctuation">:</span>
+                    <span class="token comment"># 注意交换机的inport和上一个交换机连接过来的outport并不一样 嗯 在这里出错过</span>
+                    inports<span class="token punctuation">[</span>sw<span class="token punctuation">]</span> <span class="token operator">=</span> self<span class="token punctuation">.</span>get_adjdict<span class="token punctuation">(</span>sw<span class="token punctuation">)</span><span class="token punctuation">[</span>cur<span class="token punctuation">]</span>
+                    outports<span class="token punctuation">.</span>append<span class="token punctuation">(</span>self<span class="token punctuation">.</span>get_adjdict<span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">[</span>sw<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                    stack<span class="token punctuation">.</span>append<span class="token punctuation">(</span>sw<span class="token punctuation">)</span>
+            result<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span>cur<span class="token punctuation">,</span> inports<span class="token punctuation">[</span>cur<span class="token punctuation">]</span><span class="token punctuation">,</span> outports<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token comment"># 除了广播交换器，其他每个交换机都要配置一个1的outport实现广播</span>
+            outports <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+        <span class="token comment"># print("配置的路径：",result)</span>
+        <span class="token keyword">return</span> result
+
+    <span class="token comment"># bfs找到两个交换机之间的最短路</span>
+    <span class="token keyword">def</span> <span class="token function">find_bor_path</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> src_sw<span class="token punctuation">,</span> dst_sw<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># the front lines are the same as dfs</span>
+        <span class="token comment"># sign records a switch whether is visited</span>
+        sign <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+        <span class="token comment"># 用于存放最短配置路径</span>
+        result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token comment"># init sign as 0,a switch one sign</span>
+        <span class="token keyword">for</span> sw <span class="token keyword">in</span> self<span class="token punctuation">.</span>switches<span class="token punctuation">:</span>
+            sign<span class="token punctuation">[</span>sw<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+        sign<span class="token punctuation">[</span>src_sw<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+        <span class="token comment"># use list function as queue</span>
+        queue_list <span class="token operator">=</span> <span class="token punctuation">[</span>src_sw<span class="token punctuation">]</span>
+        <span class="token comment"># bfs find the shortest way</span>
+        <span class="token keyword">while</span> queue_list<span class="token punctuation">:</span>
+            sw <span class="token operator">=</span> queue_list<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> sw <span class="token operator">==</span> dst_sw<span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"最短路径已经找出来了:"</span><span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">" "</span><span class="token punctuation">)</span>
+                self<span class="token punctuation">.</span>printsPath<span class="token punctuation">(</span>sw<span class="token punctuation">,</span> sign<span class="token punctuation">,</span> result<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"end"</span><span class="token punctuation">)</span>
+                <span class="token keyword">return</span> result
+            <span class="token keyword">for</span> u <span class="token keyword">in</span> self<span class="token punctuation">.</span>get_adjdict<span class="token punctuation">(</span>sw<span class="token punctuation">)</span><span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> sign<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+                    sign<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> sw
+                    queue_list<span class="token punctuation">.</span>insert<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> u<span class="token punctuation">)</span>
+    <span class="token comment"># 用于输出最短路路径 与project1相同</span>
+    <span class="token keyword">def</span> <span class="token function">printsPath</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> sw<span class="token punctuation">,</span> sign<span class="token punctuation">,</span> result<span class="token punctuation">,</span> outport<span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment"># [(4, 3, [1]), (3, 1, [3])]</span>
+        <span class="token keyword">if</span> sign<span class="token punctuation">[</span>sw<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span>
+            result<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span>sw<span class="token punctuation">,</span> self<span class="token punctuation">.</span>get_adjdict<span class="token punctuation">(</span>sw<span class="token punctuation">)</span><span class="token punctuation">[</span>sign<span class="token punctuation">[</span>sw<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>outport<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>printsPath<span class="token punctuation">(</span>sign<span class="token punctuation">[</span>sw<span class="token punctuation">]</span><span class="token punctuation">,</span> sign<span class="token punctuation">,</span> result<span class="token punctuation">,</span> self<span class="token punctuation">.</span>get_adjdict<span class="token punctuation">(</span>sign<span class="token punctuation">[</span>sw<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">[</span>sw<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token keyword">elif</span> sign<span class="token punctuation">[</span>sw<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span>
+            result<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span>sw<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>outport<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">&#123;</span>sw<span class="token punctuation">&#125;</span></span><span class="token string">-"</span></span><span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">' '</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">Controller</span><span class="token punctuation">(</span>app_manager<span class="token punctuation">.</span>RyuApp<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># openflow version 1.3</span>
+    OFP_VERSIONS <span class="token operator">=</span> <span class="token punctuation">[</span>ofproto_v1_3<span class="token punctuation">.</span>OFP_VERSION<span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>Controller<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>sw_to_mac <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">'1'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:01'</span><span class="token punctuation">,</span>
+                          <span class="token string">'2'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:02'</span><span class="token punctuation">,</span>
+                          <span class="token string">'3'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:03'</span><span class="token punctuation">,</span>
+                          <span class="token string">'4'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:04'</span><span class="token punctuation">,</span>
+                          <span class="token string">'5'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:05'</span><span class="token punctuation">,</span>
+                          <span class="token string">'6'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:06'</span><span class="token punctuation">,</span>
+                          <span class="token string">'7'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:07'</span><span class="token punctuation">,</span>
+                          <span class="token string">'8'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:08'</span><span class="token punctuation">,</span>
+                          <span class="token string">'9'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:09'</span><span class="token punctuation">,</span>
+                          <span class="token string">'10'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:10'</span><span class="token punctuation">,</span>
+                          <span class="token string">'11'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:11'</span><span class="token punctuation">,</span>
+                          <span class="token string">'12'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:12'</span><span class="token punctuation">,</span>
+                          <span class="token string">'13'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:ff'</span><span class="token punctuation">&#125;</span>
+        self<span class="token punctuation">.</span>topo <span class="token operator">=</span> Topo<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>datapaths <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        self<span class="token punctuation">.</span>arp_history <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+        self<span class="token punctuation">.</span>arp_table <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">'192.168.0.1'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:01'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.2'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:02'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.3'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:03'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.4'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:04'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.5'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:05'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.6'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:06'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.7'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:07'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.8'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:08'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.9'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:09'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.10'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:10'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.11'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:11'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.12'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:12'</span><span class="token punctuation">,</span>
+                          <span class="token string">'192.168.0.255'</span><span class="token punctuation">:</span> <span class="token string">'00:00:00:00:00:ff'</span>
+                          <span class="token punctuation">&#125;</span>
+        <span class="token comment"># 初始化时选定要广播和灌包的交换机</span>
+        self<span class="token punctuation">.</span>bro_sw <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"请输入要对外广播的交换机（1-13）:"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">assert</span> <span class="token number">0</span> <span class="token operator">&lt;</span> self<span class="token punctuation">.</span>bro_sw <span class="token operator">&lt;</span> <span class="token number">14</span>
+        self<span class="token punctuation">.</span>bor_sw <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"请输入要灌包的交换机（1-13）:"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">assert</span> <span class="token number">0</span> <span class="token operator">&lt;</span> self<span class="token punctuation">.</span>bor_sw  <span class="token operator">&lt;</span> <span class="token number">14</span> <span class="token keyword">and</span> self<span class="token punctuation">.</span>bor_sw <span class="token operator">!=</span> self<span class="token punctuation">.</span>bro_sw
+        <span class="token comment"># 判断广播路径是否已经设定</span>
+        self<span class="token punctuation">.</span>flag <span class="token operator">=</span> <span class="token boolean">False</span>
+
+    <span class="token comment"># 参考simple_switch_13改编</span>
+    <span class="token decorator annotation punctuation">@set_ev_cls</span><span class="token punctuation">(</span>ofp_event<span class="token punctuation">.</span>EventOFPSwitchFeatures<span class="token punctuation">,</span> CONFIG_DISPATCHER<span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">switch_features_handler</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> ev<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 一开始 Switch 連上 Controller 时的初始设定Function</span>
+        datapath <span class="token operator">=</span> ev<span class="token punctuation">.</span>msg<span class="token punctuation">.</span>datapath  <span class="token comment"># 接收 OpenFlow 交换器</span>
+        ofproto <span class="token operator">=</span> datapath<span class="token punctuation">.</span>ofproto  <span class="token comment"># OpenFlow 交换器使用的 OF 协定版本</span>
+        parser <span class="token operator">=</span> datapath<span class="token punctuation">.</span>ofproto_parser  <span class="token comment"># 处理 OF 协定的 parser（解析器）</span>
+
+        <span class="token comment"># install table-miss flow entry</span>
+        <span class="token comment">#</span>
+        <span class="token comment"># We specify NO BUFFER to max_len of the output action due to</span>
+        <span class="token comment"># OVS bug. At this moment, if we specify a lesser number, e.g.,</span>
+        <span class="token comment"># 128, OVS will send Packet-In with invalid buffer_id and</span>
+        <span class="token comment"># truncated packet data. In that case, we cannot output packets</span>
+        <span class="token comment"># correctly.  The bug has been fixed in OVS v2.1.0.</span>
+        <span class="token comment"># 以下片段yon'gu Table-Miss FlowEntry</span>
+        <span class="token comment"># 首先新增一个空的 match，也就是能够 match 任何封包的 match rule</span>
+        match <span class="token operator">=</span> parser<span class="token punctuation">.</span>OFPMatch<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment"># 指定这一条 Table-Miss FlowEntry 的对应行为</span>
+        <span class="token comment"># 把所有不知道如何处理的封包都送到 Controller</span>
+        actions <span class="token operator">=</span> <span class="token punctuation">[</span>parser<span class="token punctuation">.</span>OFPActionOutput<span class="token punctuation">(</span>ofproto<span class="token punctuation">.</span>OFPP_CONTROLLER<span class="token punctuation">,</span>
+                                          ofproto<span class="token punctuation">.</span>OFPCML_NO_BUFFER<span class="token punctuation">)</span><span class="token punctuation">]</span>
+        <span class="token comment"># 把 Table-Miss FlowEntry 設定至 Switch，並指定优先权為 0 (最低)</span>
+        self<span class="token punctuation">.</span>add_flow<span class="token punctuation">(</span>datapath<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> match<span class="token punctuation">,</span> actions<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">add_flow</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> datapath<span class="token punctuation">,</span> priority<span class="token punctuation">,</span> match<span class="token punctuation">,</span> actions<span class="token punctuation">,</span> buffer_id<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 取得与 Switch 使用的 IF 版本 对应的 OF 协定及 parser</span>
+        ofproto <span class="token operator">=</span> datapath<span class="token punctuation">.</span>ofproto
+        parser <span class="token operator">=</span> datapath<span class="token punctuation">.</span>ofproto_parser
+        <span class="token comment"># Instruction 是定义当封包满足 match 時，所要执行的动作</span>
+        <span class="token comment"># 因此把 action 以 OFPInstructionActions 包裝起來</span>
+        inst <span class="token operator">=</span> <span class="token punctuation">[</span>parser<span class="token punctuation">.</span>OFPInstructionActions<span class="token punctuation">(</span>ofproto<span class="token punctuation">.</span>OFPIT_APPLY_ACTIONS<span class="token punctuation">,</span>
+                                             actions<span class="token punctuation">)</span><span class="token punctuation">]</span>
+        <span class="token comment"># FlowMod Function 可以讓我們對 Switch 寫入由我們所定義的 Flow Entry</span>
+        <span class="token keyword">if</span> buffer_id<span class="token punctuation">:</span>
+            mod <span class="token operator">=</span> parser<span class="token punctuation">.</span>OFPFlowMod<span class="token punctuation">(</span>datapath<span class="token operator">=</span>datapath<span class="token punctuation">,</span> buffer_id<span class="token operator">=</span>buffer_id<span class="token punctuation">,</span>
+                                    priority<span class="token operator">=</span>priority<span class="token punctuation">,</span> match<span class="token operator">=</span>match<span class="token punctuation">,</span>
+                                    instructions<span class="token operator">=</span>inst<span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            mod <span class="token operator">=</span> parser<span class="token punctuation">.</span>OFPFlowMod<span class="token punctuation">(</span>datapath<span class="token operator">=</span>datapath<span class="token punctuation">,</span> priority<span class="token operator">=</span>priority<span class="token punctuation">,</span>
+                                    match<span class="token operator">=</span>match<span class="token punctuation">,</span> instructions<span class="token operator">=</span>inst<span class="token punctuation">)</span>
+            <span class="token comment"># 把定义好的 FlowEntry 送給 Switch</span>
+        datapath<span class="token punctuation">.</span>send_msg<span class="token punctuation">(</span>mod<span class="token punctuation">)</span>
+
+    <span class="token comment"># 参考simple_switch_13改编</span>
+    <span class="token decorator annotation punctuation">@set_ev_cls</span><span class="token punctuation">(</span>ofp_event<span class="token punctuation">.</span>EventOFPPacketIn<span class="token punctuation">,</span> MAIN_DISPATCHER<span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">_packet_in_handler</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> ev<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 收到來自 Switch 不知如何處理的封包（Match 到 Table-Miss FlowEntry）</span>
+        <span class="token comment"># If you hit this you might want to increase</span>
+        <span class="token comment"># the "miss_send_length" of your switch</span>
+        <span class="token keyword">if</span> ev<span class="token punctuation">.</span>msg<span class="token punctuation">.</span>msg_len <span class="token operator">&lt;</span> ev<span class="token punctuation">.</span>msg<span class="token punctuation">.</span>total_len<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>logger<span class="token punctuation">.</span>debug<span class="token punctuation">(</span><span class="token string">"packet truncated: only %s of %s bytes"</span><span class="token punctuation">,</span>
+                              ev<span class="token punctuation">.</span>msg<span class="token punctuation">.</span>msg_len<span class="token punctuation">,</span> ev<span class="token punctuation">.</span>msg<span class="token punctuation">.</span>total_len<span class="token punctuation">)</span>
+        <span class="token comment"># 获取包的基本信息</span>
+        msg <span class="token operator">=</span> ev<span class="token punctuation">.</span>msg
+        datapath <span class="token operator">=</span> msg<span class="token punctuation">.</span>datapath
+        ofproto <span class="token operator">=</span> datapath<span class="token punctuation">.</span>ofproto
+        parser <span class="token operator">=</span> datapath<span class="token punctuation">.</span>ofproto_parser
+        in_port <span class="token operator">=</span> msg<span class="token punctuation">.</span>match<span class="token punctuation">[</span><span class="token string">'in_port'</span><span class="token punctuation">]</span>
+        pkt <span class="token operator">=</span> packet<span class="token punctuation">.</span>Packet<span class="token punctuation">(</span>msg<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+        <span class="token comment"># eth 里面 存储着包的源和目标mac地址</span>
+        eth <span class="token operator">=</span> pkt<span class="token punctuation">.</span>get_protocols<span class="token punctuation">(</span>ethernet<span class="token punctuation">.</span>ethernet<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        <span class="token comment"># 如果还没配置过广播路径 进行配置</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> self<span class="token punctuation">.</span>flag<span class="token punctuation">:</span>
+            <span class="token comment"># 所有最小生成树配置路径的集合</span>
+            path <span class="token operator">=</span> self<span class="token punctuation">.</span>topo<span class="token punctuation">.</span>compute_flowTables<span class="token punctuation">(</span>self<span class="token punctuation">.</span>bro_sw<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'最小生成树路径:  '</span><span class="token punctuation">,</span> path<span class="token punctuation">)</span>
+            <span class="token comment"># 给路径中交换机下发流表</span>
+            <span class="token comment"># print(bro_sw,type(bro_sw))</span>
+            <span class="token comment"># print("mac:",self.sw_to_mac[str(bro_sw)])</span>
+            <span class="token comment"># print("mac:",self.sw_to_mac[str(bor_sw)])</span>
+            <span class="token comment"># 对路径进行配置</span>
+            self<span class="token punctuation">.</span>configure_path<span class="token punctuation">(</span>path<span class="token punctuation">,</span> ev<span class="token punctuation">,</span> self<span class="token punctuation">.</span>sw_to_mac<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>bro_sw<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>sw_to_mac<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>bor_sw<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'***********************路径设置完成************************'</span><span class="token punctuation">)</span>
+            <span class="token comment"># print(self.topo.find_bor_path(self.bor_sw, self.bro_sw))</span>
+            <span class="token comment"># 下发回路</span>
+            <span class="token comment"># 由于前面的配置只实现了对外广播的交换机到其他交换机的路径配置，而灌包时需要两个交换机能ping通 所以同时也要配置灌包交换机到广播交换机的路径</span>
+            <span class="token comment"># 这里路径是通过project1的BFS算法得到的</span>
+            self<span class="token punctuation">.</span>configure_path<span class="token punctuation">(</span>self<span class="token punctuation">.</span>topo<span class="token punctuation">.</span>find_bor_path<span class="token punctuation">(</span>self<span class="token punctuation">.</span>bor_sw<span class="token punctuation">,</span> self<span class="token punctuation">.</span>bro_sw<span class="token punctuation">)</span><span class="token punctuation">,</span> ev<span class="token punctuation">,</span> self<span class="token punctuation">.</span>sw_to_mac<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>bor_sw<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                self<span class="token punctuation">.</span>sw_to_mac<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>bro_sw<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'***********************路径设置完成************************'</span><span class="token punctuation">)</span>
+            <span class="token comment"># 路径配置完成，将flag标志为true，防止重复配置出错</span>
+            self<span class="token punctuation">.</span>flag <span class="token operator">=</span> <span class="token boolean">True</span>
+        <span class="token comment"># 丢弃泛洪的包</span>
+        <span class="token keyword">if</span> eth<span class="token punctuation">.</span>ethertype <span class="token operator">==</span> ether_types<span class="token punctuation">.</span>ETH_TYPE_LLDP<span class="token punctuation">:</span>
+            <span class="token comment"># ignore lldp packet</span>
+            <span class="token keyword">return</span>
+        <span class="token comment"># 记录src和dst的mac地址</span>
+        dst <span class="token operator">=</span> eth<span class="token punctuation">.</span>dst
+        src <span class="token operator">=</span> eth<span class="token punctuation">.</span>src
+        dpid <span class="token operator">=</span> datapath<span class="token punctuation">.</span><span class="token builtin">id</span>
+        <span class="token comment"># arp包</span>
+        arp_pkt <span class="token operator">=</span> pkt<span class="token punctuation">.</span>get_protocol<span class="token punctuation">(</span>arp<span class="token punctuation">.</span>arp<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> arp_pkt<span class="token punctuation">:</span>
+            <span class="token comment"># 记录到arp表中 ip->mac</span>
+            self<span class="token punctuation">.</span>arp_table<span class="token punctuation">[</span>arp_pkt<span class="token punctuation">.</span>src_ip<span class="token punctuation">]</span> <span class="token operator">=</span> src
+
+        <span class="token comment"># 丢弃ipv6的包 监听端口不同 不丢弃可能会造成大量丢包</span>
+        <span class="token keyword">if</span> pkt<span class="token punctuation">.</span>get_protocol<span class="token punctuation">(</span>ipv6<span class="token punctuation">.</span>ipv6<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token comment"># match = parser.OFPMatch(eth_type=eth.ethertype)</span>
+            <span class="token comment"># actions = []</span>
+            <span class="token comment"># self.add_flow(datapath, 1, match, actions)</span>
+            <span class="token keyword">return</span> <span class="token boolean">None</span>
+        <span class="token comment"># print(dst)</span>
+        <span class="token comment"># 如果是广播帧 判断是否记录过arp表</span>
+        <span class="token keyword">if</span> dst <span class="token operator">==</span> <span class="token string">'ff:ff:ff:ff:ff:ff'</span><span class="token punctuation">:</span>
+            <span class="token comment"># print(self.arp_handler(msg))</span>
+            <span class="token keyword">if</span> self<span class="token punctuation">.</span>arp_handler<span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">return</span>
+
+    <span class="token comment"># after add_flow switch enter we should put it in class we defined</span>
+    <span class="token decorator annotation punctuation">@set_ev_cls</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>EventSwitchEnter<span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">switch_enter_handler</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"A switch entered."</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>switch_topoFind_handler<span class="token punctuation">(</span>event<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"Find all topology switches we can find\n"</span><span class="token punctuation">)</span>
+
+    <span class="token decorator annotation punctuation">@set_ev_cls</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>EventSwitchLeave<span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">switch_leave_handler</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"A switch leaved."</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>switch_topoFind_handler<span class="token punctuation">(</span>event<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"Find all topology switches we can find\n"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">switch_topoFind_handler</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 找到已连接的所有交换机 ps.这里的switches和topo里面定义的switches不一样</span>
+        switches <span class="token operator">=</span> copy<span class="token punctuation">.</span>copy<span class="token punctuation">(</span>get_switch<span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># 把所有已连接交换机的dpid放在topo.switches内</span>
+        self<span class="token punctuation">.</span>topo<span class="token punctuation">.</span>switches <span class="token operator">=</span> <span class="token punctuation">[</span>sw<span class="token punctuation">.</span>dp<span class="token punctuation">.</span><span class="token builtin">id</span> <span class="token keyword">for</span> sw <span class="token keyword">in</span> switches<span class="token punctuation">]</span>
+        self<span class="token punctuation">.</span>logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"switches: &#123;&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>topo<span class="token punctuation">.</span>switches<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># 把所有已连接交换机的datapath放在datapaths中</span>
+        self<span class="token punctuation">.</span>datapaths <span class="token operator">=</span> <span class="token punctuation">[</span>sw<span class="token punctuation">.</span>dp <span class="token keyword">for</span> sw <span class="token keyword">in</span> switches<span class="token punctuation">]</span>
+
+        <span class="token comment"># 得到所有交换机之间的拓扑连接   a links is like（格式） : (src_sw,dst_sw,inport,outport)</span>
+        links <span class="token operator">=</span> copy<span class="token punctuation">.</span>copy<span class="token punctuation">(</span>get_link<span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># 把所有拓扑连接的数据放在列表links_msg里面</span>
+        links_msg <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">(</span>l<span class="token punctuation">.</span>src<span class="token punctuation">.</span>dpid<span class="token punctuation">,</span> l<span class="token punctuation">.</span>dst<span class="token punctuation">.</span>dpid<span class="token punctuation">,</span> l<span class="token punctuation">.</span>src<span class="token punctuation">.</span>port_no<span class="token punctuation">,</span> l<span class="token punctuation">.</span>dst<span class="token punctuation">.</span>port_no<span class="token punctuation">)</span> <span class="token keyword">for</span> l <span class="token keyword">in</span> links<span class="token punctuation">]</span>
+        self<span class="token punctuation">.</span>logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"All links(&#123;&#125;):"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>links_msg<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> src<span class="token punctuation">,</span> dst<span class="token punctuation">,</span> ip<span class="token punctuation">,</span> op <span class="token keyword">in</span> links_msg<span class="token punctuation">:</span>
+            <span class="token comment"># 拓扑是双向的</span>
+            self<span class="token punctuation">.</span>topo<span class="token punctuation">.</span>set_adjdict<span class="token punctuation">(</span>src<span class="token punctuation">,</span> dst<span class="token punctuation">,</span> ip<span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>topo<span class="token punctuation">.</span>set_adjdict<span class="token punctuation">(</span>dst<span class="token punctuation">,</span> src<span class="token punctuation">,</span> op<span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>logger<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"link from sw:</span><span class="token interpolation"><span class="token punctuation">&#123;</span>src<span class="token punctuation">&#125;</span></span><span class="token string"> port:</span><span class="token interpolation"><span class="token punctuation">&#123;</span>ip<span class="token punctuation">&#125;</span></span><span class="token string"> to sw</span><span class="token interpolation"><span class="token punctuation">&#123;</span>dst<span class="token punctuation">&#125;</span></span><span class="token string"> port:</span><span class="token interpolation"><span class="token punctuation">&#123;</span>op<span class="token punctuation">&#125;</span></span><span class="token string"> "</span></span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">configure_path</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> path<span class="token punctuation">,</span> event<span class="token punctuation">,</span> src_mac<span class="token punctuation">,</span> dst_mac<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># configure shortest path to switches</span>
+        msg <span class="token operator">=</span> event<span class="token punctuation">.</span>msg
+        datapath <span class="token operator">=</span> msg<span class="token punctuation">.</span>datapath
+
+        ofproto <span class="token operator">=</span> datapath<span class="token punctuation">.</span>ofproto
+
+        parser <span class="token operator">=</span> datapath<span class="token punctuation">.</span>ofproto_parser
+
+        <span class="token comment"># 获取选择路径经过的交换机以及转发方式，配置match和actions</span>
+        <span class="token comment"># (s1,inport,outport)->(s2,inport,outport)->...->(dest_switch,inport,outport)</span>
+        <span class="token keyword">for</span> switch<span class="token punctuation">,</span> inport<span class="token punctuation">,</span> outportList <span class="token keyword">in</span> path<span class="token punctuation">:</span>
+            match <span class="token operator">=</span> parser<span class="token punctuation">.</span>OFPMatch<span class="token punctuation">(</span>in_port<span class="token operator">=</span>inport<span class="token punctuation">,</span> eth_src<span class="token operator">=</span>src_mac<span class="token punctuation">,</span> eth_dst<span class="token operator">=</span>dst_mac<span class="token punctuation">)</span>
+
+            actions <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+            <span class="token comment"># actions是一个列表，表示流表向哪些端口转发 与project1的不同之处在于配置路径时,传入的path中的outport是列表 需要配置多个输出端口</span>
+            <span class="token keyword">for</span> outport <span class="token keyword">in</span> outportList<span class="token punctuation">:</span>
+                actions<span class="token punctuation">.</span>append<span class="token punctuation">(</span>parser<span class="token punctuation">.</span>OFPActionOutput<span class="token punctuation">(</span>outport<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+            <span class="token comment"># 找到dpid对应的datapath</span>
+            datapath <span class="token operator">=</span> self<span class="token punctuation">.</span>_find_dp<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>switch<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">assert</span> datapath <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span>
+
+            inst <span class="token operator">=</span> <span class="token punctuation">[</span>parser<span class="token punctuation">.</span>OFPInstructionActions<span class="token punctuation">(</span>ofproto<span class="token punctuation">.</span>OFPIT_APPLY_ACTIONS<span class="token punctuation">,</span> actions<span class="token punctuation">)</span><span class="token punctuation">]</span>
+
+            <span class="token comment"># idle and hardtimeout set to 0,making the entry permanent</span>
+            <span class="token comment"># reference openflow spec</span>
+            mod <span class="token operator">=</span> datapath<span class="token punctuation">.</span>ofproto_parser<span class="token punctuation">.</span>OFPFlowMod<span class="token punctuation">(</span>
+                datapath<span class="token operator">=</span>datapath<span class="token punctuation">,</span>
+                match<span class="token operator">=</span>match<span class="token punctuation">,</span>
+                idle_timeout<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>
+                hard_timeout<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>
+                priority<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>
+                instructions<span class="token operator">=</span>inst
+            <span class="token punctuation">)</span>
+            <span class="token comment"># 下发流表</span>
+            datapath<span class="token punctuation">.</span>send_msg<span class="token punctuation">(</span>mod<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">_find_dp</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> dpid<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> dp <span class="token keyword">in</span> self<span class="token punctuation">.</span>datapaths<span class="token punctuation">:</span>
+            <span class="token keyword">if</span> dp<span class="token punctuation">.</span><span class="token builtin">id</span> <span class="token operator">==</span> dpid<span class="token punctuation">:</span>
+                <span class="token keyword">return</span> dp
+        <span class="token keyword">return</span> <span class="token boolean">None</span>
+
+    <span class="token comment"># refer https://www.cnblogs.com/caijigugujiao/p/14664276.html can see for more detail</span>
+    <span class="token keyword">def</span> <span class="token function">arp_handler</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> msg<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 包的基本数据</span>
+        datapath <span class="token operator">=</span> msg<span class="token punctuation">.</span>datapath
+        ofproto <span class="token operator">=</span> datapath<span class="token punctuation">.</span>ofproto
+        parser <span class="token operator">=</span> datapath<span class="token punctuation">.</span>ofproto_parser
+        in_port <span class="token operator">=</span> msg<span class="token punctuation">.</span>match<span class="token punctuation">[</span><span class="token string">'in_port'</span><span class="token punctuation">]</span>
+        pkt <span class="token operator">=</span> packet<span class="token punctuation">.</span>Packet<span class="token punctuation">(</span>msg<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+        eth <span class="token operator">=</span> pkt<span class="token punctuation">.</span>get_protocols<span class="token punctuation">(</span>ethernet<span class="token punctuation">.</span>ethernet<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        arp_pkt <span class="token operator">=</span> pkt<span class="token punctuation">.</span>get_protocol<span class="token punctuation">(</span>arp<span class="token punctuation">.</span>arp<span class="token punctuation">)</span>
+        <span class="token comment"># void error</span>
+        dst_mac <span class="token operator">=</span> <span class="token string">''</span>
+        src_mac <span class="token operator">=</span> <span class="token string">''</span>
+        <span class="token keyword">if</span> eth<span class="token punctuation">:</span>
+            dst_mac <span class="token operator">=</span> eth<span class="token punctuation">.</span>dst
+            src_mac <span class="token operator">=</span> eth<span class="token punctuation">.</span>src
+        <span class="token comment"># """</span>
+        <span class="token comment">#     解决环路风暴：</span>
+        <span class="token comment">#         在回复ARP请求之前，必须解决的是网络环路问题。</span>
+        <span class="token comment">#             解决方案是：</span>
+        <span class="token comment">#                 以(dpid,eth_src,arp_dst_ip)为key，</span>
+        <span class="token comment">#                 记录第一个数据包的in_port，并将从网络中返回的数据包丢弃，</span>
+        <span class="token comment">#                 保证同一个交换机中的某一个广播数据包只能有一个入口，</span>
+        <span class="token comment">#                 从而防止成环。在此应用中，默认网络中发起通信的第一个数据包都是ARP数据包。</span>
+        <span class="token comment">#  """</span>
+        <span class="token comment"># 判断该包是不是广播包</span>
+        <span class="token keyword">if</span> dst_mac <span class="token operator">==</span> <span class="token string">'ff:ff:ff:ff:ff:ff'</span> <span class="token keyword">and</span> arp_pkt<span class="token punctuation">:</span>
+            <span class="token comment"># target ip</span>
+            dst_ip <span class="token operator">=</span> arp_pkt<span class="token punctuation">.</span>dst_ip
+            src_ip <span class="token operator">=</span> arp_pkt<span class="token punctuation">.</span>src_ip
+            <span class="token comment"># 判断这个包有没有经过过这个交换机</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>datapath<span class="token punctuation">.</span><span class="token builtin">id</span><span class="token punctuation">,</span> src_ip<span class="token punctuation">,</span> dst_ip<span class="token punctuation">)</span> <span class="token keyword">in</span> self<span class="token punctuation">.</span>arp_history<span class="token punctuation">:</span>
+                <span class="token comment"># 如果这个包已经从别的端口进入过这个交换机</span>
+                <span class="token keyword">if</span> self<span class="token punctuation">.</span>arp_history<span class="token punctuation">[</span><span class="token punctuation">(</span>datapath<span class="token punctuation">.</span><span class="token builtin">id</span><span class="token punctuation">,</span> src_ip<span class="token punctuation">,</span> dst_ip<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">!=</span> in_port<span class="token punctuation">:</span>
+                    <span class="token keyword">return</span> <span class="token boolean">True</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                <span class="token comment"># 这个包第一次到达这个交换机记录下来</span>
+                self<span class="token punctuation">.</span>arp_history<span class="token punctuation">[</span><span class="token punctuation">(</span>datapath<span class="token punctuation">.</span><span class="token builtin">id</span><span class="token punctuation">,</span> src_ip<span class="token punctuation">,</span> dst_ip<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> in_port
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">&#123;</span>datapath<span class="token punctuation">.</span><span class="token builtin">id</span><span class="token punctuation">&#125;</span></span><span class="token string"> first come ,arp learn this switch"</span></span><span class="token punctuation">)</span>
+        <span class="token comment"># """</span>
+        <span class="token comment">#     ARP回复：</span>
+        <span class="token comment">#         解决完环路拓扑中存在的广播风暴问题之后，要利用SDN控制器获取网络全局的信息的能力，去代理回复ARP请求，</span>
+        <span class="token comment">#         从而减少网络中泛洪的ARP请求数据。通过自学习主机ARP记录，在通过查询记录并回复。</span>
+        <span class="token comment"># """</span>
+        <span class="token keyword">if</span> arp_pkt<span class="token punctuation">:</span>
+            opcode <span class="token operator">=</span> arp_pkt<span class="token punctuation">.</span>opcode
+            <span class="token keyword">if</span> opcode <span class="token operator">==</span> arp<span class="token punctuation">.</span>ARP_REQUEST<span class="token punctuation">:</span>
+                <span class="token comment"># hardware type</span>
+                hwtype <span class="token operator">=</span> arp_pkt<span class="token punctuation">.</span>hwtype
+                <span class="token comment"># protocol type</span>
+                proto <span class="token operator">=</span> arp_pkt<span class="token punctuation">.</span>proto
+                <span class="token comment"># hardware address length</span>
+                hlen <span class="token operator">=</span> arp_pkt<span class="token punctuation">.</span>hlen
+                <span class="token comment"># protocol address length</span>
+                plen <span class="token operator">=</span> arp_pkt<span class="token punctuation">.</span>plen
+                <span class="token comment"># src ip</span>
+                arp_src_ip <span class="token operator">=</span> arp_pkt<span class="token punctuation">.</span>src_ip
+                <span class="token comment"># dst ip</span>
+                arp_dst_ip <span class="token operator">=</span> arp_pkt<span class="token punctuation">.</span>dst_ip
+                <span class="token keyword">if</span> arp_dst_ip <span class="token keyword">in</span> self<span class="token punctuation">.</span>arp_table<span class="token punctuation">:</span>
+                    actions <span class="token operator">=</span> <span class="token punctuation">[</span>parser<span class="token punctuation">.</span>OFPActionOutput<span class="token punctuation">(</span>in_port<span class="token punctuation">)</span><span class="token punctuation">]</span>
+                    arp_reply <span class="token operator">=</span> packet<span class="token punctuation">.</span>Packet<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    arp_reply<span class="token punctuation">.</span>add_protocol<span class="token punctuation">(</span>ethernet<span class="token punctuation">.</span>ethernet<span class="token punctuation">(</span>
+                        ethertype<span class="token operator">=</span>eth<span class="token punctuation">.</span>ethertype<span class="token punctuation">,</span>
+                        dst<span class="token operator">=</span>src_mac<span class="token punctuation">,</span>
+                        src<span class="token operator">=</span>self<span class="token punctuation">.</span>arp_table<span class="token punctuation">[</span>arp_dst_ip<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                    <span class="token comment"># add arp protocol</span>
+                    arp_reply<span class="token punctuation">.</span>add_protocol<span class="token punctuation">(</span>arp<span class="token punctuation">.</span>arp<span class="token punctuation">(</span>
+                        opcode<span class="token operator">=</span>arp<span class="token punctuation">.</span>ARP_REPLY<span class="token punctuation">,</span>
+                        src_mac<span class="token operator">=</span>self<span class="token punctuation">.</span>arp_table<span class="token punctuation">[</span>arp_dst_ip<span class="token punctuation">]</span><span class="token punctuation">,</span>
+                        src_ip<span class="token operator">=</span>arp_dst_ip<span class="token punctuation">,</span>
+                        dst_mac<span class="token operator">=</span>src_mac<span class="token punctuation">,</span>
+                        dst_ip<span class="token operator">=</span>arp_src_ip<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                    arp_reply<span class="token punctuation">.</span>serialize<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    <span class="token comment"># arp reply</span>
+                    out <span class="token operator">=</span> parser<span class="token punctuation">.</span>OFPPacketOut<span class="token punctuation">(</span>
+                        datapath<span class="token operator">=</span>datapath<span class="token punctuation">,</span>
+                        buffer_id<span class="token operator">=</span>ofproto<span class="token punctuation">.</span>OFP_NO_BUFFER<span class="token punctuation">,</span>
+                        in_port<span class="token operator">=</span>ofproto<span class="token punctuation">.</span>OFPP_CONTROLLER<span class="token punctuation">,</span>
+                        actions<span class="token operator">=</span>actions<span class="token punctuation">,</span> data<span class="token operator">=</span>arp_reply<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+                    datapath<span class="token punctuation">.</span>send_msg<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+
+                    <span class="token keyword">return</span> <span class="token boolean">True</span>
+        <span class="token keyword">return</span> <span class="token boolean">False</span>
+
+
+<span class="token comment"># draw</span>
+<span class="token keyword">def</span> <span class="token function">draw_graph</span><span class="token punctuation">(</span>sw<span class="token punctuation">,</span> link<span class="token punctuation">,</span> weight<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment"># extract nodes from graph</span>
+    nodes <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">[</span>n1 <span class="token keyword">for</span> n1<span class="token punctuation">,</span> n2 <span class="token keyword">in</span> sw<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token punctuation">[</span>n2 <span class="token keyword">for</span> n1<span class="token punctuation">,</span> n2 <span class="token keyword">in</span> sw<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token comment"># create networkx graph</span>
+    G <span class="token operator">=</span> nx<span class="token punctuation">.</span>Graph<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment"># add nodes</span>
+    <span class="token keyword">for</span> node <span class="token keyword">in</span> nodes<span class="token punctuation">:</span>
+        G<span class="token punctuation">.</span>add_node<span class="token punctuation">(</span>node<span class="token punctuation">)</span>
+    <span class="token comment"># add edges</span>
+    G<span class="token punctuation">.</span>add_edges_from<span class="token punctuation">(</span>sw<span class="token punctuation">,</span> color<span class="token operator">=</span><span class="token string">'b'</span><span class="token punctuation">)</span>
+    G<span class="token punctuation">.</span>add_edges_from<span class="token punctuation">(</span>link<span class="token punctuation">,</span> color<span class="token operator">=</span><span class="token string">'r'</span><span class="token punctuation">)</span>
+    <span class="token comment"># draw graph</span>
+    pos <span class="token operator">=</span> nx<span class="token punctuation">.</span>spring_layout<span class="token punctuation">(</span>G<span class="token punctuation">)</span>
+    <span class="token comment"># nodes</span>
+    nx<span class="token punctuation">.</span>draw_networkx_nodes<span class="token punctuation">(</span>G<span class="token punctuation">,</span> pos<span class="token punctuation">,</span> node_size<span class="token operator">=</span><span class="token number">450</span><span class="token punctuation">)</span>
+    <span class="token comment"># edges</span>
+    nx<span class="token punctuation">.</span>draw_networkx_edges<span class="token punctuation">(</span>G<span class="token punctuation">,</span> pos<span class="token punctuation">,</span> edgelist<span class="token operator">=</span>sw<span class="token punctuation">,</span> edge_color<span class="token operator">=</span><span class="token string">'b'</span><span class="token punctuation">)</span>
+    nx<span class="token punctuation">.</span>draw_networkx_edges<span class="token punctuation">(</span>G<span class="token punctuation">,</span> pos<span class="token punctuation">,</span> edgelist<span class="token operator">=</span>link<span class="token punctuation">,</span> edge_color<span class="token operator">=</span><span class="token string">'r'</span><span class="token punctuation">)</span>
+    <span class="token comment"># labels</span>
+    nx<span class="token punctuation">.</span>draw_networkx_labels<span class="token punctuation">(</span>G<span class="token punctuation">,</span> pos<span class="token punctuation">,</span> font_size<span class="token operator">=</span><span class="token number">8</span><span class="token punctuation">,</span> font_family<span class="token operator">=</span><span class="token string">'sans-serif'</span><span class="token punctuation">)</span>
+    nx<span class="token punctuation">.</span>draw_networkx_edge_labels<span class="token punctuation">(</span>G<span class="token punctuation">,</span> pos<span class="token punctuation">,</span> weight<span class="token punctuation">,</span> font_size<span class="token operator">=</span><span class="token number">8</span><span class="token punctuation">)</span>
+    plt<span class="token punctuation">.</span>axis<span class="token punctuation">(</span><span class="token string">'off'</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># show graph</span>
+    <span class="token comment"># 尽量不要用中文</span>
+    plt<span class="token punctuation">.</span>savefig<span class="token punctuation">(</span><span class="token string">"最小生成树.jpg"</span><span class="token punctuation">)</span>
+</code></pre>
+
+</div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>mianlyst</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://mlinku.top/2021/11/08/Project%202%20%E4%BB%A3%E7%A0%81%E8%AE%B2%E8%A7%A3/" title="Project 2 代码讲解">http://mlinku.top/2021/11/08/Project%202%20%E4%BB%A3%E7%A0%81%E8%AE%B2%E8%A7%A3/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.ja" target="_blank" rel="noopener" title="CC BY-NC 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg></a> 许可协议。</li></ul><script>document.addEventListener('copy', function (event) {
+  const clipboardData = event.clipboardData || window.clipboardData;
+  if (!clipboardData) { return; }
+  const text = window.getSelection().toString();
+  if (text) {
+    event.preventDefault();
+    clipboardData.setData('text/plain', text + '\n\n本文作者：mianlyst\n本文链接：http://mlinku.top/2021/11/08/Project%202%20%E4%BB%A3%E7%A0%81%E8%AE%B2%E8%A7%A3/\n版权声明：本博客所有文章除特别声明外，均默认采用 CC BY-NC 4.0 许可协议。');
+  }
+});</script></section></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2021/11/10/%E5%85%B3%E8%81%94%E6%80%A7%E5%BC%BA%E7%9A%84%E7%94%A8%E6%88%B7%E5%90%8C%E7%90%86%E5%BF%83%E5%9C%B0%E5%9B%BE%EF%BC%881+1%EF%BC%9E2%E5%90%8C%E7%90%86%E5%BF%83%E5%9C%B0%E5%9B%BE%EF%BC%89/" rel="prev" title="关联性强的用户同理心地图（1+1＞2同理心地图）"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">关联性强的用户同理心地图（1+1＞2同理心地图）</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2021/11/07/Project%202%20%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="next" title="Project 2 最小生成树"><span class="post-nav-text">Project 2 最小生成树</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>要不要和我说些什么？</span><br></div><div id="waline"></div><script>Yun.utils.getScript("https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js", () => {
+  const walineConfig = {"enable":true,"serverURL":"https://hexo-bice-delta.vercel.app/","comment":false,"visitor":true,"el":"#waline","lang":"zh-CN"}
+  walineConfig.path = "/2021/11/08/Project%202%20%E4%BB%A3%E7%A0%81%E8%AE%B2%E8%A7%A3/"
+  new Waline(walineConfig)
+}, window.Waline);</script></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2021 – 2022 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> mianlyst</span></div></footer><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><div class="aplayer no-destroy" id="aplayer" data-id="6762866428" data-server="netease" data-type="playlist" data-fixed="true" data-theme="#0078E7" data-loop="all" data-order="list" data-preload="auto" data-volume="0.7" data-mutex data-lrctype="0" data-listfolded data-listmaxheight="340px" data-storagename="metingjs"></div></div></body></html>
