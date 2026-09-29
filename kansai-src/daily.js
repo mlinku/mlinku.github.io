@@ -17,29 +17,29 @@ function dayPage(){const d=PLAN.days[dayIndex],info=DETAILS[d.date];return `
  <nav class="prev-next" aria-label="相邻日期">${dayIndex>0?pageLink('← '+dateLabel(PLAN.days[dayIndex-1].date)+' 前一天',dayHash(dayIndex-1,dayView),'text-link'):pageLink('← 全程','#overview','text-link')}${dayIndex<7?pageLink(dateLabel(PLAN.days[dayIndex+1].date)+' 后一天 →',dayHash(dayIndex+1,dayView),'text-link'):pageLink('临行待办 →','#prep','text-link')}</nav>`;}
 function progressMarkup(d){const flow=DayFlow.forDay(d);return `<span id="progress-text">已完成 <strong>${flow.done} / ${flow.total}</strong></span><div class="progress-track" role="progressbar" aria-label="当天活动完成进度" aria-valuemin="0" aria-valuemax="${flow.total}" aria-valuenow="${flow.done}"><span style="width:${flow.done/flow.total*100}%"></span></div><small class="progress-note">参考时间 · 本机保存</small>`;}
 function refreshDayProgress(d){const area=document.querySelector('.progress-area');if(area)area.innerHTML=progressMarkup(d);}
-function timelinePage(d){const flow=DayFlow.forDay(d),seenPhotos=new Set();return `
+function timelinePage(d){const flow=DayFlow.forDay(d);return `
  <div class="progress-area">${progressMarkup(d)}</div>
- <div class="timeline">${flow.sections.map(section=>`<section class="timeline-phase" id="${section.id}"><div class="phase-heading"><h2>${e(section.name)}</h2></div>${section.events.map(ev=>eventCard(d,ev,seenPhotos)).join('')}</section>`).join('')}</div>
+ <div class="timeline">${flow.sections.map(section=>`<section class="timeline-phase" id="${section.id}"><div class="phase-heading"><h2>${e(section.name)}</h2></div>${section.events.map(ev=>eventCard(d,ev)).join('')}</section>`).join('')}</div>
  <div class="day-end"><span>勾选记录完成</span>${btn(icon('reset')+'重置当天进度','reset-day','','text-button')}</div>`;}
 
 const EVENT_TRANSPORT={
  arrival_transfer:[0,1,2],uji_transfer:[0],uji_return:[2],demachi_transfer:[0],kiyomizu_transfer:[1,2],higashiyama_walk:[3],kyoto_night_return:[4],tofukuji_transfer:[0],inari_transfer:[1],luggage_pickup:[0],osaka_transfer:[3,4],usj_transfer:[0,1],nara_transfer:[0,1],nara_return_train:[2],nippombashi_arrival:[3],nara_day_return:[4],kobe_transfer:[0],umeda_transfer:[1],last_evening_return:[3],airport_train:[1,2]
 };
-function eventCard(d,ev,seenPhotos){
+function eventCard(d,ev){
  const checked=!!state.checks[d.date+':'+ev.id],isMeal=ev.category==='meal',isRest=ev.category==='rest';
  const imageIds=ev.place_ids.filter(id=>photoSrc(id));
- const compactPhotos=['transport','rest','meal'].includes(ev.category)||imageIds.every(id=>seenPhotos.has(id));
- imageIds.forEach(id=>seenPhotos.add(id));
  const foodRows=mealRows(d,ev),first=foodRows.find(r=>r[1]==='首选');
  const traffic=(EVENT_TRANSPORT[ev.id]||[]).map(i=>DETAILS[d.date].transport[i]).filter(Boolean);
  return `<article id="event-${ev.id}" class="event ${checked?'done':''} ${ev.optional?'optional':''} ${ev.category==='transport'?'transport-event':''} ${isRest?'rest-event':''}" data-event="${ev.id}"><label class="event-check"><input type="checkbox" data-event-check="${ev.id}" ${checked?'checked':''} aria-label="完成：${e(ev.title)}"><span aria-hidden="true">${icon('check')}</span></label><div class="event-content"><div class="event-meta"><span class="event-time">${e(ev.time_label)}</span><span class="event-type">${types[ev.category]||'活动'}</span>${ev.optional?'<span class="pill gold">可选 · 已启用</span>':''}${statusLabel(ev)}</div><h3>${e(ev.title)}</h3>
  ${ev.condition?`<p class="condition">${e(ev.condition)}</p>`:''}${ev.optionNote?`<p class="selection-note">${e(ev.optionNote)}</p>`:''}
- ${imageIds.length?`<div class="event-photos ${imageIds.length===1?'single-photo':''} ${compactPhotos?'compact-photos':''}">${imageIds.map(id=>photoButton(id,'',isMeal&&PLACE[id].category!=='restaurant'?'用餐周边 · ':'')).join('')}</div>`:''}
- ${pilgrimageEventLinks(d,ev)}
+ <div class="event-body ${imageIds.length===1?'has-single-photo':''}">
+ ${imageIds.length?`<div class="event-photos ${imageIds.length===1?'single-photo':''}" style="--photo-columns:${Math.min(imageIds.length,3)}">${imageIds.map(id=>photoButton(id,'',isMeal&&PLACE[id].category!=='restaurant'?'用餐周边 · ':'')).join('')}</div>`:''}
+ <div class="event-summary">${pilgrimageEventLinks(d,ev)}
  ${first?`<p class="meal-preview"><span>首选</span> ${e(first[2])}<small>${e(first[3])} / 人</small></p>`:''}
- ${ev.id==='kodaiji_night'?`<p class="night-facts">17:00亮灯 · ¥800 / 人 <span>购票待确认</span></p><details class="event-detail"><summary>开放时间与排队应变</summary><div class="detail-body"><p>游览约60—75分钟，排队另算。少量排队时争取18:45离寺，省八坂神社，晚饭略顺延；返店时间仍是目标。</p><p>17:45仍未入场、预计等候超30分钟，或已明显疲劳：取消夜枫，直接吃饭。</p><p>2026/10/23—12/13，17:00亮灯；21:30停止入场，22:00闭门。两人门票合计¥1,600。昼夜不清场，离场后同票不能再入。</p><p>${external('活动官网 ↗','https://www.kodaiji.com/saiji.html')} · ${external('票价 ↗','https://www.kodaiji.com/haikan.html')}</p><p class="muted">时间边界为行程建议，非预约。照片为历史参考，不保证当日叶况。</p></div></details><button class="text-button night-adjust" data-action="options">调整今晚：保留或取消夜枫</button>`:''}
- ${!isMeal&&ev.place_ids.length?`<div class="event-places">${ev.place_ids.filter(id=>!imageIds.includes(id)).map(placeButton).join('')}${ev.place_ids.length===1&&!isRest?external(icon('map')+'地图',PLACE[ev.place_ids[0]].map_search_url,'place-map'):''}</div>`:''}
+ ${!isMeal&&(ev.place_ids.some(id=>!imageIds.includes(id))||(ev.place_ids.length===1&&!isRest))?`<div class="event-places">${ev.place_ids.filter(id=>!imageIds.includes(id)).map(placeButton).join('')}${ev.place_ids.length===1&&!isRest?external(icon('map')+'地图',PLACE[ev.place_ids[0]].map_search_url,'place-map'):''}</div>`:''}
  ${isMeal&&first&&first[0]!=='早餐'?`<div class="meal-map">${external(icon('map')+'查看首选餐厅地图',mealMap(d,first),'text-link')}</div>`:''}
+ </div></div>
+ ${ev.id==='kodaiji_night'?`<p class="night-facts">17:00亮灯 · ¥800 / 人 <span>购票待确认</span></p><details class="event-detail"><summary>开放时间与排队应变</summary><div class="detail-body"><p>游览约60—75分钟，排队另算。少量排队时争取18:45离寺，省八坂神社，晚饭略顺延；返店时间仍是目标。</p><p>17:45仍未入场、预计等候超30分钟，或已明显疲劳：取消夜枫，直接吃饭。</p><p>2026/10/23—12/13，17:00亮灯；21:30停止入场，22:00闭门。两人门票合计¥1,600。昼夜不清场，离场后同票不能再入。</p><p>${external('活动官网 ↗','https://www.kodaiji.com/saiji.html')} · ${external('票价 ↗','https://www.kodaiji.com/haikan.html')}</p><p class="muted">时间边界为行程建议，非预约。照片为历史参考，不保证当日叶况。</p></div></details><button class="text-button night-adjust" data-action="options">调整今晚：保留或取消夜枫</button>`:''}
  ${foodRows.length?`<details class="event-detail"><summary>${isRest?'茶歇店铺与预算':'餐厅详情与备选'}</summary><div class="detail-body">${foodRows.map(r=>foodRow(d,r)).join('')}</div></details>`:''}
  ${traffic.length?`<details class="event-detail"><summary>这段怎么走</summary><ul class="detail-body">${traffic.map(t=>`<li>${e(t)}</li>`).join('')}</ul></details>`:''}
  ${ev.id==='usj_finish'?'<p class="condition">19:00—22:00 Amex活动的设施及部分餐饮需凭证；普通票设施体验19点前结束，不等于必须19点全部离园。</p>':''}

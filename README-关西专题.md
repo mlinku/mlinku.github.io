@@ -9,7 +9,7 @@
 - 专题入口：`/kansai/`，生成文件 `kansai/index.html`。
 - 博客首页文章列表增加旅行专题卡，38个现有页面的侧栏增加「旅行」链接。
 - 可编辑源码：`kansai-src/`。其中 `data/` 为此次既定行程与逐日攻略快照，`assets/` 为所需离线图片。
-- 外观：`kansai-src/blog-theme.css`；导航与结构：`interface.js`；行程规则：`app.js`。
+- 配色：`kansai-src/blog-theme.css`；统一卡片排版：`layout.css`；导航与结构：`interface.js`；行程规则：`app.js`。
 - 背景复用博客的 `background2.jpg`，颜色与布局依据 `css/hexo-theme-yun.css`。为避免旧博客脚本、全局样式与旅行交互冲突，专题单独加载自己的应用代码，沿用 Yun 内页的视觉结构。
 - 旅行链接使用完整页面跳转，避开现有 PJAX 的局部替换；返回博客使用相对地址 `../`，本地预览与正式域名均适用。
 

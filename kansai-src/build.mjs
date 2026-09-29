@@ -24,7 +24,7 @@ const blogBackground='data:image/jpeg;base64,'+fs.readFileSync(path.join(dir,'as
 const mapImage='data:image/jpeg;base64,'+fs.readFileSync(path.join(dir,'assets/kansai-google-overview.jpg')).toString('base64');
 const pilgrimage=JSON.parse(fs.readFileSync(path.join(dir,'pilgrimage.json'),'utf8'));
 for(const p of pilgrimage.points)for(const kind of ['real','anime']){const img=p[kind];if(img?.local){const file=path.join(dir,img.local);if(!fs.existsSync(file))throw Error('Missing pilgrimage asset: '+file);const mime=path.extname(file).toLowerCase()==='.png'?'image/png':'image/jpeg';img.src='data:'+mime+';base64,'+fs.readFileSync(file).toString('base64');}}
-const css=fs.readFileSync(path.join(dir,'style.css'),'utf8')+'\n'+fs.readFileSync(path.join(dir,'pilgrimage.css'),'utf8')+'\n'+fs.readFileSync(path.join(dir,'journey.css'),'utf8')+'\n'+fs.readFileSync(path.join(dir,'blog-theme.css'),'utf8');
+const css=fs.readFileSync(path.join(dir,'style.css'),'utf8')+'\n'+fs.readFileSync(path.join(dir,'pilgrimage.css'),'utf8')+'\n'+fs.readFileSync(path.join(dir,'journey.css'),'utf8')+'\n'+fs.readFileSync(path.join(dir,'blog-theme.css'),'utf8')+'\n'+fs.readFileSync(path.join(dir,'layout.css'),'utf8');
 let app=fs.readFileSync(path.join(dir,'app.js'),'utf8')+'\n'+fs.readFileSync(path.join(dir,'day-flow.js'),'utf8')+'\n'+fs.readFileSync(path.join(dir,'pilgrimage.js'),'utf8')+'\n'+fs.readFileSync(path.join(dir,'daily.js'),'utf8')+'\n'+fs.readFileSync(path.join(dir,'interface.js'),'utf8');
 app=app.replace("const BLOG_HOME='https://mlinku.github.io/';","const BLOG_HOME='../';");
 const details=fs.readFileSync(path.join(dir,'details.js'),'utf8');
