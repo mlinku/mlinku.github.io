@@ -1,0 +1,2437 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "kansai-2026-1130-1207",
+  "revision": "2026-09-28-kodaiji-night",
+  "recorded_on": "2026-09-28",
+  "language": "zh-CN",
+  "title": "关西旅行规划基准",
+  "status": "planning_baseline",
+  "source_guide": "关西逐日执行攻略_2026-11-30至12-07.md",
+  "source_audit": "行程与红叶联网复核_2026-09-28.md",
+  "trip": {
+    "start_date": "2026-11-30",
+    "end_date": "2026-12-07",
+    "travelers": 2,
+    "nights": 7,
+    "calendar_days": 8,
+    "full_sightseeing_days": 6,
+    "default_timezone": "Asia/Tokyo",
+    "flight_times": "各机场当地时间"
+  },
+  "preferences": {
+    "default_departure": "10:00",
+    "early_departure_exceptions": [
+      "2026-12-04",
+      "2026-12-07"
+    ],
+    "pace": "综合强度适中，可偶尔晚归",
+    "interests": [
+      "吹响！上低音号",
+      "玉子市场",
+      "名侦探柯南",
+      "千恋万花",
+      "红叶",
+      "奈良看鹿",
+      "动漫游戏购物"
+    ],
+    "meal_budget_jpy_per_person": [
+      1000,
+      2500
+    ],
+    "meal_notes": "简餐可低于预算；大阪特色与牛丼、定食混搭；无忌口",
+    "restaurant_wait_limit_minutes": 20,
+    "snack_wait_limit_minutes": [
+      10,
+      15
+    ],
+    "usj_ticket_preference": "Studio Pass普通票，接受少玩，不以Express为主",
+    "protected_priorities": [
+      "生田神社巡礼",
+      "奈良看鹿",
+      "日本桥动漫购物"
+    ],
+    "excluded": [
+      "任天堂博物馆",
+      "额外追加岚山、金阁寺、大阪城、海游馆、箕面"
+    ],
+    "night_foliage_policy": "只安排12/2高台寺一次夜枫，替换祇园散步；11/30正常入住、12/1默认早归。"
+  },
+  "bookings": [
+    {
+      "id": "flight_out",
+      "type": "flight",
+      "status": "booked_user_reported",
+      "airline": "香港航空",
+      "flight_number": null,
+      "from": "hkg",
+      "to": "kix",
+      "departure": "2026-11-30T11:25:00+08:00",
+      "arrival": "2026-11-30T15:00:00+08:00"
+    },
+    {
+      "id": "stay_kyoto",
+      "type": "hotel",
+      "status": "booked_user_reported",
+      "place_id": "hotel_kyoto",
+      "checkin_date": "2026-11-30",
+      "checkout_date": "2026-12-03",
+      "nights": 3,
+      "breakfast_included": false
+    },
+    {
+      "id": "stay_osaka",
+      "type": "hotel",
+      "status": "booked_user_reported",
+      "place_id": "hotel_osaka",
+      "checkin_date": "2026-12-03",
+      "checkout_date": "2026-12-07",
+      "nights": 4,
+      "breakfast_included": false
+    },
+    {
+      "id": "flight_home",
+      "type": "flight",
+      "status": "booked_user_reported",
+      "airline": "香港航空",
+      "flight_number": null,
+      "from": "kix",
+      "to": "hkg",
+      "departure": "2026-12-07T08:50:00+08:00",
+      "arrival": "2026-12-07T13:40:00+08:00"
+    },
+    {
+      "id": "haruka",
+      "type": "train_ticket",
+      "status": "purchased_user_reported",
+      "travel_date": "2026-11-30",
+      "from": "kix",
+      "to": "kyoto_station",
+      "departure": null
+    }
+  ],
+  "unconfirmed_purchases": [
+    {
+      "item": "USJ普通门票",
+      "visit_date": "2026-12-04",
+      "status": "purchase_not_confirmed"
+    },
+    {
+      "item": "梅田蓝天大厦门票",
+      "visit_date": "2026-12-06",
+      "status": "purchase_not_confirmed"
+    },
+    {
+      "item": "高台寺门票",
+      "visit_date": "2026-12-02",
+      "status": "purchase_not_confirmed"
+    }
+  ],
+  "foliage": {
+    "checked_on": "2026-09-28",
+    "status": "early_season_forecast_not_guarantee",
+    "primary_days": [
+      "2026-12-01",
+      "2026-12-02",
+      "2026-12-03"
+    ],
+    "spots": [
+      {
+        "place_id": "byodoin",
+        "visit_date": "2026-12-01",
+        "forecast_viewing_start": "2026-11-26",
+        "forecast_leaf_fall_start": "2026-12-09",
+        "source": "https://weathernews.jp/koyo/spot/26136/"
+      },
+      {
+        "place_id": "kiyomizu",
+        "visit_date": "2026-12-02",
+        "forecast_viewing_start": "2026-11-25",
+        "forecast_leaf_fall_start": "2026-12-10",
+        "source": "https://weathernews.jp/koyo/spot/26112/"
+      },
+      {
+        "place_id": "tofukuji",
+        "visit_date": "2026-12-03",
+        "forecast_viewing_start": "2026-11-23",
+        "forecast_leaf_fall_start": "2026-12-10",
+        "source": "https://weathernews.jp/koyo/spot/26111/"
+      }
+    ],
+    "notes": [
+      "预测不能保证盛期或每株树的叶况；可能已部分落叶。",
+      "临行根据现场实况与天气微调，不为单一预测变更固定机酒。"
+    ]
+  },
+  "places": [
+    {
+      "id": "hkg",
+      "name": "香港国际机场",
+      "name_ja": "Hong Kong International Airport",
+      "city": "香港",
+      "category": "airport",
+      "address_ja": null,
+      "map_query": "香港 Hong Kong International Airport",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E9%A6%99%E6%B8%AF%20Hong%20Kong%20International%20Airport",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "kix",
+      "name": "关西国际机场",
+      "name_ja": "関西国際空港",
+      "city": "大阪府",
+      "category": "airport",
+      "address_ja": null,
+      "map_query": "大阪府 関西国際空港",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%E5%BA%9C%20%E9%96%A2%E8%A5%BF%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "hotel_kyoto",
+      "name": "京都酒店",
+      "name_ja": "TUNE STAY KYOTO",
+      "city": "京都",
+      "category": "hotel",
+      "address_ja": "京都市下京区七条通新町西入夷之町708",
+      "map_query": "京都 TUNE STAY KYOTO",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20TUNE%20STAY%20KYOTO",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "hotel_osaka",
+      "name": "大阪酒店",
+      "name_ja": "City Express by Marriott Osaka Shin-Imamiya",
+      "city": "大阪",
+      "category": "hotel",
+      "address_ja": "大阪市西成区萩之茶屋1-2-7",
+      "map_query": "大阪 City Express by Marriott Osaka Shin-Imamiya",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20City%20Express%20by%20Marriott%20Osaka%20Shin-Imamiya",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "kyoto_station",
+      "name": "京都站",
+      "name_ja": "京都駅",
+      "city": "京都",
+      "category": "station",
+      "address_ja": null,
+      "map_query": "京都 京都駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E4%BA%AC%E9%83%BD%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "jr_uji",
+      "name": "JR宇治站",
+      "name_ja": "JR宇治駅",
+      "city": "宇治",
+      "category": "station",
+      "address_ja": null,
+      "map_query": "宇治 JR宇治駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%AE%87%E6%B2%BB%20JR%E5%AE%87%E6%B2%BB%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "eupho_jr_uji"
+      ]
+    },
+    {
+      "id": "uji_bridge",
+      "name": "宇治桥",
+      "name_ja": "宇治橋",
+      "city": "宇治",
+      "category": "sight",
+      "address_ja": null,
+      "map_query": "宇治 宇治橋",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%AE%87%E6%B2%BB%20%E5%AE%87%E6%B2%BB%E6%A9%8B",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "eupho_uji_bridge"
+      ]
+    },
+    {
+      "id": "byodoin",
+      "name": "平等院",
+      "name_ja": "平等院",
+      "city": "宇治",
+      "category": "temple",
+      "address_ja": null,
+      "map_query": "宇治 平等院",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%AE%87%E6%B2%BB%20%E5%B9%B3%E7%AD%89%E9%99%A2",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "eupho_omotesando"
+      ]
+    },
+    {
+      "id": "bench",
+      "name": "久美子长椅",
+      "name_ja": "井川用水機場前",
+      "city": "宇治",
+      "category": "pilgrimage",
+      "address_ja": null,
+      "map_query": "宇治 井川用水機場前",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%AE%87%E6%B2%BB%20%E4%BA%95%E5%B7%9D%E7%94%A8%E6%B0%B4%E6%A9%9F%E5%A0%B4%E5%89%8D",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "eupho_bench"
+      ]
+    },
+    {
+      "id": "kisen",
+      "name": "喜撰桥",
+      "name_ja": "喜撰橋",
+      "city": "宇治",
+      "category": "sight",
+      "address_ja": null,
+      "map_query": "宇治 喜撰橋",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%AE%87%E6%B2%BB%20%E5%96%9C%E6%92%B0%E6%A9%8B",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "eupho_kisen"
+      ]
+    },
+    {
+      "id": "asagiri",
+      "name": "朝雾桥",
+      "name_ja": "朝霧橋",
+      "city": "宇治",
+      "category": "sight",
+      "address_ja": null,
+      "map_query": "宇治 朝霧橋",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%AE%87%E6%B2%BB%20%E6%9C%9D%E9%9C%A7%E6%A9%8B",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "eupho_asagiri"
+      ]
+    },
+    {
+      "id": "uji_shrine",
+      "name": "宇治神社",
+      "name_ja": "宇治神社",
+      "city": "宇治",
+      "category": "shrine",
+      "address_ja": null,
+      "map_query": "宇治 宇治神社",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%AE%87%E6%B2%BB%20%E5%AE%87%E6%B2%BB%E7%A5%9E%E7%A4%BE",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "eupho_uji_shrine"
+      ]
+    },
+    {
+      "id": "ujigami",
+      "name": "宇治上神社",
+      "name_ja": "宇治上神社",
+      "city": "宇治",
+      "category": "shrine",
+      "address_ja": null,
+      "map_query": "宇治 宇治上神社",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%AE%87%E6%B2%BB%20%E5%AE%87%E6%B2%BB%E4%B8%8A%E7%A5%9E%E7%A4%BE",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "eupho_sawarabi"
+      ]
+    },
+    {
+      "id": "daikichi",
+      "name": "大吉山展望台",
+      "name_ja": "大吉山展望台",
+      "city": "宇治",
+      "category": "viewpoint",
+      "address_ja": null,
+      "map_query": "宇治 大吉山展望台",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%AE%87%E6%B2%BB%20%E5%A4%A7%E5%90%89%E5%B1%B1%E5%B1%95%E6%9C%9B%E5%8F%B0",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "eupho_daikichi"
+      ]
+    },
+    {
+      "id": "kotosaka",
+      "name": "琴坂",
+      "name_ja": "興聖寺 琴坂",
+      "city": "宇治",
+      "category": "optional_sight",
+      "address_ja": null,
+      "map_query": "宇治 興聖寺 琴坂",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%AE%87%E6%B2%BB%20%E8%88%88%E8%81%96%E5%AF%BA%20%E7%90%B4%E5%9D%82",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "kyoto_tower",
+      "name": "京都塔",
+      "name_ja": "京都タワー",
+      "city": "京都",
+      "category": "optional_sight",
+      "address_ja": null,
+      "map_query": "京都 京都タワー",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E4%BA%AC%E9%83%BD%E3%82%BF%E3%83%AF%E3%83%BC",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "demachi",
+      "name": "出町桝形商店街",
+      "name_ja": "出町桝形商店街",
+      "city": "京都",
+      "category": "pilgrimage",
+      "address_ja": null,
+      "map_query": "京都 出町桝形商店街",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E5%87%BA%E7%94%BA%E6%A1%9D%E5%BD%A2%E5%95%86%E5%BA%97%E8%A1%97",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "demachi-west-gate",
+        "demachi-fish"
+      ]
+    },
+    {
+      "id": "delta",
+      "name": "鸭川三角洲",
+      "name_ja": "鴨川デルタ",
+      "city": "京都",
+      "category": "sight",
+      "address_ja": null,
+      "map_query": "京都 鴨川デルタ",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E9%B4%A8%E5%B7%9D%E3%83%87%E3%83%AB%E3%82%BF",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "delta-tamako",
+        "delta-kon"
+      ]
+    },
+    {
+      "id": "demachiyanagi",
+      "name": "京阪出町柳站",
+      "name_ja": "京阪 出町柳駅",
+      "city": "京都",
+      "category": "station",
+      "address_ja": null,
+      "map_query": "京都 京阪 出町柳駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E4%BA%AC%E9%98%AA%20%E5%87%BA%E7%94%BA%E6%9F%B3%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "kiyomizu_gojo",
+      "name": "清水五条站",
+      "name_ja": "清水五条駅",
+      "city": "京都",
+      "category": "station",
+      "address_ja": null,
+      "map_query": "京都 清水五条駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E6%B8%85%E6%B0%B4%E4%BA%94%E6%9D%A1%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "kiyomizu",
+      "name": "清水寺",
+      "name_ja": "清水寺 仁王門",
+      "city": "京都",
+      "category": "temple",
+      "address_ja": null,
+      "map_query": "京都 清水寺 仁王門",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E6%B8%85%E6%B0%B4%E5%AF%BA%20%E4%BB%81%E7%8E%8B%E9%96%80",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "kiyomizu-conan"
+      ]
+    },
+    {
+      "id": "sannenzaka",
+      "name": "三年坂",
+      "name_ja": "産寧坂",
+      "city": "京都",
+      "category": "street",
+      "address_ja": null,
+      "map_query": "京都 産寧坂",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E7%94%A3%E5%AF%A7%E5%9D%82",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "senren-sannenzaka"
+      ]
+    },
+    {
+      "id": "yasaka_tower",
+      "name": "八坂塔外观",
+      "name_ja": "法観寺 八坂の塔",
+      "city": "京都",
+      "category": "sight",
+      "address_ja": null,
+      "map_query": "京都 法観寺 八坂の塔",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E6%B3%95%E8%A6%B3%E5%AF%BA%20%E5%85%AB%E5%9D%82%E3%81%AE%E5%A1%94",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "ninenzaka",
+      "name": "二年坂",
+      "name_ja": "二寧坂",
+      "city": "京都",
+      "category": "street",
+      "address_ja": null,
+      "map_query": "京都 二寧坂",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E4%BA%8C%E5%AF%A7%E5%9D%82",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "senren-ninenzaka"
+      ]
+    },
+    {
+      "id": "nene",
+      "name": "宁宁之道",
+      "name_ja": "ねねの道",
+      "city": "京都",
+      "category": "street",
+      "address_ja": null,
+      "map_query": "京都 ねねの道",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E3%81%AD%E3%81%AD%E3%81%AE%E9%81%93",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "yasaka_shrine",
+      "name": "八坂神社",
+      "name_ja": "八坂神社",
+      "city": "京都",
+      "category": "shrine",
+      "address_ja": null,
+      "map_query": "京都 八坂神社",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E5%85%AB%E5%9D%82%E7%A5%9E%E7%A4%BE",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "hanamikoji",
+      "name": "花见小路",
+      "name_ja": "祇園 花見小路",
+      "city": "京都",
+      "category": "optional_street",
+      "address_ja": null,
+      "map_query": "京都 祇園 花見小路",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E7%A5%87%E5%9C%92%20%E8%8A%B1%E8%A6%8B%E5%B0%8F%E8%B7%AF",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "shirakawa",
+      "name": "祇园白川",
+      "name_ja": "祇園白川",
+      "city": "京都",
+      "category": "optional_street",
+      "address_ja": null,
+      "map_query": "京都 祇園白川",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E7%A5%87%E5%9C%92%E7%99%BD%E5%B7%9D",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "tofukuji",
+      "name": "东福寺通天桥",
+      "name_ja": "東福寺 通天橋",
+      "city": "京都",
+      "category": "temple",
+      "address_ja": null,
+      "map_query": "京都 東福寺 通天橋",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E6%9D%B1%E7%A6%8F%E5%AF%BA%20%E9%80%9A%E5%A4%A9%E6%A9%8B",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "inari",
+      "name": "伏见稻荷大社",
+      "name_ja": "伏見稲荷大社",
+      "city": "京都",
+      "category": "shrine",
+      "address_ja": null,
+      "map_query": "京都 伏見稲荷大社",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E4%BC%8F%E8%A6%8B%E7%A8%B2%E8%8D%B7%E5%A4%A7%E7%A4%BE",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "jr_osaka",
+      "name": "JR大阪站",
+      "name_ja": "大阪駅",
+      "city": "大阪",
+      "category": "station",
+      "address_ja": null,
+      "map_query": "大阪 大阪駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20%E5%A4%A7%E9%98%AA%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "jr_shinimamiya",
+      "name": "JR新今宫站",
+      "name_ja": "JR新今宮駅",
+      "city": "大阪",
+      "category": "station",
+      "address_ja": null,
+      "map_query": "大阪 JR新今宮駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20JR%E6%96%B0%E4%BB%8A%E5%AE%AE%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "nankai_shinimamiya",
+      "name": "南海新今宫站",
+      "name_ja": "南海新今宮駅",
+      "city": "大阪",
+      "category": "station",
+      "address_ja": null,
+      "map_query": "大阪 南海新今宮駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20%E5%8D%97%E6%B5%B7%E6%96%B0%E4%BB%8A%E5%AE%AE%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "shinsekai",
+      "name": "新世界、通天阁外观",
+      "name_ja": "通天閣",
+      "city": "大阪",
+      "category": "district",
+      "address_ja": null,
+      "map_query": "大阪 通天閣",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20%E9%80%9A%E5%A4%A9%E9%96%A3",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "conan-tsutenkaku"
+      ]
+    },
+    {
+      "id": "usj",
+      "name": "日本环球影城",
+      "name_ja": "ユニバーサル・スタジオ・ジャパン",
+      "city": "大阪",
+      "category": "theme_park",
+      "address_ja": null,
+      "map_query": "大阪 ユニバーサル・スタジオ・ジャパン",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20%E3%83%A6%E3%83%8B%E3%83%90%E3%83%BC%E3%82%B5%E3%83%AB%E3%83%BB%E3%82%B9%E3%82%BF%E3%82%B8%E3%82%AA%E3%83%BB%E3%82%B8%E3%83%A3%E3%83%91%E3%83%B3",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "jr_nara",
+      "name": "JR奈良站",
+      "name_ja": "JR奈良駅",
+      "city": "奈良",
+      "category": "station",
+      "address_ja": null,
+      "map_query": "奈良 JR奈良駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A5%88%E8%89%AF%20JR%E5%A5%88%E8%89%AF%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "nara_park",
+      "name": "奈良公园看鹿区域",
+      "name_ja": "奈良公園 東大寺南大門",
+      "city": "奈良",
+      "category": "park",
+      "address_ja": null,
+      "map_query": "奈良 奈良公園 東大寺南大門",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A5%88%E8%89%AF%20%E5%A5%88%E8%89%AF%E5%85%AC%E5%9C%92%20%E6%9D%B1%E5%A4%A7%E5%AF%BA%E5%8D%97%E5%A4%A7%E9%96%80",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "todaiji",
+      "name": "东大寺大佛殿",
+      "name_ja": "東大寺 大仏殿",
+      "city": "奈良",
+      "category": "temple",
+      "address_ja": null,
+      "map_query": "奈良 東大寺 大仏殿",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A5%88%E8%89%AF%20%E6%9D%B1%E5%A4%A7%E5%AF%BA%20%E5%A4%A7%E4%BB%8F%E6%AE%BF",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "kintetsu_nara",
+      "name": "近铁奈良站",
+      "name_ja": "近鉄奈良駅",
+      "city": "奈良",
+      "category": "station",
+      "address_ja": null,
+      "map_query": "奈良 近鉄奈良駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A5%88%E8%89%AF%20%E8%BF%91%E9%89%84%E5%A5%88%E8%89%AF%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "kintetsu_nippombashi",
+      "name": "近铁日本桥站",
+      "name_ja": "近鉄日本橋駅",
+      "city": "大阪",
+      "category": "station",
+      "address_ja": null,
+      "map_query": "大阪 近鉄日本橋駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20%E8%BF%91%E9%89%84%E6%97%A5%E6%9C%AC%E6%A9%8B%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "animate",
+      "name": "Animate大阪日本桥",
+      "name_ja": "アニメイト大阪日本橋",
+      "city": "大阪",
+      "category": "shop",
+      "address_ja": "大阪市浪速区日本橋西1-1-3 池田ビル2号館1—2階",
+      "map_query": "大阪 アニメイト大阪日本橋",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20%E3%82%A2%E3%83%8B%E3%83%A1%E3%82%A4%E3%83%88%E5%A4%A7%E9%98%AA%E6%97%A5%E6%9C%AC%E6%A9%8B",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "surugaya",
+      "name": "骏河屋御宅路动漫馆",
+      "name_ja": "駿河屋オタロードアニメ・ホビー館",
+      "city": "大阪",
+      "category": "shop",
+      "address_ja": "大阪市浪速区日本橋3-8-18 平田ビル2—3階",
+      "map_query": "大阪 駿河屋オタロードアニメ・ホビー館",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20%E9%A7%BF%E6%B2%B3%E5%B1%8B%E3%82%AA%E3%82%BF%E3%83%AD%E3%83%BC%E3%83%89%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BB%E3%83%9B%E3%83%93%E3%83%BC%E9%A4%A8",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "potato",
+      "name": "Super Potato御宅路店",
+      "name_ja": "スーパーポテトオタロード店",
+      "city": "大阪",
+      "category": "alternative_shop",
+      "address_ja": "大阪市浪速区日本橋3-8-18 平田ビル1階",
+      "map_query": "大阪 スーパーポテトオタロード店",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20%E3%82%B9%E3%83%BC%E3%83%91%E3%83%BC%E3%83%9D%E3%83%86%E3%83%88%E3%82%AA%E3%82%BF%E3%83%AD%E3%83%BC%E3%83%89%E5%BA%97",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "surugaya_main",
+      "name": "骏河屋大阪日本桥本馆",
+      "name_ja": "駿河屋大阪日本橋本館",
+      "city": "大阪",
+      "category": "alternative_shop",
+      "address_ja": "大阪市浪速区日本橋4-11-3",
+      "map_query": "大阪 駿河屋大阪日本橋本館",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20%E9%A7%BF%E6%B2%B3%E5%B1%8B%E5%A4%A7%E9%98%AA%E6%97%A5%E6%9C%AC%E6%A9%8B%E6%9C%AC%E9%A4%A8",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "dotonbori",
+      "name": "道顿堀",
+      "name_ja": "道頓堀",
+      "city": "大阪",
+      "category": "district",
+      "address_ja": null,
+      "map_query": "大阪 道頓堀",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20%E9%81%93%E9%A0%93%E5%A0%80",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "glico",
+      "name": "戎桥、格力高",
+      "name_ja": "戎橋 グリコ看板",
+      "city": "大阪",
+      "category": "sight",
+      "address_ja": null,
+      "map_query": "大阪 戎橋 グリコ看板",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20%E6%88%8E%E6%A9%8B%20%E3%82%B0%E3%83%AA%E3%82%B3%E7%9C%8B%E6%9D%BF",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "conan-ebisubashi"
+      ]
+    },
+    {
+      "id": "nankai_namba",
+      "name": "南海难波站",
+      "name_ja": "南海なんば駅",
+      "city": "大阪",
+      "category": "station",
+      "address_ja": null,
+      "map_query": "大阪 南海なんば駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20%E5%8D%97%E6%B5%B7%E3%81%AA%E3%82%93%E3%81%B0%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "sannomiya",
+      "name": "JR三宫站",
+      "name_ja": "JR三ノ宮駅",
+      "city": "神户",
+      "category": "station",
+      "address_ja": null,
+      "map_query": "神户 JR三ノ宮駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E7%A5%9E%E6%88%B7%20JR%E4%B8%89%E3%83%8E%E5%AE%AE%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "ikuta",
+      "name": "生田神社",
+      "name_ja": "生田神社",
+      "city": "神户",
+      "category": "pilgrimage",
+      "address_ja": "神戸市中央区下山手通1-2-1",
+      "map_query": "神户 生田神社",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E7%A5%9E%E6%88%B7%20%E7%94%9F%E7%94%B0%E7%A5%9E%E7%A4%BE",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "pilgrimage_point_ids": [
+        "senren-ikuta"
+      ]
+    },
+    {
+      "id": "nintendo_osaka",
+      "name": "Nintendo OSAKA",
+      "name_ja": "Nintendo OSAKA LUCUA SOUTH",
+      "city": "大阪",
+      "category": "shop",
+      "address_ja": "大阪市北区梅田3-1-1 LUCUA SOUTH 13F",
+      "map_query": "大阪 Nintendo OSAKA LUCUA SOUTH",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20Nintendo%20OSAKA%20LUCUA%20SOUTH",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "pokemon_osaka",
+      "name": "宝可梦中心大阪",
+      "name_ja": "ポケモンセンターオーサカ LUCUA SOUTH",
+      "city": "大阪",
+      "category": "alternative_shop",
+      "address_ja": "大阪市北区梅田3-1-1 LUCUA SOUTH 13F",
+      "map_query": "大阪 ポケモンセンターオーサカ LUCUA SOUTH",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E3%82%AA%E3%83%BC%E3%82%B5%E3%82%AB%20LUCUA%20SOUTH",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "sky",
+      "name": "梅田蓝天大厦空中庭园",
+      "name_ja": "梅田スカイビル 空中庭園展望台",
+      "city": "大阪",
+      "category": "viewpoint",
+      "address_ja": null,
+      "map_query": "大阪 梅田スカイビル 空中庭園展望台",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20%E6%A2%85%E7%94%B0%E3%82%B9%E3%82%AB%E3%82%A4%E3%83%93%E3%83%AB%20%E7%A9%BA%E4%B8%AD%E5%BA%AD%E5%9C%92%E5%B1%95%E6%9C%9B%E5%8F%B0",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "coco_sky",
+      "name": "蓝天大厦CoCo咖喱",
+      "name_ja": "CoCo壱番屋 梅田スカイビル店",
+      "city": "大阪",
+      "category": "restaurant",
+      "address_ja": "大阪市北区大淀中1-1-90 B-100号",
+      "map_query": "大阪 CoCo壱番屋 梅田スカイビル店",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%20CoCo%E5%A3%B1%E7%95%AA%E5%B1%8B%20%E6%A2%85%E7%94%B0%E3%82%B9%E3%82%AB%E3%82%A4%E3%83%93%E3%83%AB%E5%BA%97",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "kodaiji",
+      "name": "高台寺夜枫",
+      "name_ja": "高台寺",
+      "city": "京都",
+      "category": "temple",
+      "address_ja": null,
+      "map_query": "京都 高台寺",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=京都%20高台寺",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "kyoto_stage",
+      "name": "京都站《宝岛》舞台",
+      "name_ja": "京都駅ビル 室町小路広場",
+      "city": "京都",
+      "category": "pilgrimage",
+      "address_ja": "京都駅ビル4階 室町小路広場",
+      "map_query": "京都駅ビル 室町小路広場",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=京都駅ビル+室町小路広場",
+      "coordinates": null,
+      "coordinate_status": "see_pilgrimage_reference",
+      "pilgrimage_point_ids": [
+        "kyoto-stage-stairs",
+        "kyoto-stage-clock"
+      ]
+    }
+  ],
+  "days": [
+    {
+      "date": "2026-11-30",
+      "weekday": "周一",
+      "title": "抵达京都",
+      "cities": [
+        "香港",
+        "大阪府",
+        "京都"
+      ],
+      "intensity": "交通日，游览轻",
+      "overnight": "hotel_kyoto",
+      "departure_target": null,
+      "hotel_return_target": "19:00—20:00 目标入住；晚饭后结束",
+      "route_stop_ids": [
+        "hkg",
+        "kix",
+        "kyoto_station",
+        "hotel_kyoto"
+      ],
+      "timeline": [
+        {
+          "id": "flight_out",
+          "time_label": "11:25 香港→16:00 日本",
+          "time_status": "booked",
+          "title": "香港航空去程",
+          "place_ids": [
+            "hkg",
+            "kix"
+          ],
+          "category": "flight",
+          "booking_id": "flight_out"
+        },
+        {
+          "id": "arrival_transfer",
+          "time_label": "16:00 落地后",
+          "time_status": "planning_window",
+          "title": "入境、取行李、兑票候车、HARUKA往京都",
+          "place_ids": [
+            "kix",
+            "kyoto_station"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "checkin_kyoto",
+          "time_label": "约19:00—20:00",
+          "time_status": "planning_window",
+          "title": "入住TUNE",
+          "place_ids": [
+            "hotel_kyoto"
+          ],
+          "category": "hotel"
+        },
+        {
+          "id": "dinner_arrival",
+          "time_label": "入住后",
+          "time_status": "planning_window",
+          "title": "京都站附近简餐、买次日早餐",
+          "place_ids": [
+            "kyoto_station"
+          ],
+          "category": "meal"
+        }
+      ],
+      "meals": {
+        "dinner": {
+          "primary": "すき家 烏丸七条店",
+          "alternative": "かつくら 京都ポルタ店；无长队才选"
+        }
+      },
+      "transport_notes": [
+        "HARUKA已购，按购买渠道兑换使用；京都站中央口、京都塔侧去酒店。"
+      ],
+      "optional": [],
+      "fallback_rules": [
+        "航班或入境延迟时，只入住与简餐，不预约限时活动。"
+      ]
+    },
+    {
+      "date": "2026-12-01",
+      "weekday": "周二",
+      "title": "宇治《京吹》巡礼与平等院",
+      "cities": [
+        "京都",
+        "宇治"
+      ],
+      "intensity": "中等；登山增加疲劳",
+      "overnight": "hotel_kyoto",
+      "departure_target": "10:00",
+      "hotel_return_target": "默认19:30—20:00；加京都塔20:30—21:00",
+      "route_stop_ids": [
+        "hotel_kyoto",
+        "kyoto_station",
+        "jr_uji",
+        "uji_bridge",
+        "byodoin",
+        "bench",
+        "kisen",
+        "asagiri",
+        "uji_shrine",
+        "ujigami",
+        "daikichi",
+        "uji_bridge",
+        "jr_uji",
+        "hotel_kyoto"
+      ],
+      "timeline": [
+        {
+          "id": "uji_transfer",
+          "time_label": "10:00—约11:00",
+          "time_status": "planning_window",
+          "title": "JR奈良线去宇治",
+          "place_ids": [
+            "hotel_kyoto",
+            "kyoto_station",
+            "jr_uji"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "byodoin_visit",
+          "time_label": "约11:00—12:10",
+          "time_status": "planning_window",
+          "title": "宇治桥西端短停、平等院庭园与凤翔馆",
+          "place_ids": [
+            "uji_bridge",
+            "byodoin"
+          ],
+          "category": "visit"
+        },
+        {
+          "id": "uji_lunch",
+          "time_label": "12:10—13:10",
+          "time_status": "planning_window",
+          "title": "西岸午饭与休息",
+          "place_ids": [
+            "byodoin"
+          ],
+          "category": "meal"
+        },
+        {
+          "id": "uji_pilgrimage",
+          "time_label": "13:10—14:30",
+          "time_status": "planning_window",
+          "title": "长椅→喜撰桥、岛上步道→朝雾桥→两神社",
+          "place_ids": [
+            "bench",
+            "kisen",
+            "asagiri",
+            "uji_shrine",
+            "ujigami"
+          ],
+          "category": "visit"
+        },
+        {
+          "id": "daikichi_visit",
+          "time_label": "14:30—15:45",
+          "time_status": "planning_window",
+          "title": "大吉山往返，含山顶拍照与休息",
+          "place_ids": [
+            "daikichi"
+          ],
+          "category": "walk",
+          "condition": "天气、路况和体力合适；争取16:00前下山"
+        },
+        {
+          "id": "uji_rest",
+          "time_label": "15:45—16:15",
+          "time_status": "planning_window",
+          "title": "下山后休息",
+          "place_ids": [],
+          "category": "rest"
+        },
+        {
+          "id": "uji_return",
+          "time_label": "16:15—17:30",
+          "time_status": "planning_window",
+          "title": "经宇治桥回西岸，JR回京都酒店",
+          "place_ids": [
+            "uji_bridge",
+            "jr_uji",
+            "hotel_kyoto"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "kyoto_rest",
+          "time_label": "17:30—18:00",
+          "time_status": "planning_window",
+          "title": "回酒店休息",
+          "place_ids": [
+            "hotel_kyoto"
+          ],
+          "category": "rest"
+        },
+        {
+          "id": "uji_default_dinner",
+          "time_label": "18:15—19:15",
+          "time_status": "planning_window",
+          "title": "京都站附近晚饭，之后返店",
+          "place_ids": [
+            "kyoto_station"
+          ],
+          "category": "meal"
+        }
+      ],
+      "meals": {
+        "lunch": {
+          "primary": "京うどん 三よしや",
+          "alternative": "平等院参道或宇治桥西侧有空位的普通简餐"
+        },
+        "dinner": {
+          "primary": "京都站附近かつくら或すき家",
+          "alternative": "附近简餐"
+        }
+      },
+      "transport_notes": [
+        "JR京都—JR宇治往返；先西岸后东岸，再经宇治桥返回。",
+        "午饭不去东岸再跨回来；下山后通圓仅末点前才考虑。"
+      ],
+      "optional": [
+        {
+          "id": "kotosaka_option",
+          "title": "琴坂参道",
+          "place_ids": [
+            "kotosaka"
+          ],
+          "selection_group": "uji_extra",
+          "rule": "叶况好且能减少河岸拍照换出约15—20分钟才去；朝雾桥东端向南支线折返，不入兴圣寺内部，不延后上山"
+        },
+        {
+          "id": "tower_option",
+          "title": "京都塔《京吹》联动",
+          "place_ids": [
+            "kyoto_tower"
+          ],
+          "selection_group": "uji_extra",
+          "rule": "与琴坂原则上最多加一个；休息后有余力再去",
+          "replaces_event_ids": [
+            "uji_default_dinner"
+          ],
+          "time_label": "18:15—19:15观景→19:15—20:15晚饭→20:30—21:00返店"
+        },
+        {
+          "id": "byodoin_interior",
+          "title": "凤凰堂内部参拜",
+          "place_ids": [
+            "byodoin"
+          ],
+          "rule": "需现场有合适时段，并在原平等院时段内安排；不挤占午饭、登山"
+        },
+        {
+          "id": "station_option",
+          "title": "京都站4F《宝岛》舞台短拍",
+          "place_ids": [
+            "kyoto_stage"
+          ],
+          "selection_group": "uji_extra",
+          "rule": "与琴坂、京都塔择一；宇治返程到京都站较早且有15—20分钟余量才拍，晚到直接返店；保留17:30—18:00休息、默认晚饭和早归目标。"
+        }
+      ],
+      "fallback_rules": [
+        "超时先省琴坂、额外店铺与集章。",
+        "雨天或明显疲劳取消登山。",
+        "京都塔不作为当日完成要求。"
+      ]
+    },
+    {
+      "date": "2026-12-02",
+      "weekday": "周三",
+      "title": "出町巡礼、清水寺与高台寺夜枫",
+      "cities": [
+        "京都"
+      ],
+      "intensity": "中等偏高；增加寺内步行，取消祇园专门散步",
+      "overnight": "hotel_kyoto",
+      "departure_target": "10:00",
+      "hotel_return_target": "约20:45—21:15；排队延迟时减少后段停留",
+      "route_stop_ids": [
+        "hotel_kyoto",
+        "demachi",
+        "delta",
+        "demachiyanagi",
+        "kiyomizu_gojo",
+        "kiyomizu",
+        "sannenzaka",
+        "yasaka_tower",
+        "ninenzaka",
+        "nene",
+        "kodaiji",
+        "hotel_kyoto"
+      ],
+      "timeline": [
+        {
+          "id": "demachi_transfer",
+          "time_label": "10:00—10:45/10:55",
+          "time_status": "planning_window",
+          "title": "京都站地铁到今出川，再步行去出町",
+          "place_ids": [
+            "hotel_kyoto",
+            "demachi"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "demachi_visit",
+          "time_label": "抵达—11:40",
+          "time_status": "planning_window",
+          "title": "出町桝形商店街巡礼",
+          "place_ids": [
+            "demachi"
+          ],
+          "category": "visit"
+        },
+        {
+          "id": "demachi_lunch",
+          "time_label": "11:40—12:25",
+          "time_status": "planning_window",
+          "title": "出町附近午饭",
+          "place_ids": [
+            "demachi"
+          ],
+          "category": "meal"
+        },
+        {
+          "id": "delta_visit",
+          "time_label": "12:25—12:50",
+          "time_status": "planning_window",
+          "title": "鸭川三角洲短拍、前往京阪站",
+          "place_ids": [
+            "delta",
+            "demachiyanagi"
+          ],
+          "category": "visit"
+        },
+        {
+          "id": "kiyomizu_transfer",
+          "time_label": "约13:00—14:15",
+          "time_status": "planning_window",
+          "title": "京阪到清水五条，再步行上山",
+          "place_ids": [
+            "demachiyanagi",
+            "kiyomizu_gojo",
+            "kiyomizu"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "kiyomizu_visit",
+          "time_label": "14:15—15:30",
+          "time_status": "planning_window",
+          "title": "清水寺、清水舞台与庭园赏枫",
+          "place_ids": [
+            "kiyomizu"
+          ],
+          "category": "visit"
+        },
+        {
+          "id": "higashiyama_walk",
+          "time_label": "15:30—16:45",
+          "time_status": "planning_window",
+          "title": "三年坂→八坂塔短支线→二年坂→宁宁之道、高台寺附近",
+          "place_ids": [
+            "sannenzaka",
+            "yasaka_tower",
+            "ninenzaka",
+            "nene"
+          ],
+          "category": "walk"
+        },
+        {
+          "id": "gion_rest",
+          "time_label": "16:45—17:15",
+          "time_status": "planning_window",
+          "title": "二年坂／宁宁之道附近坐下休息，不先去四条通",
+          "place_ids": [
+            "ninenzaka",
+            "nene"
+          ],
+          "category": "rest"
+        },
+        {
+          "id": "kodaiji_night",
+          "time_label": "17:15—18:30",
+          "time_status": "planning_window",
+          "title": "高台寺夜枫，游览约60—75分钟，排队另留弹性",
+          "place_ids": [
+            "kodaiji"
+          ],
+          "category": "visit",
+          "condition": "天气与体力合适；预计排队超过约30分钟可取消",
+          "booking_status": "purchase_not_confirmed"
+        },
+        {
+          "id": "gion_dinner_walk",
+          "time_label": "18:30—19:00",
+          "time_status": "planning_window",
+          "title": "往祇园／河原町晚饭地点走，有余量才短停八坂神社",
+          "place_ids": [],
+          "category": "walk"
+        },
+        {
+          "id": "gion_dinner",
+          "time_label": "19:00—20:00",
+          "time_status": "planning_window",
+          "title": "晚饭，长队换简餐；おめん20:00末点，迟到不赶店",
+          "place_ids": [],
+          "category": "meal"
+        },
+        {
+          "id": "kyoto_night_return",
+          "time_label": "目标20:45—21:15到店",
+          "time_status": "planning_window",
+          "title": "饭后直接返店，不加花见小路、白川或先斗町散步",
+          "place_ids": [
+            "hotel_kyoto"
+          ],
+          "category": "transport"
+        }
+      ],
+      "meals": {
+        "lunch": {
+          "primary": "DELTA Bistro, Coffee Shop & Gallery",
+          "alternative": "ゼッテリア 京阪出町柳駅店"
+        },
+        "tea": {
+          "primary": "二年坂／宁宁之道附近有空位茶店；星巴克仅恰好有座位时选"
+        },
+        "dinner": {
+          "primary": "名代おめん 四条先斗町店",
+          "alternative": "松屋 四条河原町店"
+        }
+      },
+      "transport_notes": [
+        "京阪出町柳站与叡山电铁分开识别，乘停清水五条的合适列车。",
+        "八坂塔先于二年坂，街区走到高台寺附近先休息，不先去八坂神社、四条通再折返。",
+        "饭后可阪急京都河原町→烏丸，换地铁四条→京都；累了可打车。"
+      ],
+      "optional": [
+        {
+          "id": "yasaka_brief",
+          "title": "八坂神社顺路短停",
+          "place_ids": [
+            "yasaka_shrine"
+          ],
+          "time_label": "高台寺结束后、晚饭途中",
+          "rule": "仅有时间和体力余量时；延迟则省略"
+        }
+      ],
+      "fallback_rules": [
+        "省排队小吃和额外商店，保留半小时坐下休息。",
+        "疲劳明显、天气差或预计入寺排队超过约30分钟，可以省高台寺直接吃饭。",
+        "排队导致延迟则省八坂神社，晚饭选容易入座的简餐，不赶おめん末点。",
+        "不再排花见小路、祇园白川专门散步；任天堂购物集中12/6梅田。"
+      ]
+    },
+    {
+      "date": "2026-12-03",
+      "weekday": "周四",
+      "title": "东福寺、伏见稻荷与搬酒店",
+      "cities": [
+        "京都",
+        "大阪"
+      ],
+      "intensity": "中等；搬行李有额外负担",
+      "overnight": "hotel_osaka",
+      "departure_target": "10:00",
+      "hotel_return_target": "20:30—21:00",
+      "route_stop_ids": [
+        "hotel_kyoto",
+        "tofukuji",
+        "inari",
+        "hotel_kyoto",
+        "kyoto_station",
+        "jr_osaka",
+        "jr_shinimamiya",
+        "hotel_osaka",
+        "shinsekai",
+        "hotel_osaka"
+      ],
+      "timeline": [
+        {
+          "id": "checkout_kyoto",
+          "time_label": "10:00",
+          "time_status": "planning_window",
+          "title": "退房、寄存行李",
+          "place_ids": [
+            "hotel_kyoto"
+          ],
+          "category": "hotel"
+        },
+        {
+          "id": "tofukuji_transfer",
+          "time_label": "10:00—10:45",
+          "time_status": "planning_window",
+          "title": "JR到东福寺站、步行入寺",
+          "place_ids": [
+            "tofukuji"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "tofukuji_visit",
+          "time_label": "10:45—12:15",
+          "time_status": "planning_window",
+          "title": "通天桥赏枫",
+          "place_ids": [
+            "tofukuji"
+          ],
+          "category": "visit"
+        },
+        {
+          "id": "inari_transfer",
+          "time_label": "12:15—12:50",
+          "time_status": "planning_window",
+          "title": "回车站，JR奈良线普通到稻荷",
+          "place_ids": [
+            "tofukuji",
+            "inari"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "inari_lunch",
+          "time_label": "12:50—13:35",
+          "time_status": "planning_window",
+          "title": "稻荷站附近午饭",
+          "place_ids": [
+            "inari"
+          ],
+          "category": "meal"
+        },
+        {
+          "id": "inari_visit",
+          "time_label": "13:40—15:10",
+          "time_status": "planning_window",
+          "title": "楼门、本殿、千本鸟居至奥社，原路返回",
+          "place_ids": [
+            "inari"
+          ],
+          "category": "visit"
+        },
+        {
+          "id": "luggage_pickup",
+          "time_label": "15:10—16:00/16:30",
+          "time_status": "planning_window",
+          "title": "回京都TUNE取行李",
+          "place_ids": [
+            "hotel_kyoto"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "osaka_transfer",
+          "time_label": "取箱后约1.5—2小时",
+          "time_status": "planning_window",
+          "title": "JR新快速到大阪，换环状线至新今宫",
+          "place_ids": [
+            "kyoto_station",
+            "jr_osaka",
+            "jr_shinimamiya",
+            "hotel_osaka"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "checkin_osaka",
+          "time_label": "约18:00—18:30",
+          "time_status": "planning_window",
+          "title": "入住大阪酒店，休息30—45分钟",
+          "place_ids": [
+            "hotel_osaka"
+          ],
+          "category": "hotel"
+        },
+        {
+          "id": "shinsekai_dinner",
+          "time_label": "19:00—20:00",
+          "time_status": "planning_window",
+          "title": "新世界串炸与通天阁外观",
+          "place_ids": [
+            "shinsekai"
+          ],
+          "category": "meal"
+        }
+      ],
+      "meals": {
+        "lunch": {
+          "primary": "名代 宇奈とと×釜心うどん希楽 伏見稲荷店",
+          "alternative": "OICY Village内其他有空位档口"
+        },
+        "dinner": {
+          "primary": "串かつだるま ジャンジャン店",
+          "alternative": "餃子の王将 新世界店"
+        }
+      },
+      "transport_notes": [
+        "取箱回程属于固定酒店下的必要往返。",
+        "稻荷选确实停靠的列车；不登顶。"
+      ],
+      "optional": [],
+      "fallback_rules": [
+        "东福寺不叠加其他收费庭园。",
+        "入住晚于19点直接简餐，饭后准备USJ App与次晨早饭。"
+      ]
+    },
+    {
+      "date": "2026-12-04",
+      "weekday": "周五",
+      "title": "USJ普通票，任天堂与柯南优先",
+      "cities": [
+        "大阪"
+      ],
+      "intensity": "高",
+      "overnight": "hotel_osaka",
+      "departure_target": null,
+      "hotel_return_target": "20:00—21:30；完成重点可提前",
+      "route_stop_ids": [
+        "hotel_osaka",
+        "jr_shinimamiya",
+        "usj",
+        "hotel_osaka"
+      ],
+      "timeline": [
+        {
+          "id": "usj_transfer",
+          "time_label": "待12/4正式开园时间确认",
+          "time_status": "to_confirm",
+          "title": "开园前45—60分钟到入口；门到门交通预算50—70分钟",
+          "place_ids": [
+            "hotel_osaka",
+            "jr_shinimamiya",
+            "usj"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "usj_app",
+          "time_label": "两人都入园后",
+          "time_status": "planning_window",
+          "title": "按当日规则在App申请任天堂区域资格",
+          "place_ids": [
+            "usj"
+          ],
+          "category": "activity"
+        },
+        {
+          "id": "usj_core",
+          "time_label": "随区域资格及场次安排",
+          "time_status": "planning_window",
+          "title": "争取任天堂区域、一项首选设施、柯南4-D",
+          "place_ids": [
+            "usj"
+          ],
+          "category": "activity"
+        },
+        {
+          "id": "usj_lunch",
+          "time_label": "午间，按场次调整",
+          "time_status": "planning_window",
+          "title": "坐下吃午饭45—60分钟",
+          "place_ids": [
+            "usj"
+          ],
+          "category": "meal"
+        },
+        {
+          "id": "usj_rest",
+          "time_label": "下午",
+          "time_status": "planning_window",
+          "title": "坐下休息约30分钟",
+          "place_ids": [
+            "usj"
+          ],
+          "category": "rest"
+        },
+        {
+          "id": "usj_finish",
+          "time_label": "17:00盘点，争取18:00前完成重点",
+          "time_status": "planning_window",
+          "title": "18—19点仅留缓冲，19点前结束普通票设施体验",
+          "place_ids": [
+            "usj"
+          ],
+          "category": "activity"
+        },
+        {
+          "id": "usj_dinner",
+          "time_label": "离园后",
+          "time_status": "planning_window",
+          "title": "顺路简餐、返回酒店",
+          "place_ids": [
+            "hotel_osaka"
+          ],
+          "category": "meal"
+        }
+      ],
+      "meals": {
+        "lunch": {
+          "primary": "Louie's N.Y. Pizza Parlor",
+          "alternative": "园内当日营业、有座位且队列合适的餐厅"
+        },
+        "dinner": {
+          "primary": "回酒店途中简餐"
+        }
+      },
+      "transport_notes": [
+        "JR新今宫→西九条→梦咲线Universal City→园门。",
+        "普通票通常不能出园用餐后再入园。"
+      ],
+      "optional": [
+        {
+          "id": "usj_extra",
+          "title": "第二项任天堂设施或其他项目",
+          "place_ids": [
+            "usj"
+          ],
+          "rule": "实时等候与体力允许才加；马里奥赛车与咚奇刚择一优先"
+        },
+        {
+          "id": "kinopio",
+          "title": "Kinopio's Cafe",
+          "place_ids": [
+            "usj"
+          ],
+          "rule": "区域资格不等于餐厅资格，申请时间合适才去；部分餐品超过常规预算"
+        }
+      ],
+      "fallback_rules": [
+        "普通票与早到均不保证任天堂区域入场，未取得资格时转柯南及其他感兴趣体验。",
+        "19:00—22:00 Amex活动，设施及部分餐饮需活动凭证；不等同普通游客必须19点全部离园。",
+        "水世界按当前11/28—12/27停运公告排除；临行复核。"
+      ]
+    },
+    {
+      "date": "2026-12-05",
+      "weekday": "周六",
+      "title": "奈良看鹿、日本桥与道顿堀",
+      "cities": [
+        "大阪",
+        "奈良"
+      ],
+      "intensity": "中等偏高；控制USJ后的累积疲劳",
+      "overnight": "hotel_osaka",
+      "departure_target": "10:00",
+      "hotel_return_target": "争取20:00—20:30",
+      "route_stop_ids": [
+        "hotel_osaka",
+        "jr_shinimamiya",
+        "jr_nara",
+        "nara_park",
+        "todaiji",
+        "kintetsu_nara",
+        "kintetsu_nippombashi",
+        "animate",
+        "surugaya",
+        "dotonbori",
+        "glico",
+        "nankai_namba",
+        "nankai_shinimamiya",
+        "hotel_osaka"
+      ],
+      "timeline": [
+        {
+          "id": "nara_transfer",
+          "time_label": "10:00—11:20/11:40",
+          "time_status": "planning_window",
+          "title": "JR去奈良，公交或现场比较出租车接驳",
+          "place_ids": [
+            "hotel_osaka",
+            "jr_nara",
+            "nara_park"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "nara_visit",
+          "time_label": "约11:30—13:00",
+          "time_status": "planning_window",
+          "title": "看鹿、南大门、大佛殿",
+          "place_ids": [
+            "nara_park",
+            "todaiji"
+          ],
+          "category": "visit"
+        },
+        {
+          "id": "nara_station_walk",
+          "time_label": "13:00—13:30",
+          "time_status": "planning_window",
+          "title": "往近铁奈良站附近走",
+          "place_ids": [
+            "todaiji",
+            "kintetsu_nara"
+          ],
+          "category": "walk"
+        },
+        {
+          "id": "nara_lunch",
+          "time_label": "13:30—14:15/14:30",
+          "time_status": "planning_window",
+          "title": "午饭和坐下休息45—60分钟",
+          "place_ids": [
+            "kintetsu_nara"
+          ],
+          "category": "meal"
+        },
+        {
+          "id": "nara_return_train",
+          "time_label": "14:30—15:00",
+          "time_status": "planning_window",
+          "title": "争取在近铁奈良站上车",
+          "place_ids": [
+            "kintetsu_nara",
+            "kintetsu_nippombashi"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "nippombashi_arrival",
+          "time_label": "15:45—16:15",
+          "time_status": "planning_window",
+          "title": "目标抵达第一家店，含候车出站步行",
+          "place_ids": [
+            "animate"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "anime_shopping",
+          "time_label": "到达—18:00",
+          "time_status": "planning_window",
+          "title": "1—2家目标店，含15—20分钟坐下休息",
+          "place_ids": [
+            "animate",
+            "surugaya"
+          ],
+          "category": "shopping"
+        },
+        {
+          "id": "dotonbori_walk",
+          "time_label": "18:00—18:20",
+          "time_status": "planning_window",
+          "title": "往道顿堀晚饭地点走",
+          "place_ids": [
+            "dotonbori"
+          ],
+          "category": "walk"
+        },
+        {
+          "id": "dotonbori_dinner",
+          "time_label": "18:20—19:20左右",
+          "time_status": "planning_window",
+          "title": "大阪烧或备选简餐",
+          "place_ids": [
+            "dotonbori"
+          ],
+          "category": "meal"
+        },
+        {
+          "id": "glico_photo",
+          "time_label": "19:20—19:40左右",
+          "time_status": "planning_window",
+          "title": "格力高短拍，然后返程",
+          "place_ids": [
+            "glico"
+          ],
+          "category": "visit"
+        },
+        {
+          "id": "nara_day_return",
+          "time_label": "争取20:00—20:30到店",
+          "time_status": "planning_window",
+          "title": "经南海难波回新今宫，累了可打车",
+          "place_ids": [
+            "nankai_namba",
+            "nankai_shinimamiya",
+            "hotel_osaka"
+          ],
+          "category": "transport"
+        }
+      ],
+      "meals": {
+        "lunch": {
+          "primary": "餃子の王将 近鉄奈良駅前店",
+          "alternative": "釜めし茶漬け GRANCHA；用餐60—75分钟，从购物中扣除增加时间"
+        },
+        "dinner": {
+          "primary": "千房 道頓堀ビル店",
+          "alternative": "道頓堀 今井 本店或附近有空位简餐"
+        }
+      },
+      "transport_notes": [
+        "JR进奈良、近铁出，避免游览后折回JR奈良站。",
+        "日本桥站南下经东侧街道到Animate，再沿御宅路北上。"
+      ],
+      "optional": [
+        {
+          "id": "shop_replacement",
+          "title": "替换一家动漫店",
+          "place_ids": [
+            "potato",
+            "surugaya_main"
+          ],
+          "rule": "总数仍不超过两家；只逛一家时按作品偏好选，不保证中古库存"
+        }
+      ],
+      "fallback_rules": [
+        "15:30才上近铁时保留原交通余量，购物缩为一家重点店，18点左右收尾。",
+        "二月堂、春日大社、若草山、法善寺横丁不排。",
+        "餐厅长队换简餐；饭后延迟就格力高短拍返程，不赶路。"
+      ]
+    },
+    {
+      "date": "2026-12-06",
+      "weekday": "周日",
+      "title": "神户生田巡礼、梅田与城市全景",
+      "cities": [
+        "大阪",
+        "神户"
+      ],
+      "intensity": "中等；排队较久时中等偏高",
+      "overnight": "hotel_osaka",
+      "departure_target": "10:00",
+      "hotel_return_target": "争取19:30—20:00；延迟余量至20:30",
+      "route_stop_ids": [
+        "hotel_osaka",
+        "jr_shinimamiya",
+        "jr_osaka",
+        "sannomiya",
+        "ikuta",
+        "sannomiya",
+        "jr_osaka",
+        "nintendo_osaka",
+        "sky",
+        "coco_sky",
+        "jr_osaka",
+        "jr_shinimamiya",
+        "hotel_osaka"
+      ],
+      "timeline": [
+        {
+          "id": "kobe_transfer",
+          "time_label": "10:00—约11:15",
+          "time_status": "planning_window",
+          "title": "经JR大阪站去三宫、步行至生田神社",
+          "place_ids": [
+            "hotel_osaka",
+            "jr_osaka",
+            "sannomiya",
+            "ikuta"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "ikuta_visit",
+          "time_label": "11:15—12:15",
+          "time_status": "planning_window",
+          "title": "参拜、拝殿外观巡礼，留完整一小时",
+          "place_ids": [
+            "ikuta"
+          ],
+          "category": "visit"
+        },
+        {
+          "id": "kobe_lunch",
+          "time_label": "12:15—13:10",
+          "time_status": "planning_window",
+          "title": "走回三宫一带午饭",
+          "place_ids": [
+            "sannomiya"
+          ],
+          "category": "meal"
+        },
+        {
+          "id": "umeda_transfer",
+          "time_label": "13:10—14:00/14:30",
+          "time_status": "planning_window",
+          "title": "回大阪站，前往购物楼层",
+          "place_ids": [
+            "sannomiya",
+            "jr_osaka",
+            "nintendo_osaka"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "umeda_shop",
+          "time_label": "14:15/14:30—15:30",
+          "time_status": "planning_window",
+          "title": "Nintendo或Pokémon一家重点逛，另一家可短看，总计60—75分钟",
+          "place_ids": [
+            "nintendo_osaka",
+            "pokemon_osaka"
+          ],
+          "category": "shopping"
+        },
+        {
+          "id": "umeda_rest",
+          "time_label": "15:30—16:00",
+          "time_status": "planning_window",
+          "title": "坐下休息",
+          "place_ids": [],
+          "category": "rest"
+        },
+        {
+          "id": "sky_transfer",
+          "time_label": "16:00—16:30",
+          "time_status": "planning_window",
+          "title": "下楼、步行到蓝天大厦展望台专用入口",
+          "place_ids": [
+            "sky"
+          ],
+          "category": "walk"
+        },
+        {
+          "id": "sky_visit",
+          "time_label": "16:30—17:45",
+          "time_status": "planning_window",
+          "title": "入场、乘梯、傍晚至夜景",
+          "place_ids": [
+            "sky"
+          ],
+          "category": "visit",
+          "condition": "能见度及体力允许；16:47日落仅目标参考，不保证看到"
+        },
+        {
+          "id": "sky_dinner",
+          "time_label": "17:45—18:45",
+          "time_status": "planning_window",
+          "title": "蓝天大厦B1就近晚饭",
+          "place_ids": [
+            "coco_sky"
+          ],
+          "category": "meal"
+        },
+        {
+          "id": "last_evening_return",
+          "time_label": "18:45起返程，争取19:30—20:00到店",
+          "time_status": "planning_window",
+          "title": "大阪站乘车回新今宫、整理行李",
+          "place_ids": [
+            "jr_osaka",
+            "jr_shinimamiya",
+            "hotel_osaka"
+          ],
+          "category": "transport"
+        }
+      ],
+      "meals": {
+        "lunch": {
+          "primary": "吉野家 プリコ三宮店"
+        },
+        "dinner": {
+          "primary": "CoCo壱番屋 梅田スカイビル店",
+          "alternative": "楼下其他有空位、菜单合预算的店或返车站途中简餐"
+        }
+      },
+      "transport_notes": [
+        "神户回程在大阪站下车接梅田活动。",
+        "返新今宫认环状线内回り、西九条／弁天町方向，并确认停靠新今宫。"
+      ],
+      "optional": [
+        {
+          "id": "second_umeda_shop",
+          "title": "第二家官方店短看",
+          "place_ids": [
+            "nintendo_osaka",
+            "pokemon_osaka"
+          ],
+          "rule": "仅能直接进入时，约10—15分钟；包含在总购物时段内"
+        }
+      ],
+      "fallback_rules": [
+        "Nintendo整理券超出窗口则改Pokémon；都久等可省购物，不回来补逛。",
+        "天气差或疲劳可省展望台；错过日落正常看夜景，不赶路。",
+        "不加神户港、电器城或其他商场；完成次晨机场准备。"
+      ]
+    },
+    {
+      "date": "2026-12-07",
+      "weekday": "周一",
+      "title": "清晨返程",
+      "cities": [
+        "大阪",
+        "大阪府",
+        "香港"
+      ],
+      "intensity": "清晨交通日",
+      "overnight": null,
+      "departure_target": "05:15—05:25",
+      "hotel_return_target": null,
+      "route_stop_ids": [
+        "hotel_osaka",
+        "nankai_shinimamiya",
+        "kix",
+        "hkg"
+      ],
+      "timeline": [
+        {
+          "id": "checkout_osaka",
+          "time_label": "05:15—05:25",
+          "time_status": "planning_window",
+          "title": "退房、步行去南海新今宫",
+          "place_ids": [
+            "hotel_osaka",
+            "nankai_shinimamiya"
+          ],
+          "category": "hotel"
+        },
+        {
+          "id": "airport_train",
+          "time_label": "当前候选05:47→06:28，临行复核",
+          "time_status": "current_timetable_candidate",
+          "title": "南海新今宫→关西机场",
+          "place_ids": [
+            "nankai_shinimamiya",
+            "kix"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "airport_checkin",
+          "time_label": "到机场后",
+          "time_status": "planning_window",
+          "title": "T1查看柜台、值机托运与出境",
+          "place_ids": [
+            "kix"
+          ],
+          "category": "activity"
+        },
+        {
+          "id": "flight_home",
+          "time_label": "09:50 日本→13:40 香港",
+          "time_status": "booked",
+          "title": "香港航空回程",
+          "place_ids": [
+            "kix",
+            "hkg"
+          ],
+          "category": "flight",
+          "booking_id": "flight_home"
+        }
+      ],
+      "meals": {
+        "breakfast": {
+          "primary": "前晚备好，离店前或抵达机场后吃"
+        }
+      },
+      "transport_notes": [
+        "南海与JR新今宫入口分开识别。",
+        "具体班次、航站楼和登机信息临行确认。"
+      ],
+      "optional": [],
+      "fallback_rules": [
+        "前晚先打包，证件与随身物品独立整理。"
+      ]
+    }
+  ],
+  "pending_checks": [
+    "USJ 12/4门票购买状态、正式开园时间、检修及演出场次；确认后倒推出门时间。",
+    "出发前7—10天看红叶实况，48—72小时看天气；12/1与12/2可视天气互换，但周二出町餐厅需重核。",
+    "餐厅临时休业、菜单与Nintendo当日入店规则。",
+    "12/6蓝天大厦天气、营业、票价及购票状态。",
+    "12/7有效南海班表、香港航空航站楼及实际航班信息。",
+    "高台寺12/2天气、叶况、临时开放调整和排队；夜枫是本次唯一安排。",
+    "USJ仍暂列12/4；12/4与12/5正式营业时间公布后，在购票前比较，尚未实施换日。"
+  ],
+  "visualization_rules": [
+    "每日主线按route_stop_ids顺序；可选项默认不画进必走路线，酒店和车站重复出现是实际回程，不去重。",
+    "coordinates为空表示尚未地理编码；只提供地图搜索入口，不编造经纬度、距离、步数或实际导航轨迹。",
+    "地图搜索点位仍需核准，尤其长椅、登山口、景区入口和大型车站。",
+    "timeline的time_label是原计划时间窗口，不能将弹性时间强制当预约；USJ开始时间未定。",
+    "航班使用含UTC偏移的时间，不能用11:25至16:00直接相减作为飞行时长。",
+    "可选活动替换主线时应用replaces_event_ids；梅田两店择主次、日本桥替换店铺，不累加全部备选。",
+    "天气条件、购票状态和临行待确认项必须随可视化保留。",
+    "此次只固化规划，不新增预约，不创建可视化、不发布网站。"
+  ],
+  "night_foliage": {
+    "place_id": "kodaiji",
+    "visit_date": "2026-12-02",
+    "event_start": "2026-10-23",
+    "event_end": "2026-12-13",
+    "illumination_start": "17:00",
+    "last_entry": "21:30",
+    "close": "22:00",
+    "adult_price_jpy": 800,
+    "two_adults_jpy": 1600,
+    "checked_on": "2026-09-28",
+    "booking_status": "purchase_not_confirmed",
+    "source": "https://www.kodaiji.com/saiji.html",
+    "price_source": "https://www.kodaiji.com/haikan.html",
+    "note": "活动日期不保证红叶盛期；昼夜不清场，出场同票不能再次进入。"
+  },
+  "pilgrimage_reference_file": "可视化网页/pilgrimage.json",
+  "pilgrimage_checked_on": "2026-09-29",
+  "pilgrimage_points": [
+    {
+      "id": "eupho_jr_uji",
+      "place_ids": [
+        "jr_uji"
+      ],
+      "date": "2026-12-01",
+      "event_id": "uji_transfer",
+      "title": "JR宇治站前 · 茶壶邮筒",
+      "work": "吹响！上低音号",
+      "coordinates": {
+        "lat": 34.890349,
+        "lng": 135.800967,
+        "precision": "茶壶邮筒地点定位；非摄影站位",
+        "source_url": "https://www.postmap.org/map/2021",
+        "verified": "地点级来源已核；不是摄影站位"
+      }
+    },
+    {
+      "id": "eupho_uji_bridge",
+      "place_ids": [
+        "uji_bridge"
+      ],
+      "date": "2026-12-01",
+      "event_id": "byodoin_visit",
+      "title": "宇治桥 · 桥上栏杆",
+      "work": "吹响！上低音号",
+      "coordinates": {
+        "lat": 34.892948,
+        "lng": 135.806267,
+        "precision": "桥梁定位；非摄影站位",
+        "source_url": "https://www.djq.jp/bridge_liblary/river_kamo/kyoto_bridge_uji007_uji.php",
+        "verified": "地点级来源已核；不是摄影站位"
+      }
+    },
+    {
+      "id": "eupho_omotesando",
+      "place_ids": [
+        "byodoin"
+      ],
+      "date": "2026-12-01",
+      "event_id": "byodoin_visit",
+      "title": "平等院表参道 · 沿途街景",
+      "work": "吹响！上低音号",
+      "coordinates": {
+        "lat": 34.891084,
+        "lng": 135.806445,
+        "precision": "表参道区域定位；具体动画站位未核",
+        "source_url": "https://www.kyoto-kankou.or.jp/info_search/6709",
+        "verified": "地点级来源已核；不是摄影站位"
+      }
+    },
+    {
+      "id": "eupho_bench",
+      "place_ids": [
+        "bench"
+      ],
+      "date": "2026-12-01",
+      "event_id": "uji_pilgrimage",
+      "title": "久美子长椅 · 井川用水机站前",
+      "work": "吹响！上低音号",
+      "coordinates": {
+        "lat": 34.88959,
+        "lng": 135.8084,
+        "precision": "长椅地点定位；与探访地图及公开街景位置交叉核对",
+        "source_url": "https://www.animepilgrimage.com/ja/maps/place/967abfaf-4a36-4e9e-8fe0-a148c5c55c5c",
+        "verified": "地点级来源已核；不是摄影站位"
+      }
+    },
+    {
+      "id": "eupho_kisen",
+      "place_ids": [
+        "kisen"
+      ],
+      "date": "2026-12-01",
+      "event_id": "uji_pilgrimage",
+      "title": "喜撰桥 · 红色栏杆",
+      "work": "吹响！上低音号",
+      "coordinates": {
+        "lat": 34.888178,
+        "lng": 135.809929,
+        "precision": "桥梁定位；非摄影站位",
+        "source_url": "https://www.djq.jp/bridge_liblary/river_kamo/kyoto_bridge_uji003_kisen.php",
+        "verified": "地点级来源已核；不是摄影站位"
+      }
+    },
+    {
+      "id": "eupho_asagiri",
+      "place_ids": [
+        "asagiri"
+      ],
+      "date": "2026-12-01",
+      "event_id": "uji_pilgrimage",
+      "title": "朝雾桥 · 红色桥栏",
+      "work": "吹响！上低音号",
+      "coordinates": {
+        "lat": 34.890189,
+        "lng": 135.809394,
+        "precision": "桥梁定位；非摄影站位",
+        "source_url": "https://www.djq.jp/bridge_liblary/river_kamo/kyoto_bridge_uji006_asagiri.php",
+        "verified": "地点级来源已核；不是摄影站位"
+      }
+    },
+    {
+      "id": "eupho_uji_shrine",
+      "place_ids": [
+        "uji_shrine"
+      ],
+      "date": "2026-12-01",
+      "event_id": "uji_pilgrimage",
+      "title": "宇治神社 · 临河鸟居",
+      "work": "吹响！上低音号",
+      "coordinates": {
+        "lat": 34.891048,
+        "lng": 135.810682,
+        "precision": "神社地点定位；鸟居在临河入口",
+        "source_url": "https://mapfan.com/spots/SC3W3%2CJ%2CGR",
+        "verified": "地点级来源已核；不是摄影站位"
+      }
+    },
+    {
+      "id": "eupho_sawarabi",
+      "place_ids": [
+        "ujigami"
+      ],
+      "date": "2026-12-01",
+      "event_id": "uji_pilgrimage",
+      "title": "宇治上神社前 · 早蕨之道",
+      "work": "吹响！上低音号",
+      "coordinates": {
+        "lat": 34.89195,
+        "lng": 135.811289,
+        "precision": "神社地点定位；机位在门外道路",
+        "source_url": "https://mapfan.com/spots/SCAHY%2CJ%2C2",
+        "verified": "地点级来源已核；不是摄影站位"
+      }
+    },
+    {
+      "id": "eupho_daikichi",
+      "place_ids": [
+        "daikichi"
+      ],
+      "date": "2026-12-01",
+      "event_id": "daikichi_visit",
+      "title": "大吉山展望台 · 栏杆转角",
+      "work": "吹响！上低音号",
+      "coordinates": {
+        "lat": 34.892874,
+        "lng": 135.812742,
+        "precision": "展望台定位；不是山顶或登山口",
+        "source_url": "https://yakei-world.com/spot_view.php?spot=1857",
+        "verified": "地点级来源已核；不是摄影站位"
+      }
+    },
+    {
+      "id": "kyoto-stage-stairs",
+      "place_ids": [
+        "kyoto_stage"
+      ],
+      "date": "2026-12-01",
+      "event_id": "station_stage",
+      "title": "大阶梯前 · 车站音乐会",
+      "work": "吹响！上低音号 2",
+      "coordinates": {
+        "lat": 34.986077,
+        "lng": 135.758628,
+        "precision": "室町小路广场参考点；楼层依官方4F说明，非厘米级机位",
+        "source_url": "https://yakei.jp/japan/spot.php?i=kyoto-muromachi"
+      }
+    },
+    {
+      "id": "kyoto-stage-clock",
+      "place_ids": [
+        "kyoto_stage"
+      ],
+      "date": "2026-12-01",
+      "event_id": "station_stage",
+      "title": "大阶梯边 · 红框时钟",
+      "work": "吹响！上低音号 2",
+      "coordinates": {
+        "lat": 34.986077,
+        "lng": 135.758628,
+        "precision": "室町小路广场参考点；楼层依官方4F说明，非厘米级机位",
+        "source_url": "https://yakei.jp/japan/spot.php?i=kyoto-muromachi"
+      }
+    },
+    {
+      "id": "demachi-west-gate",
+      "place_ids": [
+        "demachi"
+      ],
+      "date": "2026-12-02",
+      "event_id": "demachi_visit",
+      "title": "商店街西入口 · 兔子山招牌",
+      "work": "玉子市场",
+      "coordinates": {
+        "lat": 35.03032,
+        "lng": 135.769609,
+        "precision": "商店街地图POI；不是入口或吊鱼精确站位",
+        "source_url": "https://map.yahoo.co.jp/v3/place/ND9uBYsasCs"
+      }
+    },
+    {
+      "id": "demachi-fish",
+      "place_ids": [
+        "demachi"
+      ],
+      "date": "2026-12-02",
+      "event_id": "demachi_visit",
+      "title": "商店街内部 · 吊鱼与拱廊",
+      "work": "玉子市场",
+      "coordinates": {
+        "lat": 35.03032,
+        "lng": 135.769609,
+        "precision": "商店街地图POI；不是入口或吊鱼精确站位",
+        "source_url": "https://map.yahoo.co.jp/v3/place/ND9uBYsasCs"
+      }
+    },
+    {
+      "id": "delta-tamako",
+      "place_ids": [
+        "delta"
+      ],
+      "date": "2026-12-02",
+      "event_id": "delta_visit",
+      "title": "高野川侧飞石 · 玉子与饼藏",
+      "work": "玉子爱情故事",
+      "coordinates": {
+        "lat": 35.02982,
+        "lng": 135.771683,
+        "precision": "鸭川三角洲区域参考点；不是告白石块的精确坐标",
+        "source_url": "https://travel.yahoo.co.jp/kanko/spot-00036996/"
+      }
+    },
+    {
+      "id": "delta-kon",
+      "place_ids": [
+        "delta"
+      ],
+      "date": "2026-12-02",
+      "event_id": "delta_visit",
+      "title": "鸭川飞石 · 轻音OP",
+      "work": "轻音少女 第1季",
+      "coordinates": {
+        "lat": 35.029425,
+        "lng": 135.771339,
+        "precision": "巡礼作者地图参考点，非经测量的OP摄影站位",
+        "source_url": "https://keyboar.hatenablog.com/entry/20100918/1284742598"
+      }
+    },
+    {
+      "id": "kiyomizu-conan",
+      "place_ids": [
+        "kiyomizu"
+      ],
+      "date": "2026-12-02",
+      "event_id": "kiyomizu_visit",
+      "title": "清水舞台 · 新一与小兰",
+      "work": "名侦探柯南：红之校外旅行",
+      "coordinates": {
+        "lat": 34.994822,
+        "lng": 135.784915,
+        "precision": "文化厅清水寺本堂建筑参考点；不是新兰栏杆合影机位",
+        "source_url": "https://kunishitei.bunka.go.jp/heritage/detail/102/1729"
+      }
+    },
+    {
+      "id": "senren-sannenzaka",
+      "place_ids": [
+        "sannenzaka"
+      ],
+      "date": "2026-12-02",
+      "event_id": "higashiyama_walk",
+      "title": "三年坂·穗织街景",
+      "work": "千恋＊万花",
+      "coordinates": {
+        "lat": 34.997747,
+        "lng": 135.781049,
+        "precision": "玩家地图参考点；邻近街段级，未实测相机站位",
+        "source_url": "https://www.google.com/maps/d/viewer?mid=1y37l5O_WaP3kRxDXAFT1WVEYR2q4sQVz",
+        "evidence": "作者文章内嵌地图的公开KML，名称「産寧坂」，coordinates=135.7810494,34.9977472,0；另与街段坐标表交叉核对。",
+        "crosscheck_url": "https://visual.information.jp/blog/2012/12/01/201212-article_1/"
+      }
+    },
+    {
+      "id": "senren-ninenzaka",
+      "place_ids": [
+        "ninenzaka"
+      ],
+      "date": "2026-12-02",
+      "event_id": "higashiyama_walk",
+      "title": "二年坂·街角店铺",
+      "work": "千恋＊万花",
+      "coordinates": {
+        "lat": 34.998032,
+        "lng": 135.780737,
+        "precision": "玩家地图参考点；街角附近，未实测相机站位",
+        "source_url": "https://www.google.com/maps/d/viewer?mid=1y37l5O_WaP3kRxDXAFT1WVEYR2q4sQVz",
+        "evidence": "作者文章内嵌地图公开KML，名称「二年坂」，coordinates=135.7807374,34.998032,0；与二年坂01街段标点34.998,135.7808交叉核对。",
+        "crosscheck_url": "https://visual.information.jp/blog/2012/12/01/201212-article_1/"
+      }
+    },
+    {
+      "id": "conan-tsutenkaku",
+      "place_ids": [
+        "shinsekai"
+      ],
+      "date": "2026-12-03",
+      "event_id": "shinsekai_dinner",
+      "title": "通天阁·天空楼阁",
+      "work": "名侦探柯南：世纪末的魔术师",
+      "coordinates": {
+        "lat": 34.6525,
+        "lng": 135.506302,
+        "precision": "通天阁建筑级坐标；不是电影摄影站位",
+        "source_url": "https://www.latlong.net/place/ts-tenkaku-japan-22689.html",
+        "evidence": "LatLong列出通天阁34.652500,135.506302；与维基百科34.6525361,135.5063250相符至建筑范围。",
+        "crosscheck_url": "https://ja.wikipedia.org/wiki/通天閣"
+      }
+    },
+    {
+      "id": "conan-ebisubashi",
+      "place_ids": [
+        "glico"
+      ],
+      "date": "2026-12-05",
+      "event_id": "glico_photo",
+      "title": "戎桥·恋爱的暗号",
+      "work": "名侦探柯南",
+      "coordinates": {
+        "lat": 34.669074,
+        "lng": 135.50129,
+        "precision": "戎桥地点级坐标；不是平次站位或摄影站位",
+        "source_url": "https://heritage.jsce-kansai.net/heritage/detail.html?id=236",
+        "evidence": "土木学会关西支部土木遗产DB：戎橋 緯度・経度34.669074,135.501290。该记录说明历史桥梁，不用于声称现桥构造年代。"
+      }
+    },
+    {
+      "id": "senren-ikuta",
+      "place_ids": [
+        "ikuta"
+      ],
+      "date": "2026-12-06",
+      "event_id": "ikuta_visit",
+      "title": "生田神社·建实神社外观",
+      "work": "千恋＊万花",
+      "coordinates": {
+        "lat": 34.694574,
+        "lng": 135.190777,
+        "precision": "玩家地图参考点；拝殿前区域，未实测相机站位",
+        "source_url": "https://www.google.com/maps/d/viewer?mid=1y37l5O_WaP3kRxDXAFT1WVEYR2q4sQVz",
+        "evidence": "作者公开KML名称「生田神社」，coordinates=135.1907772,34.694574,0。神社地点另由國學院大學神社DB确认，DB中心点为34°41′42.0″N、135°11′27.1″E，非摄影位置。",
+        "crosscheck_url": "https://kojiki.kokugakuin.ac.jp/jinjya/ikutajinja/"
+      }
+    }
+  ]
+}

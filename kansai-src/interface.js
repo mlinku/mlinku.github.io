@@ -1,0 +1,115 @@
+/* Presentation only. Locked itinerary and selection rules live in app.js. */
+const BLOG_HOME='https://mlinku.github.io/';
+const KANSAI_MAP_URL='https://www.google.com/maps/@34.6062551,135.6203971,10z';
+Object.assign(icons,{
+ calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18m-13 4h4m3 0h4"/>',
+ list:'<path d="M9 5h12M9 12h12M9 19h12M3 5h1M3 12h1M3 19h1"/>',
+ tune:'<path d="M4 7h8m4 0h4M4 17h3m4 0h9"/><circle cx="14" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>',
+ chevron:'<path d="m9 5 7 7-7 7"/>',
+ reset:'<path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/>'
+});
+const DAY_CITIES=['抵达京都','宇治','京都东山','京都→大阪','USJ','奈良·大阪','神户·大阪','返回香港'];
+const TODOS=[...PLAN.pending_checks,'每人准备可用的交通IC卡；保存已购HARUKA订单与兑换说明。','USJ前一晚：两张有效Studio Pass登记至官方App、分别命名；准备网络、电量与次晨早餐。','12/6晚：复核南海运行、辨认南海入口、打包；证件与随身物品独立整理，备好早餐。','12/2高台寺：复核夜间参拜公告、天气与叶况，确认购票；疲劳或长队时取消。'];
+const pageLink=(label,hash,cls='',attrs='')=>`<a class="${cls}" href="${e(hash)}" data-nav ${attrs}>${label}</a>`;
+const dayHash=(i,view='timeline')=>`#day/${PLAN.days[i].date}/${view==='pilgrimage'&&!pilgrimageDay(PLAN.days[i].date).length?'timeline':view}`;
+const photo=(id,cls='',loading='lazy')=>PHOTOS[id]?.src?`<img class="${cls}" src="${PHOTOS[id].src}" alt="${e(PHOTOS[id].sight)} · 历史参考照片" width="${PHOTOS[id].width||800}" height="${PHOTOS[id].height||600}" loading="${loading}" decoding="async">`:'';
+const photoButton=(id,cls='',prefix='')=>`<button type="button" class="photo-button ${cls}" data-action="place" data-place="${id}" aria-label="查看${e(PLACE[id].name)}照片与详情">${photo(id)}<span>${e(prefix+PLACE[id].name)}</span></button>`;
+const placeButton=(id)=>`<button type="button" class="place-link" data-action="place" data-place="${id}">${e(PLACE[id].name)}${icon('chevron')}</button>`;
+function progress(d){const events=effectiveEvents(d);return{done:events.filter(ev=>state.checks[d.date+':'+ev.id]).length,total:events.length};}
+function readHash(){
+ const parts=location.hash.slice(1).split('/'); sectionTarget='';
+ if(parts[0]==='day'){
+  const i=PLAN.days.findIndex(d=>d.date===parts[1]);if(i<0)return;
+  screen='day';dayIndex=i;dayView=parts[2]==='pilgrimage'?'pilgrimage':parts[2]==='route'||parts[2]==='gallery'?'route':'timeline';if(dayView==='pilgrimage'&&parts[3])sectionTarget='shot-'+parts[3];if(dayView==='timeline'&&parts[3])sectionTarget=parts[3].startsWith('section-')?parts[3]:'event-'+parts[3];if(dayView==='route'&&parts[3])sectionTarget='route-content';
+  if(dayView==='pilgrimage'&&!pilgrimageDay(PLAN.days[i].date).length){dayView='timeline';sectionTarget='';}
+  routeFilter=parts[3]?decodeURIComponent(parts[3]):'全部';
+  if(parts[2]==='details')sectionTarget='day-support';
+ }else if(parts[0]==='prep'){screen='prep';}
+ else{screen='overview';if(parts[0]==='maps'||parts[1]==='map')sectionTarget='trip-map';else if(parts[1]==='days')sectionTarget='day-cards';}
+}
+// Reading position is session-only; completion and choices remain in localStorage.
+const viewMemory=new Map();
+let optionsReturn=null,renderedHash='',keyboardNavigation=false;
+function viewKey(){return screen==='day'?screen+'/'+PLAN.days[dayIndex].date+'/'+dayView+(dayView==='route'?'/'+routeFilter:''):screen;}
+function disclosureKey(el){return (el.closest('article')?.id||'page')+'|'+el.querySelector('summary')?.textContent.trim();}
+function captureReading(root){return [...root.querySelectorAll('details[open]')].map(disclosureKey);}
+function restoreDisclosures(root,keys){const open=new Set(keys);root.querySelectorAll('details').forEach(el=>{el.open=open.has(disclosureKey(el));});}
+function rememberView(){const main=document.getElementById('main');if(main)viewMemory.set(viewKey(),{y:window.scrollY,open:captureReading(main),hash:renderedHash});}
+function navigate(hash){
+ const restart=screen==='day'&&hash===dayHash(dayIndex,dayView);
+ rememberView();
+ if(location.hash!==hash)history.pushState(null,'',hash);
+ readHash();if(restart)viewMemory.delete(viewKey());render();focusPage();
+}
+function focusPage(fromHistory=false){
+ const memory=viewMemory.get(viewKey()),main=document.getElementById('main');
+ if(memory&&main)restoreDisclosures(main,memory.open);
+ const active=document.querySelector('.date-link.active'),rail=document.querySelector('.date-nav');
+ if(active&&rail)rail.scrollLeft=active.offsetLeft-rail.clientWidth/2+active.clientWidth/2;
+ const index=document.querySelector('.shot-index'),selected=index?.querySelector('[aria-current]');
+ if(index&&selected)index.scrollTop=selected.offsetTop-index.clientHeight/2+selected.clientHeight/2;
+ const target=sectionTarget&&document.getElementById(sectionTarget);
+ if(target&&!(fromHistory&&memory&&memory.hash===location.hash)){
+  for(let parent=target.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
+  target.scrollIntoView({block:'start'});target.setAttribute('tabindex','-1');target.classList.toggle('keyboard-focus',keyboardNavigation);target.focus({preventScroll:true});
+ }else{
+  window.scrollTo({top:memory?.y||0,behavior:'instant'});
+  // Keep keyboard focus on a meaningful control after replacing the page DOM.
+  const current=document.querySelector('.view-tab.active')||document.querySelector('.main-nav a.active');
+  if(memory)current?.focus({preventScroll:true});
+ }
+}
+function backToOptions(){const saved=optionsReturn;if(!saved)return;openOptions();const dlg=$('#place-dialog');restoreDisclosures(dlg,saved.open);dlg.scrollTop=saved.y;dlg.querySelector('[data-place="'+saved.place+'"]')?.focus({preventScroll:true});}
+function go(target,index=dayIndex,view='timeline'){navigate(target==='day'?dayHash(index,view):'#'+target);}
+function dates(){return `<nav class="date-nav" aria-label="选择旅行日期">${PLAN.days.map((d,i)=>pageLink(`<strong>${dateLabel(d.date)}</strong><span>${DAY_CITIES[i]}</span>`,dayHash(i,dayView),'date-link'+(i===dayIndex?' active':''),`aria-label="${dateLabel(d.date)} ${d.weekday} ${DETAILS[d.date].short}" ${i===dayIndex?'aria-current="date"':''}`)).join('')}</nav>`;}
+
+const DAY_SUMMARIES=['入住、简餐、休息','平等院、河岸巡礼、大吉山','玉子市场、清水寺、高台寺','东福寺、千本鸟居、新世界晚饭','任天堂与柯南优先','看鹿、1—2家店、道顿堀','生田神社、购物、蓝天大厦','南海到机场，香港航空返港'];
+function dayCard(d,i){const info=DETAILS[d.date];return pageLink(`<div class="day-card-photo">${photo(info.cover)}<span class="day-number">${String(i+1).padStart(2,'0')}</span><span class="card-date">${dateLabel(d.date)} ${d.weekday}</span></div><div class="day-card-copy"><p class="card-cities">${e(info.eyebrow)}</p><h3>${e(info.short)}</h3><p class="day-card-theme">${e(DAY_SUMMARIES[i])}</p><div class="card-practical"><span>强度 · ${e(d.intensity.split('；')[0])}</span><span>${i===0?'入住约19:00—20:00':i===7?'离店05:15—05:25':'返店 '+e(returnTarget(d))}</span></div><span class="card-enter">查看行程 ${icon('arrow')}</span></div>`,dayHash(i),'day-card');}
+function overview(){return `
+ <header class="overview-hero blog-hero">
+  <div class="hero-copy"><p class="eyebrow">旅行手帖 · 2026</p><h1>关西旅行</h1><p class="hero-sub">巡礼 · 赏枫 · USJ · 动漫购物</p><p class="trip-date">11月30日 — 12月7日 <span>两人同行</span></p><div class="trip-facts" title="12/1—12/6为完整游览日"><span><strong>8</strong> 个日历日</span><span><strong>6</strong> 完整游览日</span><span><strong>7</strong> 晚</span></div><div class="hero-links">${pageLink('查看每日行程 ↓','#overview/days','text-link')}${pageLink(icon('map')+'全程地图','#overview/map','text-link')}</div></div>
+  <div class="hero-photos"><div>${photo('tofukuji','','eager')}<span>京都 · 秋色</span></div></div>
+ </header>
+ <section id="day-cards"><div class="section-title"><div><h2>8天行程</h2></div></div><div class="day-grid">${PLAN.days.map(dayCard).join('')}</div></section>
+ <section id="trip-map" class="trip-map-section"><div class="section-title"><div><h2>全程地图</h2></div><span class="muted">Google 地图 · 区域预览</span></div><div class="map-layout"><a class="google-map-preview" href="${KANSAI_MAP_URL}" target="_blank" rel="noopener noreferrer" aria-label="打开关西区域的交互式 Google 地图"><img src="${REGION_MAP_IMAGE}" alt="Google 关西区域地图，展示京都、宇治、大阪、奈良、神户的真实位置" width="400" height="300"><span>区域预览 · 可离线看<em>点开交互地图 ↗</em></span></a><div class="trip-connections"><p>以京都、大阪为落脚点</p><h3>先住京都3晚<br>再住大阪4晚</h3>${[['11/30','关西机场 → 京都','入住京都'],['12/1','京都 ⇄ 宇治','当天往返'],['12/3','京都 → 大阪','取行李后搬酒店'],['12/5','大阪 → 奈良 → 大阪','JR去，近铁回'],['12/6','大阪 ⇄ 神户','回程逛梅田'],['12/7','大阪 → 关西机场','南海列车待复核']].map(([date,path,note])=>`<div><span>${date}</span><p><strong>${path}</strong><small>${note}</small></p></div>`).join('')}</div></div><p class="map-note">Google区域预览 · 2026/9/28。点地图联网查看；行程与照片可离线阅读。</p></section>
+ <section><div class="section-title"><div><h2>住宿与航班</h2></div><span class="muted">两段住宿均已订 · 不含早餐</span></div><div class="stays">${stayCard('hotel_kyoto','京都 · 3晚','11/30入住 — 12/3退房')}${stayCard('hotel_osaka','大阪 · 4晚','12/3入住 — 12/7退房')}</div>${flights()}</section>
+ <p class="page-note">通常10:00出门，USJ与返程日例外。正餐¥1,000—2,500/人。时间为参考，照片为历史记录，红叶预测截至9/28。</p>`;}
+function stayCard(id,title,date){return `<article class="stay-card">${photoButton(id,'stay-photo')}<div><p class="eyebrow">${title}</p><h3>${e(PLACE[id].name_ja)}</h3><p>${date}</p><button class="text-link" data-action="place" data-place="${id}">酒店详情与地图 ${icon('arrow')}</button></div></article>`;}
+function flights(){return `<details class="flight-card" open><summary><span>香港航空 · 往返航班</span><span class="pill green">已订</span></summary><div class="flight-grid"><div><p>11/30 · 去程</p><div><strong>11:25 <small>香港 HKT</small></strong>${icon('arrow')}<strong>16:00 <small>关西 JST</small></strong></div></div><div><p>12/7 · 回程</p><div><strong>09:50 <small>关西 JST</small></strong>${icon('arrow')}<strong>13:40 <small>香港 HKT</small></strong></div></div></div><p class="map-note">各机场当地时间，日本比香港快1小时。航班号、返程航站楼仍需复核；去程HARUKA已购，班次未锁定。</p></details>`;}
+
+function openOptions(){optionsReturn=null;const d=PLAN.days[dayIndex];dialogMode={kind:'options',date:d.date};const dlg=$('#place-dialog');dlg.className='options-dialog';dlg.innerHTML=`<div class="dialog-top"><div><p class="eyebrow">${dateLabel(d.date)} · ${e(DETAILS[d.date].short)}</p><h2 id="place-title">调整今天</h2></div>${btn(icon('close'),'close-dialog','aria-label="关闭调整"','icon-button')}</div><div class="dialog-body"><p class="muted">自动保存，同步更新行程与路线。</p><div class="option-fields">${optionalControls(d)}</div>${d.optional.length?`<details class="option-photos"><summary>可选与替换地点的照片</summary><div class="event-photos">${[...new Set(d.optional.flatMap(o=>o.place_ids))].map(id=>photoButton(id)).join('')}</div></details>`:''}${DETAILS[d.date].meals.some(r=>r[1]==='可选')?`<details><summary>可选餐饮参考</summary>${DETAILS[d.date].meals.filter(r=>r[1]==='可选').map(r=>foodRow(d,r)).join('')}</details>`:''}<div class="dialog-footer">${btn('完成调整','close-dialog','','primary')}</div></div>`;if(!dlg.open)dlg.showModal();}
+function openPlace(id){const p=PLACE[id];if(!p)return;const img=PHOTOS[id],dlg=$('#place-dialog');optionsReturn=dialogMode?.kind==='options'?{y:dlg.scrollTop,open:captureReading(dlg),place:id}:null;dialogMode={kind:'place',id};dlg.className='place-dialog';dlg.innerHTML=`<div class="dialog-top"><div><p class="eyebrow">${e(p.city)} · 地点详情</p><h2 id="place-title">${e(p.name)}</h2></div>${btn(icon('close'),'close-dialog','aria-label="关闭地点详情"','icon-button')}</div>${pilgrimagePlace(id).length?'':photo(id,'dialog-image','eager')}<div class="dialog-body">${optionsReturn?btn('← 返回调整','options-back','','text-button place-back'):''}<p class="jp-name" lang="ja">${e(p.name_ja)}</p>${p.address_ja?`<p>${e(p.address_ja)}</p>`:''}${PLACE_DETAILS[id]?`<p class="place-note">${e(PLACE_DETAILS[id])}</p>`:''}<div class="dialog-actions">${btn(icon('copy')+'复制日文','copy',`data-copy="${e(p.name_ja)}"`)}${external(icon('map')+'打开地图',p.map_search_url,'btn primary')}</div><p class="map-note">${pilgrimagePlace(id).length?'地图按地点名称搜索；精确度说明见下方巡礼卡。':'地图按地点名称搜索，需联网打开。'}照片为历史参考。</p>${pilgrimagePlaceContent(id)}${img&&!pilgrimagePlace(id).length?`<details class="photo-credit"><summary>照片来源</summary><p>${e(img.sight)} · ${e(img.author)} · ${e(img.date)}</p><p>${external('照片原页 ↗',img.sourcePage)} · ${img.licenseUrl?external(e(img.license),img.licenseUrl):e(img.license)}</p><p>已压缩、缩放；展示可能裁切。不代表旅行当日状态。</p></details>`:''}</div>`;if(!dlg.open)dlg.showModal();}
+
+function prepPage(){return `<header class="prep-heading"><h1>临行待办</h1><p class="muted">勾选记录准备进度，不改变门票的购买状态。</p></header><div class="prep-layout"><section class="todo-card"><div class="section-title"><h2>临行待办</h2><span id="todo-count">${TODOS.filter((_,i)=>state.todos[i]).length} / ${TODOS.length}</span></div>${TODOS.map((t,i)=>`<label class="todo-row"><input type="checkbox" data-todo="${i}" ${state.todos[i]?'checked':''}><span>${e(t)}</span></label>`).join('')}</section><div><section class="prep-note"><p class="eyebrow">已确认</p><h2>机票与住宿</h2><ul><li>香港航空往返机票</li><li>京都3晚、大阪4晚酒店，均不含早餐</li><li>11/30 HARUKA，班次未锁定</li></ul><p class="condition">USJ普通票、高台寺、梅田蓝天大厦门票：购买状态待确认。</p></section><details class="support-card"><summary><span>给店员看作品名称</span><small>日文 · 可复制</small></summary><div class="detail-body">${WORK_NAMES.map(t=>`<div class="word-row"><span lang="ja">${e(t)}</span>${btn(icon('copy'),'copy',`data-copy="${e(t)}" aria-label="复制${e(t)}"`,'icon-button')}</div>`).join('')}</div></details><details class="support-card"><summary><span>红叶预测</span><small>截至2026/9/28 · 非实时叶况</small></summary><div class="detail-body">${PLAN.foliage.spots.map(s=>`<article class="forecast-row"><h3>${e(PLACE[s.place_id].name)}</h3><p>到访 ${dateLabel(s.visit_date)}<br>预测观赏开始 ${dateLabel(s.forecast_viewing_start)}<br>预测落叶开始 ${dateLabel(s.forecast_leaf_fall_start)}</p>${external('预测来源 ↗',s.source)}</article>`).join('')}<p class="muted">可能见到枝头红叶与落叶混合，不保证盛期。</p></div></details></div></div>
+ <details class="support-card place-index"><summary><span>地点索引与全部照片</span><small>${PLAN.places.length}处 · 包含可选与替换项</small></summary><div class="detail-body">${[...new Set(PLAN.places.map(p=>p.city))].map(city=>`<h3>${e(city)}</h3><div class="index-links">${PLAN.places.filter(p=>p.city===city).map(p=>placeButton(p.id)).join('')}</div>`).join('')}</div></details>
+ <details class="support-card"><summary><span>离线与进度</span></summary><div class="detail-body"><p>行程、地点照片与攻略均嵌入当前HTML文件，可直接打开。Google地图及外部来源需联网；地图不可用时，按每日地点顺序查看。</p><p>进度存在当前浏览器本机，不跨设备同步。固定用同一个浏览器与文件路径打开；清除浏览器数据或使用隐私模式可能丢失记录。</p></div></details><p class="page-note">资料基准：${PLAN.recorded_on}。餐厅营业、菜单、景点票价与入店规则需临行复核。</p>`;}
+
+function sidebarDayIndex(){return `<nav class="desktop-day-index" aria-label="旅行日期目录"><p>旅行目录</p>${PLAN.days.map((d,i)=>pageLink(`<span>${dateLabel(d.date)}</span><strong>${e(DETAILS[d.date].short)}</strong>`,dayHash(i,dayView),screen==='day'&&i===dayIndex?'active':'',screen==='day'&&i===dayIndex?'aria-current="date"':'')).join('')}</nav>`;}
+function render(){renderedHash=location.hash;const current=screen==='day'?'day':screen;$('#app').innerHTML=`<div class="blog-backdrop" aria-hidden="true"><img src="${BLOG_BACKGROUND}" alt="" width="2000" height="1125"></div>${!storageOK?'<div class="storage-warning" role="alert">浏览器未允许本机保存，关闭后进度可能丢失。</div>':''}<header class="site-header"><div class="wrap header-inner">${`<a class="brand" href="${BLOG_HOME}" aria-label="返回まひろ的小站"><strong>まひろ的小站</strong><small>← 返回博客</small></a><p class="sidebar-trip-title">关西秋日手帖<small>2026 · 11.30 — 12.07</small></p>`}<nav class="main-nav" aria-label="主导航">${[['overview','全程','map'],['day','每日','calendar'],['prep','准备','bag']].map(([id,label,ico])=>pageLink(icon(ico)+label,id==='day'?dayHash(dayIndex,dayView):'#'+id,current===id?'active':'',current===id?'aria-current="page"':'')).join('')}</nav>${sidebarDayIndex()}</div></header><main class="wrap ${screen==='day'?'daily-page view-'+dayView:''}" id="main">${screen==='overview'?overview():screen==='prep'?prepPage():dayPage()}</main><footer class="foot wrap"><span><a href="${BLOG_HOME}">まひろ的小站</a> · 关西秋日手帖</span><span>行程离线可读 · 进度保存于本机</span></footer>`;document.title=screen==='day'?`${dateLabel(PLAN.days[dayIndex].date)} ${DETAILS[PLAN.days[dayIndex].date].short} · 关西秋日手帖`:'关西秋日手帖 · 2026';}
+function resetDay(){const d=PLAN.days[dayIndex],old={};for(const k of Object.keys(state.checks))if(k.startsWith(d.date+':')){old[k]=state.checks[k];delete state.checks[k];}save();const y=scrollY;render();scrollTo(0,y);toast('已重置'+dateLabel(d.date)+'的活动与巡礼进度，其他日期保留。',()=>{Object.assign(state.checks,old);save();render();scrollTo(0,y);toast('已恢复当天进度');});}
+function setCheck(date,id,checked){const d=PLAN.days.find(x=>x.date===date);if(!d||!effectiveEvents(d).some(ev=>ev.id===id))throw Error('无效的日期或活动');state.checks[date+':'+id]=!!checked;save();}
+document.addEventListener('pointerdown',()=>{keyboardNavigation=false;document.querySelectorAll('.keyboard-focus').forEach(el=>el.classList.remove('keyboard-focus'));});
+document.addEventListener('keydown',ev=>{if(['Tab','Enter',' ','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(ev.key))keyboardNavigation=true;});
+document.addEventListener('click',ev=>{
+ const a=ev.target.closest('a[data-nav]');if(a&&!ev.metaKey&&!ev.ctrlKey&&!ev.shiftKey&&!ev.altKey&&ev.button===0){ev.preventDefault();navigate(a.hash);return;}
+ const target=ev.target.closest('[data-action]');if(!target)return;
+ if(target.dataset.action==='place')openPlace(target.dataset.place);
+ else if(target.dataset.action==='options')openOptions();
+ else if(target.dataset.action==='options-back')backToOptions();
+ else if(target.dataset.action==='copy-close')$('#copy-dialog').close();
+ else if(target.dataset.action==='close-dialog')$('#place-dialog').close();
+ else if(target.dataset.action==='copy')copyText(target.dataset.copy);
+ else if(target.dataset.action==='reset-day')resetDay();
+ else if(target.dataset.action==='undo'&&undoAction){const fn=undoAction;undoAction=null;fn();}
+});
+document.addEventListener('change',ev=>{const input=ev.target,d=PLAN.days[dayIndex];
+ if(input.matches('[data-event-check]')){setCheck(d.date,input.dataset.eventCheck,input.checked);input.closest('.event').classList.toggle('done',input.checked);refreshDayProgress(d);}
+ else if(input.matches('[data-todo]')){state.todos[input.dataset.todo]=input.checked;save();$('#todo-count').textContent=TODOS.filter((_,i)=>state.todos[i]).length+' / '+TODOS.length;}
+ else if(input.dataset.choice){const y=scrollY,dlg=$('#place-dialog'),dy=dlg.scrollTop,key=input.dataset.choice,value=input.value,c=choice(d);c[key]=input.type==='checkbox'?input.checked:input.value;if(c.shop1===c.shop2)c.shop2='none';if(key==='kodaijiPlan'&&value==='skip')c.yasakaBrief=false;state.choices[d.date]=c;save();for(const key of viewMemory.keys())if(key.startsWith('day/'+d.date+'/'))viewMemory.delete(key);render();scrollTo(0,y);openOptions();dlg.scrollTop=dy;dlg.querySelector(`[data-choice="${key}"]${input.type==='radio'?`[value="${value}"]`:''}`)?.focus({preventScroll:true});if(key==='ujiExtra')toast(c.ujiExtra==='tower'?'已启用京都塔，晚饭改为19:15—20:15。':c.ujiExtra==='kotosaka'?'已选琴坂，其他加项未启用。':c.ujiExtra==='station'?'已选京都站《宝岛》，只用宇治返程余量。':'已恢复宇治日默认主线。');}
+});
+$('#place-dialog').addEventListener('click',ev=>{if(ev.target===$('#place-dialog')){const r=ev.target.getBoundingClientRect();if(ev.clientX<r.left||ev.clientX>r.right||ev.clientY<r.top||ev.clientY>r.bottom)ev.target.close();}});
+$('#place-dialog').addEventListener('close',()=>{dialogMode=null;optionsReturn=null;});
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+window.addEventListener('hashchange',()=>{if(location.hash==='#main')return;rememberView();readHash();render();focusPage(true);});
+window.addEventListener('storage',ev=>{if(ev.key===STORAGE_KEY){try{const next=JSON.parse(ev.newValue);if(next?.checks&&next?.todos&&next?.choices){state=next;render();}}catch{}}});
+readHash();render();focusPage();
