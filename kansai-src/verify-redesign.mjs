@@ -63,7 +63,7 @@ const results=vm.runInContext(`
  assert.ok(!effectiveRoute(kyoto).some(x=>['kodaiji','yasaka_shrine'].includes(x.id)),'取消夜枫同时省八坂神社');
  assert.equal(effectiveEvents(kyoto).find(x=>x.id==='gion_rest').time_label,'16:45—17:15','保留休息');
  assert.ok(effectiveEvents(kyoto).find(x=>x.id==='gion_dinner').time_label.includes('不等到19:00'));
- assert.equal(returnTarget(kyoto),'饭后提前返店');
+ assert.equal(returnTarget(kyoto),'饭后');
  assert.ok(!timelinePage(kyoto).includes('data-event="kodaiji_night"'));
  assert.ok(!timelinePage(kyoto).includes('傍晚 · 先休息再赏夜枫'));
  state.choices[kyoto.date]={kodaijiPlan:'night',yasakaBrief:false};
@@ -131,7 +131,7 @@ const results=vm.runInContext(`
  const riverGroup=routeGroups(uji,'下午').find(g=>g.eventId==='uji_pilgrimage');
  assert.equal(riverGroup.stops.length,5,'五个河岸点共用一个时间组');
  assert.equal(riverGroup.times.length,1);
- assert.equal(routePage(uji).split('13:10—14:30').length-1,1,'共用窗口只渲染一次');
+ assert.equal(routePage(uji).split('13:10–14:30').length-1,1,'共用窗口只渲染一次');
  for(const option of ['tower','station','kotosaka']){
   state.choices[uji.date]={ujiExtra:option};
   assert.ok(timedRoute(uji).every(s=>s.times.every(t=>t.text!=='时间待确认')),'可选路线有时间 '+option);
@@ -141,7 +141,7 @@ const results=vm.runInContext(`
  assert.equal(timedRoute(uji).filter(s=>s.id==='kyoto_station').at(-1).times[0].text,'19:15—20:15','塔后晚饭使用替换时间');
  assert.ok(timedRoute(uji).at(-1).times[0].text.includes('20:30—21:00'));
  state.choices[kyoto.date]={kodaijiPlan:'skip'};
- assert.equal(timedRoute(kyoto).at(-1).times[0].text,'饭后提前返店','取消夜枫同步提前返店');
+ assert.equal(timedRoute(kyoto).at(-1).times[0].text,'饭后','取消夜枫同步提前返店');
  const flightOut=timedRoute(PLAN.days[0]);
  assert.equal(flightOut[0].times[0].text,'11:25');assert.equal(flightOut[1].times[0].text,'16:00','日本抵达时间');
  const flightHome=timedRoute(PLAN.days[7]);

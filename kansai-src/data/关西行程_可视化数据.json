@@ -1828,7 +1828,7 @@
           "id": "usj_core",
           "time_label": "随区域资格及场次安排",
           "time_status": "planning_window",
-          "title": "争取任天堂区域、一项首选设施、柯南4-D",
+          "title": "优先体验 · 任天堂区域与柯南4-D",
           "place_ids": [
             "usj"
           ],
@@ -2040,7 +2040,7 @@
           "id": "nara_return_train",
           "time_label": "14:30—15:00",
           "time_status": "planning_window",
-          "title": "争取在近铁奈良站上车",
+          "title": "近铁奈良站乘车",
           "place_ids": [
             "kintetsu_nara",
             "kintetsu_nippombashi"
@@ -2051,7 +2051,7 @@
           "id": "nippombashi_arrival",
           "time_label": "15:45—16:15",
           "time_status": "planning_window",
-          "title": "目标抵达第一家店，含候车出站步行",
+          "title": "抵达日本桥首店",
           "place_ids": [
             "animate"
           ],
@@ -2240,7 +2240,7 @@
           "id": "ikuta_visit",
           "time_label": "11:15—12:15",
           "time_status": "planning_window",
-          "title": "参拜、拝殿外观巡礼，留完整一小时",
+          "title": "参拜、拝殿外观巡礼",
           "place_ids": [
             "ikuta"
           ],

@@ -73,7 +73,7 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
   }
  }
  if(d.date==='2026-12-04'){if(c.usjExtra)by('usj_core').optionNote='已选附加设施：仅实时等候和体力允许时加，不占午饭、休息，不突破19点边界。';if(c.kinopio){by('usj_lunch').title='如取得合适餐厅资格：キノピオ・カフェ；否则回首选午饭';by('usj_lunch').optionNote='区域资格不等于餐厅资格；预算可能超过¥2,500，饭时仍留45—60分钟。';}}
- if(d.date==='2026-12-05'){by('anime_shopping').place_ids=selectedShops(c);by('nippombashi_arrival').place_ids=[c.shop1];by('anime_shopping').title=(c.shop2==='none'?'一家重点店':'两家目标店')+'，含15—20分钟坐下休息';}
+ if(d.date==='2026-12-05'){by('anime_shopping').place_ids=selectedShops(c);by('nippombashi_arrival').place_ids=[c.shop1];by('anime_shopping').title=(c.shop2==='none'?'一家重点店':'两家店')+'，含15—20分钟坐下休息';}
  if(d.date==='2026-12-06'&&c.kobeAfternoon==='harbor'){
   events=events.filter(ev=>ev.id!=='umeda_shop');
   const at=events.findIndex(ev=>ev.id==='umeda_transfer');
@@ -82,7 +82,9 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
  }else if(d.date==='2026-12-06'){by('umeda_shop').place_ids=[c.umedaMain];by('umeda_transfer').place_ids=['sannomiya','jr_osaka',c.umedaMain];by('umeda_shop').title=PLACE[c.umedaMain].name+'重点逛'+(c.umedaSecond?'；另一家能直接入店才短看':'；15:30收尾');if(c.umedaSecond){by('umeda_shop').place_ids.push(c.umedaMain==='nintendo_osaka'?'pokemon_osaka':'nintendo_osaka');by('umeda_shop').optionNote='第二店只看10—15分钟，包含在60—75分钟总购物时段内。';}}
  return events;
 }
-function returnTarget(d){if(d.date==='2026-12-01')return choice(d).ujiExtra==='tower'?'20:30—21:00':choice(d).ujiExtra==='station'?'约19:00—19:30':'约19:00';if(d.date==='2026-12-02')return choice(d).kodaijiPlan==='skip'?'饭后提前返店':'约20:45—21:15';return d.hotel_return_target||'清晨离店，09:50日本时间起飞';}
+function returnTarget(d){if(d.date==='2026-12-01')return choice(d).ujiExtra==='tower'?'20:30—21:00':choice(d).ujiExtra==='station'?'19:00—19:30':'19:00';if(d.date==='2026-12-02')return choice(d).kodaijiPlan==='skip'?'饭后':'20:45—21:15';return (d.hotel_return_target||'').split('；')[0].replace(/^(争取|约)/,'').replace(/\s*目标入住.*/,'');}
+// Keep the full planning notes in the guide; repeated UI labels use a short form.
+function compactTime(value){return String(value).replace(/^目标|^争取/,'').replace(/到店$/,'抵达').replace(/左右$/,'').replace(/^当前候选/,'').replace('，临行复核',' · 待复核').replace('待12/4正式开园时间确认','开园时间待确认').replace('到店后 · 不等到19:00','到店后').replace('随区域资格及场次安排','按区域资格与场次').replace('17:00盘点，争取18:00前完成重点','17:00盘点 · 18:00收尾').replace('起返程，争取','出发 · ').replace(/—/g,'–');}
 function effectiveRoute(d){const c=choice(d);let nodes=d.route_stop_ids.map((id,i)=>({id,phase:DETAILS[d.date].routePhases[i],original:i+1,optional:false}));
  if(d.date==='2026-12-01'&&c.ujiExtra==='kotosaka'){const at=nodes.findIndex(x=>x.id==='asagiri');nodes.splice(at+1,0,{id:'kotosaka',phase:'下午',optional:true});}
  if(d.date==='2026-12-01'&&c.ujiExtra==='tower')nodes=nodes.filter(n=>n.id!=='saizeriya_uji');

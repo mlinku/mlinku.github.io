@@ -27,7 +27,7 @@ const ROUTE_EVENTS={
 };
 function timedRoute(d){
  const nodes=effectiveRoute(d),events=effectiveEvents(d),c=choice(d);
- const eventTime=(id,label)=>{const ev=events.find(ev=>ev.id===id);return ev?{eventId:id,text:ev.time_label,label:label||({transport:'移动窗口',meal:'用餐时段',rest:'休息时段',walk:'步行时段',visit:'参观时段',shopping:'购物时段'}[ev.category]||'安排时段')}:null;};
+ const eventTime=(id,label)=>{const ev=events.find(ev=>ev.id===id);return ev?{eventId:id,text:ev.time_label,label:label||({transport:'交通',meal:'用餐',rest:'休息',walk:'步行',visit:'参观',shopping:'购物'}[ev.category]||'行程')}:null;};
  const flightTime=(id,field)=>{const b=PLAN.bookings.find(b=>b.id===id),f=flightLocal(b,field);return {text:f.time,label:f.region+(field==='departure'?'起飞':'抵达')+' · 当地时间'};};
  return nodes.map((node,i)=>{
   let id=node.eventId||ROUTE_EVENTS[d.date]?.[node.original-1];
@@ -37,21 +37,21 @@ function timedRoute(d){
   if(d.date==='2026-12-05'&&selectedShops(c).includes(node.id))id='anime_shopping';
   if(d.date==='2026-12-06'&&['nintendo_osaka','pokemon_osaka'].includes(node.id))id='umeda_shop';
   let times=[eventTime(id)].filter(Boolean);
-  if(i===0&&node.id.startsWith('hotel_')&&d.date!=='2026-12-07')times=[{text:d.departure_target||'待正式开园时间确认',label:'离店参考'}];
-  if(i===nodes.length-1&&node.id.startsWith('hotel_'))times=[{text:returnTarget(d),label:d.date==='2026-11-30'?'入住目标':'返店目标'}];
+  if(i===0&&node.id.startsWith('hotel_')&&d.date!=='2026-12-07')times=[{text:d.departure_target||'开园时间待确认',label:'离店'}];
+  if(i===nodes.length-1&&node.id.startsWith('hotel_'))times=[{text:returnTarget(d),label:d.date==='2026-11-30'?'入住':'返店'}];
   if(d.date==='2026-12-01'&&node.original===d.route_stop_ids.length&&c.ujiExtra==='tower')times=[eventTime('kyoto_rest')];
   if(d.date==='2026-11-30'&&['hkg','kix'].includes(node.id))times=[flightTime('flight_out',node.id==='hkg'?'departure':'arrival')];
   if(d.date==='2026-12-07'){
    if(node.id==='hotel_osaka')times=[eventTime('checkout_osaka','退房离店')];
-   if(node.id==='nankai_shinimamiya')times=[eventTime('airport_train','候选列车 · 非预约')];
-   if(node.id==='kix')times=[eventTime('airport_train','到机场 · 候选列车'),flightTime('flight_home','departure')];
+   if(node.id==='nankai_shinimamiya')times=[eventTime('airport_train','候选列车')];
+   if(node.id==='kix')times=[eventTime('airport_train','机场列车'),flightTime('flight_home','departure')];
    if(node.id==='hkg')times=[flightTime('flight_home','arrival')];
   }
-  if(d.date==='2026-12-04'&&node.id==='usj')times=[{text:'开园时间待确认',label:'入园参考'},eventTime('usj_finish','收尾目标')];
+  if(d.date==='2026-12-04'&&node.id==='usj')times=[{text:'开园时间待确认',label:'入园'},eventTime('usj_finish','收尾')];
   if(d.date==='2026-12-05'){
-   if(node.id==='kintetsu_nara')times=[eventTime('nara_return_train','上车窗口')];
-   if(node.id==='kintetsu_nippombashi')times=[{text:'到站时刻待确认',label:'途中'},eventTime('nippombashi_arrival','后续第一家店抵达目标')];
-   if(node.id===c.shop1)times=[eventTime('nippombashi_arrival','抵达目标'),eventTime('anime_shopping','购物共用时段')];
+   if(node.id==='kintetsu_nara')times=[eventTime('nara_return_train','上车')];
+   if(node.id==='kintetsu_nippombashi')times=[{text:'到站时刻待确认',label:'途中'},eventTime('nippombashi_arrival','首店抵达')];
+   if(node.id===c.shop1)times=[eventTime('nippombashi_arrival','抵达'),eventTime('anime_shopping','购物')];
   }
   const shared=['uji_pilgrimage','higashiyama_walk','nara_visit','umeda_shop','byodoin_visit','delta_visit'].includes(id);
   if(shared&&times.length===1)times[0].label='同段共用';
