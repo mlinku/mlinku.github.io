@@ -107,7 +107,17 @@ document.addEventListener('click',ev=>{
 document.addEventListener('change',ev=>{const input=ev.target,d=PLAN.days[dayIndex];
  if(input.matches('[data-event-check]')){setCheck(d.date,input.dataset.eventCheck,input.checked);input.closest('.event').classList.toggle('done',input.checked);refreshDayProgress(d);}
  else if(input.matches('[data-todo]')){state.todos[input.dataset.todo]=input.checked;save();$('#todo-count').textContent=TODOS.filter((_,i)=>state.todos[i]).length+' / '+TODOS.length;}
- else if(input.dataset.choice){const y=scrollY,dlg=$('#place-dialog'),dy=dlg.scrollTop,key=input.dataset.choice,value=input.value,c=choice(d);c[key]=input.type==='checkbox'?input.checked:input.value;if(c.shop1===c.shop2)c.shop2='none';if(key==='kodaijiPlan'&&value==='skip')c.yasakaBrief=false;state.choices[d.date]=c;save();for(const key of viewMemory.keys())if(key.startsWith('day/'+d.date+'/'))viewMemory.delete(key);render();scrollTo(0,y);openOptions();dlg.scrollTop=dy;dlg.querySelector(`[data-choice="${key}"]${input.type==='radio'?`[value="${value}"]`:''}`)?.focus({preventScroll:true});if(key==='ujiExtra')toast(c.ujiExtra==='tower'?'已选京都塔 · 19:15–20:15京都站晚餐':c.ujiExtra==='kotosaka'?'已选琴坂':c.ujiExtra==='station'?'已选京都站《宝岛》':'已恢复原行程');}
+ else if(input.dataset.choice){
+  const y=scrollY,dx=$('.date-nav')?.scrollLeft||0,dlg=$('#place-dialog'),dy=dlg.scrollTop,key=input.dataset.choice,value=input.value,c=choice(d);
+  c[key]=input.type==='checkbox'?input.checked:input.value;
+  if(c.shop1===c.shop2)c.shop2='none';
+  if(key==='kodaijiPlan'&&value==='skip')c.yasakaBrief=false;
+  state.choices[d.date]=c;save();
+  for(const key of viewMemory.keys())if(key.startsWith('day/'+d.date+'/'))viewMemory.delete(key);
+  render();if($('.date-nav'))$('.date-nav').scrollLeft=dx;scrollTo(0,y);openOptions();dlg.scrollTop=dy;
+  dlg.querySelector(`[data-choice="${key}"]${input.type==='radio'?`[value="${value}"]`:''}`)?.focus({preventScroll:true});
+  if(key==='ujiExtra')toast(c.ujiExtra==='tower'?'已选京都塔 · 19:15–20:15京都站晚餐':c.ujiExtra==='kotosaka'?'已选琴坂':c.ujiExtra==='station'?'已选京都站《宝岛》':'已恢复原行程');
+ }
 });
 $('#place-dialog').addEventListener('click',ev=>{if(ev.target===$('#place-dialog')){const r=ev.target.getBoundingClientRect();if(ev.clientX<r.left||ev.clientX>r.right||ev.clientY<r.top||ev.clientY>r.bottom)ev.target.close();}});
 $('#place-dialog').addEventListener('close',()=>{dialogMode=null;optionsReturn=null;});

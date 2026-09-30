@@ -201,6 +201,42 @@ const results=vm.runInContext(`
  state.choices[kyoto.date]={kodaijiPlan:'night'};
  assert.ok(dayCard(kyoto,2).includes('高台寺'),'恢复夜枫同步更新总览');
  assert.ok(overview().includes('关西区域地图')&&!overview().includes('全程地图'));
+ // Current advice must follow the same choices as activities and routes.
+ const sourceNotes=JSON.stringify(DETAILS);
+ state.choices[kobe.date]={kobeAfternoon:'harbor',umedaSecond:true};
+ assert.ok(!dayNotes(kobe).join('').match(/Nintendo|Pokémon|第二店/),'咖啡方案不显示购物说明');
+ assert.ok(!dayTransport(kobe).join('').includes('高层下楼'),'咖啡方案不沿用商场出发说明');
+ assert.ok(!mealRows(kobe,effectiveEvents(kobe).find(ev=>ev.id==='kobe_lunch'))[0][5].includes('餐后返大阪'));
+ state.choices[kobe.date]={kobeAfternoon:'umeda',umedaMain:'pokemon_osaka'};
+ assert.ok(dayNotes(kobe).join('').includes('Pokémon久等时换Nintendo'),'重点店切换后备选方向同步');
+ assert.ok(!dayNotes(kobe).join('').includes('第二店'));
+ state.choices[kobe.date]={kobeAfternoon:'umeda',umedaSecond:true};
+ assert.ok(dayNotes(kobe).join('').includes('第二店'));
+ state.choices[kyoto.date]={kodaijiPlan:'skip'};
+ assert.ok(!dayNotes(kyoto).join('').match(/高台寺|八坂神社/),'取消夜枫后不重复入寺和神社规则');
+ state.choices[kyoto.date]={kodaijiPlan:'night',yasakaBrief:true};
+ assert.ok(dayNotes(kyoto).join('').includes('省八坂神社'));
+ state.choices[uji.date]={ujiExtra:'tower'};
+ assert.ok(dayNotes(uji).join('').includes('京都塔联动'));
+ assert.ok(!dayTransport(uji).join('').includes('萨莉亚'));
+ state.choices[uji.date]={ujiExtra:'none'};
+ assert.ok(!dayNotes(uji).join('').match(/京都塔|琴坂/));
+ assert.ok(!dayTransport(uji).join('').includes('琴坂'));
+ state.choices[nara.date]={shop1:'potato',shop2:'none'};
+ assert.ok(!dayNotes(nara).join('').includes('默认Animate'));
+ assert.ok(!dayTransport(nara).join('').includes('到Animate'));
+ assert.equal(JSON.stringify(DETAILS),sourceNotes,'显示当前说明不修改原始资料');
+ for(let i=0;i<PLAN.days.length;i++){
+  const d=PLAN.days[i];dayIndex=i;dayView='timeline';
+  const markup=dayPage();
+  assert.equal(markup.split('class="stay-access"').length-1,d.overnight?1:0,'住宿入口放在顶部 '+d.date);
+  assert.ok(!markup.includes('hotel-shortcut'),'移除底部重复住宿卡');
+  assert.ok(daySupport(d).includes('原始攻略与来源'));
+  for(const ev of effectiveEvents(d))assert.ok(!/\\d{1,2}:\\d{2}\\/\\d{1,2}:\\d{2}/.test(compactTime(ev.time_label)),'时间不堆叠备选时刻 '+ev.id);
+ }
+ assert.equal(compactTime('13:10—14:00/14:30'),'13:10出发');
+ assert.equal(compactTime('14:15/14:30—15:30'),'约14:30–15:30');
+ assert.equal(compactTime('当前候选05:47→06:28，临行复核'),'05:47→06:28 · 待复核');
  ({checked,legacyProgressPreserved:true,oldGionSelectionIgnored:true,kodaijiSkipAndRestore:true,yasakaWithinExistingWindow:true,towerDinnerReplacement:true,ujiMutualExclusion:true,shopReplacement:true,umedaMainAndShortVisit:true,kobeHarborReplacement:true,flightSingleSource:true});
  `,scope);
 fs.writeFileSync(path.join(root,'检查记录/改版行程规则检查.json'),JSON.stringify({checkedAt:new Date().toISOString(),...results},null,2));

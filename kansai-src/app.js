@@ -79,12 +79,23 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
   const at=events.findIndex(ev=>ev.id==='umeda_transfer');
   events.splice(at,0,{id:'kobe_harbor',time_label:'13:10—14:30',time_status:'planning_window',title:'神户港 · 星巴克咖啡',category:'rest',place_ids:['starbucks_meriken'],optional:true,condition:'含往返海边，计划14:30从三宫返大阪；交通或排队延误时省去咖啡。'});
   const transfer=by('umeda_transfer');transfer.time_label='14:30—15:30';transfer.title='三宫乘JR回大阪站';transfer.place_ids=['sannomiya','jr_osaka'];
+  by('sky_transfer').title='步行到蓝天大厦展望台入口';
  }else if(d.date==='2026-12-06'){by('umeda_shop').place_ids=[c.umedaMain];by('umeda_transfer').place_ids=['sannomiya','jr_osaka',c.umedaMain];by('umeda_shop').title=PLACE[c.umedaMain].name+' · 购物';if(c.umedaSecond){by('umeda_shop').place_ids.push(c.umedaMain==='nintendo_osaka'?'pokemon_osaka':'nintendo_osaka');by('umeda_shop').optionNote='另一家仅在可直接入店时短看10—15分钟；两家合计60—75分钟，15:30结束。';}}
  return events;
 }
 function returnTarget(d){if(d.date==='2026-12-01')return choice(d).ujiExtra==='tower'?'20:30—21:00':choice(d).ujiExtra==='station'?'19:00—19:30':'19:00';if(d.date==='2026-12-02')return choice(d).kodaijiPlan==='skip'?'饭后':'20:45—21:15';return (d.hotel_return_target||'').split('；')[0].replace(/^(争取|约)/,'').replace(/\s*目标入住.*/,'');}
 // Keep the full planning notes in the guide; repeated UI labels use a short form.
-function compactTime(value){return String(value).replace(/^目标|^争取/,'').replace(/到店$/,'抵达').replace(/左右$/,'').replace(/^当前候选/,'').replace('，临行复核',' · 待复核').replace('待12/4正式开园时间确认','开园时间待确认').replace('到店后 · 不等到19:00','到店后').replace('随区域资格及场次安排','按区域资格与场次').replace('17:00盘点，争取18:00前完成重点','17:00盘点 · 18:00收尾').replace('起返程，争取','出发 · ').replace(/—/g,'–');}
+function compactTime(value){
+ const windows={
+  '10:00—10:45/10:55':'10:00出发',
+  '15:10—16:00/16:30':'15:10—16:30',
+  '10:00—11:20/11:40':'10:00出发',
+  '13:30—14:15/14:30':'13:30—14:30',
+  '13:10—14:00/14:30':'13:10出发',
+  '14:15/14:30—15:30':'约14:30—15:30'
+ };
+ return String(windows[value]||value).replace(/^目标|^争取/,'').replace(/到店$/,'抵达').replace(/左右$/,'').replace(/^当前候选/,'').replace('，临行复核',' · 待复核').replace('待12/4正式开园时间确认','开园时间待确认').replace('到店后 · 不等到19:00','到店后').replace('随区域资格及场次安排','按区域资格与场次').replace('17:00盘点，争取18:00前完成重点','17:00盘点 · 18:00收尾').replace('起返程，争取','出发 · ').replace(/—/g,'–');
+}
 function effectiveRoute(d){const c=choice(d);let nodes=d.route_stop_ids.map((id,i)=>({id,phase:DETAILS[d.date].routePhases[i],original:i+1,optional:false}));
  if(d.date==='2026-12-01'&&c.ujiExtra==='kotosaka'){const at=nodes.findIndex(x=>x.id==='asagiri');nodes.splice(at+1,0,{id:'kotosaka',phase:'下午',optional:true});}
  if(d.date==='2026-12-01'&&c.ujiExtra==='tower')nodes=nodes.filter(n=>n.id!=='saizeriya_uji');
