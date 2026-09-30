@@ -69,11 +69,14 @@ function openShotZoom(id,kind){
  if(!alreadyOpen)dlg.showModal();else dlg.querySelector('[aria-pressed="true"]')?.focus({preventScroll:true});
 }
 document.addEventListener('click',ev=>{const t=ev.target.closest('[data-action]');if(t?.dataset.action==='shot-zoom')openShotZoom(t.dataset.shot,t.dataset.kind);if(t?.dataset.action==='shot-close')document.getElementById('shot-dialog').close();});
-document.addEventListener('change',ev=>{
- if(ev.target.dataset.shotJump){if(ev.target.value)navigate('#day/'+ev.target.dataset.shotJump+'/pilgrimage/'+ev.target.value);return;}
- const id=ev.target.dataset.shotCheck;if(!id)return;const p=pilgrimagePoints.find(x=>x.id===id);if(!p)return;
- const checked=ev.target.checked;state.checks[shotKey(p)]=checked;save();
+function refreshShotCompletion(p){
+ const id=p.id,checked=!!state.checks[shotKey(p)];
  document.querySelectorAll('[data-shot-check="'+id+'"]').forEach(el=>{el.checked=checked;el.closest('.shot-card').classList.toggle('shot-done',checked);el.parentElement.querySelector('span').textContent=checked?'已打卡':'打卡';});
  document.querySelectorAll('[data-shot-index="'+id+'"]').forEach(el=>{el.classList.toggle('complete',checked);el.querySelector('small').hidden=!checked;});
  const pg=shotProgress(p.date);document.querySelectorAll('[data-shot-progress="'+p.date+'"]').forEach(el=>el.innerHTML=`已打卡 <strong>${pg.done} / ${pg.total}</strong>`);
+}
+document.addEventListener('change',ev=>{
+ if(ev.target.dataset.shotJump){if(ev.target.value)navigate('#day/'+ev.target.dataset.shotJump+'/pilgrimage/'+ev.target.value);return;}
+ const id=ev.target.dataset.shotCheck;if(!id)return;const p=pilgrimagePoints.find(x=>x.id===id);if(!p)return;
+ state.checks[shotKey(p)]=ev.target.checked;save();refreshShotCompletion(p);
 });

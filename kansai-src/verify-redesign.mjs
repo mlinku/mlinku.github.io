@@ -8,7 +8,7 @@ const read=p=>fs.readFileSync(path.join(root,p),'utf8').replace(/^\uFEFF/,'');
 const PLAN=JSON.parse(read('data/关西行程_可视化数据.json'));
 const remembered={checks:{'2026-11-30:flight_out':true,'2026-12-02:gion_optional':true},todos:{0:true},choices:{'2026-12-02':{gion:'hanamikoji'}}};
 const localStorage={getItem:()=>JSON.stringify(remembered),setItem(){}};
-const scope=vm.createContext({PLAN,PILGRIMAGE:JSON.parse(read('pilgrimage.json')),PHOTOS:JSON.parse(read('photos.json')),GUIDES:Object.fromEntries(PLAN.days.map(d=>[d.date,'攻略'])),REGION_MAP_IMAGE:'data:image/jpeg;base64,AA==',document:{querySelector(){return {innerHTML:'',classList:{add(){},remove(){}}}},addEventListener(){}},localStorage,assert,scrollY:0,scrollTo(){},setTimeout(){return 1},clearTimeout(){}});
+const scope=vm.createContext({PLAN,PILGRIMAGE:JSON.parse(read('pilgrimage.json')),PHOTOS:JSON.parse(read('photos.json')),GUIDES:Object.fromEntries(PLAN.days.map(d=>[d.date,'攻略'])),REGION_MAP_IMAGE:'data:image/jpeg;base64,AA==',document:{querySelector(){return {innerHTML:'',classList:{add(){},remove(){}}}},querySelectorAll(){return []},addEventListener(){}},localStorage,assert,scrollY:0,scrollTo(){},setTimeout(){return 1},clearTimeout(){}});
 const ui=read('interface.js').split("document.addEventListener('click'")[0];
 vm.runInContext(read('details.js')+'\n'+read('app.js')+'\n'+read('day-flow.js')+'\n'+read('pilgrimage.js')+'\n'+read('daily.js')+'\n'+ui,scope);
 const results=vm.runInContext(`
@@ -119,11 +119,20 @@ const results=vm.runInContext(`
  assert.ok(!overview().includes('<iframe'),'避免兼容性空框');
  assert.ok(overview().includes('google-map-preview'),'保留真实Google区域预览');
  dayIndex=1;state.checks={'2026-12-01:shot:eupho_bench':true,'2026-12-01:uji_lunch':true,'2026-11-30:flight_out':true};
- render=()=>{};resetDay();
+ let resetRenderCount=0;render=()=>{resetRenderCount++;};resetDay();
  assert.equal(state.checks['2026-12-01:shot:eupho_bench'],undefined,'重置巡礼进度');
  assert.equal(state.checks['2026-12-01:uji_lunch'],undefined,'重置活动进度');
  assert.equal(state.checks['2026-11-30:flight_out'],true,'保留其他日期');
  undoAction();assert.equal(state.checks['2026-12-01:shot:eupho_bench'],true,'可撤销巡礼重置');
+ assert.equal(resetRenderCount,0,'重置和撤销不替换页面，保留阅读状态');
+ const photoFixtures=['kodaiji','sannenzaka','yasaka_tower','ninenzaka','nene'].map(id=>[id,PHOTOS[id].src]);
+ for(const [id] of photoFixtures)PHOTOS[id].src='test-'+id+'.jpg';
+ const nightCard=eventCard(kyoto,effectiveEvents(kyoto).find(ev=>ev.id==='kodaiji_night'));
+ assert.ok(!nightCard.includes('<span>高台寺夜枫</span>'),'单张照片不重复活动标题');
+ assert.ok(nightCard.includes('aria-label="查看高台寺夜枫照片与详情"'),'照片仍有可访问名称');
+ const eastWalk=eventCard(kyoto,effectiveEvents(kyoto).find(ev=>ev.id==='higashiyama_walk'));
+ for(const name of ['三年坂','八坂塔外观','二年坂','宁宁之道'])assert.ok(eastWalk.includes('<span>'+name+'</span>'),'多地点照片仍标明名称 '+name);
+ for(const [id,src] of photoFixtures){if(src===undefined)delete PHOTOS[id].src;else PHOTOS[id].src=src;}
  state.choices[uji.date]={ujiExtra:'none'};
  const bridges=timedRoute(uji).filter(s=>s.id==='uji_bridge');
  assert.equal(bridges[0].times[0].text,'约11:00—12:10','去程宇治桥');

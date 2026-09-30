@@ -16,7 +16,7 @@ const photo=(id,cls='',loading='lazy',sizes='(max-width:720px) calc(100vw - 72px
  const full=cls==='dialog-image',responsive=!full&&img.thumbnail&&img.thumbnailWidth<(img.width||1100);
  return `<img class="${cls}" src="${full?img.src:img.thumbnail||img.src}" ${responsive?`srcset="${img.thumbnail} ${img.thumbnailWidth}w, ${img.src} ${img.width||1100}w" sizes="${sizes}"`:''} alt="${e(img.sight)}" width="${img.width||800}" height="${img.height||600}" loading="${loading}" decoding="async" ${loading==='eager'?'fetchpriority="high"':''}>`;
 };
-const photoButton=(id,cls='',prefix='')=>`<button type="button" class="photo-button ${cls}" data-action="place" data-place="${id}" aria-label="查看${e(PLACE[id].name)}照片与详情">${photo(id)}<span>${e(prefix+PLACE[id].name)}</span></button>`;
+const photoButton=(id,cls='',prefix='',caption=true)=>`<button type="button" class="photo-button ${cls}" data-action="place" data-place="${id}" aria-label="查看${e(PLACE[id].name)}照片与详情">${photo(id)}${caption?`<span>${e(prefix+PLACE[id].name)}</span>`:''}</button>`;
 const placeButton=(id)=>`<button type="button" class="place-link" data-action="place" data-place="${id}">${e(PLACE[id].name)}${icon('chevron')}</button>`;
 function progress(d){const events=effectiveEvents(d);return{done:events.filter(ev=>state.checks[d.date+':'+ev.id]).length,total:events.length};}
 function readHash(){
@@ -88,7 +88,24 @@ function prepPage(){return `<header class="prep-heading"><h1>临行准备</h1></
 
 function sidebarDayIndex(){return `<nav class="desktop-day-index" aria-label="旅行日期目录"><p>旅行目录</p>${PLAN.days.map((d,i)=>pageLink(`<span>${dateLabel(d.date)}</span><strong>${e(dayPresentation(d).short)}</strong>`,dayHash(i,dayView),screen==='day'&&i===dayIndex?'active':'',screen==='day'&&i===dayIndex?'aria-current="date"':'')).join('')}</nav>`;}
 function render(){renderedHash=location.hash;const current=screen==='day'?'day':screen;$('#app').innerHTML=`<div class="blog-backdrop" aria-hidden="true"><img src="${BLOG_BACKGROUND}" alt="" width="2000" height="1125"></div>${!storageOK?'<div class="storage-warning" role="alert">浏览器未允许本机保存，关闭后进度可能丢失。</div>':''}<header class="site-header"><div class="wrap header-inner">${`<a class="brand" href="${BLOG_HOME}" aria-label="返回まひろ的小站"><strong>まひろ的小站</strong><small>← 返回博客</small></a><p class="sidebar-trip-title">关西秋日手帖<small>2026 · 11.30 — 12.07</small></p>`}<nav class="main-nav" aria-label="主导航">${[['overview','全程','map'],['day','每日','calendar'],['prep','准备','bag']].map(([id,label,ico])=>pageLink(icon(ico)+label,id==='day'?dayHash(dayIndex,dayView):'#'+id,current===id?'active':'',current===id?'aria-current="page"':'')).join('')}</nav>${sidebarDayIndex()}</div></header><main class="wrap ${screen==='day'?'daily-page view-'+dayView:''}" id="main">${screen==='overview'?overview():screen==='prep'?prepPage():dayPage()}</main><footer class="foot wrap"><span><a href="${BLOG_HOME}">まひろ的小站</a> · 关西秋日手帖</span></footer>`;document.title=screen==='day'?`${dateLabel(PLAN.days[dayIndex].date)} ${dayPresentation(PLAN.days[dayIndex]).short} · 关西秋日手帖`:'关西秋日手帖 · 2026';}
-function resetDay(){const d=PLAN.days[dayIndex],old={};for(const k of Object.keys(state.checks))if(k.startsWith(d.date+':')){old[k]=state.checks[k];delete state.checks[k];}save();const y=scrollY;render();scrollTo(0,y);toast('已重置 '+dateLabel(d.date)+' 进度',()=>{Object.assign(state.checks,old);save();render();scrollTo(0,y);toast('已恢复当天进度');});}
+function refreshDayChecks(d){
+ if(screen!=='day'||PLAN.days[dayIndex].date!==d.date)return;
+ document.querySelectorAll('[data-event-check]').forEach(input=>{
+  const checked=!!state.checks[d.date+':'+input.dataset.eventCheck];
+  input.checked=checked;input.closest('.event').classList.toggle('done',checked);
+ });
+ refreshDayProgress(d);
+ pilgrimageDay(d.date).forEach(refreshShotCompletion);
+}
+function resetDay(){
+ const d=PLAN.days[dayIndex],old={};
+ for(const k of Object.keys(state.checks))if(k.startsWith(d.date+':')){old[k]=state.checks[k];delete state.checks[k];}
+ // Update completion in place so open details, scroll positions and focus survive.
+ save();refreshDayChecks(d);
+ toast('已重置 '+dateLabel(d.date)+' 进度',()=>{
+  Object.assign(state.checks,old);save();refreshDayChecks(d);toast('已恢复当天进度');
+ });
+}
 function setCheck(date,id,checked){const d=PLAN.days.find(x=>x.date===date);if(!d||!effectiveEvents(d).some(ev=>ev.id===id))throw Error('无效的日期或活动');state.checks[date+':'+id]=!!checked;save();}
 document.addEventListener('pointerdown',()=>{keyboardNavigation=false;document.querySelectorAll('.keyboard-focus').forEach(el=>el.classList.remove('keyboard-focus'));});
 document.addEventListener('keydown',ev=>{if(['Tab','Enter',' ','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(ev.key))keyboardNavigation=true;});
