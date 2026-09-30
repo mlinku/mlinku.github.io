@@ -1574,5 +1574,22 @@
     "license": "来源方版权所有；品牌产品识别参考",
     "date": "拍摄时间未标注",
     "reviewedAt": "2026-09-30"
+  },
+  "saizeriya_uji": {
+    "sight": "サイゼリヤ 宇治里尻店 · 门店外观",
+    "sourcePage": "https://tabelog.com/kyoto/A2607/A260701/26017218/dtlphotolst/4/smp2/",
+    "imageUrl": "https://tblg.k-img.com/restaurant/images/Rvw/384390/640x640_rect_12341448f4d6cb28ba48a464a84b9234.jpg",
+    "originalUrl": "https://tblg.k-img.com/restaurant/images/Rvw/384390/640x640_rect_12341448f4d6cb28ba48a464a84b9234.jpg",
+    "author": "ゑつ / 食べログ",
+    "license": "著作权归原作者所有；未标注开放许可",
+    "date": "拍摄日期未标注",
+    "width": 640,
+    "height": 481,
+    "local": "assets/food-saizeriya-uji.jpg",
+    "sourceVerified": true,
+    "visualContentVerified": true,
+    "reviewedAt": "2026-09-30",
+    "changes": "文件未改动；卡片展示可能裁切。",
+    "notes": "食べログ宇治里尻店外观分类，照片编号384390116；门店地址与官网宇治里尻77一致。"
   }
 }
