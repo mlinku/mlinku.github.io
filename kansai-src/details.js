@@ -803,7 +803,7 @@ const DETAILS = {
         "place": "starbucks_meriken",
         "label": "替换梅田购物",
         "title": "神户港星巴克",
-        "text": "午饭后去海边喝咖啡，替换整段梅田购物。13:10—14:30含往返海边，14:30—15:30回大阪；保留休息、蓝天大厦和晚饭。",
+        "text": "午饭后前往美利坚公园，替换梅田购物。",
         "budget": "饮品按当天菜单；不另加正餐",
         "source": "https://store.starbucks.co.jp/detail-1432/",
         "event_id": "kobe_lunch"

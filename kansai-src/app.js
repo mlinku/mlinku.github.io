@@ -40,9 +40,22 @@ async function copyText(value){
   if(ok)toast('已复制：'+value);else openManualCopy(value);
  }
 }
-function statusLabel(event){if(event.time_status==='booked')return'<span class="pill green">已订航班 · 当地时间</span>';if(event.time_status==='to_confirm'||event.time_status==='current_timetable_candidate')return'<span class="pill gold">待确认</span>';return'';}
+function statusLabel(event){if(event.time_status==='booked')return'<span class="pill green">已订航班 · 当地时间</span>';if((event.time_status==='to_confirm'||event.time_status==='current_timetable_candidate')&&!/待确认|待复核|临行复核/.test(compactTime(event.time_label)))return'<span class="pill gold">待确认</span>';return'';}
 function selectedShops(c){return[c.shop1,c.shop2].filter(x=>x&&x!=='none');}
-function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...x,place_ids:[...x.place_ids]}));const by=id=>events.find(x=>x.id===id);
+// Titles name the activity; routes, restaurant details and planning notes retain the specifics.
+const EVENT_TITLES={
+ byodoin_visit:'平等院 · 庭园与凤翔馆',uji_pilgrimage:'宇治川巡礼',
+ demachi_transfer:'前往出町',demachi_lunch:'午餐 · 出町',delta_visit:'鸭川三角洲',
+ kiyomizu_transfer:'前往清水寺',kiyomizu_visit:'清水寺赏枫',higashiyama_walk:'东山散步',
+ tofukuji_transfer:'前往东福寺',inari_transfer:'前往伏见稻荷',inari_lunch:'午餐 · 伏见稻荷',
+ inari_visit:'伏见稻荷 · 千本鸟居',osaka_transfer:'前往大阪酒店',
+ usj_app:'申请任天堂区域资格',usj_core:'任天堂区域 · 柯南4-D',usj_lunch:'午餐',usj_finish:'游玩收尾',
+ nara_transfer:'前往奈良公园',nara_lunch:'午餐 · 近铁奈良站',nara_day_return:'返回大阪酒店',
+ kobe_transfer:'前往生田神社',ikuta_visit:'生田神社巡礼',umeda_transfer:'返回大阪站',
+ sky_transfer:'前往蓝天大厦',sky_dinner:'晚餐 · 蓝天大厦B1',last_evening_return:'返店 · 整理行李',
+ airport_checkin:'T1值机、托运与出境'
+};
+function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...x,title:EVENT_TITLES[x.id]||x.title,place_ids:[...x.place_ids]}));const by=id=>events.find(x=>x.id===id);
  for(const ev of events.filter(ev=>ev.category==='flight')){
   const booking=PLAN.bookings.find(b=>b.id===ev.id);if(!booking)continue;
   const from=flightLocal(booking,'departure'),to=flightLocal(booking,'arrival');
@@ -51,7 +64,7 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
  }
  if(d.date==='2026-12-01'){
   if(c.ujiExtra==='tower'){by('uji_return').time_label='16:15—17:30';by('uji_return').title='经宇治桥回京都酒店';by('uji_return').place_ids=['uji_bridge','jr_uji','hotel_kyoto'];by('kyoto_rest').time_label='17:30—18:00';const opt=d.optional.find(o=>o.id==='tower_option');events=events.filter(x=>!opt.replaces_event_ids.includes(x.id));events.push({id:'tower_visit',time_label:'18:15—19:15',title:'京都塔《京吹》联动观景',category:'visit',place_ids:['kyoto_tower'],optional:true},{id:'tower_dinner',time_label:'19:15—20:15',title:'晚餐 · 京都站',category:'meal',place_ids:['kyoto_station'],optional:true});}
-  if(c.ujiExtra==='kotosaka'){const ev=by('uji_pilgrimage');ev.title='长椅→喜撰桥→朝雾桥→琴坂折返→两神社';ev.place_ids.splice(3,0,'kotosaka');ev.optionNote='琴坂往返约15—20分钟，包含在河岸游览时段内。';}
+  if(c.ujiExtra==='kotosaka'){const ev=by('uji_pilgrimage');ev.title='宇治川巡礼 · 琴坂';ev.place_ids.splice(3,0,'kotosaka');ev.optionNote='琴坂往返约15—20分钟，包含在河岸游览时段内。';}
   if(c.ujiExtra==='station'){by('uji_return').title='JR宇治 → 京都站';by('uji_return').place_ids=['jr_uji','kyoto_station'];const at=events.findIndex(x=>x.id==='kyoto_rest');events.splice(at,0,{id:'station_stage',time_label:'返店前',title:'京都站4F《宝岛》舞台短拍',category:'visit',place_ids:['kyoto_stage'],optional:true,condition:'预留15—20分钟拍照；晚到则直接返店。'});}
   if(c.byodoinInterior)by('byodoin_visit').optionNote='内部参拜以现场可入场时段为准，须在12:10前结束。';
  }
@@ -72,7 +85,7 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
    if(c.yasakaBrief){by('gion_dinner_walk').title='八坂神社 → 晚餐';by('gion_dinner_walk').place_ids=['yasaka_shrine'];by('gion_dinner_walk').optionNote='夜枫延迟时省去八坂神社。';}
   }
  }
- if(d.date==='2026-12-04'){if(c.usjExtra)by('usj_core').optionNote='按等候时间与体力加项目，保留午饭和休息，19:00前结束。';if(c.kinopio){by('usj_lunch').title='午餐 · キノピオ・カフェ';by('usj_lunch').optionNote='需单独取得餐厅资格，否则选原午餐；用餐45—60分钟，可能超过¥2,500。';}}
+ if(d.date==='2026-12-04'){by('usj_transfer').condition='正式开园前45—60分钟到入口；酒店至入口约50—70分钟。';if(c.usjExtra)by('usj_core').optionNote='按等候时间与体力加项目，保留午饭和休息，19:00前结束。';if(c.kinopio){by('usj_lunch').title='午餐 · キノピオ・カフェ';by('usj_lunch').optionNote='需单独取得餐厅资格，否则选原午餐；用餐45—60分钟，可能超过¥2,500。';}}
  if(d.date==='2026-12-05'){by('anime_shopping').place_ids=selectedShops(c);by('nippombashi_arrival').place_ids=[c.shop1];by('anime_shopping').title=(c.shop2==='none'?'一家重点店':'两家店')+' · 日本桥';by('anime_shopping').optionNote='含15—20分钟休息。';}
  if(d.date==='2026-12-06'&&c.kobeAfternoon==='harbor'){
   events=events.filter(ev=>ev.id!=='umeda_shop');
@@ -113,11 +126,11 @@ function effectiveRoute(d){const c=choice(d);let nodes=d.route_stop_ids.map((id,
 }
 
 function optionalControls(d){if(!d.optional.length&&d.date!=='2026-12-05')return'';const c=choice(d);let fields='';
- if(d.date==='2026-12-01')fields=`<p class="small">可选加一项，保留休息时间。</p>${[['none','保持原行程','16:45—17:45宇治萨莉亚晚餐，约19:00返店。'],['kotosaka','琴坂参道','原河岸时段内换出15—20分钟，朝雾桥东端向南折返，不延后登山。'],['station','京都站4F《宝岛》舞台','晚餐后经过京都站，有15—20分钟余量才拍；约19:00—19:30返店。'],['tower','京都塔《京吹》联动','16:15返京都 → 酒店休息 → 18:15观景 → 19:15晚饭；替换宇治晚餐，20:30—21:00返店。']].map(([val,label,rule])=>`<label class="option-row"><input type="radio" name="ujiExtra" data-choice="ujiExtra" value="${val}" ${c.ujiExtra===val?'checked':''}>${label}<small>${rule}</small></label>`).join('')}<label class="option-row"><input type="checkbox" data-choice="byodoinInterior" ${c.byodoinInterior?'checked':''}>凤凰堂内部参拜<small>以现场可入场时段为准，12:10前结束。</small></label>`;
+ if(d.date==='2026-12-01')fields=`<p class="small">最多加选一项。</p>${[['none','保持原行程','萨莉亚晚餐 · 约19:00返店。'],['kotosaka','琴坂参道','往返15—20分钟，替换部分河岸游览，不延后上山。'],['station','京都站4F《宝岛》舞台','晚餐后短拍15—20分钟；约19:00—19:30返店。'],['tower','京都塔《京吹》联动','替换宇治晚餐；20:30—21:00返店。']].map(([val,label,rule])=>`<label class="option-row"><input type="radio" name="ujiExtra" data-choice="ujiExtra" value="${val}" ${c.ujiExtra===val?'checked':''}>${label}<small>${rule}</small></label>`).join('')}<label class="option-row"><input type="checkbox" data-choice="byodoinInterior" ${c.byodoinInterior?'checked':''}>凤凰堂内部参拜<small>以现场可入场时段为准，12:10前结束。</small></label>`;
  if(d.date==='2026-12-02')fields=`<fieldset class="night-options"><legend>夜间安排</legend>${[['night','高台寺夜枫','17:15—18:30参拜，20:45—21:15返店。'],['skip','取消夜枫','休息半小时后吃晚饭、返店，同时省去八坂神社。']].map(([value,label,note])=>`<label class="option-row"><input type="radio" name="kodaijiPlan" data-choice="kodaijiPlan" value="${value}" ${c.kodaijiPlan===value?'checked':''}>${label}<small>${note}</small></label>`).join('')}</fieldset><label class="option-row"><input type="checkbox" data-choice="yasakaBrief" ${c.yasakaBrief?'checked':''} ${c.kodaijiPlan==='skip'?'disabled':''}>八坂神社顺路短停<small>仅夜枫准时结束且体力有余；包含在晚饭前步行时段。</small></label>`;
  if(d.date==='2026-12-04')fields=`<label class="option-row"><input type="checkbox" data-choice="usjExtra" ${c.usjExtra?'checked':''}>第二项任天堂设施／其他项目<small>看实时等候和体力；马里奥赛车与咚奇刚择一优先。</small></label><label class="option-row"><input type="checkbox" data-choice="kinopio" ${c.kinopio?'checked':''}>午餐改为Kinopio’s Cafe<small>需单独取得餐厅资格；部分餐品超预算，不合适时选原午餐。</small></label>`;
- if(d.date==='2026-12-05'){const stores=['animate','surugaya','potato','surugaya_main'].map(id=>[id,PLACE[id].name]);fields=`<p class="small">总共1—2家；晚到只留一家。替换店铺后，以实时地图核对进出顺序。</p><label class="small">第一家重点店${select('shop1',c.shop1,stores)}</label><label class="small">第二家${select('shop2',c.shop2,[['none','不加第二家'],...stores.filter(([id])=>id!==c.shop1)])}</label>`;}
- if(d.date==='2026-12-06')fields=`<fieldset class="night-options"><legend>下午安排</legend>${[['umeda','梅田购物','一家重点逛，15:30结束。'],['harbor','神户港喝咖啡','替换梅田购物 · 13:10—14:30含往返海边，14:30—15:30回大阪；随后休息、蓝天大厦和晚饭。']].map(([value,label,note])=>`<label class="option-row"><input type="radio" name="kobeAfternoon" data-choice="kobeAfternoon" value="${value}" ${c.kobeAfternoon===value?'checked':''}>${label}<small>${note}</small></label>`).join('')}</fieldset>${c.kobeAfternoon==='umeda'?`<label class="small">重点店${select('umedaMain',c.umedaMain,[['nintendo_osaka','Nintendo OSAKA'],['pokemon_osaka','Pokémon Center Osaka']])}</label><label class="option-row"><input type="checkbox" data-choice="umedaSecond" ${c.umedaSecond?'checked':''}>另一家短看10—15分钟<small>包含在总购物60—75分钟内；长队就省。</small></label>`:'<p class="small">15:30—16:00休息，19:30—20:00返店；交通或排队延误时省去咖啡。</p>'}`;
+ if(d.date==='2026-12-05'){const stores=['animate','surugaya','potato','surugaya_main'].map(id=>[id,PLACE[id].name]);fields=`<p class="small">选1—2家，晚到只留一家。</p><label class="small">第一家重点店${select('shop1',c.shop1,stores)}</label><label class="small">第二家${select('shop2',c.shop2,[['none','不加第二家'],...stores.filter(([id])=>id!==c.shop1)])}</label>`;}
+ if(d.date==='2026-12-06')fields=`<fieldset class="night-options"><legend>下午安排</legend>${[['umeda','梅田购物','一家重点逛，15:30结束。'],['harbor','神户港喝咖啡','替换梅田购物；14:30从三宫返大阪。']].map(([value,label,note])=>`<label class="option-row"><input type="radio" name="kobeAfternoon" data-choice="kobeAfternoon" value="${value}" ${c.kobeAfternoon===value?'checked':''}>${label}<small>${note}</small></label>`).join('')}</fieldset>${c.kobeAfternoon==='umeda'?`<label class="small">重点店${select('umedaMain',c.umedaMain,[['nintendo_osaka','Nintendo OSAKA'],['pokemon_osaka','Pokémon Center Osaka']])}</label><label class="option-row"><input type="checkbox" data-choice="umedaSecond" ${c.umedaSecond?'checked':''}>另一家短看10—15分钟<small>包含在总购物60—75分钟内；长队就省。</small></label>`:''}`;
 
  return fields;
 }

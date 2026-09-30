@@ -41,7 +41,7 @@ function eventCard(d,ev,shownPhotos=new Set()){
  ${ev.id==='kodaiji_night'?`<p class="night-facts">17:00亮灯 · ¥800 / 人 <span>购票待确认</span></p><details class="event-detail"><summary>参拜详情</summary><div class="detail-body"><p>游览约60—75分钟，排队另计。若稍有延迟，18:45前离寺，省去八坂神社并顺延晚餐。</p><p>17:45仍未入场、预计排队超过30分钟，或天气差、明显疲劳时，取消夜枫，直接吃饭。</p><p>2026/10/23—12/13，17:00亮灯；21:30停止入场，22:00闭门。两人门票合计¥1,600。昼夜不清场，离场后同票不能再入。</p><p>${external('活动官网 ↗','https://www.kodaiji.com/saiji.html')} · ${external('票价 ↗','https://www.kodaiji.com/haikan.html')}</p></div></details>`:''}
  ${foodRows.length?`<details class="event-detail"><summary>${isRest?'茶歇详情':'餐厅详情'}</summary><div class="detail-body">${isMeal&&ev.condition?`<p>${e(ev.condition)}</p>`:''}${foodRows.map(r=>foodRow(d,r)).join('')}</div></details>`:''}
  ${foodSuggestions(d,ev.id)}
- ${ev.id==='usj_finish'?'<p class="condition">19:00前结束普通票设施体验。19:00—22:00 Amex活动设施及部分餐饮需凭证，19:00并非统一离园时间。</p>':''}
+ ${ev.id==='usj_finish'?'<p class="condition">18:00后预留缓冲，19:00前结束普通票设施体验。19:00—22:00 Amex活动设施及部分餐饮需凭证，19:00并非统一离园时间。</p>':''}
  </div></article>`;
 }
 function mealRows(d,ev){
