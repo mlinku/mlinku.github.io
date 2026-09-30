@@ -19,12 +19,12 @@ const SHOT_COPY={
  'demachi-west-gate':{scene:'宣传PV里的商店街西入口；招牌与建筑有改绘。',note:'从寺町通一侧仰拍，把入口招牌与左侧建筑收入画面；店招以现场为准。'},
  'demachi-fish':{scene:'官方主视觉里的商店街吊鱼与拱廊。',note:'进拱廊后找吊鱼和屋顶纵深；构图不完全一致，勿堵店铺通道。'},
  'delta-tamako':{note:'找东侧高野川的飞石与下河台阶，对照石块排列。雨天或水量大时留在岸边拍。'},
- 'delta-kon':{note:'从贺茂川侧飞石朝东拍中洲，和玉子告白图分开找角度。河岸有改绘，沿用原停留时间。'},
- 'kiyomizu-conan':{scene:'第927—928集清水寺与新兰剧情；亦见于《迷宫的十字路》。',note:'到本堂舞台认屋顶与木栏杆。定位为本堂参考点，不是精确合影栏杆。',caption:'官方上映会宣传视觉，非动画单帧；两图角度不同。'},
+ 'delta-kon':{note:'从贺茂川侧飞石朝东拍中洲，和玉子告白图分开找角度。河岸有改绘。'},
+ 'kiyomizu-conan':{scene:'第927—928集清水寺与新兰剧情；亦见于《迷宫的十字路》。',note:'到本堂舞台认屋顶与木栏杆。定位为本堂参考点，不是精确合影栏杆。',caption:'官方上映会宣传视觉，非动画单帧；两图视角不同。'},
  'senren-sannenzaka':{note:'在玩家标点附近，沿街对照石板路与两侧屋檐；店名有改写，顺路拍即可。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
  'senren-ninenzaka':{note:'在二年坂南端附近找右侧店铺转角、屋檐与弯路；别只在台阶中央找。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
  'conan-tsutenkaku':{note:'晚饭时从地面拍通天阁外观。塔顶视角无法在街面复刻，不另加登塔。',caption:'同建筑、不同视角；用于辨认塔体。'},
- 'conan-ebisubashi':{scene:'第763—764集《恋爱的暗号》，平次在戎桥调查。',note:'桥面找弧形栏杆与南侧店招；动画有改绘，广告可能变化。沿用19:20—19:40短拍窗口。'},
+ 'conan-ebisubashi':{scene:'第763—764集《恋爱的暗号》，平次在戎桥调查。',note:'桥面找弧形栏杆与南侧店招；动画有改绘，广告可能变化。'},
  'senren-ikuta':{note:'在拝殿前中轴稍侧处，对照屋顶、红柱与狛犬。游戏把楼房改成树木，不必追求完全重合。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'}
 };
 function shotCard(p,context='page'){
@@ -34,7 +34,7 @@ function shotCard(p,context='page'){
   <p class="shot-scene">${e(copy.scene||p.scene)}</p>
   <div class="shot-pair">${shotImage(p,'real')}${shotImage(p,'anime')}</div>
   ${copy.caption||p.match_note?`<p class="shot-caption">${e(copy.caption||p.match_note)}</p>`:''}
-  <div class="shot-direction"><span>现场找位</span><p>${e(copy.note||p.shooting_note)}</p></div>
+  <div class="shot-direction"><span>拍摄位置</span><p>${e(copy.note||p.shooting_note)}</p></div>
   <p class="shot-print-coordinate">地点参考：${coords?e(coords.lat+', '+coords.lng)+' · '+e(coords.precision):'坐标待核准'}</p>
   <div class="shot-actions">${external(icon('pin')+'地图',pointMap(p),'btn primary')}${btn(icon('copy')+'复制日文名','copy',`data-copy="${e(p.name_ja||PLACE[p.place_ids[0]]?.name_ja||p.title)}" aria-label="复制${e(p.title)}日文名"`,'small')}${event&&context==='page'?`<a class="shot-return" href="#day/${p.date}/timeline/${event.id}" data-nav aria-label="返回${e(event.time_label)}的行程">回到行程 ${icon('arrow')}</a>`:''}</div>
   <details class="shot-evidence"><summary>说明、坐标与来源</summary><div>${Object.keys(copy).length?`<div class="shot-background"><p>${e(p.scene)}</p><p>${e(p.shooting_note)}</p>${p.match_note?`<p>${e(p.match_note)}</p>`:''}</div>`:''}${coords?`<p><strong>${coords.lat}, ${coords.lng}</strong><br>${e(coords.precision)}</p><div class="evidence-actions">${btn('复制坐标','copy',`data-copy="${coords.lat}, ${coords.lng}"`,'small')}${coords.source_url?external('定位依据 ↗',coords.source_url):''}</div>`:'<p>坐标待核准，当前只按地点名称搜索。</p>'}${p.real?.source_url?`<p>实景：${e(p.real.credit||'原作者')} · ${external('来源 ↗',p.real.source_url)}</p>`:''}${p.anime?.source_url?`<p>作品画面：${e(p.anime.credit||'作品权利方')} · ${external('来源 ↗',p.anime.source_url)}</p>`:''}${(p.sources||[]).map(s=>`<p>${external(e(s.title)+' ↗',s.url)}</p>`).join('')}<p>历史图片仅供私人巡礼参考，现场可能变化。</p></div></details>
@@ -48,10 +48,10 @@ function pilgrimagePage(d){
 
  <div class="pilgrimage-layout"><nav class="shot-index" aria-label="巡礼点快捷跳转"><p>今天的巡礼</p>${groups.map(section=>`<div class="scene-index-group"><span>${e(section.short)}</span>${section.scenePoints.map(p=>`<a href="#day/${d.date}/pilgrimage/${p.id}" data-nav data-shot-index="${p.id}" title="${e(p.title)}" class="${state.checks[shotKey(p)]?'complete':''}" ${sectionTarget==='shot-'+p.id?'aria-current="location"':''}><span>${String(main.indexOf(p)+1).padStart(2,'0')}</span><span>${e(p.title)}</span><small aria-label="已打卡" ${state.checks[shotKey(p)]?'':'hidden'}>✓</small></a>`).join('')}</div>`).join('')}<a href="#day/${d.date}/timeline" data-nav class="index-return">← 当天行程</a></nav>
  <div class="shot-mobile-jump"><label for="shot-jump">跳到点位</label><select id="shot-jump" data-shot-jump="${d.date}"><option value="">选择巡礼点…</option>${groups.map(section=>`<optgroup label="${e(section.short)}">${section.scenePoints.map(p=>`<option value="${p.id}" ${sectionTarget==='shot-'+p.id?'selected':''}>${String(main.indexOf(p)+1).padStart(2,'0')} · ${e(p.title)}</option>`).join('')}</optgroup>`).join('')}</select></div>
- <div class="shot-list">${groups.map(section=>`<section class="scene-section"><div class="scene-section-heading"><h3>${e(section.name)}</h3></div>${section.scenePoints.map(p=>shotCard(p)).join('')}</section>`).join('')}
- ${optional.length?`<details class="optional-shots"><summary>未启用的可选点 <small>${optional.length}处</small></summary><p class="map-note">只作参考；在“调整今天”启用后才加入行程。</p>${optional.map(p=>shotCard(p)).join('')}</details>`:''}
- ${coverage.length?`<details class="shot-coverage"><summary>其他点位核对结果</summary>${coverage.map(p=>`<p><strong>${e(p.title)}</strong> · ${e(p.note)}</p>`).join('')}</details>`:''}
- <div class="day-end"><span>活动与打卡进度分别保存</span>${btn(icon('reset')+'重置当天进度','reset-day','','text-button')}</div></div></div></section>`;
+ <div class="shot-list">${groups.map(section=>`<section class="scene-section"><div class="scene-section-heading"><h3>${e(section.name.split(" · ")[0])}</h3></div>${section.scenePoints.map(p=>shotCard(p)).join('')}</section>`).join('')}
+ ${optional.length?`<details class="optional-shots"><summary>可选点位 <small>${optional.length}处</small></summary><p class="map-note">可在“调整今天”加入行程。</p>${optional.map(p=>shotCard(p)).join('')}</details>`:''}
+ ${coverage.length?`<details class="shot-coverage"><summary>其他点位说明</summary>${coverage.map(p=>`<p><strong>${e(p.title)}</strong> · ${e(p.note)}</p>`).join('')}</details>`:''}
+ <div class="day-end">${btn(icon('reset')+'重置当天进度','reset-day','','text-button')}</div></div></div></section>`;
 }
 function pilgrimageEventLinks(d,ev){
  const points=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p));
@@ -65,7 +65,7 @@ function openShotZoom(id,kind){
  let dlg=document.getElementById('shot-dialog');
  if(!dlg){dlg=document.createElement('dialog');dlg.id='shot-dialog';dlg.className='shot-zoom-dialog';dlg.setAttribute('aria-labelledby','shot-zoom-title');document.body.append(dlg);dlg.addEventListener('click',ev=>{if(ev.target===dlg){const r=dlg.getBoundingClientRect();if(ev.clientX<r.left||ev.clientX>r.right||ev.clientY<r.top||ev.clientY>r.bottom)dlg.close();}});}
  const alreadyOpen=dlg.open;
- dlg.innerHTML=`<div class="dialog-top"><h2 id="shot-zoom-title">${e(p.title)}</h2><button class="btn icon-button" data-action="shot-close" aria-label="关闭放大图">${icon('close')}</button></div><div class="zoom-switch" role="group" aria-label="切换对照图片">${['real','anime'].map(k=>`<button data-action="shot-zoom" data-shot="${e(p.id)}" data-kind="${k}" aria-pressed="${kind===k}">${k==='real'?'实景':'作品画面'}</button>`).join('')}</div><img src="${img.src}" alt="${e(p.title)}${kind==='real'?'实景':'作品画面'}" width="${img.width||800}" height="${img.height||450}"><p>${e(img.credit||'')} · ${external('原始来源 ↗',img.source_url)}</p>`;
+ dlg.innerHTML=`<div class="dialog-top"><h2 id="shot-zoom-title">${e(p.title)}</h2><button class="btn icon-button" data-action="shot-close" aria-label="关闭放大图">${icon('close')}</button></div><div class="zoom-switch" role="group" aria-label="切换对照图片">${['real','anime'].map(k=>`<button data-action="shot-zoom" data-shot="${e(p.id)}" data-kind="${k}" aria-pressed="${kind===k}">${k==='real'?'实景':'作品画面'}</button>`).join('')}</div><img src="${img.src}" alt="${e(p.title)}${kind==='real'?'实景':'作品画面'}" width="${img.width||800}" height="${img.height||450}"><p>${e(img.credit||'')} · ${external('图片来源 ↗',img.source_url)}</p>`;
  if(!alreadyOpen)dlg.showModal();else dlg.querySelector('[aria-pressed="true"]')?.focus({preventScroll:true});
 }
 document.addEventListener('click',ev=>{const t=ev.target.closest('[data-action]');if(t?.dataset.action==='shot-zoom')openShotZoom(t.dataset.shot,t.dataset.kind);if(t?.dataset.action==='shot-close')document.getElementById('shot-dialog').close();});

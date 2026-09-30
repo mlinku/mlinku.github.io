@@ -1000,7 +1000,7 @@
           "id": "arrival_transfer",
           "time_label": "16:00 落地后",
           "time_status": "planning_window",
-          "title": "入境、取行李、兑票候车、HARUKA往京都",
+          "title": "入境取行李 → HARUKA往京都",
           "place_ids": [
             "kix",
             "kyoto_station"
@@ -1011,7 +1011,7 @@
           "id": "checkin_kyoto",
           "time_label": "约19:00—20:00",
           "time_status": "planning_window",
-          "title": "入住TUNE",
+          "title": "入住 · TUNE STAY KYOTO",
           "place_ids": [
             "hotel_kyoto"
           ],
@@ -1056,9 +1056,9 @@
             "晚餐",
             "备选",
             "名代とんかつ かつくら 京都ポルタ店",
-            "看菜单，控制在 ¥2,500 内",
+            "¥2,500以内",
             "京都站大楼 11 楼",
-            "不要只在地下 Porta 找。参考 11:00—22:00，末点21:30；无长队才选。",
+            "位于站楼11楼，非地下街。参考11:00—22:00，最后点餐21:30；长队时换店。",
             "https://www.katsukura.jp/shops/porta/"
           ]
         ],
@@ -1148,12 +1148,12 @@
           "id": "daikichi_visit",
           "time_label": "14:30—15:45",
           "time_status": "planning_window",
-          "title": "大吉山往返，含山顶拍照与休息",
+          "title": "大吉山 · 山顶拍照与休息",
           "place_ids": [
             "daikichi"
           ],
           "category": "walk",
-          "condition": "天气、路况和体力合适；争取16:00前下山"
+          "condition": "天气、路况与体力合适时登山，计划16:00前下山。"
         },
         {
           "id": "uji_rest",
@@ -1294,7 +1294,7 @@
             "サイゼリヤ 宇治里尻店",
             "预算 ¥700–1,200",
             "宇治里尻77",
-            "参考11:00—24:00。用餐后从JR宇治回京都；若午餐已在这里吃，可换附近简餐。",
+            "营业参考11:00—24:00。",
             "https://shop.saizeriya.co.jp/sz_restaurant/spot/detail?code=0524",
             "saizeriya_uji"
           ],
@@ -1313,7 +1313,7 @@
             "place": "nakamura",
             "label": "甜品备选 · 取消登山时考虑",
             "title": "中村藤吉抹茶芭菲",
-            "text": "本店参考10:00—17:30，16:00截止受理，可能提前收号。正常登山日不预排下山后吃；若因雨或疲劳取消登山，可把14:30后的空档用于休息与芭菲。等候超过20分钟就省，保留返程余量。",
+            "text": "本店参考10:00—17:30，16:00截止受理，可能提前收号。取消登山时，可在14:30后安排芭菲；登山后不再安排。排队超过20分钟则放弃。",
             "budget": "价格待确认，以当天菜单为准",
             "source": "https://tokichi.jp/pages/stores",
             "event_id": "daikichi_visit"
@@ -1325,7 +1325,7 @@
             "晚餐",
             "首选",
             "名代とんかつ かつくら 京都ポルタ店",
-            "看菜单，控制在 ¥2,500 内",
+            "¥2,500以内",
             "京都站大楼 11 楼",
             "京都塔方案：19:15—20:15用餐。",
             "https://www.katsukura.jp/shops/porta/"
@@ -1581,7 +1581,7 @@
         "optional": [
           {
             "place": "crepe",
-            "label": "候选店待确认 · 不在主线",
+            "label": "候选店 · 待确认",
             "title": "新京极抹茶布蕾可丽饼",
             "text": "取消夜枫且仍有体力、已到河原町一带时再考虑；先确认新京极店营业，不挤占东山休息。配图为品牌产品。",
             "budget": "价格与新京极店营业时间待确认",
@@ -1806,13 +1806,14 @@
           "id": "usj_transfer",
           "time_label": "待12/4正式开园时间确认",
           "time_status": "to_confirm",
-          "title": "开园前45—60分钟到入口；门到门交通预算50—70分钟",
+          "title": "前往USJ",
           "place_ids": [
             "hotel_osaka",
             "jr_shinimamiya",
             "usj"
           ],
-          "category": "transport"
+          "category": "transport",
+          "condition": "正式开园前45—60分钟到入口；酒店至入口约50—70分钟，离店时间待开园时间确认。"
         },
         {
           "id": "usj_app",
@@ -1838,7 +1839,7 @@
           "id": "usj_lunch",
           "time_label": "午间，按场次调整",
           "time_status": "planning_window",
-          "title": "坐下吃午饭45—60分钟",
+          "title": "午餐 · 休息45—60分钟",
           "place_ids": [
             "usj"
           ],
@@ -1848,7 +1849,7 @@
           "id": "usj_rest",
           "time_label": "下午",
           "time_status": "planning_window",
-          "title": "坐下休息约30分钟",
+          "title": "休息 · 约30分钟",
           "place_ids": [
             "usj"
           ],
@@ -1926,7 +1927,7 @@
             "午餐",
             "备选",
             "ユニバーサル・スタジオ・ジャパン 園内レストラン",
-            "¥1,000–2,500 目标预算",
+            "预算 ¥1,000–2,500",
             "园内当日营业餐厅",
             "店名待现场决定，优先有座位、队列合适的店；具体菜单待确认。",
             ""
@@ -1944,9 +1945,9 @@
             "晚餐",
             "首选",
             "新今宮駅 周辺の飲食店",
-            "¥1,000–2,500 目标预算",
+            "预算 ¥1,000–2,500",
             "离园后，回酒店顺路",
-            "具体餐厅未指定；选顺路有座位简餐，不为找店绕路。",
+            "顺路选有座位的简餐。",
             ""
           ],
           [
@@ -2019,7 +2020,7 @@
           "id": "nara_station_walk",
           "time_label": "13:00—13:30",
           "time_status": "planning_window",
-          "title": "往近铁奈良站附近走",
+          "title": "前往近铁奈良站",
           "place_ids": [
             "todaiji",
             "kintetsu_nara"
@@ -2030,7 +2031,7 @@
           "id": "nara_lunch",
           "time_label": "13:30—14:15/14:30",
           "time_status": "planning_window",
-          "title": "午饭和坐下休息45—60分钟",
+          "title": "午餐 · 休息45—60分钟",
           "place_ids": [
             "kintetsu_nara"
           ],
@@ -2072,7 +2073,7 @@
           "id": "dotonbori_walk",
           "time_label": "18:00—18:20",
           "time_status": "planning_window",
-          "title": "往道顿堀晚饭地点走",
+          "title": "前往道顿堀",
           "place_ids": [
             "dotonbori"
           ],
@@ -2092,7 +2093,7 @@
           "id": "glico_photo",
           "time_label": "19:20—19:40左右",
           "time_status": "planning_window",
-          "title": "格力高短拍，然后返程",
+          "title": "格力高合影",
           "place_ids": [
             "glico"
           ],
@@ -2250,7 +2251,7 @@
           "id": "kobe_lunch",
           "time_label": "12:15—13:10",
           "time_status": "planning_window",
-          "title": "走回三宫一带午饭",
+          "title": "午餐 · 三宫",
           "place_ids": [
             "sannomiya"
           ],
@@ -2283,7 +2284,7 @@
           "id": "umeda_rest",
           "time_label": "15:30—16:00",
           "time_status": "planning_window",
-          "title": "坐下休息",
+          "title": "休息",
           "place_ids": [],
           "category": "rest"
         },
@@ -2301,12 +2302,12 @@
           "id": "sky_visit",
           "time_label": "16:30—17:45",
           "time_status": "planning_window",
-          "title": "入场、乘梯、傍晚至夜景",
+          "title": "梅田蓝天大厦 · 日落与夜景",
           "place_ids": [
             "sky"
           ],
           "category": "visit",
-          "condition": "能见度及体力允许；16:47日落仅目标参考，不保证看到"
+          "condition": "天气差或疲劳时可取消。"
         },
         {
           "id": "sky_dinner",
@@ -2388,7 +2389,7 @@
             "三ノ宮駅 周辺の飲食店",
             "¥1,000–2,500",
             "三宫站附近",
-            "未指定备选店；满座时按通用规则选附近有空位、菜单合预算的简餐。",
+            "附近简餐，选有空位且符合预算的店。",
             ""
           ],
           [
@@ -2406,14 +2407,14 @@
             "梅田スカイビル 地下飲食店",
             "¥1,000–2,500",
             "B1或回大阪站途中",
-            "未指定店；选有空位、菜单合预算的简餐，不再上LUCUA高层找餐厅。",
+            "附近简餐，选有空位且符合预算的店，不折返LUCUA。",
             ""
           ]
         ],
         "optional": [
           {
             "place": "starbucks_meriken",
-            "label": "替换方案 · 不与梅田购物叠加",
+            "label": "替换梅田购物",
             "title": "神户港星巴克",
             "text": "午饭后去海边喝咖啡，替换整段梅田购物。13:10—14:30含往返海边，14:30—15:30回大阪；保留休息、蓝天大厦和晚饭。",
             "budget": "饮品按当天菜单；不另加正餐",
@@ -2525,7 +2526,7 @@
     "餐厅临时休业、菜单与Nintendo当日入店规则。",
     "12/6蓝天大厦天气、营业、票价及购票状态。",
     "12/7有效南海班表、HX617航司通知与登机口。",
-    "高台寺12/2天气、叶况、临时开放调整和排队；夜枫是本次唯一安排。",
+    "12/2高台寺：查看天气、叶况与排队情况。",
     "USJ仍暂列12/4；12/4与12/5正式营业时间公布后，在购票前比较，尚未实施换日。"
   ],
   "visualization_rules": [
