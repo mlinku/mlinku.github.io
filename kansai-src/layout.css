@@ -76,3 +76,27 @@
 @media (prefers-reduced-motion:reduce) {
   *,*::before,*::after {scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
+
+/* Food suggestions share one photo/text rhythm; no extra itinerary switches. */
+.food-idea{margin-top:16px;padding-top:16px;border-top:1px solid var(--line);min-width:0}
+.food-idea.with-photo{display:grid;grid-template-columns:176px minmax(0,1fr);gap:18px;align-items:start}
+.food-idea h4{margin:6px 0;font-size:16px;line-height:1.6}
+.food-idea p{font-size:14px;line-height:1.85;margin:8px 0;overflow-wrap:anywhere}
+.food-idea .food-name{color:var(--muted);font-size:12px}
+.food-idea small{display:block;color:var(--muted);line-height:1.7}
+.food-idea-photo,.food-row-photo{width:100%;height:auto;aspect-ratio:4/3;border-radius:4px;overflow:hidden}
+.food-idea-photo img,.food-row-photo img{width:100%;height:100%;object-fit:cover}
+.food-idea-photo span{font-size:12px}
+.food-ideas .food-idea:first-child{margin-top:0;border-top:0;padding-top:0}
+.food-ideas .food-idea.with-photo{grid-template-columns:minmax(0,1fr)}
+.food-ideas .food-idea-photo{max-height:230px}
+.food-actions{display:flex;flex-wrap:wrap;align-items:center;margin-top:8px}
+.food-row-photo{max-width:240px;display:block;margin:12px 0}
+.flight-overview{padding:20px;margin-top:20px}
+#trip-map{margin-bottom:36px}
+.flight-heading{display:flex;align-items:baseline;gap:12px;margin-bottom:16px}
+.flight-heading h3{margin:0;font-size:17px}.flight-heading>span{font-size:13px;color:var(--muted)}
+.flight-grid>div>p{display:flex;justify-content:space-between;gap:12px}
+.flight-grid>div>p b{font-variant-numeric:tabular-nums;color:var(--text)}
+.flight-grid strong small{display:block;white-space:normal;font-size:12px;line-height:1.7}
+@media(max-width:720px){.food-idea.with-photo{grid-template-columns:minmax(0,1fr);gap:10px}.food-idea-photo{aspect-ratio:16/10}.flight-overview{padding:16px}.flight-grid>div>div{gap:10px}.flight-grid strong{font-size:22px}}

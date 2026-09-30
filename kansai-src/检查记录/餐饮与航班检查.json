@@ -1,0 +1,126 @@
+{
+  "date": "2026-09-30",
+  "layouts": [
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#overview",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#day/2026-12-01/timeline",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#day/2026-12-01/route",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#day/2026-12-02/timeline",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#day/2026-12-05/timeline",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#day/2026-12-06/timeline",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#day/2026-12-07/timeline",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#prep",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#overview",
+      "overflow": false,
+      "width": 1280
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#day/2026-12-01/timeline",
+      "overflow": false,
+      "width": 1280
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#day/2026-12-01/route",
+      "overflow": false,
+      "width": 1280
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#day/2026-12-02/timeline",
+      "overflow": false,
+      "width": 1280
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#day/2026-12-05/timeline",
+      "overflow": false,
+      "width": 1280
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#day/2026-12-06/timeline",
+      "overflow": false,
+      "width": 1280
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#day/2026-12-07/timeline",
+      "overflow": false,
+      "width": 1280
+    },
+    {
+      "brokenVisibleImages": [],
+      "hasContent": true,
+      "hash": "#prep",
+      "overflow": false,
+      "width": 1280
+    }
+  ],
+  "verified": [
+    "餐厅详情展开",
+    "可丽饼品牌图片加载",
+    "宇治午餐勾选刷新后保留并恢复原值",
+    "餐厅照片弹窗与地址",
+    "HX618去程、HX617返程",
+    "地图URL按日文名称与地址搜索"
+  ],
+  "photosAdded": 5
+}

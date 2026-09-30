@@ -17,7 +17,7 @@ const DayFlow={
 // Bind each original route occurrence, not just its place ID: return visits have different times.
 const ROUTE_EVENTS={
  '2026-11-30':['flight_out','flight_out','arrival_transfer','checkin_kyoto'],
- '2026-12-01':['uji_transfer','uji_transfer','uji_transfer','byodoin_visit','byodoin_visit','uji_pilgrimage','uji_pilgrimage','uji_pilgrimage','uji_pilgrimage','uji_pilgrimage','daikichi_visit','uji_return','uji_return','kyoto_rest'],
+ '2026-12-01':['uji_transfer','uji_transfer','uji_transfer','byodoin_visit','byodoin_visit','uji_lunch','uji_pilgrimage','uji_pilgrimage','uji_pilgrimage','uji_pilgrimage','uji_pilgrimage','daikichi_visit','uji_return','uji_return','kyoto_rest'],
  '2026-12-02':['demachi_transfer','demachi_visit','delta_visit','kiyomizu_transfer','kiyomizu_transfer','kiyomizu_visit','higashiyama_walk','higashiyama_walk','higashiyama_walk','higashiyama_walk','kodaiji_night','kyoto_night_return'],
  '2026-12-03':['checkout_kyoto','tofukuji_visit','inari_visit','luggage_pickup','osaka_transfer','osaka_transfer','osaka_transfer','checkin_osaka','shinsekai_dinner',null],
  '2026-12-04':['usj_transfer','usj_transfer','usj_core','usj_dinner'],
@@ -38,7 +38,7 @@ function timedRoute(d){
   let times=[eventTime(id)].filter(Boolean);
   if(i===0&&node.id.startsWith('hotel_')&&d.date!=='2026-12-07')times=[{text:d.departure_target||'待正式开园时间确认',label:'离店参考'}];
   if(i===nodes.length-1&&node.id.startsWith('hotel_'))times=[{text:returnTarget(d),label:d.date==='2026-11-30'?'入住目标':'返店目标'}];
-  if(d.date==='2026-12-01'&&node.original===14){times=[eventTime('kyoto_rest')];if(c.ujiExtra!=='tower')times.push({text:returnTarget(d),label:'晚饭后返店'});}
+  if(d.date==='2026-12-01'&&node.original===d.route_stop_ids.length){times=[eventTime('kyoto_rest')];if(c.ujiExtra!=='tower')times.push({text:returnTarget(d),label:'晚饭后返店'});}
   if(d.date==='2026-11-30'&&['hkg','kix'].includes(node.id))times=[flightTime('flight_out',node.id==='hkg'?'departure':'arrival')];
   if(d.date==='2026-12-07'){
    if(node.id==='hotel_osaka')times=[eventTime('checkout_osaka','退房离店')];

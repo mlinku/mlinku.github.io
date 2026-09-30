@@ -1514,5 +1514,65 @@
     "license": "原作者版权；私人行程对照引用",
     "width": 800,
     "height": 450
+  },
+  "kiku": {
+    "sight": "お肉ダイニング きく · 店铺介绍图",
+    "author": "e-NAVITA 店铺介绍",
+    "sourcePage": "https://www.navita.co.jp/s/21023071/",
+    "originalUrl": "https://www.navita.co.jp/files/topics/1378524_ext_38_0.jpg",
+    "local": "assets/food-kiku.jpg",
+    "width": 600,
+    "height": 400,
+    "license": "来源方版权所有；图示仅供门店／产品识别参考",
+    "date": "拍摄时间未标注",
+    "reviewedAt": "2026-09-30"
+  },
+  "nakamura": {
+    "sight": "中村藤吉本店 · 门店外观",
+    "author": "中村藤吉本店",
+    "sourcePage": "https://tokichi.jp/pages/stores",
+    "originalUrl": "https://tokichi.jp/cdn/shop/files/honten_57c357e1-259a-4bcb-b488-07406bfde4da.jpg?v=1682124303&width=1500",
+    "local": "assets/food-nakamura.jpg",
+    "width": 960,
+    "height": 617,
+    "license": "来源方版权所有；图示仅供门店／产品识别参考",
+    "date": "拍摄时间未标注",
+    "reviewedAt": "2026-09-30"
+  },
+  "eggtart": {
+    "sight": "安德鲁蛋挞 · 官网门店参考图",
+    "author": "アンドリューのエッグタルト",
+    "sourcePage": "https://eggtart.jp/shop/",
+    "originalUrl": "https://eggtart.jp/wp/wp-content/themes/eggtart/images/shop/osaka_nanba1.jpg",
+    "local": "assets/food-eggtart.jpg",
+    "width": 960,
+    "height": 640,
+    "license": "来源方版权所有；图示仅供门店／产品识别参考",
+    "date": "拍摄时间未标注",
+    "reviewedAt": "2026-09-30"
+  },
+  "starbucks_meriken": {
+    "sight": "星巴克神户美利坚公园店 · 外观",
+    "author": "Starbucks Coffee Japan",
+    "sourcePage": "https://store.starbucks.co.jp/detail-1432/",
+    "originalUrl": "https://d3vgbguy0yofad.cloudfront.net/store/images/img-concept-store-detail-1432-01.jpg",
+    "local": "assets/food-starbucks_meriken.jpg",
+    "width": 960,
+    "height": 640,
+    "license": "来源方版权所有；图示仅供门店／产品识别参考",
+    "date": "拍摄时间未标注",
+    "reviewedAt": "2026-09-30"
+  },
+  "crepe": {
+    "sight": "掛川抹茶布蕾可丽饼 · 品牌产品参考图",
+    "author": "たばねのし",
+    "sourcePage": "https://tabanenoshi.com/works/kakegawagreenteabrulee/",
+    "originalUrl": "https://tabanenoshi.com/wp-content/uploads/2023/01/250129_1.jpg",
+    "local": "assets/food-crepe.jpg",
+    "width": 640,
+    "height": 960,
+    "license": "来源方版权所有；品牌产品识别参考",
+    "date": "拍摄时间未标注",
+    "reviewedAt": "2026-09-30"
   }
 }
