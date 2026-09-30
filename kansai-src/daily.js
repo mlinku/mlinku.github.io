@@ -59,7 +59,7 @@ function foodRow(d,r){return `<article class="food-row"><span class="food-priori
 
 function routeTimeMarkup(times){return times.map(t=>`<div class="route-time"><strong>${e(compactTime(t.text))}</strong><span>${e(t.label==='同段共用'?'游览':t.label)}</span></div>`).join('');}
 function routePage(d){const groups=routeGroups(d);return `
- <div class="route-head" id="route-content"><h2>路线</h2><span>地点示意</span></div>
+ <div class="route-head" id="route-content"><h2>路线示意</h2></div>
 
  <div class="route-groups">${groups.map((group,g)=>`${g===0||groups[g-1].phase!==group.phase?`<h3 class="route-phase">${e(group.phase)}</h3>`:''}<section class="route-window" aria-labelledby="route-window-${g}"><header class="route-window-time" id="route-window-${g}">${routeTimeMarkup(group.times)}</header><ol class="route-stops" start="${group.stops[0].index+1}">${group.stops.map(s=>{
  const p=PLACE[s.id],extra=s.times.filter(t=>!group.times.some(common=>routeTimeKey(common)===routeTimeKey(t)));

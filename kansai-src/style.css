@@ -83,7 +83,7 @@ summary:hover {color:var(--red)}
 .day-card-theme {font-size:.81rem; color:var(--muted); min-height:42px}
 .card-practical {border-top:1px solid #f0e2ce; margin-top:12px; padding-top:9px; display:flex; flex-direction:column; gap:5px; font-size:.73rem; color:var(--muted); min-height:68px}
 .card-practical span:last-child {color:var(--accent); font-variant-numeric:tabular-nums}
-.card-enter {font-size:.77rem; color:var(--red); display:flex; justify-content:space-between; align-items:center; padding:8px 0 4px}
+.card-enter {font-size:.77rem; color:var(--red); display:flex; justify-content:flex-end; align-items:center; padding:8px 0 4px}
 .card-enter .icon {width:15px; height:15px}
 .trip-map-section {margin-top:54px; scroll-margin-top:20px}
 .map-layout {display:grid; grid-template-columns:minmax(0,1fr) 270px; gap:25px}
