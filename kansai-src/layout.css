@@ -120,6 +120,11 @@
  .trip-connections>div{padding:8px 0}
  .night-options{min-width:0}
  .checkin-address{font-size:14px;line-height:1.8}.checkin-address p{color:var(--muted);font-size:13px;margin:6px 0}
+ .event-content>.condition,.event-content>.selection-note{padding:0;border:0;background:transparent;color:var(--muted);line-height:1.8}
+ .route-transport{margin-top:24px}
+ .day-end{justify-content:flex-end}
+ .day-layout{margin-top:20px}
+ .day-support .support-card summary{min-height:48px}
  .card-cities,.card-practical,.card-enter,.heading-intensity,.toolbar-note,.route-head>span,.route-copy>small,.route-time>span,.return-label,.food-idea small,.pill,.eyebrow,.photo-credit,.progress-area{font-size:12px}
 }
 @media screen and (max-width:1024px){.map-layout{grid-template-columns:1fr}.google-map-preview{justify-self:center}}

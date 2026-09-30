@@ -1077,7 +1077,7 @@
       "intensity": "中等；登山增加疲劳",
       "overnight": "hotel_kyoto",
       "departure_target": "10:00",
-      "hotel_return_target": "默认19:30—20:00；加京都塔20:30—21:00",
+      "hotel_return_target": "约19:00；加京都塔20:30—21:00",
       "route_stop_ids": [
         "hotel_kyoto",
         "kyoto_station",
@@ -1092,6 +1092,7 @@
         "ujigami",
         "daikichi",
         "uji_bridge",
+        "saizeriya_uji",
         "jr_uji",
         "hotel_kyoto"
       ],
@@ -1127,8 +1128,7 @@
           "place_ids": [
             "kiku"
           ],
-          "category": "meal",
-          "condition": "等位超20分钟换萨莉亚；13:10左右继续巡礼。"
+          "category": "meal"
         },
         {
           "id": "uji_pilgrimage",
@@ -1164,51 +1164,61 @@
           "category": "rest"
         },
         {
-          "id": "uji_return",
-          "time_label": "16:15—17:30",
+          "id": "uji_dinner_walk",
+          "time_label": "16:15—16:45",
           "time_status": "planning_window",
-          "title": "经宇治桥回西岸，JR回京都酒店",
+          "title": "经宇治桥前往晚餐",
+          "category": "walk",
           "place_ids": [
-            "uji_bridge",
+            "uji_bridge"
+          ]
+        },
+        {
+          "id": "uji_saizeriya_dinner",
+          "time_label": "16:45—17:45",
+          "time_status": "planning_window",
+          "title": "晚餐 · 萨莉亚",
+          "category": "meal",
+          "place_ids": [
+            "saizeriya_uji"
+          ]
+        },
+        {
+          "id": "uji_return",
+          "time_label": "17:45—19:00",
+          "time_status": "planning_window",
+          "title": "JR宇治 → 京都酒店",
+          "place_ids": [
             "jr_uji",
+            "kyoto_station",
             "hotel_kyoto"
           ],
           "category": "transport"
         },
         {
           "id": "kyoto_rest",
-          "time_label": "17:30—18:00",
+          "time_label": "19:00起",
           "time_status": "planning_window",
           "title": "回酒店休息",
           "place_ids": [
             "hotel_kyoto"
           ],
           "category": "rest"
-        },
-        {
-          "id": "uji_default_dinner",
-          "time_label": "18:15—19:15",
-          "time_status": "planning_window",
-          "title": "京都站附近晚饭，之后返店",
-          "place_ids": [
-            "kyoto_station"
-          ],
-          "category": "meal"
         }
       ],
       "meals": {
         "lunch": {
-          "primary": "京うどん 三よしや",
-          "alternative": "平等院参道或宇治桥西侧有空位的普通简餐"
+          "primary": "お肉ダイニング きく",
+          "alternative": "宇治桥西侧有空位的简餐"
         },
         "dinner": {
-          "primary": "京都站附近かつくら或すき家",
-          "alternative": "附近简餐"
+          "primary": "サイゼリヤ 宇治里尻店",
+          "alternative": "宇治站周边简餐；或回京都站用餐"
         }
       },
       "transport_notes": [
         "JR京都—JR宇治往返；先西岸后东岸，再经宇治桥返回。",
-        "午饭不去东岸再跨回来；下山后通圓仅末点前才考虑。"
+        "下山经宇治桥回西岸吃晚餐，再从JR宇治返京都。"
       ],
       "optional": [
         {
@@ -1227,9 +1237,10 @@
             "kyoto_tower"
           ],
           "selection_group": "uji_extra",
-          "rule": "与琴坂原则上最多加一个；休息后有余力再去",
+          "rule": "替换宇治晚餐：16:15返京都，17:30—18:00酒店休息，18:15京都塔，19:15京都站晚饭；与琴坂、车站舞台择一。",
           "replaces_event_ids": [
-            "uji_default_dinner"
+            "uji_dinner_walk",
+            "uji_saizeriya_dinner"
           ],
           "time_label": "18:15—19:15观景→19:15—20:15晚饭→20:30—21:00返店"
         },
@@ -1248,7 +1259,7 @@
             "kyoto_stage"
           ],
           "selection_group": "uji_extra",
-          "rule": "与琴坂、京都塔择一；宇治返程到京都站较早且有15—20分钟余量才拍，晚到直接返店；保留17:30—18:00休息、默认晚饭和早归目标。"
+          "rule": "与琴坂、京都塔择一；宇治晚餐后经过京都站，有15—20分钟余量才短拍，约19:00—19:30返店。"
         }
       ],
       "fallback_rules": [
@@ -1264,37 +1275,37 @@
             "お肉ダイニング きく",
             "预算 ¥1,000–2,000",
             "宇治妙楽4-4，協栄ビル2F",
-            "京吹粉丝聚集的餐厅，并非作品取景点。到店看咖喱菜单；当前营业及价格临行复核。",
+            "京吹粉丝聚集的餐厅，非动画取景点。当前营业及咖喱价格临行复核；等位较久时可换附近简餐。",
             "https://www.pref.kyoto.jp/syokuloss/suishin88.html",
             "kiku"
           ],
           [
             "午餐",
             "备选",
+            "宇治橋 西岸の飲食店",
+            "¥1,000–2,500",
+            "宇治桥西侧",
+            "选附近有空位的简餐，晚餐保留萨莉亚。",
+            ""
+          ],
+          [
+            "晚餐",
+            "首选",
             "サイゼリヤ 宇治里尻店",
             "预算 ¥700–1,200",
             "宇治里尻77",
-            "咖喱店休息或长队时替换；参考11:00—24:00。若改在此吃早晚餐，就省京都晚餐与晚间加项，不吃两顿。",
+            "参考11:00—24:00。用餐后从JR宇治回京都；若午餐已在这里吃，可换附近简餐。",
             "https://shop.saizeriya.co.jp/sz_restaurant/spot/detail?code=0524",
             "saizeriya_uji"
           ],
           [
             "晚餐",
-            "首选",
-            "名代とんかつ かつくら 京都ポルタ店",
-            "看菜单，控制在 ¥2,500 内",
-            "京都站大楼 11 楼",
-            "默认18:15—19:15；京都塔启用后改为19:15—20:15。长队换简餐。",
-            "https://www.katsukura.jp/shops/porta/"
-          ],
-          [
-            "晚餐",
             "备选",
-            "すき家 烏丸七条店",
-            "¥700–1,200",
-            "真苧屋町 197",
-            "牛丼、定食或附近有空位简餐。",
-            "https://maps.sukiya.jp/jp/detail/970"
+            "宇治駅 周辺の飲食店",
+            "¥1,000–2,500",
+            "JR宇治站周边",
+            "选有空位的简餐；也可回京都站吃晚饭，再直接返店。",
+            ""
           ]
         ],
         "optional": [
@@ -1308,7 +1319,27 @@
             "event_id": "daikichi_visit"
           }
         ],
-        "along_route": {}
+        "along_route": {},
+        "tower_meals": [
+          [
+            "晚餐",
+            "首选",
+            "名代とんかつ かつくら 京都ポルタ店",
+            "看菜单，控制在 ¥2,500 内",
+            "京都站大楼 11 楼",
+            "京都塔方案：19:15—20:15用餐。",
+            "https://www.katsukura.jp/shops/porta/"
+          ],
+          [
+            "晚餐",
+            "备选",
+            "すき家 烏丸七条店",
+            "¥700–1,200",
+            "真苧屋町 197",
+            "牛丼、定食或附近有空位简餐。",
+            "https://maps.sukiya.jp/jp/detail/970"
+          ]
+        ]
       }
     },
     {

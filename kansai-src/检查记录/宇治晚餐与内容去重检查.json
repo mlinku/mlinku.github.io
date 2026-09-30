@@ -1,0 +1,265 @@
+{
+  "checkedAt": "2026-09-30T06:14:40.000Z",
+  "layouts": [
+    {
+      "date": "2026-11-30",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 390
+    },
+    {
+      "date": "2026-11-30",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 390
+    },
+    {
+      "date": "2026-12-01",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 390
+    },
+    {
+      "date": "2026-12-01",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 390
+    },
+    {
+      "date": "2026-12-02",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 390
+    },
+    {
+      "date": "2026-12-02",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 390
+    },
+    {
+      "date": "2026-12-03",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 390
+    },
+    {
+      "date": "2026-12-03",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 390
+    },
+    {
+      "date": "2026-12-04",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 390
+    },
+    {
+      "date": "2026-12-04",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 390
+    },
+    {
+      "date": "2026-12-05",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 390
+    },
+    {
+      "date": "2026-12-05",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 390
+    },
+    {
+      "date": "2026-12-06",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 390
+    },
+    {
+      "date": "2026-12-06",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 390
+    },
+    {
+      "date": "2026-12-07",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 390
+    },
+    {
+      "date": "2026-12-07",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 390
+    },
+    {
+      "date": "2026-11-30",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 1440
+    },
+    {
+      "date": "2026-11-30",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-01",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-01",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-02",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-02",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-03",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-03",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-04",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-04",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-05",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-05",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-06",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-06",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-07",
+      "view": "timeline",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 0,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-07",
+      "view": "route",
+      "oldPrompt": false,
+      "overflow": false,
+      "transportPanels": 1,
+      "width": 1440
+    }
+  ],
+  "ujiDinner": "16:45—17:45 萨莉亚宇治里尻店",
+  "towerReplacementVerified": true,
+  "defaultChoiceRestored": true,
+  "routeTransportOnly": true
+}
