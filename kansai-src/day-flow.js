@@ -1,3 +1,15 @@
+/* Shared presentation keeps selected plans consistent across overview and daily views. */
+function dayPresentation(d){
+ const info={...DETAILS[d.date]},c=choice(d);
+ if(d.date==='2026-12-02'&&c.kodaijiPlan==='skip'){
+  info.short='出町 · 东山';info.focus='《玉子市场》巡礼与清水寺赏枫。';
+  info.summary='出町、清水寺、东山散步';info.cover='kiyomizu';info.eyebrow='京都 · 出町 → 清水寺 → 东山';
+ }
+ if(d.date==='2026-12-01'&&c.ujiExtra==='tower')info.summary='平等院、河岸巡礼、京都塔';
+ if(d.date==='2026-12-06'&&c.kobeAfternoon==='harbor')info.summary='生田神社、海边咖啡、蓝天大厦';
+ return info;
+}
+
 /* Shared activity order for the timetable and scene references. */
 const DayFlow={
  forDay(d){

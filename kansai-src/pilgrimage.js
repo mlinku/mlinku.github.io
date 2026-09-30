@@ -8,7 +8,7 @@ function pointMap(p){return p.coordinates?mapURL(p.coordinates.lat+','+p.coordin
 function shotProgress(date){const points=pilgrimageDay(date).filter(pointEnabled);return {done:points.filter(p=>state.checks[shotKey(p)]).length,total:points.length};}
 function shotImage(p,kind){
  const img=p[kind],label=kind==='real'?'实景':'作品画面';
- return img?.src?`<button class="shot-image" data-action="shot-zoom" data-shot="${e(p.id)}" data-kind="${kind}" aria-label="放大${e(p.title)}${label}"><img src="${img.src}" alt="${e(p.title)} · ${label}" width="${img.width||800}" height="${img.height||450}" loading="lazy" decoding="async"><span>${label}<small>放大 ↗</small></span></button>`:`<div class="shot-missing"><strong>${label}待补</strong><span>${e(img?.note||'尚未找到可核对的图片')}</span></div>`;
+ return img?.src?`<button class="shot-image" data-action="shot-zoom" data-shot="${e(p.id)}" data-kind="${kind}" aria-label="放大${e(p.title)}${label}"><img src="${img.thumbnail||img.src}" alt="${e(p.title)} · ${label}" width="${img.width||800}" height="${img.height||450}" loading="lazy" decoding="async"><span>${label}<small>放大 ↗</small></span></button>`:`<div class="shot-missing"><strong>${label}待补</strong><span>${e(img?.note||'尚未找到可核对的图片')}</span></div>`;
 }
 // Concise field notes; the original descriptions remain in the existing disclosure.
 const SHOT_COPY={

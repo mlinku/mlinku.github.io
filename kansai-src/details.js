@@ -54,7 +54,9 @@ const DETAILS = {
         "位于站楼11楼，非地下街。参考11:00—22:00，最后点餐21:30；长队时换店。",
         "https://www.katsukura.jp/shops/porta/"
       ]
-    ]
+    ],
+    "cityLabel": "抵达京都",
+    "summary": "入住、简餐、休息"
   },
   "2026-12-01": {
     "short": "宇治巡礼",
@@ -205,7 +207,9 @@ const DETAILS = {
         "牛丼、定食或附近有空位简餐。",
         "https://maps.sukiya.jp/jp/detail/970"
       ]
-    ]
+    ],
+    "cityLabel": "宇治",
+    "summary": "平等院、河岸巡礼、大吉山"
   },
   "2026-12-02": {
     "short": "出町 · 东山夜枫",
@@ -345,7 +349,9 @@ const DETAILS = {
         "source": "https://www.shinkyogoku.or.jp/guide/",
         "event_id": "gion_dinner"
       }
-    ]
+    ],
+    "cityLabel": "京都东山",
+    "summary": "玉子市场、清水寺、高台寺"
   },
   "2026-12-03": {
     "short": "京都 → 大阪",
@@ -450,7 +456,9 @@ const DETAILS = {
     "extra": [
       "东福寺通天桥参考成人 ¥1,000，默认不叠加其他收费院落。",
       "晚饭后准备USJ门票App、充电宝和次晨早饭；通天阁只看外观。"
-    ]
+    ],
+    "cityLabel": "京都→大阪",
+    "summary": "东福寺、千本鸟居、新世界晚饭"
   },
   "2026-12-04": {
     "short": "USJ",
@@ -549,7 +557,9 @@ const DETAILS = {
       "普通票与早到不保证任天堂入场。未拿到资格转柯南及其他感兴趣体验，不整天盯手机等。",
       "马里奥赛车与咚奇刚择一优先；水世界按9/28资料，11/28—12/27停运，排除并临行复核。",
       "柯南4-D演出参考约30分钟，等候另算；购票状态、12/4场次与检修仍待确认。"
-    ]
+    ],
+    "cityLabel": "USJ",
+    "summary": "任天堂与柯南优先"
   },
   "2026-12-05": {
     "short": "奈良 · 日本桥",
@@ -674,7 +684,9 @@ const DETAILS = {
           "source": "https://eggtart.jp/shop/"
         }
       ]
-    }
+    },
+    "cityLabel": "奈良·大阪",
+    "summary": "看鹿、1—2家店、道顿堀"
   },
   "2026-12-06": {
     "short": "神户 · 梅田",
@@ -796,7 +808,9 @@ const DETAILS = {
         "source": "https://store.starbucks.co.jp/detail-1432/",
         "event_id": "kobe_lunch"
       }
-    ]
+    ],
+    "cityLabel": "神户·大阪",
+    "summary": "生田神社、购物、蓝天大厦"
   },
   "2026-12-07": {
     "short": "清晨返程",
@@ -843,7 +857,9 @@ const DETAILS = {
         "两家酒店均不含早餐；前晚备好面包／饭团／饮品。",
         ""
       ]
-    ]
+    ],
+    "cityLabel": "返回香港",
+    "summary": "南海到机场，香港航空返港"
   }
 };
 
