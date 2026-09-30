@@ -131,7 +131,7 @@ const DETAILS = {
         "午餐",
         "首选",
         "お肉ダイニング きく",
-        "计划 ¥1,000–2,000",
+        "预算 ¥1,000–2,000",
         "宇治妙楽4-4，協栄ビル2F",
         "京吹粉丝聚集的餐厅，并非作品取景点。到店看咖喱菜单；当前营业及价格临行复核。",
         "https://www.pref.kyoto.jp/syokuloss/suishin88.html",
@@ -141,7 +141,7 @@ const DETAILS = {
         "午餐",
         "备选",
         "サイゼリヤ 宇治里尻店",
-        "计划 ¥700–1,200",
+        "预算 ¥700–1,200",
         "宇治里尻77",
         "咖喱店休息或长队时替换；参考11:00—24:00。若改在此吃早晚餐，就省京都晚餐与晚间加项，不吃两顿。",
         "https://shop.saizeriya.co.jp/sz_restaurant/spot/detail?code=0524",
@@ -173,11 +173,12 @@ const DETAILS = {
     "foodIdeas": [
       {
         "place": "nakamura",
-        "label": "甜品候选 · 需换出时间",
-        "title": "想吃芭菲，先看受理时间",
+        "label": "甜品备选 · 取消登山时考虑",
+        "title": "中村藤吉抹茶芭菲",
         "text": "本店参考10:00—17:30，16:00截止受理，可能提前收号。正常登山日不预排下山后吃；若因雨或疲劳取消登山，可把14:30后的空档用于休息与芭菲。等候超过20分钟就省，保留返程余量。",
         "budget": "价格待确认，以当天菜单为准",
-        "source": "https://tokichi.jp/pages/stores"
+        "source": "https://tokichi.jp/pages/stores",
+        "event_id": "daikichi_visit"
       }
     ]
   },
@@ -316,7 +317,8 @@ const DETAILS = {
         "title": "新京极抹茶布蕾可丽饼",
         "text": "取消夜枫且仍有体力、已到河原町一带时再考虑；先确认新京极店营业，不挤占东山休息。配图为品牌产品。",
         "budget": "价格与新京极店营业时间待确认",
-        "source": "https://www.shinkyogoku.or.jp/guide/"
+        "source": "https://www.shinkyogoku.or.jp/guide/",
+        "event_id": "gion_dinner"
       }
     ]
   },
@@ -642,7 +644,7 @@ const DETAILS = {
           "place": "eggtart",
           "label": "可选 · 顺路外带",
           "title": "道顿堀蛋挞，短队才买",
-          "text": "与拍照共用19:20—19:40，等位超10分钟就省。7/3已迁店，按新址道頓堀1-7-5定位。",
+          "text": "顺路买蛋挞，排队超过10分钟就省；与格力高合影共用19:20—19:40。道顿堀本店现址1-7-5，参考11:00—21:00。",
           "budget": "按现场单价；两人可先买1—2个",
           "source": "https://eggtart.jp/shop/"
         }
@@ -678,6 +680,7 @@ const DETAILS = {
       [
         "下午 · 梅田购物与休息",
         [
+          "kobe_harbor",
           "umeda_transfer",
           "umeda_shop",
           "umeda_rest",
@@ -762,10 +765,11 @@ const DETAILS = {
       {
         "place": "starbucks_meriken",
         "label": "替换方案 · 不与梅田购物叠加",
-        "title": "想去海边，就让出梅田购物",
-        "text": "生田神社与三宫午饭后，约13:10—14:30留给往海边、坐下喝咖啡及接回程；约14:30—15:30返大阪，直接接蓝天大厦，省梅田购物。均为规划窗口，若交通或排队超时就省咖啡；保留19:30—20:00返店目标。默认仍走梅田购物主线。",
+        "title": "神户港星巴克",
+        "text": "午饭后去海边喝咖啡，替换整段梅田购物。13:10—14:30含往返海边，14:30—15:30回大阪；保留休息、蓝天大厦和晚饭。",
         "budget": "饮品按当天菜单；不另加正餐",
-        "source": "https://store.starbucks.co.jp/detail-1432/"
+        "source": "https://store.starbucks.co.jp/detail-1432/",
+        "event_id": "kobe_lunch"
       }
     ]
   },

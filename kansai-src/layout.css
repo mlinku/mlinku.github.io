@@ -100,3 +100,48 @@
 .flight-grid>div>p b{font-variant-numeric:tabular-nums;color:var(--text)}
 .flight-grid strong small{display:block;white-space:normal;font-size:12px;line-height:1.7}
 @media(max-width:720px){.food-idea.with-photo{grid-template-columns:minmax(0,1fr);gap:10px}.food-idea-photo{aspect-ratio:16/10}.flight-overview{padding:16px}.flight-grid>div>div{gap:10px}.flight-grid strong{font-size:22px}}
+
+/* Reading hierarchy: movement is compact; destinations retain their photographs. */
+@media screen {
+ .event.compact-event .event-content{padding:14px 20px;background:transparent;border-color:transparent;border-bottom-color:var(--line)}
+ .event.compact-event.done .event-content{background:#293f39}
+ .compact-event .event-body{margin-top:6px}
+ .compact-event .event-content>.event-detail{margin-top:8px}
+ .event.compact-event h3{font-size:15px;font-weight:500}
+ .compact-event .event-places .place-link{font-size:13px;min-height:44px}
+ .event-content .food-actions>a,.event-content .food-actions>button{font-size:13px;line-height:1.6;min-height:44px}
+ .food-suggestions .food-idea{margin:0;padding:0;border:0}
+ .food-suggestions .food-idea-photo{max-width:176px;aspect-ratio:4/3}
+ .food-suggestions small,.food-row .food-priority,.event-type,.event-detail summary,.condition,.selection-note{font-size:13px}
+ .food-suggestions .detail-body{padding-top:12px}
+ .map-layout{grid-template-columns:minmax(240px,400px) minmax(0,1fr);gap:32px}
+ .google-map-preview{max-width:400px;width:100%}
+ .trip-connections{padding-top:0}
+ .trip-connections>div{padding:8px 0}
+ .night-options{min-width:0}
+ .checkin-address{font-size:14px;line-height:1.8}.checkin-address p{color:var(--muted);font-size:13px;margin:6px 0}
+ .card-cities,.card-practical,.card-enter,.heading-intensity,.toolbar-note,.route-head>span,.route-copy>small,.route-time>span,.return-label,.food-idea small,.pill,.eyebrow,.photo-credit,.progress-area{font-size:12px}
+}
+@media screen and (max-width:1024px){.map-layout{grid-template-columns:1fr}.google-map-preview{justify-self:center}}
+@media screen and (max-width:720px){
+ :root{--dock-height:52px;--toolbar-height:48px}
+ .daily-page>.date-nav{height:52px;padding:3px 10px}
+ .date-link{min-height:44px;padding:2px 8px;min-width:65px}
+ .date-link strong{font-size:14px;line-height:20px}.date-link span{font-size:12px;line-height:18px}
+ .daily-toolbar{top:var(--dock-height);min-height:48px;padding-block:2px}
+ .view-tab,.daily-toolbar>.btn{min-height:44px;padding-block:6px}
+ .daily-toolbar>.btn{font-size:12px}.main-nav a{min-height:44px;font-size:12px;gap:1px}
+ .main-nav .icon{width:18px;height:18px}
+ .event.compact-event .event-content{padding:10px 14px}
+ .event.compact-event h3{font-size:14px}
+ .event-body.restaurant-photo{grid-template-columns:96px minmax(0,1fr);gap:12px}
+ .event .event-body.restaurant-photo .event-photos.single-photo .photo-button{aspect-ratio:1;max-height:96px}
+ .restaurant-photo .photo-button span{display:none}
+ .food-suggestions .food-idea.with-photo{grid-template-columns:1fr}
+ .food-suggestions .food-idea-photo{width:140px}
+ .food-suggestions .food-idea-photo span{display:none}
+ .day-card .card-practical,.card-cities,.card-enter,.brand small,.foot,.blog-hero .eyebrow,.blog-hero .trip-date,.blog-hero .trip-facts,.blog-hero .hero-links a,.section-title>.muted,.day-facts span,.heading-intensity,.progress-note,.route-actions .route-map,.filter,.scene-entry strong small,.scene-entry>span>span,.shot-check,.shot-progress{font-size:12px}
+ .day-card .card-practical{min-height:0}.card-cities{min-height:38px}
+ .event-type{font-size:12px}.event-time{font-size:14px}.day-key{font-size:13px}
+ .food-row p,.detail-body p,.detail-body li{font-size:14px;line-height:1.85}
+}

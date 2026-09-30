@@ -1,0 +1,257 @@
+{
+  "checkedAt": "2026-09-30T06:02:26.682Z",
+  "layouts": [
+    {
+      "date": "2026-11-30",
+      "view": "timeline",
+      "broken": 0,
+      "heading": "抵达京都",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-11-30",
+      "view": "route",
+      "broken": 0,
+      "heading": "抵达京都",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-12-01",
+      "view": "timeline",
+      "broken": 0,
+      "heading": "宇治巡礼",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-12-01",
+      "view": "route",
+      "broken": 0,
+      "heading": "宇治巡礼",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-12-02",
+      "view": "timeline",
+      "broken": 0,
+      "heading": "出町 · 东山夜枫",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-12-02",
+      "view": "route",
+      "broken": 0,
+      "heading": "出町 · 东山夜枫",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-12-03",
+      "view": "timeline",
+      "broken": 0,
+      "heading": "赏枫 · 搬酒店",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-12-03",
+      "view": "route",
+      "broken": 0,
+      "heading": "赏枫 · 搬酒店",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-12-04",
+      "view": "timeline",
+      "broken": 0,
+      "heading": "USJ",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-12-04",
+      "view": "route",
+      "broken": 0,
+      "heading": "USJ",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-12-05",
+      "view": "timeline",
+      "broken": 0,
+      "heading": "奈良 · 日本桥",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-12-05",
+      "view": "route",
+      "broken": 0,
+      "heading": "奈良 · 日本桥",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-12-06",
+      "view": "timeline",
+      "broken": 0,
+      "heading": "神户 · 梅田",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-12-06",
+      "view": "route",
+      "broken": 0,
+      "heading": "神户 · 梅田",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-12-07",
+      "view": "timeline",
+      "broken": 0,
+      "heading": "清晨返程",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-12-07",
+      "view": "route",
+      "broken": 0,
+      "heading": "清晨返程",
+      "overflow": false,
+      "width": 320
+    },
+    {
+      "date": "2026-11-30",
+      "view": "timeline",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-11-30",
+      "view": "route",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-01",
+      "view": "timeline",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-01",
+      "view": "route",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-02",
+      "view": "timeline",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-02",
+      "view": "route",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-03",
+      "view": "timeline",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-03",
+      "view": "route",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-04",
+      "view": "timeline",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-04",
+      "view": "route",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-05",
+      "view": "timeline",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-05",
+      "view": "route",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-06",
+      "view": "timeline",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-06",
+      "view": "route",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-07",
+      "view": "timeline",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "date": "2026-12-07",
+      "view": "route",
+      "broken": 0,
+      "overflow": false,
+      "width": 1440
+    }
+  ],
+  "harborChoiceAndRefresh": true,
+  "completionPersistence": true,
+  "temporaryProgressRestored": true,
+  "mapPreviewWidth": 399,
+  "mapSourceWidth": 400,
+  "flightLocalTimes": [
+    "11:25",
+    "16:00",
+    "09:50",
+    "13:40"
+  ],
+  "directFilePreview": "Browser URL policy disallows file protocol; HTTP preview verified."
+}
