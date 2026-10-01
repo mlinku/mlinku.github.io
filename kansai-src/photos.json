@@ -1662,5 +1662,18 @@
     "height": 225,
     "attribution": "实景照片：あにたび（约2015年历史参考）",
     "visualContentVerified": true
+  },
+  "suikan": {
+    "sight": "宇治川水管桥与河岸",
+    "local": "assets/uji-rally/suikan-real.webp",
+    "sourcePage": "https://kyoshippo.jp/introduce/eupho_suikankyo-230730/",
+    "imageUrl": "https://kyoshippo.jp/wp-content/uploads/2023/07/eupho_suikankyo230619-12.webp",
+    "author": "京のシッポ",
+    "license": "原作者版权所有；场景对照引用，非开放许可",
+    "date": "2023年",
+    "width": 1920,
+    "height": 1080,
+    "attribution": "京のシッポ · 2023年河岸实拍",
+    "visualContentVerified": true
   }
 }

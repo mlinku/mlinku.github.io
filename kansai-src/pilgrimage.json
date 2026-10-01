@@ -1348,12 +1348,17 @@
           "precision": "官方数字集章地点；非摄影站位",
           "source_url": "https://app.raund.net/keihan-euphonium_2026autumn/spots/detail/?id=36568"
         },
-        "real_reference": {
-          "url": "https://kyoshippo.jp/introduce/eupho_suikankyo-230730/",
-          "credit": "京のシッポ",
-          "note": "原网页有桥侧河岸实拍，与作品画面视角不同。"
-        },
-        "match_note": "白色水管下方的河岸；实拍见原网页。"
+        "match_note": "同一河岸，拍摄角度不同。",
+        "real": {
+          "local": "assets/uji-rally/suikan-real.webp",
+          "source_url": "https://kyoshippo.jp/introduce/eupho_suikankyo-230730/",
+          "image_url": "https://kyoshippo.jp/wp-content/uploads/2023/07/eupho_suikankyo230619-12.webp",
+          "credit": "京のシッポ · 2023年河岸实拍",
+          "license": "原作者版权所有；场景对照引用，非开放许可",
+          "width": 1920,
+          "height": 1080,
+          "visual_verified": true
+        }
       },
       {
         "id": "agata",
