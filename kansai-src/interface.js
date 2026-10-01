@@ -133,7 +133,7 @@ document.addEventListener('change',ev=>{const input=ev.target,d=PLAN.days[dayInd
   for(const key of viewMemory.keys())if(key.startsWith('day/'+d.date+'/'))viewMemory.delete(key);
   render();if($('.date-nav'))$('.date-nav').scrollLeft=dx;scrollTo(0,y);openOptions();dlg.scrollTop=dy;
   dlg.querySelector(`[data-choice="${key}"]${input.type==='radio'?`[value="${value}"]`:''}`)?.focus({preventScroll:true});
-  if(key==='ujiExtra')toast(c.ujiExtra==='tower'?'已选京都塔 · 19:15–20:15京都站晚餐':c.ujiExtra==='kotosaka'?'已选琴坂':c.ujiExtra==='station'?'已选京都站《宝岛》':'已恢复原行程');
+  if(key==='ujiExtra')toast(c.ujiExtra==='station'?'已选京都站《宝岛》':'饭后直接返店');
  }
 });
 $('#place-dialog').addEventListener('click',ev=>{if(ev.target===$('#place-dialog')){const r=ev.target.getBoundingClientRect();if(ev.clientX<r.left||ev.clientX>r.right||ev.clientY<r.top||ev.clientY>r.bottom)ev.target.close();}});

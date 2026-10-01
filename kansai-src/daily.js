@@ -1,6 +1,6 @@
 /* Daily presentation. DayFlow owns grouping; app.js owns itinerary choices. */
 function currentChoiceText(d){const c=choice(d),labels=[];
- if(d.date==='2026-12-01'){if(c.ujiExtra==='tower')labels.push('京都塔 · 晚餐改在京都站');if(c.ujiExtra==='agata')labels.push('縣神社集章');if(c.ujiExtra==='kotosaka')labels.push('琴坂');if(c.ujiExtra==='station')labels.push('京都站《宝岛》');if(c.byodoinInterior)labels.push('凤凰堂内部参拜');}
+ if(d.date==='2026-12-01'){if(c.skipByodoin)labels.push('省去平等院');if(c.ujiExtra==='station')labels.push('京都站《宝岛》');}
  if(d.date==='2026-12-02'){if(c.kodaijiPlan==='skip')labels.push('取消夜枫 · 饭后返店');else if(c.yasakaBrief)labels.push('八坂神社短停');}
  if(d.date==='2026-12-04'){if(c.usjExtra)labels.push('增加游乐项目');if(c.kinopio)labels.push('午餐改为Kinopio');}
  if(d.date==='2026-12-05'&&(c.shop1!=='animate'||c.shop2!=='surugaya'))labels.push('购物：'+selectedShops(c).map(id=>PLACE[id].name).join('＋'));
@@ -40,13 +40,13 @@ function eventCard(d,ev,shownPhotos=new Set()){
  </div></div>
  ${ev.id==='kodaiji_night'?`<p class="night-facts">17:00亮灯 · ¥800 / 人 <span>购票待确认</span></p><details class="event-detail"><summary>参拜详情</summary><div class="detail-body"><p>游览约60—75分钟，排队另计。若稍有延迟，18:45前离寺，省去八坂神社并顺延晚餐。</p><p>17:45仍未入场、预计排队超过30分钟，或天气差、明显疲劳时，取消夜枫，直接吃饭。</p><p>2026/10/23—12/13，17:00亮灯；21:30停止入场，22:00闭门。两人门票合计¥1,600。昼夜不清场，离场后同票不能再入。</p><p>${external('活动官网 ↗','https://www.kodaiji.com/saiji.html')} · ${external('票价 ↗','https://www.kodaiji.com/haikan.html')}</p></div></details>`:''}
  ${foodRows.length?`<details class="event-detail"><summary>${isRest?'茶歇详情':'餐厅详情'}</summary><div class="detail-body">${isMeal&&ev.condition?`<p>${e(ev.condition)}</p>`:''}${foodRows.map(r=>foodRow(d,r)).join('')}</div></details>`:''}
- ${ev.id==='uji_pilgrimage'?'<a class="rally-entry text-link" href="#day/2026-12-01/pilgrimage/rally" data-nav>京吹数字集章 · 后期点位 ↗</a>':''}${activityDetails(d,ev.id)}${foodSuggestions(d,ev.id)}
+ ${ev.rally_spot?'<a class="rally-entry text-link" href="#day/2026-12-01/pilgrimage/rally" data-nav>京吹数字集章 · 后期点位 ↗</a>':''}${activityDetails(d,ev.id)}${foodSuggestions(d,ev.id)}
  ${ev.id==='usj_finish'?'<p class="condition">18:00后预留缓冲，19:00前结束普通票设施体验。19:00—22:00 Amex活动设施及部分餐饮需凭证，19:00并非统一离园时间。</p>':''}
  </div></article>`;
 }
 function mealRows(d,ev){
  const name=ev.id==='gion_rest'?'茶歇':ev.category==='meal'?(/dinner/.test(ev.id)?'晚餐':/lunch/.test(ev.id)?'午餐':'早餐'):'';
- const rows=(ev.id==='tower_dinner'?DETAILS[d.date].towerMeals:DETAILS[d.date].meals).filter(r=>r[0]===name);
+ const rows=DETAILS[d.date].meals.filter(r=>r[0]===name);
  if(ev.id==='usj_lunch'&&choice(d).kinopio){
   // One selection drives the preview, budget, map and expanded alternatives.
   const selected=rows.find(r=>r[2]==='キノピオ・カフェ');
@@ -54,7 +54,7 @@ function mealRows(d,ev){
  }
  return rows.filter(r=>r[1]!=='可选');
 }
-function mealMap(d,r){if(r[7]&&PLACE[r[7]])return PLACE[r[7]].map_search_url;let city=d.cities.includes('宇治')&&(r[0]==='午餐'||(r[0]==='晚餐'&&choice(d).ujiExtra!=='tower'))?'宇治':d.date==='2026-12-05'&&r[0]==='午餐'?'奈良':d.date==='2026-12-06'&&r[0]==='午餐'?'神戸':d.date==='2026-12-03'&&r[0]==='午餐'?'京都':d.overnight==='hotel_kyoto'?'京都':'大阪';if(r[2].startsWith('通圓'))city='宇治';return mapURL(city+' '+r[2]);}
+function mealMap(d,r){if(r[7]&&PLACE[r[7]])return PLACE[r[7]].map_search_url;let city=d.cities.includes('宇治')&&['午餐','晚餐'].includes(r[0])?'宇治':d.date==='2026-12-05'&&r[0]==='午餐'?'奈良':d.date==='2026-12-06'&&r[0]==='午餐'?'神戸':d.date==='2026-12-03'&&r[0]==='午餐'?'京都':d.overnight==='hotel_kyoto'?'京都':'大阪';if(r[2].startsWith('通圓'))city='宇治';return mapURL(city+' '+r[2]);}
 function foodRow(d,r){return `<article class="food-row"><span class="food-priority">${e(r[0])} · ${e(r[1])}</span><h4 lang="ja">${e(r[2])}</h4>${r[1]!=='首选'&&r[7]&&photoSrc(r[7])?photoButton(r[7],'food-row-photo'):''}<p class="budget">${e(r[3])} / 人</p><p>${e(r[4])}</p><p class="muted">${e(r[5])}</p><div class="food-actions">${btn(icon('copy')+'复制日文名','copy',`data-copy="${e(r[2])}"`,'text-button')}${r[0]!=='早餐'?external(icon('map')+'地图',mealMap(d,r),'text-link'):''}${r[6]?external('店铺资料 ↗',r[6],'text-link'):''}</div></article>`;}
 
 function routeTimeMarkup(times){return times.map(t=>`<div class="route-time"><strong>${e(compactTime(t.text))}</strong><span>${e(t.label==='同段共用'?'游览':t.label)}</span></div>`).join('');}
@@ -70,18 +70,10 @@ function daySupport(d){return `<aside class="day-support" id="day-support"><deta
 function foodIdea(item){const p=PLACE[item.place],showPhoto=photoSrc(item.place)&&!item.hidePhoto;return `<article class="food-idea ${showPhoto?'with-photo':''}">${showPhoto?photoButton(item.place,'food-idea-photo'):''}<div><span class="food-priority">${e(item.label)}</span><h4>${e(item.title)}</h4><p class="food-name" lang="ja">${e(p.name_ja)}</p><p>${e(item.text)}</p><small>${e(item.budget)}</small><div class="food-actions">${external(icon('pin')+'地图',p.map_search_url,'text-link')}${btn(icon('copy')+'复制日文名','copy',`data-copy="${e(p.name_ja)}"`,'text-button')}${external('店铺资料 ↗',item.source,'text-link')}</div></div></article>`;}
 
 function dayTransport(d){const notes=[...DETAILS[d.date].transport],c=choice(d);
- if(d.date==='2026-12-01'){
-  if(c.ujiExtra==='tower')notes[2]='下山经宇治桥回西岸，从JR宇治返京都酒店；休息后去京都塔，再吃晚饭。';
-  if(c.ujiExtra!=='kotosaka')notes.splice(3,1);
- }
  if(d.date==='2026-12-05'&&(c.shop1!=='animate'||c.shop2!=='surugaya'))notes.splice(3,1);
  return notes;
 }
 function dayFallbacks(d){const c=choice(d);return d.fallback_rules.flatMap(t=>{
- if(d.date==='2026-12-01'){
-  if(t.startsWith('超时先省'))return [c.ujiExtra==='kotosaka'?t:'超时先省额外店铺与集章。'];
-  if(t.includes('京都塔')&&c.ujiExtra!=='tower')return [];
- }
  if(d.date==='2026-12-02'){
   if(t.includes('高台寺')&&c.kodaijiPlan==='skip')return [];
   if(t.includes('八坂神社'))return c.kodaijiPlan==='night'&&c.yasakaBrief?[t]:['晚饭长队时换简餐，不赶おめん末点。'];
@@ -93,7 +85,6 @@ function dayFallbacks(d){const c=choice(d);return d.fallback_rules.flatMap(t=>{
  return [t];
 });}
 function dayNotes(d){const c=choice(d);const extra=(DETAILS[d.date].extra||[]).flatMap(t=>{
- if(d.date==='2026-12-01'&&t.includes('京都塔联动'))return [t.split('京都塔联动')[0].trim(),...(c.ujiExtra==='tower'?['京都塔联动参考 ¥1,000，常规20:30末入；购票待确认。']:[])];
  if(d.date==='2026-12-02'&&t.startsWith('本次只安排'))return [];
  if(d.date==='2026-12-05'&&t.startsWith('日本桥默认'))return ['日本桥购物限1—2家，替换不增加总数；中古作品库存不保证。'];
  if(d.date==='2026-12-06'&&t.startsWith('Nintendo与Pokémon')){

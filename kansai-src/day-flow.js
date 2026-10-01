@@ -5,7 +5,6 @@ function dayPresentation(d){
   info.short='出町 · 东山';info.focus='《玉子市场》巡礼与清水寺赏枫。';
   info.summary='出町、清水寺、东山散步';info.cover='kiyomizu';info.eyebrow='京都 · 出町 → 清水寺 → 东山';
  }
- if(d.date==='2026-12-01'&&c.ujiExtra==='tower')info.summary='平等院、河岸巡礼、京都塔';
  return info;
 }
 
@@ -28,7 +27,6 @@ const DayFlow={
 // Bind each original route occurrence, not just its place ID: return visits have different times.
 const ROUTE_EVENTS={
  '2026-11-30':['flight_out','flight_out','arrival_transfer','checkin_kyoto'],
- '2026-12-01':['uji_transfer','uji_transfer','uji_transfer','byodoin_visit','byodoin_visit','uji_lunch','uji_pilgrimage','uji_pilgrimage','uji_pilgrimage','uji_pilgrimage','uji_pilgrimage','daikichi_visit','uji_dinner_walk','uji_saizeriya_dinner','uji_return','kyoto_rest'],
  '2026-12-02':['demachi_transfer','demachi_visit','delta_visit','kiyomizu_transfer','kiyomizu_transfer','kiyomizu_visit','higashiyama_walk','higashiyama_walk','higashiyama_walk','higashiyama_walk','kodaiji_night','kyoto_night_return'],
  '2026-12-03':['checkout_kyoto','tofukuji_visit','inari_visit','luggage_pickup','osaka_transfer','osaka_transfer','osaka_transfer','checkin_osaka','shinsekai_dinner',null],
  '2026-12-04':['usj_transfer','usj_transfer','usj_core','usj_dinner'],
@@ -41,15 +39,12 @@ function timedRoute(d){
  const flightTime=(id,field)=>{const b=PLAN.bookings.find(b=>b.id===id),f=flightLocal(b,field);return {text:f.time,label:f.region+(field==='departure'?'起飞':'抵达')+' · 当地时间'};};
  return nodes.map((node,i)=>{
   let id=node.eventId||(d.route_event_ids||ROUTE_EVENTS[d.date])?.[node.original-1];
-  if(d.date==='2026-12-01'&&c.ujiExtra==='tower'&&node.original===13)id='uji_return';
-  if(d.date==='2026-12-01'&&node.optional)id={agata:'uji_pilgrimage',kotosaka:'uji_pilgrimage',kyoto_tower:'tower_visit',kyoto_station:c.ujiExtra==='tower'?'tower_dinner':'uji_return',kyoto_stage:'station_stage'}[node.id];
   if(d.date==='2026-12-02'&&node.id==='yasaka_shrine')id='gion_dinner_walk';
   if(d.date==='2026-12-05'&&selectedShops(c).includes(node.id))id='anime_shopping';
   if(d.date==='2026-12-06'&&['nintendo_osaka','pokemon_osaka'].includes(node.id))id='umeda_shop';
   let times=[eventTime(id)].filter(Boolean);
   if(i===0&&node.id.startsWith('hotel_')&&d.date!=='2026-12-07')times=[{text:d.departure_target||'开园时间待确认',label:'离店'}];
   if(i===nodes.length-1&&node.id.startsWith('hotel_'))times=[{text:returnTarget(d),label:d.date==='2026-11-30'?'入住':'返店'}];
-  if(d.date==='2026-12-01'&&node.original===d.route_stop_ids.length&&c.ujiExtra==='tower')times=[eventTime('kyoto_rest')];
   if(d.date==='2026-11-30'&&['hkg','kix'].includes(node.id))times=[flightTime('flight_out',node.id==='hkg'?'departure':'arrival')];
   if(d.date==='2026-12-07'){
    if(node.id==='hotel_osaka')times=[eventTime('checkout_osaka','退房离店')];
@@ -63,7 +58,7 @@ function timedRoute(d){
    if(node.id==='kintetsu_nippombashi')times=[{text:'到站时刻待确认',label:'途中'},eventTime('nippombashi_arrival','首店抵达')];
    if(node.id===c.shop1)times=[eventTime('nippombashi_arrival','抵达'),eventTime('anime_shopping','购物')];
   }
-  const shared=['uji_pilgrimage','higashiyama_walk','nara_visit','umeda_shop','byodoin_visit','delta_visit'].includes(id);
+  const shared=['uji_pilgrimage','uji_shrines','higashiyama_walk','nara_visit','umeda_shop','byodoin_visit','delta_visit'].includes(id);
   if(shared&&times.length===1)times[0].label='同段共用';
   return {...node,eventId:id,times:times.length?times:[{text:'时间待确认',label:'参考'}]};
  });

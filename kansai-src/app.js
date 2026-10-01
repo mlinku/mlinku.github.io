@@ -20,7 +20,7 @@ function flightLocal(b,field){const place=field==='departure'?b.from:b.to,zone=p
 function flightDeparture(id){const b=PLAN.bookings.find(b=>b.id===id),f=flightLocal(b,'departure');return f.time+' '+f.region+'起飞';}
 const photoSrc=id=>PHOTOS[id]?.src||'';
 const dateLabel=d=>String(Number(d.slice(5,7)))+'/'+String(Number(d.slice(8)));
-const choice=d=>{const c={ujiExtra:'none',byodoinInterior:false,kodaijiPlan:'night',yasakaBrief:false,usjExtra:false,kinopio:false,shop1:'animate',shop2:'surugaya',umedaMain:'nintendo_osaka',umedaSecond:false,...state.choices[d.date]};if(d.date==='2026-12-02'){if(!['night','skip'].includes(c.kodaijiPlan))c.kodaijiPlan='night';c.yasakaBrief=c.kodaijiPlan==='night'&&c.yasakaBrief===true;}if(!['nintendo_osaka','pokemon_osaka'].includes(c.umedaMain))c.umedaMain='nintendo_osaka';return c;};
+const choice=d=>{const c={ujiExtra:'none',byodoinInterior:false,kodaijiPlan:'night',yasakaBrief:false,usjExtra:false,kinopio:false,shop1:'animate',shop2:'surugaya',umedaMain:'nintendo_osaka',umedaSecond:false,...state.choices[d.date]};if(d.date==='2026-12-01'){if(!['none','station'].includes(c.ujiExtra))c.ujiExtra='none';c.byodoinInterior=false;c.skipByodoin=c.skipByodoin===true;}if(d.date==='2026-12-02'){if(!['night','skip'].includes(c.kodaijiPlan))c.kodaijiPlan='night';c.yasakaBrief=c.kodaijiPlan==='night'&&c.yasakaBrief===true;}if(!['nintendo_osaka','pokemon_osaka'].includes(c.umedaMain))c.umedaMain='nintendo_osaka';return c;};
 function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch{storageOK=false;toast('浏览器未允许保存；本次仍可勾选，关闭后可能丢失。');}}
 function toast(message,undo){clearTimeout(toastTimer);undoAction=undo||null;$('#toast').innerHTML=e(message)+(undo?'<button data-action="undo">撤销</button>':'');$('#toast').classList.add('show');toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),undo?8500:3500);}
 function openManualCopy(value){
@@ -63,11 +63,8 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
   ev.title=booking.flight_number+' · '+from.city+from.terminal+(booking.departure_terminal_role==='check_in'?'值机':'')+' → '+to.city+to.terminal;
  }
  if(d.date==='2026-12-01'){
-  if(c.ujiExtra==='tower'){by('uji_return').time_label='16:15—17:30';by('uji_return').title='经宇治桥回京都酒店';by('uji_return').place_ids=['uji_bridge','jr_uji','hotel_kyoto'];by('kyoto_rest').time_label='17:30—18:00';const opt=d.optional.find(o=>o.id==='tower_option');events=events.filter(x=>!opt.replaces_event_ids.includes(x.id));events.push({id:'tower_visit',time_label:'18:15—19:15',title:'京都塔《京吹》联动观景',category:'visit',place_ids:['kyoto_tower'],optional:true},{id:'tower_dinner',time_label:'19:15—20:15',title:'晚餐 · 京都站',category:'meal',place_ids:['kyoto_station'],optional:true});}
-  if(c.ujiExtra==='agata'){const ev=by('uji_pilgrimage');ev.title='縣神社集章 · 宇治川巡礼';ev.place_ids.unshift('agata');ev.optionNote='縣神社预留15—20分钟，替换部分河岸拍照；14:30登山。';}
-  if(c.ujiExtra==='kotosaka'){const ev=by('uji_pilgrimage');ev.title='宇治川巡礼 · 琴坂';ev.place_ids.splice(3,0,'kotosaka');ev.optionNote='琴坂往返约15—20分钟，包含在河岸游览时段内。';}
-  if(c.ujiExtra==='station'){by('uji_return').title='JR宇治 → 京都站';by('uji_return').place_ids=['jr_uji','kyoto_station'];const at=events.findIndex(x=>x.id==='kyoto_rest');events.splice(at,0,{id:'station_stage',time_label:'返店前',title:'京都站4F《宝岛》舞台短拍',category:'visit',place_ids:['kyoto_stage'],optional:true,condition:'预留15—20分钟拍照；晚到则直接返店。'});}
-  if(c.byodoinInterior)by('byodoin_visit').optionNote='内部参拜以现场可入场时段为准，须在12:10前结束。';
+  if(c.skipByodoin){events=events.filter(ev=>ev.id!=='byodoin_visit');by('uji_dinner_walk').time_label='集章后';by('uji_dinner_walk').title='表参道 → 晚餐与休息';by('uji_saizeriya_dinner').time_label='到店后';by('uji_return').time_label='饭后返程';by('kyoto_rest').time_label='饭后返店';}
+  if(c.ujiExtra==='station'){const at=events.findIndex(ev=>ev.id==='kyoto_rest');events.splice(at,0,{id:'station_stage',time_label:'返店前',title:'京都站4F《宝岛》舞台短拍',category:'visit',place_ids:['kyoto_stage'],optional:true,condition:'有余力再拍15—20分钟。'});}
  }
  if(d.date==='2026-12-02'){
   by('gion_rest').title='高台寺附近休息';
@@ -91,7 +88,7 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
  if(d.date==='2026-12-06'){by('umeda_shop').place_ids=[c.umedaMain];by('umeda_shop').title=PLACE[c.umedaMain].name+' · 购物';if(c.umedaSecond){by('umeda_shop').place_ids.push(c.umedaMain==='nintendo_osaka'?'pokemon_osaka':'nintendo_osaka');by('umeda_shop').optionNote='另一家短看10—15分钟，包含在本段55分钟内。';}}
  return events;
 }
-function returnTarget(d){if(d.date==='2026-12-01')return choice(d).ujiExtra==='tower'?'20:30—21:00':choice(d).ujiExtra==='station'?'19:00—19:30':'19:00';if(d.date==='2026-12-02')return choice(d).kodaijiPlan==='skip'?'饭后':'20:45—21:15';return (d.hotel_return_target||'').split('；')[0].replace(/^(争取|约)/,'').replace(/\s*目标入住.*/,'');}
+function returnTarget(d){if(d.date==='2026-12-01')return choice(d).skipByodoin?'饭后':d.hotel_return_target;if(d.date==='2026-12-02')return choice(d).kodaijiPlan==='skip'?'饭后':'20:45—21:15';return (d.hotel_return_target||'').split('；')[0].replace(/^(争取|约)/,'').replace(/\s*目标入住.*/,'');}
 // Keep the full planning notes in the guide; repeated UI labels use a short form.
 function compactTime(value){
  const windows={
@@ -105,11 +102,10 @@ function compactTime(value){
  return String(windows[value]||value).replace(/^目标|^争取/,'').replace(/到店$/,'抵达').replace(/左右$/,'').replace(/^当前候选/,'').replace('，临行复核',' · 待复核').replace('待12/4正式开园时间确认','开园时间待确认').replace('到店后 · 不等到19:00','到店后').replace('随区域资格及场次安排','按区域资格与场次').replace('17:00盘点，争取18:00前完成重点','17:00盘点 · 18:00收尾').replace('起返程，争取','出发 · ').replace(/—/g,'–');
 }
 function effectiveRoute(d){const c=choice(d);let nodes=d.route_stop_ids.map((id,i)=>({id,phase:DETAILS[d.date].routePhases[i],original:i+1,optional:false}));
- if(d.date==='2026-12-01'&&c.ujiExtra==='agata'){const at=nodes.findIndex(x=>x.id==='bench');nodes.splice(at,0,{id:'agata',phase:'下午',optional:true,eventId:'uji_pilgrimage'});}
- if(d.date==='2026-12-01'&&c.ujiExtra==='kotosaka'){const at=nodes.findIndex(x=>x.id==='asagiri');nodes.splice(at+1,0,{id:'kotosaka',phase:'下午',optional:true});}
- if(d.date==='2026-12-01'&&c.ujiExtra==='tower')nodes=nodes.filter(n=>n.id!=='saizeriya_uji');
- if(d.date==='2026-12-01'&&c.ujiExtra==='tower')nodes.push({id:'kyoto_tower',phase:'夜间',optional:true},{id:'kyoto_station',phase:'夜间',optional:true},{id:'hotel_kyoto',phase:'夜间',optional:true});
- if(d.date==='2026-12-01'&&c.ujiExtra==='station')nodes.splice(nodes.length-1,0,{id:'kyoto_station',phase:'下午',optional:true},{id:'kyoto_stage',phase:'下午',optional:true});
+ if(d.date==='2026-12-01'){
+  nodes=nodes.filter(n=>n.id!=='byodoin'||!c.skipByodoin).map(n=>n.id==='byodoin'?{...n,optional:true}:n);
+  if(c.ujiExtra==='station')nodes.splice(nodes.length-1,0,{id:'kyoto_stage',phase:'夜间',optional:true,eventId:'station_stage'});
+ }
  if(d.date==='2026-12-02'){if(c.kodaijiPlan==='skip')nodes=nodes.filter(n=>n.id!=='kodaiji');else if(c.yasakaBrief)nodes.splice(nodes.length-1,0,{id:'yasaka_shrine',phase:'夜间',optional:true});}
  if(d.date==='2026-12-05'){const at=nodes.findIndex(x=>x.id==='animate');nodes.splice(at,2,...selectedShops(c).map(id=>({id,phase:'下午',optional:!['animate','surugaya'].includes(id)})));}
  if(d.date==='2026-12-06'){const at=nodes.findIndex(x=>x.id==='nintendo_osaka');nodes[at]={...nodes[at],id:c.umedaMain};if(c.umedaSecond)nodes.splice(at+1,0,{id:c.umedaMain==='nintendo_osaka'?'pokemon_osaka':'nintendo_osaka',phase:'傍晚',optional:true});}
@@ -117,7 +113,7 @@ function effectiveRoute(d){const c=choice(d);let nodes=d.route_stop_ids.map((id,
 }
 
 function optionalControls(d){if(!d.optional.length&&d.date!=='2026-12-05')return'';const c=choice(d);let fields='';
- if(d.date==='2026-12-01')fields=`<p class="small">最多加选一项。</p>${[['none','保持原行程','萨莉亚晚餐 · 约19:00返店。'],['agata','縣神社数字集章','午饭后短停15—20分钟，替换部分河岸拍照；不延后上山。'],['kotosaka','琴坂参道','往返15—20分钟，替换部分河岸游览，不延后上山。'],['station','京都站4F《宝岛》舞台','晚餐后短拍15—20分钟；约19:00—19:30返店。'],['tower','京都塔《京吹》联动','替换宇治晚餐；20:30—21:00返店。']].map(([val,label,rule])=>`<label class="option-row"><input type="radio" name="ujiExtra" data-choice="ujiExtra" value="${val}" ${c.ujiExtra===val?'checked':''}>${label}<small>${rule}</small></label>`).join('')}<label class="option-row"><input type="checkbox" data-choice="byodoinInterior" ${c.byodoinInterior?'checked':''}>凤凰堂内部参拜<small>以现场可入场时段为准，12:10前结束。</small></label>`;
+ if(d.date==='2026-12-01')fields=`<label class="option-row"><input type="checkbox" data-choice="skipByodoin" ${c.skipByodoin?'checked':''}>省去平等院<small>三章与大吉山保留，集章后从容吃饭、返店。</small></label>${[['none','饭后直接返店',''],['station','京都站4F《宝岛》舞台','有余力再短拍15—20分钟。']].map(([val,label,rule])=>`<label class="option-row"><input type="radio" name="ujiExtra" data-choice="ujiExtra" value="${val}" ${c.ujiExtra===val?'checked':''}>${label}${rule?`<small>${rule}</small>`:''}</label>`).join('')}`;
  if(d.date==='2026-12-02')fields=`<fieldset class="night-options"><legend>夜间安排</legend>${[['night','高台寺夜枫','17:15—18:30参拜，20:45—21:15返店。'],['skip','取消夜枫','休息半小时后吃晚饭、返店，同时省去八坂神社。']].map(([value,label,note])=>`<label class="option-row"><input type="radio" name="kodaijiPlan" data-choice="kodaijiPlan" value="${value}" ${c.kodaijiPlan===value?'checked':''}>${label}<small>${note}</small></label>`).join('')}</fieldset><label class="option-row"><input type="checkbox" data-choice="yasakaBrief" ${c.yasakaBrief?'checked':''} ${c.kodaijiPlan==='skip'?'disabled':''}>八坂神社顺路短停<small>仅夜枫准时结束且体力有余；包含在晚饭前步行时段。</small></label>`;
  if(d.date==='2026-12-04')fields=`<label class="option-row"><input type="checkbox" data-choice="usjExtra" ${c.usjExtra?'checked':''}>第二项任天堂设施／其他项目<small>看实时等候和体力；马里奥赛车与咚奇刚择一优先。</small></label><label class="option-row"><input type="checkbox" data-choice="kinopio" ${c.kinopio?'checked':''}>午餐改为Kinopio’s Cafe<small>需单独取得餐厅资格；部分餐品超预算，不合适时选原午餐。</small></label>`;
  if(d.date==='2026-12-05'){const stores=['animate','surugaya','potato','surugaya_main'].map(id=>[id,PLACE[id].name]);fields=`<p class="small">选1—2家，晚到只留一家。</p><label class="small">第一家重点店${select('shop1',c.shop1,stores)}</label><label class="small">第二家${select('shop2',c.shop2,[['none','不加第二家'],...stores.filter(([id])=>id!==c.shop1)])}</label>`;}
