@@ -1634,5 +1634,20 @@
     "height": 2160,
     "attribution": "京都府观光联盟／縣神社",
     "sourceVerified": true
+  },
+  "kohata": {
+    "sight": "許波多神社（五ケ庄）· 境内鸟居",
+    "local": "assets/uji-rally/kohata-real.jpg",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Kohata-jinja_(Gokasho),_keidai-torii.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Kohata-jinja_%28Gokasho%29%2C_keidai-torii.jpg/1280px-Kohata-jinja_%28Gokasho%29%2C_keidai-torii.jpg",
+    "author": "Saigen Jiro",
+    "date": "2016-09-04",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "width": 1280,
+    "height": 851,
+    "attribution": "Saigen Jiro / Wikimedia Commons · CC0 1.0",
+    "sourceVerified": true,
+    "notes": "五ケ庄境内鸟居；与作品画面角度不同。使用 Commons 缩略版，未裁切。"
   }
 }

@@ -1279,7 +1279,16 @@
           "lng": 135.79395,
           "precision": "官方数字集章地点；非摄影站位",
           "source_url": "https://app.raund.net/keihan-euphonium_2026autumn/spots/detail/?id=36570"
-        }
+        },
+        "real": {
+          "local": "assets/uji-rally/kohata-real.jpg",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Kohata-jinja_(Gokasho),_keidai-torii.jpg",
+          "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Kohata-jinja_%28Gokasho%29%2C_keidai-torii.jpg/1280px-Kohata-jinja_%28Gokasho%29%2C_keidai-torii.jpg",
+          "credit": "Saigen Jiro / Wikimedia Commons · CC0 1.0",
+          "width": 1280,
+          "height": 851
+        },
+        "match_note": "境内鸟居实景；与作品画面角度不同。"
       },
       {
         "id": "suikan",
@@ -1302,7 +1311,13 @@
           "lng": 135.80153,
           "precision": "官方数字集章地点；非摄影站位",
           "source_url": "https://app.raund.net/keihan-euphonium_2026autumn/spots/detail/?id=36568"
-        }
+        },
+        "real_reference": {
+          "url": "https://kyoshippo.jp/introduce/eupho_suikankyo-230730/",
+          "credit": "京のシッポ",
+          "note": "原网页有桥侧河岸实拍，与作品画面视角不同。"
+        },
+        "match_note": "白色水管下方的河岸；实拍见原网页。"
       },
       {
         "id": "agata",
@@ -1325,7 +1340,16 @@
           "lng": 135.80573,
           "precision": "官方数字集章地点；非摄影站位",
           "source_url": "https://app.raund.net/keihan-euphonium_2026autumn/spots/detail/?id=36569"
-        }
+        },
+        "real": {
+          "local": "assets/uji-rally/agata-real.webp",
+          "source_url": "https://www.kyoto-kankou.or.jp/info_search/366",
+          "image_url": "https://www.kyoto-kankou.or.jp/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NTM0NiwicHVyIjoiYmxvYl9pZCJ9fQ==--a2c50e461eb1dac3abfe2a93ad50ac86298d6319/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJ3ZWJwIiwicmVzaXplX3RvX2ZpdCI6WzM4NDAsMjE2MF19LCJwdXIiOiJ2YXJpYXRpb24ifX0=--d4a38f8dcc86a603c3d632cf5b22690482f0e7f5/1607.jpg",
+          "credit": "京都府观光联盟／縣神社",
+          "width": 3224,
+          "height": 2160
+        },
+        "match_note": "神社实景；作品为夏祭场景，与12月现场不同。"
       }
     ],
     "rules": [
