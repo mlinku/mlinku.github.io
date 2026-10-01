@@ -16,16 +16,16 @@ const SHOT_COPY={
  'eupho_omotesando':{scene:'京阪官方巡礼地图第6点：平等院表参道。',note:'晚餐前经过表参道，沿街对照取景。'},
  'kyoto-stage-stairs':{scene:'第7集车站音乐会，《宝岛》演出广场。',note:'中央口一侧上4F室町小路广场，对照大阶梯、扶梯和红色时钟。无需登顶，遇活动占用就省。'},
  'kyoto-stage-clock':{note:'在4F广场抬头找红色方框时钟与钢架；别与红色雕塑「朱甲舞」混淆。'},
- 'demachi-west-gate':{scene:'宣传PV里的商店街西入口；招牌与建筑有改绘。',note:'从寺町通一侧仰拍，把入口招牌与左侧建筑收入画面；店招以现场为准。'},
+ 'demachi-west-gate':{scene:'宣传PV里的商店街西入口；招牌与建筑有改绘。',note:'从寺町通一侧仰拍入口招牌与左侧建筑。'},
  'demachi-fish':{scene:'官方主视觉里的商店街吊鱼与拱廊。',note:'进拱廊后找吊鱼和屋顶纵深；构图不完全一致，勿堵店铺通道。'},
  'delta-tamako':{note:'找东侧高野川的飞石与下河台阶，对照石块排列。雨天或水量大时留在岸边拍。'},
  'delta-kon':{note:'从贺茂川侧飞石朝东拍中洲，和玉子告白图分开找角度。河岸有改绘。'},
- 'kiyomizu-conan':{scene:'第927—928集清水寺与新兰剧情；亦见于《迷宫的十字路》。',note:'到本堂舞台认屋顶与木栏杆。定位为本堂参考点，不是精确合影栏杆。',caption:'官方上映会宣传视觉，非动画单帧；两图视角不同。'},
+ 'kiyomizu-conan':{scene:'第927—928集清水寺与新兰剧情；亦见于《迷宫的十字路》。',note:'在本堂舞台对照屋顶与木栏杆；定位为本堂参考点。',caption:'官方上映会宣传视觉，非动画单帧；两图视角不同。'},
  'senren-sannenzaka':{note:'在玩家标点附近，沿街对照石板路与两侧屋檐；店名有改写，顺路拍即可。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
  'senren-ninenzaka':{note:'在二年坂南端附近找右侧店铺转角、屋檐与弯路；别只在台阶中央找。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
  'conan-tsutenkaku':{note:'晚饭时从地面拍通天阁外观。塔顶视角无法在街面复刻，不另加登塔。',caption:'同建筑、不同视角；用于辨认塔体。'},
  'conan-ebisubashi':{scene:'第763—764集《恋爱的暗号》，平次在戎桥调查。',note:'桥面找弧形栏杆与南侧店招；动画有改绘，广告可能变化。'},
- 'senren-ikuta':{note:'在拝殿前中轴稍侧处，对照屋顶、红柱与狛犬。游戏把楼房改成树木，不必追求完全重合。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'}
+ 'senren-ikuta':{note:'在拝殿前稍侧处对照屋顶、红柱与狛犬；游戏将楼房改绘为树木。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'}
 };
 function shotCard(p,context='page'){
  const coords=p.coordinates,done=!!state.checks[shotKey(p)],day=PLAN.days.find(d=>d.date===p.date),event=effectiveEvents(day).find(ev=>ev.id===p.event_id),number=pilgrimageDay(p.date).filter(pointEnabled).findIndex(x=>x.id===p.id)+1,copy=SHOT_COPY[p.id]||{};
@@ -55,7 +55,7 @@ function pilgrimagePage(d){
 }
 function rallyCard(d){
  const r=PILGRIMAGE.rally;if(!r||r.date!==d.date)return '';
- return `<section class="rally-card" id="shot-rally"><div class="rally-heading"><div><span class="food-priority">11/1–12/20 · 后期</span><h2>京吹数字集章</h2></div>${external('参加活动 ↗',r.entry_url,'btn small')}</div><p>許波多神社 → 水管桥 → 縣神社。</p><details class="rally-detail" ${sectionTarget==='shot-rally'?'open':''}><summary>点位图片与集章说明</summary><div class="rally-spots">${r.spots.map(p=>`<article><header><span class="food-priority">${e(p.fit)}</span><h3>${e(p.title)}</h3></header><div class="rally-pair">${p.real?.src?shotImage(p,'real'):''}${shotImage(p,'anime')}</div><p class="rally-caption">${e(p.match_note||p.caption)}</p><p>${e(p.note)}</p><div class="food-actions">${external(icon('pin')+'地图',p.map_url,'text-link')}${btn(icon('copy')+'复制日文名','copy',`data-copy="${e(p.name_ja)}"`,'text-button')}</div></article>`).join('')}</div><p class="rally-recommendation">${e(r.recommendation)}</p><details class="event-detail"><summary>参与规则与来源</summary><div class="detail-body">${r.rules.map(t=>`<p>${e(t)}</p>`).join('')}${r.spots.filter(p=>p.coordinates).map(p=>`<p>${e(p.title)}：${p.coordinates.lat}, ${p.coordinates.lng} · ${external('官方定位 ↗',p.coordinates.source_url)}</p>`).join('')}<p>${external('活动官网 ↗',r.source_url)} · ${external('官方巡礼地图 PDF ↗',r.map_pdf)}</p><p class="muted">作品画面：©武田綾乃・宝島社／「響け！」製作委員会2024，京阪活动官网。核查：2026/10/1。</p></div></details></details></section>`;
+ return `<section class="rally-card" id="shot-rally"><div class="rally-heading"><div><span class="food-priority">11/1–12/20 · 后期</span><h2>京吹数字集章</h2></div>${external('参加活动 ↗',r.entry_url,'btn small')}</div><p>許波多神社 → 水管桥 → 縣神社。</p><details class="rally-detail" ${sectionTarget==='shot-rally'?'open':''}><summary>点位图片与集章说明</summary><div class="rally-spots">${r.spots.map(p=>`<article><header><span class="food-priority">${e(p.fit)}</span><h3>${e(p.title)}</h3></header><div class="rally-pair">${p.real?.src?shotImage(p,'real'):''}${shotImage(p,'anime')}</div><p class="rally-caption">${e(p.match_note||p.caption)}</p><p>${e(p.note)}</p><div class="food-actions">${external(icon('pin')+'地图',p.map_url,'text-link')}${btn(icon('copy')+'复制日文名','copy',`data-copy="${e(p.name_ja)}"`,'text-button')}</div></article>`).join('')}</div><details class="event-detail"><summary>参与规则与来源</summary><div class="detail-body">${r.rules.map(t=>`<p>${e(t)}</p>`).join('')}${r.spots.filter(p=>p.coordinates).map(p=>`<p>${e(p.title)}：${p.coordinates.lat}, ${p.coordinates.lng} · ${external('官方定位 ↗',p.coordinates.source_url)}</p>`).join('')}<p>${external('活动官网 ↗',r.source_url)} · ${external('官方巡礼地图 PDF ↗',r.map_pdf)}</p><p class="muted">作品画面：©武田綾乃・宝島社／「響け！」製作委員会2024，京阪活动官网。核查：2026/10/1。</p></div></details></details></section>`;
 }
 function pilgrimageEventLinks(d,ev){
  const points=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p));
