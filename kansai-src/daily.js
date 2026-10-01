@@ -14,7 +14,7 @@ function dayPage(){const d=PLAN.days[dayIndex],info=dayPresentation(d);return `
  ${currentChoiceText(d)?`<p class="selected-choice">${icon('tune')}${e(currentChoiceText(d))}</p>`:''}
  <div class="day-layout"><div class="day-main">${dayView==='pilgrimage'?pilgrimagePage(d):dayView==='route'?routePage(d):timelinePage(d)}</div>${dayView==='pilgrimage'?'':daySupport(d)}</div>
  <nav class="prev-next" aria-label="相邻日期">${dayIndex>0?pageLink('← '+dateLabel(PLAN.days[dayIndex-1].date)+' 前一天',dayHash(dayIndex-1,dayView),'text-link'):pageLink('← 全程','#overview','text-link')}${dayIndex<7?pageLink(dateLabel(PLAN.days[dayIndex+1].date)+' 后一天 →',dayHash(dayIndex+1,dayView),'text-link'):pageLink('临行待办 →','#prep','text-link')}</nav>`;}
-function progressMarkup(d){const flow=DayFlow.forDay(d);return `<span id="progress-text">已完成 <strong>${flow.done} / ${flow.total}</strong></span><div class="progress-track" role="progressbar" aria-label="当天活动完成进度" aria-valuemin="0" aria-valuemax="${flow.total}" aria-valuenow="${flow.done}"><span style="width:${flow.done/flow.total*100}%"></span></div>`;}
+function progressMarkup(d){const flow=DayFlow.forDay(d);return `<span id="progress-text">已完成 <strong>${flow.done} / ${flow.total}</strong></span><div class="progress-track" role="progressbar" aria-label="当天活动完成进度" aria-valuemin="0" aria-valuemax="${flow.total}" aria-valuenow="${flow.done}"><span style="width:${flow.done/flow.total*100}%"></span></div>${resumeLink(d)}`;}
 function refreshDayProgress(d){const area=document.querySelector('.progress-area');if(area)area.innerHTML=progressMarkup(d);}
 function timelinePage(d){const flow=DayFlow.forDay(d);return `
  <div class="progress-area">${progressMarkup(d)}</div>
@@ -27,8 +27,8 @@ function eventCard(d,ev){
  const imageIds=compact?[]:ev.place_ids.filter(id=>photoSrc(id)&&(!isMeal||PLACE[id].category==='restaurant'));
  const restaurantPhoto=imageIds.length===1&&PLACE[imageIds[0]].category==='restaurant';
  const foodRows=mealRows(d,ev),first=foodRows.find(r=>r[1]==='首选');
- return `<article id="event-${ev.id}" class="event ${compact?'compact-event':''} ${checked?'done':''} ${ev.optional?'optional':''} ${ev.category==='transport'?'transport-event':''} ${isRest?'rest-event':''}" data-event="${ev.id}"><label class="event-check"><input type="checkbox" data-event-check="${ev.id}" ${checked?'checked':''} aria-label="完成：${e(ev.title)}"><span aria-hidden="true">${icon('check')}</span></label><div class="event-content"><div class="event-meta"><span class="event-time">${e(compactTime(ev.time_label))}</span><span class="event-type">${types[ev.category]||'活动'}</span>${ev.optional?'<span class="pill gold">可选</span>':''}${statusLabel(ev)}</div><h3>${e(ev.title)}</h3>
- ${ev.condition&&!isMeal?`<p class="condition">${e(ev.condition)}</p>`:''}${ev.optionNote?`<p class="selection-note">${e(ev.optionNote)}</p>`:''}
+ return `<article id="event-${ev.id}" class="event ${compact?'compact-event':''} ${checked?'done':''} ${ev.optional?'optional':''} ${ev.category==='transport'?'transport-event':''} ${isRest?'rest-event':''}" data-event="${ev.id}"><label class="event-check"><input type="checkbox" data-event-check="${ev.id}" ${checked?'checked':''} aria-label="完成：${e(ev.title)}"><span aria-hidden="true">${icon('check')}</span></label><div class="event-content"><div class="event-meta">${ev.time_hint?`<span class="time-hint">${e(ev.time_hint)}</span>`:''}<span class="event-time">${e(compactTime(ev.time_label))}</span><span class="event-type">${types[ev.category]||'活动'}</span>${ev.optional?'<span class="pill gold">可选</span>':''}${statusLabel(ev)}</div><h3>${e(ev.title)}</h3>
+ ${ev.condition&&!isMeal?`<p class="condition">${e(ev.condition)}</p>`:''}${ev.optionNote?`<p class="selection-note">${e(ev.optionNote)}</p>`:''}${executionNotice(d,ev)}
  <div class="event-body ${imageIds.length===1?'has-single-photo':''} ${restaurantPhoto?'restaurant-photo':''}">
  ${imageIds.length?`<div class="event-photos ${imageIds.length===1?'single-photo':''}" style="--photo-columns:${Math.min(imageIds.length,3)}">${imageIds.map(id=>photoButton(id,'',isMeal&&PLACE[id].category!=='restaurant'?'用餐周边 · ':'',id!==first?.[7]&&(imageIds.length!==1||PLACE[id].name!==ev.title))).join('')}</div>`:''}
  <div class="event-summary">${pilgrimageEventLinks(d,ev)}
@@ -39,7 +39,7 @@ function eventCard(d,ev){
  </div></div>
  ${ev.id==='kodaiji_night'?`<p class="night-facts">17:00亮灯 · ¥800 / 人 <span>购票待确认</span></p><details class="event-detail"><summary>参拜详情</summary><div class="detail-body"><p>游览约60—75分钟，排队另计。若稍有延迟，18:45前离寺，省去八坂神社并顺延晚餐。</p><p>17:45仍未入场、预计排队超过30分钟，或天气差、明显疲劳时，取消夜枫，直接吃饭。</p><p>2026/10/23—12/13，17:00亮灯；21:30停止入场，22:00闭门。两人门票合计¥1,600。昼夜不清场，离场后同票不能再入。</p><p>${external('活动官网 ↗','https://www.kodaiji.com/saiji.html')} · ${external('票价 ↗','https://www.kodaiji.com/haikan.html')}</p></div></details>`:''}
  ${foodRows.length?`<details class="event-detail"><summary>${isRest?'茶歇详情':'餐厅详情'}</summary><div class="detail-body">${isMeal&&ev.condition?`<p>${e(ev.condition)}</p>`:''}${foodRows.map(r=>foodRow(d,r)).join('')}</div></details>`:''}
- ${ev.rally_spot?'<a class="rally-entry text-link" href="#day/2026-12-01/pilgrimage/rally" data-nav>京吹数字集章 · 后期点位 ↗</a>':''}${transportDetail(d,ev)}${activityDetails(d,ev.id)}${foodSuggestions(d,ev.id)}
+ ${rallyActions(ev)}${eventNavigation(ev)}${transportDetail(d,ev)}${activityDetails(d,ev.id)}${foodSuggestions(d,ev.id)}
  ${ev.id==='usj_finish'?'<p class="condition">18:00后预留缓冲，19:00前结束普通票设施体验。19:00—22:00 Amex活动设施及部分餐饮需凭证，19:00并非统一离园时间。</p>':''}
  </div></article>`;
 }
@@ -51,8 +51,9 @@ const TRANSPORT_AT_EVENT={
  kobe_transfer:[0],kobe_bridge_visit:[3],umeda_transfer:[4],sky_transfer:[5],last_evening_return:[6],
  airport_train:[1,2]
 };
-function transportDetail(d,ev){const indexes=TRANSPORT_AT_EVENT[ev.id];if(!indexes)return '';
- const notes=indexes.map(i=>DETAILS[d.date].transport[i]).filter(Boolean);
+function transportDetail(d,ev){const indexes=TRANSPORT_AT_EVENT[ev.id];
+ const notes=ev.id==='tofukuji_transfer'?['京都站乘JR奈良线至东福寺，再步行入寺。']:(indexes||[]).map(i=>DETAILS[d.date].transport[i]).filter(Boolean);
+ if(!notes.length)return '';
  return `<details class="event-detail transport-detail"><summary>交通详情</summary><ul class="detail-body">${notes.map(n=>`<li>${e(n)}</li>`).join('')}</ul></details>`;
 }
 function mealRows(d,ev){

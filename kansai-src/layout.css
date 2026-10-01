@@ -213,3 +213,23 @@
   .source-links a {display:inline-block; min-height:36px; overflow-wrap:anywhere}
 }
 @media screen and (max-width:720px) {.source-links {grid-template-columns:1fr}}
+
+/* Essential actions stay with the activity; completion remains explicitly manual. */
+@media screen {
+  .progress-area {flex-wrap:wrap; gap:8px 14px}
+  .resume-link {display:inline-flex; align-items:center; gap:6px; min-height:44px; margin-left:auto; font-size:14px}
+  .resume-link .icon {width:16px; height:16px}
+  .execution-note {margin:12px 0; padding:8px 12px; border-left:2px solid #e9b779; color:var(--ink); font-size:14px; line-height:1.8}
+  .execution-note strong {font-weight:600}
+  .execution-note a {display:inline-block; padding:4px 0; text-underline-offset:3px}
+  .time-hint {font-size:12px; color:var(--muted)}
+  .activity-navigation {margin-top:8px}
+  .activity-navigation a {display:inline-flex; align-items:center; gap:6px; min-height:44px; font-size:14px; overflow-wrap:anywhere}
+  .activity-navigation .icon {flex:none}
+  .rally-actions {display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; margin-top:12px}
+  .rally-actions a {min-height:44px; display:inline-flex; align-items:center; font-size:14px}
+}
+@media screen and (max-width:720px) {
+  .execution-note {font-size:14px; padding-inline:10px}
+  .progress-area .progress-track {flex:1; min-width:40px; max-width:100px}
+}

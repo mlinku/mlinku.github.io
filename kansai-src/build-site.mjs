@@ -5,7 +5,7 @@ import crypto from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 
 export const STYLE_FILES=['style.css','pilgrimage.css','journey.css','blog-theme.css','layout.css'];
-export const SCRIPT_FILES=['details.js','app.js','day-flow.js','pilgrimage.js','daily.js','interface.js'];
+export const SCRIPT_FILES=['details.js','app.js','day-flow.js','pilgrimage.js','execution.js','daily.js','interface.js'];
 const json=value=>JSON.stringify(value).replace(/</g,'\\u003c');
 
 // Both deliveries use one renderer. Offline embeds media; the blog publishes cached assets.

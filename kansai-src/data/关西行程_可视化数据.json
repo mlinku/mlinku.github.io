@@ -1453,7 +1453,8 @@
           "place_ids": [
             "hotel_kyoto"
           ],
-          "category": "rest"
+          "category": "rest",
+          "time_hint": "预计返店"
         }
       ],
       "meals": {
@@ -1487,7 +1488,7 @@
         }
       ],
       "fallback_rules": [
-        "后期集章、白天登山与芭菲为主线；延误先省京都站短拍。",
+        "后期集章、白天登山与芭菲为主线；下山后先核对本店候位，必要时缩短河岸拍照、提前到店。晚间延误再省京都站短拍。",
         "本店通常16:00结束受理，繁忙时可能提前；下山后查看官网候位，必要时缩短河岸拍照、先到店。",
         "大吉山不夜爬；雨天或明显疲劳时取消登山。"
       ],
@@ -1932,11 +1933,13 @@
           "id": "checkin_osaka",
           "time_label": "约18:00—18:30",
           "time_status": "planning_window",
-          "title": "入住大阪酒店，休息30—45分钟",
+          "title": "入住大阪酒店",
           "place_ids": [
             "hotel_osaka"
           ],
-          "category": "hotel"
+          "category": "hotel",
+          "time_hint": "预计抵达",
+          "condition": "入住后休息30—45分钟。"
         },
         {
           "id": "shinsekai_dinner",
@@ -2267,12 +2270,13 @@
           "id": "nara_return_train",
           "time_label": "14:30—15:00",
           "time_status": "planning_window",
-          "title": "近铁奈良站乘车",
+          "title": "近铁奈良 → 日本桥",
           "place_ids": [
             "kintetsu_nara",
             "kintetsu_nippombashi"
           ],
-          "category": "transport"
+          "category": "transport",
+          "time_hint": "计划上车"
         },
         {
           "id": "nippombashi_arrival",
@@ -2282,7 +2286,8 @@
           "place_ids": [
             "animate"
           ],
-          "category": "transport"
+          "category": "transport",
+          "time_hint": "预计抵达"
         },
         {
           "id": "anime_shopping",
@@ -2492,7 +2497,7 @@
           "place_ids": [
             "starbucks_kitano"
           ],
-          "condition": "含上坡步行约20分钟、用餐休息约50分钟、下坡到三宫商圈约20分钟。轻食配饮品，具体供应与座位以现场为准。"
+          "condition": "上坡步行20分钟 → 用餐休息50分钟 → 下坡到三宫20分钟。轻食与座位以现场为准。"
         },
         {
           "id": "sannomiya_shopping",

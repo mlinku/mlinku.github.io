@@ -10,9 +10,31 @@ const remembered={checks:{'2026-11-30:flight_out':true,'2026-12-02:gion_optional
 const localStorage={getItem:()=>JSON.stringify(remembered),setItem(){}};
 const scope=vm.createContext({PLAN,PILGRIMAGE:JSON.parse(read('pilgrimage.json')),PHOTOS:JSON.parse(read('photos.json')),GUIDES:Object.fromEntries(PLAN.days.map(d=>[d.date,'攻略'])),REGION_MAP_IMAGE:'data:image/jpeg;base64,AA==',document:{querySelector(){return {innerHTML:'',classList:{add(){},remove(){}}}},querySelectorAll(){return []},addEventListener(){}},localStorage,assert,scrollY:0,scrollTo(){},setTimeout(){return 1},clearTimeout(){}});
 const ui=read('interface.js').split("document.addEventListener('click'")[0];
-vm.runInContext(read('details.js')+'\n'+read('app.js')+'\n'+read('day-flow.js')+'\n'+read('pilgrimage.js')+'\n'+read('daily.js')+'\n'+ui,scope);
+vm.runInContext(read('details.js')+'\n'+read('app.js')+'\n'+read('day-flow.js')+'\n'+read('pilgrimage.js')+'\n'+read('execution.js')+'\n'+read('daily.js')+'\n'+ui,scope);
 const results=vm.runInContext(`
  const checked=[];
+ const savedChecks={...state.checks},savedChoices={...state.choices};
+ const resumeDay=PLAN.days[1];state.checks={};state.choices[resumeDay.date]={};
+ assert.equal(nextActivity(resumeDay),null,'未开始时不显示继续入口');
+ const resumeEvents=effectiveEvents(resumeDay);
+ state.checks[resumeDay.date+':'+resumeEvents[0].id]=true;
+ assert.equal(nextActivity(resumeDay).id,resumeEvents[1].id,'跳到第一项未完成活动');
+ assert.ok(resumeLink(resumeDay).includes('/timeline/'+resumeEvents[1].id),'继续行程使用可分享的活动锚点');
+ for(const ev of resumeEvents)state.checks[resumeDay.date+':'+ev.id]=true;
+ assert.equal(nextActivity(resumeDay),null,'全部完成后无继续入口');
+ state.choices[resumeDay.date]={ujiExtra:'station'};
+ assert.equal(nextActivity(resumeDay).id,'station_stage','新增可选项也能继续');
+ state.checks={};state.choices={...savedChoices};
+ assert.equal(nextActivity(resumeDay),null,'重置后移除继续入口');
+ for(const day of PLAN.days)for(const ev of effectiveEvents(day)){
+  const id=navigationPlace(ev);if(id){assert.ok(PLACE[id]?.map_search_url,'导航点存在 '+ev.id);assert.ok(!eventNavigation(ev).includes('origin='),'不绑定上一站 '+ev.id);}
+  if(ev.rally_spot){assert.ok(rallyActions(ev).includes(PILGRIMAGE.rally.entry_url),'集章直达官方活动');assert.ok(!rallyActions(ev).includes('data-event-check'),'打开活动不标记领取完成');}
+ }
+ assert.equal(navigationPlace(effectiveEvents(PLAN.days[5]).find(e=>e.id==='nara_return_train')),'kintetsu_nara','上车阶段地图指向出发车站');
+ assert.ok(executionNotice(resumeDay,{id:'uji_parfait'}).includes('16:00'),'芭菲受理时限无需展开');
+ assert.ok(executionNotice(resumeDay,{id:'uji_pilgrimage'}).includes('提前到店'),'河岸阶段即提示延误处理');
+ state.checks=savedChecks;state.choices=savedChoices;
+
  assert.ok(prepPage().includes('临行准备'));
  assert.ok(PLACE_DETAILS.hotel_kyoto);
  assert.ok(!tripPlaces().some(p=>['byodoin','kyoto_tower','kotosaka','meriken'].includes(p.id)),'地点目录不展示已取消景点');
@@ -288,7 +310,7 @@ const results=vm.runInContext(`
  assert.equal(effectiveEvents(kyoto).find(ev=>ev.id==='higashiyama_walk').title,'东山散步');
  assert.ok(['sannenzaka','yasaka_tower','ninenzaka','nene'].every(id=>effectiveRoute(kyoto).some(n=>n.id===id)),'简短标题不删路线站点');
  assert.ok(dayTransport(PLAN.days[3]).join('').includes('奥社奉拜所'),'内部游览路线仍可查阅');
- assert.ok(effectiveEvents(PLAN.days[3]).find(ev=>ev.id==='checkin_osaka').title.includes('30—45分钟'),'保留入住休息');
+ assert.ok(effectiveEvents(PLAN.days[3]).find(ev=>ev.id==='checkin_osaka').condition.includes('30—45分钟'),'保留入住休息');
  assert.ok(effectiveEvents(usj).find(ev=>ev.id==='usj_rest').title.includes('30分钟'),'保留USJ休息');
 
  state.choices[uji.date]={};
