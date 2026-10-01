@@ -1649,5 +1649,18 @@
     "attribution": "Saigen Jiro / Wikimedia Commons · CC0 1.0",
     "sourceVerified": true,
     "notes": "五ケ庄境内鸟居；与作品画面角度不同。使用 Commons 缩略版，未裁切。"
+  },
+  "byodoin_approach": {
+    "sight": "平等院表参道",
+    "local": "assets/pilgrimage/uji/omotesando_r.jpg",
+    "sourcePage": "https://anitabi.net/anime-eupho/",
+    "imageUrl": "https://anitabi.net/blog/%E9%9F%BF%E3%81%91%E3%80%80%E3%83%A6%E3%83%BC%E3%83%95%E3%82%A9%E3%83%8B%E3%82%A2%E3%83%A0%E8%81%96%E5%9C%B05.jpg",
+    "author": "あにたび",
+    "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+    "date": "约2015年（历史参考）",
+    "width": 400,
+    "height": 225,
+    "attribution": "实景照片：あにたび（约2015年历史参考）",
+    "visualContentVerified": true
   }
 }

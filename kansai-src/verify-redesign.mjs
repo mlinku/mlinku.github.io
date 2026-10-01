@@ -141,7 +141,7 @@ const results=vm.runInContext(`
  for(const [id] of photoFixtures)PHOTOS[id].src='test-'+id+'.jpg';
  const nightCard=eventCard(kyoto,effectiveEvents(kyoto).find(ev=>ev.id==='kodaiji_night'));
  assert.ok(!nightCard.includes('<span>高台寺夜枫</span>'),'单张照片不重复活动标题');
- assert.ok(nightCard.includes('aria-label="查看高台寺夜枫照片与详情"'),'照片仍有可访问名称');
+ assert.ok(nightCard.includes('aria-label="查看高台寺夜枫详情"'),'照片仍有可访问名称');
  const eastWalk=eventCard(kyoto,effectiveEvents(kyoto).find(ev=>ev.id==='higashiyama_walk'));
  for(const name of ['三年坂','八坂塔外观','二年坂','宁宁之道'])assert.ok(eastWalk.includes('<span>'+name+'</span>'),'多地点照片仍标明名称 '+name);
  for(const [id,src] of photoFixtures){if(src===undefined)delete PHOTOS[id].src;else PHOTOS[id].src=src;}
@@ -265,7 +265,7 @@ const results=vm.runInContext(`
   const markup=dayPage();
   assert.equal(markup.split('class="stay-access"').length-1,d.overnight?1:0,'住宿入口放在顶部 '+d.date);
   assert.ok(!markup.includes('hotel-shortcut'),'移除底部重复住宿卡');
-  assert.ok(daySupport(d).includes('原始攻略与来源'));
+  assert.ok(daySupport(d).includes('详细攻略与来源'));
   for(const ev of effectiveEvents(d))assert.ok(!/\\d{1,2}:\\d{2}\\/\\d{1,2}:\\d{2}/.test(compactTime(ev.time_label)),'时间不堆叠备选时刻 '+ev.id);
  }
  assert.equal(compactTime('13:10—14:00/14:30'),'13:10出发');
@@ -307,6 +307,12 @@ const results=vm.runInContext(`
  assert.ok(!effectiveEvents(uji).some(ev=>ev.id==='byodoin_visit'));
  assert.ok(!effectiveRoute(uji).some(n=>n.id==='byodoin'));
  assert.ok(effectiveRoute(uji).some(n=>n.id==='byodoin_approach'),'省收费区仍保留表参道');
+ assert.ok(pilgrimagePlace('byodoin_approach').some(p=>p.id==='eupho_omotesando'),'表参道详情关联对应巡礼图');
+ assert.ok(!pilgrimagePlace('byodoin').some(p=>p.id==='eupho_omotesando'),'不把表参道绑定到收费区');
+ assert.ok(PHOTOS.byodoin_approach?.local,'表参道路线显示实景缩略图');
+ assert.ok(!PILGRIMAGE.coverage.some(p=>p.title==='京都塔'||p.place_id==='kotosaka'),'不展示已取消支线说明');
+ assert.ok(!rallyCard(uji).includes('调整今天'),'必选集章不提供无关调整入口');
+ assert.ok(!daySupport(uji).includes('原始方案'),'当前攻略不再标成旧方案');
  assert.equal(effectiveEvents(uji).filter(ev=>ev.rally_spot).length,3);
  assert.equal(effectiveEvents(uji).find(ev=>ev.id==='uji_saizeriya_dinner').time_label,'18:15—19:15');
  assert.equal(returnTarget(uji),'20:15—20:45');

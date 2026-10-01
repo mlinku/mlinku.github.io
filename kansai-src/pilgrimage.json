@@ -410,7 +410,7 @@
     {
       "id": "eupho_omotesando",
       "place_ids": [
-        "byodoin"
+        "byodoin_approach"
       ],
       "date": "2026-12-01",
       "event_id": "uji_dinner_walk",
@@ -622,7 +622,7 @@
       ],
       "status": "matched_pair",
       "priority": "optional_short_stop",
-      "route_rule": "12/1回京都站有余力时作为京都塔的替代短停；不累计成第二个晚间景点。",
+      "route_rule": "返回京都站后有余力再短停，不另外绕行。",
       "match_note": "",
       "name_ja": "京都駅ビル 室町小路広場",
       "option": "station"
@@ -1281,18 +1281,6 @@
       "note": "神社前早蕨之道已确认；使用门外道路对照，不用本殿照片冒充。",
       "title": "宇治上神社",
       "date": "2026-12-01"
-    },
-    {
-      "place_id": "kotosaka",
-      "status": "未找到可靠《吹响》动画帧对照",
-      "note": "未找到可靠《吹响》动画帧对照；保留可选赏枫；不制作动画对照卡。",
-      "title": "琴坂",
-      "date": "2026-12-01"
-    },
-    {
-      "date": "2026-12-01",
-      "title": "京都塔",
-      "note": "保留原有可选联动体验；未把联动宣传图当成动画取景帧。"
     },
     {
       "date": "2026-12-04",
