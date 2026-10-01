@@ -1,6 +1,6 @@
 /* Daily presentation. DayFlow owns grouping; app.js owns itinerary choices. */
 function currentChoiceText(d){const c=choice(d),labels=[];
- if(d.date==='2026-12-01'){if(c.skipByodoin)labels.push('省去平等院');if(c.ujiExtra==='station')labels.push('京都站《宝岛》');}
+ if(d.date==='2026-12-01'){if(c.ujiExtra==='station')labels.push('京都站《宝岛》');}
  if(d.date==='2026-12-02'){if(c.kodaijiPlan==='skip')labels.push('取消夜枫 · 饭后返店');else if(c.yasakaBrief)labels.push('八坂神社短停');}
  if(d.date==='2026-12-04'){if(c.usjExtra)labels.push('增加游乐项目');if(c.kinopio)labels.push('午餐改为Kinopio');}
  if(d.date==='2026-12-05'&&(c.shop1!=='animate'||c.shop2!=='surugaya'))labels.push('购物：'+selectedShops(c).map(id=>PLACE[id].name).join('＋'));
@@ -23,7 +23,7 @@ function timelinePage(d){const flow=DayFlow.forDay(d);return `
 
 function eventCard(d,ev){
  const checked=!!state.checks[d.date+':'+ev.id],isMeal=ev.category==='meal',isRest=ev.category==='rest';
- const compact=ev.category==='transport'||(isRest&&ev.place_ids.every(id=>id.startsWith('hotel_')||id==='usj'))||['sky_transfer','usj_app','usj_finish'].includes(ev.id);
+ const compact=ev.category==='transport'||(isRest&&ev.place_ids.every(id=>id.startsWith('hotel_')||id==='usj'))||['sky_transfer','nakamura_walk','usj_app','usj_finish'].includes(ev.id);
  const imageIds=compact?[]:ev.place_ids.filter(id=>photoSrc(id)&&(!isMeal||PLACE[id].category==='restaurant'));
  const restaurantPhoto=imageIds.length===1&&PLACE[imageIds[0]].category==='restaurant';
  const foodRows=mealRows(d,ev),first=foodRows.find(r=>r[1]==='首选');
@@ -33,7 +33,7 @@ function eventCard(d,ev){
  ${imageIds.length?`<div class="event-photos ${imageIds.length===1?'single-photo':''}" style="--photo-columns:${Math.min(imageIds.length,3)}">${imageIds.map(id=>photoButton(id,'',isMeal&&PLACE[id].category!=='restaurant'?'用餐周边 · ':'',imageIds.length!==1||PLACE[id].name!==ev.title)).join('')}</div>`:''}
  <div class="event-summary">${pilgrimageEventLinks(d,ev)}
  ${ev.category==='hotel'&&ev.place_ids[0]?`<div class="checkin-address"><strong lang="ja">${e(PLACE[ev.place_ids[0]].name_ja)}</strong><p lang="ja">${e(PLACE[ev.place_ids[0]].address_ja||'')}</p></div>`:''}
- ${first?`<p class="meal-preview">${e(first[2])}<small>${e(first[3])} / 人</small></p>`:''}
+ ${first?`<p class="meal-preview">${e(first[2])}<small>${e(first[3])}${first[3].includes('菜单')?'':' / 人'}</small></p>`:''}
  ${!isMeal&&!compact&&(ev.place_ids.some(id=>!imageIds.includes(id))||(ev.place_ids.length===1&&(!isRest||restaurantPhoto)))?`<div class="event-places">${ev.place_ids.filter(id=>!imageIds.includes(id)).map(placeButton).join('')}${ev.place_ids.length===1&&(!isRest||restaurantPhoto)?external(icon('map')+'地图',PLACE[ev.place_ids[0]].map_search_url,'place-map'):''}</div>`:''}
  ${isMeal&&first&&first[0]!=='早餐'?`<div class="meal-map">${external(icon('map')+'地图',mealMap(d,first),'text-link')}</div>`:''}
  </div></div>
@@ -44,7 +44,7 @@ function eventCard(d,ev){
  </div></article>`;
 }
 function mealRows(d,ev){
- const name=ev.id==='gion_rest'?'茶歇':ev.category==='meal'?(/dinner/.test(ev.id)?'晚餐':/lunch/.test(ev.id)?'午餐':'早餐'):'';
+ const name=['gion_rest','uji_parfait'].includes(ev.id)?'茶歇':ev.category==='meal'?(/dinner/.test(ev.id)?'晚餐':/lunch/.test(ev.id)?'午餐':'早餐'):'';
  const rows=DETAILS[d.date].meals.filter(r=>r[0]===name);
  if(ev.id==='usj_lunch'&&choice(d).kinopio){
   // One selection drives the preview, budget, map and expanded alternatives.
@@ -54,7 +54,7 @@ function mealRows(d,ev){
  return rows.filter(r=>r[1]!=='可选');
 }
 function mealMap(d,r){if(r[7]&&PLACE[r[7]])return PLACE[r[7]].map_search_url;let city=d.cities.includes('宇治')&&['午餐','晚餐'].includes(r[0])?'宇治':d.date==='2026-12-05'&&r[0]==='午餐'?'奈良':d.date==='2026-12-06'&&r[0]==='午餐'?'神戸':d.date==='2026-12-03'&&r[0]==='午餐'?'京都':d.overnight==='hotel_kyoto'?'京都':'大阪';if(r[2].startsWith('通圓'))city='宇治';return mapURL(city+' '+r[2]);}
-function foodRow(d,r){return `<article class="food-row"><span class="food-priority">${e(r[0])} · ${e(r[1])}</span><h4 lang="ja">${e(r[2])}</h4>${r[1]!=='首选'&&r[7]&&photoSrc(r[7])?photoButton(r[7],'food-row-photo'):''}<p class="budget">${e(r[3])} / 人</p><p>${e(r[4])}</p><p class="muted">${e(r[5])}</p><div class="food-actions">${btn(icon('copy')+'复制日文名','copy',`data-copy="${e(r[2])}"`,'text-button')}${r[0]!=='早餐'?external(icon('map')+'地图',mealMap(d,r),'text-link'):''}${r[6]?external('店铺资料 ↗',r[6],'text-link'):''}</div></article>`;}
+function foodRow(d,r){return `<article class="food-row"><span class="food-priority">${e(r[0])} · ${e(r[1])}</span><h4 lang="ja">${e(r[2])}</h4>${r[1]!=='首选'&&r[7]&&photoSrc(r[7])?photoButton(r[7],'food-row-photo'):''}<p class="budget">${e(r[3])}${r[3].includes('菜单')?'':' / 人'}</p><p>${e(r[4])}</p><p class="muted">${e(r[5])}</p><div class="food-actions">${btn(icon('copy')+'复制日文名','copy',`data-copy="${e(r[2])}"`,'text-button')}${r[0]!=='早餐'?external(icon('map')+'地图',mealMap(d,r),'text-link'):''}${r[6]?external('店铺资料 ↗',r[6],'text-link'):''}</div></article>`;}
 
 function routeTimeMarkup(times){return times.map(t=>`<div class="route-time"><strong>${e(compactTime(t.text))}</strong><span>${e(t.label==='同段共用'?'游览':t.label)}</span></div>`).join('');}
 function routePage(d){const groups=routeGroups(d);return `

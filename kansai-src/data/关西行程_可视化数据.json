@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "plan_id": "kansai-2026-1130-1207",
-  "revision": "2026-10-01-kobe-0930-balanced",
+  "revision": "2026-10-01-uji-mountain-parfait",
   "recorded_on": "2026-09-28",
   "language": "zh-CN",
   "title": "关西旅行规划基准",
@@ -147,18 +147,10 @@
     "checked_on": "2026-09-28",
     "status": "early_season_forecast_not_guarantee",
     "primary_days": [
-      "2026-12-01",
       "2026-12-02",
       "2026-12-03"
     ],
     "spots": [
-      {
-        "place_id": "byodoin",
-        "visit_date": "2026-12-01",
-        "forecast_viewing_start": "2026-11-26",
-        "forecast_leaf_fall_start": "2026-12-09",
-        "source": "https://weathernews.jp/koyo/spot/26136/"
-      },
       {
         "place_id": "kiyomizu",
         "visit_date": "2026-12-02",
@@ -1261,7 +1253,7 @@
       "intensity": "中等偏高；含登山与跨片区步行",
       "overnight": "hotel_kyoto",
       "departure_target": "09:30",
-      "hotel_return_target": "20:00—20:30",
+      "hotel_return_target": "20:15—20:45",
       "route_stop_ids": [
         "hotel_kyoto",
         "kyoto_station",
@@ -1277,8 +1269,8 @@
         "asagiri",
         "kisen",
         "bench",
+        "nakamura",
         "agata",
-        "byodoin",
         "byodoin_approach",
         "uji_bridge",
         "saizeriya_uji",
@@ -1345,7 +1337,7 @@
         },
         {
           "id": "uji_lunch",
-          "time_label": "12:15—13:15",
+          "time_label": "12:15—13:00",
           "time_status": "planning_window",
           "title": "午餐 · きく咖喱",
           "place_ids": [
@@ -1355,7 +1347,7 @@
         },
         {
           "id": "uji_shrines",
-          "time_label": "13:15—14:00",
+          "time_label": "13:00—13:40",
           "time_status": "planning_window",
           "title": "宇治神社、宇治上神社",
           "place_ids": [
@@ -1367,7 +1359,7 @@
         },
         {
           "id": "daikichi_visit",
-          "time_label": "14:00—15:15",
+          "time_label": "13:40—14:55",
           "time_status": "planning_window",
           "title": "大吉山 · 展望台",
           "place_ids": [
@@ -1377,16 +1369,8 @@
           "condition": "含往返与停留；天气差或疲劳时取消，不改为夜爬。"
         },
         {
-          "id": "uji_rest",
-          "time_label": "15:15—15:40",
-          "time_status": "planning_window",
-          "title": "下山后休息",
-          "place_ids": [],
-          "category": "rest"
-        },
-        {
           "id": "uji_pilgrimage",
-          "time_label": "15:40—16:10",
+          "time_label": "14:55—15:25",
           "time_status": "planning_window",
           "title": "宇治川巡礼",
           "place_ids": [
@@ -1397,31 +1381,40 @@
           "category": "walk"
         },
         {
+          "id": "nakamura_walk",
+          "time_label": "15:25—15:40",
+          "time_status": "planning_window",
+          "title": "前往中村藤吉本店",
+          "place_ids": [
+            "nakamura"
+          ],
+          "category": "walk"
+        },
+        {
+          "id": "uji_parfait",
+          "time_label": "15:40—17:10",
+          "time_status": "planning_window",
+          "title": "中村藤吉 · 抹茶芭菲",
+          "place_ids": [
+            "nakamura"
+          ],
+          "category": "rest"
+        },
+        {
           "id": "agata_stamp",
-          "time_label": "16:10—16:30",
+          "time_label": "17:10—17:40",
           "time_status": "planning_window",
           "title": "縣神社 · 第③章",
           "place_ids": [
             "agata"
           ],
           "category": "visit",
-          "rally_spot": "agata"
-        },
-        {
-          "id": "byodoin_visit",
-          "time_label": "16:30—17:20",
-          "time_status": "planning_window",
-          "title": "平等院 · 庭园与凤翔馆",
-          "place_ids": [
-            "byodoin"
-          ],
-          "category": "visit",
-          "optional": true,
-          "condition": "有余量再去；先看凤翔馆，16:45停止入馆。到达偏晚就省掉。"
+          "rally_spot": "agata",
+          "condition": "含从本店步行至神社与领取第③章。"
         },
         {
           "id": "uji_dinner_walk",
-          "time_label": "17:20—18:00",
+          "time_label": "17:40—18:15",
           "time_status": "planning_window",
           "title": "表参道、宇治桥 → 晚餐",
           "place_ids": [
@@ -1432,7 +1425,7 @@
         },
         {
           "id": "uji_saizeriya_dinner",
-          "time_label": "18:00—19:00",
+          "time_label": "18:15—19:15",
           "time_status": "planning_window",
           "title": "晚餐 · 萨莉亚",
           "place_ids": [
@@ -1442,7 +1435,7 @@
         },
         {
           "id": "uji_return",
-          "time_label": "19:00—20:15",
+          "time_label": "19:15—20:30",
           "time_status": "planning_window",
           "title": "JR宇治 → 京都酒店",
           "place_ids": [
@@ -1454,7 +1447,7 @@
         },
         {
           "id": "kyoto_rest",
-          "time_label": "20:00—20:30",
+          "time_label": "20:15—20:45",
           "time_status": "planning_window",
           "title": "回酒店休息",
           "place_ids": [
@@ -1471,23 +1464,19 @@
         "dinner": {
           "primary": "サイゼリヤ 宇治里尻店",
           "alternative": "宇治站周边简餐；或回京都站用餐"
+        },
+        "tea": {
+          "primary": "中村藤吉本店 · 抹茶芭菲",
+          "time": "15:40—17:10"
         }
       },
       "transport_notes": [
         "去程京都站乘停靠黄檗的JR奈良线普通列车，黄檗站步行至五ケ庄古川13的許波多神社。",
         "許波多→水管桥预留45分钟移动，按导航走公共道路；地图坐标是河岸集章位置，不是走上水管桥。",
-        "午餐后过宇治桥到东岸，参拜两神社并登山；下山后经朝雾桥、喜撰桥到西岸长椅和縣神社。",
+        "午餐后过宇治桥到东岸，参拜两神社并登山；下山经朝雾桥、喜撰桥、久美子长椅前往中村藤吉本店。茶歇后步行至縣神社领取第③章，再经表参道、宇治桥去晚餐。",
         "晚餐后从JR宇治返回京都；沿途不再追加琴坂或京都塔。"
       ],
       "optional": [
-        {
-          "id": "byodoin_option",
-          "title": "平等院庭园与凤翔馆",
-          "place_ids": [
-            "byodoin"
-          ],
-          "rule": "三章与登山完成后有余量再去；先看凤翔馆，16:45停止入馆，不安排凤凰堂内部。"
-        },
         {
           "id": "station_option",
           "title": "京都站4F《宝岛》舞台短拍",
@@ -1498,9 +1487,9 @@
         }
       ],
       "fallback_rules": [
-        "后期三章保留；延误时先省平等院与京都站短拍。",
-        "大吉山保留白天窗口；天气差、明显疲劳或下午延误时取消登山。",
-        "平等院先看凤翔馆，16:45停止入馆、17:00闭馆；庭园17:30关闭。"
+        "后期三章、白天登山与芭菲为主线；延误先省京都站短拍。",
+        "本店通常16:00结束受理，繁忙时可能提前；下山后查看官网候位，必要时缩短河岸拍照、先到店。",
+        "大吉山不夜爬；雨天或明显疲劳时取消登山。"
       ],
       "dining_recommendations": {
         "meals": [
@@ -1541,19 +1530,19 @@
             "JR宇治站周边",
             "选有空位的简餐；也可回京都站吃晚饭，再直接返店。",
             ""
+          ],
+          [
+            "茶歇",
+            "首选",
+            "中村藤吉本店",
+            "价格以当日菜单为准",
+            "宇治壱番十番地",
+            "15:40到店，90分钟含等位与用餐。参考16:00结束受理、16:30末点、17:30闭店；不接受预约，繁忙时可能提前停止受理。",
+            "https://tokichi.jp/pages/honten-store-page",
+            "nakamura"
           ]
         ],
-        "optional": [
-          {
-            "place": "nakamura",
-            "label": "甜品备选 · 取消登山时考虑",
-            "title": "中村藤吉抹茶芭菲",
-            "text": "本店参考16:00截止受理，可能提前收号。取消登山时，可用下午时段吃芭菲；先完成縣神社集章，再按余量选择甜品或平等院，不叠加。",
-            "budget": "价格待确认，以当天菜单为准",
-            "source": "https://tokichi.jp/pages/stores",
-            "event_id": "daikichi_visit"
-          }
-        ],
+        "optional": [],
         "along_route": {}
       },
       "route_event_ids": [
@@ -1571,8 +1560,8 @@
         "uji_pilgrimage",
         "uji_pilgrimage",
         "uji_pilgrimage",
+        "uji_parfait",
         "agata_stamp",
-        "byodoin_visit",
         "uji_dinner_walk",
         "uji_dinner_walk",
         "uji_saizeriya_dinner",
@@ -2801,12 +2790,12 @@
   ],
   "pending_checks": [
     "USJ 12/4门票购买状态、正式开园时间、检修及演出场次；确认后倒推出门时间。",
-    "出发前7—10天看红叶实况，48—72小时看天气；12/1与12/2可视天气互换，但周二出町餐厅需重核。",
+    "出发前7—10天看红叶实况，48—72小时看天气；雨天调整当天户外项目，日期保持现方案。",
     "餐厅临时休业、菜单与Nintendo当日入店规则。",
     "12/6北野星巴克与商店营业、Nintendo入店规则、大桥天气；蓝天大厦营业、票价及购票状态。",
     "12/7有效南海班表、HX617航司通知与登机口。",
     "12/2高台寺：查看天气、叶况与排队情况。",
-    "USJ仍暂列12/4；12/4与12/5正式营业时间公布后，在购票前比较，尚未实施换日。",
+    "12/1确认きく午间营业与咖喱菜单、中村藤吉接待时间；当天查看本店候位情况。",
     "12/1京阪后期数字集章：用手机Safari或Chrome提前确认活动账户、联网与定位权限，临行复核点位公告。"
   ],
   "visualization_rules": [
@@ -2875,7 +2864,7 @@
     {
       "id": "eupho_omotesando",
       "place_ids": [
-        "byodoin"
+        "byodoin_approach"
       ],
       "date": "2026-12-01",
       "event_id": "uji_dinner_walk",
@@ -3240,7 +3229,7 @@
         "許波多神社（五ケ庄）"
       ]
     },
-    "selection": "12/1 09:30离店；許波多→水管桥→縣神社后三章均为主线；大吉山白天完成，平等院为余量项，约20:00—20:30返店。",
+    "selection": "12/1 09:30离店；許波多→水管桥→縣神社后三章均为主线；大吉山白天完成，下午中村藤吉芭菲，平等院不入内，约20:15—20:45返店。",
     "source_url": "https://www.keihan.co.jp/euphonium/"
   }
 }
