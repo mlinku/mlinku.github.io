@@ -15,6 +15,13 @@ const results=vm.runInContext(`
  const checked=[];
  assert.ok(prepPage().includes('临行准备'));
  assert.ok(PLACE_DETAILS.hotel_kyoto);
+ assert.ok(!tripPlaces().some(p=>['byodoin','kyoto_tower','kotosaka','meriken'].includes(p.id)),'地点目录不展示已取消景点');
+ assert.ok(tripPlaces().some(p=>p.id==='surugaya_main'),'保留购物替换店');
+ for(const d of PLAN.days)for(const ev of effectiveEvents(d))if(TRANSPORT_AT_EVENT[ev.id]){
+  assert.ok(TRANSPORT_AT_EVENT[ev.id].every(i=>DETAILS[d.date].transport[i]),'交通说明索引有效 '+ev.id);
+  assert.ok(eventCard(d,ev).includes('交通详情'),'交通活动可就地展开 '+ev.id);
+ }
+
  for(const img of Object.values(PHOTOS))img.src=img.local;
  for(const d of PLAN.days){
   assert.deepEqual(effectiveRoute(d).map(p=>p.id),d.route_stop_ids,'路线顺序 '+d.date);
@@ -103,9 +110,9 @@ const results=vm.runInContext(`
    if(p.coordinates)assert.ok(p.coordinates.source_url&&p.coordinates.precision,p.id+' coordinate provenance');
    assert.ok(PLAN.days.find(d=>d.date===p.date),p.id+' valid day');
    assert.ok(shotCard(p).includes('data-shot-check="'+p.id+'"'),p.id+' completion control');
-   assert.ok(shotCard(p).includes(e(p.shooting_note)),p.id+' 精简后保留完整现场说明');
-   assert.ok(shotCard(p).includes(e(p.scene)),p.id+' 精简后保留完整作品依据');
-   if(p.match_note)assert.ok(shotCard(p).includes(e(p.match_note)),p.id+' 图片匹配限定保留');
+   assert.ok(shotCard(p).includes(e(SHOT_COPY[p.id]?.note||p.shooting_note)),p.id+' 显示当前拍摄说明');
+   assert.ok(shotCard(p).includes(e(SHOT_COPY[p.id]?.scene||p.scene)),p.id+' 显示作品依据');
+   if(p.match_note)assert.ok(shotCard(p).includes(e(SHOT_COPY[p.id]?.caption||p.match_note)),p.id+' 图片匹配限定保留');
  }
 
  const point=pilgrimagePoints.find(p=>p.id==='delta-kon');
@@ -265,7 +272,7 @@ const results=vm.runInContext(`
   const markup=dayPage();
   assert.equal(markup.split('class="stay-access"').length-1,d.overnight?1:0,'住宿入口放在顶部 '+d.date);
   assert.ok(!markup.includes('hotel-shortcut'),'移除底部重复住宿卡');
-  assert.ok(daySupport(d).includes('详细攻略与来源'));
+  assert.ok(daySupport(d).includes('资料来源'));
   for(const ev of effectiveEvents(d))assert.ok(!/\\d{1,2}:\\d{2}\\/\\d{1,2}:\\d{2}/.test(compactTime(ev.time_label)),'时间不堆叠备选时刻 '+ev.id);
  }
  assert.equal(compactTime('13:10—14:00/14:30'),'13:10出发');

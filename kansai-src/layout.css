@@ -1,4 +1,4 @@
-/* layout.css — scoped rules; shared reading tokens live in layout.css. */
+/* Shared reading layout and responsive refinements. */
 @media screen {
   .day-main, .event-content, .event-summary, .route-copy, .shot-heading>div {min-width:0}
   .event .event-content {display:block; padding:20px; border:1px solid var(--line); border-radius:4px; box-shadow:none}
@@ -192,3 +192,24 @@
   .event-body {margin-top:10px}
   .event .event-photos {gap:8px}
 }
+/* Keep the daily reading flow in one column; supporting material follows it. */
+@media screen {
+  .day-layout {display:block}
+  .day-support {position:static; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 24px; margin-top:28px; align-items:start}
+  .day-support .support-card {margin:0; min-width:0}
+  .day-support .support-card[open] {grid-column:1 / -1}
+  .transport-detail .detail-body {margin:0; padding:4px 0 10px 20px}
+  .transport-detail li+li {margin-top:8px}
+  .option-fields .option-row {line-height:1.7}
+  .option-fields .option-row small {line-height:1.7}
+  .rally-spots header {min-height:32px}
+}
+@media screen and (max-width:720px) {
+  .day-support {grid-template-columns:1fr; gap:0; margin-top:20px}
+  .rally-spots header {min-height:0}
+}
+@media screen {
+  .source-links {display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 20px; padding-left:20px; margin:0}
+  .source-links a {display:inline-block; min-height:36px; overflow-wrap:anywhere}
+}
+@media screen and (max-width:720px) {.source-links {grid-template-columns:1fr}}
