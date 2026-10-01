@@ -1252,8 +1252,8 @@
       ],
       "intensity": "中等偏高；含登山与跨片区步行",
       "overnight": "hotel_kyoto",
-      "departure_target": "09:30",
-      "hotel_return_target": "20:15—20:45",
+      "departure_target": "09:00",
+      "hotel_return_target": "19:45—20:15",
       "route_stop_ids": [
         "hotel_kyoto",
         "kyoto_station",
@@ -1281,7 +1281,7 @@
       "timeline": [
         {
           "id": "uji_transfer",
-          "time_label": "09:30—10:30",
+          "time_label": "09:00—10:00",
           "time_status": "planning_window",
           "title": "京都 → 黄檗",
           "place_ids": [
@@ -1293,7 +1293,7 @@
         },
         {
           "id": "kohata_stamp",
-          "time_label": "10:30—10:50",
+          "time_label": "10:00—10:20",
           "time_status": "planning_window",
           "title": "許波多神社 · 集章点",
           "place_ids": [
@@ -1304,7 +1304,7 @@
         },
         {
           "id": "suikan_transfer",
-          "time_label": "10:50—11:35",
+          "time_label": "10:20—11:05",
           "time_status": "planning_window",
           "title": "前往水管桥河岸",
           "place_ids": [
@@ -1316,7 +1316,7 @@
         },
         {
           "id": "suikan_stamp",
-          "time_label": "11:35—11:55",
+          "time_label": "11:05—11:25",
           "time_status": "planning_window",
           "title": "水管桥河岸 · 集章点",
           "place_ids": [
@@ -1327,7 +1327,7 @@
         },
         {
           "id": "uji_lunch_walk",
-          "time_label": "11:55—12:15",
+          "time_label": "11:25—11:45",
           "time_status": "planning_window",
           "title": "宇治桥 → 午餐",
           "place_ids": [
@@ -1337,7 +1337,7 @@
         },
         {
           "id": "uji_lunch",
-          "time_label": "12:15—13:00",
+          "time_label": "11:45—12:30",
           "time_status": "planning_window",
           "title": "午餐 · きく咖喱",
           "place_ids": [
@@ -1347,7 +1347,7 @@
         },
         {
           "id": "uji_shrines",
-          "time_label": "13:00—13:40",
+          "time_label": "12:30—13:10",
           "time_status": "planning_window",
           "title": "宇治神社、宇治上神社",
           "place_ids": [
@@ -1359,7 +1359,7 @@
         },
         {
           "id": "daikichi_visit",
-          "time_label": "13:40—14:55",
+          "time_label": "13:10—14:25",
           "time_status": "planning_window",
           "title": "大吉山 · 展望台",
           "place_ids": [
@@ -1370,7 +1370,7 @@
         },
         {
           "id": "uji_pilgrimage",
-          "time_label": "14:55—15:25",
+          "time_label": "14:25—14:55",
           "time_status": "planning_window",
           "title": "宇治川巡礼",
           "place_ids": [
@@ -1382,7 +1382,7 @@
         },
         {
           "id": "nakamura_walk",
-          "time_label": "15:25—15:40",
+          "time_label": "14:55—15:10",
           "time_status": "planning_window",
           "title": "前往中村藤吉本店",
           "place_ids": [
@@ -1392,7 +1392,7 @@
         },
         {
           "id": "uji_parfait",
-          "time_label": "15:40—17:10",
+          "time_label": "15:10—16:40",
           "time_status": "planning_window",
           "title": "中村藤吉 · 抹茶芭菲",
           "place_ids": [
@@ -1402,7 +1402,7 @@
         },
         {
           "id": "agata_stamp",
-          "time_label": "17:10—17:40",
+          "time_label": "16:40—17:10",
           "time_status": "planning_window",
           "title": "縣神社 · 集章点",
           "place_ids": [
@@ -1414,7 +1414,7 @@
         },
         {
           "id": "uji_dinner_walk",
-          "time_label": "17:40—18:15",
+          "time_label": "17:10—17:45",
           "time_status": "planning_window",
           "title": "表参道、宇治桥 → 晚餐",
           "place_ids": [
@@ -1425,7 +1425,7 @@
         },
         {
           "id": "uji_saizeriya_dinner",
-          "time_label": "18:15—19:15",
+          "time_label": "17:45—18:45",
           "time_status": "planning_window",
           "title": "晚餐 · 萨莉亚",
           "place_ids": [
@@ -1435,7 +1435,7 @@
         },
         {
           "id": "uji_return",
-          "time_label": "19:15—20:30",
+          "time_label": "18:45—20:00",
           "time_status": "planning_window",
           "title": "JR宇治 → 京都酒店",
           "place_ids": [
@@ -1447,7 +1447,7 @@
         },
         {
           "id": "kyoto_rest",
-          "time_label": "20:15—20:45",
+          "time_label": "19:45—20:15",
           "time_status": "planning_window",
           "title": "回酒店休息",
           "place_ids": [
@@ -1468,7 +1468,7 @@
         },
         "tea": {
           "primary": "中村藤吉本店 · 抹茶芭菲",
-          "time": "15:40—17:10"
+          "time": "15:10—16:40"
         }
       },
       "transport_notes": [
@@ -1538,7 +1538,7 @@
             "中村藤吉本店",
             "价格以当日菜单为准",
             "宇治壱番十番地",
-            "15:40到店，90分钟含等位与用餐。参考16:00结束受理、16:30末点、17:30闭店；不接受预约，繁忙时可能提前停止受理。",
+            "15:10到店，90分钟含等位与用餐。参考16:00结束受理、16:30末点、17:30闭店；不接受预约，繁忙时可能提前停止受理。",
             "https://tokichi.jp/pages/honten-store-page",
             "nakamura"
           ]
@@ -1599,7 +1599,7 @@
       "timeline": [
         {
           "id": "demachi_transfer",
-          "time_label": "10:00—10:45/10:55",
+          "time_label": "10:00—10:55",
           "time_status": "planning_window",
           "title": "京都站地铁到今出川，再步行去出町",
           "place_ids": [
@@ -1610,7 +1610,7 @@
         },
         {
           "id": "demachi_visit",
-          "time_label": "抵达—11:40",
+          "time_label": "10:55—11:40",
           "time_status": "planning_window",
           "title": "出町桝形商店街巡礼",
           "place_ids": [
@@ -2291,7 +2291,7 @@
         },
         {
           "id": "anime_shopping",
-          "time_label": "到达—18:00",
+          "time_label": "18:00结束",
           "time_status": "planning_window",
           "title": "1—2家目标店，含15—20分钟坐下休息",
           "place_ids": [
@@ -3231,7 +3231,7 @@
         "許波多神社（五ケ庄）"
       ]
     },
-    "selection": "12/1 09:30离店；許波多→水管桥→縣神社三个集章点均为主线；大吉山白天完成，下午中村藤吉芭菲，平等院不入内，约20:15—20:45返店。",
+    "selection": "12/1 09:00离店；許波多→水管桥→縣神社三个集章点均为主线；大吉山白天完成，15:10到中村藤吉吃芭菲，约19:45—20:15返店。",
     "source_url": "https://www.keihan.co.jp/euphonium/"
   }
 }

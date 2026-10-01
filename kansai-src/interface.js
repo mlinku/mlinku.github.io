@@ -114,13 +114,13 @@ function refreshDayChecks(d){
  refreshDayProgress(d);
  pilgrimageDay(d.date).forEach(refreshShotCompletion);
 }
-function resetDay(){
- const d=PLAN.days[dayIndex],old={};
- for(const k of Object.keys(state.checks))if(k.startsWith(d.date+':')){old[k]=state.checks[k];delete state.checks[k];}
+function resetDay(scope='timeline'){
+ const d=PLAN.days[dayIndex],old={},shots=scope==='pilgrimage',label=shots?'打卡':'行程',prefix=d.date+':';
+ for(const k of Object.keys(state.checks))if(k.startsWith(prefix)&&k.startsWith(prefix+'shot:')===shots){old[k]=state.checks[k];delete state.checks[k];}
  // Update completion in place so open details, scroll positions and focus survive.
  save();refreshDayChecks(d);
- toast('已重置 '+dateLabel(d.date)+' 进度',()=>{
-  Object.assign(state.checks,old);save();refreshDayChecks(d);toast('已恢复当天进度');
+ toast('已重置 '+dateLabel(d.date)+' '+label,()=>{
+  Object.assign(state.checks,old);save();refreshDayChecks(d);toast('已恢复当天'+label);
  });
 }
 function setCheck(date,id,checked){const d=PLAN.days.find(x=>x.date===date);if(!d||!effectiveEvents(d).some(ev=>ev.id===id))throw Error('无效的日期或活动');state.checks[date+':'+id]=!!checked;save();}
@@ -135,7 +135,7 @@ document.addEventListener('click',ev=>{
  else if(target.dataset.action==='copy-close')$('#copy-dialog').close();
  else if(target.dataset.action==='close-dialog')$('#place-dialog').close();
  else if(target.dataset.action==='copy')copyText(target.dataset.copy);
- else if(target.dataset.action==='reset-day')resetDay();
+ else if(target.dataset.action==='reset-day')resetDay(target.dataset.resetScope);
  else if(target.dataset.action==='undo'&&undoAction){const fn=undoAction;undoAction=null;fn();}
 });
 document.addEventListener('change',ev=>{const input=ev.target,d=PLAN.days[dayIndex];

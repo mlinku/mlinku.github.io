@@ -19,7 +19,7 @@ function refreshDayProgress(d){const area=document.querySelector('.progress-area
 function timelinePage(d){const flow=DayFlow.forDay(d);return `
  <div class="progress-area">${progressMarkup(d)}</div>
  <div class="timeline">${flow.sections.map(section=>`<section class="timeline-phase" id="${section.id}"><div class="phase-heading"><h2>${e(section.short)}</h2></div>${section.events.map(ev=>eventCard(d,ev)).join('')}</section>`).join('')}</div>
- <div class="day-end">${btn(icon('reset')+'重置当天进度','reset-day','','text-button')}</div>`;}
+ <div class="day-end">${btn(icon('reset')+'重置当天行程','reset-day','data-reset-scope="timeline"','text-button')}</div>`;}
 
 function eventCard(d,ev){
  const checked=!!state.checks[d.date+':'+ev.id],isMeal=ev.category==='meal',isRest=ev.category==='rest';

@@ -88,7 +88,7 @@ const results=vm.runInContext(`
  assert.equal((ujiTimeline.match(/class="photo-button [^"]*" data-action="place" data-place="uji_bridge"/g)||[]).length,bridgeVisits,'时间轴重复经过宇治桥也保留照片');
  assert.equal(mealRows(ujiDefault,effectiveEvents(ujiDefault).find(e=>e.id==='uji_saizeriya_dinner'))[0][7],'saizeriya_uji');
  assert.ok(!effectiveEvents(ujiDefault).some(ev=>ev.id==='uji_default_dinner'),'默认没有第二顿京都晚餐');
- assert.equal(timedRoute(ujiDefault).find(n=>n.id==='saizeriya_uji').times[0].text,'18:15—19:15');
+ assert.equal(timedRoute(ujiDefault).find(n=>n.id==='saizeriya_uji').times[0].text,'17:45—18:45');
  assert.ok(!timelinePage(ujiDefault).includes('等位超20分钟换萨莉亚'));
  assert.equal(state.checks['2026-11-30:flight_out'],true,'旧活动进度保留');
  for(const d of PLAN.days)assert.ok(!/phase-nav|resume-step|phase-route/.test(timelinePage(d)),'行程不再重复时段导航 '+d.date);
@@ -122,7 +122,7 @@ const results=vm.runInContext(`
  }
  state.choices[uji.date]={ujiExtra:'station'};
  assert.equal(effectiveEvents(uji).filter(x=>x.id==='station_stage').length,1);
- assert.ok(effectiveEvents(uji).some(x=>x.id==='uji_saizeriya_dinner'&&x.time_label==='18:15—19:15'));
+ assert.ok(effectiveEvents(uji).some(x=>x.id==='uji_saizeriya_dinner'&&x.time_label==='17:45—18:45'));
  assert.ok(!effectiveEvents(uji).some(x=>x.id==='tower_visit'));
  assert.ok(!effectiveRoute(uji).some(x=>['kyoto_tower','kotosaka'].includes(x.id)));
  assert.equal(effectiveRoute(uji).slice(-3).map(x=>x.id).join(','),'kyoto_station,kyoto_stage,hotel_kyoto');
@@ -161,9 +161,14 @@ const results=vm.runInContext(`
  assert.ok(overview().includes('google-map-preview'),'保留真实Google区域预览');
  dayIndex=1;state.checks={'2026-12-01:shot:eupho_bench':true,'2026-12-01:uji_lunch':true,'2026-11-30:flight_out':true};
  let resetRenderCount=0;render=()=>{resetRenderCount++;};resetDay();
- assert.equal(state.checks['2026-12-01:shot:eupho_bench'],undefined,'重置巡礼进度');
+ assert.equal(state.checks['2026-12-01:shot:eupho_bench'],true,'行程重置保留巡礼打卡');
  assert.equal(state.checks['2026-12-01:uji_lunch'],undefined,'重置活动进度');
  assert.equal(state.checks['2026-11-30:flight_out'],true,'保留其他日期');
+ undoAction();assert.equal(state.checks['2026-12-01:uji_lunch'],true,'可撤销行程重置');
+ resetDay('pilgrimage');
+ assert.equal(state.checks['2026-12-01:shot:eupho_bench'],undefined,'巡礼重置仅清除打卡');
+ assert.equal(state.checks['2026-12-01:uji_lunch'],true,'巡礼重置保留行程进度');
+ assert.equal(state.checks['2026-11-30:flight_out'],true,'巡礼重置保留其他日期');
  undoAction();assert.equal(state.checks['2026-12-01:shot:eupho_bench'],true,'可撤销巡礼重置');
  assert.equal(resetRenderCount,0,'重置和撤销不替换页面，保留阅读状态');
  const photoFixtures=['kodaiji','sannenzaka','yasaka_tower','ninenzaka','nene'].map(id=>[id,PHOTOS[id].src]);
@@ -176,19 +181,19 @@ const results=vm.runInContext(`
  for(const [id,src] of photoFixtures){if(src===undefined)delete PHOTOS[id].src;else PHOTOS[id].src=src;}
  state.choices[uji.date]={ujiExtra:'none'};
  const bridges=timedRoute(uji).filter(s=>s.id==='uji_bridge');
- assert.equal(bridges[0].times[0].text,'11:55—12:15','午餐前宇治桥');
- assert.equal(bridges.at(-1).times[0].text,'17:40—18:15','返程宇治桥不能使用上午时间');
+ assert.equal(bridges[0].times[0].text,'11:25—11:45','午餐前宇治桥');
+ assert.equal(bridges.at(-1).times[0].text,'17:10—17:45','返程宇治桥不能使用上午时间');
  const riverGroup=routeGroups(uji,'下午').find(g=>g.eventId==='uji_pilgrimage');
  assert.equal(riverGroup.stops.length,3,'三个河岸点共用一个时间组');
  assert.equal(riverGroup.times.length,1);
- assert.equal(routePage(uji).split('14:55–15:25').length-1,1,'共用窗口只渲染一次');
+ assert.equal(routePage(uji).split('14:25–14:55').length-1,1,'共用窗口只渲染一次');
  for(const option of ['tower','station','kotosaka']){
   state.choices[uji.date]={ujiExtra:option};
   assert.ok(timedRoute(uji).every(s=>s.times.every(t=>t.text!=='时间待确认')),'可选路线有时间 '+option);
  }
  state.choices[uji.date]={ujiExtra:'station'};
  assert.equal(timedRoute(uji).find(n=>n.id==='kyoto_stage').times[0].text,'返店前');
- assert.equal(timedRoute(uji).at(-1).times[0].text,'20:15—20:45');
+ assert.equal(timedRoute(uji).at(-1).times[0].text,'19:45—20:15');
  state.choices[kyoto.date]={kodaijiPlan:'skip'};
  assert.equal(timedRoute(kyoto).at(-1).times[0].text,'饭后','取消夜枫同步提前返店');
  const flightOut=timedRoute(PLAN.days[0]);
@@ -203,7 +208,7 @@ const results=vm.runInContext(`
  state.choices[nara.date]={shop1:'animate',shop2:'surugaya'};
  const shops=routeGroups(nara).find(g=>g.eventId==='anime_shopping');
  assert.equal(shops.stops.length,2,'两家店合并共享购物时段');
- assert.equal(shops.times[0].text,'到达—18:00');
+ assert.equal(shops.times[0].text,'18:00结束');
  assert.ok(shops.stops[0].times.some(t=>t.text==='15:45—16:15'),'第一店独有抵达目标保留');
  assert.equal(routeGroups(PLAN.days[7]).find(g=>g.eventId==='airport_train').stops.length,2,'候选列车窗口只出现一组');
  const kobe=PLAN.days[6];
@@ -314,12 +319,17 @@ const results=vm.runInContext(`
  assert.ok(effectiveEvents(usj).find(ev=>ev.id==='usj_rest').title.includes('30分钟'),'保留USJ休息');
 
  state.choices[uji.date]={};
- assert.equal(uji.departure_target,'09:30');
- assert.equal(returnTarget(uji),'20:15—20:45');
+ assert.equal(uji.departure_target,'09:00');
+ assert.equal(returnTarget(uji),'19:45—20:15');
  const stamps=effectiveEvents(uji).filter(ev=>ev.rally_spot);
  assert.equal(stamps.map(ev=>ev.rally_spot).join(','),'kohata,suikan,agata');
  assert.ok(stamps.every(ev=>!ev.optional),'三章全部是主线');
- assert.equal(effectiveEvents(uji).find(ev=>ev.id==='daikichi_visit').time_label,'13:40—14:55');
+ assert.equal(effectiveEvents(uji).find(ev=>ev.id==='daikichi_visit').time_label,'13:10—14:25');
+ assert.equal(uji.departure_target,'09:00','提前出门，保留游览时长');
+ assert.equal(effectiveEvents(uji).find(ev=>ev.id==='uji_parfait').time_label,'15:10—16:40');
+ assert.equal(effectiveEvents(kyoto).find(ev=>ev.id==='demachi_visit').time_label,'10:55—11:40');
+ assert.ok(timelinePage(uji).includes('data-reset-scope="timeline"'));
+ assert.ok(pilgrimagePage(uji).includes('data-reset-scope="pilgrimage"'));
  assert.equal(PILGRIMAGE.rally.spots.map(p=>p.id).join(','),'kohata,suikan,agata');
  assert.ok(rallyCard(uji).includes('后期'));
  assert.equal(rallyCard(PLAN.days[2]),'');
@@ -343,8 +353,8 @@ const results=vm.runInContext(`
  assert.ok(!rallyCard(uji).includes('调整今天'),'必选集章不提供无关调整入口');
  assert.ok(!daySupport(uji).includes('原始方案'),'当前攻略不再标成旧方案');
  assert.equal(effectiveEvents(uji).filter(ev=>ev.rally_spot).length,3);
- assert.equal(effectiveEvents(uji).find(ev=>ev.id==='uji_saizeriya_dinner').time_label,'18:15—19:15');
- assert.equal(returnTarget(uji),'20:15—20:45');
+ assert.equal(effectiveEvents(uji).find(ev=>ev.id==='uji_saizeriya_dinner').time_label,'17:45—18:45');
+ assert.equal(returnTarget(uji),'19:45—20:15');
  assert.equal(shotProgress(uji.date).total,10,'不删减公共街道巡礼');
  state.choices[uji.date]={};
  const lockedPlan=JSON.stringify(PLAN);
