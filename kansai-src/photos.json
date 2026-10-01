@@ -1591,5 +1591,48 @@
     "reviewedAt": "2026-09-30",
     "changes": "文件未改动；卡片展示可能裁切。",
     "notes": "食べログ宇治里尻店外观分类，照片编号384390116；门店地址与官网宇治里尻77一致。"
+  },
+  "starbucks_kitano": {
+    "sight": "北野星巴克外观",
+    "local": "assets/pilgrimage/kobe/kitano-real.jpg",
+    "sourcePage": "https://azusairi.com/?p=2576",
+    "imageUrl": "https://azusairi.com/wp-content/uploads/2024/02/IMG_5614-1-1024x576.jpg",
+    "author": "アズサイリ",
+    "license": "原权利方保留版权，非开放许可",
+    "width": 1024,
+    "height": 576,
+    "notes": "用于辨认店门与巡礼建筑；历史照片。",
+    "sourceVerified": true,
+    "visualContentVerified": true,
+    "reviewedAt": "2026-10-01",
+    "attribution": "アズサイリ · 北野星巴克外观"
+  },
+  "kobe_bridge": {
+    "sight": "从北公园看神户大桥",
+    "local": "assets/pilgrimage/kobe/bridge-real.jpg",
+    "sourcePage": "https://www.feel-kobe.jp/kobe-yakei/spots/port-island-kita-park/",
+    "imageUrl": "https://www.feel-kobe.jp/kobe-yakei/assets/media/L1120348_resize-scaled.jpg",
+    "author": "神户市／神户夜景指南",
+    "license": "原权利方保留版权，非开放许可",
+    "width": 2560,
+    "height": 1704,
+    "notes": "官网夜景参考图；本次在傍晚到访，不保证同样光线。",
+    "sourceVerified": true,
+    "visualContentVerified": true,
+    "reviewedAt": "2026-10-01",
+    "attribution": "神户市／神户夜景指南 · 从北公园看神户大桥"
+  },
+  "agata": {
+    "sight": "縣神社 · 官方实景参考",
+    "local": "assets/uji-rally/agata-real.webp",
+    "sourcePage": "https://www.kyoto-kankou.or.jp/info_search/366",
+    "imageUrl": "https://www.kyoto-kankou.or.jp/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NTM0NiwicHVyIjoiYmxvYl9pZCJ9fQ==--a2c50e461eb1dac3abfe2a93ad50ac86298d6319/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJ3ZWJwIiwicmVzaXplX3RvX2ZpdCI6WzM4NDAsMjE2MF19LCJwdXIiOiJ2YXJpYXRpb24ifX0=--d4a38f8dcc86a603c3d632cf5b22690482f0e7f5/1607.jpg",
+    "author": "京都府观光联盟",
+    "date": "拍摄日期未注明",
+    "license": "官网参考图，版权归原权利人",
+    "width": 3224,
+    "height": 2160,
+    "attribution": "京都府观光联盟／縣神社",
+    "sourceVerified": true
   }
 }

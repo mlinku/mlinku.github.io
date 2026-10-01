@@ -245,3 +245,14 @@ html {scroll-padding-bottom:80px}
   .place-back {display:none!important}
 }
 .copy-dialog {margin:auto}
+
+/* Preserve tall, already paired reference images without cropping either scene. */
+.shot-pair.shot-composite{grid-template-columns:1fr;justify-items:center}.shot-composite .shot-image{width:min(100%,400px);aspect-ratio:auto}.shot-composite .shot-image img{width:100%;height:auto;aspect-ratio:auto;object-fit:contain}.shot-composite .shot-image>span{position:static;display:flex}
+
+/* Event facts stay separate from the saved scene-photo checklist. */
+.rally-card{border:1px solid var(--line);border-radius:12px;padding:22px;margin-bottom:26px;background:rgba(255,255,255,.025);scroll-margin-top:110px}
+.rally-heading{display:flex;align-items:center;justify-content:space-between;gap:16px}.rally-heading h2{margin:4px 0;font-size:1.3rem}.rally-card>p{margin:12px 0;color:var(--muted);line-height:1.8}.rally-detail>summary{cursor:pointer;padding:12px 0;min-height:44px;color:var(--accent)}
+.rally-spots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:12px 0 18px}.rally-spots article{min-width:0}.rally-spots figure{margin:0 0 12px}.rally-spots img{display:block;width:100%;height:auto;border-radius:8px}.rally-spots figcaption{font-size:.76rem;color:var(--muted);margin-top:7px;line-height:1.6}.rally-spots h3{font-size:1.05rem;margin:6px 0}.rally-spots p{font-size:.9rem;line-height:1.8;margin:8px 0}.rally-spots .food-actions{gap:10px;flex-wrap:wrap}.rally-recommendation{line-height:1.85}.rally-entry{display:inline-flex;margin-top:14px;min-height:44px;align-items:center}
+@media(max-width:720px){.rally-card{padding:16px}.rally-heading{align-items:flex-start}.rally-heading .btn{white-space:nowrap}.rally-spots{grid-template-columns:1fr;gap:24px}.rally-spots article+article{border-top:1px solid var(--line);padding-top:20px}.rally-heading h2{font-size:1.16rem}}
+
+.rally-spots article{display:flex;flex-direction:column}.rally-spots article>div{display:flex;flex:1;flex-direction:column}.rally-spots .food-actions{margin-top:auto;padding-top:8px}.rally-spots .food-priority{min-height:20px}

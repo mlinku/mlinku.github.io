@@ -1,5 +1,5 @@
 {
-  "checked_on": "2026-09-29",
+  "checked_on": "2026-10-01",
   "points": [
     {
       "id": "eupho_jr_uji",
@@ -1133,6 +1133,90 @@
       "status": "已目视核对成对图片；作品关联为玩家对照，非官方认证",
       "match_note": "玩家实地对照；作品有改绘，不代表官方认定或精确摄影站位。",
       "name_ja": "生田神社"
+    },
+    {
+      "id": "witch-kitano",
+      "place_ids": [
+        "starbucks_kitano"
+      ],
+      "date": "2026-12-06",
+      "event_id": "kitano_lunch",
+      "title": "北野物语馆 · 七绪咖啡店",
+      "name_ja": "スターバックス コーヒー 神戸北野異人館店",
+      "work": "魔女的夜宴／サノバウィッチ",
+      "scene": "七绪的咖啡店 Schwarze Katze 外观背景。",
+      "shooting_note": "在北野坂人行道对照绿色门廊、窗框和石墙；画面有改绘，不到车道上追机位。",
+      "match_note": "玩家实景对照，非官方认定；两图角度略有差异。",
+      "coordinates": null,
+      "status": "ready",
+      "checked_on": "2026-10-01",
+      "real": {
+        "local": "assets/pilgrimage/kobe/kitano-real.jpg",
+        "source_url": "https://azusairi.com/?p=2576",
+        "image_url": "https://azusairi.com/wp-content/uploads/2024/02/IMG_5614-1-1024x576.jpg",
+        "credit": "实景：アズサイリ，2024年文章历史照片",
+        "license": "原权利方保留版权；用于地点识别与作品场景对照，非开放许可",
+        "visual_verified": true,
+        "width": 1024,
+        "height": 576
+      },
+      "anime": {
+        "local": "assets/pilgrimage/kobe/kitano-game.png",
+        "source_url": "https://azusairi.com/?p=2576",
+        "image_url": "https://azusairi.com/wp-content/uploads/2024/02/サノバウィッチ-84.png",
+        "credit": "游戏画面 © YUZUSOFT/JUNOS INC.；对照：アズサイリ",
+        "license": "原权利方保留版权；用于地点识别与作品场景对照，非开放许可",
+        "visual_verified": true,
+        "width": 683,
+        "height": 384
+      },
+      "sources": [
+        {
+          "title": "门店官方地址与营业",
+          "url": "https://store.starbucks.co.jp/detail-940/"
+        },
+        {
+          "title": "玩家作品与实景对照",
+          "url": "https://azusairi.com/?p=2576"
+        }
+      ]
+    },
+    {
+      "id": "fate-kobe-bridge",
+      "place_ids": [
+        "kobe_bridge"
+      ],
+      "date": "2026-12-06",
+      "event_id": "kobe_bridge_visit",
+      "title": "神户大桥 · 冬木大桥",
+      "name_ja": "ポートアイランド北公園",
+      "work": "Fate/stay night",
+      "scene": "冬木大桥的红色桥梁背景，取景参考在桥南侧北公园。",
+      "shooting_note": "从北公园海边朝桥北端拍，找红色拱架、桥下水面与石墩；不必走完整座桥。",
+      "match_note": "原作者对照图：上方作品画面，下方实景。实景为夜间照片，本次安排傍晚到访。",
+      "coordinates": null,
+      "status": "ready",
+      "checked_on": "2026-10-01",
+      "comparison": {
+        "local": "assets/pilgrimage/kobe/bridge-comparison.jpeg",
+        "source_url": "https://aurakaze.blog/fate-jyunreihyogo/",
+        "image_url": "https://aurakaze.blog/wp-content/uploads/2023/11/38-3-scaled.jpeg",
+        "credit": "上：游戏画面 © TYPE-MOON；下：Aura Kaze，2023年实景。保留原作者对照图。",
+        "license": "原权利方保留版权；用于地点识别与作品场景对照，非开放许可",
+        "visual_verified": true,
+        "width": 1529,
+        "height": 2560
+      },
+      "sources": [
+        {
+          "title": "北公园官方位置与交通",
+          "url": "https://www.feel-kobe.jp/kobe-yakei/spots/port-island-kita-park/"
+        },
+        {
+          "title": "作品与实景对照",
+          "url": "https://aurakaze.blog/fate-jyunreihyogo/"
+        }
+      ]
     }
   ],
   "coverage": [
@@ -1167,5 +1251,92 @@
       "title": "USJ柯南与任天堂",
       "note": "这是主题园区体验，不是原作实景取景地；沿用园区照片，不虚构实景／动画同机位。"
     }
-  ]
+  ],
+  "rally": {
+    "date": "2026-12-01",
+    "entry_url": "https://app.raund.net/keihan-euphonium_2026autumn/",
+    "source_url": "https://www.keihan.co.jp/euphonium/",
+    "map_pdf": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf",
+    "spots": [
+      {
+        "id": "agata",
+        "title": "縣神社",
+        "name_ja": "縣神社",
+        "caption": "官方作品画面 · 夏祭场景，非12月现场",
+        "fit": "可顺路短停",
+        "note": "平等院南侧。午饭后往长椅前加入，预留15—20分钟；当天没有画面中的夏祭摊位。",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=34.88848,135.80573",
+        "anime": {
+          "local": "assets/uji-rally/agata.jpg",
+          "source_url": "https://www.keihan.co.jp/euphonium/",
+          "image_url": "https://www.keihan.co.jp/euphonium/assets/img/img_spot6.jpg",
+          "credit": "京阪活动官网／©武田綾乃・宝島社／「響け！」製作委員会2024",
+          "width": 750,
+          "height": 480
+        },
+        "coordinates": {
+          "lat": 34.88848,
+          "lng": 135.80573,
+          "precision": "官方数字集章地点；非摄影站位",
+          "source_url": "https://app.raund.net/keihan-euphonium_2026autumn/spots/detail/?id=36569"
+        }
+      },
+      {
+        "id": "suikan",
+        "title": "水管桥河岸",
+        "name_ja": "宇治川河川敷（水管橋）",
+        "caption": "官方作品画面 · 明日香与久美子",
+        "fit": "需要向北绕行",
+        "note": "三室户一带，莵道車田34-1附近的东岸。明日香与久美子演奏的水管桥河岸，需向北绕行；河岸无照明，应白天去。",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=34.90041,135.80153",
+        "anime": {
+          "local": "assets/uji-rally/suikan.jpg",
+          "source_url": "https://www.keihan.co.jp/euphonium/",
+          "image_url": "https://www.keihan.co.jp/euphonium/assets/img/img_spot7.jpg",
+          "credit": "京阪活动官网／©武田綾乃・宝島社／「響け！」製作委員会2024",
+          "width": 750,
+          "height": 480
+        },
+        "coordinates": {
+          "lat": 34.90041,
+          "lng": 135.80153,
+          "precision": "官方数字集章地点；非摄影站位",
+          "source_url": "https://app.raund.net/keihan-euphonium_2026autumn/spots/detail/?id=36568"
+        }
+      },
+      {
+        "id": "kohata",
+        "title": "許波多神社（五ケ庄）",
+        "name_ja": "許波多神社（五ケ庄）",
+        "caption": "官方作品画面 · 神社鸟居",
+        "fit": "离开宇治核心区",
+        "note": "官方地图第19点，黄檗站西侧，五ケ庄古川13。不要导航到木幡地区的同名神社。",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=34.91676,135.79395",
+        "anime": {
+          "local": "assets/uji-rally/kohata.jpg",
+          "source_url": "https://www.keihan.co.jp/euphonium/",
+          "image_url": "https://www.keihan.co.jp/euphonium/assets/img/img_spot4.jpg",
+          "credit": "京阪活动官网／©武田綾乃・宝島社／「響け！」製作委員会2024",
+          "width": 750,
+          "height": 480
+        },
+        "coordinates": {
+          "lat": 34.91676,
+          "lng": 135.79395,
+          "precision": "官方数字集章地点；非摄影站位",
+          "source_url": "https://app.raund.net/keihan-euphonium_2026autumn/spots/detail/?id=36570"
+        }
+      }
+    ],
+    "rules": [
+      "前期9/1—10/31：井川用水機場前（久美子）、宇治桥（奏）、大吉山展望台（丽奈）。12/1不能补前期章。",
+      "后期11/1—12/20：水管桥河岸（明日香）、縣神社（夏纪）、許波多神社（优子）。单点可领对应角色相框，后期三点完成可领三人集合相框。",
+      "这是手机GPS数字集章，不是纸本盖印。参加免费，交通与流量另计；先在官方活动站创建账号，到现场定位后领取。",
+      "使用同一个手机浏览器：iPhone为iOS 17以上＋Safari，Android为Android 12以上＋Chrome。不要使用微信等应用内浏览器或无痕模式；日本境外销售的部分机型可能不受支持。",
+      "联网并允许定位；相框可用至2027/1/31。未取得前期三章，仅12月一天不能满足六章抽奖条件。",
+      "活动范围内的开放时间与GPS领取判定以现场、官方活动站为准。攻略勾选不会替你领取官方数字章。",
+      "京阪宇治站有活动立牌，可在回程过桥前视余量短看；与JR宇治是不同车站。站内位置及是否需入场票以现场为准，不另跑中书岛。"
+    ],
+    "recommendation": "建议只加縣神社，主线保留平等院、河岸巡礼、大吉山与萨莉亚晚餐。若想收齐后期三章，应另换出大吉山及京都塔等可选内容，把水管桥、黄檗片区排进白天；这不是原路线顺手多盖两章。"
+  }
 }

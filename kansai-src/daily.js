@@ -1,10 +1,10 @@
 /* Daily presentation. DayFlow owns grouping; app.js owns itinerary choices. */
 function currentChoiceText(d){const c=choice(d),labels=[];
- if(d.date==='2026-12-01'){if(c.ujiExtra==='tower')labels.push('京都塔 · 晚餐改在京都站');if(c.ujiExtra==='kotosaka')labels.push('琴坂');if(c.ujiExtra==='station')labels.push('京都站《宝岛》');if(c.byodoinInterior)labels.push('凤凰堂内部参拜');}
+ if(d.date==='2026-12-01'){if(c.ujiExtra==='tower')labels.push('京都塔 · 晚餐改在京都站');if(c.ujiExtra==='agata')labels.push('縣神社集章');if(c.ujiExtra==='kotosaka')labels.push('琴坂');if(c.ujiExtra==='station')labels.push('京都站《宝岛》');if(c.byodoinInterior)labels.push('凤凰堂内部参拜');}
  if(d.date==='2026-12-02'){if(c.kodaijiPlan==='skip')labels.push('取消夜枫 · 饭后返店');else if(c.yasakaBrief)labels.push('八坂神社短停');}
  if(d.date==='2026-12-04'){if(c.usjExtra)labels.push('增加游乐项目');if(c.kinopio)labels.push('午餐改为Kinopio');}
  if(d.date==='2026-12-05'&&(c.shop1!=='animate'||c.shop2!=='surugaya'))labels.push('购物：'+selectedShops(c).map(id=>PLACE[id].name).join('＋'));
- if(d.date==='2026-12-06'){if(c.kobeAfternoon==='harbor')return '神户港咖啡 · 替换梅田购物';if(c.umedaMain!=='nintendo_osaka')labels.push('Pokémon重点逛');if(c.umedaSecond)labels.push('另一家短看');}
+ if(d.date==='2026-12-06'){if(c.umedaMain!=='nintendo_osaka')labels.push('Pokémon重点逛');if(c.umedaSecond)labels.push('另一家短看');}
  return labels.join(' · ');
 }
 function dayPage(){const d=PLAN.days[dayIndex],info=dayPresentation(d);return `
@@ -40,7 +40,7 @@ function eventCard(d,ev,shownPhotos=new Set()){
  </div></div>
  ${ev.id==='kodaiji_night'?`<p class="night-facts">17:00亮灯 · ¥800 / 人 <span>购票待确认</span></p><details class="event-detail"><summary>参拜详情</summary><div class="detail-body"><p>游览约60—75分钟，排队另计。若稍有延迟，18:45前离寺，省去八坂神社并顺延晚餐。</p><p>17:45仍未入场、预计排队超过30分钟，或天气差、明显疲劳时，取消夜枫，直接吃饭。</p><p>2026/10/23—12/13，17:00亮灯；21:30停止入场，22:00闭门。两人门票合计¥1,600。昼夜不清场，离场后同票不能再入。</p><p>${external('活动官网 ↗','https://www.kodaiji.com/saiji.html')} · ${external('票价 ↗','https://www.kodaiji.com/haikan.html')}</p></div></details>`:''}
  ${foodRows.length?`<details class="event-detail"><summary>${isRest?'茶歇详情':'餐厅详情'}</summary><div class="detail-body">${isMeal&&ev.condition?`<p>${e(ev.condition)}</p>`:''}${foodRows.map(r=>foodRow(d,r)).join('')}</div></details>`:''}
- ${foodSuggestions(d,ev.id)}
+ ${ev.id==='uji_pilgrimage'?'<a class="rally-entry text-link" href="#day/2026-12-01/pilgrimage/rally" data-nav>京吹数字集章 · 后期点位 ↗</a>':''}${activityDetails(d,ev.id)}${foodSuggestions(d,ev.id)}
  ${ev.id==='usj_finish'?'<p class="condition">18:00后预留缓冲，19:00前结束普通票设施体验。19:00—22:00 Amex活动设施及部分餐饮需凭证，19:00并非统一离园时间。</p>':''}
  </div></article>`;
 }
@@ -52,7 +52,7 @@ function mealRows(d,ev){
   const selected=rows.find(r=>r[2]==='キノピオ・カフェ');
   return [[selected[0],'首选',...selected.slice(2)],...rows.filter(r=>r!==selected&&r[1]!=='可选').map(r=>[r[0],'备选',...r.slice(2)])];
  }
- return rows.filter(r=>r[1]!=='可选').map(r=>d.date==='2026-12-06'&&choice(d).kobeAfternoon==='harbor'&&r[0]==='午餐'?[...r.slice(0,5),r[5].replace('便于餐后返大阪',''),...r.slice(6)]:r);
+ return rows.filter(r=>r[1]!=='可选');
 }
 function mealMap(d,r){if(r[7]&&PLACE[r[7]])return PLACE[r[7]].map_search_url;let city=d.cities.includes('宇治')&&(r[0]==='午餐'||(r[0]==='晚餐'&&choice(d).ujiExtra!=='tower'))?'宇治':d.date==='2026-12-05'&&r[0]==='午餐'?'奈良':d.date==='2026-12-06'&&r[0]==='午餐'?'神戸':d.date==='2026-12-03'&&r[0]==='午餐'?'京都':d.overnight==='hotel_kyoto'?'京都':'大阪';if(r[2].startsWith('通圓'))city='宇治';return mapURL(city+' '+r[2]);}
 function foodRow(d,r){return `<article class="food-row"><span class="food-priority">${e(r[0])} · ${e(r[1])}</span><h4 lang="ja">${e(r[2])}</h4>${r[1]!=='首选'&&r[7]&&photoSrc(r[7])?photoButton(r[7],'food-row-photo'):''}<p class="budget">${e(r[3])} / 人</p><p>${e(r[4])}</p><p class="muted">${e(r[5])}</p><div class="food-actions">${btn(icon('copy')+'复制日文名','copy',`data-copy="${e(r[2])}"`,'text-button')}${r[0]!=='早餐'?external(icon('map')+'地图',mealMap(d,r),'text-link'):''}${r[6]?external('店铺资料 ↗',r[6],'text-link'):''}</div></article>`;}
@@ -74,12 +74,6 @@ function dayTransport(d){const notes=[...DETAILS[d.date].transport],c=choice(d);
   if(c.ujiExtra==='tower')notes[2]='下山经宇治桥回西岸，从JR宇治返京都酒店；休息后去京都塔，再吃晚饭。';
   if(c.ujiExtra!=='kotosaka')notes.splice(3,1);
  }
- if(d.date==='2026-12-06'){
-  if(c.kobeAfternoon==='harbor'){
-   notes[1]='按当天地图往返海边；计划14:30从JR三ノ宮返大阪，到站后休息。';
-   notes[2]='从大阪站步行到蓝天大厦，留约30分钟找展望台专用入口，不进办公塔楼电梯。';
-  }else notes[1]='三宫乘JR回大阪站，约14:00—14:30抵达；到店后开始购物，15:30结束。商店位于LUCUA SOUTH 13楼。';
- }
  if(d.date==='2026-12-05'&&(c.shop1!=='animate'||c.shop2!=='surugaya'))notes.splice(3,1);
  return notes;
 }
@@ -94,8 +88,7 @@ function dayFallbacks(d){const c=choice(d);return d.fallback_rules.flatMap(t=>{
   if(t.startsWith('不再排'))return [];
  }
  if(d.date==='2026-12-06'){
-  if(t.startsWith('Nintendo'))return c.kobeAfternoon==='harbor'?[]:[c.umedaMain==='pokemon_osaka'?'Pokémon久等时换Nintendo；两家都需久等就省购物。':t];
-  if(t.startsWith('神户港咖啡'))return ['晚饭后返店，准备次晨出发。'];
+  if(t.startsWith('Nintendo'))return [c.umedaMain==='pokemon_osaka'?'Pokémon久等时换Nintendo；两家都需久等就省购物。':t];
  }
  return [t];
 });}
@@ -104,15 +97,15 @@ function dayNotes(d){const c=choice(d);const extra=(DETAILS[d.date].extra||[]).f
  if(d.date==='2026-12-02'&&t.startsWith('本次只安排'))return [];
  if(d.date==='2026-12-05'&&t.startsWith('日本桥默认'))return ['日本桥购物限1—2家，替换不增加总数；中古作品库存不保证。'];
  if(d.date==='2026-12-06'&&t.startsWith('Nintendo与Pokémon')){
-  if(c.kobeAfternoon==='harbor')return [];
-  return [c.umedaSecond?t:PLACE[c.umedaMain].name+'参考营业10:00—20:00，重点逛一家，15:30结束。'];
+  return [c.umedaSecond?t:PLACE[c.umedaMain].name+'参考营业10:00—20:00，重点逛一家，18:45结束。'];
  }
  return [t];
 });return [...dayFallbacks(d),...extra];}
 function foodSuggestions(d,eventId){
- const info=DETAILS[d.date],harbor=d.date==='2026-12-06'&&choice(d).kobeAfternoon==='harbor';
- const candidates=(info.foodIdeas||[]).filter(item=>item.event_id===eventId&&!(item.place==='starbucks_meriken'&&harbor));
+ const info=DETAILS[d.date];
+ const candidates=(info.foodIdeas||[]).filter(item=>item.event_id===eventId);
  const along=info.eventFood?.[eventId]||[];
- const active=eventId==='kobe_harbor'?(info.foodIdeas||[]).map(item=>({...item,hidePhoto:true,label:'咖啡店详情',title:'美利坚公园店',text:'波止場町2-4。参考07:30—22:00，不定休；出发前复核营业。'})):[];
- return [...candidates,...along,...active].map(item=>`<details class="event-detail food-suggestions"><summary>${e(item.place==='starbucks_meriken'?(harbor?'咖啡店详情':'神户港咖啡备选'):'甜品备选 · '+item.title)}</summary><div class="detail-body">${foodIdea(item)}${item.place==='starbucks_meriken'&&!harbor?btn('调整下午行程','options','','text-button'):''}</div></details>`).join('');
+ return [...candidates,...along].map(item=>`<details class="event-detail food-suggestions"><summary>${e('甜品备选 · '+item.title)}</summary><div class="detail-body">${foodIdea(item)}</div></details>`).join('');
 }
+
+function activityDetails(d,id){const info=DETAILS[d.date].eventDetails?.[id];return info?`<details class="event-detail"><summary>${e(info.title)}</summary><ul class="detail-body">${info.items.map(item=>`<li>${e(item.text)}${item.url?' '+external('资料 ↗',item.url):''}</li>`).join('')}</ul></details>`:'';}

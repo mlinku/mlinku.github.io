@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "plan_id": "kansai-2026-1130-1207",
-  "revision": "2026-09-30-food-stops",
+  "revision": "2026-10-01-kobe-lunch-flow",
   "recorded_on": "2026-09-28",
   "language": "zh-CN",
   "title": "关西旅行规划基准",
@@ -54,7 +54,13 @@
       "任天堂博物馆",
       "额外追加岚山、金阁寺、大阪城、海游馆、箕面"
     ],
-    "night_foliage_policy": "只安排12/2高台寺一次夜枫，替换祇园散步；11/30正常入住、12/1默认早归。"
+    "night_foliage_policy": "只安排12/2高台寺一次夜枫，替换祇园散步；11/30正常入住、12/1默认早归。",
+    "kobe_day": "12/6可21:30—22:00返店；北野星巴克兼午餐，三宫三店75分钟，保留坐下休息。",
+    "shopping_focus": [
+      "音像",
+      "毛绒",
+      "立牌"
+    ]
   },
   "bookings": [
     {
@@ -961,6 +967,126 @@
       "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%90%E3%83%83%E3%82%AF%E3%82%B9%20%E3%82%B3%E3%83%BC%E3%83%92%E3%83%BC%20%E7%A5%9E%E6%88%B8%E3%83%A1%E3%83%AA%E3%82%B1%E3%83%B3%E3%83%91%E3%83%BC%E3%82%AF%E5%BA%97%20%E7%A5%9E%E6%88%B8%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E6%B3%A2%E6%AD%A2%E5%A0%B4%E7%94%BA2-4",
       "coordinates": null,
       "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "starbucks_kitano",
+      "name": "北野星巴克",
+      "name_ja": "スターバックス コーヒー 神戸北野異人館店",
+      "city": "神户",
+      "category": "restaurant",
+      "address_ja": "神戸市中央区北野町3-1-31 北野物語館",
+      "map_query": "スターバックス コーヒー 神戸北野異人館店 神戸市中央区北野町3-1-31 北野物語館",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%90%E3%83%83%E3%82%AF%E3%82%B9%20%E3%82%B3%E3%83%BC%E3%83%92%E3%83%BC%20%E7%A5%9E%E6%88%B8%E5%8C%97%E9%87%8E%E7%95%B0%E4%BA%BA%E9%A4%A8%E5%BA%97%20%E7%A5%9E%E6%88%B8%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E5%8C%97%E9%87%8E%E7%94%BA3-1-31%20%E5%8C%97%E9%87%8E%E7%89%A9%E8%AA%9E%E9%A4%A8",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "source_url": "https://store.starbucks.co.jp/detail-940/"
+    },
+    {
+      "id": "lashinbang_kobe",
+      "name": "らしんばん 神户店",
+      "name_ja": "らしんばん神戸店",
+      "city": "神户",
+      "category": "shopping",
+      "address_ja": "神戸市中央区三宮町1-9-1 センタープラザ東館2F 246-1",
+      "map_query": "らしんばん神戸店 神戸市中央区三宮町1-9-1 センタープラザ東館2F 246-1",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E3%82%89%E3%81%97%E3%82%93%E3%81%B0%E3%82%93%E7%A5%9E%E6%88%B8%E5%BA%97%20%E7%A5%9E%E6%88%B8%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E4%B8%89%E5%AE%AE%E7%94%BA1-9-1%20%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%97%E3%83%A9%E3%82%B6%E6%9D%B1%E9%A4%A82F%20246-1",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "source_url": "https://www.lashinbang.com/store/"
+    },
+    {
+      "id": "surugaya_kobe",
+      "name": "骏河屋 神户三宫1号店",
+      "name_ja": "駿河屋 神戸三宮1号店",
+      "city": "神户",
+      "category": "shopping",
+      "address_ja": "神戸市中央区三宮町1-8-1 さんプラザ3F-2",
+      "map_query": "駿河屋 神戸三宮1号店 神戸市中央区三宮町1-8-1 さんプラザ3F-2",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E9%A7%BF%E6%B2%B3%E5%B1%8B%20%E7%A5%9E%E6%88%B8%E4%B8%89%E5%AE%AE1%E5%8F%B7%E5%BA%97%20%E7%A5%9E%E6%88%B8%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E4%B8%89%E5%AE%AE%E7%94%BA1-8-1%20%E3%81%95%E3%82%93%E3%83%97%E3%83%A9%E3%82%B63F-2",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "source_url": "https://www.suruga-ya.jp/feature/realstore/sannomiya/index.html"
+    },
+    {
+      "id": "bookoff_kobe",
+      "name": "BOOKOFF 三宫中央街店",
+      "name_ja": "BOOKOFF 三宮センター街店",
+      "city": "神户",
+      "category": "shopping",
+      "address_ja": "神戸市中央区三宮町2-10-7 グレースコウベ5F",
+      "map_query": "BOOKOFF 三宮センター街店 神戸市中央区三宮町2-10-7 グレースコウベ5F",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=BOOKOFF%20%E4%B8%89%E5%AE%AE%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E8%A1%97%E5%BA%97%20%E7%A5%9E%E6%88%B8%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E4%B8%89%E5%AE%AE%E7%94%BA2-10-7%20%E3%82%B0%E3%83%AC%E3%83%BC%E3%82%B9%E3%82%B3%E3%82%A6%E3%83%995F",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "source_url": "https://www.bookoff.co.jp/shop/shop10822.html"
+    },
+    {
+      "id": "sannomiya_center",
+      "name": "三宫中央街",
+      "name_ja": "三宮センター街",
+      "city": "神户",
+      "category": "area",
+      "address_ja": "神戸市中央区三宮町",
+      "map_query": "三宮センター街 神戸市中央区三宮町",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%B8%89%E5%AE%AE%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E8%A1%97%20%E7%A5%9E%E6%88%B8%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E4%B8%89%E5%AE%AE%E7%94%BA",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "source_url": "https://kobe-sc.jp/shop/gourmet/"
+    },
+    {
+      "id": "port_sannomiya",
+      "name": "Port Liner 三宫站",
+      "name_ja": "ポートライナー 三宮駅",
+      "city": "神户",
+      "category": "station",
+      "address_ja": "神戸市中央区雲井通8丁目",
+      "map_query": "ポートライナー 三宮駅 神戸市中央区雲井通8丁目",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E3%83%9D%E3%83%BC%E3%83%88%E3%83%A9%E3%82%A4%E3%83%8A%E3%83%BC%20%E4%B8%89%E5%AE%AE%E9%A7%85%20%E7%A5%9E%E6%88%B8%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E9%9B%B2%E4%BA%95%E9%80%9A8%E4%B8%81%E7%9B%AE",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "source_url": "https://www.knt-liner.co.jp/station/"
+    },
+    {
+      "id": "port_nakakoen",
+      "name": "中公园站",
+      "name_ja": "ポートライナー 中公園駅",
+      "city": "神户",
+      "category": "station",
+      "address_ja": "神戸市中央区港島中町4丁目",
+      "map_query": "ポートライナー 中公園駅 神戸市中央区港島中町4丁目",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E3%83%9D%E3%83%BC%E3%83%88%E3%83%A9%E3%82%A4%E3%83%8A%E3%83%BC%20%E4%B8%AD%E5%85%AC%E5%9C%92%E9%A7%85%20%E7%A5%9E%E6%88%B8%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E6%B8%AF%E5%B3%B6%E4%B8%AD%E7%94%BA4%E4%B8%81%E7%9B%AE",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "source_url": "https://www.knt-liner.co.jp/stationp04/"
+    },
+    {
+      "id": "kobe_bridge",
+      "name": "神户大桥 · 北公园",
+      "name_ja": "ポートアイランド北公園 神戸大橋",
+      "city": "神户",
+      "category": "visit",
+      "address_ja": "神戸市中央区港島2-2 北公園",
+      "map_query": "ポートアイランド北公園 神戸大橋 神戸市中央区港島2-2 北公園",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E3%83%9D%E3%83%BC%E3%83%88%E3%82%A2%E3%82%A4%E3%83%A9%E3%83%B3%E3%83%89%E5%8C%97%E5%85%AC%E5%9C%92%20%E7%A5%9E%E6%88%B8%E5%A4%A7%E6%A9%8B%20%E7%A5%9E%E6%88%B8%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E6%B8%AF%E5%B3%B62-2%20%E5%8C%97%E5%85%AC%E5%9C%92",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "source_url": "https://www.feel-kobe.jp/kobe-yakei/spots/port-island-kita-park/"
+    },
+    {
+      "id": "agata",
+      "name": "縣神社",
+      "name_ja": "縣神社",
+      "city": "宇治",
+      "category": "visit",
+      "address_ja": "京都府宇治市宇治蓮華72",
+      "map_query": "縣神社 宇治市宇治蓮華72",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=34.88848,135.80573",
+      "coordinates": {
+        "lat": 34.88848,
+        "lng": 135.80573
+      },
+      "coordinate_status": "official_rally_location_not_camera_position",
+      "source_url": "https://app.raund.net/keihan-euphonium_2026autumn/spots/detail/?id=36569"
     }
   ],
   "days": [
@@ -1260,6 +1386,15 @@
           ],
           "selection_group": "uji_extra",
           "rule": "与琴坂、京都塔择一；宇治晚餐后经过京都站，有15—20分钟余量才短拍，约19:00—19:30返店。"
+        },
+        {
+          "id": "agata_option",
+          "title": "縣神社数字集章",
+          "place_ids": [
+            "agata"
+          ],
+          "selection_group": "uji_extra",
+          "rule": "午饭后、久美子长椅前预留15—20分钟，替换部分河岸拍照；不延后14:30登山，与琴坂、京都塔和京都站舞台择一。"
         }
       ],
       "fallback_rules": [
@@ -2199,26 +2334,36 @@
     {
       "date": "2026-12-06",
       "weekday": "周日",
-      "title": "神户生田巡礼、梅田与城市全景",
+      "title": "神户巡礼、三宫购物与梅田夜景",
       "cities": [
         "大阪",
         "神户"
       ],
-      "intensity": "中等；排队较久时中等偏高",
+      "intensity": "中等偏高",
       "overnight": "hotel_osaka",
       "departure_target": "10:00",
-      "hotel_return_target": "争取19:30—20:00；延迟余量至20:30",
+      "hotel_return_target": "21:30—22:00",
       "route_stop_ids": [
         "hotel_osaka",
         "jr_shinimamiya",
         "jr_osaka",
         "sannomiya",
         "ikuta",
+        "starbucks_kitano",
+        "lashinbang_kobe",
+        "surugaya_kobe",
+        "bookoff_kobe",
+        "sannomiya_center",
+        "port_sannomiya",
+        "port_nakakoen",
+        "kobe_bridge",
+        "port_nakakoen",
+        "port_sannomiya",
         "sannomiya",
         "jr_osaka",
         "nintendo_osaka",
-        "sky",
         "coco_sky",
+        "sky",
         "jr_osaka",
         "jr_shinimamiya",
         "hotel_osaka"
@@ -2226,124 +2371,155 @@
       "timeline": [
         {
           "id": "kobe_transfer",
-          "time_label": "10:00—约11:15",
+          "time_label": "10:00—11:15",
           "time_status": "planning_window",
-          "title": "经JR大阪站去三宫、步行至生田神社",
+          "title": "前往生田神社",
+          "category": "transport",
           "place_ids": [
             "hotel_osaka",
+            "jr_shinimamiya",
             "jr_osaka",
             "sannomiya",
             "ikuta"
-          ],
-          "category": "transport"
+          ]
         },
         {
           "id": "ikuta_visit",
           "time_label": "11:15—12:15",
           "time_status": "planning_window",
-          "title": "参拜、拝殿外观巡礼",
+          "title": "生田神社巡礼",
+          "category": "visit",
           "place_ids": [
             "ikuta"
-          ],
-          "category": "visit"
+          ]
         },
         {
-          "id": "kobe_lunch",
-          "time_label": "12:15—13:10",
+          "id": "kitano_lunch",
+          "time_label": "12:15—13:45",
           "time_status": "planning_window",
-          "title": "午餐 · 三宫",
+          "title": "北野星巴克 · 午餐与巡礼",
+          "category": "meal",
           "place_ids": [
-            "sannomiya"
+            "starbucks_kitano"
           ],
-          "category": "meal"
+          "condition": "含上坡步行约20分钟、用餐休息约50分钟、下坡到三宫商圈约20分钟。轻食配饮品，具体供应与座位以现场为准。"
+        },
+        {
+          "id": "sannomiya_shopping",
+          "time_label": "13:45—15:00",
+          "time_status": "planning_window",
+          "title": "三宫 · 三家店",
+          "category": "shopping",
+          "place_ids": [
+            "lashinbang_kobe",
+            "surugaya_kobe",
+            "bookoff_kobe"
+          ]
+        },
+        {
+          "id": "sannomiya_rest",
+          "time_label": "15:00—15:20",
+          "time_status": "planning_window",
+          "title": "坐下休息",
+          "category": "rest",
+          "place_ids": [
+            "sannomiya_center"
+          ]
+        },
+        {
+          "id": "kobe_bridge_visit",
+          "time_label": "15:20—16:50",
+          "time_status": "planning_window",
+          "title": "神户大桥巡礼",
+          "category": "visit",
+          "place_ids": [
+            "kobe_bridge"
+          ],
+          "condition": "含三宫往返交通；在北公园拍桥，现场约30分钟。"
         },
         {
           "id": "umeda_transfer",
-          "time_label": "13:10—14:00/14:30",
+          "time_label": "16:50—17:50",
           "time_status": "planning_window",
-          "title": "回大阪站，前往购物楼层",
+          "title": "返回大阪站",
+          "category": "transport",
           "place_ids": [
             "sannomiya",
-            "jr_osaka",
-            "nintendo_osaka"
-          ],
-          "category": "transport"
+            "jr_osaka"
+          ]
         },
         {
           "id": "umeda_shop",
-          "time_label": "14:15/14:30—15:30",
+          "time_label": "17:50—18:45",
           "time_status": "planning_window",
-          "title": "Nintendo或Pokémon一家重点逛，另一家可短看，总计60—75分钟",
+          "title": "Nintendo OSAKA · 购物",
+          "category": "shopping",
           "place_ids": [
-            "nintendo_osaka",
-            "pokemon_osaka"
-          ],
-          "category": "shopping"
-        },
-        {
-          "id": "umeda_rest",
-          "time_label": "15:30—16:00",
-          "time_status": "planning_window",
-          "title": "休息",
-          "place_ids": [],
-          "category": "rest"
+            "nintendo_osaka"
+          ]
         },
         {
           "id": "sky_transfer",
-          "time_label": "16:00—16:30",
+          "time_label": "18:45—19:15",
           "time_status": "planning_window",
-          "title": "下楼、步行到蓝天大厦展望台专用入口",
+          "title": "前往蓝天大厦",
+          "category": "walk",
           "place_ids": [
             "sky"
-          ],
-          "category": "walk"
-        },
-        {
-          "id": "sky_visit",
-          "time_label": "16:30—17:45",
-          "time_status": "planning_window",
-          "title": "梅田蓝天大厦 · 日落与夜景",
-          "place_ids": [
-            "sky"
-          ],
-          "category": "visit",
-          "condition": "天气差或疲劳时可取消。"
+          ]
         },
         {
           "id": "sky_dinner",
-          "time_label": "17:45—18:45",
+          "time_label": "19:15—20:00",
           "time_status": "planning_window",
-          "title": "蓝天大厦B1就近晚饭",
+          "title": "晚餐 · 蓝天大厦B1",
+          "category": "meal",
           "place_ids": [
             "coco_sky"
+          ]
+        },
+        {
+          "id": "sky_visit",
+          "time_label": "20:00—21:00",
+          "time_status": "planning_window",
+          "title": "梅田蓝天大厦 · 夜景",
+          "category": "visit",
+          "place_ids": [
+            "sky"
           ],
-          "category": "meal"
+          "condition": "含入场与乘梯；天气差或明显疲劳时可省。"
         },
         {
           "id": "last_evening_return",
-          "time_label": "18:45起返程，争取19:30—20:00到店",
+          "time_label": "21:00—22:00",
           "time_status": "planning_window",
-          "title": "大阪站乘车回新今宫、整理行李",
+          "title": "返店 · 整理随身物品",
+          "category": "transport",
           "place_ids": [
             "jr_osaka",
             "jr_shinimamiya",
             "hotel_osaka"
-          ],
-          "category": "transport"
+          ]
         }
       ],
       "meals": {
         "lunch": {
-          "primary": "吉野家 プリコ三宮店"
+          "primary": "スターバックス コーヒー 神戸北野異人館店",
+          "note": "午餐、咖啡与休息合并；三宫小吃现场自选，不另排餐厅。"
         },
         "dinner": {
           "primary": "CoCo壱番屋 梅田スカイビル店",
-          "alternative": "楼下其他有空位、菜单合预算的店或返车站途中简餐"
+          "alternative": "梅田スカイビル 地下飲食店"
         }
       },
       "transport_notes": [
-        "神户回程在大阪站下车接梅田活动。",
-        "返新今宫认环状线内回り、西九条／弁天町方向，并确认停靠新今宫。"
+        "新今宫乘JR环状线到大阪，换JR神户线新快速到三ノ宮，再步行至生田神社；门到神社预留约75分钟。",
+        "生田神社向北野步行，上坡约20分钟；午饭后沿北野坂下坡到三宫商圈，约20分钟。步行时间为规划余量。",
+        "三宫购物：らしんばん在センタープラザ东馆2F，骏河屋1号店在相邻さんプラザ3F；BOOKOFF另在グレースコウベ5F。三店共用75分钟，含换楼、上下楼与结账。",
+        "三宫步行到Port Liner站，乘车至中公園，步行约8分钟到北公园；拍摄后原路回中公園，乘三宫方向列车。90分钟包含候车、步行、摄影与往返，不锁定车次。",
+        "回到三宫后换JR神户线至大阪；约一小时包含换乘与前往LUCUA SOUTH 13F购物楼层。",
+        "从购物楼层下楼，步行到梅田蓝天大厦，预留30分钟；先在B1吃饭，再找空中庭园展望台专用入口。",
+        "返回大阪站，乘JR环状线内回り、西九条／弁天町方向，确认停靠新今宫。"
       ],
       "optional": [
         {
@@ -2353,44 +2529,26 @@
             "nintendo_osaka",
             "pokemon_osaka"
           ],
-          "rule": "仅能直接进入时，约10—15分钟；包含在总购物时段内"
-        },
-        {
-          "id": "kobe_harbor_option",
-          "title": "神户港星巴克",
-          "place_ids": [
-            "starbucks_meriken"
-          ],
-          "rule": "替换梅田购物；13:10—14:30含往返海边，14:30—15:30回大阪，保留休息与返店目标",
-          "replaces_event_ids": [
-            "umeda_shop"
-          ]
+          "rule": "能直接入店才短看10—15分钟，包含在17:50—18:45的55分钟内"
         }
       ],
       "fallback_rules": [
-        "Nintendo整理券超出窗口则改Pokémon；都久等可省购物，不回来补逛。",
-        "天气差或疲劳可省展望台；错过日落正常看夜景，不赶路。",
-        "神户港咖啡与梅田购物二选一；不加其他商场，晚饭后返店准备次晨出发。"
+        "延迟时先省梅田第二家店，再缩短展望台停留；保留午晚餐与坐下休息。",
+        "Nintendo整理券超出窗口则改Pokémon；两家都需久等时省购物。",
+        "大风、下雨或疲劳时，可省神户大桥或展望台。",
+        "行李尽量12/5晚整理；12/6返店后只收尾随身物品、证件与次晨早餐。"
       ],
       "dining_recommendations": {
         "meals": [
           [
             "午餐",
             "首选",
-            "吉野家 プリコ三宮店",
-            "约 ¥700–1,200",
-            "加纳町4-1-1，JR三ノ宮西口附近",
-            "参考24小时；牛丼／定食便于餐后返大阪。",
-            "https://stores.yoshinoya.com/yoshinoya/spot/detail?code=ysn_042535"
-          ],
-          [
-            "午餐",
-            "备选",
-            "三ノ宮駅 周辺の飲食店",
-            "¥1,000–2,500",
-            "三宫站附近",
-            "附近简餐，选有空位且符合预算的店。",
-            ""
+            "スターバックス コーヒー 神戸北野異人館店",
+            "预算 ¥1,000–1,500",
+            "北野町3-1-31，北野物语馆",
+            "轻食配饮品，可加一份面包；用餐同时休息。参考营业08:00—22:00、不定休，餐食和座位以现场为准。",
+            "https://store.starbucks.co.jp/detail-940/",
+            "starbucks_kitano"
           ],
           [
             "晚餐",
@@ -2398,32 +2556,48 @@
             "CoCo壱番屋 梅田スカイビル店",
             "约 ¥1,000–1,500",
             "蓝天大厦B1，B-100号",
-            "观景后直接楼下晚饭，具体菜单和营业待确认。",
-            "https://tenpo.ichibanya.co.jp/map/2808/"
+            "先吃饭再上展望台。当前官网11:00—21:00最后点餐，临行复核。",
+            "https://tenpo.ichibanya.co.jp/map/2808/",
+            "coco_sky"
           ],
           [
             "晚餐",
             "备选",
             "梅田スカイビル 地下飲食店",
             "¥1,000–2,500",
-            "B1或回大阪站途中",
-            "附近简餐，选有空位且符合预算的店，不折返LUCUA。",
+            "蓝天大厦B1",
+            "现场选有空位且合预算的店。",
             ""
           ]
         ],
-        "optional": [
-          {
-            "place": "starbucks_meriken",
-            "label": "替换梅田购物",
-            "title": "神户港星巴克",
-            "text": "午饭后去海边喝咖啡，替换整段梅田购物。13:10—14:30含往返海边，14:30—15:30回大阪；保留休息、蓝天大厦和晚饭。",
-            "budget": "饮品按当天菜单；不另加正餐",
-            "source": "https://store.starbucks.co.jp/detail-1432/",
-            "event_id": "kobe_lunch"
-          }
-        ],
+        "optional": [],
         "along_route": {}
-      }
+      },
+      "route_event_ids": [
+        "kobe_transfer",
+        "kobe_transfer",
+        "kobe_transfer",
+        "kobe_transfer",
+        "ikuta_visit",
+        "kitano_lunch",
+        "sannomiya_shopping",
+        "sannomiya_shopping",
+        "sannomiya_shopping",
+        "sannomiya_rest",
+        "kobe_bridge_visit",
+        "kobe_bridge_visit",
+        "kobe_bridge_visit",
+        "kobe_bridge_visit",
+        "kobe_bridge_visit",
+        "umeda_transfer",
+        "umeda_transfer",
+        "umeda_shop",
+        "sky_dinner",
+        "sky_visit",
+        "last_evening_return",
+        "last_evening_return",
+        "last_evening_return"
+      ]
     },
     {
       "date": "2026-12-07",
@@ -2524,10 +2698,11 @@
     "USJ 12/4门票购买状态、正式开园时间、检修及演出场次；确认后倒推出门时间。",
     "出发前7—10天看红叶实况，48—72小时看天气；12/1与12/2可视天气互换，但周二出町餐厅需重核。",
     "餐厅临时休业、菜单与Nintendo当日入店规则。",
-    "12/6蓝天大厦天气、营业、票价及购票状态。",
+    "12/6北野星巴克与商店营业、Nintendo入店规则、大桥天气；蓝天大厦营业、票价及购票状态。",
     "12/7有效南海班表、HX617航司通知与登机口。",
     "12/2高台寺：查看天气、叶况与排队情况。",
-    "USJ仍暂列12/4；12/4与12/5正式营业时间公布后，在购票前比较，尚未实施换日。"
+    "USJ仍暂列12/4；12/4与12/5正式营业时间公布后，在购票前比较，尚未实施换日。",
+    "12/1京阪后期数字集章：用手机Safari或Chrome提前确认活动账户、联网与定位权限，临行复核点位公告。"
   ],
   "visualization_rules": [
     "每日主线按route_stop_ids顺序；可选项默认不画进必走路线，酒店和车站重复出现是实际回程，不去重。",
@@ -2556,7 +2731,7 @@
     "note": "活动日期不保证红叶盛期；昼夜不清场，出场同票不能再次进入。"
   },
   "pilgrimage_reference_file": "可视化网页/pilgrimage.json",
-  "pilgrimage_checked_on": "2026-09-29",
+  "pilgrimage_checked_on": "2026-10-01",
   "pilgrimage_points": [
     {
       "id": "eupho_jr_uji",
@@ -2911,11 +3086,56 @@
         "evidence": "作者公开KML名称「生田神社」，coordinates=135.1907772,34.694574,0。神社地点另由國學院大學神社DB确认，DB中心点为34°41′42.0″N、135°11′27.1″E，非摄影位置。",
         "crosscheck_url": "https://kojiki.kokugakuin.ac.jp/jinjya/ikutajinja/"
       }
+    },
+    {
+      "id": "witch-kitano",
+      "place_ids": [
+        "starbucks_kitano"
+      ],
+      "date": "2026-12-06",
+      "event_id": "kitano_lunch",
+      "title": "北野物语馆 · 七绪咖啡店",
+      "work": "魔女的夜宴／サノバウィッチ",
+      "coordinates": null
+    },
+    {
+      "id": "fate-kobe-bridge",
+      "place_ids": [
+        "kobe_bridge"
+      ],
+      "date": "2026-12-06",
+      "event_id": "kobe_bridge_visit",
+      "title": "神户大桥 · 冬木大桥",
+      "work": "Fate/stay night",
+      "coordinates": null
     }
   ],
   "food_updated_on": "2026-09-30",
   "flight_sources": [
     "https://www.hongkongairlines.com/webfile/static/pdf/Check-in%20counter%20relcoation%20to%20T2%20FAQ%20-%20EN.pdf?siteId=6",
     "https://www.kansai-airport.or.jp/en/flight/airlines"
-  ]
+  ],
+  "uji_rally": {
+    "checked_on": "2026-10-01",
+    "early": {
+      "start": "2026-09-01",
+      "end": "2026-10-31",
+      "spots": [
+        "井川用水機場前",
+        "宇治橋",
+        "大吉山展望台"
+      ]
+    },
+    "late": {
+      "start": "2026-11-01",
+      "end": "2026-12-20",
+      "spots": [
+        "宇治川河川敷（水管橋）",
+        "縣神社",
+        "許波多神社（五ケ庄）"
+      ]
+    },
+    "selection": "默认主线不变；縣神社为短停可选，未加入后期三点全收集路线",
+    "source_url": "https://www.keihan.co.jp/euphonium/"
+  }
 }

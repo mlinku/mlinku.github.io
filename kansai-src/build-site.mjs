@@ -42,7 +42,8 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false}){
   published.set(source,result);return result;
  }
  for(const img of Object.values(photos)){if(!img.local)throw Error('Missing local photo');Object.assign(img,media(img.local,true));}
- for(const p of pilgrimage.points)for(const kind of ['real','anime']){const img=p[kind];if(img?.local)Object.assign(img,media(img.local,true));}
+ const illustratedPoints=[...pilgrimage.points,...(pilgrimage.rally?.spots||[])];
+ for(const p of illustratedPoints)for(const kind of ['real','anime','comparison']){const img=p[kind];if(img?.local)Object.assign(img,media(img.local,true));}
  const background=media('assets/blog-background.jpg').src,mapImage=media('assets/kansai-google-overview.jpg').src;
  if(jobs.length){
   const temp=path.join(os.tmpdir(),'kansai-media-'+crypto.randomUUID()+'.json');
@@ -55,7 +56,7 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false}){
    const sizes=JSON.parse(fs.readFileSync(temp,'utf8'));
    jobs.forEach((job,i)=>{job.result.thumbnailWidth=sizes[i].width;job.result.thumbnailHeight=sizes[i].height;});
    for(const img of Object.values(photos))Object.assign(img,media(img.local,true));
-   for(const p of pilgrimage.points)for(const kind of ['real','anime'])if(p[kind]?.local)Object.assign(p[kind],media(p[kind].local,true));
+   for(const p of illustratedPoints)for(const kind of ['real','anime','comparison'])if(p[kind]?.local)Object.assign(p[kind],media(p[kind].local,true));
   }finally{if(fs.existsSync(temp))fs.unlinkSync(temp);}
  }
  const css=STYLE_FILES.map(read).join('\n');
