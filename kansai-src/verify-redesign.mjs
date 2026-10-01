@@ -254,7 +254,7 @@ const results=vm.runInContext(`
  assert.ok(dayNotes(kyoto).join('').includes('省八坂神社'));
  state.choices[uji.date]={ujiExtra:'none'};
  assert.ok(dayTransport(uji).join('').includes('黄檗'));
- assert.ok(dayFallbacks(uji).join('').includes('后期三章'));
+ assert.ok(dayFallbacks(uji).join('').includes('后期集章'));
  assert.ok(!dayFallbacks(uji).join('').includes('省额外店铺与集章'));
  state.choices[nara.date]={shop1:'potato',shop2:'none'};
  assert.ok(!dayNotes(nara).join('').includes('默认Animate'));
