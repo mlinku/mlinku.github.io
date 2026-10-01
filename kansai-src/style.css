@@ -234,14 +234,13 @@ summary:hover {color:var(--red)}
 .route-copy {min-width:0}
 .route-copy>button {display:block; text-align:left; padding:0; min-height:32px; font-weight:550; font-size:.97rem}
 .route-copy>small {display:block; font-size:.73rem; color:var(--muted); overflow-wrap:anywhere}
-.return-label {display:inline-block; font-size:.69rem; color:#766137; margin-top:3px; margin-right:7px}
+.return-label {display:inline-block; font-size:.69rem; color:var(--muted); margin-top:3px; margin-right:7px}
 .route-map {display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:48px; color:var(--red); font-size:.69rem; border:1px solid var(--line); border-radius:7px}
 .route-map .icon {width:18px; height:18px}
 .route-leg {border-bottom:1px solid var(--line); padding-bottom:4px}
 .route-leg .text-link {min-height:30px; font-size:.73rem; font-weight:400; color:var(--muted)}
 .route-stop.optional .route-item {border:1px dashed #c5ae78; border-radius:8px; padding-inline:9px; background:#f9f1df}
 .route-stops+.map-note {margin-top:21px}
-.return-stop .route-photo {opacity:.85}
 .prep-heading {padding:38px 0 30px}
 .prep-heading h1 {font-size:2.4rem; margin:6px 0 11px}
 .prep-heading>p:last-child {font-size:.88rem}

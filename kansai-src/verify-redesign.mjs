@@ -13,6 +13,7 @@ const ui=read('interface.js').split("document.addEventListener('click'")[0];
 vm.runInContext(read('details.js')+'\n'+read('app.js')+'\n'+read('day-flow.js')+'\n'+read('pilgrimage.js')+'\n'+read('daily.js')+'\n'+ui,scope);
 const results=vm.runInContext(`
  const checked=[];
+ for(const img of Object.values(PHOTOS))img.src=img.local;
  for(const d of PLAN.days){
   assert.deepEqual(effectiveRoute(d).map(p=>p.id),d.route_stop_ids,'路线顺序 '+d.date);
   const timed=timedRoute(d);
@@ -28,6 +29,11 @@ const results=vm.runInContext(`
   const routeMarkup=routePage(d);
   assert.equal(routeMarkup.split('class="route-actions"').length-1,effectiveRoute(d).length,'每站保留紧凑地图操作 '+d.date);
   assert.ok(!routeMarkup.includes('class="route-leg"'),'移除单独占行的旧路线入口');
+  for(const id of new Set(d.route_stop_ids.filter(id=>photoSrc(id)))){
+   const occurrences=effectiveRoute(d).filter(stop=>stop.id===id).length;
+   assert.equal(routeMarkup.split('class="route-photo" data-action="place" data-place="'+id+'"').length-1,occurrences,'每次经过都保留地点照片 '+d.date+' '+id);
+  }
+  assert.ok(!routeMarkup.includes('repeated-place'),'重复地点不再替换成定位图标');
   for(const ev of events)assert.equal(markup.split('data-event="'+ev.id+'"').length-1,1,'时间轴遗漏或重复 '+ev.id);
   for(const r of DETAILS[d.date].meals.filter(r=>r[1]==='首选'&&['午餐','晚餐'].includes(r[0])))assert.ok(markup.includes(e(r[2])),'餐饮首选未显示 '+d.date);
   assert.equal(DayFlow.forDay(d).sections.flatMap(s=>s.events).map(ev=>ev.id).join(','),events.map(ev=>ev.id).join(','),'分段后不改变活动顺序 '+d.date);
@@ -41,6 +47,14 @@ const results=vm.runInContext(`
   assert.equal(routePage(d).split('<summary>交通说明</summary>').length-1,1,'路线仅保留一个交通说明');
  }
  const ujiDefault=PLAN.days[1];
+ const ujiTimeline=timelinePage(ujiDefault);
+ assert.ok(ujiTimeline.includes('#day/2026-12-01/pilgrimage/eupho_saizeriya_uji'),'晚餐能进入萨莉亚巡礼对照');
+ const saizeriyaShot=pilgrimageDay(ujiDefault.date).find(p=>p.id==='eupho_saizeriya_uji');
+ assert.equal(saizeriyaShot.event_id,'uji_saizeriya_dinner');
+ assert.ok(saizeriyaShot.real.local&&saizeriyaShot.anime.local,'萨莉亚对照包含实景及作品图');
+ const bridgeVisits=effectiveEvents(ujiDefault).filter(ev=>ev.category!=='transport'&&ev.category!=='meal'&&ev.place_ids.includes('uji_bridge')).length;
+ assert.ok(bridgeVisits>1);
+ assert.equal((ujiTimeline.match(/class="photo-button [^"]*" data-action="place" data-place="uji_bridge"/g)||[]).length,bridgeVisits,'时间轴重复经过宇治桥也保留照片');
  assert.equal(mealRows(ujiDefault,effectiveEvents(ujiDefault).find(e=>e.id==='uji_saizeriya_dinner'))[0][7],'saizeriya_uji');
  assert.ok(!effectiveEvents(ujiDefault).some(ev=>ev.id==='uji_default_dinner'),'默认没有第二顿京都晚餐');
  assert.equal(timedRoute(ujiDefault).find(n=>n.id==='saizeriya_uji').times[0].text,'18:00—19:00');
@@ -98,8 +112,8 @@ const results=vm.runInContext(`
  assert.ok(!shotCard(point,'place').includes('id="shot-delta-kon"'));
  state.checks[shotKey(point)]=true;assert.equal(shotProgress(point.date).done,1,'巡礼计数包含打卡');
  delete state.checks[shotKey(point)];assert.equal(shotProgress(point.date).done,0,'巡礼计数可取消');
- state.choices[uji.date]={ujiExtra:'none'};assert.equal(shotProgress(uji.date).total,9,'未启用的点不计入主线进度');
- state.choices[uji.date]={ujiExtra:'station'};assert.equal(shotProgress(uji.date).total,11,'启用后计入京都站两个机位');
+ state.choices[uji.date]={ujiExtra:'none'};assert.equal(shotProgress(uji.date).total,10,'未启用的点不计入主线进度');
+ state.choices[uji.date]={ujiExtra:'station'};assert.equal(shotProgress(uji.date).total,12,'启用后计入京都站两个机位');
  globalThis.location={hash:'#day/2026-12-02/timeline/delta_visit'};readHash();assert.equal(sectionTarget,'event-delta_visit');
  location.hash='#day/2026-12-02/pilgrimage/delta-kon';readHash();assert.equal(sectionTarget,'shot-delta-kon');
  assert.ok(!dayPage().includes('id="day-support"'),'巡礼不重复通用侧栏');
@@ -280,7 +294,7 @@ const results=vm.runInContext(`
  assert.equal(effectiveEvents(uji).filter(ev=>ev.rally_spot).length,3);
  assert.equal(effectiveEvents(uji).find(ev=>ev.id==='uji_saizeriya_dinner').time_label,'到店后');
  assert.equal(returnTarget(uji),'饭后');
- assert.equal(shotProgress(uji.date).total,9,'不删减公共街道巡礼');
+ assert.equal(shotProgress(uji.date).total,10,'不删减公共街道巡礼');
  state.choices[uji.date]={};
  const lockedPlan=JSON.stringify(PLAN);
  const configurations=[

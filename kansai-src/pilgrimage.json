@@ -466,6 +466,54 @@
       "name_ja": "平等院表参道"
     },
     {
+      "id": "eupho_saizeriya_uji",
+      "place_ids": [
+        "saizeriya_uji"
+      ],
+      "date": "2026-12-01",
+      "event_id": "uji_saizeriya_dinner",
+      "title": "萨莉亚宇治里尻店",
+      "name_ja": "サイゼリヤ 宇治里尻店",
+      "work": "吹响！上低音号 · 誓言的终章",
+      "scene": "剧场版中久美子与奏谈话的家庭餐厅。",
+      "shooting_note": "晚饭前顺拍二层窗户与店招；在公共通道取景，避让停车场车辆。",
+      "match_note": "巡礼者外观比对；作品改绘了店招，实景角度不同。",
+      "real": {
+        "local": "assets/food-saizeriya-uji.jpg",
+        "source_url": "https://tabelog.com/kyoto/A2607/A260701/26017218/dtlphotolst/4/smp2/",
+        "image_url": "https://tblg.k-img.com/restaurant/images/Rvw/384390/640x640_rect_12341448f4d6cb28ba48a464a84b9234.jpg",
+        "credit": "ゑつ / 食べログ",
+        "width": 640,
+        "height": 481
+      },
+      "anime": {
+        "local": "assets/pilgrimage/uji/saizeriya_a.png",
+        "source_url": "https://note.com/loyal_wasp2136/n/n88b7b73ecc59",
+        "image_url": "https://assets.st-note.com/img/1760264552-CYwXADJz7GLnrNqxB3jbpsaF.png?width=1200",
+        "credit": "©武田綾乃・宝島社／「響け！」製作委員会 · 引自东京理科大学百合爱好会巡礼记录",
+        "license": "作品单帧场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 1200,
+        "height": 675
+      },
+      "sources": [
+        {
+          "title": "巡礼者实地对照（非官方取景地认定）",
+          "url": "https://note.com/loyal_wasp2136/n/n88b7b73ecc59"
+        },
+        {
+          "title": "萨莉亚官方门店资料",
+          "url": "https://shop.saizeriya.co.jp/sz_restaurant/spot/detail?code=0524"
+        },
+        {
+          "title": "剧场版作品官网",
+          "url": "https://movie3.anime-eupho.com/"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-10-01"
+    },
+    {
       "id": "eupho_jr_uji",
       "place_ids": [
         "jr_uji"
