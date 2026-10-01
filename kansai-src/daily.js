@@ -87,7 +87,7 @@ function dayNotes(d){const c=choice(d);const extra=(DETAILS[d.date].extra||[]).f
  if(d.date==='2026-12-02'&&t.startsWith('本次只安排'))return [];
  if(d.date==='2026-12-05'&&t.startsWith('日本桥默认'))return ['日本桥购物限1—2家，替换不增加总数；中古作品库存不保证。'];
  if(d.date==='2026-12-06'&&t.startsWith('Nintendo与Pokémon')){
-  return [c.umedaSecond?t:PLACE[c.umedaMain].name+'参考营业10:00—20:00，重点逛一家，18:45结束。'];
+  return [c.umedaSecond?t:PLACE[c.umedaMain].name+'参考营业10:00—20:00，重点逛一家，18:30结束。'];
  }
  return [t];
 });return [...dayFallbacks(d),...extra];}

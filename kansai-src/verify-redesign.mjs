@@ -124,7 +124,7 @@ const results=vm.runInContext(`
  const umeda=PLAN.days[6];state.choices[umeda.date]={umedaMain:'pokemon_osaka',umedaSecond:true};
  assert.deepEqual(effectiveEvents(umeda).find(x=>x.id==='umeda_shop').place_ids,['pokemon_osaka','nintendo_osaka']);
  assert.ok(returnTarget(nara).includes('20:00—20:30'));
- assert.equal(returnTarget(umeda),'21:30—22:00');
+ assert.equal(returnTarget(umeda),'21:15—21:45');
  assert.ok(!overview().includes('city-map'),'删除旧城市示意');
  assert.ok(!overview().includes('<iframe'),'避免兼容性空框');
  assert.ok(overview().includes('google-map-preview'),'保留真实Google区域预览');
@@ -184,12 +184,19 @@ const results=vm.runInContext(`
  assert.ok(effectiveRoute(kobe).some(n=>n.id==='kobe_bridge'));
  assert.equal(DayFlow.forDay(kobe).sections.flatMap(s=>s.events).map(ev=>ev.id).join(','),effectiveEvents(kobe).map(ev=>ev.id).join(','),'新活动按下午顺序分组');
  assert.equal(progress(kobe).done,1,'原购物进度保留，新午餐不会自动完成');
- assert.equal(timedRoute(kobe).find(n=>n.id==='starbucks_kitano').times[0].text,'12:15—13:45');
+ assert.equal(timedRoute(kobe).find(n=>n.id==='starbucks_kitano').times[0].text,'11:30—13:00');
  assert.ok(timedRoute(kobe).every(n=>n.times.every(t=>t.text!=='时间待确认')),'替换后每站时间完整');
  assert.equal(timedRoute(kobe).filter(n=>n.id==='port_nakakoen').length,2,'大桥往返保留重复中公园站');
  assert.equal(routeGroups(kobe).find(g=>g.eventId==='sannomiya_shopping').stops.length,3,'三店共用一个购物窗口');
- assert.equal(routePage(kobe).split('13:45–15:00').length-1,1,'75分钟只出现一次');
+ assert.equal(routePage(kobe).split('13:00–14:30').length-1,1,'90分钟只出现一次');
  const kobeEvents=effectiveEvents(kobe);
+ assert.equal(kobe.departure_target,'09:30');
+ assert.equal(kobeEvents.find(e=>e.id==='sannomiya_rest').time_label,'14:30—15:00','购物后保留半小时休息');
+ assert.equal(kobeEvents.find(e=>e.id==='sky_dinner').time_label,'19:00—20:00','晚饭保留一小时');
+ assert.equal(kobeEvents.find(e=>e.id==='kobe_bridge_visit').time_label,'15:00—16:30','大桥往返仍有90分钟');
+ assert.equal(kobeEvents.find(e=>e.id==='sky_visit').time_label,'20:00—20:45','保留夜景主线');
+ for(let i=1;i<kobeEvents.length;i++)assert.equal(kobeEvents[i-1].time_label.split('—')[1],kobeEvents[i].time_label.split('—')[0],'窗口连续且无重叠 '+kobeEvents[i].id);
+
  assert.ok(kobeEvents.findIndex(e=>e.id==='sky_dinner')<kobeEvents.findIndex(e=>e.id==='sky_visit'),'先晚饭后展望台');
  assert.equal(kobeEvents.filter(e=>e.category==='meal'&&e.id.includes('lunch')).length,1,'只有一顿星巴克午餐');
  assert.equal(mealRows(kobe,kobeEvents.find(e=>e.id==='kitano_lunch')).length,1,'不增设三宫午餐备选');

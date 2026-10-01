@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "plan_id": "kansai-2026-1130-1207",
-  "revision": "2026-10-01-kobe-lunch-flow",
+  "revision": "2026-10-01-kobe-0930-balanced",
   "recorded_on": "2026-09-28",
   "language": "zh-CN",
   "title": "关西旅行规划基准",
@@ -56,7 +56,7 @@
       "额外追加岚山、金阁寺、大阪城、海游馆、箕面"
     ],
     "night_foliage_policy": "只安排12/2高台寺一次夜枫，替换祇园散步；11/30正常入住、12/1集章后约20:00—20:30返店。",
-    "kobe_day": "12/6可21:30—22:00返店；北野星巴克兼午餐，三宫三店75分钟，保留坐下休息。",
+    "kobe_day": "12/6 09:30出门，保留生田、北野、三宫三店、神户大桥与梅田夜景；三店90分钟，购物后休息30分钟，晚饭60分钟，21:15—21:45返店。",
     "shopping_focus": [
       "音像",
       "毛绒",
@@ -2445,8 +2445,8 @@
       ],
       "intensity": "中等偏高",
       "overnight": "hotel_osaka",
-      "departure_target": "10:00",
-      "hotel_return_target": "21:30—22:00",
+      "departure_target": "09:30",
+      "hotel_return_target": "21:15—21:45",
       "route_stop_ids": [
         "hotel_osaka",
         "jr_shinimamiya",
@@ -2475,7 +2475,7 @@
       "timeline": [
         {
           "id": "kobe_transfer",
-          "time_label": "10:00—11:15",
+          "time_label": "09:30—10:45",
           "time_status": "planning_window",
           "title": "前往生田神社",
           "category": "transport",
@@ -2489,7 +2489,7 @@
         },
         {
           "id": "ikuta_visit",
-          "time_label": "11:15—12:15",
+          "time_label": "10:45—11:30",
           "time_status": "planning_window",
           "title": "生田神社巡礼",
           "category": "visit",
@@ -2499,7 +2499,7 @@
         },
         {
           "id": "kitano_lunch",
-          "time_label": "12:15—13:45",
+          "time_label": "11:30—13:00",
           "time_status": "planning_window",
           "title": "北野星巴克 · 午餐与巡礼",
           "category": "meal",
@@ -2510,7 +2510,7 @@
         },
         {
           "id": "sannomiya_shopping",
-          "time_label": "13:45—15:00",
+          "time_label": "13:00—14:30",
           "time_status": "planning_window",
           "title": "三宫 · 三家店",
           "category": "shopping",
@@ -2522,7 +2522,7 @@
         },
         {
           "id": "sannomiya_rest",
-          "time_label": "15:00—15:20",
+          "time_label": "14:30—15:00",
           "time_status": "planning_window",
           "title": "坐下休息",
           "category": "rest",
@@ -2532,7 +2532,7 @@
         },
         {
           "id": "kobe_bridge_visit",
-          "time_label": "15:20—16:50",
+          "time_label": "15:00—16:30",
           "time_status": "planning_window",
           "title": "神户大桥巡礼",
           "category": "visit",
@@ -2543,7 +2543,7 @@
         },
         {
           "id": "umeda_transfer",
-          "time_label": "16:50—17:50",
+          "time_label": "16:30—17:30",
           "time_status": "planning_window",
           "title": "返回大阪站",
           "category": "transport",
@@ -2554,7 +2554,7 @@
         },
         {
           "id": "umeda_shop",
-          "time_label": "17:50—18:45",
+          "time_label": "17:30—18:30",
           "time_status": "planning_window",
           "title": "Nintendo OSAKA · 购物",
           "category": "shopping",
@@ -2564,7 +2564,7 @@
         },
         {
           "id": "sky_transfer",
-          "time_label": "18:45—19:15",
+          "time_label": "18:30—19:00",
           "time_status": "planning_window",
           "title": "前往蓝天大厦",
           "category": "walk",
@@ -2574,7 +2574,7 @@
         },
         {
           "id": "sky_dinner",
-          "time_label": "19:15—20:00",
+          "time_label": "19:00—20:00",
           "time_status": "planning_window",
           "title": "晚餐 · 蓝天大厦B1",
           "category": "meal",
@@ -2584,18 +2584,18 @@
         },
         {
           "id": "sky_visit",
-          "time_label": "20:00—21:00",
+          "time_label": "20:00—20:45",
           "time_status": "planning_window",
           "title": "梅田蓝天大厦 · 夜景",
           "category": "visit",
           "place_ids": [
             "sky"
           ],
-          "condition": "含入场与乘梯；天气差或明显疲劳时可省。"
+          "condition": "含入场与乘梯；排队较长时可延至21:00，返店约22:00。"
         },
         {
           "id": "last_evening_return",
-          "time_label": "21:00—22:00",
+          "time_label": "20:45—21:45",
           "time_status": "planning_window",
           "title": "返店 · 整理随身物品",
           "category": "transport",
@@ -2619,7 +2619,7 @@
       "transport_notes": [
         "新今宫乘JR环状线到大阪，换JR神户线新快速到三ノ宮，再步行至生田神社；门到神社预留约75分钟。",
         "生田神社向北野步行，上坡约20分钟；午饭后沿北野坂下坡到三宫商圈，约20分钟。步行时间为规划余量。",
-        "三宫购物：らしんばん在センタープラザ东馆2F，骏河屋1号店在相邻さんプラザ3F；BOOKOFF另在グレースコウベ5F。三店共用75分钟，含换楼、上下楼与结账。",
+        "三宫购物：らしんばん在センタープラザ东馆2F，骏河屋1号店在相邻さんプラザ3F；BOOKOFF另在グレースコウベ5F。三店共用90分钟，含换楼、上下楼与结账。",
         "三宫步行到Port Liner站，乘车至中公園，步行约8分钟到北公园；拍摄后原路回中公園，乘三宫方向列车。90分钟包含候车、步行、摄影与往返，不锁定车次。",
         "回到三宫后换JR神户线至大阪；约一小时包含换乘与前往LUCUA SOUTH 13F购物楼层。",
         "从购物楼层下楼，步行到梅田蓝天大厦，预留30分钟；先在B1吃饭，再找空中庭园展望台专用入口。",
@@ -2633,14 +2633,15 @@
             "nintendo_osaka",
             "pokemon_osaka"
           ],
-          "rule": "能直接入店才短看10—15分钟，包含在17:50—18:45的55分钟内"
+          "rule": "能直接入店才短看10—15分钟，包含在17:30—18:30的60分钟内"
         }
       ],
       "fallback_rules": [
-        "延迟时先省梅田第二家店，再缩短展望台停留；保留午晚餐与坐下休息。",
+        "午餐、购物后30分钟休息和晚饭均保留；前段延迟先用购物机动时间，再省梅田第二店。",
         "Nintendo整理券超出窗口则改Pokémon；两家都需久等时省购物。",
-        "大风、下雨或疲劳时，可省神户大桥或展望台。",
-        "行李尽量12/5晚整理；12/6返店后只收尾随身物品、证件与次晨早餐。"
+        "大风、下雨或明显疲劳时，可省神户大桥或展望台。",
+        "展望台需要排队时，最晚21:00开始返程，约22:00返店；不压缩吃饭与休息。",
+        "12/5晚先整理行李；12/6只收尾当天购物、证件和次晨早餐。"
       ],
       "dining_recommendations": {
         "meals": [
