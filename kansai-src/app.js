@@ -18,6 +18,7 @@ const directionURL=(a,b,mode)=>'https://www.google.com/maps/dir/?api=1&origin='+
 // Booking timestamps include offsets; always display the airport's local time.
 function flightLocal(b,field){const place=field==='departure'?b.from:b.to,zone=place==='hkg'?'Asia/Hong_Kong':'Asia/Tokyo';const date=new Date(b[field]);return {time:new Intl.DateTimeFormat('en-GB',{timeZone:zone,hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(date),date:new Intl.DateTimeFormat('en-US',{timeZone:zone,month:'numeric',day:'numeric'}).format(date),city:place==='hkg'?'香港':'关西',region:place==='hkg'?'香港':'日本',terminal:b[field+'_terminal']||'航站楼待确认'};}
 function flightDeparture(id){const b=PLAN.bookings.find(b=>b.id===id),f=flightLocal(b,'departure');return f.time+' '+f.region+'起飞';}
+function flightTerminals(b){const from=flightLocal(b,'departure'),to=flightLocal(b,'arrival');return from.city+(b.departure_terminal_role==='check_in'?from.terminal+'值机 → '+(b.boarding_terminal||'航站楼待确认')+'登机':from.terminal+'出发')+'；'+to.city+to.terminal+'抵达。';}
 const photoSrc=id=>PHOTOS[id]?.src||'';
 const dateLabel=d=>String(Number(d.slice(5,7)))+'/'+String(Number(d.slice(8)));
 const choice=d=>{const c={ujiExtra:'none',byodoinInterior:false,kodaijiPlan:'night',yasakaBrief:false,usjExtra:false,kinopio:false,shop1:'animate',shop2:'surugaya',umedaMain:'nintendo_osaka',umedaSecond:false,...state.choices[d.date]};if(d.date==='2026-12-01'){if(!['none','station'].includes(c.ujiExtra))c.ujiExtra='none';c.byodoinInterior=false;delete c.skipByodoin;}if(d.date==='2026-12-02'){if(!['night','skip'].includes(c.kodaijiPlan))c.kodaijiPlan='night';c.yasakaBrief=c.kodaijiPlan==='night'&&c.yasakaBrief===true;}if(!['nintendo_osaka','pokemon_osaka'].includes(c.umedaMain))c.umedaMain='nintendo_osaka';return c;};
@@ -59,8 +60,9 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
  for(const ev of events.filter(ev=>ev.category==='flight')){
   const booking=PLAN.bookings.find(b=>b.id===ev.id);if(!booking)continue;
   const from=flightLocal(booking,'departure'),to=flightLocal(booking,'arrival');
-  ev.time_label=from.time+' '+from.region+' → '+to.time+' '+to.region;
-  ev.title=booking.flight_number+' · '+from.city+from.terminal+(booking.departure_terminal_role==='check_in'?'值机':'')+' → '+to.city+to.terminal;
+  ev.time_label=from.time+' '+from.region+'起飞 → '+to.time+' '+to.region+'抵达';
+  ev.title=booking.flight_number+' · '+from.city+' → '+to.city;
+  ev.condition=flightTerminals(booking);
  }
  if(d.date==='2026-12-01'){
   if(c.ujiExtra==='station'){const at=events.findIndex(ev=>ev.id==='kyoto_rest');events.splice(at,0,{id:'station_stage',time_label:'返店前',title:'京都站4F《宝岛》舞台短拍',category:'visit',place_ids:['kyoto_stage'],optional:true,condition:'有余力再拍15—20分钟。'});}

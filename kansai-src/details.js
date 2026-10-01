@@ -894,13 +894,25 @@ const PLACE_DETAILS = {
   "nintendo_osaka": "LUCUA SOUTH 13楼；先确认入店规则，整理券超出窗口改逛Pokémon。参考10:00—20:00。",
   "pokemon_osaka": "LUCUA SOUTH 13楼；与Nintendo选一家重点逛，另一家有时间且能直接入店才短看。参考10:00—20:00。",
   "bench": "搜索名称为井川用水機場前；须结合宇治市巡礼图及现场标识核对机位，不把任意河边长椅当目标。",
-  "daikichi": "天气、路况与体力合适才登山；13:40左右起步，往返与停留预留75分钟，不排夜爬。登山口须现场核对。",
+  "daikichi": "天气、路况与体力合适才登山；往返与停留预留75分钟，白天完成。登山口须现场核对。",
   "ikuta": "巡礼重点是拝殿外观。参照爱好者实景记录，并非制作方认证原型；普通游客不可拍建筑内部。",
   "kiyomizu": "目的地设清水寺仁王门，按正式参道入寺；地图可能导向不可进入的道路。",
   "sky": "跟随展望台专用入口，不使用办公塔楼电梯。门票未确认购买；天气差或疲劳可省。",
   "kyoto_tower": "本次12/1集章路线不安排京都塔。",
   "kotosaka": "本次12/1集章路线不安排琴坂支线。",
   "kodaiji": "2026/10/23—12/13夜间特别参拜；17:00亮灯，21:30末入、22:00闭门。成人¥800，两人¥1,600，购票待确认。昼夜不清场；离场后同票不可再次进入。"
+};
+
+// Building and floor labels already recorded in the itinerary's shop details.
+const PLACE_LOCATIONS = {
+ "animate":"池田大楼2号馆 · 1–2F",
+ "surugaya":"平田大楼 · 2–3F",
+ "potato":"平田大楼 · 1F",
+ "nintendo_osaka":"LUCUA SOUTH · 13F",
+ "pokemon_osaka":"LUCUA SOUTH · 13F",
+ "lashinbang_kobe":"センタープラザ东馆 · 2F",
+ "surugaya_kobe":"さんプラザ · 3F-2",
+ "bookoff_kobe":"グレースコウベ · 5F"
 };
 
 const WORK_NAMES = [

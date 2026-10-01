@@ -215,6 +215,14 @@
 @media screen and (max-width:720px) {.source-links {grid-template-columns:1fr}}
 
 /* Essential actions stay with the activity; completion remains explicitly manual. */
+.flight-grid .flight-action {display:block; font-size:12px; font-weight:400; line-height:1.7; color:var(--muted)}
+.flight-grid>div>.flight-terminals {display:block; font-size:13px; line-height:1.8; color:var(--muted); margin:12px 0 0; overflow-wrap:anywhere}
+.shop-photo {min-width:0}
+.shop-photo>.place-location {display:block; margin-top:6px; font-size:13px; line-height:1.65; color:var(--muted); overflow-wrap:anywhere}
+.place-link.has-location {flex:1 1 220px; align-items:flex-start; padding-block:8px; gap:6px; font-size:14px}
+.place-link.has-location>span {min-width:0; overflow-wrap:anywhere}
+.place-link.has-location .icon {flex:none; margin-top:4px}
+.place-link .place-location {display:block; font-size:13px; color:var(--muted); line-height:1.65; margin-top:3px}
 @media screen {
   .progress-area {flex-wrap:wrap; gap:8px 14px}
   .resume-link {display:inline-flex; align-items:center; gap:6px; min-height:44px; margin-left:auto; font-size:14px}

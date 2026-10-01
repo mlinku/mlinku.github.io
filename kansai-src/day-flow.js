@@ -33,6 +33,22 @@ const ROUTE_EVENTS={
  '2026-12-05':['nara_transfer','nara_transfer','nara_transfer','nara_visit','nara_visit','nara_return_train','nara_return_train','anime_shopping','anime_shopping','dotonbori_dinner','glico_photo','nara_day_return','nara_day_return','nara_day_return'],
  '2026-12-07':['checkout_osaka','airport_train','airport_train','flight_home']
 };
+function routePurpose(node,eventId,index,nodes){
+ if(node.id.startsWith('hotel_')){
+  if(eventId==='checkout_kyoto')return '退房寄存';
+  if(eventId==='checkout_osaka')return '退房离店';
+  if(eventId==='luggage_pickup')return '取行李';
+  if(eventId?.startsWith('checkin_'))return '入住';
+  return index===0?'离店':'返店';
+ }
+ if(!nodes.slice(0,index).some(p=>p.id===node.id))return '';
+ if(node.id==='uji_bridge')return eventId==='uji_shrines'?'过桥去神社':'过桥去晚餐';
+ if(eventId==='uji_return')return '下车返店';
+ if(eventId==='kobe_bridge_visit')return node.id==='port_nakakoen'?'乘车回三宫':'换乘JR';
+ if(eventId==='umeda_transfer')return node.id==='sannomiya'?'乘车往大阪':'下车去梅田';
+ if(eventId==='last_evening_return')return node.id==='jr_osaka'?'乘车返店':'下车返店';
+ return '';
+}
 function timedRoute(d){
  const nodes=effectiveRoute(d),events=effectiveEvents(d),c=choice(d);
  const eventTime=(id,label)=>{const ev=events.find(ev=>ev.id===id);return ev?{eventId:id,text:ev.time_label,label:label||({transport:'交通',meal:'用餐',rest:'休息',walk:'步行',visit:'参观',shopping:'购物'}[ev.category]||'行程')}:null;};
@@ -60,7 +76,9 @@ function timedRoute(d){
   }
   const shared=['uji_pilgrimage','uji_shrines','higashiyama_walk','nara_visit','umeda_shop','byodoin_visit','delta_visit'].includes(id);
   if(shared&&times.length===1)times[0].label='同段共用';
-  return {...node,eventId:id,times:times.length?times:[{text:'时间待确认',label:'参考'}]};
+  const purpose=routePurpose(node,id,i,nodes);
+  if(node.id.startsWith('hotel_')&&times.length===1)times[0].label=purpose;
+  return {...node,eventId:id,purpose,times:times.length?times:[{text:'时间待确认',label:'参考'}]};
  });
 }
 

@@ -19,6 +19,7 @@ const results=vm.runInContext(`
  const resumeEvents=effectiveEvents(resumeDay);
  state.checks[resumeDay.date+':'+resumeEvents[0].id]=true;
  assert.equal(nextActivity(resumeDay).id,resumeEvents[1].id,'跳到第一项未完成活动');
+ assert.ok(resumeLink(resumeDay).includes('下一项未完成'),'按钮名称与未完成定位一致');
  assert.ok(resumeLink(resumeDay).includes('/timeline/'+resumeEvents[1].id),'继续行程使用可分享的活动锚点');
  for(const ev of resumeEvents)state.checks[resumeDay.date+':'+ev.id]=true;
  assert.equal(nextActivity(resumeDay),null,'全部完成后无继续入口');
@@ -198,6 +199,16 @@ const results=vm.runInContext(`
  assert.equal(timedRoute(kyoto).at(-1).times[0].text,'饭后','取消夜枫同步提前返店');
  const flightOut=timedRoute(PLAN.days[0]);
  assert.equal(flightOut[0].times[0].text,'11:25');assert.equal(flightOut[1].times[0].text,'16:00','日本抵达时间');
+ const movingHotels=timedRoute(PLAN.days[3]).filter(n=>n.id.startsWith('hotel_'));
+ assert.deepEqual(Array.from(movingHotels,n=>n.purpose),['退房寄存','取行李','入住','返店'],'四次酒店停留有明确用途');
+ assert.ok(!routePage(PLAN.days[3]).includes('再次经过'),'酒店用途替换笼统重复标识');
+ assert.deepEqual(Array.from(timedRoute(PLAN.days[3]),n=>n.id),Array.from(PLAN.days[3].route_stop_ids),'增加用途不改路线顺序');
+ const returnStation=timedRoute(PLAN.days[6]).filter(n=>n.id==='jr_osaka');
+ assert.equal(returnStation.at(-1).purpose,'乘车返店','最后大阪站说明乘车目的');
+ for(const id of ['lashinbang_kobe','surugaya_kobe','bookoff_kobe']){
+  assert.ok(placeButton(id).includes(PLACE_LOCATIONS[id]),'无照片店铺也显示楼层 '+id);
+  assert.ok(routePage(PLAN.days[6]).includes(PLACE_LOCATIONS[id]),'路线店铺显示楼层 '+id);
+ }
  const flightHome=timedRoute(PLAN.days[7]);
  assert.equal(flightHome[2].times[1].text,'09:50');assert.equal(flightHome[3].times[0].text,'13:40');
  assert.ok(flightHome[1].times[0].text.includes('临行复核'),'候选列车保留复核提醒');
@@ -243,6 +254,11 @@ const results=vm.runInContext(`
  assert.equal(progress(kobe).done,1,'原购物进度保留');
  delete state.checks[kobe.date+':umeda_shop'];
  assert.ok(flights().includes('16:00'),'航班总览按日本时区显示');
+ const outEvent=effectiveEvents(PLAN.days[0]).find(ev=>ev.id==='flight_out');
+ assert.ok(outEvent.time_label.includes('11:25 香港起飞'),'不把起飞时间当值机时间');
+ assert.ok(outEvent.condition.includes('香港T2值机 → T1登机'),'航站楼与时间分开');
+ assert.ok(!outEvent.title.includes('值机'),'航班标题仅展示航线');
+ assert.ok(flights().includes('class="flight-action">起飞</span>11:25'),'总览明确时间角色');
  const booking=PLAN.bookings.find(b=>b.id==='flight_out'),savedArrival=booking.arrival,savedTerminal=booking.arrival_terminal;
  booking.arrival='2026-11-30T16:20:00+08:00';booking.arrival_terminal='T9';
  assert.ok(flights().includes('17:20')&&flights().includes('T9'),'航班时间与航站楼从预订数据读取');

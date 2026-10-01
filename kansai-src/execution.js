@@ -4,7 +4,7 @@ function nextActivity(d){
  if(!events.some(ev=>state.checks[d.date+':'+ev.id]))return null;
  return events.find(ev=>!state.checks[d.date+':'+ev.id])||null;
 }
-function resumeLink(d){const next=nextActivity(d);return next?pageLink('继续行程 '+icon('arrow'),`#day/${d.date}/timeline/${next.id}`,'resume-link',`aria-label="继续行程：${e(next.title)}"`):'';}
+function resumeLink(d){const next=nextActivity(d);return next?pageLink('下一项未完成 '+icon('arrow'),`#day/${d.date}/timeline/${next.id}`,'resume-link',`aria-label="下一项未完成：${e(next.title)}"`):'';}
 
 function navigationPlace(ev){
  if(ev.id==='nara_return_train')return 'kintetsu_nara';
@@ -20,7 +20,6 @@ const NANKAI_TIMETABLE='https://www.nankai.co.jp/tc_railway/access-timetable';
 const NANKAI_STATION='https://www.nankai.co.jp/traffic/station/shinimamiya.html';
 function executionNotice(d,ev){
  const content={
-  flight_out:'香港T2值机，随后按机场指引前往T1登机。',
   kohata_stamp:'集章前登录活动网站并开启定位；确认领取成功后再离开。攻略勾选只记录行程。',
   uji_pilgrimage:`先看中村藤吉候位情况；时间不足时缩短河岸拍照，提前到店。 ${external('查看候位 ↗',CAFE_SOURCE)}`,
   uji_parfait:`<strong>通常16:00结束受理，繁忙时可能提前。</strong>此时段包含等位与用餐。 ${external('候位与营业 ↗',CAFE_SOURCE)}`,
