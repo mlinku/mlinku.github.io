@@ -12,14 +12,14 @@ function shotImage(p,kind){
 }
 // Concise field notes; the original descriptions remain in the existing disclosure.
 const SHOT_COPY={
- 'eupho_uji_bridge':{scene:'第一季第12集，久美子抒发心情的宇治桥。',note:'在行人通道对照桥栏与河景；返程还会再次经过。'},
- 'eupho_omotesando':{scene:'京阪官方巡礼地图第6点：平等院表参道。',note:'晚餐前经过表参道，沿街对照取景。'},
- 'kyoto-stage-stairs':{scene:'第7集车站音乐会，《宝岛》演出广场。',note:'中央口一侧上4F室町小路广场，对照大阶梯、扶梯和红色时钟。无需登顶，遇活动占用就省。'},
+ 'eupho_uji_bridge':{scene:'第一季第12集，久美子抒发心情的宇治桥。',note:'在行人通道对照桥栏与河景。'},
+ 'eupho_omotesando':{scene:'京阪官方巡礼地图第6点：平等院表参道。',note:'午饭后经过表参道，沿街对照取景。'},
+ 'kyoto-stage-stairs':{scene:'第7集车站音乐会，《宝岛》演出广场。',note:'中央口一侧上4F室町小路广场，对照大阶梯、扶梯和红色时钟。无需登顶；遇活动占用时在允许通行处拍摄。'},
  'kyoto-stage-clock':{note:'在4F广场抬头找红色方框时钟与钢架；别与红色雕塑「朱甲舞」混淆。'},
  'demachi-west-gate':{scene:'宣传PV里的商店街西入口；招牌与建筑有改绘。',note:'从寺町通一侧仰拍入口招牌与左侧建筑。'},
  'demachi-fish':{scene:'官方主视觉里的商店街吊鱼与拱廊。',note:'进拱廊后找吊鱼和屋顶纵深；构图不完全一致，勿堵店铺通道。'},
  'delta-tamako':{note:'找东侧高野川的飞石与下河台阶，对照石块排列。雨天或水量大时留在岸边拍。'},
- 'delta-kon':{note:'从贺茂川侧飞石朝东拍中洲，和玉子告白图分开找角度。河岸有改绘。'},
+ 'delta-kon':{note:'从贺茂川侧飞石朝东拍中洲，与《玉子》告白位置分开。玉子点位优先，余量不足就省此机位，不延误京阪换乘。'},
  'kiyomizu-conan':{scene:'第927—928集清水寺与新兰剧情；亦见于《迷宫的十字路》。',note:'在本堂舞台对照屋顶与木栏杆；定位为本堂参考点。',caption:'官方上映会宣传视觉，非动画单帧；两图视角不同。'},
  'senren-sannenzaka':{note:'在玩家标点附近，沿街对照石板路与两侧屋檐；店名有改写，顺路拍即可。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
  'senren-ninenzaka':{note:'在二年坂南端附近找右侧店铺转角、屋檐与弯路；别只在台阶中央找。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
@@ -36,7 +36,7 @@ function shotCard(p,context='page'){
   ${copy.caption||p.match_note?`<p class="shot-caption">${e(copy.caption||p.match_note)}</p>`:''}
   <div class="shot-direction"><span>拍摄位置</span><p>${e(copy.note||p.shooting_note)}</p></div>
   <p class="shot-print-coordinate">地点参考：${coords?e(coords.lat+', '+coords.lng)+' · '+e(coords.precision):'坐标待核准'}</p>
-  <div class="shot-actions">${external(icon('pin')+'地图',pointMap(p),'btn primary')}${btn(icon('copy')+'复制日文名','copy',`data-copy="${e(p.name_ja||PLACE[p.place_ids[0]]?.name_ja||p.title)}" aria-label="复制${e(p.title)}日文名"`,'small')}${event&&context==='page'?`<a class="shot-return" href="#day/${p.date}/timeline/${event.id}" data-nav aria-label="返回${e(event.time_label)}的行程">回到行程 ${icon('arrow')}</a>`:''}</div>
+  <div class="shot-actions">${external(icon('pin')+'地图',pointMap(p),'btn primary')}${btn(icon('copy')+'复制名称','copy',`data-copy="${e(p.name_ja||PLACE[p.place_ids[0]]?.name_ja||p.title)}" aria-label="复制${e(p.title)}名称"`,'small')}${event&&context==='page'?`<a class="shot-return" href="#day/${p.date}/timeline/${event.id}" data-nav aria-label="返回${e(event.time_label)}的行程">回到行程 ${icon('arrow')}</a>`:''}</div>
   <details class="shot-evidence"><summary>坐标与来源</summary><div>${coords?`<p><strong>${coords.lat}, ${coords.lng}</strong><br>${e(coords.precision)}</p><div class="evidence-actions">${btn('复制坐标','copy',`data-copy="${coords.lat}, ${coords.lng}"`,'small')}${coords.source_url?external('定位依据 ↗',coords.source_url):''}</div>`:'<p>坐标待核准，当前只按地点名称搜索。</p>'}${p.real?.source_url?`<p>实景：${e(p.real.credit||'原作者')} · ${external('来源 ↗',p.real.source_url)}</p>`:''}${p.anime?.source_url?`<p>作品画面：${e(p.anime.credit||'作品权利方')} · ${external('来源 ↗',p.anime.source_url)}</p>`:''}${p.comparison?`<p>${e(p.comparison.credit)} · ${external('对照原图 ↗',p.comparison.source_url)}</p>`:''}${(p.sources||[]).map(s=>`<p>${external(e(s.title)+' ↗',s.url)}</p>`).join('')}</div></details>
  </article>`;
 }
@@ -50,12 +50,12 @@ function pilgrimagePage(d){
  <div class="shot-mobile-jump"><label for="shot-jump">跳到点位</label><select id="shot-jump" data-shot-jump="${d.date}"><option value="">选择巡礼点…</option>${groups.map(section=>`<optgroup label="${e(section.short)}">${section.scenePoints.map(p=>`<option value="${p.id}" ${sectionTarget==='shot-'+p.id?'selected':''}>${String(main.indexOf(p)+1).padStart(2,'0')} · ${e(p.title)}</option>`).join('')}</optgroup>`).join('')}</select></div>
  <div class="shot-list">${groups.map(section=>`<section class="scene-section"><div class="scene-section-heading"><h3>${e(section.name.split(" · ")[0])}</h3></div>${section.scenePoints.map(p=>shotCard(p)).join('')}</section>`).join('')}
  ${optional.length?`<details class="optional-shots"><summary>可选点位 <small>${optional.length}处</small></summary><p class="map-note">可在“可选安排”加入行程。</p>${optional.map(p=>shotCard(p)).join('')}</details>`:''}
- ${coverage.length?`<details class="shot-coverage"><summary>其他点位说明</summary>${coverage.map(p=>`<p><strong>${e(p.title)}</strong> · ${e(p.note)}</p>`).join('')}</details>`:''}
+ ${coverage.length?`<details class="shot-coverage"><summary>其他点位说明</summary>${coverage.map(p=>`<p><strong>${e(p.title)}</strong> · ${e(p.note)}${p.event_id?' '+pageLink('查看行程 →','#day/'+p.date+'/timeline/'+p.event_id,'text-link'):''}</p>`).join('')}</details>`:''}
  <div class="day-end">${btn(icon('reset')+'重置当天打卡','reset-day','data-reset-scope="pilgrimage"','text-button')}</div></div></div></section>`;
 }
 function rallyCard(d){
  const r=PILGRIMAGE.rally;if(!r||r.date!==d.date)return '';
- return `<section class="rally-card" id="shot-rally"><div class="rally-heading"><div><span class="food-priority">11/1–12/20 · 后期</span><h2>京吹数字集章</h2></div>${external('参加活动 ↗',r.entry_url,'btn small')}</div><p>許波多神社 → 水管桥 → 縣神社。</p><details class="rally-detail" ${sectionTarget==='shot-rally'?'open':''}><summary>集章点位与图片</summary><div class="rally-spots">${r.spots.map(p=>`<article><header><h3>${e(p.title)}</h3></header><div class="rally-pair">${p.real?.src?shotImage(p,'real'):''}${shotImage(p,'anime')}</div><p class="rally-caption">${e(p.match_note||p.caption)}</p><p>${e(p.note)}</p><div class="food-actions">${external(icon('pin')+'地图',p.map_url,'text-link')}${btn(icon('copy')+'复制日文名','copy',`data-copy="${e(p.name_ja)}"`,'text-button')}</div></article>`).join('')}</div></details><details class="event-detail"><summary>参与规则与来源</summary><div class="detail-body">${r.rules.map(t=>`<p>${e(t)}</p>`).join('')}${r.spots.filter(p=>p.coordinates).map(p=>`<p>${e(p.title)}：${p.coordinates.lat}, ${p.coordinates.lng} · ${external('官方定位 ↗',p.coordinates.source_url)}</p>`).join('')}<p>${external('活动官网 ↗',r.source_url)} · ${external('官方巡礼地图 PDF ↗',r.map_pdf)}</p><p class="muted">作品画面：©武田綾乃・宝島社／「響け！」製作委員会2024，京阪活动官网。核查：2026/10/1。</p></div></details></section>`;
+ return `<section class="rally-card" id="shot-rally"><div class="rally-heading"><div><span class="food-priority">11/1–12/20 · 后期</span><h2>京吹数字集章</h2></div>${external('参加活动 ↗',r.entry_url,'btn small')}</div><p>${e(r.recommendation)}</p><details class="rally-detail" ${sectionTarget==='shot-rally'?'open':''}><summary>集章点位与图片</summary><div class="rally-spots">${r.spots.map(p=>`<article><header><h3>${e(p.title)}</h3></header><div class="rally-pair">${p.real?.src?shotImage(p,'real'):''}${shotImage(p,'anime')}</div><p class="rally-caption">${e(p.match_note||p.caption)}</p><p>${e(p.note)}</p><div class="food-actions">${external(icon('pin')+'地图',p.map_url,'text-link')}${btn(icon('copy')+'复制名称','copy',`data-copy="${e(p.name_ja)}"`,'text-button')}</div></article>`).join('')}</div></details><details class="event-detail"><summary>参与规则与来源</summary><div class="detail-body">${r.rules.map(t=>`<p>${e(t)}</p>`).join('')}${r.spots.filter(p=>p.coordinates).map(p=>`<p>${e(p.title)}：${p.coordinates.lat}, ${p.coordinates.lng} · ${external('官方定位 ↗',p.coordinates.source_url)}</p>`).join('')}<p>${external('活动官网 ↗',r.source_url)} · ${external('官方巡礼地图 PDF ↗',r.map_pdf)}</p><p class="muted">作品画面：©武田綾乃・宝島社／「響け！」製作委員会2024，京阪活动官网。核查：2026/10/1。</p></div></details></section>`;
 }
 function pilgrimageEventLinks(d,ev){
  const points=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p));

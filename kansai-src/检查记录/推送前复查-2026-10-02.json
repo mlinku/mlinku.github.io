@@ -1,0 +1,304 @@
+{
+  "dates": [
+    "2026-11-30",
+    "2026-12-01",
+    "2026-12-02",
+    "2026-12-03",
+    "2026-12-04",
+    "2026-12-05",
+    "2026-12-06",
+    "2026-12-07"
+  ],
+  "checks": [
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-11-30/timeline",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-11-30/route",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-01/timeline",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-01/route",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-01/pilgrimage",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-02/timeline",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-02/route",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-02/pilgrimage",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-03/timeline",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-03/route",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-03/pilgrimage",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-04/timeline",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-04/route",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-05/timeline",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-05/route",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-05/pilgrimage",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-06/timeline",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-06/route",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-06/pilgrimage",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-07/timeline",
+      "width": 390
+    },
+    {
+      "body": 375,
+      "broken": [],
+      "empty": 0,
+      "url": "#day/2026-12-07/route",
+      "width": 390
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-11-30/timeline",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-11-30/route",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-01/timeline",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-01/route",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-01/pilgrimage",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-02/timeline",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-02/route",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-02/pilgrimage",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-03/timeline",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-03/route",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-03/pilgrimage",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-04/timeline",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-04/route",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-05/timeline",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-05/route",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-05/pilgrimage",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-06/timeline",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-06/route",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-06/pilgrimage",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-07/timeline",
+      "width": 1920
+    },
+    {
+      "body": 1905,
+      "broken": [],
+      "url": "#day/2026-12-07/route",
+      "width": 1920
+    }
+  ],
+  "textReview": [
+    "2026-11-30",
+    "2026-12-01",
+    "2026-12-02",
+    "2026-12-03",
+    "2026-12-04",
+    "2026-12-05",
+    "2026-12-06",
+    "2026-12-07"
+  ],
+  "publicPages": [
+    "overview",
+    "prep"
+  ],
+  "newIssues": [],
+  "spaChoiceAndPersistencePassed": true,
+  "userProgressUntouched": true
+}

@@ -50,6 +50,7 @@
   .event-meta {gap:4px 8px; margin-bottom:6px}
   .event-body.has-single-photo {grid-template-columns:minmax(0,1fr); gap:12px}
   .event-body .event-photos {grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px}
+  .event-body .event-photos>:first-child:nth-last-child(3) {grid-column:1 / -1}
   .event-body .event-photos.single-photo {grid-template-columns:minmax(0,1fr)}
   .event .event-body .event-photos .photo-button, #event-kodaiji_night .event-body .event-photos .photo-button {aspect-ratio:4/3; max-height:none}
   .event .event-body .event-photos.single-photo .photo-button {aspect-ratio:16/10}
@@ -58,6 +59,11 @@
   .shot-direction>span {display:block; margin-bottom:4px}
   .shot-heading>div {flex-basis:140px}
   .shot-return {margin-left:0}
+}
+@media screen {
+  .event .event-body .event-photos .photo-button.illustration-photo {aspect-ratio:auto; max-height:none}
+  .event-body .photo-button.illustration-photo img {height:auto; max-height:340px; object-fit:contain}
+  .event-body .photo-button.illustration-photo>span {position:static; display:block; padding:8px; background:transparent}
 }
 @media (prefers-reduced-motion:reduce) {
   *, *::before, *::after {scroll-behavior:auto!important; transition:none!important; animation:none!important}
@@ -132,9 +138,6 @@
   .main-nav .icon {width:18px; height:18px}
   .event.compact-event .event-content {padding:10px 14px}
   .event.compact-event h3 {font-size:var(--type-body)}
-  .event-body.restaurant-photo {grid-template-columns:96px minmax(0,1fr); gap:12px}
-  .event .event-body.restaurant-photo .event-photos.single-photo .photo-button {aspect-ratio:1; max-height:96px}
-  .restaurant-photo .photo-button span {display:none}
   .food-suggestions .food-idea.with-photo {grid-template-columns:1fr}
   .food-suggestions .food-idea-photo {width:140px}
   .food-suggestions .food-idea-photo span {display:none}
@@ -215,6 +218,11 @@
 @media screen and (max-width:720px) {.source-links {grid-template-columns:1fr}}
 
 /* Essential actions stay with the activity; completion remains explicitly manual. */
+.route-action-step {margin:0 0 12px; padding:0 16px; border-left:2px solid var(--line)}
+.route-action-step a {display:flex; align-items:center; flex-wrap:wrap; gap:4px 12px; min-height:44px; padding-block:8px}
+.route-action-step span {font-size:13px; color:var(--muted)}
+.route-action-step strong {font-size:14px; font-weight:500}
+.route-action-step .icon {width:16px; margin-left:auto}
 .flight-grid .flight-action {display:block; font-size:12px; font-weight:400; line-height:1.7; color:var(--muted)}
 .flight-grid>div>.flight-terminals {display:block; font-size:13px; line-height:1.8; color:var(--muted); margin:12px 0 0; overflow-wrap:anywhere}
 .shop-photo {min-width:0}

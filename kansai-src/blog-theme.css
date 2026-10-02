@@ -152,6 +152,7 @@
   .zoom-pair-tabs {background:#273043}
   .word-row {border-color:#ffffff22}
   #toast {background:#edf4fb; color:#203b50}
+  #toast button {color:#254f72}
   .skip {background:#1b1f2e; color:#dcecff}
 }
 @media screen and (min-width:1440px) {

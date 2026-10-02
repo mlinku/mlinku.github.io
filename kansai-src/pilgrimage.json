@@ -24,7 +24,7 @@
         "local": "assets/pilgrimage/uji/bridge_r.jpg",
         "source_url": "https://anitabi.net/anime-eupho/",
         "image_url": "https://anitabi.net/blog/%E9%9F%BF%E3%81%91%E3%80%80%E3%83%A6%E3%83%BC%E3%83%95%E3%82%A9%E3%83%8B%E3%82%A2%E3%83%A0%E8%81%96%E5%9C%B044.jpg",
-        "credit": "实景照片：あにたび（约2015年历史参考）",
+        "credit": "あにたび（约2015年历史参考）",
         "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
         "visual_verified": true,
         "width": 400,
@@ -60,217 +60,43 @@
       "name_ja": "宇治橋"
     },
     {
-      "id": "eupho_uji_shrine",
+      "id": "eupho_omotesando",
       "place_ids": [
-        "uji_shrine"
+        "byodoin_approach"
       ],
       "date": "2026-12-01",
-      "event_id": "uji_shrines",
-      "title": "宇治神社 · 临河鸟居",
+      "event_id": "uji_approach",
+      "title": "平等院表参道 · 沿途街景",
       "work": "吹响！上低音号",
-      "scene": "第一季第1集，宇治神社鸟居外观。",
-      "shooting_note": "从朝雾桥东侧找面河鸟居与台阶；地图定位在神社内，照片机位在入口。",
-      "pair_match": "同机位参考；季节、光线与现场设施可能已变化",
+      "scene": "京阪官方巡礼地图第6点：平等院表参道。",
+      "shooting_note": "午饭后沿表参道去縣神社；对照街景，不进入平等院收费区。",
+      "pair_match": "同一街道，角度不同；作品为夜景，实景为白天。",
       "coordinates": {
-        "lat": 34.891048,
-        "lng": 135.810682,
-        "precision": "神社地点定位；鸟居在临河入口",
-        "source_url": "https://mapfan.com/spots/SC3W3%2CJ%2CGR",
+        "lat": 34.891084,
+        "lng": 135.806445,
+        "precision": "表参道区域定位；具体动画站位未核",
+        "source_url": "https://www.kyoto-kankou.or.jp/info_search/6709",
         "verified": "地点级来源已核；不是摄影站位"
       },
       "real": {
-        "local": "assets/pilgrimage/uji/shrine_r.jpg",
+        "local": "assets/pilgrimage/uji/omotesando_r.jpg",
         "source_url": "https://anitabi.net/anime-eupho/",
-        "image_url": "https://anitabi.net/blog/1.%E5%AE%87%E6%B2%BB%E7%A5%9E%E7%A4%BE%EF%BC%91%EF%BC%91.jpg",
-        "credit": "实景照片：あにたび（约2015年历史参考）",
+        "image_url": "https://anitabi.net/blog/%E9%9F%BF%E3%81%91%E3%80%80%E3%83%A6%E3%83%BC%E3%83%95%E3%82%A9%E3%83%8B%E3%82%A2%E3%83%A0%E8%81%96%E5%9C%B05.jpg",
+        "credit": "あにたび（约2015年历史参考）",
         "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
         "visual_verified": true,
         "width": 400,
         "height": 225
       },
       "anime": {
-        "local": "assets/pilgrimage/uji/shrine_a.jpg",
-        "source_url": "https://anitabi.net/anime-eupho/",
-        "image_url": "https://anitabi.net/blog/1.%E5%AE%87%E6%B2%BB%E7%A5%9E%E7%A4%BE%EF%BC%91.jpg",
-        "credit": "动画画面 ©武田綾乃・宝島社／「響け！」製作委員会；对照出处：あにたび",
-        "license": "版权所有；个人行程中的小尺寸场景对照引用，非开放许可",
-        "visual_verified": true,
-        "width": 400,
-        "height": 226
-      },
-      "sources": [
-        {
-          "title": "京阪官方舞台探访地图（2026秋）",
-          "url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf"
-        },
-        {
-          "title": "あにたび实景逐帧对照",
-          "url": "https://anitabi.net/anime-eupho/"
-        },
-        {
-          "title": "地点坐标来源",
-          "url": "https://mapfan.com/spots/SC3W3%2CJ%2CGR"
-        }
-      ],
-      "status": "ready",
-      "checked_on": "2026-09-29",
-      "match_note": "同机位参考；季节、光线与现场设施可能已变化",
-      "name_ja": "宇治神社"
-    },
-    {
-      "id": "eupho_sawarabi",
-      "place_ids": [
-        "ujigami"
-      ],
-      "date": "2026-12-01",
-      "event_id": "uji_shrines",
-      "title": "宇治上神社前 · 早蕨之道",
-      "work": "吹响！上低音号",
-      "scene": "第一季第8集，久美子与丽奈带乐器去大吉山的路。",
-      "shooting_note": "在神社外的道路找成排圆形石挡；不是把本殿当作同画面。",
-      "pair_match": "同机位参考；季节、光线与现场设施可能已变化",
-      "coordinates": {
-        "lat": 34.89195,
-        "lng": 135.811289,
-        "precision": "神社地点定位；机位在门外道路",
-        "source_url": "https://mapfan.com/spots/SCAHY%2CJ%2C2",
-        "verified": "地点级来源已核；不是摄影站位"
-      },
-      "real": {
-        "local": "assets/pilgrimage/uji/ujigami_r.jpg",
-        "source_url": "https://anitabi.net/anime-eupho/",
-        "image_url": "https://anitabi.net/blog/IMG_278011.JPG",
-        "credit": "实景照片：あにたび（约2015年历史参考）",
-        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
-        "visual_verified": true,
-        "width": 400,
-        "height": 225
-      },
-      "anime": {
-        "local": "assets/pilgrimage/uji/ujigami_a.jpg",
-        "source_url": "https://anitabi.net/anime-eupho/",
-        "image_url": "https://anitabi.net/blog/IMG_271.jpg",
-        "credit": "动画画面 ©武田綾乃・宝島社／「響け！」製作委員会；对照出处：あにたび",
-        "license": "版权所有；个人行程中的小尺寸场景对照引用，非开放许可",
-        "visual_verified": true,
-        "width": 400,
-        "height": 225
-      },
-      "sources": [
-        {
-          "title": "京阪官方舞台探访地图（2026秋）",
-          "url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf"
-        },
-        {
-          "title": "あにたび实景逐帧对照",
-          "url": "https://anitabi.net/anime-eupho/"
-        },
-        {
-          "title": "地点坐标来源",
-          "url": "https://mapfan.com/spots/SCAHY%2CJ%2C2"
-        }
-      ],
-      "status": "ready",
-      "checked_on": "2026-09-29",
-      "match_note": "同机位参考；季节、光线与现场设施可能已变化",
-      "name_ja": "宇治上神社前 さわらびの道"
-    },
-    {
-      "id": "eupho_daikichi",
-      "place_ids": [
-        "daikichi"
-      ],
-      "date": "2026-12-01",
-      "event_id": "daikichi_visit",
-      "title": "大吉山展望台 · 栏杆转角",
-      "work": "吹响！上低音号",
-      "scene": "第一季第8集，久美子与丽奈在展望台。",
-      "shooting_note": "对照栏杆转角和树木；动画为夜景，本次仍白天上山、天黑前下山。",
-      "pair_match": "同机位参考；季节、光线与现场设施可能已变化",
-      "coordinates": {
-        "lat": 34.892874,
-        "lng": 135.812742,
-        "precision": "展望台定位；不是山顶或登山口",
-        "source_url": "https://yakei-world.com/spot_view.php?spot=1857",
-        "verified": "地点级来源已核；不是摄影站位"
-      },
-      "real": {
-        "local": "assets/pilgrimage/uji/daikichi_r.jpg",
-        "source_url": "https://anitabi.net/anime-eupho/",
-        "image_url": "https://anitabi.net/blog/IMG_2776.jpg",
-        "credit": "实景照片：あにたび（约2015年历史参考）",
-        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
-        "visual_verified": true,
-        "width": 400,
-        "height": 225
-      },
-      "anime": {
-        "local": "assets/pilgrimage/uji/daikichi_a.jpg",
-        "source_url": "https://anitabi.net/anime-eupho/",
-        "image_url": "https://anitabi.net/blog/%EF%BC%98%E8%A9%B1%E3%81%8A%E3%81%BE%E3%81%A4%E3%82%8A%E3%83%88%E3%83%A9%E3%82%A4%E3%82%A2%E3%83%B3%E3%82%B0%E3%83%AB%E8%81%96%E5%9C%B012.jpg",
-        "credit": "动画画面 ©武田綾乃・宝島社／「響け！」製作委員会；对照出处：あにたび",
-        "license": "版权所有；个人行程中的小尺寸场景对照引用，非开放许可",
-        "visual_verified": true,
-        "width": 400,
-        "height": 225
-      },
-      "sources": [
-        {
-          "title": "京阪官方舞台探访地图（2026秋）",
-          "url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf"
-        },
-        {
-          "title": "あにたび实景逐帧对照",
-          "url": "https://anitabi.net/anime-eupho/"
-        },
-        {
-          "title": "地点坐标来源",
-          "url": "https://yakei-world.com/spot_view.php?spot=1857"
-        }
-      ],
-      "status": "ready",
-      "checked_on": "2026-09-29",
-      "match_note": "同机位参考；季节、光线与现场设施可能已变化",
-      "name_ja": "大吉山展望台"
-    },
-    {
-      "id": "eupho_asagiri",
-      "place_ids": [
-        "asagiri"
-      ],
-      "date": "2026-12-01",
-      "event_id": "uji_pilgrimage",
-      "title": "朝雾桥 · 红色桥栏",
-      "work": "吹响！上低音号",
-      "scene": "京阪官方巡礼地图第9点：朝雾桥。",
-      "shooting_note": "过桥看红色栏杆；东桥头紧邻宇治神社，按原路线继续。",
-      "pair_match": "同地点景观参考；实景包含桥头与源氏物语像，不是动画正面机位",
-      "coordinates": {
-        "lat": 34.890189,
-        "lng": 135.809394,
-        "precision": "桥梁定位；非摄影站位",
-        "source_url": "https://www.djq.jp/bridge_liblary/river_kamo/kyoto_bridge_uji006_asagiri.php",
-        "verified": "地点级来源已核；不是摄影站位"
-      },
-      "real": {
-        "local": "assets/asagiri.jpg",
-        "source_url": "https://commons.wikimedia.org/wiki/File:Asagiri_Bashi%26Hikaru_Genji_statue.jpg",
-        "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Asagiri_Bashi%26Hikaru_Genji_statue.jpg",
-        "credit": "御影守駒氏",
-        "license": "CC BY-SA 4.0",
-        "visual_verified": true,
-        "width": 825,
-        "height": 1100
-      },
-      "anime": {
-        "local": "assets/pilgrimage/uji/asagiri_a.png",
+        "local": "assets/pilgrimage/uji/omotesando_a.png",
         "source_url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf",
         "image_url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf#page=2",
         "credit": "京阪电车官方舞台探访地图 / ©武田綾乃・宝島社／「響け！」製作委員会",
         "license": "版权所有；个人行程中的小尺寸场景对照引用，非开放许可",
         "visual_verified": true,
-        "width": 372,
-        "height": 212
+        "width": 374,
+        "height": 202
       },
       "sources": [
         {
@@ -283,13 +109,71 @@
         },
         {
           "title": "地点坐标来源",
-          "url": "https://www.djq.jp/bridge_liblary/river_kamo/kyoto_bridge_uji006_asagiri.php"
+          "url": "https://www.kyoto-kankou.or.jp/info_search/6709"
         }
       ],
       "status": "ready",
       "checked_on": "2026-09-29",
-      "match_note": "同地点景观参考；实景包含桥头与源氏物语像，不是动画正面机位",
-      "name_ja": "朝霧橋"
+      "match_note": "同一街道，角度不同；作品为夜景，实景为白天。",
+      "name_ja": "平等院表参道"
+    },
+    {
+      "id": "eupho_bench",
+      "place_ids": [
+        "bench"
+      ],
+      "date": "2026-12-01",
+      "event_id": "uji_pilgrimage",
+      "title": "久美子长椅 · 井川用水机站前",
+      "work": "吹响！上低音号",
+      "scene": "第一季第1集，久美子坐在河边长椅。",
+      "shooting_note": "正面略高视角对照长椅；旧图中的座椅与后方护岸可能已有变化。",
+      "pair_match": "同机位参考；以现场设施为准",
+      "coordinates": {
+        "lat": 34.88959,
+        "lng": 135.8084,
+        "precision": "长椅地点定位；与探访地图及公开街景位置交叉核对",
+        "source_url": "https://www.animepilgrimage.com/ja/maps/place/967abfaf-4a36-4e9e-8fe0-a148c5c55c5c",
+        "verified": "地点级来源已核；不是摄影站位"
+      },
+      "real": {
+        "local": "assets/pilgrimage/uji/bench_r.jpg",
+        "source_url": "https://anitabi.net/anime-eupho/",
+        "image_url": "https://anitabi.net/blog/2.%E3%83%99%E3%83%B3%E3%83%81%EF%BC%91%EF%BC%91.jpg",
+        "credit": "あにたび（约2015年历史参考）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "visual_verified": true,
+        "width": 400,
+        "height": 225
+      },
+      "anime": {
+        "local": "assets/pilgrimage/uji/bench_a.jpg",
+        "source_url": "https://anitabi.net/anime-eupho/",
+        "image_url": "https://anitabi.net/blog/2.%E3%83%99%E3%83%B3%E3%83%81%EF%BC%91.jpg",
+        "credit": "动画画面 ©武田綾乃・宝島社／「響け！」製作委員会；对照出处：あにたび",
+        "license": "版权所有；个人行程中的小尺寸场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 400,
+        "height": 222
+      },
+      "sources": [
+        {
+          "title": "京阪官方舞台探访地图（2026秋）",
+          "url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf"
+        },
+        {
+          "title": "あにたび实景逐帧对照",
+          "url": "https://anitabi.net/anime-eupho/"
+        },
+        {
+          "title": "地点坐标来源",
+          "url": "https://www.animepilgrimage.com/ja/maps/place/967abfaf-4a36-4e9e-8fe0-a148c5c55c5c"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-09-29",
+      "match_note": "同机位参考；以现场设施为准",
+      "name_ja": "井川用水機場前 ベンチ"
     },
     {
       "id": "eupho_kisen",
@@ -301,8 +185,8 @@
       "title": "喜撰桥 · 红色栏杆",
       "work": "吹响！上低音号",
       "scene": "官方巡礼地图第8点；第二季第1集有桥上场景。",
-      "shooting_note": "沿既定过桥方向看栏杆；画面为夜间，按本次白天行程拍。",
-      "pair_match": "同地点景观参考；现有实景照片未核为同一摄影角度",
+      "shooting_note": "过桥时对照红色栏杆；作品画面为夜间。",
+      "pair_match": "同一地点，拍摄角度不同。",
       "coordinates": {
         "lat": 34.888178,
         "lng": 135.809929,
@@ -346,105 +230,47 @@
       ],
       "status": "ready",
       "checked_on": "2026-09-29",
-      "match_note": "同地点景观参考；现有实景照片未核为同一摄影角度",
+      "match_note": "同一地点，拍摄角度不同。",
       "name_ja": "喜撰橋"
     },
     {
-      "id": "eupho_bench",
+      "id": "eupho_asagiri",
       "place_ids": [
-        "bench"
+        "asagiri"
       ],
       "date": "2026-12-01",
       "event_id": "uji_pilgrimage",
-      "title": "久美子长椅 · 井川用水机站前",
+      "title": "朝雾桥 · 红色桥栏",
       "work": "吹响！上低音号",
-      "scene": "第一季第1集，久美子坐在河边长椅。",
-      "shooting_note": "正面略高视角对照长椅；旧图中的座椅与后方护岸可能已有变化。",
-      "pair_match": "同机位参考；季节、光线与现场设施可能已变化",
+      "scene": "京阪官方巡礼地图第9点：朝雾桥。",
+      "shooting_note": "对照红色栏杆，过桥后前往东桥头的宇治神社。",
+      "pair_match": "实景为桥头与源氏物语像，与动画角度不同。",
       "coordinates": {
-        "lat": 34.88959,
-        "lng": 135.8084,
-        "precision": "长椅地点定位；与探访地图及公开街景位置交叉核对",
-        "source_url": "https://www.animepilgrimage.com/ja/maps/place/967abfaf-4a36-4e9e-8fe0-a148c5c55c5c",
+        "lat": 34.890189,
+        "lng": 135.809394,
+        "precision": "桥梁定位；非摄影站位",
+        "source_url": "https://www.djq.jp/bridge_liblary/river_kamo/kyoto_bridge_uji006_asagiri.php",
         "verified": "地点级来源已核；不是摄影站位"
       },
       "real": {
-        "local": "assets/pilgrimage/uji/bench_r.jpg",
-        "source_url": "https://anitabi.net/anime-eupho/",
-        "image_url": "https://anitabi.net/blog/2.%E3%83%99%E3%83%B3%E3%83%81%EF%BC%91%EF%BC%91.jpg",
-        "credit": "实景照片：あにたび（约2015年历史参考）",
-        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "local": "assets/asagiri.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Asagiri_Bashi%26Hikaru_Genji_statue.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Asagiri_Bashi%26Hikaru_Genji_statue.jpg",
+        "credit": "御影守駒氏",
+        "license": "CC BY-SA 4.0",
         "visual_verified": true,
-        "width": 400,
-        "height": 225
+        "width": 825,
+        "height": 1100
       },
       "anime": {
-        "local": "assets/pilgrimage/uji/bench_a.jpg",
-        "source_url": "https://anitabi.net/anime-eupho/",
-        "image_url": "https://anitabi.net/blog/2.%E3%83%99%E3%83%B3%E3%83%81%EF%BC%91.jpg",
-        "credit": "动画画面 ©武田綾乃・宝島社／「響け！」製作委員会；对照出处：あにたび",
-        "license": "版权所有；个人行程中的小尺寸场景对照引用，非开放许可",
-        "visual_verified": true,
-        "width": 400,
-        "height": 222
-      },
-      "sources": [
-        {
-          "title": "京阪官方舞台探访地图（2026秋）",
-          "url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf"
-        },
-        {
-          "title": "あにたび实景逐帧对照",
-          "url": "https://anitabi.net/anime-eupho/"
-        },
-        {
-          "title": "地点坐标来源",
-          "url": "https://www.animepilgrimage.com/ja/maps/place/967abfaf-4a36-4e9e-8fe0-a148c5c55c5c"
-        }
-      ],
-      "status": "ready",
-      "checked_on": "2026-09-29",
-      "match_note": "同机位参考；季节、光线与现场设施可能已变化",
-      "name_ja": "井川用水機場前 ベンチ"
-    },
-    {
-      "id": "eupho_omotesando",
-      "place_ids": [
-        "byodoin_approach"
-      ],
-      "date": "2026-12-01",
-      "event_id": "uji_dinner_walk",
-      "title": "平等院表参道 · 沿途街景",
-      "work": "吹响！上低音号",
-      "scene": "京阪官方巡礼地图第6点：平等院表参道。",
-      "shooting_note": "从縣神社去晚餐途中经过表参道；对应街景，不进入平等院收费区。",
-      "pair_match": "同一区域、不同角度；官方动画为夜间街景，实景为表参道白天参考",
-      "coordinates": {
-        "lat": 34.891084,
-        "lng": 135.806445,
-        "precision": "表参道区域定位；具体动画站位未核",
-        "source_url": "https://www.kyoto-kankou.or.jp/info_search/6709",
-        "verified": "地点级来源已核；不是摄影站位"
-      },
-      "real": {
-        "local": "assets/pilgrimage/uji/omotesando_r.jpg",
-        "source_url": "https://anitabi.net/anime-eupho/",
-        "image_url": "https://anitabi.net/blog/%E9%9F%BF%E3%81%91%E3%80%80%E3%83%A6%E3%83%BC%E3%83%95%E3%82%A9%E3%83%8B%E3%82%A2%E3%83%A0%E8%81%96%E5%9C%B05.jpg",
-        "credit": "实景照片：あにたび（约2015年历史参考）",
-        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
-        "visual_verified": true,
-        "width": 400,
-        "height": 225
-      },
-      "anime": {
-        "local": "assets/pilgrimage/uji/omotesando_a.png",
+        "local": "assets/pilgrimage/uji/asagiri_a.png",
         "source_url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf",
         "image_url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf#page=2",
         "credit": "京阪电车官方舞台探访地图 / ©武田綾乃・宝島社／「響け！」製作委員会",
         "license": "版权所有；个人行程中的小尺寸场景对照引用，非开放许可",
         "visual_verified": true,
-        "width": 374,
-        "height": 202
+        "width": 372,
+        "height": 212
       },
       "sources": [
         {
@@ -457,13 +283,187 @@
         },
         {
           "title": "地点坐标来源",
-          "url": "https://www.kyoto-kankou.or.jp/info_search/6709"
+          "url": "https://www.djq.jp/bridge_liblary/river_kamo/kyoto_bridge_uji006_asagiri.php"
         }
       ],
       "status": "ready",
       "checked_on": "2026-09-29",
-      "match_note": "同一区域、不同角度；官方动画为夜间街景，实景为表参道白天参考",
-      "name_ja": "平等院表参道"
+      "match_note": "实景为桥头与源氏物语像，与动画角度不同。",
+      "name_ja": "朝霧橋"
+    },
+    {
+      "id": "eupho_uji_shrine",
+      "place_ids": [
+        "uji_shrine"
+      ],
+      "date": "2026-12-01",
+      "event_id": "uji_shrines",
+      "title": "宇治神社 · 临河鸟居",
+      "work": "吹响！上低音号",
+      "scene": "第一季第1集，宇治神社鸟居外观。",
+      "shooting_note": "从朝雾桥东侧找面河鸟居与台阶；地图定位在神社内，照片机位在入口。",
+      "pair_match": "同机位参考；以现场设施为准",
+      "coordinates": {
+        "lat": 34.891048,
+        "lng": 135.810682,
+        "precision": "神社地点定位；鸟居在临河入口",
+        "source_url": "https://mapfan.com/spots/SC3W3%2CJ%2CGR",
+        "verified": "地点级来源已核；不是摄影站位"
+      },
+      "real": {
+        "local": "assets/pilgrimage/uji/shrine_r.jpg",
+        "source_url": "https://anitabi.net/anime-eupho/",
+        "image_url": "https://anitabi.net/blog/1.%E5%AE%87%E6%B2%BB%E7%A5%9E%E7%A4%BE%EF%BC%91%EF%BC%91.jpg",
+        "credit": "あにたび（约2015年历史参考）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "visual_verified": true,
+        "width": 400,
+        "height": 225
+      },
+      "anime": {
+        "local": "assets/pilgrimage/uji/shrine_a.jpg",
+        "source_url": "https://anitabi.net/anime-eupho/",
+        "image_url": "https://anitabi.net/blog/1.%E5%AE%87%E6%B2%BB%E7%A5%9E%E7%A4%BE%EF%BC%91.jpg",
+        "credit": "动画画面 ©武田綾乃・宝島社／「響け！」製作委員会；对照出处：あにたび",
+        "license": "版权所有；个人行程中的小尺寸场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 400,
+        "height": 226
+      },
+      "sources": [
+        {
+          "title": "京阪官方舞台探访地图（2026秋）",
+          "url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf"
+        },
+        {
+          "title": "あにたび实景逐帧对照",
+          "url": "https://anitabi.net/anime-eupho/"
+        },
+        {
+          "title": "地点坐标来源",
+          "url": "https://mapfan.com/spots/SC3W3%2CJ%2CGR"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-09-29",
+      "match_note": "同机位参考；以现场设施为准",
+      "name_ja": "宇治神社"
+    },
+    {
+      "id": "eupho_sawarabi",
+      "place_ids": [
+        "ujigami"
+      ],
+      "date": "2026-12-01",
+      "event_id": "uji_shrines",
+      "title": "宇治上神社前 · 早蕨之道",
+      "work": "吹响！上低音号",
+      "scene": "第一季第8集，久美子与丽奈带乐器去大吉山的路。",
+      "shooting_note": "在神社外的道路对照成排圆形石挡。",
+      "pair_match": "同机位参考；以现场设施为准",
+      "coordinates": {
+        "lat": 34.89195,
+        "lng": 135.811289,
+        "precision": "神社地点定位；机位在门外道路",
+        "source_url": "https://mapfan.com/spots/SCAHY%2CJ%2C2",
+        "verified": "地点级来源已核；不是摄影站位"
+      },
+      "real": {
+        "local": "assets/pilgrimage/uji/ujigami_r.jpg",
+        "source_url": "https://anitabi.net/anime-eupho/",
+        "image_url": "https://anitabi.net/blog/IMG_278011.JPG",
+        "credit": "あにたび（约2015年历史参考）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "visual_verified": true,
+        "width": 400,
+        "height": 225
+      },
+      "anime": {
+        "local": "assets/pilgrimage/uji/ujigami_a.jpg",
+        "source_url": "https://anitabi.net/anime-eupho/",
+        "image_url": "https://anitabi.net/blog/IMG_271.jpg",
+        "credit": "动画画面 ©武田綾乃・宝島社／「響け！」製作委員会；对照出处：あにたび",
+        "license": "版权所有；个人行程中的小尺寸场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 400,
+        "height": 225
+      },
+      "sources": [
+        {
+          "title": "京阪官方舞台探访地图（2026秋）",
+          "url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf"
+        },
+        {
+          "title": "あにたび实景逐帧对照",
+          "url": "https://anitabi.net/anime-eupho/"
+        },
+        {
+          "title": "地点坐标来源",
+          "url": "https://mapfan.com/spots/SCAHY%2CJ%2C2"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-09-29",
+      "match_note": "同机位参考；以现场设施为准",
+      "name_ja": "宇治上神社前 さわらびの道"
+    },
+    {
+      "id": "eupho_daikichi",
+      "place_ids": [
+        "daikichi"
+      ],
+      "date": "2026-12-01",
+      "event_id": "daikichi_visit",
+      "title": "大吉山展望台 · 栏杆转角",
+      "work": "吹响！上低音号",
+      "scene": "第一季第8集，久美子与丽奈在展望台。",
+      "shooting_note": "对照栏杆转角和树木；动画为夜景，本次仍白天上山、天黑前下山。",
+      "pair_match": "同机位参考；以现场设施为准",
+      "coordinates": {
+        "lat": 34.892874,
+        "lng": 135.812742,
+        "precision": "展望台定位；不是山顶或登山口",
+        "source_url": "https://yakei-world.com/spot_view.php?spot=1857",
+        "verified": "地点级来源已核；不是摄影站位"
+      },
+      "real": {
+        "local": "assets/pilgrimage/uji/daikichi_r.jpg",
+        "source_url": "https://anitabi.net/anime-eupho/",
+        "image_url": "https://anitabi.net/blog/IMG_2776.jpg",
+        "credit": "あにたび（约2015年历史参考）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "visual_verified": true,
+        "width": 400,
+        "height": 225
+      },
+      "anime": {
+        "local": "assets/pilgrimage/uji/daikichi_a.jpg",
+        "source_url": "https://anitabi.net/anime-eupho/",
+        "image_url": "https://anitabi.net/blog/%EF%BC%98%E8%A9%B1%E3%81%8A%E3%81%BE%E3%81%A4%E3%82%8A%E3%83%88%E3%83%A9%E3%82%A4%E3%82%A2%E3%83%B3%E3%82%B0%E3%83%AB%E8%81%96%E5%9C%B012.jpg",
+        "credit": "动画画面 ©武田綾乃・宝島社／「響け！」製作委員会；对照出处：あにたび",
+        "license": "版权所有；个人行程中的小尺寸场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 400,
+        "height": 225
+      },
+      "sources": [
+        {
+          "title": "京阪官方舞台探访地图（2026秋）",
+          "url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf"
+        },
+        {
+          "title": "あにたび实景逐帧对照",
+          "url": "https://anitabi.net/anime-eupho/"
+        },
+        {
+          "title": "地点坐标来源",
+          "url": "https://yakei-world.com/spot_view.php?spot=1857"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-09-29",
+      "match_note": "同机位参考；以现场设施为准",
+      "name_ja": "大吉山展望台"
     },
     {
       "id": "eupho_saizeriya_uji",
@@ -523,8 +523,8 @@
       "title": "JR宇治站前 · 茶壶邮筒",
       "work": "吹响！上低音号",
       "scene": "第一季第8集，叶月、绿辉与琥珀在站前会合。",
-      "shooting_note": "到站后找茶壶造型邮筒；无需进入京阪宇治站。",
-      "pair_match": "同机位参考；季节、光线与现场设施可能已变化",
+      "shooting_note": "晚餐后到JR宇治站前找茶壶造型邮筒，再乘车回京都；不是傍晚看展示的京阪宇治站。",
+      "pair_match": "同机位参考；以现场设施为准",
       "coordinates": {
         "lat": 34.890349,
         "lng": 135.800967,
@@ -536,7 +536,7 @@
         "local": "assets/pilgrimage/uji/jr_r.jpg",
         "source_url": "https://anitabi.net/anime-eupho/",
         "image_url": "https://anitabi.net/blog/IMG_2825.JPG",
-        "credit": "实景照片：あにたび（约2015年历史参考）",
+        "credit": "あにたび（约2015年历史参考）",
         "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
         "visual_verified": true,
         "width": 400,
@@ -568,7 +568,7 @@
       ],
       "status": "ready",
       "checked_on": "2026-09-29",
-      "match_note": "同机位参考；季节、光线与现场设施可能已变化",
+      "match_note": "同机位参考；以现场设施为准",
       "name_ja": "JR宇治駅 茶壺型郵便ポスト"
     },
     {
@@ -591,7 +591,7 @@
       "real": {
         "local": "assets/pilgrimage/kyoto/station_scene_real.jpg",
         "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/l/laquari/20190603/20190603153728.jpg",
-        "credit": "实景：laquari，2019/05/15",
+        "credit": "laquari，2019/05/15",
         "usage": "公开来源的少量缩略图，用于本机个人旅行场景对照；未取得公开再分发授权。保留作者与原页链接。",
         "note": "",
         "width": 800,
@@ -621,11 +621,10 @@
         }
       ],
       "status": "matched_pair",
-      "priority": "optional_short_stop",
-      "route_rule": "返回京都站后有余力再短停，不另外绕行。",
+      "priority": "mainline",
+      "route_rule": "返回京都站后前往4F室町小路广场，停留15—20分钟，再步行回酒店。",
       "match_note": "",
-      "name_ja": "京都駅ビル 室町小路広場",
-      "option": "station"
+      "name_ja": "京都駅ビル 室町小路広場"
     },
     {
       "id": "kyoto-stage-clock",
@@ -647,7 +646,7 @@
       "real": {
         "local": "assets/pilgrimage/kyoto/station_concert_real.jpg",
         "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/l/laquari/20190603/20190603153729.jpg",
-        "credit": "实景：laquari，2019/05/15",
+        "credit": "laquari，2019/05/15",
         "usage": "公开来源的少量缩略图，用于本机个人旅行场景对照；未取得公开再分发授权。保留作者与原页链接。",
         "note": "",
         "width": 800,
@@ -675,8 +674,7 @@
       "status": "matched_pair",
       "priority": "same_stop",
       "match_note": "",
-      "name_ja": "京都駅ビル 室町小路広場",
-      "option": "station"
+      "name_ja": "京都駅ビル 室町小路広場"
     },
     {
       "id": "demachi-west-gate",
@@ -698,7 +696,7 @@
       "real": {
         "local": "assets/pilgrimage/kyoto/market_entry_photo.jpg",
         "source_url": "https://kbas.ifdef.jp/b/tamakoma/00p/b_tamakoma_p_00_44.jpg",
-        "credit": "实景：ぶらり聖地巡礼の旅（kbas），2013/01/04",
+        "credit": "ぶらり聖地巡礼の旅（kbas），2013/01/04",
         "usage": "公开来源的少量缩略图，用于本机个人旅行场景对照；未取得公开再分发授权。保留作者与原页链接。",
         "note": "",
         "width": 320,
@@ -748,7 +746,7 @@
       "real": {
         "local": "assets/pilgrimage/kyoto/market_real.jpg",
         "source_url": "https://masugata.demachi.jp/assets/img/tamakomarket/intro_img02.jpg",
-        "credit": "实景：出町桝形商店街官方",
+        "credit": "出町桝形商店街官方",
         "usage": "公开来源的少量缩略图，用于本机个人旅行场景对照；未取得公开再分发授权。保留作者与原页链接。",
         "note": "",
         "width": 855,
@@ -798,7 +796,7 @@
       "real": {
         "local": "assets/pilgrimage/kyoto/delta_d.jpg",
         "source_url": "https://blog-imgs-57.fc2.com/r/i/m/rimatai/201410131033492ac.jpg",
-        "credit": "实景：リマタイ（rimatai），2014年探访",
+        "credit": "リマタイ（rimatai），2014年探访",
         "usage": "公开来源的少量缩略图，用于本机个人旅行场景对照；未取得公开再分发授权。保留作者与原页链接。",
         "note": "",
         "width": 640,
@@ -838,7 +836,7 @@
       "title": "鸭川飞石 · 轻音OP",
       "work": "轻音少女 第1季",
       "scene": "OP中唯、澪、律、紬经过飞石的画面。",
-      "shooting_note": "该对照作者说明从贺茂川侧飞石朝东拍中洲与高野川；与玉子告白图分开找角度。动画对后方河岸作过处理，现场植被也有变化，不追求完全重合。仅用原有鸭川停留。",
+      "shooting_note": "从贺茂川侧飞石朝东拍中洲，与《玉子》告白位置分开。玉子点位优先，余量不足就省此机位，不延误京阪换乘。",
       "coordinates": {
         "lat": 35.029425,
         "lng": 135.771339,
@@ -848,7 +846,7 @@
       "real": {
         "local": "assets/pilgrimage/kyoto/kon_c.jpg",
         "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/k/keyboar/20100918/20100918223956.jpg",
-        "credit": "实景：きーぼー（keyboar），2009年探访",
+        "credit": "きーぼー（keyboar），2009年探访",
         "usage": "公开来源的少量缩略图，用于本机个人旅行场景对照；未取得公开再分发授权。保留作者与原页链接。",
         "note": "",
         "width": 640,
@@ -894,7 +892,7 @@
       "real": {
         "local": "assets/pilgrimage/kyoto/conan_m7_pair.jpg",
         "source_url": "https://conan-diary.com/wp-content/uploads/2022/08/清水寺.jpg",
-        "credit": "实景来源：名探偵コナンの捜査日誌",
+        "credit": "名探偵コナンの捜査日誌",
         "usage": "公开来源的少量缩略图，用于本机个人旅行场景对照；未取得公开再分发授权。保留作者与原页链接。",
         "note": "清水寺建筑实景，非新兰合影同角度",
         "width": 600,
@@ -954,7 +952,7 @@
       "real": {
         "local": "assets/pilgrimage/senren/sannenzaka-2.jpg",
         "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/y/yuiyu22/20210221/20210221210038.jpg",
-        "credit": "实景：owleye / yuiyu22，2020-12-01拍摄",
+        "credit": "owleye / yuiyu22，2020-12-01拍摄",
         "width": 800,
         "height": 450
       },
@@ -1001,7 +999,7 @@
       "real": {
         "local": "assets/pilgrimage/senren/ninenzaka-2.jpg",
         "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/y/yuiyu22/20210221/20210221210052.jpg",
-        "credit": "实景：owleye / yuiyu22，2020-12-01拍摄",
+        "credit": "owleye / yuiyu22，2020-12-01拍摄",
         "width": 800,
         "height": 450
       },
@@ -1048,14 +1046,14 @@
       "real": {
         "local": "assets/pilgrimage/senren/tsutenkaku-real.jpg",
         "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/t/turquoise2134/20221029/20221029060211.jpg",
-        "credit": "实景：たーこいず / turquoise2134，2022年巡礼记录",
+        "credit": "たーこいず / turquoise2134，2022年巡礼记录",
         "width": 768,
         "height": 1024
       },
       "anime": {
         "local": "assets/pilgrimage/senren/tsutenkaku-film.jpg",
         "source_url": "https://www.j-culturearc.com/wp-content/uploads/2025/04/conan-kansai-spot14-1024x556.avif",
-        "credit": "电影画面 © 青山剛昌／小学館・読売テレビ・ポリグラム・小学館プロダクション・東宝・TMS；来源 星顆日本；转JPEG兼容离线查看",
+        "credit": "电影画面 © 青山剛昌／小学館・読売テレビ・ポリグラム・小学館プロダクション・東宝・TMS；来源 星顆日本",
         "width": 1024,
         "height": 556
       },
@@ -1102,7 +1100,7 @@
       "real": {
         "local": "assets/pilgrimage/senren/ebisu-ameba-2.jpg",
         "source_url": "https://stat.ameba.jp/user_images/20191214/13/kurukun52/b9/d6/j/o0550032014674987267.jpg",
-        "credit": "实景：クルくん / kurukun52（文章2019年发布）",
+        "credit": "クルくん / kurukun52（文章2019年发布）",
         "width": 550,
         "height": 320
       },
@@ -1141,7 +1139,7 @@
       "title": "生田神社·建实神社外观",
       "work": "千恋＊万花",
       "scene": "建实神社社殿正面背景，红柱、屋顶与狛犬形成主要对应。",
-      "shooting_note": "到拝殿前广场，从中轴稍侧的位置对照屋顶、红柱和狛犬；示例不是完全同机位。游戏把周围楼房改绘成树木，不必寻找一模一样的背景。按原有1小时参拜时段拍摄。",
+      "shooting_note": "到拝殿前广场，从中轴稍侧的位置对照屋顶、红柱和狛犬；示例不是完全同机位。游戏把周围楼房改绘成树木，不必寻找一模一样的背景。在当天45分钟参观时段内拍摄。",
       "coordinates": {
         "lat": 34.694574,
         "lng": 135.190777,
@@ -1153,14 +1151,14 @@
       "real": {
         "local": "assets/pilgrimage/senren/ikuta-2-compact.jpg",
         "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/y/yuiyu22/20260322/20260322231741.jpg",
-        "credit": "实景：owleye / yuiyu22，2026-03-21拍摄；缩小用于手机对照",
+        "credit": "owleye / yuiyu22，2026-03-21拍摄",
         "width": 1000,
         "height": 563
       },
       "anime": {
         "local": "assets/pilgrimage/senren/ikuta-1-compact.jpg",
         "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/y/yuiyu22/20220929/20220929000834_original.png",
-        "credit": "游戏画面 © YUZUSOFT；对照来源 owleye / yuiyu22；缩小用于手机对照",
+        "credit": "游戏画面 © YUZUSOFT；对照来源 owleye / yuiyu22",
         "width": 1000,
         "height": 563
       },
@@ -1202,7 +1200,7 @@
         "local": "assets/pilgrimage/kobe/kitano-real.jpg",
         "source_url": "https://azusairi.com/?p=2576",
         "image_url": "https://azusairi.com/wp-content/uploads/2024/02/IMG_5614-1-1024x576.jpg",
-        "credit": "实景：アズサイリ，2024年文章历史照片",
+        "credit": "アズサイリ，2024年文章历史照片",
         "license": "原权利方保留版权；用于地点识别与作品场景对照，非开放许可",
         "visual_verified": true,
         "width": 1024,
@@ -1241,7 +1239,7 @@
       "work": "Fate/stay night",
       "scene": "冬木大桥的红色桥梁背景，取景参考在桥南侧北公园。",
       "shooting_note": "从北公园海边朝桥北端拍，找红色拱架、桥下水面与石墩；不必走完整座桥。",
-      "match_note": "原作者对照图：上方作品画面，下方实景。实景为夜间照片，本次安排傍晚到访。",
+      "match_note": "原作者对照图：上方作品画面，下方实景。实景为夜间照片，本次在15:00—16:30时段到访。",
       "coordinates": null,
       "status": "ready",
       "checked_on": "2026-10-01",
@@ -1272,6 +1270,18 @@
       "date": "2026-12-04",
       "title": "USJ柯南与任天堂",
       "note": "这是主题园区体验，不是原作实景取景地；沿用园区照片，不虚构实景／动画同机位。"
+    },
+    {
+      "date": "2026-12-01",
+      "title": "平和书店 · 京阿尼周边",
+      "note": "店内逛30—40分钟；照片、地图与营业信息见行程。",
+      "event_id": "heiwa_visit"
+    },
+    {
+      "date": "2026-12-01",
+      "title": "车站联动展示",
+      "note": "久美子贩售机与三人立牌；位置和入场提示见行程。",
+      "event_id": "keihan_uji_visit"
     }
   ],
   "rally": {
@@ -1281,36 +1291,36 @@
     "map_pdf": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf",
     "spots": [
       {
-        "id": "kohata",
-        "title": "許波多神社（五ケ庄）",
-        "name_ja": "許波多神社（五ケ庄）",
-        "caption": "官方作品画面 · 神社鸟居",
+        "id": "agata",
+        "title": "縣神社",
+        "name_ja": "縣神社",
+        "caption": "官方作品画面 · 夏祭场景，非12月现场",
         "fit": "集章点",
-        "note": "五ケ庄古川13，黄檗站西侧。先到此处领章，勿导航到木幡的同名神社。",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=34.91676,135.79395",
+        "note": "表参道之后、久美子椅之前短停；延迟时可省。",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=34.88848,135.80573",
         "anime": {
-          "local": "assets/uji-rally/kohata.jpg",
+          "local": "assets/uji-rally/agata.jpg",
           "source_url": "https://www.keihan.co.jp/euphonium/",
-          "image_url": "https://www.keihan.co.jp/euphonium/assets/img/img_spot4.jpg",
+          "image_url": "https://www.keihan.co.jp/euphonium/assets/img/img_spot6.jpg",
           "credit": "京阪活动官网／©武田綾乃・宝島社／「響け！」製作委員会2024",
           "width": 750,
           "height": 480
         },
         "coordinates": {
-          "lat": 34.91676,
-          "lng": 135.79395,
+          "lat": 34.88848,
+          "lng": 135.80573,
           "precision": "官方数字集章地点；非摄影站位",
-          "source_url": "https://app.raund.net/keihan-euphonium_2026autumn/spots/detail/?id=36570"
+          "source_url": "https://app.raund.net/keihan-euphonium_2026autumn/spots/detail/?id=36569"
         },
         "real": {
-          "local": "assets/uji-rally/kohata-real.jpg",
-          "source_url": "https://commons.wikimedia.org/wiki/File:Kohata-jinja_(Gokasho),_keidai-torii.jpg",
-          "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Kohata-jinja_%28Gokasho%29%2C_keidai-torii.jpg/1280px-Kohata-jinja_%28Gokasho%29%2C_keidai-torii.jpg",
-          "credit": "Saigen Jiro / Wikimedia Commons · CC0 1.0",
-          "width": 1280,
-          "height": 851
+          "local": "assets/uji-rally/agata-real.webp",
+          "source_url": "https://www.kyoto-kankou.or.jp/info_search/366",
+          "image_url": "https://www.kyoto-kankou.or.jp/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NTM0NiwicHVyIjoiYmxvYl9pZCJ9fQ==--a2c50e461eb1dac3abfe2a93ad50ac86298d6319/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJ3ZWJwIiwicmVzaXplX3RvX2ZpdCI6WzM4NDAsMjE2MF19LCJwdXIiOiJ2YXJpYXRpb24ifX0=--d4a38f8dcc86a603c3d632cf5b22690482f0e7f5/1607.jpg",
+          "credit": "京都府观光联盟／縣神社",
+          "width": 3224,
+          "height": 2160
         },
-        "match_note": "境内鸟居实景；与作品画面角度不同。"
+        "match_note": "神社实景；作品为夏祭场景，与12月现场不同。"
       },
       {
         "id": "suikan",
@@ -1318,7 +1328,7 @@
         "name_ja": "宇治川河川敷（水管橋）",
         "caption": "官方作品画面 · 明日香与久美子",
         "fit": "集章点",
-        "note": "从許波多向南到三室户一带的东岸河川敷。白天领取、拍照，不走上水管桥。",
+        "note": "下山后前往东岸河川敷，白天拍照并顺路领章；不走上水管桥。",
         "map_url": "https://www.google.com/maps/search/?api=1&query=34.90041,135.80153",
         "anime": {
           "local": "assets/uji-rally/suikan.jpg",
@@ -1345,49 +1355,17 @@
           "height": 1080,
           "visual_verified": true
         }
-      },
-      {
-        "id": "agata",
-        "title": "縣神社",
-        "name_ja": "縣神社",
-        "caption": "官方作品画面 · 夏祭场景，非12月现场",
-        "fit": "集章点",
-        "note": "茶歇后步行到神社集章。",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=34.88848,135.80573",
-        "anime": {
-          "local": "assets/uji-rally/agata.jpg",
-          "source_url": "https://www.keihan.co.jp/euphonium/",
-          "image_url": "https://www.keihan.co.jp/euphonium/assets/img/img_spot6.jpg",
-          "credit": "京阪活动官网／©武田綾乃・宝島社／「響け！」製作委員会2024",
-          "width": 750,
-          "height": 480
-        },
-        "coordinates": {
-          "lat": 34.88848,
-          "lng": 135.80573,
-          "precision": "官方数字集章地点；非摄影站位",
-          "source_url": "https://app.raund.net/keihan-euphonium_2026autumn/spots/detail/?id=36569"
-        },
-        "real": {
-          "local": "assets/uji-rally/agata-real.webp",
-          "source_url": "https://www.kyoto-kankou.or.jp/info_search/366",
-          "image_url": "https://www.kyoto-kankou.or.jp/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NTM0NiwicHVyIjoiYmxvYl9pZCJ9fQ==--a2c50e461eb1dac3abfe2a93ad50ac86298d6319/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJ3ZWJwIiwicmVzaXplX3RvX2ZpdCI6WzM4NDAsMjE2MF19LCJwdXIiOiJ2YXJpYXRpb24ifX0=--d4a38f8dcc86a603c3d632cf5b22690482f0e7f5/1607.jpg",
-          "credit": "京都府观光联盟／縣神社",
-          "width": 3224,
-          "height": 2160
-        },
-        "match_note": "神社实景；作品为夏祭场景，与12月现场不同。"
       }
     ],
     "rules": [
+      "本日走縣神社、水管桥两点，可各领一个角色相框；不满足后期三章集合相框条件。",
       "前期9/1—10/31：井川用水機場前（久美子）、宇治桥（奏）、大吉山展望台（丽奈）。12/1不能补前期章。",
       "后期11/1—12/20：水管桥河岸（明日香）、縣神社（夏纪）、許波多神社（优子）。单点可领对应角色相框，后期三点完成可领三人集合相框。",
       "这是手机GPS数字集章，不是纸本盖印。参加免费，交通与流量另计；先在官方活动站创建账号，到现场定位后领取。",
       "使用同一个手机浏览器：iPhone为iOS 17以上＋Safari，Android为Android 12以上＋Chrome。不要使用微信等应用内浏览器或无痕模式；日本境外销售的部分机型可能不受支持。",
       "联网并允许定位；相框可用至2027/1/31。未取得前期3枚印章，仅12月一天不能满足6枚印章的抽奖条件。",
-      "活动范围内的开放时间与GPS领取判定以现场、官方活动站为准。攻略勾选不会替你领取官方数字章。",
-      "京阪宇治站有活动立牌，与JR宇治不同。只有顺路且有余量时短看；站内位置、入场条件现场确认，不另跑中书岛。"
+      "活动范围内的开放时间与GPS领取判定以现场、官方活动站为准。攻略勾选不会替你领取官方数字章。"
     ],
-    "recommendation": "09:00出门，后期集章、大吉山与抹茶芭菲纳入主线；登山白天完成，晚饭后返回京都。"
+    "recommendation": "縣神社 → 水管桥：领取两个单点相框。"
   }
 }

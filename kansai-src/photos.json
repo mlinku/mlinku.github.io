@@ -1675,5 +1675,50 @@
     "height": 1080,
     "attribution": "京のシッポ · 2023年河岸实拍",
     "visualContentVerified": true
+  },
+  "heiwa_books": {
+    "sight": "アル・プラザ宇治東外观 · 平和书店在3F",
+    "local": "assets/uji-heiwa_books.jpg",
+    "sourcePage": "https://directshop.jp/store/10293/",
+    "imageUrl": "https://directshop.jp/wp-content/uploads/2019/11/IMG_2661-1280x960.jpg",
+    "author": "株式会社ダイレクト・ショップ",
+    "license": "版权所有；地点识别引用，非开放许可",
+    "date": "拍摄日期未注明",
+    "width": 1280,
+    "height": 960,
+    "visualContentVerified": true,
+    "notes": "商场外观用于识别建筑，非书店内景或当前库存照片。"
+  },
+  "keihan_uji": {
+    "sight": "2026秋季宇治站立牌 · 官方示意图",
+    "local": "assets/uji-keihan_uji_panel.png",
+    "sourcePage": "https://www.keihan.co.jp/euphonium/",
+    "imageUrl": "https://www.keihan.co.jp/euphonium/assets/img/img_uji1.png",
+    "author": "京阪／©武田綾乃・宝島社／「響け！」製作委員会2024",
+    "license": "版权所有；活动识别引用，非开放许可",
+    "date": "2026秋季活动",
+    "width": 750,
+    "height": 838,
+    "illustration": true,
+    "visualContentVerified": true,
+    "notes": "小奏、久美子、丽奈三人立牌设计图，非现场照片。"
+  },
+  "sannomiya_center": {
+    "sight": "三宫中央街",
+    "sourcePage": "https://www.feel-kobe.jp/facilities/0000000730/",
+    "imageUrl": "https://www.feel-kobe.jp/wp-content/uploads/2021/03/photos_QfRjrymno6fUWSSF_kf1614837875801_sannomiyacenter20212.jpg",
+    "author": "神户观光局 / Feel KOBE",
+    "license": "版权归原权利人；未声明开放许可",
+    "date": "拍摄日期未注明",
+    "width": 1100,
+    "height": 736,
+    "notes": "三宫中央街街景，不代表具体店铺外观或当前店铺库存。",
+    "local": "assets/sannomiya-center.jpg",
+    "sourceVerified": true,
+    "binaryDownloaded": true,
+    "visualContentVerified": true,
+    "reviewedAt": "2026-10-02",
+    "attribution": "三宫中央街 — 神户观光局 / Feel KOBE",
+    "changes": "按比例缩小并压缩为JPEG"
   }
 }

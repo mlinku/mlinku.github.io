@@ -2,7 +2,7 @@
 function dayPresentation(d){
  const info={...DETAILS[d.date]},c=choice(d);
  if(d.date==='2026-12-02'&&c.kodaijiPlan==='skip'){
-  info.short='出町 · 东山';info.focus='《玉子市场》巡礼与清水寺赏枫。';
+  info.short='京都';info.focus='《玉子市场》巡礼与清水寺赏枫。';
   info.summary='出町、清水寺、东山散步';info.cover='kiyomizu';info.eyebrow='京都 · 出町 → 清水寺 → 东山';
  }
  return info;
@@ -28,7 +28,7 @@ const DayFlow={
 const ROUTE_EVENTS={
  '2026-11-30':['flight_out','flight_out','arrival_transfer','checkin_kyoto'],
  '2026-12-02':['demachi_transfer','demachi_visit','delta_visit','kiyomizu_transfer','kiyomizu_transfer','kiyomizu_visit','higashiyama_walk','higashiyama_walk','higashiyama_walk','higashiyama_walk','kodaiji_night','kyoto_night_return'],
- '2026-12-03':['checkout_kyoto','tofukuji_visit','inari_visit','luggage_pickup','osaka_transfer','osaka_transfer','osaka_transfer','checkin_osaka','shinsekai_dinner',null],
+ '2026-12-03':['checkout_kyoto','tofukuji_visit','inari_visit','luggage_pickup','osaka_transfer','osaka_transfer','osaka_transfer','checkin_osaka','shinsekai_dinner','osaka_evening_return'],
  '2026-12-04':['usj_transfer','usj_transfer','usj_core','usj_dinner'],
  '2026-12-05':['nara_transfer','nara_transfer','nara_transfer','nara_visit','nara_visit','nara_return_train','nara_return_train','anime_shopping','anime_shopping','dotonbori_dinner','glico_photo','nara_day_return','nara_day_return','nara_day_return'],
  '2026-12-07':['checkout_osaka','airport_train','airport_train','flight_home']
@@ -38,12 +38,13 @@ function routePurpose(node,eventId,index,nodes){
   if(eventId==='checkout_kyoto')return '退房寄存';
   if(eventId==='checkout_osaka')return '退房离店';
   if(eventId==='luggage_pickup')return '取行李';
+  if(eventId==='nara_day_return'&&nodes.some(n=>n.id==='spaworld'))return '放购物袋、整理行李';
   if(eventId?.startsWith('checkin_'))return '入住';
   return index===0?'离店':'返店';
  }
  if(!nodes.slice(0,index).some(p=>p.id===node.id))return '';
  if(node.id==='uji_bridge')return eventId==='uji_shrines'?'过桥去神社':'过桥去晚餐';
- if(eventId==='uji_return')return '下车返店';
+ if(eventId==='uji_return')return node.id==='jr_uji'?'乘车回京都':nodes[index+1]?.id==='kyoto_stage'?'下车去4F舞台':'下车返店';
  if(eventId==='kobe_bridge_visit')return node.id==='port_nakakoen'?'乘车回三宫':'换乘JR';
  if(eventId==='umeda_transfer')return node.id==='sannomiya'?'乘车往大阪':'下车去梅田';
  if(eventId==='last_evening_return')return node.id==='jr_osaka'?'乘车返店':'下车返店';
@@ -59,7 +60,7 @@ function timedRoute(d){
   if(d.date==='2026-12-05'&&selectedShops(c).includes(node.id))id='anime_shopping';
   if(d.date==='2026-12-06'&&['nintendo_osaka','pokemon_osaka'].includes(node.id))id='umeda_shop';
   let times=[eventTime(id)].filter(Boolean);
-  if(i===0&&node.id.startsWith('hotel_')&&d.date!=='2026-12-07')times=[{text:d.departure_target||'开园时间待确认',label:'离店'}];
+  if(i===0&&node.id.startsWith('hotel_')&&d.date!=='2026-12-07')times=id==='checkout_kyoto'?[eventTime(id,'退房寄存')]:[{text:d.departure_target||'开园时间待确认',label:'离店'}];
   if(i===nodes.length-1&&node.id.startsWith('hotel_'))times=[{text:returnTarget(d),label:d.date==='2026-11-30'?'入住':'返店'}];
   if(d.date==='2026-11-30'&&['hkg','kix'].includes(node.id))times=[flightTime('flight_out',node.id==='hkg'?'departure':'arrival')];
   if(d.date==='2026-12-07'){
@@ -68,11 +69,13 @@ function timedRoute(d){
    if(node.id==='kix')times=[eventTime('airport_train','机场列车'),flightTime('flight_home','departure')];
    if(node.id==='hkg')times=[flightTime('flight_home','arrival')];
   }
-  if(d.date==='2026-12-04'&&node.id==='usj')times=[{text:'开园时间待确认',label:'入园'},eventTime('usj_finish','收尾')];
+ if(d.date==='2026-12-04'&&node.id==='usj'){id='usj_app';times=[eventTime('usj_app','申请区域资格')];}
   if(d.date==='2026-12-05'){
+   if(node.id==='spaworld')times=[eventTime('spaworld_visit','预计抵达'),{text:'60—75分钟',label:'洗浴与休息 · 22:15前离馆'}];
    if(node.id==='kintetsu_nara')times=[eventTime('nara_return_train','上车')];
-   if(node.id==='kintetsu_nippombashi')times=[{text:'到站时刻待确认',label:'途中'},eventTime('nippombashi_arrival','首店抵达')];
+   if(node.id==='kintetsu_nippombashi')times=[{text:'到站时刻待确认',label:'下车步行去首店'}];
    if(node.id===c.shop1)times=[eventTime('nippombashi_arrival','抵达'),eventTime('anime_shopping','购物')];
+   if(['nankai_namba','nankai_shinimamiya'].includes(node.id))times=[{eventId:'nara_day_return',text:'拍照后',label:'乘车返店'}];
   }
   const shared=['uji_pilgrimage','uji_shrines','higashiyama_walk','nara_visit','umeda_shop','byodoin_visit','delta_visit'].includes(id);
   if(shared&&times.length===1)times[0].label='同段共用';
