@@ -762,11 +762,23 @@ const DETAILS = {
         "items": [
           {
             "text": "Animate大阪日本桥：周六参考10:00—20:00；池田大楼2号馆1—2楼。",
-            "url": "https://www.animate.co.jp/shop/nipponbashi/"
+            "url": "https://www.animate.co.jp/shop/nipponbashi/",
+            "place_id": "animate"
           },
           {
             "text": "骏河屋OtARoad动漫·Hobby馆：参考10:00—21:00；平田大楼2—3楼。",
-            "url": "https://www.suruga-ya.jp/feature/realstore/otaroad/index.html"
+            "url": "https://www.suruga-ya.jp/feature/realstore/otaroad/index.html",
+            "place_id": "surugaya"
+          },
+          {
+            "text": "Super Potato御宅路店：周末参考10:00—20:00；平田大楼1楼。",
+            "url": "https://www.superpotato.com/shop/otaroad/",
+            "place_id": "potato"
+          },
+          {
+            "text": "骏河屋大阪日本桥本馆：参考10:00—21:00；日本桥4-11-3。",
+            "url": "https://www.suruga-ya.jp/feature/realstore/nihonbashi_main/index.html",
+            "place_id": "surugaya_main"
           },
           {
             "text": "若现场替换为らしんばん，日本桥主要门店约20:00关门；分店不同，地址与营业另核对。",

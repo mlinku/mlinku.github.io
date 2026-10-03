@@ -306,6 +306,15 @@ const results=vm.runInContext(`
  assert.ok(effectiveEvents(paceNara).find(ev=>ev.id==='anime_shopping').condition.includes('1—2小时'),'购物按弹性预算安排');
  state.choices[paceNara.date]={shop1:'potato',shop2:'none'};
  assert.ok(!effectiveEvents(paceNara).find(ev=>ev.id==='anime_shopping').condition.includes('Animate'),'替换后不残留原店时长');
+ for(const stores of [['animate','surugaya'],['potato','surugaya_main'],['surugaya_main','potato'],['potato']]){
+  state.choices[paceNara.date]={shop1:stores[0],shop2:stores[1]||'none'};
+  const hours=activityDetails(paceNara,'anime_shopping');
+  const rows=DETAILS[paceNara.date].eventDetails.anime_shopping.items.filter(item=>item.place_id);
+  for(const row of rows)assert.equal(hours.includes(row.text),stores.includes(row.place_id),'关门时间仅展示已选门店 '+row.place_id);
+  if(stores.length===2)assert.ok(hours.indexOf(rows.find(r=>r.place_id===stores[0]).text)<hours.indexOf(rows.find(r=>r.place_id===stores[1]).text),'营业资料按所选路线顺序');
+  assert.equal(effectiveEvents(paceNara).find(ev=>ev.id==='nippombashi_arrival').place_ids[0],stores[0],'首店到达定位同步');
+ }
+ assert.equal(JSON.stringify(DETAILS[paceNara.date].eventDetails.anime_shopping),JSON.stringify(paceNara.visit_details.anime_shopping),'网页门店资料与规划JSON一致');
  state.choices[paceNara.date]={};
  assert.ok(!optionalControls(kobe).includes('梅田'),'删除梅田购物控件');
  assert.equal(PLAN.days[7].departure_target,'05:15—05:25','不擅自推迟返程离店');

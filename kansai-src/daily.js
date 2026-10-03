@@ -115,7 +115,15 @@ function foodSuggestions(d,eventId){
  return [...candidates,...along].map(item=>`<details class="event-detail food-suggestions"><summary>${e('甜品备选 · '+item.title)}</summary><div class="detail-body">${foodIdea(item)}</div></details>`).join('');
 }
 
-function activityDetails(d,id){const info=DETAILS[d.date].eventDetails?.[id];return info?`<details class="event-detail"><summary>${e(info.title)}</summary><ul class="detail-body">${info.items.map(item=>`<li>${e(item.text)}${item.url?' '+external('资料 ↗',item.url):''}</li>`).join('')}</ul></details>`:'';}
+function activityDetails(d,id){
+ const info=DETAILS[d.date].eventDetails?.[id];if(!info)return '';
+ const selected=id==='anime_shopping'?selectedShops(choice(d)):null;
+ const items=selected?[
+  ...selected.map(placeId=>info.items.find(item=>item.place_id===placeId)).filter(Boolean),
+  ...info.items.filter(item=>!item.place_id)
+ ]:info.items;
+ return `<details class="event-detail"><summary>${e(info.title)}</summary><ul class="detail-body">${items.map(item=>`<li>${e(item.text)}${item.url?' '+external('资料 ↗',item.url):''}</li>`).join('')}</ul></details>`;
+}
 
 function guideSources(d){
  const seen=new Set(),links=[];
