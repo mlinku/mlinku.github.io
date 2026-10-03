@@ -8,7 +8,7 @@ function resumeLink(d){const next=nextActivity(d);return next?pageLink('下一�
 
 function navigationPlace(ev){
  if(ev.id==='nara_return_train')return 'kintetsu_nara';
- if(ev.category==='transport'||['nakamura_walk','sky_transfer','checkout_osaka'].includes(ev.id))return ev.place_ids.at(-1);
+ if(ev.category==='transport'||['nakamura_walk','checkout_osaka'].includes(ev.id))return ev.place_ids.at(-1);
  return null;
 }
 function eventNavigation(ev,d){

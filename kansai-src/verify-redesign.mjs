@@ -38,7 +38,7 @@ const results=vm.runInContext(`
 
  assert.ok(prepPage().includes('临行准备'));
  assert.ok(PLACE_DETAILS.hotel_kyoto);
- assert.ok(!tripPlaces().some(p=>['byodoin','kyoto_tower','kotosaka','meriken'].includes(p.id)),'地点目录不展示已取消景点');
+ assert.ok(!tripPlaces().some(p=>['byodoin','tofukuji','nintendo_osaka','pokemon_osaka','umeda_sky','coco_umeda','kotosaka','meriken'].includes(p.id)),'地点目录不展示已取消景点');
  assert.ok(tripPlaces().some(p=>p.id==='surugaya_main'),'保留购物替换店');
  for(const d of PLAN.days)for(const ev of effectiveEvents(d))if(TRANSPORT_AT_EVENT[ev.id]){
   assert.ok(TRANSPORT_AT_EVENT[ev.id].every(i=>DETAILS[d.date].transport[i]),'交通说明索引有效 '+ev.id);
@@ -92,8 +92,8 @@ const results=vm.runInContext(`
   assert.equal(p.event_id,actual.event_id,'规划与巡礼的活动绑定一致 '+p.id);
   assert.equal(p.option,actual.option,'规划与巡礼的主线状态一致 '+p.id);
  }
- assert.equal(PLAN.days[3].timeline[0].time_label,'10:00离店前','退房先于离店');
- assert.equal(timedRoute(PLAN.days[3])[0].times[0].text,'10:00离店前','路线同步退房先于离店');
+ assert.equal(PLAN.days[3].timeline[0].time_label,'09:45离店前','退房先于离店');
+ assert.equal(timedRoute(PLAN.days[3])[0].times[0].text,'09:45离店前','路线同步退房先于离店');
  const dinnerDay=PLAN.days[2],dinnerWalk=effectiveEvents(dinnerDay).find(ev=>ev.id==='gion_dinner_walk');
  assert.ok(eventNavigation(dinnerWalk,dinnerDay).includes(encodeURIComponent('名代おめん 四条先斗町店')),'晚餐步行能定位具体餐厅');
  const ujiTimeline=timelinePage(ujiDefault);
@@ -175,9 +175,9 @@ const results=vm.runInContext(`
  const nara=PLAN.days[5];state.choices[nara.date]={shop1:'potato',shop2:'none'};
  assert.deepEqual(effectiveEvents(nara).find(x=>x.id==='anime_shopping').place_ids,['potato']);
  const umeda=PLAN.days[6];state.choices[umeda.date]={umedaMain:'pokemon_osaka',umedaSecond:true};
- assert.deepEqual(effectiveEvents(umeda).find(x=>x.id==='umeda_shop').place_ids,['pokemon_osaka','nintendo_osaka']);
- assert.ok(returnTarget(nara).includes('20:00—20:30'));
- assert.equal(returnTarget(umeda),'21:00—21:30');
+ assert.ok(!effectiveEvents(umeda).some(x=>x.id==='umeda_shop'),'旧梅田选择不恢复已删除活动');
+ assert.ok(returnTarget(nara).includes('22:10—22:30'));
+ assert.equal(returnTarget(umeda),'20:45—21:00，随晚餐时段调整');
  assert.ok(!overview().includes('city-map'),'删除旧城市示意');
  assert.ok(!overview().includes('<iframe'),'避免兼容性空框');
  assert.ok(overview().includes('google-map-preview'),'保留真实Google区域预览');
@@ -234,7 +234,7 @@ const results=vm.runInContext(`
  assert.ok(!routePage(PLAN.days[3]).includes('再次经过'),'酒店用途替换笼统重复标识');
  assert.deepEqual(Array.from(timedRoute(PLAN.days[3]),n=>n.id),Array.from(PLAN.days[3].route_stop_ids),'增加用途不改路线顺序');
  const returnStation=timedRoute(PLAN.days[6]).filter(n=>n.id==='jr_osaka');
- assert.equal(returnStation.at(-1).purpose,'乘车返店','最后大阪站说明乘车目的');
+ assert.equal(returnStation.at(-1).purpose,'换环状线返店','最后大阪站说明乘车目的');
  for(const id of ['lashinbang_kobe','surugaya_kobe','bookoff_kobe']){
   assert.ok(placeButton(id).includes(PLACE_LOCATIONS[id]),'无照片店铺也显示楼层 '+id);
   assert.ok(routePage(PLAN.days[6]).includes(PLACE_LOCATIONS[id]),'路线店铺显示楼层 '+id);
@@ -247,33 +247,34 @@ const results=vm.runInContext(`
  assert.ok(effectiveEvents(PLAN.days[4])[0].condition.includes('09:00—19:00'),'行程显示官方营业时间');
  const naraTiming=timedRoute(nara);
  assert.equal(naraTiming.find(s=>s.id==='kintetsu_nippombashi').times[0].text,'到站时刻待确认','不能把奈良上车窗口当作日本桥抵达');
- assert.ok(!naraTiming.find(s=>s.id==='kintetsu_nippombashi').times.some(t=>t.text==='15:45—16:15'),'首店抵达目标不能挂在车站节点');
+ assert.ok(!naraTiming.find(s=>s.id==='kintetsu_nippombashi').times.some(t=>t.text==='约18:05—18:20'),'首店抵达目标不能挂在车站节点');
  for(const id of ['nankai_namba','nankai_shinimamiya'])assert.equal(naraTiming.find(s=>s.id===id).times[0].text,'拍照后','返店目标不能作为上车时间');
  const usjRoute=routePage(PLAN.days[4]);
  for(const id of ['usj_core','usj_lunch','usj_rest','usj_finish','usj_dinner'])assert.ok(usjRoute.includes('/timeline/'+id+'"'),'USJ路线保留执行步骤 '+id);
  assert.ok(usjRoute.indexOf('/timeline/usj_dinner"')<usjRoute.lastIndexOf('data-route-id="hotel_osaka"'),'离园后先用餐再返店');
- assert.ok(dayTransport(PLAN.days[3])[0].includes('东福寺'),'搬酒店日交通说明从第一程开始');
+ assert.ok(dayTransport(PLAN.days[3])[0].includes('京都塔'),'搬酒店日交通说明从第一程开始');
  assert.ok(PLAN.days[7].timeline.find(ev=>ev.id==='airport_checkin').condition.includes('安检'),'返程保留机场必要步骤');
  const savedNightChoice=state.choices[PLAN.days[2].date];
  state.choices[PLAN.days[2].date]={kodaijiPlan:'skip'};
  assert.ok(!dayNotes(PLAN.days[2]).some(t=>t.includes('17:45')),'取消夜枫后不残留入寺截止提醒');
  state.choices[PLAN.days[2].date]=savedNightChoice;
- assert.equal(naraTiming.find(s=>s.id==='potato').times[0].text,'15:45—16:15','替换店铺保留抵达目标');
+ assert.equal(naraTiming.find(s=>s.id==='potato').times[0].text,'约18:05—18:20','替换店铺保留抵达目标');
  state.choices[nara.date]={shop1:'animate',shop2:'surugaya'};
  const shops=routeGroups(nara).find(g=>g.eventId==='anime_shopping');
  assert.equal(shops.stops.length,2,'两家店合并共享购物时段');
- assert.equal(shops.times[0].text,'18:00结束');
- assert.ok(shops.stops[0].times.some(t=>t.text==='15:45—16:15'),'第一店独有抵达目标保留');
+ assert.equal(shops.phase,'傍晚','替换店铺继承新的傍晚时段，不恢复旧下午标签');
+ assert.equal(shops.times[0].text,'参考18:20—19:50 · 可浮动1—2小时');
+ assert.ok(shops.stops[0].times.some(t=>t.text==='约18:05—18:20'),'第一店独有抵达目标保留');
  assert.equal(routeGroups(PLAN.days[7]).find(g=>g.eventId==='airport_train').stops.length,2,'候选列车窗口只出现一组');
  const kobe=PLAN.days[6];
  state.checks[kobe.date+':umeda_shop']=true;
  state.choices[kobe.date]={kobeAfternoon:'harbor',umedaSecond:true};
- assert.ok(effectiveEvents(kobe).some(ev=>ev.id==='umeda_shop'),'旧海边偏好不能删除新主线梅田购物');
+ assert.ok(!effectiveEvents(kobe).some(ev=>ev.id==='umeda_shop'),'旧梅田选择不恢复已取消购物');
  assert.ok(!effectiveRoute(kobe).some(n=>n.id==='starbucks_meriken'),'旧海边偏好不恢复已删除地点');
  assert.ok(effectiveRoute(kobe).some(n=>n.id==='starbucks_kitano'));
  assert.ok(effectiveRoute(kobe).some(n=>n.id==='kobe_bridge'));
  assert.equal(DayFlow.forDay(kobe).sections.flatMap(s=>s.events).map(ev=>ev.id).join(','),effectiveEvents(kobe).map(ev=>ev.id).join(','),'新活动按下午顺序分组');
- assert.equal(progress(kobe).done,1,'原购物进度保留，新午餐不会自动完成');
+ assert.equal(progress(kobe).done,0,'取消的梅田记录保留存储，但不计入当前进度');
  assert.equal(timedRoute(kobe).find(n=>n.id==='starbucks_kitano').times[0].text,'11:30—13:00');
  assert.ok(timedRoute(kobe).every(n=>n.times.every(t=>t.text!=='时间待确认')),'替换后每站时间完整');
  assert.equal(timedRoute(kobe).filter(n=>n.id==='port_nakakoen').length,2,'大桥往返保留重复中公园站');
@@ -282,19 +283,19 @@ const results=vm.runInContext(`
  const kobeEvents=effectiveEvents(kobe);
  assert.equal(kobe.departure_target,'09:30');
  assert.equal(kobeEvents.find(e=>e.id==='sannomiya_rest').time_label,'14:30—15:00','购物后保留半小时休息');
- assert.equal(kobeEvents.find(e=>e.id==='sky_dinner').time_label,'18:45—19:45','晚饭提前但保留一小时');
+ assert.equal(kobeEvents.find(e=>e.id==='sannomiya_dinner').time_label,'意向17:30—19:30 · 预留1.5—2小时','晚饭为意向窗口');
  assert.equal(kobeEvents.find(e=>e.id==='kobe_bridge_visit').time_label,'15:00—16:30','大桥往返仍有90分钟');
- assert.equal(kobeEvents.find(e=>e.id==='sky_visit').time_label,'19:45—20:30','保留夜景主线');
- for(let i=1;i<kobeEvents.length;i++)assert.equal(kobeEvents[i-1].time_label.split('—')[1],kobeEvents[i].time_label.split('—')[0],'窗口连续且无重叠 '+kobeEvents[i].id);
+ assert.ok(!kobeEvents.some(e=>e.id==='sky_visit'),'移除蓝天大厦');
+ for(let i=1;i<7;i++)assert.equal(kobeEvents[i-1].time_label.split('—')[1],kobeEvents[i].time_label.split('—')[0],'窗口连续且无重叠 '+kobeEvents[i].id);
 
- assert.ok(kobeEvents.findIndex(e=>e.id==='sky_dinner')<kobeEvents.findIndex(e=>e.id==='sky_visit'),'先晚饭后展望台');
+ assert.ok(kobeEvents.findIndex(e=>e.id==='sannomiya_dinner')<kobeEvents.findIndex(e=>e.id==='last_evening_return'),'晚饭后直接回酒店');
  assert.equal(kobeEvents.filter(e=>e.category==='meal'&&e.id.includes('lunch')).length,1,'只有一顿星巴克午餐');
  assert.equal(mealRows(kobe,kobeEvents.find(e=>e.id==='kitano_lunch')).length,1,'不增设三宫午餐备选');
- assert.ok(activityDetails(kobe,'sannomiya_shopping').includes('小吃沿中央街自选'));
+ assert.ok(dayNotes(kobe).join('').includes('小吃沿中央街自选'));
  assert.ok(!optionalControls(kobe).includes('下午安排'),'取消旧神户港分支控件');
  state.choices[kobe.date]={kobeAfternoon:'umeda'};
  assert.deepEqual(effectiveRoute(kobe).map(n=>n.id),kobe.route_stop_ids,'恢复默认路线');
- assert.equal(progress(kobe).done,1,'原购物进度保留');
+ assert.equal(progress(kobe).done,0,'旧梅田完成记录不计入新神户主线');
  delete state.checks[kobe.date+':umeda_shop'];
  // Pace changes must preserve protected experiences and selected-store wording.
  const paceUji=effectiveEvents(PLAN.days[1]);
@@ -302,11 +303,11 @@ const results=vm.runInContext(`
  assert.equal(paceUji.find(ev=>ev.id==='daikichi_visit').time_label,'14:15—15:30','登山仍保留75分钟');
  assert.equal(paceUji.find(ev=>ev.id==='uji_pilgrimage').time_label,'13:10—13:55','河岸增加15分钟');
  const paceNara=PLAN.days[5];state.choices[paceNara.date]={};
- assert.ok(effectiveEvents(paceNara).find(ev=>ev.id==='anime_shopping').condition.includes('骏河屋约50—60分钟'),'默认购物偏重中古');
+ assert.ok(effectiveEvents(paceNara).find(ev=>ev.id==='anime_shopping').condition.includes('1—2小时'),'购物按弹性预算安排');
  state.choices[paceNara.date]={shop1:'potato',shop2:'none'};
  assert.ok(!effectiveEvents(paceNara).find(ev=>ev.id==='anime_shopping').condition.includes('Animate'),'替换后不残留原店时长');
  state.choices[paceNara.date]={};
- assert.equal(kobeEvents.find(ev=>ev.id==='umeda_shop').time_label,'17:30—18:15','梅田缩为45分钟');
+ assert.ok(!optionalControls(kobe).includes('梅田'),'删除梅田购物控件');
  assert.equal(PLAN.days[7].departure_target,'05:15—05:25','不擅自推迟返程离店');
  assert.ok(flights().includes('16:00'),'航班总览按日本时区显示');
  const outEvent=effectiveEvents(PLAN.days[0]).find(ev=>ev.id==='flight_out');
@@ -345,14 +346,14 @@ const results=vm.runInContext(`
  // Current advice must follow the same choices as activities and routes.
  const sourceNotes=JSON.stringify(DETAILS);
  state.choices[kobe.date]={kobeAfternoon:'harbor',umedaSecond:true};
- assert.ok(dayNotes(kobe).join('').includes('第二店'),'旧海边偏好不影响当前购物说明');
+ assert.ok(dayNotes(kobe).join('').includes('三宫购物移到大桥之后'),'优先白天拍桥');
  assert.ok(dayTransport(kobe).join('').includes('中公園'),'交通包含新大桥往返');
  assert.ok(!mealRows(kobe,effectiveEvents(kobe).find(ev=>ev.id==='kitano_lunch'))[0][5].includes('餐后返大阪'));
  state.choices[kobe.date]={kobeAfternoon:'umeda',umedaMain:'pokemon_osaka'};
- assert.ok(dayNotes(kobe).join('').includes('Pokémon久等时换Nintendo'),'重点店切换后备选方向同步');
+ assert.ok(!dayNotes(kobe).join('').includes('Nintendo'),'旧梅田选择不影响当前说明');
  assert.ok(!dayNotes(kobe).join('').includes('第二店仅在'));
  state.choices[kobe.date]={kobeAfternoon:'umeda',umedaSecond:true};
- assert.ok(dayNotes(kobe).join('').includes('第二店'));
+ assert.ok(dayNotes(kobe).join('').includes('和牛自助'));
  state.choices[kyoto.date]={kodaijiPlan:'skip'};
  assert.ok(!dayNotes(kyoto).join('').match(/高台寺|八坂神社/),'取消夜枫后不重复入寺和神社规则');
  state.choices[kyoto.date]={kodaijiPlan:'night',yasakaBrief:true};
@@ -385,7 +386,7 @@ const results=vm.runInContext(`
  assert.equal(statusLabel(effectiveEvents(PLAN.days[7]).find(ev=>ev.id==='airport_train')),'','候选列车保留时间旁的复核提示');
  assert.equal(effectiveEvents(kyoto).find(ev=>ev.id==='higashiyama_walk').title,'东山散步');
  assert.ok(['sannenzaka','yasaka_tower','ninenzaka','nene'].every(id=>effectiveRoute(kyoto).some(n=>n.id===id)),'简短标题不删路线站点');
- assert.ok(dayTransport(PLAN.days[3]).join('').includes('奥社奉拜所'),'内部游览路线仍可查阅');
+ assert.ok(effectiveEvents(PLAN.days[3]).find(e=>e.id==='inari_visit').condition.includes('奥社奉拜所'),'内部游览路线仍可查阅');
  assert.ok(effectiveEvents(PLAN.days[3]).find(ev=>ev.id==='checkin_osaka').condition.includes('30—45分钟'),'保留入住休息');
  assert.ok(effectiveEvents(usj).find(ev=>ev.id==='usj_rest').title.includes('30分钟'),'保留USJ休息');
 
@@ -450,31 +451,21 @@ const results=vm.runInContext(`
   state.choices[day.date]=selected;
   for(const ev of effectiveEvents(day))assert.ok(timelinePage(day).includes('data-event="'+ev.id+'"'));
   assert.ok(routeGroups(day).flatMap(group=>group.stops).every(stop=>stop.times.length));
-  if(day.date==='2026-12-01')assert.equal(optionalControls(day),'');else assert.ok(optionalControls(day).length);
+  if(!day.optional.length)assert.equal(optionalControls(day),'');else assert.ok(optionalControls(day).length);
  }
  state.choices[nara.date]={};
- const beforeSpa=effectiveEvents(nara),beforeRoute=effectiveRoute(nara).map(n=>n.id),beforeChecks=JSON.stringify(state.checks);
- assert.ok(!beforeSpa.some(ev=>ev.id==='spaworld_visit'),'泡汤默认关闭');
- state.choices[nara.date]={spaworldEvening:true};
- const withSpa=effectiveEvents(nara),spaRoute=timedRoute(nara);
- assert.equal(JSON.stringify(withSpa.slice(0,-4)),JSON.stringify(beforeSpa.slice(0,-1)),'泡汤不修改白天与晚饭');
- assert.equal(withSpa.at(-4).title,'回酒店放购物袋');
- assert.equal(withSpa.at(-1).id,'spaworld_return');
- assert.equal(returnTarget(nara),'22:00—22:30');
- assert.equal(spaRoute.map(n=>n.id).join(','),[...beforeRoute,'spaworld','hotel_osaka'].join(','),'保留先返店放物品和泡汤后再次返店');
- assert.equal(spaRoute.at(-3).purpose,'放购物袋、整理行李');
- assert.equal(spaRoute.at(-1).purpose,'返店');
- assert.ok(spaRoute.every(n=>n.eventId&&n.times.every(t=>t.text!=='时间待确认')),'泡汤路线各段有活动与时间');
- assert.ok(timelinePage(nara).includes('泡汤详情与费用'));
- assert.ok(routePage(nara).includes('spaworld_walk'),'路线保留去浴场步行步骤');
- assert.ok(dayNotes(nara).some(n=>n.includes('20:30后')),'泡汤延误规则可见');
- assert.equal(DayFlow.forDay(nara).events.length,beforeSpa.length+3);
- assert.equal(JSON.stringify(state.checks),beforeChecks,'选择泡汤不修改完成进度');
+ const beforeSpa=JSON.stringify(effectiveEvents(nara)),beforeRoute=JSON.stringify(effectiveRoute(nara)),beforeChecks=JSON.stringify(state.checks);
+ state.choices[nara.date]={spaworldEvening:true};state.checks[nara.date+':spaworld_visit']=true;
+ assert.equal(JSON.stringify(effectiveEvents(nara)),beforeSpa,'旧泡汤选择不改动已确认的晚归主线');
+ assert.equal(JSON.stringify(effectiveRoute(nara)),beforeRoute,'旧泡汤选择不恢复冲突路线');
+ assert.ok(!optionalControls(nara).includes('泡汤'),'不再提供时间冲突的泡汤安排');
+ assert.equal(state.checks[nara.date+':spaworld_visit'],true,'保留旧泡汤完成记录');
+ delete state.checks[nara.date+':spaworld_visit'];
+ assert.equal(JSON.stringify(state.checks),beforeChecks,'不更改其他完成记录');
+ assert.equal(returnTarget(nara),'22:10—22:30');
  state.choices[nara.date]={};
- assert.equal(JSON.stringify(effectiveEvents(nara)),JSON.stringify(beforeSpa),'关闭泡汤完整还原默认安排');
- assert.equal(returnTarget(nara),'20:00—20:30');
  assert.equal(JSON.stringify(PLAN),lockedPlan,'文案调整和方案切换不改变原始行程');
- ({checked,legacyProgressPreserved:true,oldGionSelectionIgnored:true,kodaijiSkipAndRestore:true,yasakaWithinExistingWindow:true,ujiStampsAlongRoute:true,ujiLegacySelectionMigration:true,byodoinRetired:true,shopReplacement:true,umedaMainAndShortVisit:true,kobeLunchAndRoundTrip:true,oldHarborSelectionIgnored:true,flightSingleSource:true});
+ ({checked,legacyProgressPreserved:true,oldGionSelectionIgnored:true,kodaijiSkipAndRestore:true,yasakaWithinExistingWindow:true,ujiStampsAlongRoute:true,ujiLegacySelectionMigration:true,byodoinRetired:true,shopReplacement:true,retiredUmedaChoicesIgnored:true,lateStartNara:true,kobeLunchAndRoundTrip:true,oldHarborSelectionIgnored:true,flightSingleSource:true});
  `,scope);
 fs.writeFileSync(path.join(root,'检查记录/改版行程规则检查.json'),JSON.stringify({checkedAt:new Date().toISOString(),...results},null,2));
 console.log(JSON.stringify(results));

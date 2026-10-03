@@ -4,7 +4,6 @@ function currentChoiceText(d){const c=choice(d),labels=[];
  if(d.date==='2026-12-04'){if(c.usjExtra)labels.push('增加游乐项目');if(c.kinopio)labels.push('午餐改为Kinopio');}
  if(d.date==='2026-12-05'&&(c.shop1!=='animate'||c.shop2!=='surugaya'))labels.push('购物：'+selectedShops(c).map(id=>PLACE[id].name).join('＋'));
  if(d.date==='2026-12-05'&&c.spaworldEvening)labels.push('晚间泡汤');
- if(d.date==='2026-12-06'){if(c.umedaMain!=='nintendo_osaka')labels.push('Pokémon重点逛');if(c.umedaSecond)labels.push('另一家短看');}
  return labels.join(' · ');
 }
 function dayPage(){const d=PLAN.days[dayIndex],info=dayPresentation(d);return `
@@ -23,7 +22,7 @@ function timelinePage(d){const flow=DayFlow.forDay(d);return `
 
 function eventCard(d,ev){
  const checked=!!state.checks[d.date+':'+ev.id],isMeal=ev.category==='meal',isRest=ev.category==='rest';
- const compact=ev.category==='transport'||(isRest&&ev.place_ids.every(id=>id.startsWith('hotel_')||id==='usj'))||['sky_transfer','nakamura_walk','usj_app','usj_finish'].includes(ev.id);
+ const compact=ev.category==='transport'||(isRest&&ev.place_ids.every(id=>id.startsWith('hotel_')||id==='usj'))||['nakamura_walk','usj_app','usj_finish'].includes(ev.id);
  const imageIds=compact?[]:ev.place_ids.filter(id=>photoSrc(id)&&(!isMeal||PLACE[id].category==='restaurant'));
  const restaurantPhoto=imageIds.length===1&&PLACE[imageIds[0]].category==='restaurant';
  const foodRows=mealRows(d,ev),first=foodRows.find(r=>r[1]==='首选');
@@ -35,7 +34,7 @@ function eventCard(d,ev){
  ${ev.category==='hotel'&&ev.place_ids[0]?`<div class="checkin-address"><strong lang="ja">${e(PLACE[ev.place_ids[0]].name_ja)}</strong><p lang="ja">${e(PLACE[ev.place_ids[0]].address_ja||'')}</p></div>`:''}
  ${first?`<p class="meal-preview">${e(first[2])}<small>${e(first[3])}${first[3].includes('菜单')?'':' / 人'}</small></p>`:''}
  ${!isMeal&&!compact&&(ev.place_ids.some(id=>!imageIds.includes(id))||(ev.place_ids.length===1&&(!isRest||restaurantPhoto)))?`<div class="event-places">${ev.place_ids.filter(id=>!imageIds.includes(id)).map(placeButton).join('')}${ev.place_ids.length===1&&(!isRest||restaurantPhoto)?external(icon('map')+'地图',PLACE[ev.place_ids[0]].map_search_url,'place-map'):''}</div>`:''}
- ${isMeal&&first&&first[0]!=='早餐'?`<div class="meal-map">${external(icon('map')+'地图',mealMap(d,first),'text-link')}</div>`:''}
+ ${isMeal&&first&&first[0]!=='早餐'?`<div class="meal-map">${external(icon('map')+(first[8]?.pending?'查看餐饮区域':'地图'),mealMap(d,first),'text-link')}</div>`:''}
  </div></div>
  ${ev.id==='kodaiji_night'?`<p class="night-facts">17:00亮灯 · ¥800 / 人 <span>购票待确认</span></p><details class="event-detail"><summary>参拜详情</summary><div class="detail-body"><p>游览约60—75分钟，排队另计。稍有延迟时18:45前离寺，省去八坂神社并顺延晚餐。</p><p>活动期2026/10/23—12/13；21:30停止入场，22:00闭门。昼夜不清场，离场后同票不能再入。</p><p>${external('活动官网 ↗','https://www.kodaiji.com/saiji.html')} · ${external('票价 ↗','https://www.kodaiji.com/haikan.html')}</p></div></details>`:''}
  ${foodRows.length?`<details class="event-detail"><summary>${isRest?'茶歇详情':'餐厅详情'}</summary><div class="detail-body">${isMeal&&ev.condition?`<p>${e(ev.condition)}</p>`:''}${foodRows.map(r=>foodRow(d,r)).join('')}</div></details>`:''}
@@ -46,13 +45,13 @@ function eventCard(d,ev){
 const TRANSPORT_AT_EVENT={
  arrival_transfer:[0,1],uji_transfer:[0],suikan_stamp:[1],uji_return:[3],
  demachi_transfer:[0],kiyomizu_transfer:[1,2],kyoto_night_return:[4],
- inari_transfer:[1],luggage_pickup:[0],osaka_transfer:[3,4],usj_transfer:[0,1],
- nara_transfer:[0,1],nara_return_train:[2],nara_day_return:[4],
- kobe_transfer:[0],kobe_bridge_visit:[3],umeda_transfer:[4],sky_transfer:[5],last_evening_return:[6],
+ kyoto_tower_transfer:[0],inari_transfer:[1],luggage_pickup:[2],osaka_transfer:[3,4],usj_transfer:[0,1],
+ castle_transfer:[0],castle_station_walk:[1],nara_transfer:[1],nara_return_train:[2],nara_day_return:[4],
+ kobe_transfer:[0],kobe_bridge_visit:[3],last_evening_return:[4],
  airport_train:[1,2],usj_dinner:[4]
 };
 function transportDetail(d,ev){const indexes=TRANSPORT_AT_EVENT[ev.id];
- const notes=ev.id==='tofukuji_transfer'?['京都站乘JR奈良线至东福寺，再步行入寺。']:(indexes||[]).map(i=>DETAILS[d.date].transport[i]).filter(Boolean);
+ const notes=(indexes||[]).map(i=>DETAILS[d.date].transport[i]).filter(Boolean);
  if(!notes.length)return '';
  return `<details class="event-detail transport-detail"><summary>交通详情</summary><ul class="detail-body">${notes.map(n=>`<li>${e(n)}</li>`).join('')}</ul></details>`;
 }
@@ -67,7 +66,7 @@ function mealRows(d,ev){
  return rows.filter(r=>r[1]!=='可选');
 }
 function mealMap(d,r){if(r[7]&&PLACE[r[7]])return PLACE[r[7]].map_search_url;let city=d.cities.includes('宇治')&&['午餐','晚餐'].includes(r[0])?'宇治':d.date==='2026-12-05'&&r[0]==='午餐'?'奈良':d.date==='2026-12-06'&&r[0]==='午餐'?'神戸':d.date==='2026-12-03'&&r[0]==='午餐'?'京都':d.overnight==='hotel_kyoto'?'京都':'大阪';if(r[2].startsWith('通圓'))city='宇治';return mapURL(city+' '+r[2]);}
-function foodRow(d,r){return `<article class="food-row"><span class="food-priority">${e(r[0])} · ${e(r[1])}</span><h4 lang="ja">${e(r[2])}</h4>${r[1]!=='首选'&&r[7]&&photoSrc(r[7])?photoButton(r[7],'food-row-photo'):''}<p class="budget">${e(r[3])}${r[3].includes('菜单')?'':' / 人'}</p><p>${e(r[4])}</p><p class="muted">${e(r[5])}</p><div class="food-actions">${btn(icon('copy')+'复制名称','copy',`data-copy="${e(r[2])}"`,'text-button')}${r[0]!=='早餐'?external(icon('map')+'地图',mealMap(d,r),'text-link'):''}${r[6]?external('店铺资料 ↗',r[6],'text-link'):''}</div></article>`;}
+function foodRow(d,r){return `<article class="food-row"><span class="food-priority">${e(r[0])} · ${e(r[1])}</span><h4 lang="ja">${e(r[2])}</h4>${r[1]!=='首选'&&r[7]&&photoSrc(r[7])?photoButton(r[7],'food-row-photo'):''}<p class="budget">${e(r[3])}${r[3].includes('菜单')?'':' / 人'}</p><p>${e(r[4])}</p><p class="muted">${e(r[5])}</p><div class="food-actions">${r[8]?.pending?'':btn(icon('copy')+'复制名称','copy',`data-copy="${e(r[2])}"`,'text-button')}${r[0]!=='早餐'?external(icon('map')+(r[8]?.pending?'查看餐饮区域':'地图'),mealMap(d,r),'text-link'):''}${r[6]?external('店铺资料 ↗',r[6],'text-link'):''}</div></article>`;}
 
 function routeTimeMarkup(times){return times.map(t=>`<div class="route-time"><strong>${e(compactTime(t.text))}</strong><span>${e(t.label==='同段共用'?'游览':t.label)}</span></div>`).join('');}
 // Keep necessary actions that share a place visible between route stops.
@@ -93,7 +92,6 @@ function foodIdea(item){const p=PLACE[item.place],showPhoto=photoSrc(item.place)
 
 function dayTransport(d){const notes=[...DETAILS[d.date].transport],c=choice(d);
  if(d.date==='2026-12-05'&&c.spaworldEvening)notes.push('泡汤前先回酒店放购物袋、整理主要行李；步行到SPAWORLD及返店各预留10—15分钟，无需乘车。');
- if(d.date==='2026-12-03')return ['京都站乘JR奈良线至东福寺，再步行约10—15分钟入寺。',notes[1],notes[2],notes[0],...notes.slice(3)];
  if(d.date==='2026-12-05'&&(c.shop1!=='animate'||c.shop2!=='surugaya'))notes.splice(3,1);
  return notes;
 }
@@ -103,17 +101,11 @@ function dayFallbacks(d){const c=choice(d);return d.fallback_rules.flatMap(t=>{
   if(t.includes('八坂神社'))return c.kodaijiPlan==='night'&&c.yasakaBrief?[t]:['晚饭长队时换简餐；おめん20:00最后点餐。'];
   if(t.startsWith('不再排'))return [];
  }
- if(d.date==='2026-12-06'){
-  if(t.startsWith('Nintendo'))return [c.umedaMain==='pokemon_osaka'?'Pokémon久等时换Nintendo；两家都需久等就省购物。':t];
- }
  return [t];
 });}
 function dayNotes(d){const c=choice(d);const extra=(DETAILS[d.date].extra||[]).flatMap(t=>{
  if(d.date==='2026-12-02'&&t.startsWith('本次只安排'))return [];
  if(d.date==='2026-12-05'&&t.startsWith('日本桥默认'))return ['日本桥购物限1—2家，替换不增加总数；中古作品库存不保证。'];
- if(d.date==='2026-12-06'&&t.startsWith('Nintendo与Pokémon')){
-  return [c.umedaSecond?t:PLACE[c.umedaMain].name+'参考营业10:00—20:00，重点逛一家，18:15左右结束。'];
- }
  return [t];
 });if(d.date==='2026-12-05'&&c.spaworldEvening)extra.push(d.optional.find(o=>o.id==='spaworld_evening').rule);return [...dayFallbacks(d),...extra];}
 function foodSuggestions(d,eventId){

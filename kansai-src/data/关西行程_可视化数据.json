@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "plan_id": "kansai-2026-1130-1207",
-  "revision": "2026-10-02-usj-hours-confirmed",
+  "revision": "2026-10-03-tower-castle-kobe",
   "recorded_on": "2026-09-28",
   "language": "zh-CN",
   "title": "关西旅行规划基准",
@@ -22,18 +22,20 @@
     "default_departure": "10:00",
     "early_departure_exceptions": [
       "2026-12-01",
+      "2026-12-03",
       "2026-12-04",
+      "2026-12-05",
       "2026-12-06",
       "2026-12-07"
     ],
-    "pace": "综合强度适中，可偶尔晚归",
+    "pace": "整体中等偏满；12/3略减负，12/5为USJ次日且较满，12/6神户更从容。",
     "interests": [
       "吹响！上低音号",
       "玉子市场",
       "名侦探柯南",
       "千恋万花",
       "红叶",
-      "奈良看鹿",
+      "奈良短逛",
       "动漫游戏购物"
     ],
     "meal_budget_jpy_per_person": [
@@ -48,16 +50,18 @@
     ],
     "usj_ticket_preference": "Studio Pass普通票，接受少玩，不以Express为主",
     "protected_priorities": [
-      "生田神社巡礼",
-      "奈良看鹿",
-      "日本桥动漫购物"
+      "作品巡礼与联动集章",
+      "USJ",
+      "生田神社、北野物语馆与神户大桥巡礼",
+      "日本桥与三宫二次元购物",
+      "奈良短逛，不喂鹿或要求近距离互动"
     ],
     "excluded": [
       "任天堂博物馆",
-      "额外追加岚山、金阁寺、大阪城、海游馆、箕面"
+      "额外追加岚山、金阁寺、海游馆、箕面"
     ],
     "night_foliage_policy": "只安排12/2高台寺一次夜枫；11/30正常入住，12/1宇治晚餐后约20:15—20:35返店。",
-    "kobe_day": "12/6 09:30出门，保留生田、北野、三宫三店、神户大桥与梅田夜景；三店90分钟，购物后休息30分钟，晚饭60分钟，21:00—21:30返店。",
+    "kobe_day": "12/6 09:30离店，保留生田、北野物语馆、三宫三店与白天神户大桥；晚餐为三宫和牛自助意向，预留1.5—2小时，餐厅与价格待确认，未订位；饭后直接返店。",
     "shopping_focus": [
       "音像",
       "毛绒",
@@ -134,13 +138,18 @@
       "status": "purchase_not_confirmed"
     },
     {
-      "item": "梅田蓝天大厦门票",
-      "visit_date": "2026-12-06",
+      "item": "高台寺门票",
+      "visit_date": "2026-12-02",
       "status": "purchase_not_confirmed"
     },
     {
-      "item": "高台寺门票",
-      "visit_date": "2026-12-02",
+      "item": "京都塔展望室门票",
+      "visit_date": "2026-12-03",
+      "status": "purchase_not_confirmed"
+    },
+    {
+      "item": "大阪城天守阁门票",
+      "visit_date": "2026-12-05",
       "status": "purchase_not_confirmed"
     }
   ],
@@ -148,8 +157,7 @@
     "checked_on": "2026-09-28",
     "status": "early_season_forecast_not_guarantee",
     "primary_days": [
-      "2026-12-02",
-      "2026-12-03"
+      "2026-12-02"
     ],
     "spots": [
       {
@@ -158,13 +166,6 @@
         "forecast_viewing_start": "2026-11-25",
         "forecast_leaf_fall_start": "2026-12-10",
         "source": "https://weathernews.jp/koyo/spot/26112/"
-      },
-      {
-        "place_id": "tofukuji",
-        "visit_date": "2026-12-03",
-        "forecast_viewing_start": "2026-11-23",
-        "forecast_leaf_fall_start": "2026-12-10",
-        "source": "https://weathernews.jp/koyo/spot/26111/"
       }
     ],
     "notes": [
@@ -382,15 +383,16 @@
     },
     {
       "id": "kyoto_tower",
-      "name": "京都塔",
-      "name_ja": "京都タワー",
+      "name": "京都塔 · 京吹联动",
+      "name_ja": "ニデック京都タワー",
       "city": "京都",
-      "category": "optional_sight",
-      "address_ja": null,
+      "category": "sight",
+      "address_ja": "京都市下京区烏丸通七条下る東塩小路町721-1",
       "map_query": "京都 京都タワー",
       "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%20%E4%BA%AC%E9%83%BD%E3%82%BF%E3%83%AF%E3%83%BC",
       "coordinates": null,
-      "coordinate_status": "not_geocoded"
+      "coordinate_status": "not_geocoded",
+      "description": "2026/9/1—12/20京阪×京吹联动。展望室5层领叠印台纸，全7处；先完成收费区域再离场，门票不可再入。成人¥1,000，未购票；周边店10:00—20:30，各章点开放时间待确认。"
     },
     {
       "id": "demachi",
@@ -654,7 +656,7 @@
     },
     {
       "id": "nara_park",
-      "name": "奈良公园看鹿区域",
+      "name": "奈良公园",
       "name_ja": "奈良公園 東大寺南大門",
       "city": "奈良",
       "category": "park",
@@ -1205,6 +1207,97 @@
       "description": "天然温泉，男女分浴。位于JR新今宫站东出口附近；酒店靠南海站一侧，需步行到车站另一端。仅温泉、不用泳池：当前成人¥1,500/人，两人¥3,000，未购票。开放10:00至次日08:45（浴室更换日提前结束），午夜后加费；临行复核。纹身（含贴纸）不可入馆。",
       "source_url": "https://www.spaworld.co.jp/info/ryokin/",
       "checked_on": "2026-10-02"
+    },
+    {
+      "id": "osaka_castle",
+      "name": "大阪城天守阁",
+      "name_ja": "大阪城天守閣",
+      "city": "大阪",
+      "category": "sight",
+      "address_ja": "大阪市中央区大阪城1-1",
+      "map_query": "大阪城天守閣 大阪市中央区大阪城1-1",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%E5%9F%8E%E5%A4%A9%E5%AE%88%E9%96%A3%20%E5%A4%A7%E9%98%AA%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E5%A4%A7%E9%98%AA%E5%9F%8E1-1",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "description": "09:00—18:00，17:30停止入馆；成人¥1,200，未购票。参观含公园内步行、排队及馆内展览，12月营业与临时调整待复核。"
+    },
+    {
+      "id": "morinomiya",
+      "name": "JR森之宫站",
+      "name_ja": "JR 森ノ宮駅",
+      "city": "大阪",
+      "category": "station",
+      "address_ja": "大阪市中央区森ノ宮中央1丁目",
+      "map_query": "JR 森ノ宮駅 北口",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=JR%20%E6%A3%AE%E3%83%8E%E5%AE%AE%E9%A7%85%20%E5%8C%97%E5%8F%A3",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "description": "从车站到天守阁另留约20—30分钟步行；回程在此乘JR大阪环状线去鹤桥。"
+    },
+    {
+      "id": "jr_tsuruhashi",
+      "name": "JR鹤桥站",
+      "name_ja": "JR 鶴橋駅",
+      "city": "大阪",
+      "category": "station",
+      "address_ja": "大阪市天王寺区下味原町",
+      "map_query": "JR 鶴橋駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=JR%20%E9%B6%B4%E6%A9%8B%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "description": "按近鉄のりかえ指示换乘近铁；JR与近铁为不同运营商。"
+    },
+    {
+      "id": "kintetsu_tsuruhashi",
+      "name": "近铁鹤桥站",
+      "name_ja": "近鉄 鶴橋駅",
+      "city": "大阪",
+      "category": "station",
+      "address_ja": "大阪市生野区鶴橋2丁目",
+      "map_query": "近鉄 鶴橋駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E8%BF%91%E9%89%84%20%E9%B6%B4%E6%A9%8B%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "description": "前往近铁奈良，确认奈良线与目的地，不乘大阪线往伊势方向。"
+    },
+    {
+      "id": "nara_nandaimon",
+      "name": "东大寺南大门",
+      "name_ja": "東大寺 南大門",
+      "city": "奈良",
+      "category": "sight",
+      "address_ja": "奈良市雑司町406-1",
+      "map_query": "東大寺 南大門",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E5%A4%A7%E5%AF%BA%20%E5%8D%97%E5%A4%A7%E9%96%80",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "description": "南大门外观短拍；大佛殿在门内继续向北，内部参观另购票。"
+    },
+    {
+      "id": "namba_area",
+      "name": "日本桥／难波餐饮区",
+      "name_ja": "日本橋・難波周辺",
+      "city": "大阪",
+      "category": "area",
+      "address_ja": null,
+      "map_query": "なんば駅 日本橋 飲食店",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E3%81%AA%E3%82%93%E3%81%B0%E9%A7%85%20%E6%97%A5%E6%9C%AC%E6%A9%8B%20%E9%A3%B2%E9%A3%9F%E5%BA%97",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "description": "晚餐在购物沿线灵活选择，普通正餐预算¥1,000—2,500/人；地图为片区，未选定餐厅。"
+    },
+    {
+      "id": "shinsaibashi_south",
+      "name": "心斋桥筋南段",
+      "name_ja": "心斎橋筋商店街 南口",
+      "city": "大阪",
+      "category": "sight",
+      "address_ja": null,
+      "map_query": "心斎橋筋商店街 南口",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%BF%83%E6%96%8E%E6%A9%8B%E7%AD%8B%E5%95%86%E5%BA%97%E8%A1%97%20%E5%8D%97%E5%8F%A3",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "description": "戎桥北侧向商店街短走拍照，不逛大型商场，也不要求走到心斋桥站。"
     }
   ],
   "days": [
@@ -1910,13 +2003,14 @@
         "京都",
         "大阪"
       ],
-      "intensity": "中等；搬行李有额外负担",
+      "intensity": "中等；联动、稻荷与搬行李",
       "overnight": "hotel_osaka",
-      "departure_target": "10:00",
-      "hotel_return_target": "20:30—21:00",
+      "departure_target": "09:45",
+      "hotel_return_target": "20:00—20:30",
       "route_stop_ids": [
         "hotel_kyoto",
-        "tofukuji",
+        "kyoto_tower",
+        "kyoto_station",
         "inari",
         "hotel_kyoto",
         "kyoto_station",
@@ -1929,130 +2023,135 @@
       "timeline": [
         {
           "id": "checkout_kyoto",
-          "time_label": "10:00离店前",
+          "time_label": "09:45离店前",
           "time_status": "planning_window",
           "title": "退房、寄存行李",
+          "category": "hotel",
           "place_ids": [
             "hotel_kyoto"
           ],
-          "category": "hotel"
+          "condition": "寄存及领取方式待酒店确认；入住时询问，不能寄存则使用京都站可用储物柜并记录位置。"
         },
         {
-          "id": "tofukuji_transfer",
-          "time_label": "10:00—10:45",
+          "id": "kyoto_tower_transfer",
+          "time_label": "09:45—10:00",
           "time_status": "planning_window",
-          "title": "JR到东福寺站、步行入寺",
+          "title": "步行前往京都塔",
+          "category": "transport",
           "place_ids": [
-            "tofukuji"
-          ],
-          "category": "transport"
+            "hotel_kyoto",
+            "kyoto_tower"
+          ]
         },
         {
-          "id": "tofukuji_visit",
-          "time_label": "10:45—12:15",
+          "id": "kyoto_tower_visit",
+          "time_label": "10:00—11:30",
           "time_status": "planning_window",
-          "title": "通天桥赏枫",
+          "title": "京都塔 · 京吹联动集章",
+          "category": "visit",
           "place_ids": [
-            "tofukuji"
+            "kyoto_tower"
           ],
-          "category": "visit"
+          "condition": "先在展望室5层领叠印台纸，完成收费区章点再出场；共7处，按现场指引集章、拍展示与买周边。"
+        },
+        {
+          "id": "kyoto_lunch",
+          "time_label": "11:30—12:30",
+          "time_status": "planning_window",
+          "title": "午餐 · 京都站附近",
+          "category": "meal",
+          "place_ids": [
+            "kyoto_station"
+          ],
+          "condition": "含找店、步行和坐下用餐；附近简餐即可，不长时间候位。"
         },
         {
           "id": "inari_transfer",
-          "time_label": "12:15—12:50",
+          "time_label": "12:30—13:10",
           "time_status": "planning_window",
-          "title": "回车站，JR奈良线普通到稻荷",
+          "title": "京都站 → JR稻荷",
+          "category": "transport",
           "place_ids": [
-            "tofukuji",
+            "kyoto_station",
             "inari"
-          ],
-          "category": "transport"
-        },
-        {
-          "id": "inari_lunch",
-          "time_label": "12:50—13:35",
-          "time_status": "planning_window",
-          "title": "稻荷站附近午饭",
-          "place_ids": [
-            "inari"
-          ],
-          "category": "meal"
+          ]
         },
         {
           "id": "inari_visit",
-          "time_label": "13:40—15:10",
+          "time_label": "13:10—14:40",
           "time_status": "planning_window",
-          "title": "楼门、本殿、千本鸟居至奥社，原路返回",
+          "title": "伏见稻荷 · 千本鸟居",
+          "category": "visit",
           "place_ids": [
             "inari"
           ],
-          "category": "visit",
-          "condition": "楼门→本殿→千本鸟居→奥社奉拜所，原路返回。"
+          "condition": "楼门→本殿→千本鸟居→奥社奉拜所，原路返回；不登顶。"
         },
         {
           "id": "luggage_pickup",
-          "time_label": "15:10—16:00/16:30",
+          "time_label": "14:40—15:40",
           "time_status": "planning_window",
           "title": "回京都TUNE取行李",
+          "category": "transport",
           "place_ids": [
             "hotel_kyoto"
           ],
-          "category": "transport",
-          "condition": "本段含稻荷回京都的车程、步行与取行李；取好即可前往大阪，不必等到16:30。"
+          "condition": "含JR回京都、步行与取件；若改用储物柜，回寄存处取齐再乘车。"
         },
         {
           "id": "osaka_transfer",
           "time_label": "取箱后约1.5—2小时",
           "time_status": "planning_window",
-          "title": "JR新快速到大阪，换环状线至新今宫",
+          "title": "前往大阪新今宫酒店",
+          "category": "transport",
           "place_ids": [
             "kyoto_station",
             "jr_osaka",
             "jr_shinimamiya",
             "hotel_osaka"
           ],
-          "category": "transport"
+          "condition": "含候车、换乘、携行李步行；按实际列车出发，不锁定车次。"
         },
         {
           "id": "checkin_osaka",
-          "time_label": "约18:00—18:30",
+          "time_label": "约17:15—18:00",
           "time_status": "planning_window",
           "title": "入住大阪酒店",
+          "category": "hotel",
           "place_ids": [
             "hotel_osaka"
           ],
-          "category": "hotel",
-          "time_hint": "预计抵达",
-          "condition": "入住后休息30—45分钟。"
+          "condition": "预计到店范围，随取件和交通调整；入住后休息30—45分钟。",
+          "time_hint": "预计抵达"
         },
         {
           "id": "shinsekai_dinner",
-          "time_label": "休息后 · 参考19:00—20:00",
+          "time_label": "休息后 · 参考18:30—19:30",
           "time_status": "planning_window",
-          "title": "新世界串炸与通天阁外观",
+          "title": "新世界晚餐、通天阁外观",
+          "category": "meal",
           "place_ids": [
             "shinsekai"
           ],
-          "category": "meal",
-          "condition": "入住后先休息30—45分钟，准备好即可吃饭；顺利时可提前，延迟则顺延，19:00后才入住选简餐。"
+          "condition": "附近吃饭，通天阁只从地面短拍；按体力调整停留，晚到不追加登塔。"
         },
         {
           "id": "osaka_evening_return",
-          "time_label": "饭后 · 参考20:30—21:00",
-          "time_hint": "预计返店",
+          "time_label": "饭后 · 参考20:00—20:30",
           "time_status": "planning_window",
           "title": "返回酒店，准备次日USJ",
           "category": "transport",
           "place_ids": [
             "hotel_osaka"
           ],
-          "condition": "通天阁外观短拍后返店，可提前；备好USJ门票App、充电宝与早餐。"
+          "condition": "可提前返店；备好USJ门票App、充电宝与早餐。",
+          "time_hint": "预计返店"
         }
       ],
       "meals": {
         "lunch": {
-          "primary": "名代 宇奈とと×釜心うどん希楽 伏見稲荷店",
-          "alternative": "OICY Village内其他有空位档口"
+          "primary": "すき家 烏丸七条店或京都站附近简餐",
+          "alternative": "名代とんかつ かつくら 京都ポルタ店；不排长队"
         },
         "dinner": {
           "primary": "串かつだるま ジャンジャン店",
@@ -2060,33 +2159,36 @@
         }
       },
       "transport_notes": [
-        "稻荷参观后乘JR奈良线普通回京都，步行到TUNE取寄存行李，再从京都站去大阪。",
-        "稻荷选确实停靠的列车；在奥社奉拜所折返。"
+        "酒店到京都塔步行预留10—15分钟；先退房寄存，不带大箱上塔。",
+        "午饭后从京都站乘JR奈良线普通列车到稻荷；确认列车停靠稻荷。",
+        "稻荷参观后乘JR奈良线普通回京都，步行到TUNE或已确认的寄存点取行李。",
+        "取箱后京都站JR新快速→大阪，换环状线至JR新今宫，再步行去酒店；共预留约1.5—2小时。",
+        "酒店与新世界之间沿街步行；晚饭和外观短拍后直接回酒店。"
       ],
       "optional": [],
       "fallback_rules": [
-        "前段延迟时，东福寺只看通天桥，稻荷缩短拍照、在奥社奉拜所折返；保留取行李和入住后休息。",
-        "入住晚于19点直接简餐，饭后准备USJ App与次晨早饭。"
+        "京都塔延误时先减少重复拍照与周边挑选；收费区离场前查漏章，未开放章点现场询问，不为凑齐无限等候。",
+        "保留午饭、伏见稻荷奥社折返、取行李与入住后休息；延迟时稻荷少停拍照，晚餐改附近简餐。"
       ],
       "dining_recommendations": {
         "meals": [
           [
             "午餐",
             "首选",
-            "名代 宇奈とと×釜心うどん希楽 伏見稲荷店",
-            "约 ¥1,000–1,700",
-            "深草一之坪町13-5，OICY Village 1楼",
-            "鳗鱼饭或乌冬；参考10:00—21:30，最后点餐21:00。",
-            "https://www.unatoto.com/shop/fushimiinari/"
+            "すき家 烏丸七条店",
+            "¥700–1,200",
+            "真苧屋町197，京都站北侧",
+            "牛丼／定食；含步行和坐下用餐，12:30前后去京都站。",
+            "https://maps.sukiya.jp/jp/detail/970"
           ],
           [
             "午餐",
             "备选",
-            "伏見稲荷 OICY Village",
-            "¥1,000–2,500",
-            "同一餐饮设施内",
-            "换有座位的档口，不继续找远处餐厅。",
-            ""
+            "名代とんかつ かつくら 京都ポルタ店",
+            "¥2,500以内",
+            "京都站大楼11楼",
+            "参考11:00开门；只有无需久等时选择，预留上下楼时间。",
+            "https://www.katsukura.jp/shops/porta/"
           ],
           [
             "晚餐",
@@ -2109,6 +2211,42 @@
         ],
         "optional": [],
         "along_route": {}
+      },
+      "route_event_ids": [
+        "checkout_kyoto",
+        "kyoto_tower_visit",
+        "inari_transfer",
+        "inari_visit",
+        "luggage_pickup",
+        "osaka_transfer",
+        "osaka_transfer",
+        "osaka_transfer",
+        "checkin_osaka",
+        "shinsekai_dinner",
+        "osaka_evening_return"
+      ],
+      "visit_details": {
+        "kyoto_tower_visit": {
+          "title": "集章、门票与楼层",
+          "items": [
+            {
+              "text": "活动2026/9/1—12/20，覆盖12/3。叠印台纸免费，在展望室5层领取；共7处章点，各点开放时间尚未完全核实，到场先确认。",
+              "url": "https://www.kyoto-tower.jp/event/eupho26autumn/"
+            },
+            {
+              "text": "展望室5层须购票进入；当前成人¥1,000、两人¥2,000，未购票。10:00—21:00，20:30停止入场。",
+              "url": "https://www.kyoto-tower.jp/event/eupho26autumn/"
+            },
+            {
+              "text": "展望室1层是京都塔大楼11楼；周边店10:00—20:30。先完成展望室收费区，再按现场章点指引到大楼其他楼层。",
+              "url": "https://www.kyoto-tower.jp/event/eupho26autumn/"
+            },
+            {
+              "text": "门票不可再次入场，出场前检查台纸；京都塔叠印与12/1宇治GPS数字集章是不同活动。",
+              "url": "https://www.kyoto-tower.jp/faq/"
+            }
+          ]
+        }
       }
     },
     {
@@ -2296,168 +2434,246 @@
     {
       "date": "2026-12-05",
       "weekday": "周六",
-      "title": "奈良 · 大阪",
+      "title": "大阪城 · 奈良 · 日本桥",
       "cities": [
         "大阪",
         "奈良"
       ],
-      "intensity": "中等偏高；控制USJ后的累积疲劳",
+      "intensity": "较满；09:30离店，晚间返店",
       "overnight": "hotel_osaka",
-      "departure_target": "10:00",
-      "hotel_return_target": "争取20:00—20:30",
+      "departure_target": "09:30",
+      "hotel_return_target": "约22:10—22:30",
       "route_stop_ids": [
         "hotel_osaka",
         "jr_shinimamiya",
-        "jr_nara",
+        "morinomiya",
+        "osaka_castle",
+        "morinomiya",
+        "jr_tsuruhashi",
+        "kintetsu_tsuruhashi",
+        "kintetsu_nara",
         "nara_park",
+        "nara_nandaimon",
         "todaiji",
         "kintetsu_nara",
         "kintetsu_nippombashi",
         "animate",
         "surugaya",
+        "namba_area",
         "dotonbori",
         "glico",
+        "shinsaibashi_south",
         "nankai_namba",
         "nankai_shinimamiya",
         "hotel_osaka"
       ],
       "timeline": [
         {
-          "id": "nara_transfer",
-          "time_label": "10:00—11:20/11:40",
+          "id": "castle_transfer",
+          "time_label": "09:30—10:20",
           "time_status": "planning_window",
-          "title": "JR去奈良，公交或现场比较出租车接驳",
+          "title": "前往大阪城公园",
+          "category": "transport",
           "place_ids": [
             "hotel_osaka",
-            "jr_nara",
-            "nara_park"
+            "jr_shinimamiya",
+            "morinomiya"
           ],
-          "category": "transport"
+          "condition": "09:30从酒店出发，约10:20到森之宫侧公园入口；到站后仍要走到天守阁。"
+        },
+        {
+          "id": "castle_visit",
+          "time_label": "10:20—12:30",
+          "time_status": "planning_window",
+          "title": "大阪城公园、天守阁内部",
+          "category": "visit",
+          "place_ids": [
+            "osaka_castle"
+          ],
+          "condition": "公园步行约20—30分钟；其后约100—110分钟用于排队与馆内参观，馆内预留约75—90分钟。队伍较长则顺延，不靠压缩馆内参观赶路。"
+        },
+        {
+          "id": "castle_station_walk",
+          "time_label": "12:30—13:00",
+          "time_status": "planning_window",
+          "title": "步行回森之宫站附近",
+          "category": "walk",
+          "place_ids": [
+            "osaka_castle",
+            "morinomiya"
+          ],
+          "condition": "这是前往奈良交通的步行段，已计入70—90分钟交通总预算；在车站附近吃午饭。"
+        },
+        {
+          "id": "nara_lunch",
+          "time_label": "13:00—13:50",
+          "time_status": "planning_window",
+          "title": "午餐 · 森之宫站附近",
+          "category": "meal",
+          "place_ids": [
+            "morinomiya"
+          ],
+          "condition": "单独留50分钟找店、吃饭与坐下休息；沿回车站的路线选择能及时入座的简餐店，不把午饭算进交通。"
+        },
+        {
+          "id": "nara_transfer",
+          "time_label": "13:50—14:50",
+          "time_status": "planning_window",
+          "title": "森之宫 → 鹤桥 → 近铁奈良",
+          "category": "transport",
+          "place_ids": [
+            "morinomiya",
+            "jr_tsuruhashi",
+            "kintetsu_tsuruhashi",
+            "kintetsu_nara"
+          ],
+          "condition": "铁路、换乘和候车约40—60分钟；连同午饭前回森之宫步行，全程交通约70—90分钟，另加午饭50分钟。预计14:30—14:50到近铁奈良，具体班次待核。"
+        },
+        {
+          "id": "nara_park_walk",
+          "time_label": "参考14:50—15:20",
+          "time_status": "planning_window",
+          "title": "步行至公园、南大门",
+          "category": "walk",
+          "place_ids": [
+            "nara_park",
+            "nara_nandaimon"
+          ],
+          "condition": "从近铁奈良站沿公园步道到南大门，预留约30分钟；远看鹿即可，不喂鹿、不要求近距离互动。"
         },
         {
           "id": "nara_visit",
-          "time_label": "抵达后约90分钟 · 参考11:30—13:00",
+          "time_label": "参考15:20—16:10",
           "time_status": "planning_window",
-          "title": "看鹿、南大门、大佛殿",
+          "title": "南大门、大佛殿内部",
+          "category": "visit",
           "place_ids": [
-            "nara_park",
+            "nara_nandaimon",
             "todaiji"
           ],
-          "category": "visit",
-          "condition": "接驳较晚时，午饭与返程顺延，日本桥少逛一家，保留看鹿与休息。"
+          "condition": "南大门短拍、门间步行与大佛殿内部约30—40分钟，合计约50分钟。冬季大佛殿17:00闭门；排队另占用缓冲，不默认省内部。"
+        },
+        {
+          "id": "nara_rest",
+          "time_label": "参考16:10—16:20",
+          "time_status": "planning_window",
+          "title": "坐下休息",
+          "category": "rest",
+          "place_ids": [
+            "todaiji"
+          ],
+          "condition": "参观后在回车站沿途找座位短休，保留约10分钟。"
         },
         {
           "id": "nara_station_walk",
-          "time_label": "13:00—13:30",
+          "time_label": "参考16:20—16:50",
           "time_status": "planning_window",
-          "title": "前往近铁奈良站",
+          "title": "返回近铁奈良站",
+          "category": "walk",
           "place_ids": [
             "todaiji",
             "kintetsu_nara"
           ],
-          "category": "walk"
-        },
-        {
-          "id": "nara_lunch",
-          "time_label": "13:30—14:15/14:30",
-          "time_status": "planning_window",
-          "title": "午餐 · 休息45—60分钟",
-          "place_ids": [
-            "kintetsu_nara"
-          ],
-          "category": "meal"
+          "condition": "步行约30分钟回近铁奈良站；从抵达至回站共约2小时，不折回JR奈良。"
         },
         {
           "id": "nara_return_train",
-          "time_label": "14:30—15:00",
+          "time_label": "参考16:50起 · 全段75—90分钟",
           "time_status": "planning_window",
-          "title": "近铁奈良 → 日本桥",
+          "title": "近铁奈良 → 近铁日本桥",
+          "category": "transport",
           "place_ids": [
             "kintetsu_nara",
             "kintetsu_nippombashi"
           ],
-          "category": "transport",
-          "time_hint": "计划上车"
+          "condition": "从近铁奈良站返程计时，含候车、铁路、出站和到首店步行；16:50不是已确认发车时间。"
         },
         {
           "id": "nippombashi_arrival",
-          "time_label": "15:45—16:15",
+          "time_label": "约18:05—18:20",
           "time_status": "planning_window",
           "title": "抵达日本桥首店",
+          "category": "transport",
           "place_ids": [
             "animate"
           ],
-          "category": "transport",
           "time_hint": "预计抵达"
         },
         {
           "id": "anime_shopping",
-          "time_label": "18:00结束",
+          "time_label": "参考18:20—19:50 · 可浮动1—2小时",
           "time_status": "planning_window",
-          "title": "1—2家目标店，含15—20分钟坐下休息",
+          "title": "日本桥 · 重点店短逛",
+          "category": "shopping",
           "place_ids": [
             "animate",
             "surugaya"
           ],
-          "category": "shopping",
-          "condition": "Animate约25—30分钟，骏河屋约50—60分钟；另留15—20分钟坐下休息，店间步行另计，晚到只逛一家。"
+          "condition": "默认Animate→骏河屋，挑重点品类；含店间步行和约15分钟休息。先逛20:00关门的店，再晚饭；不设最低购物时长。"
+        },
+        {
+          "id": "nippombashi_dinner",
+          "time_label": "参考19:50—20:50",
+          "time_status": "planning_window",
+          "title": "晚餐 · 日本桥／难波",
+          "category": "meal",
+          "place_ids": [
+            "namba_area"
+          ],
+          "condition": "在日本桥／难波沿途找有空位、仍接待正餐的店，预留45—60分钟；晚到仍先购物，再吃饭，不赶饭。"
         },
         {
           "id": "dotonbori_walk",
-          "time_label": "18:00—18:20",
+          "time_label": "参考20:50—21:10",
           "time_status": "planning_window",
           "title": "前往道顿堀",
+          "category": "walk",
           "place_ids": [
             "dotonbori"
-          ],
-          "category": "walk"
-        },
-        {
-          "id": "dotonbori_dinner",
-          "time_label": "18:20—19:20左右",
-          "time_status": "planning_window",
-          "title": "大阪烧或备选简餐",
-          "place_ids": [
-            "dotonbori"
-          ],
-          "category": "meal"
+          ]
         },
         {
           "id": "glico_photo",
-          "time_label": "19:20—19:40左右",
+          "time_label": "参考21:10—21:40 · 共用30分钟",
           "time_status": "planning_window",
-          "title": "格力高合影",
+          "title": "戎桥、格力高与心斋桥短拍",
+          "category": "visit",
           "place_ids": [
-            "glico"
+            "glico",
+            "shinsaibashi_south"
           ],
-          "category": "visit"
+          "condition": "保留《柯南》戎桥对照；心斋桥筋南段短走拍照，不逛大型商场，不必走到心斋桥站。"
         },
         {
           "id": "nara_day_return",
-          "time_label": "争取20:00—20:30到店",
+          "time_label": "约22:10—22:30抵达",
           "time_status": "planning_window",
-          "title": "经南海难波回新今宫，累了可打车",
+          "title": "返回大阪酒店",
+          "category": "transport",
           "place_ids": [
             "nankai_namba",
             "nankai_shinimamiya",
             "hotel_osaka"
           ],
-          "category": "transport"
+          "condition": "拍照后经南海难波回新今宫，含步行和候车约30—45分钟。逛满2小时或排队延误时可晚至22:40—23:00；按实际结束时间返店，不加夜游。"
         }
       ],
       "meals": {
         "lunch": {
-          "primary": "餃子の王将 近鉄奈良駅前店",
-          "alternative": "釜めし茶漬け GRANCHA；用餐60—75分钟，从购物中扣除增加时间"
+          "primary": "森之宫站附近沿途简餐",
+          "alternative": "就近选择能及时入座的店；不等到奈良再吃午饭"
         },
         "dinner": {
-          "primary": "千房 道頓堀ビル店",
-          "alternative": "道頓堀 今井 本店或附近有空位简餐"
+          "primary": "日本桥／难波沿途现选简餐",
+          "alternative": "按空位和最后点餐时间选店；未订位"
         }
       },
       "transport_notes": [
-        "JR进奈良、近铁出，避免游览后折回JR奈良站。",
-        "日本桥站南下经东侧街道到Animate，再沿御宅路北上。"
+        "酒店步行到JR新今宫，乘大阪环状线内回り（天王寺、鹤桥方向）到森之宫；09:30离店、约10:20到公园入口，进天守阁另留20—30分钟步行。",
+        "天守阁步行回JR森之宫约30分钟，午饭单独留50分钟；饭后乘环状线外回り（鹤桥、天王寺方向）到JR鹤桥，按近鉄のりかえ换奈良线往近铁奈良，勿上大阪线往伊势。交通合计约70—90分钟，不含午饭。",
+        "近铁奈良站到公园、南大门、大佛殿再回站，含来回步行约2小时。回大阪乘大阪难波方向且停近铁日本桥的列车；回程含候车、出站与到店步行约75—90分钟。",
+        "近铁日本桥站沿东侧街道向南到Animate，再沿御宅路向北到骏河屋动漫·Hobby馆；只挑1—2家，不要求逐店逛完。",
+        "道顿堀、戎桥后在心斋桥筋南段短拍，再步行到南海难波→南海新今宫→酒店；不去JR难波。"
       ],
       "optional": [
         {
@@ -2468,143 +2684,41 @@
             "surugaya_main"
           ],
           "rule": "总数仍不超过两家；只逛一家时按作品偏好选，不保证中古库存"
-        },
-        {
-          "id": "spaworld_evening",
-          "title": "晚间泡汤 · SPAWORLD",
-          "choice_key": "spaworldEvening",
-          "default_enabled": false,
-          "place_ids": [
-            "spaworld"
-          ],
-          "time_label": "回酒店放好物品后，约22:00—22:30返店",
-          "hotel_return_target": "22:00—22:30",
-          "rule": "20:30后才到酒店、入馆预计等候超过15分钟或疲劳时，省去泡汤；不压缩白天游览、晚饭与休息。",
-          "event_overrides": {
-            "nara_day_return": {
-              "title": "回酒店放购物袋",
-              "condition": "放好购物袋、先整理主要行李再出门；20:30后才到酒店或疲劳时，取消泡汤，直接休息。"
-            }
-          },
-          "events": [
-            {
-              "id": "spaworld_walk",
-              "time_label": "放好物品后 · 步行预留10—15分钟",
-              "time_status": "planning_window",
-              "title": "步行前往SPAWORLD",
-              "place_ids": [
-                "hotel_osaka",
-                "spaworld"
-              ],
-              "category": "transport",
-              "optional": true,
-              "condition": "沿街步行至JR新今宫站东侧、新世界方向；无需进站乘车。"
-            },
-            {
-              "id": "spaworld_visit",
-              "time_label": "约20:30—21:00",
-              "time_hint": "预计抵达",
-              "time_status": "planning_window",
-              "title": "SPAWORLD · 泡汤与休息",
-              "place_ids": [
-                "spaworld"
-              ],
-              "category": "activity",
-              "optional": true,
-              "condition": "洗浴、换衣与休息合计60—75分钟，22:15前离馆；入馆预计等候超过15分钟就返店。"
-            },
-            {
-              "id": "spaworld_return",
-              "time_label": "约22:00—22:30返店",
-              "time_status": "planning_window",
-              "title": "步行回酒店休息",
-              "place_ids": [
-                "spaworld",
-                "hotel_osaka"
-              ],
-              "category": "transport",
-              "optional": true,
-              "condition": "步行预留10—15分钟；提前结束即可返店，不必等到表定时间。"
-            }
-          ],
-          "route_append": [
-            {
-              "id": "spaworld",
-              "phase": "夜间",
-              "eventId": "spaworld_visit",
-              "optional": true
-            },
-            {
-              "id": "hotel_osaka",
-              "phase": "夜间",
-              "eventId": "spaworld_return",
-              "optional": true
-            }
-          ],
-          "visit_details": {
-            "title": "泡汤详情与费用",
-            "items": [
-              {
-                "text": "天然温泉，男女分浴。当前成人¥1,500/人，两人¥3,000（不用泳池）；未购票。岩盘浴、私汤另收费，本安排不含。",
-                "url": "https://www.spaworld.co.jp/info/ryokin/"
-              },
-              {
-                "text": "温泉开放10:00至次日08:45，浴室更换日提前结束；午夜后加费。本次晚间使用，临行复核营业与价格。",
-                "url": "https://www.spaworld.co.jp/info/eigyo/"
-              },
-              {
-                "text": "纹身（含贴纸）不可入馆。",
-                "url": "https://www.spaworld.co.jp/info/ryokin/"
-              },
-              {
-                "text": "JR新今宫东出口附近；酒店在南海站一侧，步行需经过车站外围。",
-                "url": "https://www.spaworld.co.jp/about/access.html"
-              }
-            ]
-          }
         }
       ],
       "fallback_rules": [
-        "奈良接驳或午饭延迟时，后续步行、午饭及乘车顺延；日本桥缩为一家重点店，18点左右收尾，保留看鹿与休息。",
-        "餐厅长队换简餐；饭后延迟就格力高短拍返程，不赶路。"
+        "09:30离店，奈良约2小时和两顿饭都保留，这天仍较满；上午排队延长时顺延后续，不压缩天守阁参观或交通。",
+        "若预计15:30后才抵奈良，大佛殿17:00闭门会限制完整步行与入内时间。最小调整是减少沿途散拍，并仅在能节省时间时改用公交／出租车到南大门附近；不默认取消大佛殿。更大延误需现场重新判断，不能保证全部照表完成。",
+        "晚回大阪先购物再吃饭：Animate及らしんばん主要店约20:00关门，骏河屋动漫·Hobby馆约21:00。18:50后才到首店时，优先一家或缩短为约1小时，保留晚饭和休息。",
+        "拍照含戎桥《柯南》、格力高及心斋桥筋南段；不加商场购物。按实际结束时间返店，逛满2小时或明显延误可晚至22:40—23:00。"
       ],
       "dining_recommendations": {
         "meals": [
           [
             "午餐",
             "首选",
-            "餃子の王将 近鉄奈良駅前店",
-            "约 ¥1,000–1,500",
-            "小西町20，近铁奈良站4号出口附近",
-            "45—60分钟吃饭兼休息。参考11:00—22:30，最后点餐22:00。",
-            "https://map.ohsho.co.jp/b/ohsho/info/1459/"
-          ],
-          [
-            "午餐",
-            "备选",
-            "釜めし茶漬け GRANCHA",
-            "¥1,700–2,500",
-            "东向中町22，2楼",
-            "现做釜饭预留60—75分钟，增加时间从购物扣除；午市11:00、最后点餐16:00。",
-            "https://www.grancha-kamameshi.com/"
+            "森ノ宮駅周辺の飲食店",
+            "预算 ¥1,000–2,500",
+            "森之宫站附近，沿回站路线选择",
+            "13:00—13:50单独用于吃饭与休息；不排长队，餐厅现场选择，未订位。",
+            "",
+            "morinomiya",
+            {
+              "pending": true
+            }
           ],
           [
             "晚餐",
             "首选",
-            "千房 道頓堀ビル店",
-            "约 ¥1,500–2,500",
-            "道顿堀1-5-5，1—6楼",
-            "大阪烧／炒面按菜单点单；注意与7楼店铺区分。",
-            "https://shop.chibo.com/detail/28/"
-          ],
-          [
-            "晚餐",
-            "备选",
-            "道頓堀 今井 本店",
-            "参考 ¥930–1,850",
-            "道顿堀1-7-22",
-            "狐狸乌冬930、亲子丼1,500、锅烧乌冬1,850；参考最后点餐21:00，周三休。",
-            "https://www.d-imai.com/shops/honten/"
+            "日本橋・難波周辺の飲食店",
+            "预算 ¥1,000–2,500",
+            "日本桥／难波一带，餐厅现场选择",
+            "参考19:50—20:50；按空位及最后点餐时间选店，晚回大阪先购物。地图为餐饮片区，未订位。",
+            "",
+            "namba_area",
+            {
+              "pending": true
+            }
           ]
         ],
         "optional": [],
@@ -2614,9 +2728,78 @@
               "place": "eggtart",
               "label": "可选 · 顺路外带",
               "title": "道顿堀蛋挞",
-              "text": "顺路买蛋挞，排队超过10分钟就省；与格力高合影共用19:20—19:40。道顿堀本店现址1-7-5，参考11:00—21:00。",
+              "text": "现址道顿堀1-7-5，参考11:00—21:00。只有21:00前经过且无队伍时才外带；按本日参考时间已过营业时间，不专程赶店。",
               "budget": "按现场单价；两人可先买1—2个",
               "source": "https://eggtart.jp/shop/"
+            }
+          ]
+        }
+      },
+      "route_event_ids": [
+        "castle_transfer",
+        "castle_transfer",
+        "castle_transfer",
+        "castle_visit",
+        "castle_station_walk",
+        "nara_transfer",
+        "nara_transfer",
+        "nara_transfer",
+        "nara_park_walk",
+        "nara_visit",
+        "nara_visit",
+        "nara_return_train",
+        "nara_return_train",
+        "anime_shopping",
+        "anime_shopping",
+        "nippombashi_dinner",
+        "dotonbori_walk",
+        "glico_photo",
+        "glico_photo",
+        "nara_day_return",
+        "nara_day_return",
+        "nara_day_return"
+      ],
+      "visit_details": {
+        "castle_visit": {
+          "title": "天守阁门票与参观",
+          "items": [
+            {
+              "text": "当前09:00—18:00，17:30停止入馆；成人¥1,200、两人¥2,400，未购票。12月营业和临时调整须复核。",
+              "url": "https://www.osakacastle.net/guide/?lang=en"
+            },
+            {
+              "text": "09:30是酒店出发时间，约10:20到森之宫侧公园入口；至天守阁另留20—30分钟。随后排队和馆内合计约100—110分钟，馆内预留75—90分钟。",
+              "url": "https://www.osakacastle.net/access/index.html"
+            }
+          ]
+        },
+        "anime_shopping": {
+          "title": "店铺关门时间",
+          "items": [
+            {
+              "text": "Animate大阪日本桥：周六参考10:00—20:00；池田大楼2号馆1—2楼。",
+              "url": "https://www.animate.co.jp/shop/nipponbashi/"
+            },
+            {
+              "text": "骏河屋OtARoad动漫·Hobby馆：参考10:00—21:00；平田大楼2—3楼。",
+              "url": "https://www.suruga-ya.jp/feature/realstore/otaroad/index.html"
+            },
+            {
+              "text": "若现场替换为らしんばん，日本桥主要门店约20:00关门；分店不同，地址与营业另核对。",
+              "url": "https://www.lashinbang.com/store/"
+            }
+          ]
+        },
+        "nara_visit": {
+          "title": "大佛殿参观与闭门时间",
+          "items": [
+            {
+              "text": "11月至3月大佛殿08:00—17:00。当前成人¥800、两人¥1,600，现场拝观费以现金支付；购买状态待确认。",
+              "url": "https://www.todaiji.or.jp/information/haikan/"
+            },
+            {
+              "text": "参考15:20从南大门向内参观；大佛殿内部保留约30—40分钟，17:00闭门是硬边界。抵奈良晚于15:30时，先核对入堂余量再决定接驳，不靠压缩参观硬赶。",
+              "url": "https://www.todaiji.or.jp/information/haikan/"
             }
           ]
         }
@@ -2625,15 +2808,15 @@
     {
       "date": "2026-12-06",
       "weekday": "周日",
-      "title": "神户 · 梅田",
+      "title": "神户",
       "cities": [
         "大阪",
         "神户"
       ],
-      "intensity": "中等偏高",
+      "intensity": "中等；午晚餐与休息留足",
       "overnight": "hotel_osaka",
       "departure_target": "09:30",
-      "hotel_return_target": "21:00—21:30",
+      "hotel_return_target": "约20:45—21:00，随晚餐时段调整",
       "route_stop_ids": [
         "hotel_osaka",
         "jr_shinimamiya",
@@ -2650,11 +2833,8 @@
         "kobe_bridge",
         "port_nakakoen",
         "port_sannomiya",
+        "sannomiya_center",
         "sannomiya",
-        "jr_osaka",
-        "nintendo_osaka",
-        "coco_sky",
-        "sky",
         "jr_osaka",
         "jr_shinimamiya",
         "hotel_osaka"
@@ -2693,7 +2873,7 @@
           "place_ids": [
             "starbucks_kitano"
           ],
-          "condition": "上坡步行20分钟 → 用餐休息50分钟 → 下坡到三宫20分钟。轻食或座位不合适时，拍外观后回三宫吃简餐；超时顺延购物与休息，从梅田购物留出余量。"
+          "condition": "上坡步行20分钟 → 午餐、咖啡和休息约50分钟 → 下坡到三宫20分钟。北野物语馆外观是《魔女的夜宴》七绪咖啡店的玩家实景对照，非官方认定；无座位也保留外观短拍，再下坡吃简餐。"
         },
         {
           "id": "sannomiya_shopping",
@@ -2706,7 +2886,7 @@
             "surugaya_kobe",
             "bookoff_kobe"
           ],
-          "condition": "三店共90分钟，按现场收获分配；先找音像、毛绒与立牌，留出换楼和结账时间。"
+          "condition": "三家合计约90分钟，含换楼与结账；先看音像、毛绒和立牌。若前段延迟，把剩余购物放到大桥之后，不取消三店。"
         },
         {
           "id": "sannomiya_rest",
@@ -2727,72 +2907,43 @@
           "place_ids": [
             "kobe_bridge"
           ],
-          "condition": "含三宫往返交通；在北公园拍桥，现场约30分钟。"
+          "condition": "含三宫往返交通，北公园现场约30分钟；《Fate/stay night》桥梁对照，尽量白天拍摄。最晚15:00前后从三宫出发，余下购物回程再继续。"
         },
         {
-          "id": "umeda_transfer",
+          "id": "sannomiya_evening",
           "time_label": "16:30—17:30",
           "time_status": "planning_window",
-          "title": "返回大阪站",
-          "category": "transport",
+          "title": "三宫 · 购物余量与休息",
+          "category": "rest",
           "place_ids": [
-            "sannomiya",
-            "jr_osaka"
-          ]
-        },
-        {
-          "id": "umeda_shop",
-          "time_label": "17:30—18:15",
-          "time_status": "planning_window",
-          "title": "Nintendo OSAKA · 购物",
-          "category": "shopping",
-          "place_ids": [
-            "nintendo_osaka"
+            "sannomiya_center"
           ],
-          "condition": "重点店约45分钟；前段延迟时缩为30分钟，不增加第二家。"
+          "condition": "前段未逛完的店在此补足原定90分钟；已逛完就坐下休息，预留前往所选餐厅的步行时间。"
         },
         {
-          "id": "sky_transfer",
-          "time_label": "18:15—18:45",
+          "id": "sannomiya_dinner",
+          "time_label": "意向17:30—19:30 · 预留1.5—2小时",
           "time_status": "planning_window",
-          "title": "前往蓝天大厦",
-          "category": "walk",
-          "place_ids": [
-            "sky"
-          ]
-        },
-        {
-          "id": "sky_dinner",
-          "time_label": "18:45—19:45",
-          "time_status": "planning_window",
-          "title": "晚餐 · 蓝天大厦B1",
+          "title": "晚餐 · 三宫和牛自助",
           "category": "meal",
           "place_ids": [
-            "coco_sky"
-          ]
-        },
-        {
-          "id": "sky_visit",
-          "time_label": "19:45—20:30",
-          "time_status": "planning_window",
-          "title": "梅田蓝天大厦 · 夜景",
-          "category": "visit",
-          "place_ids": [
-            "sky"
+            "sannomiya_center"
           ],
-          "condition": "45分钟含入场与乘梯；正常20:30离开。排队延迟则顺延返店，不压缩晚饭和返程交通。"
+          "condition": "餐厅、套餐、价格与入店时间待确认，尚未订位；选店后按实际用餐时长调整返程。"
         },
         {
           "id": "last_evening_return",
-          "time_label": "20:30—21:30",
+          "time_label": "晚饭后约75—90分钟",
           "time_status": "planning_window",
-          "title": "返店 · 整理随身物品",
+          "title": "返回大阪酒店、收行李",
           "category": "transport",
           "place_ids": [
+            "sannomiya",
             "jr_osaka",
             "jr_shinimamiya",
             "hotel_osaka"
-          ]
+          ],
+          "condition": "19:30结束晚饭时，预计20:45—21:00返店；订位或用餐较晚则顺延。回店整理行李、证件和次晨早餐，不加夜游。"
         }
       ],
       "meals": {
@@ -2801,8 +2952,13 @@
           "note": "午餐、咖啡与休息合并；轻食或座位不合适则拍外观后回三宫现选简餐。"
         },
         "dinner": {
-          "primary": "CoCo壱番屋 梅田スカイビル店",
-          "alternative": "梅田スカイビル 地下飲食店"
+          "primary": "三宫附近和牛自助（餐厅待选）",
+          "price_jpy": null,
+          "booking_status": "not_reserved",
+          "duration_minutes": [
+            90,
+            120
+          ]
         }
       },
       "transport_notes": [
@@ -2810,27 +2966,14 @@
         "生田神社→北野，上坡预留20分钟；午饭后沿北野坂下坡至三宫，预留20分钟。",
         "三宫购物：らしんばん在センタープラザ东馆2F，骏河屋1号店在相邻さんプラザ3F；BOOKOFF另在グレースコウベ5F。三店共用90分钟，含换楼、上下楼与结账。",
         "三宫步行到Port Liner站，乘车至中公園，步行约8分钟到北公园；拍摄后原路回中公園，乘三宫方向列车。90分钟包含候车、步行、摄影与往返，不锁定车次。",
-        "回到三宫后换JR神户线至大阪；约一小时包含换乘与前往LUCUA SOUTH 13F购物楼层。",
-        "从购物楼层下楼，步行到梅田蓝天大厦，预留30分钟；先在B1吃饭，再找空中庭园展望台专用入口。",
-        "返回大阪站，乘JR环状线内回り、西九条／弁天町方向，确认停靠新今宫。"
+        "晚餐后步行回JR三ノ宮，乘JR神户线到大阪，换停靠新今宫的环状线列车；含到站、候车、换乘及回酒店步行，预留75—90分钟。"
       ],
-      "optional": [
-        {
-          "id": "second_umeda_shop",
-          "title": "第二家官方店短看",
-          "place_ids": [
-            "nintendo_osaka",
-            "pokemon_osaka"
-          ],
-          "rule": "两店共用17:30—18:15的45分钟：重点店约30分钟，余下时间含换店与第二店短看；第二店仅能直接入店时逛10—15分钟，晚到只逛重点店。"
-        }
-      ],
+      "optional": [],
       "fallback_rules": [
-        "午餐延迟时，三宫购物与30分钟休息顺延；先省梅田第二店，重点店可缩为30分钟，保留午晚餐和交通时间。",
-        "Nintendo整理券超出窗口则改Pokémon；两家都需久等时省购物。",
-        "大风、下雨或明显疲劳时，可省神户大桥或展望台。",
-        "正常20:30开始返程，目标21:00—21:30返店；若排队造成延迟，返店相应顺延，不再增加购物。",
-        "12/5晚先整理行李；12/6只收尾当天购物、证件和次晨早餐。"
+        "午餐或购物延迟时，把部分三宫购物移到大桥之后；保留约30分钟休息，并争取15:00从三宫去北公园，避免购物挤掉白天拍桥。",
+        "大风、雨天或明显疲劳时，在三宫休息并取消大桥往返；北野物语馆的外观巡礼保留，咖啡店满座则下坡吃简餐。",
+        "和牛自助尚未选店或订位，不能保证17:30入店；选店时核对价格、用餐限时与交通，较晚用餐则顺延返店。",
+        "前一晚能整理的行李先整理，12/6晚饭后直接回酒店收尾；不再追加大阪夜游。"
       ],
       "dining_recommendations": {
         "meals": [
@@ -2847,21 +2990,15 @@
           [
             "晚餐",
             "首选",
-            "CoCo壱番屋 梅田スカイビル店",
-            "约 ¥1,000–1,500",
-            "蓝天大厦B1，B-100号",
-            "先吃饭再上展望台。当前官网11:00—21:00最后点餐，临行复核。",
-            "https://tenpo.ichibanya.co.jp/map/2808/",
-            "coco_sky"
-          ],
-          [
-            "晚餐",
-            "备选",
-            "梅田スカイビル 地下飲食店",
-            "¥1,000–2,500",
-            "蓝天大厦B1",
-            "现场选有空位且合预算的店。",
-            ""
+            "和牛自助（餐厅待选）",
+            "价格待确认",
+            "三宫附近；地图仅标示商圈",
+            "预留1.5—2小时；尚未订位，店名、套餐与价格确认后再补。",
+            "",
+            "sannomiya_center",
+            {
+              "pending": true
+            }
           ]
         ],
         "optional": [],
@@ -2883,11 +3020,8 @@
         "kobe_bridge_visit",
         "kobe_bridge_visit",
         "kobe_bridge_visit",
-        "umeda_transfer",
-        "umeda_transfer",
-        "umeda_shop",
-        "sky_dinner",
-        "sky_visit",
+        "sannomiya_dinner",
+        "last_evening_return",
         "last_evening_return",
         "last_evening_return",
         "last_evening_return"
@@ -2995,7 +3129,7 @@
     "USJ：确认12/4门票购买状态、检修及演出场次，临行复核09:00—19:00营业时间是否调整。",
     "出发前7—10天查叶况，48—72小时前查天气，必要时减少户外项目。",
     "核对餐厅营业与菜单。",
-    "12/6北野星巴克与商店营业、Nintendo入店规则、大桥天气；蓝天大厦营业、票价及购票状态。",
+    "12/6选定三宫和牛自助餐厅，确认价格、营业、用餐时长与17:30前后入店时段；尚未订位。复核北野及三宫店铺营业、大桥天气。",
     "12/7核对南海时刻表、HX617航司通知与登机口。",
     "12/2高台寺：查看天气、叶况与排队情况。",
     "12/1确认きく午间营业、中村藤吉受理时间与候位；平和书店营业、京阿尼库存及京阪车站联动展示位置。",
@@ -3007,7 +3141,7 @@
     "地图搜索点位仍需核准，尤其长椅、登山口、景区入口和大型车站。",
     "timeline的time_label是规划时间窗口，不代表预约；12/4 USJ官方营业09:00—19:00，约07:00为计划离店时间。",
     "航班使用含UTC偏移的时间，不能用11:25至16:00直接相减作为飞行时长。",
-    "可选活动替换主线时应用replaces_event_ids；梅田两店择主次、日本桥替换店铺，不累加全部备选。",
+    "可选活动替换主线时应用replaces_event_ids；日本桥替换店铺、泡汤按条件启用，不累加全部备选。",
     "天气条件、购票状态和临行待确认项必须随可视化保留。"
   ],
   "night_foliage": {
@@ -3444,5 +3578,49 @@
     },
     "selection": "12/1 09:00离店，JR宇治进出；上午中村藤吉，午饭后西岸巡礼、过桥登山，白天先水管桥再逛书店。縣神社→水管桥顺路领章，不要求集满；回京都后到4F《宝岛》舞台，约20:15—20:35返店。",
     "source_url": "https://www.keihan.co.jp/euphonium/"
-  }
+  },
+  "additional_checks": [
+    {
+      "id": "kyoto-tower-20261003",
+      "text": "12/3确认京都塔7处叠印点开放时间、台纸供应与门票；入住京都时确认退房寄存和取件方式。"
+    },
+    {
+      "id": "castle-nara-20261003",
+      "text": "12/5复核大阪城天守阁12月营业与票价、森之宫经鹤桥到近铁奈良的班次、日本桥目标分店关门时间。"
+    }
+  ],
+  "visit_budget": [
+    {
+      "place_id": "kyoto_tower",
+      "date": "2026-12-03",
+      "adult_jpy": 1000,
+      "two_adults_jpy": 2000,
+      "status": "未购票",
+      "source": "https://www.kyoto-tower.jp/event/eupho26autumn/"
+    },
+    {
+      "place_id": "osaka_castle",
+      "date": "2026-12-05",
+      "adult_jpy": 1200,
+      "two_adults_jpy": 2400,
+      "status": "未购票",
+      "source": "https://www.osakacastle.net/guide/?lang=en"
+    },
+    {
+      "place_id": "todaiji",
+      "date": "2026-12-05",
+      "adult_jpy": 800,
+      "two_adults_jpy": 1600,
+      "status": "购买状态待确认；默认保留内部参观",
+      "source": "https://www.todaiji.or.jp/information/haikan/"
+    },
+    {
+      "place_id": "sannomiya_center",
+      "date": "2026-12-06",
+      "item": "和牛自助晚餐",
+      "adult_jpy": null,
+      "two_adults_jpy": null,
+      "status": "餐厅、价格待确认；未订位"
+    }
+  ]
 }

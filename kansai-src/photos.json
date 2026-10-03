@@ -1720,5 +1720,20 @@
     "reviewedAt": "2026-10-02",
     "attribution": "三宫中央街 — 神户观光局 / Feel KOBE",
     "changes": "按比例缩小并压缩为JPEG"
+  },
+  "osaka_castle": {
+    "sight": "大阪城天守阁",
+    "sourcePage": "https://www.osakacastle.net/",
+    "imageUrl": "https://www.osakacastle.net/img/top/keyvisual_bg_01.jpg",
+    "author": "大阪城天守閣 公式サイト",
+    "license": "官方宣传图片；权利归原权利方",
+    "width": 4000,
+    "height": 1920,
+    "sourceVerified": true,
+    "binaryDownloaded": true,
+    "visualContentVerified": true,
+    "local": "assets/osaka_castle.jpg",
+    "attribution": "大阪城天守閣公式サイト；非旅行当日照片",
+    "reviewedAt": "2026-10-03"
   }
 }

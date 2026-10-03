@@ -1,0 +1,190 @@
+{
+  "checkedAt": "2026-10-03T15:18:12.347Z",
+  "isolatedOrigin": "http://127.0.0.1:8775",
+  "mobilePages": [
+    {
+      "date": "2026-11-30",
+      "view": "timeline",
+      "badVisibleImages": [],
+      "events": 4,
+      "overflow": false,
+      "routeStops": 0,
+      "title": "抵达京都"
+    },
+    {
+      "date": "2026-11-30",
+      "view": "route",
+      "badVisibleImages": [],
+      "events": 0,
+      "overflow": false,
+      "routeStops": 4,
+      "title": "抵达京都"
+    },
+    {
+      "date": "2026-12-01",
+      "view": "timeline",
+      "badVisibleImages": [],
+      "events": 17,
+      "overflow": false,
+      "routeStops": 0,
+      "title": "宇治"
+    },
+    {
+      "date": "2026-12-01",
+      "view": "route",
+      "badVisibleImages": [],
+      "events": 0,
+      "overflow": false,
+      "routeStops": 23,
+      "title": "宇治"
+    },
+    {
+      "date": "2026-12-02",
+      "view": "timeline",
+      "badVisibleImages": [],
+      "events": 12,
+      "overflow": false,
+      "routeStops": 0,
+      "title": "京都"
+    },
+    {
+      "date": "2026-12-02",
+      "view": "route",
+      "badVisibleImages": [],
+      "events": 0,
+      "overflow": false,
+      "routeStops": 12,
+      "title": "京都"
+    },
+    {
+      "date": "2026-12-03",
+      "view": "timeline",
+      "badVisibleImages": [],
+      "events": 11,
+      "overflow": false,
+      "routeStops": 0,
+      "title": "京都 → 大阪"
+    },
+    {
+      "date": "2026-12-03",
+      "view": "route",
+      "badVisibleImages": [],
+      "events": 0,
+      "overflow": false,
+      "routeStops": 11,
+      "title": "京都 → 大阪"
+    },
+    {
+      "date": "2026-12-04",
+      "view": "timeline",
+      "badVisibleImages": [],
+      "events": 7,
+      "overflow": false,
+      "routeStops": 0,
+      "title": "USJ"
+    },
+    {
+      "date": "2026-12-04",
+      "view": "route",
+      "badVisibleImages": [],
+      "events": 0,
+      "overflow": false,
+      "routeStops": 4,
+      "title": "USJ"
+    },
+    {
+      "date": "2026-12-05",
+      "view": "timeline",
+      "badVisibleImages": [],
+      "events": 16,
+      "overflow": false,
+      "routeStops": 0,
+      "title": "大阪城 · 奈良"
+    },
+    {
+      "date": "2026-12-05",
+      "view": "route",
+      "badVisibleImages": [],
+      "events": 0,
+      "overflow": false,
+      "routeStops": 22,
+      "title": "大阪城 · 奈良"
+    },
+    {
+      "date": "2026-12-06",
+      "view": "timeline",
+      "badVisibleImages": [],
+      "events": 9,
+      "overflow": false,
+      "routeStops": 0,
+      "title": "神户"
+    },
+    {
+      "date": "2026-12-06",
+      "view": "route",
+      "badVisibleImages": [],
+      "events": 0,
+      "overflow": false,
+      "routeStops": 20,
+      "title": "神户"
+    },
+    {
+      "date": "2026-12-07",
+      "view": "timeline",
+      "badVisibleImages": [],
+      "events": 4,
+      "overflow": false,
+      "routeStops": 0,
+      "title": "返回香港"
+    },
+    {
+      "date": "2026-12-07",
+      "view": "route",
+      "badVisibleImages": [],
+      "events": 0,
+      "overflow": false,
+      "routeStops": 4,
+      "title": "返回香港"
+    }
+  ],
+  "pilgrimageDesktop": [
+    {
+      "date": "2026-12-01",
+      "view": "pilgrimage",
+      "cards": 12,
+      "missingText": false,
+      "overflow": false
+    },
+    {
+      "date": "2026-12-02",
+      "view": "pilgrimage",
+      "cards": 7,
+      "missingText": false,
+      "overflow": false
+    },
+    {
+      "date": "2026-12-03",
+      "view": "pilgrimage",
+      "cards": 1,
+      "missingText": false,
+      "overflow": false
+    },
+    {
+      "date": "2026-12-05",
+      "view": "pilgrimage",
+      "cards": 1,
+      "missingText": false,
+      "overflow": false
+    },
+    {
+      "date": "2026-12-06",
+      "view": "pilgrimage",
+      "cards": 3,
+      "missingText": false,
+      "overflow": false
+    }
+  ],
+  "progressReloadResetUndoRestored": true,
+  "shopSelectionRestored": true,
+  "existingUserOriginsUntouched": true
+}
