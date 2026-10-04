@@ -37,6 +37,7 @@ function routePurpose(node,eventId,index,nodes){
   if(eventId==='checkout_osaka')return '退房离店';
   if(eventId==='luggage_pickup')return '取行李';
   if(eventId==='nara_day_return'&&nodes.some(n=>n.id==='spaworld'))return '放购物袋、整理行李';
+  if(eventId==='checkin_osaka')return '抵达入住，随后休息30—45分钟';
   if(eventId?.startsWith('checkin_'))return '入住';
   return index===0?'离店':'返店';
  }

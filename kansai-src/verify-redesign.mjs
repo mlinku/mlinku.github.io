@@ -230,7 +230,7 @@ const results=vm.runInContext(`
  const flightOut=timedRoute(PLAN.days[0]);
  assert.equal(flightOut[0].times[0].text,'11:25');assert.equal(flightOut[1].times[0].text,'16:00','日本抵达时间');
  const movingHotels=timedRoute(PLAN.days[3]).filter(n=>n.id.startsWith('hotel_'));
- assert.deepEqual(Array.from(movingHotels,n=>n.purpose),['退房寄存','取行李','入住','返店'],'四次酒店停留有明确用途');
+ assert.deepEqual(Array.from(movingHotels,n=>n.purpose),['退房寄存','取行李','抵达入住，随后休息30—45分钟','返店'],'四次酒店停留有明确用途');
  assert.ok(!routePage(PLAN.days[3]).includes('再次经过'),'酒店用途替换笼统重复标识');
  assert.deepEqual(Array.from(timedRoute(PLAN.days[3]),n=>n.id),Array.from(PLAN.days[3].route_stop_ids),'增加用途不改路线顺序');
  const returnStation=timedRoute(PLAN.days[6]).filter(n=>n.id==='jr_osaka');
@@ -303,9 +303,12 @@ const results=vm.runInContext(`
  assert.equal(paceUji.find(ev=>ev.id==='daikichi_visit').time_label,'14:15—15:30','登山仍保留75分钟');
  assert.equal(paceUji.find(ev=>ev.id==='uji_pilgrimage').time_label,'13:10—13:55','河岸增加15分钟');
  const paceNara=PLAN.days[5];state.choices[paceNara.date]={};
- assert.ok(effectiveEvents(paceNara).find(ev=>ev.id==='anime_shopping').condition.includes('1—2小时'),'购物按弹性预算安排');
+ assert.ok(effectiveEvents(paceNara).find(ev=>ev.id==='anime_shopping').time_label.includes('可浮动1—2小时'),'购物按弹性预算安排');
  state.choices[paceNara.date]={shop1:'potato',shop2:'none'};
  assert.ok(!effectiveEvents(paceNara).find(ev=>ev.id==='anime_shopping').condition.includes('Animate'),'替换后不残留原店时长');
+ assert.ok(!effectiveEvents(paceNara).find(ev=>ev.id==='anime_shopping').condition.includes('店间步行'),'只选一家不提示跨店步行');
+ assert.ok(effectiveRoute(paceNara).filter(n=>selectedShops(choice(paceNara)).includes(n.id)).every(n=>!n.optional),'已选店铺纳入当天主线');
+ assert.ok(!dayFallbacks(paceNara).join('').includes('Animate'),'替换后延误提示不固定指向默认店铺');
  for(const stores of [['animate','surugaya'],['potato','surugaya_main'],['surugaya_main','potato'],['potato']]){
   state.choices[paceNara.date]={shop1:stores[0],shop2:stores[1]||'none'};
   const hours=activityDetails(paceNara,'anime_shopping');

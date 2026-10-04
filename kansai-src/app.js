@@ -67,13 +67,13 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
  if(d.date==='2026-12-02'){
   by('gion_rest').title='高台寺附近休息';
   by('gion_dinner_walk').title='前往晚饭地点';
-  by('gion_dinner_walk').condition='步行前往晚饭地点，预留约30分钟。';
+  delete by('gion_dinner_walk').condition;
   by('gion_dinner').title='晚餐 · 祇园／河原町';
   delete by('gion_dinner').condition; // The last-order reminder is shown once by executionNotice.
   by('kyoto_night_return').title='回酒店休息';
   if(c.kodaijiPlan==='skip'){
    events=events.filter(x=>x.id!=='kodaiji_night');
-   by('gion_dinner_walk').time_label='休息后';by('gion_dinner_walk').title='直接前往晚饭地点';
+   by('gion_dinner_walk').time_label='休息后';by('gion_dinner_walk').title='直接前往晚饭地点';by('gion_dinner_walk').condition='步行预留约30分钟。';
    by('gion_dinner').time_label='到店后 · 不等到19:00';by('gion_dinner').title='晚餐 · 祇园／河原町';
    by('kyoto_night_return').time_label='饭后返店';by('kyoto_night_return').title='回酒店休息';
   }else{
@@ -83,7 +83,7 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
   }
  }
  if(d.date==='2026-12-04'){if(c.usjExtra)by('usj_core').optionNote='按等候时间与体力加项目，保留午饭和休息，19:00前结束。';if(c.kinopio){by('usj_lunch').title='午餐 · キノピオ・カフェ';by('usj_lunch').optionNote='需单独取得餐厅资格，否则选择其他园内餐厅；用餐45—60分钟，可能超过¥2,500。';}}
- if(d.date==='2026-12-05'){by('anime_shopping').place_ids=selectedShops(c);by('nippombashi_arrival').place_ids=[c.shop1];by('anime_shopping').title=(c.shop2==='none'?'一家重点店':'重点店短逛')+' · 日本桥';by('anime_shopping').condition='约1—2小时含店间步行和15分钟休息，不设最低时长；晚到先逛店再吃饭，20:00关门的店优先。';}
+ if(d.date==='2026-12-05'){by('anime_shopping').place_ids=selectedShops(c);by('nippombashi_arrival').place_ids=[c.shop1];by('anime_shopping').title=(c.shop2==='none'?'一家重点店':'重点店短逛')+' · 日本桥';by('anime_shopping').condition=(c.shop2==='none'?'保留约15分钟休息':'含店间步行和约15分钟休息')+'；晚到先逛店再吃饭，20:00关门的店优先。';}
  if(d.date==='2026-12-05'&&c.spaworldEvening){const spa=d.optional.find(o=>o.id==='spaworld_evening');for(const [id,patch] of Object.entries(spa.event_overrides))Object.assign(by(id),patch);events.push(...spa.events.map(ev=>({...ev,place_ids:[...ev.place_ids]})));}
  return events;
 }
@@ -102,7 +102,7 @@ function compactTime(value){
 }
 function effectiveRoute(d){const c=choice(d);let nodes=d.route_stop_ids.map((id,i)=>({id,phase:DETAILS[d.date].routePhases[i],original:i+1,optional:false}));
  if(d.date==='2026-12-02'){if(c.kodaijiPlan==='skip')nodes=nodes.filter(n=>n.id!=='kodaiji');else if(c.yasakaBrief)nodes.splice(nodes.length-1,0,{id:'yasaka_shrine',phase:'夜间',optional:true});}
- if(d.date==='2026-12-05'){const at=nodes.findIndex(x=>x.id==='animate'),phase=nodes[at].phase;nodes.splice(at,2,...selectedShops(c).map(id=>({id,phase,optional:!['animate','surugaya'].includes(id)})));}
+ if(d.date==='2026-12-05'){const at=nodes.findIndex(x=>x.id==='animate'),phase=nodes[at].phase;nodes.splice(at,2,...selectedShops(c).map(id=>({id,phase,optional:false})));}
  if(d.date==='2026-12-05'&&c.spaworldEvening)nodes.push(...d.optional.find(o=>o.id==='spaworld_evening').route_append.map(n=>({...n})));
  return nodes;
 }

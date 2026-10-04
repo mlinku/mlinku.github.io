@@ -43,10 +43,10 @@ function eventCard(d,ev){
  </div></article>`;
 }
 const TRANSPORT_AT_EVENT={
- arrival_transfer:[0,1],uji_transfer:[0],suikan_stamp:[1],uji_return:[3],
+ arrival_transfer:[0,1],uji_transfer:[0],suikan_stamp:[2],uji_return:[3],
  demachi_transfer:[0],kiyomizu_transfer:[1,2],kyoto_night_return:[4],
- kyoto_tower_transfer:[0],inari_transfer:[1],luggage_pickup:[2],osaka_transfer:[3,4],usj_transfer:[0,1],
- castle_transfer:[0],castle_station_walk:[1],nara_transfer:[1],nara_return_train:[2],nara_day_return:[4],
+ kyoto_tower_transfer:[0],inari_transfer:[1],luggage_pickup:[2],osaka_transfer:[3],osaka_evening_return:[4],usj_transfer:[0],
+ castle_transfer:[0],nara_transfer:[1],nara_return_train:[2],nara_day_return:[4],
  kobe_transfer:[0],kobe_bridge_visit:[3],last_evening_return:[4],
  airport_train:[1,2],usj_dinner:[4]
 };
