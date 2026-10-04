@@ -1,0 +1,21 @@
+{
+  "checked_on": "2026-10-02",
+  "usj": {
+    "date": "2026-12-04",
+    "official_hours": "09:00—19:00",
+    "source": "https://www.usj.co.jp/web/ja/jp/park-guide/schedule/park-hour/",
+    "verification": "通过浏览器点击日历下一月，再点2026年12月4日金曜日，实际页面显示09:00〜19:00；初始页面只显示10月和11月，不能据此断言12月未公布。",
+    "departure_plan": "约07:00离店，门到门50—70分钟，预计08:00前后到园；规划时间非预约。",
+    "remaining": "临行复核营业时间变更、票务、检修、演出和区域规则；保留晚间Amex活动凭证限制。"
+  },
+  "airport_train": {
+    "travel_date": "2026-12-07",
+    "service": "南海空港急行",
+    "from": "南海新今宫05:47",
+    "to": "关西机场06:28",
+    "source": "https://www.nankai.co.jp/tc_railway/access-timetable",
+    "status": "现行官方平日时刻可查，12/7临行再核是否改点与运行情况；非预约车次。"
+  },
+  "checks": ["8天规则回归通过，旧进度兼容保留", "两种交付构建与资产核对通过"],
+  "git": {"committed":false,"pushed":false}
+}

@@ -1,0 +1,98 @@
+{
+  "checked_on": "2026-10-04",
+  "scope": "全部8天、总览、机酒、准备、行程/路线/巡礼、地点/交通/餐饮详情、可选分支；保留已确认计划与进度",
+  "actual_fixes": [
+    {
+      "date": "2026-12-02",
+      "category": "A",
+      "problem": "清水舞台巡礼卡的复制名称与本堂地图定位不一致，复制了入寺入口仁王门",
+      "fix": "巡礼卡复制清水寺 本堂；入寺路线保留清水寺 仁王門",
+      "source": "kansai-src/pilgrimage.json"
+    },
+    {
+      "date": "2026-12-03",
+      "category": "A",
+      "problem": "两份规划末尾残留京都塔集章可行性待确认提醒，与用户已接受方案及网页不一致",
+      "fix": "同步为门票准备和退房寄存取件；基准版本与JSON一致",
+      "sources": [
+        "关西旅行规划基准_2026-09-28.md",
+        "关西逐日执行攻略_2026-11-30至12-07.md"
+      ]
+    }
+  ],
+  "dates": [
+    {
+      "date": "2026-11-30",
+      "text_review": "completed",
+      "execution_review": "completed",
+      "result": "未发现本轮需修改项"
+    },
+    {
+      "date": "2026-12-01",
+      "text_review": "completed",
+      "execution_review": "completed",
+      "result": "未发现本轮需修改项"
+    },
+    {
+      "date": "2026-12-02",
+      "text_review": "completed",
+      "execution_review": "completed",
+      "result": "修复清水舞台复制名称"
+    },
+    {
+      "date": "2026-12-03",
+      "text_review": "completed",
+      "execution_review": "completed",
+      "result": "清理已接受的京都塔安排旧提醒"
+    },
+    {
+      "date": "2026-12-04",
+      "text_review": "completed",
+      "execution_review": "completed",
+      "result": "未发现本轮需修改项"
+    },
+    {
+      "date": "2026-12-05",
+      "text_review": "completed",
+      "execution_review": "completed",
+      "result": "未发现本轮需修改项"
+    },
+    {
+      "date": "2026-12-06",
+      "text_review": "completed",
+      "execution_review": "completed",
+      "result": "未发现本轮需修改项"
+    },
+    {
+      "date": "2026-12-07",
+      "text_review": "completed",
+      "execution_review": "completed",
+      "result": "未发现本轮需修改项"
+    }
+  ],
+  "unresolved_A": [],
+  "unresolved_B_execution_prerequisites": [
+    "12/4两张USJ普通门票未购买，需购票后登记App；攻略已写明未购",
+    "12/6和牛自助餐厅和订位未落实；预算≤6000日元/人，已有5000日元候选但不当成预订"
+  ],
+  "predeparture_rechecks": [
+    "航司通知与12/7南海候选班次及运行",
+    "USJ营业调整、场次、区域规则与检修",
+    "酒店退房寄存与取件（已给储物柜替代）",
+    "餐厅/分店营业、联动展示、天气及叶况"
+  ],
+  "regression": [
+    "verify-redesign",
+    "verify-polish",
+    "verify-oct3",
+    "verify-delivery: web and standalone",
+    "canonical 3 files byte-equal to data copies",
+    "copy name actual UI equals 清水寺 本堂; route entrance preserved"
+  ],
+  "coverage_limit": "网页交互在独立HTTP站点实测；file://版仅完成构建、内嵌资源与数据静态验证，未在浏览器实测",
+  "browser_report": "最终验收-确认后-浏览器.json",
+  "user_progress": "未读取或修改用户文件版、线上版存储；测试使用独立8782端口，测试项归零，选项恢复默认",
+  "bookings_routes_times": "不变",
+  "commit": false,
+  "push": false
+}

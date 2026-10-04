@@ -1,0 +1,300 @@
+{
+  "checkedOn": "2026-10-04",
+  "origin": "http://127.0.0.1:8782",
+  "desktop": [
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-11-30/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-11-30/route"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-01/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-01/route"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-01/pilgrimage"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-02/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-02/route"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-02/pilgrimage"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-03/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-03/route"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-03/pilgrimage"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-04/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-04/route"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-05/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-05/route"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-05/pilgrimage"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-06/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-06/route"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-06/pilgrimage"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-07/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "url": "#day/2026-12-07/route"
+    }
+  ],
+  "mobile": [
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "抵达京都",
+      "url": "#day/2026-11-30/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "抵达京都",
+      "url": "#day/2026-11-30/route"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "宇治",
+      "url": "#day/2026-12-01/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "宇治",
+      "url": "#day/2026-12-01/route"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "宇治",
+      "url": "#day/2026-12-01/pilgrimage"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "京都",
+      "url": "#day/2026-12-02/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "京都",
+      "url": "#day/2026-12-02/route"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "京都",
+      "url": "#day/2026-12-02/pilgrimage"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "京都 → 大阪",
+      "url": "#day/2026-12-03/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "京都 → 大阪",
+      "url": "#day/2026-12-03/route"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "京都 → 大阪",
+      "url": "#day/2026-12-03/pilgrimage"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "USJ",
+      "url": "#day/2026-12-04/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "USJ",
+      "url": "#day/2026-12-04/route"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "大阪城 · 奈良",
+      "url": "#day/2026-12-05/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "大阪城 · 奈良",
+      "url": "#day/2026-12-05/route"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "大阪城 · 奈良",
+      "url": "#day/2026-12-05/pilgrimage"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "神户",
+      "url": "#day/2026-12-06/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "神户",
+      "url": "#day/2026-12-06/route"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "神户",
+      "url": "#day/2026-12-06/pilgrimage"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "返回香港",
+      "url": "#day/2026-12-07/timeline"
+    },
+    {
+      "broken": [],
+      "checked": 0,
+      "overflow": false,
+      "title": "返回香港",
+      "url": "#day/2026-12-07/route"
+    }
+  ],
+  "interactions": [
+    "date and view navigation",
+    "details expand and collapse",
+    "hotel details",
+    "Google Maps opened to Morinomiya",
+    "Japanese name copied and original clipboard restored",
+    "real and anime zoom switching",
+    "activity and pilgrimage progress survive reload",
+    "next incomplete jumps to expected event",
+    "timeline reset preserves pilgrimage completion",
+    "pilgrimage reset and undo",
+    "todos survive reload",
+    "night foliage/Yasaka branch and meals/return sync",
+    "USJ Kinopio and extra option",
+    "Nippombashi shop replacement and single shop survive reload"
+  ],
+  "testState": "isolated origin; all tested checkboxes restored to unchecked; options restored to defaults; user file/live origins untouched",
+  "fileProtocol": "not browser-tested in this pass; standalone build and all asset references verified",
+  "jsConsoleErrors": []
+}

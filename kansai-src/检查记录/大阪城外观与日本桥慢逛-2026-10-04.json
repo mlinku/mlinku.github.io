@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-10-04T14:01:46.091Z",
+  "bookingsUnchanged": true,
+  "protectedDates": [
+    "2026-11-30",
+    "2026-12-01",
+    "2026-12-02",
+    "2026-12-03",
+    "2026-12-04",
+    "2026-12-06",
+    "2026-12-07"
+  ],
+  "protectedFields": [
+    "bookings",
+    "schedule times",
+    "event IDs",
+    "routes",
+    "optional arrangements"
+  ],
+  "reviewedDates": [
+    "2026-11-30",
+    "2026-12-01",
+    "2026-12-02",
+    "2026-12-03",
+    "2026-12-04",
+    "2026-12-05",
+    "2026-12-06",
+    "2026-12-07"
+  ],
+  "nara": {
+    "hotelDeparture": "09:30",
+    "castleVisit": "10:20–11:15",
+    "separateLunch": "11:45–12:35",
+    "stationToStation": "13:35–15:35",
+    "shoppingArrival": "16:50–17:05",
+    "hotelReturn": "21:30–21:45",
+    "latestArrivalBeforeTempleBecomesConstrained": "15:30"
+  },
+  "pilgrimageAndMediaPreserved": true
+}

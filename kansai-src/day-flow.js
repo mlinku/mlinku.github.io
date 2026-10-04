@@ -41,6 +41,8 @@ function routePurpose(node,eventId,index,nodes){
   if(eventId?.startsWith('checkin_'))return '入住';
   return index===0?'离店':'返店';
  }
+ if(node.id==='hkg'&&eventId==='flight_out')return '建议08:25抵达T2，先办理值机';
+ if(node.id==='kix'&&eventId==='airport_train')return '到站后前往T1值机';
  if(!nodes.slice(0,index).some(p=>p.id===node.id))return '';
  if(node.id==='uji_bridge')return eventId==='uji_shrines'?'过桥去神社':'过桥去晚餐';
  if(eventId==='uji_return')return node.id==='jr_uji'?'乘车回京都':nodes[index+1]?.id==='kyoto_stage'?'下车去4F舞台':'下车返店';
@@ -67,11 +69,12 @@ function timedRoute(d){
   if(d.date==='2026-12-07'){
    if(node.id==='hotel_osaka')times=[eventTime('checkout_osaka','退房离店')];
    if(node.id==='nankai_shinimamiya')times=[eventTime('airport_train','候选列车')];
-   if(node.id==='kix')times=[eventTime('airport_train','机场列车'),flightTime('flight_home','departure')];
+   if(node.id==='kix')times=[eventTime('airport_train','机场列车')];
    if(node.id==='hkg')times=[flightTime('flight_home','arrival')];
   }
  if(d.date==='2026-12-04'&&node.id==='usj'){id='usj_app';times=[eventTime('usj_app','申请区域资格')];}
   if(d.date==='2026-12-05'){
+   if(node.id==='osaka_castle'&&id==='castle_visit')times=[eventTime(id,'步行与外观拍照')];
    if(node.id==='spaworld')times=[eventTime('spaworld_visit','预计抵达'),{text:'60—75分钟',label:'洗浴与休息 · 22:15前离馆'}];
    if(node.id==='kintetsu_nara')times=[eventTime(id,id==='nara_return_train'?'返程，含候车':'交通')];
    if(node.id==='kintetsu_nippombashi')times=[{text:'到站时刻待确认',label:'下车步行去首店'}];

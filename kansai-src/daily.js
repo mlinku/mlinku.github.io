@@ -73,8 +73,9 @@ function routeTimeMarkup(times){return times.map(t=>`<div class="route-time"><st
 function routeActionsBetween(d,groups){
  const events=effectiveEvents(d),represented=new Set(groups.flatMap(g=>[g.eventId,...g.stops.flatMap(s=>s.times.map(t=>t.eventId))])),buckets=Array.from({length:groups.length+1},()=>[]);
  for(const ev of events){
-  if(represented.has(ev.id)&&ev.id!=='usj_dinner')continue;
-  const rank=events.indexOf(ev),next=groups.findIndex(g=>events.findIndex(item=>item.id===g.eventId)>rank||(ev.id==='usj_dinner'&&g.eventId===ev.id));
+  const beforeArrival=['usj_dinner','flight_home'].includes(ev.id);
+  if(represented.has(ev.id)&&!beforeArrival)continue;
+  const rank=events.indexOf(ev),next=groups.findIndex(g=>events.findIndex(item=>item.id===g.eventId)>rank||(beforeArrival&&g.eventId===ev.id));
   buckets[next<0?groups.length:next].push(ev);
  }
  return buckets.map(items=>items.map(ev=>`<p class="route-action-step">${pageLink(`<span>${e(compactTime(ev.time_label))}</span><strong>${e(ev.title)}</strong>${icon('chevron')}`,`#day/${d.date}/timeline/${ev.id}`)}</p>`).join(''));

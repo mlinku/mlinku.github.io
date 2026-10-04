@@ -62,7 +62,7 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
   const from=flightLocal(booking,'departure'),to=flightLocal(booking,'arrival');
   ev.time_label=from.time+' '+from.region+'起飞 → '+to.time+' '+to.region+'抵达';
   ev.title=booking.flight_number+' · '+from.city+' → '+to.city;
-  ev.condition=flightTerminals(booking);
+  ev.condition=[flightTerminals(booking),ev.condition].filter(Boolean).join(' ');
  }
  if(d.date==='2026-12-02'){
   by('gion_rest').title='高台寺附近休息';
@@ -83,7 +83,7 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
   }
  }
  if(d.date==='2026-12-04'){if(c.usjExtra)by('usj_core').optionNote='按等候时间与体力加项目，保留午饭和休息，19:00前结束。';if(c.kinopio){by('usj_lunch').title='午餐 · キノピオ・カフェ';by('usj_lunch').optionNote='需单独取得餐厅资格，否则选择其他园内餐厅；用餐45—60分钟，可能超过¥2,500。';}}
- if(d.date==='2026-12-05'){by('anime_shopping').place_ids=selectedShops(c);by('nippombashi_arrival').place_ids=[c.shop1];by('anime_shopping').title=(c.shop2==='none'?'一家重点店':'重点店短逛')+' · 日本桥';by('anime_shopping').condition=(c.shop2==='none'?'保留约15分钟休息':'含店间步行和约15分钟休息')+'；晚到先逛店再吃饭，20:00关门的店优先。';}
+ if(d.date==='2026-12-05'){by('anime_shopping').place_ids=selectedShops(c);by('nippombashi_arrival').place_ids=[c.shop1];by('anime_shopping').title=(c.shop2==='none'?'日本桥 · 一家重点店':'日本桥 · 动漫购物');by('anime_shopping').condition=(c.shop2==='none'?'按兴趣慢逛，保留约20分钟休息':'挑1—2家慢逛，含店间步行和约20分钟休息')+'；先逛20:00关门的店，再吃饭。';}
  if(d.date==='2026-12-05'&&c.spaworldEvening){const spa=d.optional.find(o=>o.id==='spaworld_evening');for(const [id,patch] of Object.entries(spa.event_overrides))Object.assign(by(id),patch);events.push(...spa.events.map(ev=>({...ev,place_ids:[...ev.place_ids]})));}
  return events;
 }
