@@ -276,6 +276,7 @@
 /* Place information stays beside the itinerary; image buttons only enlarge images. */
 .place-info {margin:10px 0; overflow-wrap:anywhere; font-size:14px; line-height:1.75}
 .place-info p {margin:4px 0}
+.activity-hotel {margin:8px 0; font-size:14px; line-height:1.75; overflow-wrap:anywhere}
 .place-info+.place-info {padding-top:10px; border-top:1px solid var(--line)}
 .stay-info {margin:10px 0 16px; padding:0 14px; border:1px solid var(--line); border-radius:10px; background:var(--white); font-size:14px}
 .stay-info summary,.place-reference summary {min-height:44px; padding:10px 0; cursor:pointer}

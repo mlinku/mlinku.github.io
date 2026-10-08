@@ -7,21 +7,27 @@ function navigationPlace(ev){
 function eventNavigation(ev,d,includeMeal=false){
  const first=d?mealRows(d,ev).find(row=>row[1]==='首选'):null;
  const hasMealMap=includeMeal||(first&&first[0]!=='早餐');
- const links=ev.place_ids.filter(id=>!hasMealMap||id!==first?.[7]).map(id=>external(icon('pin')+'地图：'+e(PLACE[id].name),PLACE[id].map_search_url,'text-link'));
+ const stops=NAVIGATION_PATHS[ev.id]||activityPlaceIds(ev);
+ const links=stops.filter(stop=>!hasMealMap||stop!==first?.[7]).map(stop=>{
+  const [label,url]=Array.isArray(stop)?[stop[0],mapURL(stop[1])]:[PLACE[stop].name,PLACE[stop].map_search_url];
+  return external(icon('pin')+'地图：'+e(label),url,'text-link');
+ });
  if(ev.id==='gion_dinner_walk'&&d){const row=DETAILS[d.date].meals.find(r=>r[0]==='晚餐'&&r[1]==='首选');links.push(external(icon('pin')+'地图：'+e(row[2]),mealMap(d,row),'text-link'));}
  if(includeMeal&&first&&first[0]!=='早餐')links.push(external(icon('pin')+'地图：'+e(first[2]),mealMap(d,first),'text-link'));
  return links.length?`<div class="activity-navigation">${links.join('')}</div>`:'';
 }
-// Stations and entrances absent from the activity's destination list remain explicit.
-const TRANSPORT_MAPS={
- demachi_transfer:[['京都站地铁烏丸线','京都駅 地下鉄 烏丸線'],['今出川站','今出川駅']],
- inari_transfer:[['JR稻荷站','稲荷駅 JR']],luggage_pickup:[['JR稻荷站','稲荷駅 JR'],['京都站中央口','京都駅 中央口']],
- kyoto_night_return:[['阪急京都河原町站','京都河原町駅 阪急'],['阪急烏丸站','烏丸駅 阪急'],['地铁四条站','四条駅 地下鉄']],
- usj_transfer:[['西九条站','西九条駅 JR'],['Universal City站','ユニバーサルシティ駅']],
- usj_dinner:[['Universal City站','ユニバーサルシティ駅'],['西九条站','西九条駅 JR'],['JR新今宫站','新今宮駅 JR']],
- kobe_bridge_visit:[['Port Liner三宫站','三宮駅 ポートライナー'],['Port Liner中公园站','中公園駅 ポートライナー']]
+// Supplemental station maps belong in travel order, before the destination.
+const NAVIGATION_PATHS={
+ demachi_transfer:['hotel_kyoto',['京都站地铁烏丸线','京都駅 地下鉄 烏丸線'],['今出川站','今出川駅'],'demachi'],
+ inari_transfer:['kyoto_station',['JR稻荷站','稲荷駅 JR'],'inari'],
+ luggage_pickup:[['JR稻荷站','稲荷駅 JR'],['京都站中央口','京都駅 中央口'],'hotel_kyoto'],
+ kyoto_night_return:[['阪急京都河原町站','京都河原町駅 阪急'],['阪急烏丸站','烏丸駅 阪急'],['地铁四条站','四条駅 地下鉄'],'hotel_kyoto'],
+ usj_transfer:['hotel_osaka','jr_shinimamiya',['西九条站','西九条駅 JR'],['Universal City站','ユニバーサルシティ駅'],'usj'],
+ usj_dinner:[['Universal City站','ユニバーサルシティ駅'],['西九条站','西九条駅 JR'],['JR新今宫站','新今宮駅 JR'],'hotel_osaka'],
+ kobe_bridge_visit:[['Port Liner三宫站','三宮駅 ポートライナー'],['Port Liner中公园站','中公園駅 ポートライナー'],'kobe_bridge']
 };
-function transportMaps(ev){const maps=TRANSPORT_MAPS[ev.id]||[];return maps.length?`<div class="activity-navigation">${maps.map(([label,query])=>external(icon('pin')+'地图：'+e(label),mapURL(query),'text-link')).join('')}</div>`:'';}
+// These activities stay inside USJ; the park entrance map remains on arrival.
+function activityPlaceIds(ev){return ['usj_app','usj_core','usj_lunch','usj_rest','usj_finish'].includes(ev.id)?ev.place_ids.filter(id=>id!=='usj'):ev.place_ids;}
 
 const CAFE_SOURCE='https://tokichi.jp/pages/honten-store-page';
 const USJ_HOURS='https://www.usj.co.jp/web/ja/jp/park-guide/schedule/park-hour';
