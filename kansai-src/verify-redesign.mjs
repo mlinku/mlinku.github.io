@@ -42,7 +42,7 @@ const results=vm.runInContext(`
  assert.ok(tripPlaces().some(p=>p.id==='surugaya_main'),'保留购物替换店');
  for(const d of PLAN.days)for(const ev of effectiveEvents(d))if(TRANSPORT_AT_EVENT[ev.id]){
   assert.ok(TRANSPORT_AT_EVENT[ev.id].every(i=>DETAILS[d.date].transport[i]),'交通说明索引有效 '+ev.id);
-  assert.ok(eventCard(d,ev).includes('交通详情'),'交通活动可就地展开 '+ev.id);
+  assert.ok(eventCard(d,ev).includes('aria-label="交通说明"'),'交通活动就近显示 '+ev.id);
  }
 
  for(const img of Object.values(PHOTOS))img.src=img.local;
@@ -69,11 +69,7 @@ const results=vm.runInContext(`
   }
   assert.equal(routeMarkup.split('class="route-actions"').length-1,effectiveRoute(d).length,'每站保留紧凑地图操作 '+d.date);
   assert.ok(!routeMarkup.includes('class="route-leg"'),'移除单独占行的旧路线入口');
-  for(const id of new Set(d.route_stop_ids.filter(id=>photoSrc(id)))){
-   const occurrences=effectiveRoute(d).filter(stop=>stop.id===id).length;
-   assert.equal(routeMarkup.split('class="route-photo" data-action="place" data-place="'+id+'"').length-1,occurrences,'每次经过都保留地点照片 '+d.date+' '+id);
-  }
-  assert.ok(!routeMarkup.includes('repeated-place'),'重复地点不再替换成定位图标');
+  assert.ok(!routeMarkup.includes('class="route-photo"'),'紧凑路线不重复地点照片 '+d.date);
   for(const ev of events)assert.equal(markup.split('data-event="'+ev.id+'"').length-1,1,'时间轴遗漏或重复 '+ev.id);
   for(const r of DETAILS[d.date].meals.filter(r=>r[1]==='首选'&&['午餐','晚餐'].includes(r[0])))assert.ok(markup.includes(e(r[2])),'餐饮首选未显示 '+d.date);
   assert.equal(DayFlow.forDay(d).sections.flatMap(s=>s.events).map(ev=>ev.id).join(','),events.map(ev=>ev.id).join(','),'分段后不改变活动顺序 '+d.date);
@@ -84,7 +80,7 @@ const results=vm.runInContext(`
  for(const d of PLAN.days){
   assert.ok(!timelinePage(d).includes('这段怎么走'),'交通不在时间轴重复');
   assert.ok(!daySupport(d).includes('交通说明'),'侧栏不重复交通');
-  assert.equal(routePage(d).split('<summary>交通说明</summary>').length-1,1,'路线仅保留一个交通说明');
+  assert.ok(!routePage(d).includes('<summary>交通说明</summary>'),'路线交通直接放在对应步骤');
  }
  const ujiDefault=PLAN.days[1];
  for(const p of PLAN.pilgrimage_points){
@@ -252,7 +248,7 @@ const results=vm.runInContext(`
  const usjRoute=routePage(PLAN.days[4]);
  for(const id of ['usj_core','usj_lunch','usj_rest','usj_finish','usj_dinner'])assert.ok(usjRoute.includes('/timeline/'+id+'"'),'USJ路线保留执行步骤 '+id);
  assert.ok(usjRoute.indexOf('/timeline/usj_dinner"')<usjRoute.lastIndexOf('data-route-id="hotel_osaka"'),'离园后先用餐再返店');
- assert.ok(dayTransport(PLAN.days[3])[0].includes('京都塔'),'搬酒店日交通说明从第一程开始');
+ assert.ok(eventCard(PLAN.days[3],effectiveEvents(PLAN.days[3]).find(ev=>ev.id==='kyoto_tower_transfer')).includes('酒店到京都塔步行预留10—15分钟'),'搬酒店日首程活动显示交通');
  assert.ok(PLAN.days[7].timeline.find(ev=>ev.id==='airport_checkin').condition.includes('安检'),'返程保留机场必要步骤');
  const savedNightChoice=state.choices[PLAN.days[2].date];
  state.choices[PLAN.days[2].date]={kodaijiPlan:'skip'};
@@ -365,7 +361,7 @@ const results=vm.runInContext(`
  const sourceNotes=JSON.stringify(DETAILS);
  state.choices[kobe.date]={kobeAfternoon:'harbor',umedaSecond:true};
  assert.ok(dayNotes(kobe).join('').includes('三宫购物移到大桥之后'),'优先白天拍桥');
- assert.ok(dayTransport(kobe).join('').includes('中公園'),'交通包含新大桥往返');
+ for(const markup of [timelinePage(kobe),routePage(kobe)])assert.ok(markup.includes('中公園'),'两视图包含新大桥往返交通');
  assert.ok(!mealRows(kobe,effectiveEvents(kobe).find(ev=>ev.id==='kitano_lunch'))[0][5].includes('餐后返大阪'));
  state.choices[kobe.date]={kobeAfternoon:'umeda',umedaMain:'pokemon_osaka'};
  assert.ok(!dayNotes(kobe).join('').includes('Nintendo'),'旧梅田选择不影响当前说明');
@@ -377,12 +373,12 @@ const results=vm.runInContext(`
  state.choices[kyoto.date]={kodaijiPlan:'night',yasakaBrief:true};
  assert.ok(dayNotes(kyoto).join('').includes('省八坂神社'));
  state.choices[uji.date]={ujiExtra:'none'};
- assert.ok(dayTransport(uji).join('').includes('JR宇治'));
+ for(const markup of [timelinePage(uji),routePage(uji)])assert.ok(markup.includes('不要在京阪宇治站乘车'),'两视图保留JR返程站区别');
  assert.ok(dayFallbacks(uji).join('').includes('略过縣神社'));
  assert.ok(!dayFallbacks(uji).join('').includes('省额外店铺与集章'));
  state.choices[nara.date]={shop1:'potato',shop2:'none'};
  assert.ok(!dayNotes(nara).join('').includes('默认Animate'));
- assert.ok(!dayTransport(nara).join('').includes('到Animate'));
+ for(const markup of [timelinePage(nara),routePage(nara)])assert.ok(!markup.includes('到Animate'),'替换门店后两视图不残留默认交通');
  assert.equal(JSON.stringify(DETAILS),sourceNotes,'显示当前说明不修改原始资料');
  for(let i=0;i<PLAN.days.length;i++){
   const d=PLAN.days[i];dayIndex=i;dayView='timeline';

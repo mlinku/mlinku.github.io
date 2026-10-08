@@ -29,7 +29,7 @@
   .event-detail summary {padding-block:10px; min-height:46px}
   .event-content>.condition, .event-content>.selection-note, .event-content>.night-facts {margin-top:12px}
   .night-adjust {margin-top:8px}
-  .route-window .route-copy>button {display:block; text-align:left; overflow-wrap:anywhere}
+  .route-window .route-copy>strong {display:block; text-align:left; overflow-wrap:anywhere; font-weight:550}
   .route-copy>small, .hotel-shortcut strong, .stay-card h3 {overflow-wrap:anywhere}
   .route-actions {align-self:center}
   .shot-heading {align-items:flex-start; flex-wrap:wrap}
@@ -162,10 +162,10 @@
   .scene-entry-icon {background:transparent}
   .event .event-content>.condition, .event .event-content>.selection-note {font-size:var(--type-secondary)}
   .event-time, .route-time strong {color:#ffd29e; font-size:var(--type-body)}
-  .route-window .route-copy>button {font-size:var(--type-body); min-height:44px}
+  .route-window .route-copy>strong {font-size:var(--type-body)}
   .route-window .route-copy>small {font-size:13px; line-height:1.65}
   .route-actions .route-map, .event-summary .place-map, .event-summary .text-link, .food-actions>a, .food-actions>button {font-size:var(--type-secondary); min-height:44px}
-  .route-window .route-item {grid-template-columns:56px minmax(0,1fr) auto; gap:12px}
+  .route-window .route-item {grid-template-columns:minmax(0,1fr) auto; gap:12px}
   .route-window .route-photo {width:56px; aspect-ratio:1; height:auto}
   .event .event-detail summary {font-size:var(--type-secondary)}
   .day-facts strong {font-size:var(--type-body)}
@@ -182,11 +182,11 @@
 @media screen and (max-width:720px) {
   #main {margin-inline:0; padding-inline:16px}
   .route-window .route-stops {padding-inline:10px}
-  .route-window .route-item {grid-template-columns:40px minmax(0,1fr) 48px; gap:8px}
+  .route-window .route-item {grid-template-columns:minmax(0,1fr) 48px; gap:8px}
   .route-window .route-photo {width:40px}
   .route-window .route-stop {padding-left:22px}
   .route-window .route-map {min-width:44px; font-size:14px}
-  .route-window .route-copy>button {font-size:16px}
+  .route-window .route-copy>strong {font-size:16px}
   .event-summary .meal-preview, .shot-direction, .food-row p, .detail-body p, .detail-body li {font-size:15px}
   .day-facts strong {font-size:14px}
   .view-tab {font-size:14px}
@@ -202,6 +202,10 @@
   .day-support .support-card {margin:0; min-width:0}
   .day-support .support-card[open] {grid-column:1 / -1}
   .transport-detail .detail-body {margin:0; padding:4px 0 10px 20px}
+  .route-context {padding:8px 16px 0; font-size:var(--type-secondary)}
+  .route-context:empty {display:none}
+  .route-context p {margin:0 0 8px}
+  .route-action-step .route-context {padding-inline:0}
   .transport-detail li+li {margin-top:8px}
   .option-fields .option-row {line-height:1.7}
   .option-fields .option-row small {line-height:1.7}
@@ -219,10 +223,10 @@
 
 /* Essential actions stay with the activity; completion remains explicitly manual. */
 .route-action-step {margin:0 0 12px; padding:0 16px; border-left:2px solid var(--line)}
-.route-action-step a {display:flex; align-items:center; flex-wrap:wrap; gap:4px 12px; min-height:44px; padding-block:8px}
+.route-action-step>a {display:flex; align-items:center; flex-wrap:wrap; gap:4px 12px; min-height:44px; padding-block:8px}
 .route-action-step span {font-size:13px; color:var(--muted)}
 .route-action-step strong {font-size:14px; font-weight:500}
-.route-action-step .icon {width:16px; margin-left:auto}
+.route-action-step>a .icon {width:16px; margin-left:auto}
 .flight-grid .flight-action {display:block; font-size:12px; font-weight:400; line-height:1.7; color:var(--muted)}
 .flight-grid>div>.flight-terminals {display:block; font-size:13px; line-height:1.8; color:var(--muted); margin:12px 0 0; overflow-wrap:anywhere}
 .shop-photo {min-width:0}
@@ -239,7 +243,7 @@
   .execution-note strong {font-weight:600}
   .execution-note a {display:inline-block; padding:4px 0; text-underline-offset:3px}
   .time-hint {font-size:12px; color:var(--muted)}
-  .activity-navigation {margin-top:8px}
+  .activity-navigation {display:flex; flex-wrap:wrap; gap:2px 16px; margin-top:8px}
   .activity-navigation a {display:inline-flex; align-items:center; gap:6px; min-height:44px; font-size:14px; overflow-wrap:anywhere}
   .activity-navigation .icon {flex:none}
   .rally-actions {display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; margin-top:12px}

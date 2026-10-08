@@ -63,7 +63,7 @@ const DETAILS = {
         "title": "值机与登机",
         "items": [
           {
-            "text": "HX618于香港时间11:25起飞。建议08:25到T2；现行规则在起飞前60分钟停止值机（10:25），前20分钟关闭登机口（11:05）。以航司最新通知及登机牌为准。",
+            "text": "HX618的值机与登机口关闭时限按航司通知及登机牌复核。",
             "url": "https://www.hongkongairlines.com/webfile/static/pdf/Check-in%20counter%20relcoation%20to%20T2%20FAQ%20-%20EN.pdf?siteId=6"
           },
           {
@@ -806,7 +806,7 @@ const DETAILS = {
             "url": "https://www.todaiji.or.jp/information/haikan/"
           },
           {
-            "text": "参考14:05从南大门向内参观；大佛殿内部保留约30—40分钟，17:00闭门是硬边界。抵奈良晚于15:30时，先核对入堂余量再决定接驳，不靠压缩参观硬赶。",
+            "text": "参考14:05从南大门向内参观；大佛殿内部保留约30—40分钟。",
             "url": "https://www.todaiji.or.jp/information/haikan/"
           }
         ]
