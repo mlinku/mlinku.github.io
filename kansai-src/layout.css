@@ -81,6 +81,9 @@
 .food-ideas .food-idea.with-photo {grid-template-columns:minmax(0,1fr)}
 .food-ideas .food-idea-photo {max-height:230px}
 .food-actions {display:flex; flex-wrap:wrap; align-items:center; margin-top:8px}
+.meal-conditions {font-size:var(--type-secondary); line-height:1.85; overflow-wrap:anywhere}
+.meal-conditions p {margin:8px 0}
+.inline-choices .option-fields {padding-bottom:8px}
 .food-row-photo {max-width:240px; display:block; margin:12px 0}
 .flight-overview {padding:20px; margin-top:20px}
 #trip-map {margin-bottom:36px}

@@ -7,7 +7,7 @@ const STORAGE_KEY='kansai-autumn-notebook-v1';
 let storageOK=true, toastTimer, undoAction=null;
 let state={checks:{},todos:{},choices:{}};
 try{const old=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');if(old&&typeof old==='object')for(const key of ['checks','todos','choices'])if(old[key]&&typeof old[key]==='object'&&!Array.isArray(old[key]))state[key]=old[key];localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch{storageOK=false;}
-let screen='overview',dayIndex=0,dayView='timeline',routeFilter='全部',sectionTarget='',dialogMode=null;
+let screen='overview',dayIndex=0,dayView='timeline',routeFilter='全部',sectionTarget='';
 const types={flight:'航班',transport:'交通',hotel:'住宿',meal:'用餐',visit:'景点',walk:'步行',rest:'休息',activity:'体验',shopping:'购物'};
 const icons={map:'<path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2z"/><path d="M9 3v16M15 5v16"/>',arrow:'<path d="M4 12h16m-6-6 6 6-6 6"/>',copy:'<rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H3v13h5"/>',check:'<path d="m4 12 5 5L20 6"/>',pin:'<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',close:'<path d="m6 6 12 12M18 6 6 18"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M19 5l-1.5 1.5m-11 11L5 19"/>',bag:'<rect x="5" y="6" width="14" height="15" rx="2"/><path d="M9 6V3h6v3M9 10v7m6-7v7"/>'};
 const icon=(n)=>`<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${icons[n]||icons.pin}</svg>`;
@@ -107,12 +107,13 @@ function effectiveRoute(d){const c=choice(d);let nodes=d.route_stop_ids.map((id,
  return nodes;
 }
 
-function optionalControls(d){if(!d.optional.length&&d.date!=='2026-12-05')return'';const c=choice(d);let fields='';
- if(d.date==='2026-12-02')fields=`<fieldset class="night-options"><legend>夜间安排</legend>${[['night','高台寺夜枫','17:15—18:30参拜，20:45—21:15返店。'],['skip','晚餐后休息','高台寺附近休息半小时，再吃晚饭、返店。']].map(([value,label,note])=>`<label class="option-row"><input type="radio" name="kodaijiPlan" data-choice="kodaijiPlan" value="${value}" ${c.kodaijiPlan===value?'checked':''}>${label}<small>${note}</small></label>`).join('')}</fieldset><label class="option-row"><input type="checkbox" data-choice="yasakaBrief" ${c.yasakaBrief?'checked':''} ${c.kodaijiPlan==='skip'?'disabled':''}>八坂神社顺路短停<small>仅夜枫准时结束且体力有余；包含在晚饭前步行时段。</small></label>`;
- if(d.date==='2026-12-04')fields=`<label class="option-row"><input type="checkbox" data-choice="usjExtra" ${c.usjExtra?'checked':''}>第二项任天堂设施／其他项目<small>看实时等候和体力；马里奥赛车与咚奇刚择一优先。</small></label><label class="option-row"><input type="checkbox" data-choice="kinopio" ${c.kinopio?'checked':''}>午餐改为Kinopio’s Cafe<small>需单独取得餐厅资格；部分餐品超预算，无资格时选其他园内餐厅。</small></label>`;
- if(d.date==='2026-12-05'){const stores=['animate','surugaya','potato','surugaya_main'].map(id=>[id,PLACE[id].name]);fields=`<p class="small">选1—2家，晚到只留一家。</p><label class="small">第一家${select('shop1',c.shop1,stores)}</label><label class="small">第二家${select('shop2',c.shop2,[['none','不加第二家'],...stores.filter(([id])=>id!==c.shop1)])}</label>`;}
+function optionalControls(d,eventId){if(!d.optional.length&&d.date!=='2026-12-05')return'';const c=choice(d),show=id=>!eventId||eventId===id;let fields='';
+ if(d.date==='2026-12-02'&&show('gion_rest'))fields=`<fieldset class="night-options"><legend>夜间安排</legend>${[['night','高台寺夜枫','17:15—18:30参拜，20:45—21:15返店。'],['skip','晚餐后休息','高台寺附近休息半小时，再吃晚饭、返店。']].map(([value,label,note])=>`<label class="option-row"><input type="radio" name="kodaijiPlan" data-choice="kodaijiPlan" value="${value}" ${c.kodaijiPlan===value?'checked':''}>${label}<small>${note}</small></label>`).join('')}</fieldset><label class="option-row"><input type="checkbox" data-choice="yasakaBrief" ${c.yasakaBrief?'checked':''} ${c.kodaijiPlan==='skip'?'disabled':''}>八坂神社顺路短停<small>仅夜枫准时结束且体力有余；包含在晚饭前步行时段。</small></label>`;
+ if(d.date==='2026-12-04'&&show('usj_core'))fields=`<label class="option-row"><input type="checkbox" data-choice="usjExtra" ${c.usjExtra?'checked':''}>第二项任天堂设施／其他项目<small>看实时等候和体力；马里奥赛车与咚奇刚择一优先。</small></label>`;
+ if(d.date==='2026-12-04'&&show('usj_lunch'))fields+=`<label class="option-row"><input type="checkbox" data-choice="kinopio" ${c.kinopio?'checked':''}>午餐改为Kinopio’s Cafe<small>需单独取得餐厅资格；部分餐品超预算，无资格时选其他园内餐厅。</small></label>`;
+ if(d.date==='2026-12-05'&&show('anime_shopping')){const stores=['animate','surugaya','potato','surugaya_main'].map(id=>[id,PLACE[id].name]);fields=`<p class="small">选1—2家，晚到只留一家。</p><label class="small">第一家${select('shop1',c.shop1,stores)}</label><label class="small">第二家${select('shop2',c.shop2,[['none','不加第二家'],...stores.filter(([id])=>id!==c.shop1)])}</label>`;}
 
- if(d.date==='2026-12-05'&&d.optional.some(o=>o.id==='spaworld_evening'))fields+=`<label class="option-row"><input type="checkbox" data-choice="spaworldEvening" ${c.spaworldEvening?'checked':''}>晚间泡汤 · SPAWORLD<small>仅20:30前已回酒店且仍有体力时考虑；先放购物袋，再步行泡汤，约22:00—22:30返店。¥1,500/人，未购票。</small></label>`;
+ if(d.date==='2026-12-05'&&show('anime_shopping')&&d.optional.some(o=>o.id==='spaworld_evening'))fields+=`<label class="option-row"><input type="checkbox" data-choice="spaworldEvening" ${c.spaworldEvening?'checked':''}>晚间泡汤 · SPAWORLD<small>仅20:30前已回酒店且仍有体力时考虑；先放购物袋，再步行泡汤，约22:00—22:30返店。¥1,500/人，未购票。</small></label>`;
  return fields;
 }
 function select(key,value,options){return `<select class="option-select" data-choice="${key}" aria-label="${({shop1:'日本桥第一家店',shop2:'日本桥第二家店',umedaMain:'梅田重点店'})[key]||key}">${options.map(([v,l])=>`<option value="${v}" ${v===value?'selected':''}>${e(l)}</option>`).join('')}</select>`;}

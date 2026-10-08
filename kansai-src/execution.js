@@ -13,7 +13,7 @@ function navigationPlace(ev){
 }
 function eventNavigation(ev,d,includeMeal=false){
  const first=d?mealRows(d,ev).find(row=>row[1]==='首选'):null;
- const hasMealMap=includeMeal||(ev.category==='meal'&&first?.[0]!=='早餐');
+ const hasMealMap=includeMeal||(first&&first[0]!=='早餐');
  const links=ev.place_ids.filter(id=>!hasMealMap||id!==first?.[7]).map(id=>external(icon('pin')+'地图：'+e(PLACE[id].name),PLACE[id].map_search_url,'text-link'));
  if(ev.id==='gion_dinner_walk'&&d){const row=DETAILS[d.date].meals.find(r=>r[0]==='晚餐'&&r[1]==='首选');links.push(external(icon('pin')+'地图：'+e(row[2]),mealMap(d,row),'text-link'));}
  if(includeMeal&&first&&first[0]!=='早餐')links.push(external(icon('pin')+'地图：'+e(first[2]),mealMap(d,first),'text-link'));
@@ -39,7 +39,7 @@ function executionNotice(d,ev){
  const content={
   flight_out:'当前11:05关闭登机口（香港时间）；以航司最新通知及登机牌为准。',
   agata_stamp:'登录活动网站并开启定位，确认领章成功再离开；攻略勾选不代替领章。',
-  uji_parfait:`10:00开门，不接受预约；75分钟含候位与用餐。久等时缩短午饭前闲逛。 ${external('候位与营业 ↗',CAFE_SOURCE)}`,
+  uji_parfait:'10:00开门，不接受预约；75分钟含候位与用餐。久等时缩短午饭前闲逛。',
   daikichi_visit:'14:30仍未到登山口时，须确认能白天下山，否则取消。',
   kodaiji_night:'17:45仍未入场、预计排队超过30分钟，或天气差、疲劳时，直接吃晚饭。稍有延迟时18:45前离寺，省去八坂神社并顺延晚餐。',
   gion_dinner:'おめん20:00最后点餐；晚到或长队时换简餐。',

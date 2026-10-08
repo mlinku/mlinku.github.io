@@ -25,7 +25,7 @@ const photo=(id,cls='',loading='lazy',sizes='(max-width:720px) calc(100vw - 72px
  return `<img class="${cls}" ${img.illustration?'style="object-fit:contain"':''} src="${full?img.src:img.thumbnail||img.src}" ${responsive?`srcset="${img.thumbnail} ${img.thumbnailWidth}w, ${img.src} ${img.width||1100}w" sizes="${sizes}"`:''} alt="${e(img.sight)}" width="${img.width||800}" height="${img.height||600}" loading="${loading}" decoding="async" ${loading==='eager'?'fetchpriority="high"':''}>`;
 };
 const photoButton=(id,cls='',prefix='',caption=true)=>`<button type="button" class="photo-button ${cls}${PHOTOS[id]?.illustration?' illustration-photo':''}" data-action="photo-zoom" data-place="${id}" aria-label="放大${e(PLACE[id].name)}照片">${photo(id)}${caption?`<span>${e(prefix+PLACE[id].name)}</span>`:''}</button>`;
-function placeInfo(id){const p=PLACE[id];return `<div class="place-info" data-place-info="${id}"><strong lang="ja">${e(p.name_ja)}</strong>${p.address_ja?`<p lang="ja">${e(p.address_ja)}</p>`:''}${PLACE_LOCATIONS[id]?`<p class="place-location">${e(PLACE_LOCATIONS[id])}</p>`:''}${PLACE_DETAILS[id]?`<p>${e(PLACE_DETAILS[id])}</p>`:''}</div>`;}
+function placeInfo(id,omitName=false){const p=PLACE[id];return `<div class="place-info" data-place-info="${id}">${omitName?'':`<strong lang="ja">${e(p.name_ja)}</strong>`}${p.address_ja?`<p lang="ja">${e(p.address_ja)}</p>`:''}${PLACE_LOCATIONS[id]?`<p class="place-location">${e(PLACE_LOCATIONS[id])}</p>`:''}${PLACE_DETAILS[id]?`<p>${e(PLACE_DETAILS[id])}</p>`:''}</div>`;}
 const placeButton=id=>`<details class="place-reference"><summary>${e(PLACE[id].name)}${PLACE_LOCATIONS[id]?`<small class="place-location">${e(PLACE_LOCATIONS[id])}</small>`:''}</summary>${placeInfo(id)}${photoSrc(id)?photoButton(id):''}${external(icon('pin')+'地图',PLACE[id].map_search_url,'text-link')}${[...new Set(pilgrimagePlace(id).map(p=>p.date))].map(date=>pageLink('查看巡礼对照 →','#day/'+date+'/pilgrimage','text-link')).join('')}</details>`;
 function stayInfo(id){return `<details class="stay-info" id="stay-info"><summary>酒店名称、地址与到店说明</summary>${placeInfo(id)}${photoSrc(id)?photoButton(id,'stay-info-photo'):''}${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'text-link')}<p>${e(id==='hotel_kyoto'?DETAILS['2026-11-30'].transport.slice(1,3).join(' '):'从新今宫站前往酒店；入住和取行李安排见当天活动。')}</p></details>`;}
 const activityPhoto=(id,...args)=>PLACE_LOCATIONS[id]?`<div class="shop-photo">${photoButton(id,...args)}<small class="place-location">${e(PLACE_LOCATIONS[id])}</small></div>`:photoButton(id,...args);
@@ -89,7 +89,6 @@ function overview(){return `
 function stayCard(id,title,date){return `<article class="stay-card">${photoButton(id,'stay-photo')}<div><p class="eyebrow">${title}</p><h3>${e(PLACE[id].name_ja)}</h3><p>${date}</p><details class="stay-info"><summary>酒店信息</summary>${placeInfo(id)}${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'text-link')}</details></div></article>`;}
 function flights(){const bookings=PLAN.bookings.filter(b=>b.type==='flight');return `<section class="flight-card flight-overview"><div class="flight-heading"><h3>${e([...new Set(bookings.map(b=>b.airline))].join(' / '))}</h3><span>往返航班 · 当地时间</span></div><div class="flight-grid">${bookings.map(b=>{const from=flightLocal(b,'departure'),to=flightLocal(b,'arrival');return `<div><p>${e(from.date)} · ${b.from==='hkg'?'去程':'回程'} <b>${e(b.flight_number||'航班号待确认')}</b></p><div><strong><span class="flight-action">起飞</span>${from.time}<small>${e(from.city)}</small></strong>${icon('arrow')}<strong><span class="flight-action">抵达</span>${to.time}<small>${e(to.city)}</small></strong></div><p class="flight-terminals">${e(flightTerminals(b))}</p></div>`;}).join('')}</div></section>`;}
 
-function openOptions(){const d=PLAN.days[dayIndex];dialogMode={kind:'options',date:d.date};const dlg=$('#place-dialog');dlg.className='options-dialog';dlg.innerHTML=`<div class="dialog-top"><div><p class="eyebrow">${dateLabel(d.date)} · ${e(dayPresentation(d).short)}</p><h2 id="place-title">可选安排</h2></div>${btn(icon('close'),'close-dialog','aria-label="关闭可选安排"','icon-button')}</div><div class="dialog-body"><div class="option-fields">${optionalControls(d)}</div>${d.optional.length?`<details class="option-photos"><summary>地点照片</summary><div class="event-photos">${[...new Set(d.optional.flatMap(o=>o.place_ids))].filter(id=>photoSrc(id)).map(id=>photoButton(id)).join('')}</div></details>`:''}${DETAILS[d.date].meals.some(r=>r[1]==='可选')?`<details><summary>可选餐饮</summary>${DETAILS[d.date].meals.filter(r=>r[1]==='可选').map(r=>foodRow(d,r)).join('')}</details>`:''}<div class="dialog-footer">${btn('完成','close-dialog','','primary')}</div></div>`;if(!dlg.open)dlg.showModal();}
 
 function tripPlaces(){
  const ids=new Set(PLAN.days.flatMap(d=>[...d.route_stop_ids,...d.timeline.flatMap(ev=>ev.place_ids),...d.optional.flatMap(o=>o.place_ids)]));
@@ -131,9 +130,7 @@ document.addEventListener('click',ev=>{
  const a=ev.target.closest('a[data-nav]');if(a&&!ev.metaKey&&!ev.ctrlKey&&!ev.shiftKey&&!ev.altKey&&ev.button===0){ev.preventDefault();navigate(a.hash);return;}
  const target=ev.target.closest('[data-action]');if(!target)return;
  if(target.dataset.action==='stay-info'){const info=document.getElementById('stay-info');if(info){info.open=true;info.scrollIntoView({block:'center'});info.querySelector('summary').focus({preventScroll:true});}}
- else if(target.dataset.action==='options')openOptions();
  else if(target.dataset.action==='copy-close')$('#copy-dialog').close();
- else if(target.dataset.action==='close-dialog')$('#place-dialog').close();
  else if(target.dataset.action==='copy')copyText(target.dataset.copy);
  else if(target.dataset.action==='reset-day')resetDay(target.dataset.resetScope);
  else if(target.dataset.action==='undo'&&undoAction){const fn=undoAction;undoAction=null;fn();}
@@ -142,18 +139,17 @@ document.addEventListener('change',ev=>{const input=ev.target,d=PLAN.days[dayInd
  if(input.matches('[data-event-check]')){setCheck(d.date,input.dataset.eventCheck,input.checked);input.closest('.event').classList.toggle('done',input.checked);refreshDayProgress(d);}
  else if(input.matches('[data-todo]')){state.todos[input.dataset.todo]=input.checked;save();$('#todo-count').textContent=TODOS.filter((_,i)=>state.todos[TODO_IDS[i]]).length+' / '+TODOS.length;}
  else if(input.dataset.choice){
-  const y=scrollY,dx=$('.date-nav')?.scrollLeft||0,dlg=$('#place-dialog'),dy=dlg.scrollTop,key=input.dataset.choice,value=input.value,c=choice(d);
+  const y=input.getBoundingClientRect().top,dx=$('.date-nav')?.scrollLeft||0,open=captureReading($('#main')),key=input.dataset.choice,value=input.value,c=choice(d);
   c[key]=input.type==='checkbox'?input.checked:input.value;
   if(c.shop1===c.shop2)c.shop2='none';
   if(key==='kodaijiPlan'&&value==='skip')c.yasakaBrief=false;
   state.choices[d.date]=c;save();
   for(const key of viewMemory.keys())if(key.startsWith('day/'+d.date+'/'))viewMemory.delete(key);
-  render();if($('.date-nav'))$('.date-nav').scrollLeft=dx;scrollTo(0,y);openOptions();dlg.scrollTop=dy;
-  dlg.querySelector(`[data-choice="${key}"]${input.type==='radio'?`[value="${value}"]`:''}`)?.focus({preventScroll:true});
+  render();restoreDisclosures($('#main'),open);if($('.date-nav'))$('.date-nav').scrollLeft=dx;
+  const replacement=document.querySelector(`[data-choice="${key}"]${input.type==='radio'?`[value="${value}"]`:''}`);
+  if(replacement){scrollBy(0,replacement.getBoundingClientRect().top-y);replacement.focus({preventScroll:true});}
  }
 });
-$('#place-dialog').addEventListener('click',ev=>{if(ev.target===$('#place-dialog')){const r=ev.target.getBoundingClientRect();if(ev.clientX<r.left||ev.clientX>r.right||ev.clientY<r.top||ev.clientY>r.bottom)ev.target.close();}});
-$('#place-dialog').addEventListener('close',()=>{dialogMode=null;});
 if('scrollRestoration' in history)history.scrollRestoration='manual';
 window.addEventListener('hashchange',()=>{if(location.hash==='#main')return;rememberView();readHash();render();focusPage(true);});
 window.addEventListener('storage',ev=>{if(ev.key===STORAGE_KEY){try{const next=JSON.parse(ev.newValue);if(next?.checks&&next?.todos&&next?.choices){state=next;render();}}catch{}}});
