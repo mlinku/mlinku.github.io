@@ -225,6 +225,18 @@
 @media screen and (max-width:720px) {.source-links {grid-template-columns:1fr}}
 
 /* Essential actions stay with the activity; completion remains explicitly manual. */
+.day-route {margin-bottom:18px; border:1px solid var(--line); border-radius:4px; padding:0 14px; font-size:14px}
+.day-route>summary {min-height:48px; display:flex; align-items:center; gap:8px; padding-block:8px}
+.route-overview-hint {font-size:12px; font-weight:400; color:var(--muted)}
+.route-overview-note {font-size:13px; line-height:1.8; color:var(--muted); margin:6px 0 10px}
+.route-overview-list {margin:0 0 10px; padding-left:24px}
+.route-overview-list li {position:relative; padding-right:62px; border-bottom:1px solid var(--line)}
+.route-overview-list li:last-child {border-bottom:0}
+.route-overview-list li::marker {color:var(--muted); font-size:12px}
+.route-overview-place {display:flex; flex-direction:column; justify-content:center; min-height:44px; padding:8px 0; overflow-wrap:anywhere; line-height:1.6}
+.route-overview-place small {color:var(--muted); font-size:12px}
+.route-overview-map {position:absolute; right:0; top:0; display:flex; align-items:center; gap:4px; min-height:44px; min-width:48px}
+.route-overview-map .icon {width:16px; height:16px}
 .route-action-step {margin:0 0 12px; padding:0 16px; border-left:2px solid var(--line)}
 .route-action-step>a {display:flex; align-items:center; flex-wrap:wrap; gap:4px 12px; min-height:44px; padding-block:8px}
 .route-action-step span {font-size:13px; color:var(--muted)}

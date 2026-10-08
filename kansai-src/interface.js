@@ -17,7 +17,7 @@ for(let i=0;i<TODO_IDS.length;i++)if(Object.hasOwn(state.todos,i)){
 }
 if(migratedTodos)save();
 const pageLink=(label,hash,cls='',attrs='')=>`<a class="${cls}" href="${e(hash)}" data-nav ${attrs}>${label}</a>`;
-const dayHash=(i,view='timeline')=>`#day/${PLAN.days[i].date}/${view==='pilgrimage'&&!pilgrimageDay(PLAN.days[i].date).length?'timeline':view}`;
+const dayHash=(i,view='timeline')=>`#day/${PLAN.days[i].date}/${view==='route'?'timeline/route':view==='pilgrimage'&&!pilgrimageDay(PLAN.days[i].date).length?'timeline':view}`;
 const photo=(id,cls='',loading='lazy',sizes='(max-width:720px) calc(100vw - 72px), 208px')=>{
  const img=PHOTOS[id];if(!img?.src)return '';
  const full=cls==='dialog-image',responsive=!full&&img.thumbnail&&img.thumbnailWidth<(img.width||1100);
@@ -34,9 +34,9 @@ function readHash(){
  const parts=location.hash.slice(1).split('/'); sectionTarget='';
  if(parts[0]==='day'){
   const i=PLAN.days.findIndex(d=>d.date===parts[1]);if(i<0)return;
-  screen='day';dayIndex=i;dayView=parts[2]==='pilgrimage'?'pilgrimage':parts[2]==='route'||parts[2]==='gallery'?'route':'timeline';if(dayView==='pilgrimage'&&parts[3])sectionTarget='shot-'+parts[3];if(dayView==='timeline'&&parts[3])sectionTarget=parts[3].startsWith('section-')?parts[3]:'event-'+parts[3];if(dayView==='route'&&parts[3])sectionTarget='route-content';
+  screen='day';dayIndex=i;dayView=parts[2]==='pilgrimage'?'pilgrimage':'timeline';if(dayView==='pilgrimage'&&parts[3])sectionTarget='shot-'+parts[3];if(dayView==='timeline'&&parts[3])sectionTarget=parts[3].startsWith('section-')?parts[3]:'event-'+parts[3];
+  if(parts[2]==='route'||parts[2]==='gallery'||(dayView==='timeline'&&parts[3]==='route'))sectionTarget='route-content';
   if(dayView==='pilgrimage'&&!pilgrimageDay(PLAN.days[i].date).length){dayView='timeline';sectionTarget='';}
-  routeFilter=parts[3]?decodeURIComponent(parts[3]):'全部';
   if(parts[2]==='details')sectionTarget='day-support';
  }else if(parts[0]==='prep'){screen='prep';if(['todos','bookings','reference'].includes(parts[1]))sectionTarget='prep-'+parts[1];}
  else{screen='overview';if(parts[0]==='maps'||parts[1]==='map')sectionTarget='trip-map';else if(parts[1]==='days')sectionTarget='day-cards';}
@@ -44,7 +44,7 @@ function readHash(){
 // Reading position is session-only; completion and choices remain in localStorage.
 const viewMemory=new Map();
 let renderedHash='',keyboardNavigation=false;
-function viewKey(){return screen==='day'?screen+'/'+PLAN.days[dayIndex].date+'/'+dayView+(dayView==='route'?'/'+routeFilter:''):screen;}
+function viewKey(){return screen==='day'?screen+'/'+PLAN.days[dayIndex].date+'/'+dayView:screen;}
 function disclosureKey(el){return (el.closest('article')?.id||'page')+'|'+el.querySelector('summary')?.textContent.trim();}
 function captureReading(root){return [...root.querySelectorAll('details[open]')].map(disclosureKey);}
 function restoreDisclosures(root,keys){const open=new Set(keys);root.querySelectorAll('details').forEach(el=>{el.open=open.has(disclosureKey(el));});}

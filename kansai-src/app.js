@@ -26,7 +26,7 @@ try{
  for(const [key,value] of Object.entries(state.checks))if(!key.includes(':shot:')&&value==='skipped')state.checks[key]='pending';
  preserveLegacyRecord();localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
 }catch{storageOK=false;}
-let screen='overview',dayIndex=0,dayView='timeline',routeFilter='全部',sectionTarget='';
+let screen='overview',dayIndex=0,dayView='timeline',sectionTarget='';
 const types={flight:'航班',transport:'交通',hotel:'住宿',meal:'用餐',visit:'景点',walk:'步行',rest:'休息',activity:'体验',shopping:'购物'};
 const icons={map:'<path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2z"/><path d="M9 3v16M15 5v16"/>',arrow:'<path d="M4 12h16m-6-6 6 6-6 6"/>',copy:'<rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H3v13h5"/>',check:'<path d="m4 12 5 5L20 6"/>',pin:'<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',close:'<path d="m6 6 12 12M18 6 6 18"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M19 5l-1.5 1.5m-11 11L5 19"/>',bag:'<rect x="5" y="6" width="14" height="15" rx="2"/><path d="M9 6V3h6v3M9 10v7m6-7v7"/>'};
 const icon=(n)=>`<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${icons[n]||icons.pin}</svg>`;

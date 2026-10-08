@@ -10,13 +10,14 @@ function dayPage(){const d=PLAN.days[dayIndex],info=dayPresentation(d);return `
  ${dates()}<header class="day-heading"><div><p class="eyebrow">DAY ${String(dayIndex+1).padStart(2,'0')} · ${d.weekday}<span class="heading-intensity">强度 · ${e(d.intensity.split('；')[0])}</span></p><h1>${e(info.short)}</h1></div><button class="day-heading-photo" data-action="photo-zoom" data-place="${info.cover}" aria-label="查看${e(PLACE[info.cover].name)}照片">${photo(info.cover,'','eager','120px')}</button></header>
  <div class="day-facts"><div><span>${dayIndex===0?'去程航班':'离店'}</span><strong>${dayIndex===0?e(flightDeparture('flight_out')):e(compactTime(d.departure_target||'开园时间待确认'))}</strong></div><div>${d.overnight?`<button class="stay-access" data-action="stay-info" data-place="${d.overnight}" aria-label="${dayIndex===0?'入住':'返店'} ${e(compactTime(returnTarget(d)))}，查看${e(PLACE[d.overnight].name)}详情"><span>${dayIndex===0?'入住':'返店'}</span><strong>${dayIndex===0?'19:00–20:00':e(compactTime(returnTarget(d)))}</strong>${icon('pin')}</button>`:`<span>回程航班</span><strong>${e(flightDeparture('flight_home'))}</strong>`}</div></div>
  ${d.overnight?stayInfo(d.overnight):''}
- <div class="daily-toolbar"><nav class="view-tabs" aria-label="当天查看方式">${pageLink(icon('list')+'行程',dayHash(dayIndex),'view-tab'+(dayView==='timeline'?' active':''),dayView==='timeline'?'aria-current="page"':'')}${pageLink(icon('map')+'路线',dayHash(dayIndex,'route'),'view-tab'+(dayView==='route'?' active':''),dayView==='route'?'aria-current="page"':'')}${pilgrimageDay(d.date).length?pageLink(icon('pin')+'巡礼',dayHash(dayIndex,'pilgrimage'),'view-tab'+(dayView==='pilgrimage'?' active':''),dayView==='pilgrimage'?'aria-current="page"':''):''}</nav></div>
+ ${pilgrimageDay(d.date).length?`<div class="daily-toolbar"><nav class="view-tabs" aria-label="当天查看方式">${pageLink(icon('list')+'行程',dayHash(dayIndex),'view-tab'+(dayView==='timeline'?' active':''),dayView==='timeline'?'aria-current="page"':'')}${pageLink(icon('pin')+'巡礼',dayHash(dayIndex,'pilgrimage'),'view-tab'+(dayView==='pilgrimage'?' active':''),dayView==='pilgrimage'?'aria-current="page"':'')}</nav></div>`:''}
  ${currentChoiceText(d)?`<p class="selected-choice">${icon('tune')}${e(currentChoiceText(d))}</p>`:''}
- <div class="day-layout"><div class="day-main">${dayView==='pilgrimage'?pilgrimagePage(d):dayView==='route'?routePage(d):timelinePage(d)}</div>${dayView==='pilgrimage'?'':daySupport(d)}</div>
+ <div class="day-layout"><div class="day-main">${dayView==='pilgrimage'?pilgrimagePage(d):timelinePage(d)}</div>${dayView==='pilgrimage'?'':daySupport(d)}</div>
  <nav class="prev-next" aria-label="相邻日期">${dayIndex>0?pageLink('← '+dateLabel(PLAN.days[dayIndex-1].date)+' 前一天',dayHash(dayIndex-1,dayView),'text-link'):pageLink('← 全程','#overview','text-link')}${dayIndex<7?pageLink(dateLabel(PLAN.days[dayIndex+1].date)+' 后一天 →',dayHash(dayIndex+1,dayView),'text-link'):pageLink('临行待办 →','#prep','text-link')}</nav>`;}
 function progressMarkup(d){const flow=DayFlow.forDay(d);return `<span id="progress-text" aria-live="polite">已完成 <strong>${flow.done} / ${flow.total}</strong>${flow.done===flow.total?' · 当天活动全部完成':''}</span><div class="progress-track" role="progressbar" aria-label="当天活动完成进度" aria-valuemin="0" aria-valuemax="${flow.total}" aria-valuenow="${flow.done}"><span style="width:${flow.done/flow.total*100}%"></span></div>`;}
 function refreshDayProgress(d){const area=document.querySelector('.progress-area');if(area)area.innerHTML=progressMarkup(d);}
 function timelinePage(d){const flow=DayFlow.forDay(d);return `
+ ${routeOverview(d)}
  <div class="progress-area">${progressMarkup(d)}</div>
  <div class="timeline">${flow.sections.map(section=>`<section class="timeline-phase" id="${section.id}"><div class="phase-heading"><h2>${e(section.short)}</h2></div>${section.events.map(ev=>eventCard(d,ev)).join('')}</section>`).join('')}</div>`;}
 
@@ -89,29 +90,11 @@ function mealSupplement(d,ev,rows){
 function mealMap(d,r){if(r[7]&&PLACE[r[7]])return PLACE[r[7]].map_search_url;let city=d.cities.includes('宇治')&&['午餐','晚餐'].includes(r[0])?'宇治':d.date==='2026-12-05'&&r[0]==='午餐'?'奈良':d.date==='2026-12-06'&&r[0]==='午餐'?'神戸':d.date==='2026-12-03'&&r[0]==='午餐'?'京都':d.overnight==='hotel_kyoto'?'京都':'大阪';if(r[2].startsWith('通圓'))city='宇治';return mapURL(city+' '+r[2]);}
 function foodRow(d,r){return `<article class="food-row"><span class="food-priority">${e(r[0])} · ${e(r[1])}</span><h4 lang="ja">${e(r[2])}</h4>${r[1]!=='首选'&&r[7]&&photoSrc(r[7])?photoButton(r[7],'food-row-photo'):''}<p class="budget">${e(r[3])}${r[3].includes('菜单')?'':' / 人'}</p><p>${e(r[4])}</p><p class="muted">${e(r[5])}</p><div class="food-actions">${r[0]!=='早餐'?external(icon('map')+(r[8]?.pending?'查看餐饮区域':'地图'),mealMap(d,r),'text-link'):''}${r[6]?external('店铺资料 ↗',r[6],'text-link'):''}</div></article>`;}
 
-function routeTimeMarkup(times){return times.map(t=>`<div class="route-time"><strong>${e(compactTime(t.text))}</strong><span>${e(t.label==='同段共用'?'游览':t.label)}</span></div>`).join('');}
-// Keep necessary actions that share a place visible between route stops.
-function routeActionsBetween(d,groups){
- const events=effectiveEvents(d),represented=new Set(groups.flatMap(g=>[g.eventId,...g.stops.flatMap(s=>s.times.map(t=>t.eventId))])),buckets=Array.from({length:groups.length+1},()=>[]);
- for(const ev of events){
-  const beforeArrival=['usj_dinner','flight_home'].includes(ev.id);
-  if(represented.has(ev.id)&&!beforeArrival)continue;
-  const rank=events.indexOf(ev),next=groups.findIndex(g=>events.findIndex(item=>item.id===g.eventId)>rank||(beforeArrival&&g.eventId===ev.id));
-  buckets[next<0?groups.length:next].push(ev);
- }
- return buckets.map(items=>items.map(ev=>`<div class="route-action-step">${pageLink(`<span>${e(compactTime(ev.time_label))}</span><strong>${e(ev.title)}</strong>${icon('chevron')}`,`#day/${d.date}/timeline/${ev.id}`)}${routeEventContext(d,ev.id)}${eventNavigation(ev,d,true)}</div>`).join(''));
-}
-function routeEventContext(d,eventId){const ev=effectiveEvents(d).find(ev=>ev.id===eventId);if(!ev)return '';
- return `<div class="route-context">${ev.condition?`<p class="condition">${e(ev.condition)}</p>`:''}${ev.optionNote?`<p class="selection-note">${e(ev.optionNote)}</p>`:''}${executionNotice(d,ev)}${transportDetail(d,ev)}${transportMaps(ev)}</div>`;
-}
-function routePage(d){const groups=routeGroups(d),between=routeActionsBetween(d,groups),shown=new Set(['usj_dinner','flight_home']);
- const context=group=>[...new Set([group.eventId,...group.stops.flatMap(stop=>stop.times.map(time=>time.eventId))])].filter(id=>id&&!shown.has(id)).map(id=>{shown.add(id);return routeEventContext(d,id);}).join('');
- return `
- <div class="route-head" id="route-content"><h2>路线示意</h2></div>
-
- <div class="route-groups">${groups.map((group,g)=>`${between[g]}${g===0||groups[g-1].phase!==group.phase?`<h3 class="route-phase">${e(group.phase)}</h3>`:''}<section class="route-window" aria-labelledby="route-window-${g}"><header class="route-window-time" id="route-window-${g}">${routeTimeMarkup(group.times)}</header>${context(group)}<ol class="route-stops" start="${group.stops[0].index+1}">${group.stops.map(s=>{
- const p=PLACE[s.id],extra=s.times.filter(t=>!group.times.some(common=>routeTimeKey(common)===routeTimeKey(t))),purpose=s.purpose&&!group.times.some(t=>t.label===s.purpose)?s.purpose:!s.purpose&&s.seen?'再次经过':'';
- return `<li class="route-stop ${s.seen?'return-stop':''} ${s.optional?'optional':''}" value="${s.index+1}" data-route-id="${s.id}" data-phase="${e(s.phase)}"><div class="route-item"><span class="route-number" aria-hidden="true">${s.index+1}</span><div class="route-copy"><strong>${e(p.name)}</strong>${p.name_ja!==p.name?`<small lang="ja">${e(p.name_ja)}</small>`:''}${PLACE_LOCATIONS[s.id]?`<small class="place-location">${e(PLACE_LOCATIONS[s.id])}</small>`:''}${extra.length?`<div class="route-extra-time">${routeTimeMarkup(extra)}</div>`:''}${purpose?`<span class="return-label">${e(purpose)}</span>`:''}${s.optional?'<span class="return-label">可选</span>':''}</div><div class="route-actions">${external(icon('pin')+'地图',p.map_search_url,'route-map')}</div></div></li>`;}).join('')}</ol></section>`).join('')}${between[groups.length]}</div>`;}
+// A compact index into the itinerary, not a second copy of its execution notes.
+function routeOverview(d){const stops=timedRoute(d);return `<details class="day-route" id="day-route"><summary id="route-content">${icon('map')}当天路线<span class="route-overview-hint">地点顺序与地图</span></summary><p class="route-overview-note">点地点名称查看对应活动；时间、换乘和入场要求见下方行程。</p><ol class="route-overview-list">${stops.map(s=>{
+ const p=PLACE[s.id],label=`${e(p.name)}${s.purpose?`<small>${e(s.purpose)}</small>`:''}${s.optional?'<small>可选</small>':''}`;
+ return `<li data-route-id="${s.id}">${s.eventId?pageLink(label,`#day/${d.date}/timeline/${s.eventId}`,'route-overview-place'):`<span class="route-overview-place">${label}</span>`}${external(icon('pin')+'地图',p.map_search_url,'route-overview-map')}</li>`;
+ }).join('')}</ol></details>`;}
 function daySupport(d){return `<aside class="day-support" id="day-support"><details class="support-card"><summary><span>行程提示</span></summary><ul class="detail-body">${dayNotes(d).map(t=>`<li>${e(t)}</li>`).join('')}</ul></details><details class="support-card source-disclosure"><summary><span>资料来源</span></summary><div class="detail-body">${guideSources(d)}</div></details></aside>`;}
 
 
