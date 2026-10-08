@@ -5,12 +5,12 @@ const e=escapeHTML;
 const PLACE=Object.fromEntries(PLAN.places.map(p=>[p.id,p]));
 const STORAGE_KEY='kansai-autumn-notebook-v1';
 let storageOK=true, toastTimer, undoAction=null;
-let state={schemaVersion:2,checks:{},todos:{},choices:{}},pendingBackup=null;
+let state={schemaVersion:3,checks:{},todos:{},choices:{}},pendingBackup=null;
 // Preserve the exact old snapshot before any migration (including todo IDs) writes.
 // Shot keys already include date + point ID; retain them without guessing by place name.
 function preserveLegacyRecord(){
  if(pendingBackup===null)return;
- let key=STORAGE_KEY+'-before-activity-v2';
+ let key=STORAGE_KEY+'-before-activity-v3';
  const existing=localStorage.getItem(key);
  if(existing!==null&&existing!==pendingBackup)key+='-'+Date.now();
  localStorage.setItem(key,pendingBackup);pendingBackup=null;
@@ -19,10 +19,11 @@ try{
  const raw=localStorage.getItem(STORAGE_KEY);pendingBackup=raw;
  const old=JSON.parse(raw||'null');
  if(old&&typeof old==='object'){
-  if(old.schemaVersion===2)pendingBackup=null;
+  if(old.schemaVersion===3)pendingBackup=null;
   for(const key of ['checks','todos','choices'])if(old[key]&&typeof old[key]==='object'&&!Array.isArray(old[key]))state[key]=old[key];
  }
  for(const [key,value] of Object.entries(state.checks))if(!key.includes(':shot:')&&typeof value==='boolean')state.checks[key]=value?'done':'pending';
+ for(const [key,value] of Object.entries(state.checks))if(!key.includes(':shot:')&&value==='skipped')state.checks[key]='pending';
  preserveLegacyRecord();localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
 }catch{storageOK=false;}
 let screen='overview',dayIndex=0,dayView='timeline',routeFilter='全部',sectionTarget='';
@@ -40,7 +41,7 @@ function flightTerminals(b){const from=flightLocal(b,'departure'),to=flightLocal
 const photoSrc=id=>PHOTOS[id]?.src||'';
 const dateLabel=d=>String(Number(d.slice(5,7)))+'/'+String(Number(d.slice(8)));
 const choice=d=>{const c={ujiExtra:'none',byodoinInterior:false,kodaijiPlan:'night',yasakaBrief:false,usjExtra:false,kinopio:false,spaworldEvening:false,shop1:'animate',shop2:'surugaya',...state.choices[d.date]};if(d.date==='2026-12-01'){c.ujiExtra='none';c.byodoinInterior=false;delete c.skipByodoin;}if(d.date==='2026-12-05'&&!d.optional.some(o=>o.id==='spaworld_evening'))c.spaworldEvening=false;if(d.date==='2026-12-02'){if(!['night','skip'].includes(c.kodaijiPlan))c.kodaijiPlan='night';c.yasakaBrief=c.kodaijiPlan==='night'&&c.yasakaBrief===true;}return c;};
-function activityState(date,id){const value=state.checks[date+':'+id];return value===true||value==='done'?'done':value==='skipped'?'skipped':'pending';}
+function activityState(date,id){const value=state.checks[date+':'+id];return value===true||value==='done'?'done':'pending';}
 function save(){try{preserveLegacyRecord();localStorage.setItem(STORAGE_KEY,JSON.stringify(state));storageOK=true;return true;}catch{storageOK=false;toast('本次修改未保存；请允许浏览器存储后重试，刷新或关闭可能丢失。');return false;}}
 function toast(message,undo){clearTimeout(toastTimer);undoAction=undo||null;$('#toast').innerHTML=e(message)+(undo?'<button data-action="undo">撤销</button>':'');$('#toast').classList.add('show');toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),undo?8500:3500);}
 function openManualCopy(value){

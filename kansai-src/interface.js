@@ -29,7 +29,7 @@ function placeInfo(id,omitName=false){const p=PLACE[id];return `<div class="plac
 function stayArrivalText(id){return id==='hotel_kyoto'?DETAILS['2026-11-30'].transport.slice(1,3).join(' '):'从新今宫站前往酒店；入住和取行李安排见当天活动。';}
 function stayInfo(id){return `<details class="stay-info" id="stay-info"><summary>酒店名称、地址与到店说明</summary>${placeInfo(id)}${photoSrc(id)?photoButton(id,'stay-info-photo'):''}${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'text-link')}<p>${e(stayArrivalText(id))}</p></details>`;}
 const activityPhoto=(id,...args)=>PLACE_LOCATIONS[id]?`<div class="shop-photo">${photoButton(id,...args)}<small class="place-location">${e(PLACE_LOCATIONS[id])}</small></div>`:photoButton(id,...args);
-function progress(d){const {done,skipped,total}=DayFlow.forDay(d);return{done,skipped,total};}
+function progress(d){const {done,total}=DayFlow.forDay(d);return{done,total};}
 function readHash(){
  const parts=location.hash.slice(1).split('/'); sectionTarget='';
  if(parts[0]==='day'){
@@ -114,19 +114,14 @@ function refreshDayChecks(d){
  document.querySelectorAll('[data-event-check]').forEach(input=>{
   const status=activityState(d.date,input.dataset.eventCheck),checked=status==='done';
   input.checked=checked;input.closest('.event').classList.toggle('done',checked);
-  const card=input.closest('.event'),label=card.querySelector('[data-event-status]'),skip=card.querySelector('[data-event-skip]');
-  label.hidden=status==='pending';label.textContent=status==='skipped'?'已跳过':status==='done'?'已完成':'';
-  skip.textContent=status==='skipped'?'恢复此项':'跳过此项';
  });
  refreshDayProgress(d);
  pilgrimageDay(d.date).forEach(refreshShotCompletion);
 }
-function setActivityState(date,id,status){const d=PLAN.days.find(x=>x.date===date);if(!d||!effectiveEvents(d).some(ev=>ev.id===id)||!['pending','done','skipped'].includes(status))throw Error('无效的日期、活动或状态');state.checks[date+':'+id]=status;return save();}
-function setCheck(date,id,checked){return setActivityState(date,id,checked?'done':'pending');}
+function setCheck(date,id,checked){const d=PLAN.days.find(x=>x.date===date);if(!d||!effectiveEvents(d).some(ev=>ev.id===id))throw Error('无效的日期或活动');state.checks[date+':'+id]=checked?'done':'pending';return save();}
 document.addEventListener('pointerdown',()=>{keyboardNavigation=false;document.querySelectorAll('.keyboard-focus').forEach(el=>el.classList.remove('keyboard-focus'));});
 document.addEventListener('keydown',ev=>{if(['Tab','Enter',' ','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(ev.key))keyboardNavigation=true;});
 document.addEventListener('click',ev=>{
- const skip=ev.target.closest('[data-event-skip]');if(skip){const d=PLAN.days[dayIndex],id=skip.dataset.eventSkip;setActivityState(d.date,id,activityState(d.date,id)==='skipped'?'pending':'skipped');refreshDayChecks(d);return;}
  const a=ev.target.closest('a[data-nav]');if(a&&!ev.metaKey&&!ev.ctrlKey&&!ev.shiftKey&&!ev.altKey&&ev.button===0){ev.preventDefault();navigate(a.hash);return;}
  const target=ev.target.closest('[data-action]');if(!target)return;
  if(target.dataset.action==='stay-info'){const info=document.getElementById('stay-info');if(info){info.open=true;info.scrollIntoView({block:'center'});info.querySelector('summary').focus({preventScroll:true});}}

@@ -240,8 +240,6 @@
 .place-link .place-location {display:block; font-size:13px; color:var(--muted); line-height:1.65; margin-top:3px}
 @media screen {
   .progress-area {flex-wrap:wrap; gap:8px 14px}
-  .resume-link {display:inline-flex; align-items:center; gap:6px; min-height:44px; margin-left:auto; font-size:14px}
-  .resume-link .icon {width:16px; height:16px}
   .execution-note {margin:12px 0; padding:8px 12px; border-left:2px solid #e9b779; color:var(--ink); font-size:14px; line-height:1.8}
   .execution-note strong {font-weight:600}
   .execution-note a {display:inline-block; padding:4px 0; text-underline-offset:3px}
@@ -300,7 +298,4 @@
   .prep-bookings {font-size:15px}
   #prep-todos, #prep-bookings, #prep-reference {scroll-margin-top:64px}
 }
-/* Individual corrections keep the activity and its planning details in place. */
-.activity-state{display:flex;align-items:center;gap:12px;margin:4px 0 10px;font-size:.8rem;color:var(--muted)}
-.activity-state button{min-height:44px;padding:6px 8px}
 .shot-name{font-size:.85rem;color:var(--muted);user-select:text}

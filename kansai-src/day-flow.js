@@ -20,8 +20,7 @@ const DayFlow={
    return {id:'section-'+index,name,short,events:items,scenePoints};
   }).filter(section=>section.events.length);
   const done=events.filter(ev=>activityState(d.date,ev.id)==='done').length;
-  const skipped=events.filter(ev=>activityState(d.date,ev.id)==='skipped').length;
-  return {sections,events,done,skipped,total:events.length};
+  return {sections,events,done,total:events.length};
  }
 };
 

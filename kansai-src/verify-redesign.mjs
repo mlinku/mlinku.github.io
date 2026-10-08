@@ -15,18 +15,8 @@ const results=vm.runInContext(`
  const checked=[];
  const savedChecks={...state.checks},savedChoices={...state.choices};
  const resumeDay=PLAN.days[1];state.checks={};state.choices[resumeDay.date]={};
- assert.equal(nextActivity(resumeDay),null,'未开始时不显示继续入口');
- const resumeEvents=effectiveEvents(resumeDay);
- state.checks[resumeDay.date+':'+resumeEvents[0].id]=true;
- assert.equal(nextActivity(resumeDay).id,resumeEvents[1].id,'跳到第一项未完成活动');
- assert.ok(resumeLink(resumeDay).includes('下一项未完成'),'按钮名称与未完成定位一致');
- assert.ok(resumeLink(resumeDay).includes('/timeline/'+resumeEvents[1].id),'继续行程使用可分享的活动锚点');
- for(const ev of resumeEvents)state.checks[resumeDay.date+':'+ev.id]=true;
- assert.equal(nextActivity(resumeDay),null,'全部完成后无继续入口');
- state.choices[resumeDay.date]={ujiExtra:'station'}; delete state.checks[resumeDay.date+':station_stage'];
- assert.equal(nextActivity(resumeDay).id,'station_stage','舞台主线未完成时能继续');
- state.checks={};state.choices={...savedChoices};
- assert.equal(nextActivity(resumeDay),null,'重置后移除继续入口');
+ assert.ok(!timelinePage(resumeDay).includes('下一项未完成'),'不再提供下一项跳转');
+ assert.ok(!timelinePage(resumeDay).includes('data-event-skip'),'不再提供跳过操作');
  for(const day of PLAN.days)for(const ev of effectiveEvents(day)){
   const id=navigationPlace(ev);if(id){assert.ok(PLACE[id]?.map_search_url,'导航点存在 '+ev.id);assert.ok(!eventNavigation(ev).includes('origin='),'不绑定上一站 '+ev.id);}
   if(ev.rally_spot){assert.ok(rallyActions(ev).includes(PILGRIMAGE.rally.entry_url),'集章直达官方活动');assert.ok(!rallyActions(ev).includes('data-event-check'),'打开活动不标记领取完成');}
@@ -179,13 +169,11 @@ const results=vm.runInContext(`
  assert.ok(overview().includes('google-map-preview'),'保留真实Google区域预览');
  dayIndex=1;state.checks={'2026-12-01:shot:eupho_bench':true,'2026-12-01:uji_lunch':true,'2026-11-30:flight_out':true};
  const unchangedEvents=JSON.stringify(effectiveEvents(uji)),unchangedChoices=JSON.stringify(state.choices);
- setActivityState(uji.date,'uji_lunch','skipped');
- assert.equal(activityState(uji.date,'uji_lunch'),'skipped','完成可改为跳过');
- assert.equal(state.checks['2026-12-01:shot:eupho_bench'],true,'跳过不改变拍摄');
+ setCheck(uji.date,'uji_lunch',false);
+ assert.equal(state.checks['2026-12-01:shot:eupho_bench'],true,'取消完成不改变拍摄');
  assert.equal(state.checks['2026-11-30:flight_out'],true,'保留其他日期');
- assert.equal(JSON.stringify(effectiveEvents(uji)),unchangedEvents,'跳过不重排行程');
- assert.equal(JSON.stringify(state.choices),unchangedChoices,'跳过不修改选择');
- setActivityState(uji.date,'uji_lunch','pending');assert.equal(activityState(uji.date,'uji_lunch'),'pending','恢复回到未完成');
+ assert.equal(JSON.stringify(effectiveEvents(uji)),unchangedEvents,'勾选不重排行程');
+ assert.equal(JSON.stringify(state.choices),unchangedChoices,'勾选不修改选择');
  setCheck(uji.date,'uji_lunch',true);assert.equal(activityState(uji.date,'uji_lunch'),'done');
  setCheck(uji.date,'uji_lunch',false);assert.equal(activityState(uji.date,'uji_lunch'),'pending','逐项取消');
  const photoFixtures=['kodaiji','sannenzaka','yasaka_tower','ninenzaka','nene'].map(id=>[id,PHOTOS[id].src]);

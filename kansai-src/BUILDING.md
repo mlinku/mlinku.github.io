@@ -19,4 +19,4 @@ node kansai-src/verify-polish.mjs
 
 在本地旅行目录构建时，两版都以旅行目录的三份规划文件为准；博客构建自动同步到 `kansai-src/data`。独立克隆仓库时使用已提交的数据副本。文档中的交通、票券和地点来源应保持完整。
 
-本地记录沿用 `kansai-autumn-notebook-v1` 存储键，`schemaVersion: 2` 的活动值为 `pending`、`done`、`skipped`；拍摄仍沿用 `日期:shot:点位ID` 的布尔值。首次升级在任何迁移写入前，将旧存储原文保存在 `kansai-autumn-notebook-v1-before-activity-v2`（键已占用且内容不同则追加时间戳）。需要恢复时可从浏览器开发工具导出该值，再写回原存储键并刷新；先导出当前记录，恢复会替换当前进度。备份失败时不会覆盖旧存储。各浏览器和网页／文件来源分别保存。
+本地记录沿用 `kansai-autumn-notebook-v1` 存储键，`schemaVersion: 3` 的活动值为 `pending`、`done`，旧 `skipped` 按未完成迁移；拍摄仍沿用 `日期:shot:点位ID` 的布尔值。首次升级在任何迁移写入前，将旧存储原文保存在 `kansai-autumn-notebook-v1-before-activity-v3`（键已占用且内容不同则追加时间戳）。需要恢复时可从浏览器开发工具导出该值，再写回原存储键并刷新；先导出当前记录，恢复会替换当前进度。备份失败时不会覆盖旧存储。各浏览器和网页／文件来源分别保存。
