@@ -19,8 +19,9 @@ const DayFlow={
    const scenePoints=PILGRIMAGE.points.filter(p=>p.date===d.date&&items.some(ev=>ev.id===p.event_id)&&(!p.option||choice(d).ujiExtra===p.option));
    return {id:'section-'+index,name,short,events:items,scenePoints};
   }).filter(section=>section.events.length);
-  const done=events.filter(ev=>state.checks[d.date+':'+ev.id]).length;
-  return {sections,events,done,total:events.length};
+  const done=events.filter(ev=>activityState(d.date,ev.id)==='done').length;
+  const skipped=events.filter(ev=>activityState(d.date,ev.id)==='skipped').length;
+  return {sections,events,done,skipped,total:events.length};
  }
 };
 

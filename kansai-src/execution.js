@@ -1,8 +1,8 @@
 /* On-the-day actions. Never infer completion from the clock or a link click. */
 function nextActivity(d){
  const events=effectiveEvents(d);
- if(!events.some(ev=>state.checks[d.date+':'+ev.id]))return null;
- return events.find(ev=>!state.checks[d.date+':'+ev.id])||null;
+ if(!events.some(ev=>activityState(d.date,ev.id)!=='pending'))return null;
+ return events.find(ev=>activityState(d.date,ev.id)==='pending')||null;
 }
 function resumeLink(d){const next=nextActivity(d);return next?pageLink('下一项未完成 '+icon('arrow'),`#day/${d.date}/timeline/${next.id}`,'resume-link',`aria-label="下一项未完成：${e(next.title)}"`):'';}
 

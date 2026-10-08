@@ -5,8 +5,26 @@ const e=escapeHTML;
 const PLACE=Object.fromEntries(PLAN.places.map(p=>[p.id,p]));
 const STORAGE_KEY='kansai-autumn-notebook-v1';
 let storageOK=true, toastTimer, undoAction=null;
-let state={checks:{},todos:{},choices:{}};
-try{const old=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');if(old&&typeof old==='object')for(const key of ['checks','todos','choices'])if(old[key]&&typeof old[key]==='object'&&!Array.isArray(old[key]))state[key]=old[key];localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch{storageOK=false;}
+let state={schemaVersion:2,checks:{},todos:{},choices:{}},pendingBackup=null;
+// Preserve the exact old snapshot before any migration (including todo IDs) writes.
+// Shot keys already include date + point ID; retain them without guessing by place name.
+function preserveLegacyRecord(){
+ if(pendingBackup===null)return;
+ let key=STORAGE_KEY+'-before-activity-v2';
+ const existing=localStorage.getItem(key);
+ if(existing!==null&&existing!==pendingBackup)key+='-'+Date.now();
+ localStorage.setItem(key,pendingBackup);pendingBackup=null;
+}
+try{
+ const raw=localStorage.getItem(STORAGE_KEY);pendingBackup=raw;
+ const old=JSON.parse(raw||'null');
+ if(old&&typeof old==='object'){
+  if(old.schemaVersion===2)pendingBackup=null;
+  for(const key of ['checks','todos','choices'])if(old[key]&&typeof old[key]==='object'&&!Array.isArray(old[key]))state[key]=old[key];
+ }
+ for(const [key,value] of Object.entries(state.checks))if(!key.includes(':shot:')&&typeof value==='boolean')state.checks[key]=value?'done':'pending';
+ preserveLegacyRecord();localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+}catch{storageOK=false;}
 let screen='overview',dayIndex=0,dayView='timeline',routeFilter='全部',sectionTarget='';
 const types={flight:'航班',transport:'交通',hotel:'住宿',meal:'用餐',visit:'景点',walk:'步行',rest:'休息',activity:'体验',shopping:'购物'};
 const icons={map:'<path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2z"/><path d="M9 3v16M15 5v16"/>',arrow:'<path d="M4 12h16m-6-6 6 6-6 6"/>',copy:'<rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H3v13h5"/>',check:'<path d="m4 12 5 5L20 6"/>',pin:'<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',close:'<path d="m6 6 12 12M18 6 6 18"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M19 5l-1.5 1.5m-11 11L5 19"/>',bag:'<rect x="5" y="6" width="14" height="15" rx="2"/><path d="M9 6V3h6v3M9 10v7m6-7v7"/>'};
@@ -22,7 +40,8 @@ function flightTerminals(b){const from=flightLocal(b,'departure'),to=flightLocal
 const photoSrc=id=>PHOTOS[id]?.src||'';
 const dateLabel=d=>String(Number(d.slice(5,7)))+'/'+String(Number(d.slice(8)));
 const choice=d=>{const c={ujiExtra:'none',byodoinInterior:false,kodaijiPlan:'night',yasakaBrief:false,usjExtra:false,kinopio:false,spaworldEvening:false,shop1:'animate',shop2:'surugaya',...state.choices[d.date]};if(d.date==='2026-12-01'){c.ujiExtra='none';c.byodoinInterior=false;delete c.skipByodoin;}if(d.date==='2026-12-05'&&!d.optional.some(o=>o.id==='spaworld_evening'))c.spaworldEvening=false;if(d.date==='2026-12-02'){if(!['night','skip'].includes(c.kodaijiPlan))c.kodaijiPlan='night';c.yasakaBrief=c.kodaijiPlan==='night'&&c.yasakaBrief===true;}return c;};
-function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch{storageOK=false;toast('浏览器未允许保存；本次仍可勾选，关闭后可能丢失。');}}
+function activityState(date,id){const value=state.checks[date+':'+id];return value===true||value==='done'?'done':value==='skipped'?'skipped':'pending';}
+function save(){try{preserveLegacyRecord();localStorage.setItem(STORAGE_KEY,JSON.stringify(state));storageOK=true;return true;}catch{storageOK=false;toast('本次修改未保存；请允许浏览器存储后重试，刷新或关闭可能丢失。');return false;}}
 function toast(message,undo){clearTimeout(toastTimer);undoAction=undo||null;$('#toast').innerHTML=e(message)+(undo?'<button data-action="undo">撤销</button>':'');$('#toast').classList.add('show');toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),undo?8500:3500);}
 function openManualCopy(value){
  let dlg=document.getElementById('copy-dialog');

@@ -5,8 +5,7 @@ Object.assign(icons,{
  calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18m-13 4h4m3 0h4"/>',
  list:'<path d="M9 5h12M9 12h12M9 19h12M3 5h1M3 12h1M3 19h1"/>',
  tune:'<path d="M4 7h8m4 0h4M4 17h3m4 0h9"/><circle cx="14" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>',
- chevron:'<path d="m9 5 7 7-7 7"/>',
- reset:'<path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/>'
+ chevron:'<path d="m9 5 7 7-7 7"/>'
 });
 const TODOS=[...PLAN.pending_checks,'准备交通IC卡，保存HARUKA订单与兑换说明。','USJ前一晚：在官方App登记并区分两张Studio Pass，备好网络、充电宝与早餐。','12/6返店后整理行李，复核南海列车与入口，收好证件、随身物品和次晨早餐。','高台寺门票：核对夜间参拜公告与购票方式。',...(PLAN.additional_checks||[]).map(item=>item.text)];
 const TODO_IDS=['usj-details','weather','restaurants','kobe-dinner-20261003','return-travel','kodaiji-weather','uji-cafes','rally-account','transport-tickets','usj-app','packing','kodaiji-tickets',...(PLAN.additional_checks||[]).map(item=>item.id)];
@@ -30,7 +29,7 @@ function placeInfo(id,omitName=false){const p=PLACE[id];return `<div class="plac
 function stayArrivalText(id){return id==='hotel_kyoto'?DETAILS['2026-11-30'].transport.slice(1,3).join(' '):'从新今宫站前往酒店；入住和取行李安排见当天活动。';}
 function stayInfo(id){return `<details class="stay-info" id="stay-info"><summary>酒店名称、地址与到店说明</summary>${placeInfo(id)}${photoSrc(id)?photoButton(id,'stay-info-photo'):''}${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'text-link')}<p>${e(stayArrivalText(id))}</p></details>`;}
 const activityPhoto=(id,...args)=>PLACE_LOCATIONS[id]?`<div class="shop-photo">${photoButton(id,...args)}<small class="place-location">${e(PLACE_LOCATIONS[id])}</small></div>`:photoButton(id,...args);
-function progress(d){const events=effectiveEvents(d);return{done:events.filter(ev=>state.checks[d.date+':'+ev.id]).length,total:events.length};}
+function progress(d){const {done,skipped,total}=DayFlow.forDay(d);return{done,skipped,total};}
 function readHash(){
  const parts=location.hash.slice(1).split('/'); sectionTarget='';
  if(parts[0]==='day'){
@@ -105,7 +104,7 @@ function prepPage(){return `<header class="prep-heading"><h1>临行准备</h1><n
  <section><h2>保存的早季红叶预测</h2><p class="muted">截至2026/9/28 · 非实时叶况</p>${PLAN.foliage.spots.map(s=>`<article class="forecast-row"><h3>${e(PLACE[s.place_id].name)}</h3><p>到访 ${dateLabel(s.visit_date)}<br>预测观赏开始 ${dateLabel(s.forecast_viewing_start)}<br>预测落叶开始 ${dateLabel(s.forecast_leaf_fall_start)}</p>${external('预测来源 ↗',s.source)}</article>`).join('')}<p class="muted">可能见到枝头红叶与落叶混合，不保证盛期。</p></section>
  <section><h2>出行信息</h2><p>普通正餐预算每人¥1,000—2,500；12/6和牛自助预算不超过¥6,000/人，尚未订位。</p><p>部分门票费用（两人）：京都塔¥2,000，未购票；大佛殿¥1,600、高台寺¥1,600，购买状态待确认。USJ、清水寺及购物费用另计。</p></section>
  <section><h2>资料说明</h2><p>行程时间为参考，不代表预约；营业时间、菜单与叶况请临行复核。</p><p>照片供地点识别与作品对照，拍摄时间、来源可在放大图或巡礼的“坐标与来源”查看；示意图另有标注。Google区域预览采集于2026/9/28。</p></section>
- <section><h2>离线与进度</h2><p>${typeof DELIVERY_MODE!=='undefined'&&DELIVERY_MODE==='web'?'博客图片按需加载；完整离线阅读请使用独立离线版。':'行程与照片可离线查看。'}地图和来源链接需联网。</p><p>进度仅保存在当前浏览器，不跨设备同步。请使用同一网址或文件路径；清除浏览器数据或使用隐私模式可能丢失记录。</p></section>
+ <section><h2>离线与进度</h2><p>${typeof DELIVERY_MODE!=='undefined'&&DELIVERY_MODE==='web'?'博客图片按需加载；完整离线阅读请使用独立离线版。':'行程与照片可离线查看。'}地图和来源链接需联网。</p><p>活动、已拍、可选安排与待办仅保存在当前浏览器。不同浏览器、设备、网页版与离线文件各自记录，不互相同步。请使用同一网址或文件路径；清除浏览器数据或使用隐私模式可能丢失记录。</p></section>
  </div></details>`;}
 
 function sidebarDayIndex(){return `<nav class="desktop-day-index" aria-label="旅行日期目录"><p>旅行目录</p>${PLAN.days.map((d,i)=>pageLink(`<span>${dateLabel(d.date)}</span><strong>${e(dayPresentation(d).short)}</strong>`,dayHash(i,dayView),screen==='day'&&i===dayIndex?'active':'',screen==='day'&&i===dayIndex?'aria-current="date"':'')).join('')}</nav>`;}
@@ -113,35 +112,30 @@ function render(){renderedHash=location.hash;const current=screen==='day'?'day':
 function refreshDayChecks(d){
  if(screen!=='day'||PLAN.days[dayIndex].date!==d.date)return;
  document.querySelectorAll('[data-event-check]').forEach(input=>{
-  const checked=!!state.checks[d.date+':'+input.dataset.eventCheck];
+  const status=activityState(d.date,input.dataset.eventCheck),checked=status==='done';
   input.checked=checked;input.closest('.event').classList.toggle('done',checked);
+  const card=input.closest('.event'),label=card.querySelector('[data-event-status]'),skip=card.querySelector('[data-event-skip]');
+  label.hidden=status==='pending';label.textContent=status==='skipped'?'已跳过':status==='done'?'已完成':'';
+  skip.textContent=status==='skipped'?'恢复此项':'跳过此项';
  });
  refreshDayProgress(d);
  pilgrimageDay(d.date).forEach(refreshShotCompletion);
 }
-function resetDay(scope='timeline'){
- const d=PLAN.days[dayIndex],old={},shots=scope==='pilgrimage',label=shots?'打卡':'行程',prefix=d.date+':';
- for(const k of Object.keys(state.checks))if(k.startsWith(prefix)&&k.startsWith(prefix+'shot:')===shots){old[k]=state.checks[k];delete state.checks[k];}
- // Update completion in place so open details, scroll positions and focus survive.
- save();refreshDayChecks(d);
- toast('已重置 '+dateLabel(d.date)+' '+label,()=>{
-  Object.assign(state.checks,old);save();refreshDayChecks(d);toast('已恢复当天'+label);
- });
-}
-function setCheck(date,id,checked){const d=PLAN.days.find(x=>x.date===date);if(!d||!effectiveEvents(d).some(ev=>ev.id===id))throw Error('无效的日期或活动');state.checks[date+':'+id]=!!checked;save();}
+function setActivityState(date,id,status){const d=PLAN.days.find(x=>x.date===date);if(!d||!effectiveEvents(d).some(ev=>ev.id===id)||!['pending','done','skipped'].includes(status))throw Error('无效的日期、活动或状态');state.checks[date+':'+id]=status;return save();}
+function setCheck(date,id,checked){return setActivityState(date,id,checked?'done':'pending');}
 document.addEventListener('pointerdown',()=>{keyboardNavigation=false;document.querySelectorAll('.keyboard-focus').forEach(el=>el.classList.remove('keyboard-focus'));});
 document.addEventListener('keydown',ev=>{if(['Tab','Enter',' ','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(ev.key))keyboardNavigation=true;});
 document.addEventListener('click',ev=>{
+ const skip=ev.target.closest('[data-event-skip]');if(skip){const d=PLAN.days[dayIndex],id=skip.dataset.eventSkip;setActivityState(d.date,id,activityState(d.date,id)==='skipped'?'pending':'skipped');refreshDayChecks(d);return;}
  const a=ev.target.closest('a[data-nav]');if(a&&!ev.metaKey&&!ev.ctrlKey&&!ev.shiftKey&&!ev.altKey&&ev.button===0){ev.preventDefault();navigate(a.hash);return;}
  const target=ev.target.closest('[data-action]');if(!target)return;
  if(target.dataset.action==='stay-info'){const info=document.getElementById('stay-info');if(info){info.open=true;info.scrollIntoView({block:'center'});info.querySelector('summary').focus({preventScroll:true});}}
  else if(target.dataset.action==='copy-close')$('#copy-dialog').close();
  else if(target.dataset.action==='copy')copyText(target.dataset.copy);
- else if(target.dataset.action==='reset-day')resetDay(target.dataset.resetScope);
  else if(target.dataset.action==='undo'&&undoAction){const fn=undoAction;undoAction=null;fn();}
 });
 document.addEventListener('change',ev=>{const input=ev.target,d=PLAN.days[dayIndex];
- if(input.matches('[data-event-check]')){setCheck(d.date,input.dataset.eventCheck,input.checked);input.closest('.event').classList.toggle('done',input.checked);refreshDayProgress(d);}
+ if(input.matches('[data-event-check]')){setCheck(d.date,input.dataset.eventCheck,input.checked);refreshDayChecks(d);}
  else if(input.matches('[data-todo]')){state.todos[input.dataset.todo]=input.checked;save();$('#todo-count').textContent=TODOS.filter((_,i)=>state.todos[TODO_IDS[i]]).length+' / '+TODOS.length;}
  else if(input.dataset.choice){
   const y=input.getBoundingClientRect().top,dx=$('.date-nav')?.scrollLeft||0,open=captureReading($('#main')),key=input.dataset.choice,value=input.value,c=choice(d);

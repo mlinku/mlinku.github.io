@@ -14,25 +14,25 @@ function dayPage(){const d=PLAN.days[dayIndex],info=dayPresentation(d);return `
  ${currentChoiceText(d)?`<p class="selected-choice">${icon('tune')}${e(currentChoiceText(d))}</p>`:''}
  <div class="day-layout"><div class="day-main">${dayView==='pilgrimage'?pilgrimagePage(d):dayView==='route'?routePage(d):timelinePage(d)}</div>${dayView==='pilgrimage'?'':daySupport(d)}</div>
  <nav class="prev-next" aria-label="相邻日期">${dayIndex>0?pageLink('← '+dateLabel(PLAN.days[dayIndex-1].date)+' 前一天',dayHash(dayIndex-1,dayView),'text-link'):pageLink('← 全程','#overview','text-link')}${dayIndex<7?pageLink(dateLabel(PLAN.days[dayIndex+1].date)+' 后一天 →',dayHash(dayIndex+1,dayView),'text-link'):pageLink('临行待办 →','#prep','text-link')}</nav>`;}
-function progressMarkup(d){const flow=DayFlow.forDay(d);return `<span id="progress-text">已完成 <strong>${flow.done} / ${flow.total}</strong></span><div class="progress-track" role="progressbar" aria-label="当天活动完成进度" aria-valuemin="0" aria-valuemax="${flow.total}" aria-valuenow="${flow.done}"><span style="width:${flow.done/flow.total*100}%"></span></div>${resumeLink(d)}`;}
+function progressMarkup(d){const flow=DayFlow.forDay(d);return `<span id="progress-text" aria-live="polite">已完成 <strong>${flow.done} / ${flow.total}</strong>${flow.skipped?` · 已跳过 ${flow.skipped}`:''}${flow.done+flow.skipped===flow.total?` · ${flow.skipped?'当天活动已处理':'当天活动全部完成'}`:''}</span><div class="progress-track" role="progressbar" aria-label="当天活动完成进度" aria-valuemin="0" aria-valuemax="${flow.total}" aria-valuenow="${flow.done}"><span style="width:${flow.done/flow.total*100}%"></span></div>${resumeLink(d)}`;}
 function refreshDayProgress(d){const area=document.querySelector('.progress-area');if(area)area.innerHTML=progressMarkup(d);}
 function timelinePage(d){const flow=DayFlow.forDay(d);return `
  <div class="progress-area">${progressMarkup(d)}</div>
- <div class="timeline">${flow.sections.map(section=>`<section class="timeline-phase" id="${section.id}"><div class="phase-heading"><h2>${e(section.short)}</h2></div>${section.events.map(ev=>eventCard(d,ev)).join('')}</section>`).join('')}</div>
- <div class="day-end">${btn(icon('reset')+'重置当天行程','reset-day','data-reset-scope="timeline"','text-button')}</div>`;}
+ <div class="timeline">${flow.sections.map(section=>`<section class="timeline-phase" id="${section.id}"><div class="phase-heading"><h2>${e(section.short)}</h2></div>${section.events.map(ev=>eventCard(d,ev)).join('')}</section>`).join('')}</div>`;}
 
 // Ordinary identification photos belong to the first eligible activity, not transit.
 // Distinct entrance assets remain distinct place IDs; pilgrimage comparisons are independent.
 function compactEvent(ev){return ev.category==='transport'||(ev.category==='rest'&&ev.place_ids.every(id=>id.startsWith('hotel_')||id==='usj'))||['nakamura_walk','usj_app','usj_finish'].includes(ev.id);}
 function eventPhotoIds(ev){return compactEvent(ev)?[]:ev.place_ids.filter(id=>photoSrc(id)&&(ev.category!=='meal'||PLACE[id].category==='restaurant'));}
 function eventCard(d,ev){
- const checked=!!state.checks[d.date+':'+ev.id],isMeal=ev.category==='meal',isRest=ev.category==='rest';
+ const status=activityState(d.date,ev.id),checked=status==='done',isMeal=ev.category==='meal',isRest=ev.category==='rest';
  const compact=compactEvent(ev);
  const earlier=effectiveEvents(d).slice(0,effectiveEvents(d).findIndex(item=>item.id===ev.id));
  const seen=new Set(earlier.flatMap(eventPhotoIds)),imageIds=eventPhotoIds(ev).filter(id=>!seen.has(id));
  const restaurantPhoto=imageIds.length===1&&PLACE[imageIds[0]].category==='restaurant';
  const foodRows=mealRows(d,ev),first=foodRows.find(r=>r[1]==='首选');
  return `<article id="event-${ev.id}" class="event ${compact?'compact-event':''} ${checked?'done':''} ${ev.optional?'optional':''} ${ev.category==='transport'?'transport-event':''} ${isRest?'rest-event':''}" data-event="${ev.id}"><label class="event-check"><input type="checkbox" data-event-check="${ev.id}" ${checked?'checked':''} aria-label="完成：${e(ev.title)}"><span aria-hidden="true">${icon('check')}</span></label><div class="event-content"><div class="event-meta">${ev.time_hint?`<span class="time-hint">${e(ev.time_hint)}</span>`:''}<span class="event-time">${e(compactTime(ev.time_label))}</span>${ev.optional?'<span class="pill gold">可选</span>':''}${statusLabel(ev)}</div><h3>${e(ev.title)}</h3>
+ <div class="activity-state"><span data-event-status="${ev.id}" ${status==='pending'?'hidden':''}>${status==='skipped'?'已跳过':status==='done'?'已完成':''}</span><button type="button" class="text-button" data-event-skip="${ev.id}">${status==='skipped'?'恢复此项':'跳过此项'}</button></div>
  ${ev.condition?`<p class="condition">${e(ev.condition)}</p>`:''}${ev.optionNote?`<p class="selection-note">${e(ev.optionNote)}</p>`:''}${executionNotice(d,ev)}
  <div class="event-body ${imageIds.length===1?'has-single-photo':''} ${restaurantPhoto?'restaurant-photo':''}">
  ${imageIds.length?`<div class="event-photos ${imageIds.length===1?'single-photo':''}" style="--photo-columns:${Math.min(imageIds.length,3)}">${imageIds.map(id=>activityPhoto(id,'',isMeal&&PLACE[id].category!=='restaurant'?'用餐周边 · ':'',id!==first?.[7]&&(imageIds.length!==1||PLACE[id].name!==ev.title))).join('')}</div>`:''}

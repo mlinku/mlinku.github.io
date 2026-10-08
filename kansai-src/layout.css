@@ -300,3 +300,7 @@
   .prep-bookings {font-size:15px}
   #prep-todos, #prep-bookings, #prep-reference {scroll-margin-top:64px}
 }
+/* Individual corrections keep the activity and its planning details in place. */
+.activity-state{display:flex;align-items:center;gap:12px;margin:4px 0 10px;font-size:.8rem;color:var(--muted)}
+.activity-state button{min-height:44px;padding:6px 8px}
+.shot-name{font-size:.85rem;color:var(--muted);user-select:text}
