@@ -65,16 +65,25 @@ function pilgrimageEventLinks(d,ev){
  return `<a class="scene-entry" href="#day/${d.date}/pilgrimage/${points[0].id}" data-nav><span class="scene-entry-icon">${icon('pin')}</span><span><strong>实景 × 作品 <small>${points.length}组对照</small></strong><span>${e(works.join(' · '))}</span></span>${icon('chevron')}</a>`;
 }
 function pilgrimagePlaceContent(id){const points=pilgrimagePlace(id);return points.length?`<section class="place-pilgrimage"><h3>实景 × 作品</h3>${points.map(p=>shotCard(p,'place')).join('')}</section>`:'';}
-function openShotZoom(id,kind){
- const p=pilgrimagePoints.find(x=>x.id===id)||PILGRIMAGE.rally?.spots.find(x=>x.id===id),img=p?.[kind];if(!img?.src)return;
+function imageZoom(title,img,switcher=''){
  let dlg=document.getElementById('shot-dialog');
- if(!dlg){dlg=document.createElement('dialog');dlg.id='shot-dialog';dlg.className='shot-zoom-dialog';dlg.setAttribute('aria-labelledby','shot-zoom-title');document.body.append(dlg);dlg.addEventListener('click',ev=>{if(ev.target===dlg){const r=dlg.getBoundingClientRect();if(ev.clientX<r.left||ev.clientX>r.right||ev.clientY<r.top||ev.clientY>r.bottom)dlg.close();}});}
+ if(!dlg){
+  dlg=document.createElement('dialog');dlg.id='shot-dialog';dlg.className='shot-zoom-dialog';dlg.setAttribute('aria-labelledby','shot-zoom-title');document.body.append(dlg);
+  dlg.addEventListener('click',ev=>{if(ev.target===dlg){const r=dlg.getBoundingClientRect();if(ev.clientX<r.left||ev.clientX>r.right||ev.clientY<r.top||ev.clientY>r.bottom)dlg.close();}});
+  dlg.addEventListener('close',()=>{const reading=dlg.returnReading;dlg.returnReading=null;if(reading){reading.target?.focus({preventScroll:true});window.scrollTo({left:reading.x,top:reading.y,behavior:'instant'});}});
+ }
  const alreadyOpen=dlg.open;
- const switcher=p.comparison?'':`<div class="zoom-switch" role="group" aria-label="切换对照图片">${['real','anime'].filter(k=>p[k]?.src).map(k=>`<button data-action="shot-zoom" data-shot="${e(p.id)}" data-kind="${k}" aria-pressed="${kind===k}">${k==='real'?'实景':'作品画面'}</button>`).join('')}</div>`;
- dlg.innerHTML=`<div class="dialog-top"><h2 id="shot-zoom-title">${e(p.title)}</h2><button class="btn icon-button" data-action="shot-close" aria-label="关闭放大图">${icon('close')}</button></div>${switcher}<img src="${img.src}" alt="${e(p.title)}${kind==='comparison'?'作品 × 实景':kind==='real'?'实景':'作品画面'}" width="${img.width||800}" height="${img.height||450}"><p>${e(img.credit||'')} · ${external('图片来源 ↗',img.source_url)}</p>`;
+ if(!alreadyOpen)dlg.returnReading={target:document.activeElement,x:scrollX,y:scrollY};
+ dlg.innerHTML=`<div class="dialog-top"><h2 id="shot-zoom-title">${e(title)}</h2><button class="btn icon-button" data-action="shot-close" aria-label="关闭放大图">${icon('close')}</button></div>${switcher}<img src="${img.src}" alt="${e(img.alt||title)}" width="${img.width||800}" height="${img.height||450}"><p>${e(img.credit||'')}${img.source_url?' · '+external('图片来源 ↗',img.source_url):''}${img.license?' · '+(img.licenseUrl?external(e(img.license),img.licenseUrl):e(img.license)):''}</p>`;
  if(!alreadyOpen)dlg.showModal();else dlg.querySelector('[aria-pressed="true"]')?.focus({preventScroll:true});
 }
-document.addEventListener('click',ev=>{const t=ev.target.closest('[data-action]');if(t?.dataset.action==='shot-zoom')openShotZoom(t.dataset.shot,t.dataset.kind);if(t?.dataset.action==='shot-close')document.getElementById('shot-dialog').close();});
+function openShotZoom(id,kind){
+ const p=pilgrimagePoints.find(x=>x.id===id)||PILGRIMAGE.rally?.spots.find(x=>x.id===id),img=p?.[kind];if(!img?.src)return;
+ const switcher=p.comparison?'':`<div class="zoom-switch" role="group" aria-label="切换对照图片">${['real','anime'].filter(k=>p[k]?.src).map(k=>`<button data-action="shot-zoom" data-shot="${e(p.id)}" data-kind="${k}" aria-pressed="${kind===k}">${k==='real'?'实景':'作品画面'}</button>`).join('')}</div>`;
+ imageZoom(p.title,{...img,alt:p.title+(kind==='comparison'?'作品 × 实景':kind==='real'?'实景':'作品画面')},switcher);
+}
+function openPhotoZoom(id){const img=PHOTOS[id];if(!img?.src)return;imageZoom(PLACE[id].name,{...img,alt:img.sight,credit:[img.sight,img.author,img.date].filter(Boolean).join(' · '),source_url:img.sourcePage});}
+document.addEventListener('click',ev=>{const t=ev.target.closest('[data-action]');if(t?.dataset.action==='shot-zoom')openShotZoom(t.dataset.shot,t.dataset.kind);if(t?.dataset.action==='photo-zoom')openPhotoZoom(t.dataset.place);if(t?.dataset.action==='shot-close')document.getElementById('shot-dialog').close();});
 function refreshShotCompletion(p){
  const id=p.id,checked=!!state.checks[shotKey(p)];
  document.querySelectorAll('[data-shot-check="'+id+'"]').forEach(el=>{el.checked=checked;el.closest('.shot-card').classList.toggle('shot-done',checked);el.parentElement.querySelector('span').textContent=checked?'已打卡':'打卡';});

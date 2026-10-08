@@ -253,3 +253,16 @@
   .execution-note {font-size:14px; padding-inline:10px}
   .progress-area .progress-track {flex:1; min-width:40px; max-width:100px}
 }
+
+/* Place information stays beside the itinerary; image buttons only enlarge images. */
+.place-info {margin:10px 0; overflow-wrap:anywhere; font-size:14px; line-height:1.75}
+.place-info p {margin:4px 0}
+.place-info+.place-info {padding-top:10px; border-top:1px solid var(--line)}
+.stay-info {margin:10px 0 16px; padding:0 14px; border:1px solid var(--line); border-radius:10px; background:var(--white); font-size:14px}
+.stay-info summary,.place-reference summary {min-height:44px; padding:10px 0; cursor:pointer}
+.stay-info>.text-link {display:inline-flex; align-items:center; min-height:44px}
+.stay-info-photo {display:block; width:min(240px,100%); margin:10px 0}
+.stay-info-photo img {width:100%; height:150px; object-fit:cover}
+.place-reference {width:100%; padding:0 12px; border-bottom:1px solid var(--line)}
+.place-reference .photo-button {display:block; width:min(240px,100%); margin-bottom:10px}
+.place-reference .text-link {display:inline-flex; align-items:center; min-height:44px; margin-right:16px}

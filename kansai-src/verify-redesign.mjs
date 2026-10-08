@@ -99,7 +99,7 @@ const results=vm.runInContext(`
  assert.ok(saizeriyaShot.real.local&&saizeriyaShot.anime.local,'萨莉亚对照包含实景及作品图');
  const bridgeVisits=effectiveEvents(ujiDefault).filter(ev=>ev.category!=='transport'&&ev.category!=='meal'&&ev.place_ids.includes('uji_bridge')).length;
  assert.ok(bridgeVisits>1);
- assert.equal((ujiTimeline.match(/class="photo-button [^"]*" data-action="place" data-place="uji_bridge"/g)||[]).length,bridgeVisits,'时间轴重复经过宇治桥也保留照片');
+ assert.equal((ujiTimeline.match(/class="photo-button [^"]*" data-action="photo-zoom" data-place="uji_bridge"/g)||[]).length,1,'时间轴重复经过宇治桥只在首次需要时保留照片');
  assert.equal(mealRows(ujiDefault,effectiveEvents(ujiDefault).find(e=>e.id==='uji_saizeriya_dinner'))[0][7],'saizeriya_uji');
  assert.ok(!effectiveEvents(ujiDefault).some(ev=>ev.id==='uji_default_dinner'),'默认没有第二顿京都晚餐');
  assert.equal(timedRoute(ujiDefault).find(n=>n.id==='saizeriya_uji').times[0].text,'18:00—19:00');
@@ -193,7 +193,7 @@ const results=vm.runInContext(`
  for(const [id] of photoFixtures)PHOTOS[id].src='test-'+id+'.jpg';
  const nightCard=eventCard(kyoto,effectiveEvents(kyoto).find(ev=>ev.id==='kodaiji_night'));
  assert.ok(!nightCard.includes('<span>高台寺夜枫</span>'),'单张照片不重复活动标题');
- assert.ok(nightCard.includes('aria-label="查看高台寺夜枫详情"'),'照片仍有可访问名称');
+ assert.ok(nightCard.includes('aria-label="放大高台寺夜枫照片"'),'照片仍有可访问名称');
  const eastWalk=eventCard(kyoto,effectiveEvents(kyoto).find(ev=>ev.id==='higashiyama_walk'));
  for(const name of ['三年坂','八坂塔外观','二年坂','宁宁之道'])assert.ok(eastWalk.includes('<span>'+name+'</span>'),'多地点照片仍标明名称 '+name);
  for(const [id,src] of photoFixtures){if(src===undefined)delete PHOTOS[id].src;else PHOTOS[id].src=src;}

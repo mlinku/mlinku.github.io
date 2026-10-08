@@ -24,8 +24,10 @@ const photo=(id,cls='',loading='lazy',sizes='(max-width:720px) calc(100vw - 72px
  const full=cls==='dialog-image',responsive=!full&&img.thumbnail&&img.thumbnailWidth<(img.width||1100);
  return `<img class="${cls}" ${img.illustration?'style="object-fit:contain"':''} src="${full?img.src:img.thumbnail||img.src}" ${responsive?`srcset="${img.thumbnail} ${img.thumbnailWidth}w, ${img.src} ${img.width||1100}w" sizes="${sizes}"`:''} alt="${e(img.sight)}" width="${img.width||800}" height="${img.height||600}" loading="${loading}" decoding="async" ${loading==='eager'?'fetchpriority="high"':''}>`;
 };
-const photoButton=(id,cls='',prefix='',caption=true)=>`<button type="button" class="photo-button ${cls}${PHOTOS[id]?.illustration?' illustration-photo':''}" data-action="place" data-place="${id}" aria-label="查看${e(PLACE[id].name)}详情">${photo(id)}${caption?`<span>${e(prefix+PLACE[id].name)}</span>`:''}</button>`;
-const placeButton=(id)=>`<button type="button" class="place-link${PLACE_LOCATIONS[id]?' has-location':''}" data-action="place" data-place="${id}">${PLACE_LOCATIONS[id]?`<span>${e(PLACE[id].name)}<small class="place-location">${e(PLACE_LOCATIONS[id])}</small></span>`:e(PLACE[id].name)}${icon('chevron')}</button>`;
+const photoButton=(id,cls='',prefix='',caption=true)=>`<button type="button" class="photo-button ${cls}${PHOTOS[id]?.illustration?' illustration-photo':''}" data-action="photo-zoom" data-place="${id}" aria-label="放大${e(PLACE[id].name)}照片">${photo(id)}${caption?`<span>${e(prefix+PLACE[id].name)}</span>`:''}</button>`;
+function placeInfo(id){const p=PLACE[id];return `<div class="place-info" data-place-info="${id}"><strong lang="ja">${e(p.name_ja)}</strong>${p.address_ja?`<p lang="ja">${e(p.address_ja)}</p>`:''}${PLACE_LOCATIONS[id]?`<p class="place-location">${e(PLACE_LOCATIONS[id])}</p>`:''}${PLACE_DETAILS[id]?`<p>${e(PLACE_DETAILS[id])}</p>`:''}</div>`;}
+const placeButton=id=>`<details class="place-reference"><summary>${e(PLACE[id].name)}${PLACE_LOCATIONS[id]?`<small class="place-location">${e(PLACE_LOCATIONS[id])}</small>`:''}</summary>${placeInfo(id)}${photoSrc(id)?photoButton(id):''}${external(icon('pin')+'地图',PLACE[id].map_search_url,'text-link')}${[...new Set(pilgrimagePlace(id).map(p=>p.date))].map(date=>pageLink('查看巡礼对照 →','#day/'+date+'/pilgrimage','text-link')).join('')}</details>`;
+function stayInfo(id){return `<details class="stay-info" id="stay-info"><summary>酒店名称、地址与到店说明</summary>${placeInfo(id)}${photoSrc(id)?photoButton(id,'stay-info-photo'):''}${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'text-link')}<p>${e(id==='hotel_kyoto'?DETAILS['2026-11-30'].transport.slice(1,3).join(' '):'从新今宫站前往酒店；入住和取行李安排见当天活动。')}</p></details>`;}
 const activityPhoto=(id,...args)=>PLACE_LOCATIONS[id]?`<div class="shop-photo">${photoButton(id,...args)}<small class="place-location">${e(PLACE_LOCATIONS[id])}</small></div>`:photoButton(id,...args);
 function progress(d){const events=effectiveEvents(d);return{done:events.filter(ev=>state.checks[d.date+':'+ev.id]).length,total:events.length};}
 function readHash(){
@@ -41,7 +43,7 @@ function readHash(){
 }
 // Reading position is session-only; completion and choices remain in localStorage.
 const viewMemory=new Map();
-let optionsReturn=null,renderedHash='',keyboardNavigation=false;
+let renderedHash='',keyboardNavigation=false;
 function viewKey(){return screen==='day'?screen+'/'+PLAN.days[dayIndex].date+'/'+dayView+(dayView==='route'?'/'+routeFilter:''):screen;}
 function disclosureKey(el){return (el.closest('article')?.id||'page')+'|'+el.querySelector('summary')?.textContent.trim();}
 function captureReading(root){return [...root.querySelectorAll('details[open]')].map(disclosureKey);}
@@ -71,7 +73,6 @@ function focusPage(fromHistory=false){
   if(memory)current?.focus({preventScroll:true});
  }
 }
-function backToOptions(){const saved=optionsReturn;if(!saved)return;openOptions();const dlg=$('#place-dialog');restoreDisclosures(dlg,saved.open);dlg.scrollTop=saved.y;dlg.querySelector('[data-place="'+saved.place+'"]')?.focus({preventScroll:true});}
 function go(target,index=dayIndex,view='timeline'){navigate(target==='day'?dayHash(index,view):'#'+target);}
 function dates(){return `<nav class="date-nav" aria-label="选择旅行日期">${PLAN.days.map((d,i)=>pageLink(`<strong>${dateLabel(d.date)}</strong><span>${DETAILS[d.date].cityLabel}</span>`,dayHash(i,dayView),'date-link'+(i===dayIndex?' active':''),`aria-label="${dateLabel(d.date)} ${d.weekday} ${dayPresentation(d).short}" ${i===dayIndex?'aria-current="date"':''}`)).join('')}</nav>`;}
 
@@ -85,11 +86,10 @@ function overview(){return `
  <section id="trip-map" class="trip-map-section"><div class="section-title"><div><h2>关西区域地图</h2></div></div><div class="map-layout"><a class="google-map-preview" href="${KANSAI_MAP_URL}" target="_blank" rel="noopener noreferrer" aria-label="打开关西区域的交互式 Google 地图"><img src="${REGION_MAP_IMAGE}" alt="Google 关西区域地图，展示京都、宇治、大阪、奈良、神户的真实位置" width="400" height="300"><span>关西<em>打开 Google 地图 ↗</em></span></a><div class="trip-connections">${[['11/30','关西机场 → 京都',''],['12/1','京都 ⇄ 宇治',''],['12/3','京都 → 大阪','先回京都酒店取行李'],['12/5','大阪 → 奈良 → 大阪','大阪城后经鹤桥乘近铁往返奈良'],['12/6','大阪 ⇄ 神户','生田、北野、三宫与神户大桥'],['12/7','大阪 → 关西机场','南海列车待复核']].map(([date,path,note])=>`<div><span>${date}</span><p><strong>${path}</strong>${note?`<small>${note}</small>`:''}</p></div>`).join('')}</div></div></section>
  <section><div class="section-title"><div><h2>住宿与航班</h2></div></div><div class="stays">${stayCard('hotel_kyoto','京都 · 3晚','11/30入住 — 12/3退房')}${stayCard('hotel_osaka','大阪 · 4晚','12/3入住 — 12/7退房')}</div>${flights()}</section>
  `;}
-function stayCard(id,title,date){return `<article class="stay-card">${photoButton(id,'stay-photo')}<div><p class="eyebrow">${title}</p><h3>${e(PLACE[id].name_ja)}</h3><p>${date}</p><button class="text-link" data-action="place" data-place="${id}">查看酒店 ${icon('arrow')}</button></div></article>`;}
+function stayCard(id,title,date){return `<article class="stay-card">${photoButton(id,'stay-photo')}<div><p class="eyebrow">${title}</p><h3>${e(PLACE[id].name_ja)}</h3><p>${date}</p><details class="stay-info"><summary>酒店信息</summary>${placeInfo(id)}${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'text-link')}</details></div></article>`;}
 function flights(){const bookings=PLAN.bookings.filter(b=>b.type==='flight');return `<section class="flight-card flight-overview"><div class="flight-heading"><h3>${e([...new Set(bookings.map(b=>b.airline))].join(' / '))}</h3><span>往返航班 · 当地时间</span></div><div class="flight-grid">${bookings.map(b=>{const from=flightLocal(b,'departure'),to=flightLocal(b,'arrival');return `<div><p>${e(from.date)} · ${b.from==='hkg'?'去程':'回程'} <b>${e(b.flight_number||'航班号待确认')}</b></p><div><strong><span class="flight-action">起飞</span>${from.time}<small>${e(from.city)}</small></strong>${icon('arrow')}<strong><span class="flight-action">抵达</span>${to.time}<small>${e(to.city)}</small></strong></div><p class="flight-terminals">${e(flightTerminals(b))}</p></div>`;}).join('')}</div></section>`;}
 
-function openOptions(){optionsReturn=null;const d=PLAN.days[dayIndex];dialogMode={kind:'options',date:d.date};const dlg=$('#place-dialog');dlg.className='options-dialog';dlg.innerHTML=`<div class="dialog-top"><div><p class="eyebrow">${dateLabel(d.date)} · ${e(dayPresentation(d).short)}</p><h2 id="place-title">可选安排</h2></div>${btn(icon('close'),'close-dialog','aria-label="关闭可选安排"','icon-button')}</div><div class="dialog-body"><div class="option-fields">${optionalControls(d)}</div>${d.optional.length?`<details class="option-photos"><summary>地点照片</summary><div class="event-photos">${[...new Set(d.optional.flatMap(o=>o.place_ids))].filter(id=>photoSrc(id)).map(id=>photoButton(id)).join('')}</div></details>`:''}${DETAILS[d.date].meals.some(r=>r[1]==='可选')?`<details><summary>可选餐饮</summary>${DETAILS[d.date].meals.filter(r=>r[1]==='可选').map(r=>foodRow(d,r)).join('')}</details>`:''}<div class="dialog-footer">${btn('完成','close-dialog','','primary')}</div></div>`;if(!dlg.open)dlg.showModal();}
-function openPlace(id){const p=PLACE[id];if(!p)return;const img=PHOTOS[id],dlg=$('#place-dialog');optionsReturn=dialogMode?.kind==='options'?{y:dlg.scrollTop,open:captureReading(dlg),place:id}:null;dialogMode={kind:'place',id};dlg.className='place-dialog';dlg.innerHTML=`<div class="dialog-top"><div><p class="eyebrow">${e(p.city)}</p><h2 id="place-title">${e(p.name)}</h2></div>${btn(icon('close'),'close-dialog','aria-label="关闭地点详情"','icon-button')}</div>${pilgrimagePlace(id).length?'':photo(id,'dialog-image','eager')}<div class="dialog-body">${optionsReturn?btn('← 返回可选安排','options-back','','text-button place-back'):''}${p.name_ja!==p.name?`<p class="jp-name" lang="ja">${e(p.name_ja)}</p>`:''}${p.address_ja?`<p>${e(p.address_ja)}</p>`:''}${PLACE_DETAILS[id]?`<p class="place-note">${e(PLACE_DETAILS[id])}</p>`:''}<div class="dialog-actions">${btn(icon('copy')+'复制名称','copy',`data-copy="${e(p.name_ja)}"`)}${external(icon('map')+'地图',p.map_search_url,'btn primary')}</div>${pilgrimagePlaceContent(id)}${img&&!pilgrimagePlace(id).length?`<details class="photo-credit"><summary>照片来源</summary><p>${e(img.sight)} · ${e(img.author)} · ${e(img.date)}</p><p>${external('照片原页 ↗',img.sourcePage)} · ${img.licenseUrl?external(e(img.license),img.licenseUrl):e(img.license)}</p></details>`:''}</div>`;if(!dlg.open)dlg.showModal();}
+function openOptions(){const d=PLAN.days[dayIndex];dialogMode={kind:'options',date:d.date};const dlg=$('#place-dialog');dlg.className='options-dialog';dlg.innerHTML=`<div class="dialog-top"><div><p class="eyebrow">${dateLabel(d.date)} · ${e(dayPresentation(d).short)}</p><h2 id="place-title">可选安排</h2></div>${btn(icon('close'),'close-dialog','aria-label="关闭可选安排"','icon-button')}</div><div class="dialog-body"><div class="option-fields">${optionalControls(d)}</div>${d.optional.length?`<details class="option-photos"><summary>地点照片</summary><div class="event-photos">${[...new Set(d.optional.flatMap(o=>o.place_ids))].filter(id=>photoSrc(id)).map(id=>photoButton(id)).join('')}</div></details>`:''}${DETAILS[d.date].meals.some(r=>r[1]==='可选')?`<details><summary>可选餐饮</summary>${DETAILS[d.date].meals.filter(r=>r[1]==='可选').map(r=>foodRow(d,r)).join('')}</details>`:''}<div class="dialog-footer">${btn('完成','close-dialog','','primary')}</div></div>`;if(!dlg.open)dlg.showModal();}
 
 function tripPlaces(){
  const ids=new Set(PLAN.days.flatMap(d=>[...d.route_stop_ids,...d.timeline.flatMap(ev=>ev.place_ids),...d.optional.flatMap(o=>o.place_ids)]));
@@ -130,9 +130,8 @@ document.addEventListener('keydown',ev=>{if(['Tab','Enter',' ','ArrowUp','ArrowD
 document.addEventListener('click',ev=>{
  const a=ev.target.closest('a[data-nav]');if(a&&!ev.metaKey&&!ev.ctrlKey&&!ev.shiftKey&&!ev.altKey&&ev.button===0){ev.preventDefault();navigate(a.hash);return;}
  const target=ev.target.closest('[data-action]');if(!target)return;
- if(target.dataset.action==='place')openPlace(target.dataset.place);
+ if(target.dataset.action==='stay-info'){const info=document.getElementById('stay-info');if(info){info.open=true;info.scrollIntoView({block:'center'});info.querySelector('summary').focus({preventScroll:true});}}
  else if(target.dataset.action==='options')openOptions();
- else if(target.dataset.action==='options-back')backToOptions();
  else if(target.dataset.action==='copy-close')$('#copy-dialog').close();
  else if(target.dataset.action==='close-dialog')$('#place-dialog').close();
  else if(target.dataset.action==='copy')copyText(target.dataset.copy);
@@ -154,7 +153,7 @@ document.addEventListener('change',ev=>{const input=ev.target,d=PLAN.days[dayInd
  }
 });
 $('#place-dialog').addEventListener('click',ev=>{if(ev.target===$('#place-dialog')){const r=ev.target.getBoundingClientRect();if(ev.clientX<r.left||ev.clientX>r.right||ev.clientY<r.top||ev.clientY>r.bottom)ev.target.close();}});
-$('#place-dialog').addEventListener('close',()=>{dialogMode=null;optionsReturn=null;});
+$('#place-dialog').addEventListener('close',()=>{dialogMode=null;});
 if('scrollRestoration' in history)history.scrollRestoration='manual';
 window.addEventListener('hashchange',()=>{if(location.hash==='#main')return;rememberView();readHash();render();focusPage(true);});
 window.addEventListener('storage',ev=>{if(ev.key===STORAGE_KEY){try{const next=JSON.parse(ev.newValue);if(next?.checks&&next?.todos&&next?.choices){state=next;render();}}catch{}}});

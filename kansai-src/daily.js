@@ -7,8 +7,9 @@ function currentChoiceText(d){const c=choice(d),labels=[];
  return labels.join(' · ');
 }
 function dayPage(){const d=PLAN.days[dayIndex],info=dayPresentation(d);return `
- ${dates()}<header class="day-heading"><div><p class="eyebrow">DAY ${String(dayIndex+1).padStart(2,'0')} · ${d.weekday}<span class="heading-intensity">强度 · ${e(d.intensity.split('；')[0])}</span></p><h1>${e(info.short)}</h1></div><button class="day-heading-photo" data-action="place" data-place="${info.cover}" aria-label="查看${e(PLACE[info.cover].name)}照片">${photo(info.cover,'','eager','120px')}</button></header>
- <div class="day-facts"><div><span>${dayIndex===0?'去程航班':'离店'}</span><strong>${dayIndex===0?e(flightDeparture('flight_out')):e(compactTime(d.departure_target||'开园时间待确认'))}</strong></div><div>${d.overnight?`<button class="stay-access" data-action="place" data-place="${d.overnight}" aria-label="${dayIndex===0?'入住':'返店'} ${e(compactTime(returnTarget(d)))}，查看${e(PLACE[d.overnight].name)}详情"><span>${dayIndex===0?'入住':'返店'}</span><strong>${dayIndex===0?'19:00–20:00':e(compactTime(returnTarget(d)))}</strong>${icon('pin')}</button>`:`<span>回程航班</span><strong>${e(flightDeparture('flight_home'))}</strong>`}</div></div>
+ ${dates()}<header class="day-heading"><div><p class="eyebrow">DAY ${String(dayIndex+1).padStart(2,'0')} · ${d.weekday}<span class="heading-intensity">强度 · ${e(d.intensity.split('；')[0])}</span></p><h1>${e(info.short)}</h1></div><button class="day-heading-photo" data-action="photo-zoom" data-place="${info.cover}" aria-label="查看${e(PLACE[info.cover].name)}照片">${photo(info.cover,'','eager','120px')}</button></header>
+ <div class="day-facts"><div><span>${dayIndex===0?'去程航班':'离店'}</span><strong>${dayIndex===0?e(flightDeparture('flight_out')):e(compactTime(d.departure_target||'开园时间待确认'))}</strong></div><div>${d.overnight?`<button class="stay-access" data-action="stay-info" data-place="${d.overnight}" aria-label="${dayIndex===0?'入住':'返店'} ${e(compactTime(returnTarget(d)))}，查看${e(PLACE[d.overnight].name)}详情"><span>${dayIndex===0?'入住':'返店'}</span><strong>${dayIndex===0?'19:00–20:00':e(compactTime(returnTarget(d)))}</strong>${icon('pin')}</button>`:`<span>回程航班</span><strong>${e(flightDeparture('flight_home'))}</strong>`}</div></div>
+ ${d.overnight?stayInfo(d.overnight):''}
  <div class="daily-toolbar"><nav class="view-tabs" aria-label="当天查看方式">${pageLink(icon('list')+'行程',dayHash(dayIndex),'view-tab'+(dayView==='timeline'?' active':''),dayView==='timeline'?'aria-current="page"':'')}${pageLink(icon('map')+'路线',dayHash(dayIndex,'route'),'view-tab'+(dayView==='route'?' active':''),dayView==='route'?'aria-current="page"':'')}${pilgrimageDay(d.date).length?pageLink(icon('pin')+'巡礼',dayHash(dayIndex,'pilgrimage'),'view-tab'+(dayView==='pilgrimage'?' active':''),dayView==='pilgrimage'?'aria-current="page"':''):''}</nav>${d.optional.length?btn(icon('tune')+'可选安排','options','','small'):''}</div>
  ${currentChoiceText(d)?`<p class="selected-choice">${icon('tune')}${e(currentChoiceText(d))}</p>`:''}
  <div class="day-layout"><div class="day-main">${dayView==='pilgrimage'?pilgrimagePage(d):dayView==='route'?routePage(d):timelinePage(d)}</div>${dayView==='pilgrimage'?'':daySupport(d)}</div>
@@ -20,10 +21,15 @@ function timelinePage(d){const flow=DayFlow.forDay(d);return `
  <div class="timeline">${flow.sections.map(section=>`<section class="timeline-phase" id="${section.id}"><div class="phase-heading"><h2>${e(section.short)}</h2></div>${section.events.map(ev=>eventCard(d,ev)).join('')}</section>`).join('')}</div>
  <div class="day-end">${btn(icon('reset')+'重置当天行程','reset-day','data-reset-scope="timeline"','text-button')}</div>`;}
 
+// Ordinary identification photos belong to the first eligible activity, not transit.
+// Distinct entrance assets remain distinct place IDs; pilgrimage comparisons are independent.
+function compactEvent(ev){return ev.category==='transport'||(ev.category==='rest'&&ev.place_ids.every(id=>id.startsWith('hotel_')||id==='usj'))||['nakamura_walk','usj_app','usj_finish'].includes(ev.id);}
+function eventPhotoIds(ev){return compactEvent(ev)?[]:ev.place_ids.filter(id=>photoSrc(id)&&(ev.category!=='meal'||PLACE[id].category==='restaurant'));}
 function eventCard(d,ev){
  const checked=!!state.checks[d.date+':'+ev.id],isMeal=ev.category==='meal',isRest=ev.category==='rest';
- const compact=ev.category==='transport'||(isRest&&ev.place_ids.every(id=>id.startsWith('hotel_')||id==='usj'))||['nakamura_walk','usj_app','usj_finish'].includes(ev.id);
- const imageIds=compact?[]:ev.place_ids.filter(id=>photoSrc(id)&&(!isMeal||PLACE[id].category==='restaurant'));
+ const compact=compactEvent(ev);
+ const earlier=effectiveEvents(d).slice(0,effectiveEvents(d).findIndex(item=>item.id===ev.id));
+ const seen=new Set(earlier.flatMap(eventPhotoIds)),imageIds=eventPhotoIds(ev).filter(id=>!seen.has(id));
  const restaurantPhoto=imageIds.length===1&&PLACE[imageIds[0]].category==='restaurant';
  const foodRows=mealRows(d,ev),first=foodRows.find(r=>r[1]==='首选');
  return `<article id="event-${ev.id}" class="event ${compact?'compact-event':''} ${checked?'done':''} ${ev.optional?'optional':''} ${ev.category==='transport'?'transport-event':''} ${isRest?'rest-event':''}" data-event="${ev.id}"><label class="event-check"><input type="checkbox" data-event-check="${ev.id}" ${checked?'checked':''} aria-label="完成：${e(ev.title)}"><span aria-hidden="true">${icon('check')}</span></label><div class="event-content"><div class="event-meta">${ev.time_hint?`<span class="time-hint">${e(ev.time_hint)}</span>`:''}<span class="event-time">${e(compactTime(ev.time_label))}</span>${ev.optional?'<span class="pill gold">可选</span>':''}${statusLabel(ev)}</div><h3>${e(ev.title)}</h3>
@@ -31,14 +37,14 @@ function eventCard(d,ev){
  <div class="event-body ${imageIds.length===1?'has-single-photo':''} ${restaurantPhoto?'restaurant-photo':''}">
  ${imageIds.length?`<div class="event-photos ${imageIds.length===1?'single-photo':''}" style="--photo-columns:${Math.min(imageIds.length,3)}">${imageIds.map(id=>activityPhoto(id,'',isMeal&&PLACE[id].category!=='restaurant'?'用餐周边 · ':'',id!==first?.[7]&&(imageIds.length!==1||PLACE[id].name!==ev.title))).join('')}</div>`:''}
  <div class="event-summary">${pilgrimageEventLinks(d,ev)}
- ${ev.category==='hotel'&&ev.place_ids[0]?`<div class="checkin-address"><strong lang="ja">${e(PLACE[ev.place_ids[0]].name_ja)}</strong><p lang="ja">${e(PLACE[ev.place_ids[0]].address_ja||'')}</p></div>`:''}
+
  ${first?`<p class="meal-preview">${e(first[2])}<small>${e(first[3])}${first[3].includes('菜单')?'':' / 人'}</small></p>`:''}
 
  ${isMeal&&first&&first[0]!=='早餐'?`<div class="meal-map">${external(icon('map')+(first[8]?.pending?'查看餐饮区域':'地图'),mealMap(d,first),'text-link')}</div>`:''}
  </div></div>
  ${ev.id==='kodaiji_night'?`<p class="night-facts">17:00亮灯 · ¥800 / 人 <span>购票待确认</span></p><details class="event-detail"><summary>参拜详情</summary><div class="detail-body"><p>游览约60—75分钟，排队另计。</p><p>活动期2026/10/23—12/13；21:30停止入场，22:00闭门。昼夜不清场，离场后同票不能再入。</p><p>${external('活动官网 ↗','https://www.kodaiji.com/saiji.html')} · ${external('票价 ↗','https://www.kodaiji.com/haikan.html')}</p></div></details>`:''}
  ${foodRows.length?`<details class="event-detail"><summary>${isRest?'茶歇详情':'餐厅详情'}</summary><div class="detail-body">${foodRows.map(r=>foodRow(d,r)).join('')}</div></details>`:''}
- ${rallyActions(ev)}${eventNavigation(ev,d)}${transportMaps(ev)}${transportDetail(d,ev)}${activityDetails(d,ev.id)}${foodSuggestions(d,ev.id)}
+ ${rallyActions(ev)}${ev.place_ids.length?`<details class="event-detail place-facts"><summary>地点名称与到访说明</summary><div class="detail-body">${ev.place_ids.map(placeInfo).join('')}</div></details>`:''}${eventNavigation(ev,d)}${transportMaps(ev)}${transportDetail(d,ev)}${activityDetails(d,ev.id)}${foodSuggestions(d,ev.id)}
  </div></article>`;
 }
 const TRANSPORT_AT_EVENT={
