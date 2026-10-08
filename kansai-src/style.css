@@ -147,7 +147,7 @@ summary:hover {color:var(--red)}
 .timeline-phase>h2:after {content:''; height:1px; background:var(--line); flex:1}
 .event {position:relative; display:grid; grid-template-columns:35px minmax(0,1fr); gap:11px; padding:0 0 20px}
 .event:before {content:''; position:absolute; left:17px; top:31px; bottom:0; width:1px; background:var(--line)}
-.event-check {width:35px; height:44px; position:relative; display:grid; place-items:center; cursor:pointer; margin-top:2px}
+.event-check {width:44px; height:44px; position:relative; display:grid; place-items:center; cursor:pointer; margin-top:2px; margin-left:-4.5px}
 .event-check input {position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer}
 .event-check>span {width:21px; height:21px; border:1px solid #c9b696; border-radius:50%; display:grid; place-items:center; background:var(--paper); pointer-events:none}
 .event-check .icon {width:13px; height:13px; opacity:0}
@@ -398,7 +398,7 @@ body:has(dialog[open]) {overflow:hidden}
   .timeline-phase>h2 {padding:12px 0; gap:11px}
   .event {padding-bottom:14px}
   .event:before {left:13px}
-  .event-check {width:28px; height:44px}
+  .event-check {margin-left:-9px}
   .event-check>span {width:20px; height:20px}
   .event-content {border-radius:9px}
   .event-meta {gap:5px 7px; margin-bottom:5px}

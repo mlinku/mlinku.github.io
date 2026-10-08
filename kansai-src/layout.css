@@ -247,6 +247,12 @@
   .activity-navigation {display:flex; flex-wrap:wrap; gap:2px 16px; margin-top:8px}
   .activity-navigation a {display:inline-flex; align-items:center; gap:6px; min-height:44px; font-size:14px; overflow-wrap:anywhere}
   .activity-navigation .icon {flex:none}
+  .activity-tools {display:flex; flex-wrap:wrap; align-items:center; gap:2px 16px; margin-top:8px}
+  .activity-tools:empty {display:none}
+  .activity-tools .activity-navigation {display:contents}
+  .activity-tools>.place-facts {min-width:0; margin:0}
+  .activity-tools>.place-facts[open] {flex-basis:100%; border-top:1px solid var(--line)}
+  .activity-tools>.place-facts>summary {min-height:44px; padding-block:8px; border:0}
   .rally-actions {display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; margin-top:12px}
   .rally-actions a {min-height:44px; display:inline-flex; align-items:center; font-size:14px}
 }
