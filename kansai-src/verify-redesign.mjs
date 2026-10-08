@@ -38,8 +38,8 @@ const results=vm.runInContext(`
 
  assert.ok(prepPage().includes('临行准备'));
  assert.ok(PLACE_DETAILS.hotel_kyoto);
- assert.ok(!tripPlaces().some(p=>['byodoin','tofukuji','nintendo_osaka','pokemon_osaka','umeda_sky','coco_umeda','kotosaka','meriken'].includes(p.id)),'地点目录不展示已取消景点');
- assert.ok(tripPlaces().some(p=>p.id==='surugaya_main'),'保留购物替换店');
+ assert.ok(!prepPage().includes('地点与照片'),'准备页不再生成地点照片总索引');
+ assert.ok(prepPage().includes('参考资料'),'辅助资料集中收起');
  for(const d of PLAN.days)for(const ev of effectiveEvents(d))if(TRANSPORT_AT_EVENT[ev.id]){
   assert.ok(TRANSPORT_AT_EVENT[ev.id].every(i=>DETAILS[d.date].transport[i]),'交通说明索引有效 '+ev.id);
   assert.ok(eventCard(d,ev).includes('aria-label="交通说明"'),'交通活动就近显示 '+ev.id);
@@ -232,7 +232,7 @@ const results=vm.runInContext(`
  const returnStation=timedRoute(PLAN.days[6]).filter(n=>n.id==='jr_osaka');
  assert.equal(returnStation.at(-1).purpose,'换环状线返店','最后大阪站说明乘车目的');
  for(const id of ['lashinbang_kobe','surugaya_kobe','bookoff_kobe']){
-  assert.ok(placeButton(id).includes(PLACE_LOCATIONS[id]),'无照片店铺也显示楼层 '+id);
+  assert.ok(eventCard(PLAN.days[6],effectiveEvents(PLAN.days[6]).find(ev=>ev.id==='sannomiya_shopping')).includes(PLACE_LOCATIONS[id]),'店铺活动保留楼层 '+id);
   assert.ok(routePage(PLAN.days[6]).includes(PLACE_LOCATIONS[id]),'路线店铺显示楼层 '+id);
  }
  const flightHome=timedRoute(PLAN.days[7]);

@@ -269,3 +269,34 @@
 .place-reference {width:100%; padding:0 12px; border-bottom:1px solid var(--line)}
 .place-reference .photo-button {display:block; width:min(240px,100%); margin-bottom:10px}
 .place-reference .text-link {display:inline-flex; align-items:center; min-height:44px; margin-right:16px}
+/* Preparation keeps actionable tasks and bookings ahead of reference material. */
+@media screen {
+  .prep-jump {display:flex; flex-wrap:wrap; gap:4px 20px}
+  .prep-jump a {display:inline-flex; align-items:center; min-height:44px}
+  .todo-row>span {min-width:0; overflow-wrap:anywhere}
+  #todo-count {white-space:nowrap}
+  .prep-bookings {min-width:0; font-size:var(--type-secondary); line-height:1.8; overflow-wrap:anywhere}
+  .prep-bookings>h2 {margin:0 0 8px; font-size:22px}
+  .prep-bookings .flight-overview {padding:16px; margin:12px 0}
+  .prep-bookings .flight-heading {flex-wrap:wrap; gap:4px 12px; margin-bottom:8px}
+  .prep-bookings .flight-grid {grid-template-columns:minmax(0,1fr); gap:16px; padding:0}
+  .prep-bookings .flight-grid>div+div {border-left:0; border-top:1px solid var(--line); padding:16px 0 0}
+  .prep-bookings .flight-grid .flight-conditions {display:block; margin-top:10px}
+  .flight-conditions p {font-size:14px; line-height:1.8; color:var(--ink); margin:8px 0}
+  .prep-bookings .text-link {display:inline-flex; align-items:center; gap:6px; min-height:44px; margin-right:12px}
+  .prep-hotels article {padding:14px 0; border-bottom:1px solid var(--line)}
+  .prep-hotels h3 {font-size:16px; line-height:1.7; margin:0 0 6px}
+  .prep-hotels p {margin:6px 0}
+  .booking-time-note {color:var(--muted)}
+  .prep-reference {margin-top:24px}
+  .prep-reference section+section {margin-top:20px; padding-top:16px; border-top:1px solid var(--line)}
+  .prep-reference h2 {font-size:18px; margin:0 0 10px}
+  .prep-reference .detail-body {font-size:var(--type-secondary); overflow-wrap:anywhere}
+  .prep-reference .word-row {gap:12px}
+  .prep-reference .word-row .icon-button {flex:none}
+  #prep-todos, #prep-bookings, #prep-reference {scroll-margin-top:16px}
+}
+@media screen and (max-width:720px) {
+  .prep-bookings {font-size:15px}
+  #prep-todos, #prep-bookings, #prep-reference {scroll-margin-top:64px}
+}

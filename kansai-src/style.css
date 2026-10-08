@@ -241,15 +241,15 @@ summary:hover {color:var(--red)}
 .route-leg .text-link {min-height:30px; font-size:.73rem; font-weight:400; color:var(--muted)}
 .route-stop.optional .route-item {border:1px dashed #c5ae78; border-radius:8px; padding-inline:9px; background:#f9f1df}
 .route-stops+.map-note {margin-top:21px}
-.prep-heading {padding:38px 0 30px}
-.prep-heading h1 {font-size:2.4rem; margin:6px 0 11px}
+.prep-heading {padding:16px 0 18px}
+.prep-heading h1 {font-size:2.4rem; margin:0 0 8px}
 .prep-heading>p:last-child {font-size:.88rem}
-.prep-layout {display:grid; grid-template-columns:minmax(0,1.7fr) minmax(250px,1fr); gap:40px}
-.todo-card {background:var(--white); border:1px solid var(--line); padding:22px; border-radius:12px}
+.prep-layout {display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; align-items:start}
+.todo-card {background:var(--white); border:1px solid var(--line); padding:18px; border-radius:12px}
 .todo-card .section-title {margin-bottom:10px; align-items:center}
 .todo-card h2 {font-size:1.4rem}
 .todo-card .section-title>span {font-size:.83rem; color:var(--accent)}
-.todo-row {display:flex; gap:13px; padding:15px 0; border-top:1px solid var(--line); align-items:flex-start; font-size:.85rem; line-height:1.85; cursor:pointer}
+.todo-row {display:flex; gap:13px; padding:10px 0; border-top:1px solid var(--line); align-items:flex-start; font-size:var(--type-secondary,14px); line-height:1.8; min-height:44px; cursor:pointer}
 .todo-row input {flex:0 0 20px; width:20px; height:20px; accent-color:var(--accent); margin:4px 0 0}
 .todo-row:has(input:checked)>span {color:#838b7e; text-decoration:line-through}
 .prep-note {background:#f2e2c8; padding:23px; border-radius:12px; margin-bottom:22px}
@@ -311,7 +311,7 @@ body:has(dialog[open]) {overflow:hidden}
   .day-heading {grid-template-columns:minmax(0,1fr) 160px}
   .day-facts>div {display:block}
   .day-facts strong {display:block; margin-top:3px}
-  .prep-layout {gap:24px; grid-template-columns:1.4fr 1fr}
+  .prep-layout {grid-template-columns:minmax(0,1fr)}
 }
 @media(max-width:720px) {
   .wrap {padding-inline:19px}
@@ -448,13 +448,13 @@ body:has(dialog[open]) {overflow:hidden}
   .route-map {font-size:.63rem; min-height:46px}
   .route-phase {font-size:.71rem; padding-top:16px}
   .route-stops+.map-note {font-size:.71rem}
-  .prep-heading {padding:28px 0 25px}
+  .prep-heading {padding:12px 0}
   .prep-heading h1 {font-size:1.95rem}
   .prep-heading>p:last-child {font-size:.8rem}
-  .prep-layout {grid-template-columns:1fr; gap:25px}
-  .todo-card {padding:17px 15px}
+  .prep-layout {grid-template-columns:minmax(0,1fr)}
+  .todo-card {padding:14px}
   .todo-card h2 {font-size:1.25rem}
-  .todo-row {gap:12px; padding:15px 0; font-size:.79rem}
+  .todo-row {gap:12px; font-size:15px}
   .prep-note {padding:21px}
   .prep-note h2 {font-size:1.3rem}
   .prep-note ul {font-size:.8rem}
