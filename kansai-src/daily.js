@@ -81,7 +81,7 @@ function eventPhotoIds(ev){return compactEvent(ev)?[]:ev.place_ids.filter(id=>ph
 // The rail shows when an activity starts; the full window stays in the title and the next row implies the end.
 function timeMarkup(ev,minor=false){
  const full=compactTime(ev.time_label);
- if(ev.category==='flight'){const [main,...notes]=full.split(' · ');return `<span class="event-time">${main.split(' → ').map(part=>`<span>${e(part)}</span>`).join('')}</span>${notes.map(n=>`<span class="time-note">${e(n)}</span>`).join('')}`;}
+ if(ev.category==='flight'){const [dep,arr]=full.split(' · ')[0].split(' → ');return `<span class="event-time">${e(dep.split(' ')[0])}</span><span class="time-note">${e(dep.split(' ').slice(1).join(' '))}${arr?' · '+e(arr):''}</span>`;}
  const [main,...notes]=full.split(' · '),start=/(约)?(\d{1,2}:\d{2})/.exec(main);
  if(!start)return `<span class="event-time is-text">${e(main)}</span>${minor?'':notes.map(n=>`<span class="time-note">${e(n)}</span>`).join('')}`;
  const end=/[–→](\d{1,2}:\d{2})/.exec(main.slice(start.index+start[0].length))?.[1];
