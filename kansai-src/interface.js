@@ -45,7 +45,7 @@ const photoButton=(id,cls='',prefix='',caption=true)=>`<button type="button" cla
 function placeInfo(id,omitName=false,withDetails=true){const p=PLACE[id];return `<div class="place-info" data-place-info="${id}">${omitName?'':`<strong lang="ja">${e(p.name_ja)}</strong>`}${p.address_ja?`<p lang="ja">${e(p.address_ja)}</p>`:''}${PLACE_LOCATIONS[id]?`<p class="place-location">${e(PLACE_LOCATIONS[id])}</p>`:''}${withDetails&&PLACE_DETAILS[id]?`<p>${e(PLACE_DETAILS[id])}</p>`:''}</div>`;}
 
 function stayArrivalText(id){return id==='hotel_kyoto'?DETAILS['2026-11-30'].transport[1]:'从新今宫站前往酒店；入住和取行李安排见当天活动。';}
-function stayInfo(id){return `<details class="stay-info" id="stay-info"><summary>${icon('bed')}<span>今晚住 <strong lang="ja">${e(PLACE[id].name_ja)}</strong></span></summary><div class="stay-info-body">${photoSrc(id)?photoButton(id,'stay-info-photo'):''}<div>${placeInfo(id)}<p>${e(stayArrivalText(id))}</p>${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'btn small')}</div></div></details>`;}
+function stayInfo(id){return `<details class="stay-info" id="stay-info"><summary>${icon('bed')}<span>今晚住 <strong>${e(PLACE[id].name)}</strong></span></summary><div class="stay-info-body">${photoSrc(id)?photoButton(id,'stay-info-photo'):''}<div>${placeInfo(id)}<p>${e(stayArrivalText(id))}</p>${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'btn small')}</div></div></details>`;}
 const activityPhoto=(id,...args)=>PLACE_LOCATIONS[id]?`<div class="shop-photo">${photoButton(id,...args)}<small class="place-location">${e(PLACE_LOCATIONS[id])}</small></div>`:photoButton(id,...args);
 function progress(d){const {done,total}=DayFlow.forDay(d);return{done,total};}
 
@@ -198,6 +198,12 @@ function prepPage(){return `<header class="page-heading"><h1>临行准备</h1><p
  <section><h2>离线与进度</h2><p>${typeof DELIVERY_MODE!=='undefined'&&DELIVERY_MODE==='web'?'博客图片按需加载；完整离线阅读请使用独立离线版。':'行程与照片可离线查看。'}地图和来源链接需联网。</p><p>活动、已拍、可选安排与待办仅保存在当前浏览器。不同浏览器、设备、网页版与离线文件各自记录，不互相同步。请使用同一网址或文件路径；清除浏览器数据或使用隐私模式可能丢失记录。</p></section>
  </div></details>`;}
 
+// One activity open at a time keeps the day readable as a list.
+function openEventRow(row,open){
+ if(!row)return;
+ if(open)document.querySelectorAll('.event.expanded').forEach(other=>{if(other!==row){other.classList.remove('expanded');other.querySelector('.row-toggle')?.setAttribute('aria-expanded','false');}});
+ row.classList.toggle('expanded',open);row.querySelector('.row-toggle')?.setAttribute('aria-expanded',String(open));
+}
 /* ---------- Shell ---------- */
 // Same storage key and attribute as the blog's js/ui/mode.js, so one choice applies to the blog and the guide.
 const COLOR_MODE_KEY='user-color-scheme';
@@ -213,7 +219,7 @@ function refreshDayChecks(d){
  if(screen!=='day'||PLAN.days[dayIndex].date!==d.date)return;
  document.querySelectorAll('[data-event-check]').forEach(input=>{
   const status=activityState(d.date,input.dataset.eventCheck),checked=status==='done';
-  input.checked=checked;input.closest('.event').classList.toggle('done',checked);if(!checked)input.closest('.event').classList.remove('expanded');
+  input.checked=checked;input.closest('.event').classList.toggle('done',checked);
  });
  refreshDayProgress(d);
  pilgrimageDay(d.date).forEach(refreshShotCompletion);
@@ -222,13 +228,12 @@ function setCheck(date,id,checked){const d=PLAN.days.find(x=>x.date===date);if(!
 document.addEventListener('pointerdown',()=>{keyboardNavigation=false;document.querySelectorAll('.keyboard-focus').forEach(el=>el.classList.remove('keyboard-focus'));});
 document.addEventListener('keydown',ev=>{if(['Tab','Enter',' ','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(ev.key))keyboardNavigation=true;});
 document.addEventListener('click',ev=>{
- // A finished activity folds to its title; tapping the title opens it again.
- const doneTitle=ev.target.closest('.event.done .event-heading h3');if(doneTitle){doneTitle.closest('.event').classList.toggle('expanded');return;}
  const a=ev.target.closest('a[data-nav]');if(a&&!ev.metaKey&&!ev.ctrlKey&&!ev.shiftKey&&!ev.altKey&&ev.button===0){ev.preventDefault();navigate(a.hash);return;}
  const target=ev.target.closest('[data-action]');if(!target)return;
  if(target.dataset.action==='stay-info'){const info=document.getElementById('stay-info');if(info){info.open=true;info.scrollIntoView({block:'center'});info.querySelector('summary').focus({preventScroll:true});}}
  else if(target.dataset.action==='mode-toggle')toggleColorMode();
- else if(target.dataset.action==='minor-toggle'){const row=target.closest('.event');row.classList.toggle('expanded');target.setAttribute('aria-expanded',row.classList.contains('expanded'));}
+ else if(target.dataset.action==='row-toggle')openEventRow(target.closest('.event'),!target.closest('.event').classList.contains('expanded'));
+ else if(target.dataset.action==='jump-event'){const row=document.getElementById('event-'+target.dataset.eventId);if(row){openEventRow(row,true);row.scrollIntoView({block:'start'});}}
  else if(target.dataset.action==='route-jump'){const route=document.getElementById('day-route');if(route){route.open=true;route.scrollIntoView({block:'start'});route.querySelector('summary').focus({preventScroll:true});}}
  else if(target.dataset.action==='jump-now'){const now=document.querySelector('.event.is-now');if(now){now.scrollIntoView({block:'start'});now.setAttribute('tabindex','-1');now.focus({preventScroll:true});}}
  else if(target.dataset.action==='copy-close')$('#copy-dialog').close();
@@ -236,7 +241,7 @@ document.addEventListener('click',ev=>{
  else if(target.dataset.action==='undo'&&undoAction){const fn=undoAction;undoAction=null;fn();}
 });
 document.addEventListener('change',ev=>{const input=ev.target,d=PLAN.days[dayIndex];
- if(input.matches('[data-event-check]')){setCheck(d.date,input.dataset.eventCheck,input.checked);refreshDayChecks(d);}
+ if(input.matches('[data-event-check]')){setCheck(d.date,input.dataset.eventCheck,input.checked);refreshDayChecks(d);if(input.checked)openEventRow(input.closest('.event'),false);}
  else if(input.matches('[data-todo]')){state.todos[input.dataset.todo]=input.checked;save();$('#todo-count').innerHTML=todoProgressMarkup();}
  else if(input.dataset.choice){
   const y=input.getBoundingClientRect().top,dx=$('.date-nav')?.scrollLeft||0,open=captureReading($('#main')),key=input.dataset.choice,value=input.value,c=choice(d);

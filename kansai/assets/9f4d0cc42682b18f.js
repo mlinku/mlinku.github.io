@@ -1544,7 +1544,7 @@ function dayPage(){const d=PLAN.days[dayIndex],info=dayPresentation(d),[leave,ba
  <div class="day-facts"><div><span>${leave[0]}</span><strong>${e(leave[1])}</strong></div><div>${d.overnight?`<button class="stay-access" data-action="stay-info" data-place="${d.overnight}" aria-label="${dayIndex===0?'入住':'返店'} ${e(compactTime(returnTarget(d)))}，查看${e(PLACE[d.overnight].name)}详情"><span>${back[0]}</span><strong>${e(back[1])}</strong>${back[2]?`<small class="fact-note">${e(back[2])}</small>`:''}</button>`:`<span>回程航班</span><strong>${e(flightDeparture('flight_home'))}</strong>`}</div><div><span>强度</span><strong>${intensityMarkup(d)}</strong></div></div>
  <section class="day-brief" aria-label="今日要点"><p class="day-key"><span class="day-key-label">今日要点</span>${e(info.key)}</p>${notes.length?`<details class="day-notes"><summary>情况有变时（${notes.length} 条）</summary><ul>${notes.map(t=>`<li>${e(t)}</li>`).join('')}</ul></details>`:''}</section>
  <div class="day-extras">${dayView==='timeline'?routeOverview(d):''}${d.overnight?stayInfo(d.overnight):''}</div>
- <div class="daily-toolbar">${hasPilgrimage?`<nav class="view-tabs" aria-label="当天查看方式">${pageLink('行程',dayHash(dayIndex),'view-tab'+(dayView==='timeline'?' active':''),dayView==='timeline'?'aria-current="page"':'')}${pageLink('巡礼对照',dayHash(dayIndex,'pilgrimage'),'view-tab'+(dayView==='pilgrimage'?' active':''),dayView==='pilgrimage'?'aria-current="page"':'')}</nav>`:`<p class="view-title">当天行程</p>`}${dayView==='timeline'?`${isToday&&currentEventId(d)?btn('现在','jump-now','aria-label="跳到现在进行的活动"','small now-button'):''}<div class="progress-area">${progressMarkup(d)}</div>`:''}</div>
+ <div class="daily-toolbar">${hasPilgrimage?`<nav class="view-tabs" aria-label="当天查看方式">${pageLink('行程',dayHash(dayIndex),'view-tab'+(dayView==='timeline'?' active':''),dayView==='timeline'?'aria-current="page"':'')}${pageLink('巡礼对照',dayHash(dayIndex,'pilgrimage'),'view-tab'+(dayView==='pilgrimage'?' active':''),dayView==='pilgrimage'?'aria-current="page"':'')}</nav>`:`<p class="view-title">当天行程</p>`}${dayView==='timeline'?`<div class="progress-area">${progressMarkup(d)}</div>${nextStopMarkup(d)}`:''}</div>
  ${currentChoiceText(d)?`<p class="selected-choice">已调整：${e(currentChoiceText(d))}</p>`:''}
  <div class="day-layout"><div class="day-main">${dayView==='pilgrimage'?pilgrimagePage(d):timelinePage(d)}</div></div>${dayView==='pilgrimage'?'':daySupport(d)}
  <nav class="prev-next" aria-label="相邻日期">${dayIndex>0?pageLink(`<small>← 前一天</small><strong>${dateLabel(PLAN.days[dayIndex-1].date)} ${e(dayPresentation(PLAN.days[dayIndex-1]).short)}</strong>`,dayHash(dayIndex-1,dayView),'prev'):pageLink(`<small>← 返回</small><strong>行程总览</strong>`,'#overview','prev')}${dayIndex<PLAN.days.length-1?pageLink(`<small>后一天 →</small><strong>${dateLabel(PLAN.days[dayIndex+1].date)} ${e(dayPresentation(PLAN.days[dayIndex+1]).short)}</strong>`,dayHash(dayIndex+1,dayView),'next'):pageLink(`<small>回顾 →</small><strong>临行待办</strong>`,'#prep','next')}</nav>`;}
@@ -1558,6 +1558,15 @@ function currentEventId(d){
  return current;
 }
 let nowEventId=null;
+// On a travel day the toolbar names the next activity after the current Japan time.
+function nextStopMarkup(d){
+ const status=tripStatus();if(status.phase!=='during'||PLAN.days[status.index].date!==d.date)return '';
+ const next=effectiveEvents(d).find(ev=>{const t=eventStart(ev);return t!==null&&t>status.minutes;});
+ if(!next)return `<p class="next-stop">今天的安排已经走完，早点休息。</p>`;
+ const wait=eventStart(next)-status.minutes,first=mealRows(d,next).find(r=>r[1]==='首选'),dest=navigationStops(next,d,!!(first&&first[0]!=='早餐')).at(-1);
+ const when=wait<60?`${wait} 分钟后`:`${Math.floor(wait/60)} 小时${wait%60?` ${wait%60} 分`:''}后`;
+ return `<p class="next-stop"><span class="next-label">下一站</span><button type="button" class="next-target" data-action="jump-event" data-event-id="${next.id}"><b>${String(eventStart(next)/60|0).padStart(2,'0')}:${String(eventStart(next)%60).padStart(2,'0')}</b> ${e(next.title)}</button><span class="next-wait">${when}</span></p>`;
+}
 function timelinePage(d){const flow=DayFlow.forDay(d);nowEventId=currentEventId(d);return `<div class="timeline">${flow.sections.map(section=>{const [label,...rest]=section.name.split(' · ');const clocks=section.events.flatMap(ev=>[...compactTime(ev.time_label).matchAll(/\d{1,2}:\d{2}/g)].map(m=>m[0])),range=clocks.length?clocks[0]+(clocks.length>1?'–'+clocks.at(-1):''):'';return `<section class="timeline-phase" id="${section.id}"><div class="phase-heading"><h2>${e(label)}</h2>${rest.length?`<p>${e(rest.join(' · '))}</p>`:''}${range?`<span class="phase-range">${range}</span>`:''}</div>${section.events.map(ev=>eventCard(d,ev)).join('')}</section>`;}).join('')}</div>`;}
 
 // Ordinary identification photos belong to the first eligible activity, not transit.
@@ -1606,19 +1615,21 @@ function eventCard(d,ev){
  const moreBody=moreHTML.replace(/<details class="event-detail[^"]*"><summary>([\s\S]*?)<\/summary>/g,'<section class="more-block"><h4>$1</h4>').replace(/<\/details>/g,'</section>');
  const line=brief??ev.condition??'';
  const check=`<label class="event-check"><input type="checkbox" data-event-check="${ev.id}" ${checked?'checked':''} aria-label="完成：${e(ev.title)}"><span class="check-box" aria-hidden="true">${icon('check')}</span><span class="check-text" aria-hidden="true"></span></label>`;
- const dest=major||ev.category==='rest'?null:navigationStops(ev,d,!!(first&&first[0]!=='早餐')).at(-1);
- const sub=line||(TRANSPORT_AT_EVENT[ev.id]||[]).map(i=>DETAILS[d.date].transport[i]).filter(Boolean)[0]||'';
- const head=major
-  ?`<div class="event-head"><div class="event-heading"><h3>${e(ev.title)}</h3>${isNow?'<span class="pill now">现在</span>':''}${ev.optional?'<span class="pill gold">可选</span>':''}${statusLabel(ev)}</div>${check}</div>`
-  :`<div class="event-head"><h3 class="minor-heading"><button type="button" class="minor-toggle" data-action="minor-toggle" aria-expanded="false"><span class="minor-title">${e(ev.title)}</span>${sub?`<span class="minor-sub">${e(sub)}</span>`:''}</button></h3>${isNow?'<span class="pill now">现在</span>':''}${dest?external('导航',dest.url,'minor-nav'):''}${check}</div>`;
- const text=`${hotelIds.filter(id=>!ev.title.includes(PLACE[id].name_ja)).map(id=>`<p class="activity-hotel" lang="ja">${e(PLACE[id].name_ja)}</p>`).join('')}${line?`<p class="condition">${e(line)}</p>`:''}${ev.optionNote?`<p class="selection-note">${e(ev.optionNote)}</p>`:''}${executionNotice(d,ev)}
+ const navStops=navigationStops(ev,d,!!(first&&first[0]!=='早餐')),dest=ev.category==='rest'&&!major?null:navStops.at(-1);
+ const notice=executionNotice(d,ev);
+ const open=isNow;
+ // Collapsed: start time, a thumbnail slot, the title, a warning mark, navigation and completion.
+ const head=`<div class="event-head"><span class="row-thumb">${imageIds.length?photoFor(imageIds[0]):''}</span><h3 class="row-heading"><button type="button" class="row-toggle" data-action="row-toggle" aria-expanded="${open}"><span class="row-title">${e(ev.title)}</span>${notice?'<span class="row-warn" title="有注意事项">⚠</span>':''}${ev.optional?'<span class="pill gold">可选</span>':''}</button></h3>${dest?external('导航',dest.url,'row-nav'):''}${check}</div>`;
+ const text=`${statusLabel(ev)?`<p>${statusLabel(ev)}</p>`:''}${hotelIds.filter(id=>!ev.title.includes(PLACE[id].name_ja)).map(id=>`<p class="activity-hotel" lang="ja">${e(PLACE[id].name_ja)}</p>`).join('')}${line?`<p class="condition">${e(line)}</p>`:''}${ev.optionNote?`<p class="selection-note">${e(ev.optionNote)}</p>`:''}${notice}
  ${first?`<div class="meal-block"><p class="meal-preview"><span lang="ja">${e(first[2])}</span><small>${e(first[3])}${first[3].includes('菜单')?'':' / 人'}</small></p><p class="meal-conditions">${e(first[4].replace(' · Louie’s N.Y. Pizza Parlor',''))}${mealNotes(first).conditions?` · ${e(mealNotes(first).conditions)}`:''}</p></div>`:''}
  ${ev.id==='kodaiji_night'?`<p class="night-facts">17:00亮灯 · ¥800 / 人 <span>购票待确认</span></p>`:''}
  ${transportDetail(d,ev)}`;
- return `<article id="event-${ev.id}" class="event ${major?'major':'minor'} cat-${ev.category} ${checked?'done':''} ${ev.optional?'optional':''} ${isNow?'is-now':''}" data-event="${ev.id}">
- <div class="event-time-col" title="${e(compactTime(ev.time_label))}">${ev.time_hint?`<span class="time-hint">${e(ev.time_hint)}</span>`:''}${timeMarkup(ev,!major)}</div>
+ const via=navStops.length>1?`<details class="nav-via"><summary>沿途 ${navStops.length-1} 站</summary><ol>${navStops.map(s=>`<li>${external(`<b>${e(s.name)}</b>${s.sub?`<small lang="ja">${e(s.sub)}</small>`:''}`,s.url,'via-stop')}</li>`).join('')}</ol></details>`:'';
+ const actions=[via,pilgrimageEventLinks(d,ev),rallyActions(ev),inlineChoices(d,ev),moreBody?`<details class="event-more"><summary>更多<small>${e(moreLabels.join(' · '))}</small></summary><div class="more-body">${moreBody}</div></details>`:''].join('');
+ return `<article id="event-${ev.id}" class="event ${major?'major':'minor'} cat-${ev.category} ${checked?'done':''} ${ev.optional?'optional':''} ${isNow?'is-now':''} ${open?'expanded':''}" data-event="${ev.id}">
+ <div class="event-time-col" title="${e(compactTime(ev.time_label))}">${ev.time_hint?`<span class="time-hint">${e(ev.time_hint)}</span>`:''}${timeMarkup(ev)}</div>
  <div class="event-content">${head}
- <div class="event-body${imageIds.length?' has-figure':''}"><div class="event-text">${text}<div class="event-actions">${eventNavigation(ev,d,!!(first&&first[0]!=='早餐'))}${pilgrimageEventLinks(d,ev)}${rallyActions(ev)}${inlineChoices(d,ev)}${moreBody?`<details class="event-more"><summary>更多<small>${e(moreLabels.join(' · '))}</small></summary><div class="more-body">${moreBody}</div></details>`:''}</div></div>${imageIds.length?`<div class="event-figure">${imageIds.length>1?photoFor(imageIds[0]):activityPhoto(imageIds[0],'','',false)}</div>`:''}</div>
+ <div class="event-body"><div class="event-text">${text}${actions?`<div class="event-actions">${actions}</div>`:''}</div></div>
  </div></article>`;
 }
 function inlineChoices(d,ev){const fields=optionalControls(d,ev.id);return fields?`<details class="event-detail inline-choices" data-choice-group="${ev.id}"><summary>${ev.id==='gion_rest'?'可调整：夜间安排':ev.id==='usj_lunch'?'可调整：午餐':ev.id==='anime_shopping'?'可调整：门店与晚间':'可调整：加项目'}</summary><div class="detail-body option-fields">${fields}</div></details>`:'';}
@@ -1768,7 +1779,7 @@ const photoButton=(id,cls='',prefix='',caption=true)=>`<button type="button" cla
 function placeInfo(id,omitName=false,withDetails=true){const p=PLACE[id];return `<div class="place-info" data-place-info="${id}">${omitName?'':`<strong lang="ja">${e(p.name_ja)}</strong>`}${p.address_ja?`<p lang="ja">${e(p.address_ja)}</p>`:''}${PLACE_LOCATIONS[id]?`<p class="place-location">${e(PLACE_LOCATIONS[id])}</p>`:''}${withDetails&&PLACE_DETAILS[id]?`<p>${e(PLACE_DETAILS[id])}</p>`:''}</div>`;}
 
 function stayArrivalText(id){return id==='hotel_kyoto'?DETAILS['2026-11-30'].transport[1]:'从新今宫站前往酒店；入住和取行李安排见当天活动。';}
-function stayInfo(id){return `<details class="stay-info" id="stay-info"><summary>${icon('bed')}<span>今晚住 <strong lang="ja">${e(PLACE[id].name_ja)}</strong></span></summary><div class="stay-info-body">${photoSrc(id)?photoButton(id,'stay-info-photo'):''}<div>${placeInfo(id)}<p>${e(stayArrivalText(id))}</p>${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'btn small')}</div></div></details>`;}
+function stayInfo(id){return `<details class="stay-info" id="stay-info"><summary>${icon('bed')}<span>今晚住 <strong>${e(PLACE[id].name)}</strong></span></summary><div class="stay-info-body">${photoSrc(id)?photoButton(id,'stay-info-photo'):''}<div>${placeInfo(id)}<p>${e(stayArrivalText(id))}</p>${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'btn small')}</div></div></details>`;}
 const activityPhoto=(id,...args)=>PLACE_LOCATIONS[id]?`<div class="shop-photo">${photoButton(id,...args)}<small class="place-location">${e(PLACE_LOCATIONS[id])}</small></div>`:photoButton(id,...args);
 function progress(d){const {done,total}=DayFlow.forDay(d);return{done,total};}
 
@@ -1921,6 +1932,12 @@ function prepPage(){return `<header class="page-heading"><h1>临行准备</h1><p
  <section><h2>离线与进度</h2><p>${typeof DELIVERY_MODE!=='undefined'&&DELIVERY_MODE==='web'?'博客图片按需加载；完整离线阅读请使用独立离线版。':'行程与照片可离线查看。'}地图和来源链接需联网。</p><p>活动、已拍、可选安排与待办仅保存在当前浏览器。不同浏览器、设备、网页版与离线文件各自记录，不互相同步。请使用同一网址或文件路径；清除浏览器数据或使用隐私模式可能丢失记录。</p></section>
  </div></details>`;}
 
+// One activity open at a time keeps the day readable as a list.
+function openEventRow(row,open){
+ if(!row)return;
+ if(open)document.querySelectorAll('.event.expanded').forEach(other=>{if(other!==row){other.classList.remove('expanded');other.querySelector('.row-toggle')?.setAttribute('aria-expanded','false');}});
+ row.classList.toggle('expanded',open);row.querySelector('.row-toggle')?.setAttribute('aria-expanded',String(open));
+}
 /* ---------- Shell ---------- */
 // Same storage key and attribute as the blog's js/ui/mode.js, so one choice applies to the blog and the guide.
 const COLOR_MODE_KEY='user-color-scheme';
@@ -1936,7 +1953,7 @@ function refreshDayChecks(d){
  if(screen!=='day'||PLAN.days[dayIndex].date!==d.date)return;
  document.querySelectorAll('[data-event-check]').forEach(input=>{
   const status=activityState(d.date,input.dataset.eventCheck),checked=status==='done';
-  input.checked=checked;input.closest('.event').classList.toggle('done',checked);if(!checked)input.closest('.event').classList.remove('expanded');
+  input.checked=checked;input.closest('.event').classList.toggle('done',checked);
  });
  refreshDayProgress(d);
  pilgrimageDay(d.date).forEach(refreshShotCompletion);
@@ -1945,13 +1962,12 @@ function setCheck(date,id,checked){const d=PLAN.days.find(x=>x.date===date);if(!
 document.addEventListener('pointerdown',()=>{keyboardNavigation=false;document.querySelectorAll('.keyboard-focus').forEach(el=>el.classList.remove('keyboard-focus'));});
 document.addEventListener('keydown',ev=>{if(['Tab','Enter',' ','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(ev.key))keyboardNavigation=true;});
 document.addEventListener('click',ev=>{
- // A finished activity folds to its title; tapping the title opens it again.
- const doneTitle=ev.target.closest('.event.done .event-heading h3');if(doneTitle){doneTitle.closest('.event').classList.toggle('expanded');return;}
  const a=ev.target.closest('a[data-nav]');if(a&&!ev.metaKey&&!ev.ctrlKey&&!ev.shiftKey&&!ev.altKey&&ev.button===0){ev.preventDefault();navigate(a.hash);return;}
  const target=ev.target.closest('[data-action]');if(!target)return;
  if(target.dataset.action==='stay-info'){const info=document.getElementById('stay-info');if(info){info.open=true;info.scrollIntoView({block:'center'});info.querySelector('summary').focus({preventScroll:true});}}
  else if(target.dataset.action==='mode-toggle')toggleColorMode();
- else if(target.dataset.action==='minor-toggle'){const row=target.closest('.event');row.classList.toggle('expanded');target.setAttribute('aria-expanded',row.classList.contains('expanded'));}
+ else if(target.dataset.action==='row-toggle')openEventRow(target.closest('.event'),!target.closest('.event').classList.contains('expanded'));
+ else if(target.dataset.action==='jump-event'){const row=document.getElementById('event-'+target.dataset.eventId);if(row){openEventRow(row,true);row.scrollIntoView({block:'start'});}}
  else if(target.dataset.action==='route-jump'){const route=document.getElementById('day-route');if(route){route.open=true;route.scrollIntoView({block:'start'});route.querySelector('summary').focus({preventScroll:true});}}
  else if(target.dataset.action==='jump-now'){const now=document.querySelector('.event.is-now');if(now){now.scrollIntoView({block:'start'});now.setAttribute('tabindex','-1');now.focus({preventScroll:true});}}
  else if(target.dataset.action==='copy-close')$('#copy-dialog').close();
@@ -1959,7 +1975,7 @@ document.addEventListener('click',ev=>{
  else if(target.dataset.action==='undo'&&undoAction){const fn=undoAction;undoAction=null;fn();}
 });
 document.addEventListener('change',ev=>{const input=ev.target,d=PLAN.days[dayIndex];
- if(input.matches('[data-event-check]')){setCheck(d.date,input.dataset.eventCheck,input.checked);refreshDayChecks(d);}
+ if(input.matches('[data-event-check]')){setCheck(d.date,input.dataset.eventCheck,input.checked);refreshDayChecks(d);if(input.checked)openEventRow(input.closest('.event'),false);}
  else if(input.matches('[data-todo]')){state.todos[input.dataset.todo]=input.checked;save();$('#todo-count').innerHTML=todoProgressMarkup();}
  else if(input.dataset.choice){
   const y=input.getBoundingClientRect().top,dx=$('.date-nav')?.scrollLeft||0,open=captureReading($('#main')),key=input.dataset.choice,value=input.value,c=choice(d);
