@@ -1491,39 +1491,40 @@ function rallyActions(ev){return ev.rally_spot?`<div class="rally-actions">${ext
 
 /* Daily presentation. DayFlow owns grouping; app.js owns itinerary choices. */
 // One-line card copy for activities whose planning note is long. The full note stays under 更多 → 完整说明.
+// An empty string hides the note on the card when 怎么走 already says the same thing.
 const EVENT_BRIEF={
- flight_out:'建议08:25到香港T2，10:25值机截止。',
+ flight_out:'',
  uji_lunch:'吃饭加休息45分钟；延迟时先略过縣神社。',
- uji_pilgrimage:'縣神社 → 久美子椅 → 喜撰桥 → 塔之岛 → 朝雾桥，约45分钟。',
+ uji_pilgrimage:'约45分钟，久美子椅多留片刻，桥上顺拍。',
  daikichi_visit:'往返加展望台约75分钟；下雨或累了就取消。',
- suikan_stamp:'东岸河川敷拍照、休息约10分钟，不走上水管桥。',
+ suikan_stamp:'河岸拍照，坐下休息约10分钟。',
  station_stage:'上4F室町小路广场，拍大阶梯和红色时钟。',
  delta_visit:'河岸拍照约25分钟，优先《玉子》高野川侧。',
- higashiyama_walk:'三年坂 → 八坂塔 → 二年坂 → 宁宁之道，约75分钟。',
+ higashiyama_walk:'步行与巡礼短拍约75分钟。',
  checkout_kyoto:'寄存行李；不能寄存就用京都站储物柜并记下位置。',
  kyoto_tower_visit:'展望室5层领台纸，集齐7处章再出场。',
- luggage_pickup:'JR回京都站，步行回酒店取行李。',
- osaka_transfer:'带行李乘车去大阪，按实际列车出发。',
+ luggage_pickup:'',
+ osaka_transfer:'',
  checkin_osaka:'入住后休息30—45分钟。',
- usj_transfer:'到园约50—70分钟，目标08:00前后到入口。',
+ usj_transfer:'',
  usj_core:'任天堂区域一次玩完、拍完、逛完，再按场次看柯南。',
- castle_transfer:'09:30出发，约10:20到森之宫侧公园入口。',
+ castle_transfer:'',
  castle_visit:'步行到天守阁外观拍照，约1小时，不入馆。',
  nara_transfer:'换乘约40—60分钟，预计13:15—13:35到近铁奈良。',
  nara_park_walk:'沿公园步道走到南大门约30分钟，远看鹿即可。',
  nara_visit:'南大门和大佛殿内部约50分钟；冬季17:00闭门。',
  nara_station_walk:'步行约30分钟回近铁奈良站。',
- nara_return_train:'乘近铁到日本桥，出站步行去首店。',
- anime_shopping:'挑1—2家慢逛，先逛20:00关门的店，再吃饭。',
+ nara_return_train:'',
+ anime_shopping:'先逛20:00关门的店，再吃饭。',
  nippombashi_dinner:'坐下吃45—60分钟，沿途选有空位的店。',
  glico_photo:'戎桥、格力高、心斋桥筋南口短拍，再去南海难波。',
- nara_day_return:'南海难波 → 新今宫，约30—45分钟。',
- kitano_lunch:'上坡20分钟 → 午餐休息50分钟 → 下坡20分钟。',
- sannomiya_shopping:'三家店共约90分钟；延迟就把余下的放到大桥之后。',
+ nara_day_return:'',
+ kitano_lunch:'午餐、咖啡和休息约50分钟；北野物语馆外观可顺路短拍。',
+ sannomiya_shopping:'先看音像、毛绒和立牌；延迟就把余下的放到大桥之后。',
  kobe_bridge_visit:'现场约30分钟，尽量白天拍；争取15:00从三宫出发。',
  sannomiya_evening:'补逛没逛完的店，逛完就坐下休息。',
  last_evening_return:'预计20:45—21:00回店，整理行李、证件和早餐。',
- airport_checkin:'去T1值机、托运、出境；值机09:10截止。'
+ airport_checkin:''
 };
 
 function currentChoiceText(d){const c=choice(d),labels=[];
@@ -1536,8 +1537,8 @@ function currentChoiceText(d){const c=choice(d),labels=[];
 function dayPage(){const d=PLAN.days[dayIndex],info=dayPresentation(d),[leave,back]=dayTimes(d,dayIndex),isToday=todayIndex()===dayIndex,notes=dayNotes(d),hasPilgrimage=pilgrimageDay(d.date).length>0;return `
  ${dates()}
  <div class="day-top"><header class="day-hero"><button type="button" class="day-hero-photo" data-action="photo-zoom" data-place="${info.cover}" aria-label="查看${e(PLACE[info.cover].name)}照片">${photo(info.cover,'','eager','(max-width:720px) 100vw, 960px')}</button><div class="day-hero-copy"><p class="eyebrow">DAY ${String(dayIndex+1).padStart(2,'0')} · ${dateLabel(d.date)} ${d.weekday}${isToday?' · <em>今天</em>':''}</p><h1>${e(info.short)}</h1><p class="day-hero-route">${e(info.eyebrow)}</p></div></header>
- <div class="day-summary"><div class="day-facts"><div><span>${leave[0]}</span><strong>${e(leave[1])}</strong></div><div>${d.overnight?`<button class="stay-access" data-action="stay-info" data-place="${d.overnight}" aria-label="${dayIndex===0?'入住':'返店'} ${e(compactTime(returnTarget(d)))}，查看${e(PLACE[d.overnight].name)}详情"><span>${back[0]}${icon('bed')}</span><strong>${e(back[1])}</strong></button>`:`<span>回程航班</span><strong>${e(flightDeparture('flight_home'))}</strong>`}</div><div><span>强度</span><strong>${intensityMarkup(d)}</strong></div></div>
- <section class="day-brief" aria-label="今日要点"><p class="day-key"><span class="day-key-label">${icon('sparkle')}今日要点</span>${e(info.key)}</p>${notes.length?`<details class="day-notes"><summary>${icon('alert')}<span>情况有变时怎么办</span><small>${notes.length} 条</small></summary><ul>${notes.map(t=>`<li>${e(t)}</li>`).join('')}</ul></details>`:''}</section>${dayView==='timeline'?`<div class="ticket-links">${btn(icon('map')+`当天路线 · ${timedRoute(d).length} 站`,'route-jump','','ticket-link')}${d.overnight?btn(icon('bed')+`今晚住 <span lang="ja">${e(PLACE[d.overnight].name_ja)}</span>`,'stay-info','','ticket-link'):''}</div>`:''}</div></div>
+ <div class="day-summary"><div class="day-facts"><div><span>${leave[0]}</span><strong>${e(leave[1])}</strong></div><div>${d.overnight?`<button class="stay-access" data-action="stay-info" data-place="${d.overnight}" aria-label="${dayIndex===0?'入住':'返店'} ${e(compactTime(returnTarget(d)))}，查看${e(PLACE[d.overnight].name)}详情"><span>${back[0]}${icon('bed')}</span><strong>${e(back[1])}</strong>${back[2]?`<small class="fact-note">${e(back[2])}</small>`:''}</button>`:`<span>回程航班</span><strong>${e(flightDeparture('flight_home'))}</strong>`}</div><div><span>强度</span><strong>${intensityMarkup(d)}</strong></div></div>
+ <section class="day-brief" aria-label="今日要点"><p class="day-key"><span class="day-key-label">${icon('sparkle')}今日要点</span>${e(info.key)}</p>${notes.length?`<details class="day-notes"><summary>${icon('alert')}<span>情况有变时怎么办</span><small>${notes.length} 条</small></summary><ul>${notes.map(t=>`<li>${e(t)}</li>`).join('')}</ul></details>`:''}</section>${dayView==='timeline'?`<div class="ticket-links">${btn(icon('map')+`当天路线 · ${timedRoute(d).length} 站`,'route-jump','','ticket-link')}${d.overnight?btn(icon('bed')+`今晚住 <span>${e(PLACE[d.overnight].name)}</span>`,'stay-info','','ticket-link'):''}</div>`:''}</div></div>
  <div class="daily-toolbar">${hasPilgrimage?`<nav class="view-tabs" aria-label="当天查看方式">${pageLink(icon('list')+'行程',dayHash(dayIndex),'view-tab'+(dayView==='timeline'?' active':''),dayView==='timeline'?'aria-current="page"':'')}${pageLink(icon('camera')+'巡礼对照',dayHash(dayIndex,'pilgrimage'),'view-tab'+(dayView==='pilgrimage'?' active':''),dayView==='pilgrimage'?'aria-current="page"':'')}</nav>`:`<p class="view-title">${icon('list')}当天行程</p>`}${dayView==='timeline'?`${isToday&&currentEventId(d)?btn(icon('clock')+'现在','jump-now','aria-label="跳到现在进行的活动"','small now-button'):''}<div class="progress-area">${progressMarkup(d)}</div>`:''}</div>
  ${currentChoiceText(d)?`<p class="selected-choice">${icon('tune')}已调整：${e(currentChoiceText(d))}</p>`:''}
  ${dayView==='pilgrimage'?`<div class="day-layout is-single"><div class="day-main">${pilgrimagePage(d)}</div></div>${d.overnight?stayInfo(d.overnight):''}`:`<div class="day-layout"><div class="day-main">${timelinePage(d)}</div><aside class="day-aside" aria-label="当天路线与住宿">${routeOverview(d)}${d.overnight?stayInfo(d.overnight):''}</aside></div>${daySupport(d)}`}
@@ -1559,7 +1560,10 @@ function timelinePage(d){const flow=DayFlow.forDay(d);nowEventId=currentEventId(
 function compactEvent(ev){return ev.category==='transport'||(ev.category==='rest'&&ev.place_ids.every(id=>id.startsWith('hotel_')||id==='usj'))||['nakamura_walk','usj_app','usj_finish'].includes(ev.id);}
 function eventPhotoIds(ev){return compactEvent(ev)?[]:ev.place_ids.filter(id=>photoSrc(id)&&(ev.category!=='meal'||PLACE[id].category==='restaurant'));}
 // Long time labels read as stacked lines: departure → arrival, then any "·" note in a quieter size.
-function timeMarkup(ev){const [main,...notes]=compactTime(ev.time_label).split(' · ');return `<span class="event-time">${main.split(' → ').map(part=>`<span>${e(part)}</span>`).join('')}</span>${notes.map(n=>`<span class="time-note">${e(n)}</span>`).join('')}`;}
+function timeMarkup(ev){let [main,...notes]=compactTime(ev.time_label).split(' · ');
+ // Keep the clock part on the rail; leading or trailing words ("参考", "抵达", "晚饭后") move to quieter lines.
+ const m=!main.includes(' → ')&&main.length>10&&/^([^\d约]*)(约?[\d:.–→]+(?:分钟|小时)?)(.*)$/.exec(main);
+ let hint='';if(m){hint=m[1];main=m[2];if(m[3])notes=[m[3],...notes];}return `${hint?`<span class="time-hint">${e(hint)}</span>`:''}<span class="event-time">${main.split(' → ').map(part=>`<span>${e(part)}</span>`).join('')}</span>${notes.map(n=>`<span class="time-note">${e(n)}</span>`).join('')}`;}
 const CATEGORY_ICON={transport:'train',flight:'plane',meal:'food',visit:'camera',walk:'walk',rest:'clock',hotel:'bed',activity:'sparkle',shopping:'bag'};
 function eventCard(d,ev){
  const status=activityState(d.date,ev.id),checked=status==='done',isMeal=ev.category==='meal';
@@ -1569,9 +1573,9 @@ function eventCard(d,ev){
  const foodRows=mealRows(d,ev),first=foodRows.find(r=>r[1]==='首选');
  const placeIds=activityPlaceIds(ev),hotelIds=ev.category==='hotel'||ev.id==='luggage_pickup'?ev.place_ids.filter(id=>id.startsWith('hotel_')):[];
  const isNow=ev.id===nowEventId;
- const brief=ev.condition&&EVENT_BRIEF[ev.id];
+ const brief=ev.condition&&Object.hasOwn(EVENT_BRIEF,ev.id)?EVENT_BRIEF[ev.id]:null;
  const more=[
-  brief?`<details class="event-detail"><summary>完整说明</summary><div class="detail-body"><p>${e(ev.condition)}</p></div></details>`:'',
+  brief!==null?`<details class="event-detail"><summary>完整说明</summary><div class="detail-body"><p>${e(ev.condition)}</p></div></details>`:'',
   ev.id==='kodaiji_night'?`<details class="event-detail"><summary>参拜详情</summary><div class="detail-body"><p>游览约60—75分钟，排队另计。</p><p>活动期2026/10/23—12/13；21:30停止入场，22:00闭门。昼夜不清场，离场后同票不能再入。</p><p>${external('活动官网 ↗','https://www.kodaiji.com/saiji.html')} · ${external('票价 ↗','https://www.kodaiji.com/haikan.html')}</p></div></details>`:'',
   foodRows.length?mealSupplement(d,ev,foodRows):'',
   activityDetails(d,ev.id),
@@ -1584,7 +1588,7 @@ function eventCard(d,ev){
  return `<article id="event-${ev.id}" class="event cat-${ev.category} ${compact?'compact-event':''} ${checked?'done':''} ${ev.optional?'optional':''} ${isNow?'is-now':''}" data-event="${ev.id}">
  <div class="event-time-col">${ev.time_hint?`<span class="time-hint">${e(ev.time_hint)}</span>`:''}${timeMarkup(ev)}</div>
  <div class="event-content"><div class="event-head"><div class="event-heading"><h3>${e(ev.title)}</h3>${isNow?'<span class="pill now">现在</span>':''}${ev.optional?'<span class="pill gold">可选</span>':''}${statusLabel(ev)}</div><label class="event-check"><input type="checkbox" data-event-check="${ev.id}" ${checked?'checked':''} aria-label="完成：${e(ev.title)}"><span class="check-box" aria-hidden="true">${icon('check')}</span><span class="check-text" aria-hidden="true"></span></label></div>
- ${hotelIds.filter(id=>!ev.title.includes(PLACE[id].name_ja)).map(id=>`<p class="activity-hotel" lang="ja">${icon('bed')}${e(PLACE[id].name_ja)}</p>`).join('')}${ev.condition?`<p class="condition">${e(brief||ev.condition)}</p>`:''}${ev.optionNote?`<p class="selection-note">${icon('tune')}${e(ev.optionNote)}</p>`:''}${executionNotice(d,ev)}
+ ${hotelIds.filter(id=>!ev.title.includes(PLACE[id].name_ja)).map(id=>`<p class="activity-hotel" lang="ja">${icon('bed')}${e(PLACE[id].name_ja)}</p>`).join('')}${(brief??ev.condition)?`<p class="condition">${e(brief??ev.condition)}</p>`:''}${ev.optionNote?`<p class="selection-note">${icon('tune')}${e(ev.optionNote)}</p>`:''}${executionNotice(d,ev)}
  ${imageIds.length?`<div class="event-photos ${imageIds.length===1?'single-photo':''}" style="--photo-columns:${Math.min(imageIds.length,3)}">${imageIds.map(id=>activityPhoto(id,'',isMeal&&PLACE[id].category!=='restaurant'?'用餐周边 · ':'',id!==first?.[7]&&(imageIds.length!==1||PLACE[id].name!==ev.title))).join('')}</div>`:''}
  ${first?`<div class="meal-block"><p class="meal-preview"><span lang="ja">${e(first[2])}</span><small>${e(first[3])}${first[3].includes('菜单')?'':' / 人'}</small></p><p class="meal-conditions">${e(first[4].replace(' · Louie’s N.Y. Pizza Parlor',''))}${mealNotes(first).conditions?` · ${e(mealNotes(first).conditions)}`:''}</p></div>`:''}
  ${ev.id==='kodaiji_night'?`<p class="night-facts">17:00亮灯 · ¥800 / 人 <span>购票待确认</span></p>`:''}
@@ -1738,9 +1742,9 @@ const photo=(id,cls='',loading='lazy',sizes='(max-width:720px) calc(100vw - 72px
  return `<img class="${cls}" ${img.illustration?'style="object-fit:contain"':''} src="${full?img.src:img.thumbnail||img.src}" ${responsive?`srcset="${img.thumbnail} ${img.thumbnailWidth}w, ${img.src} ${img.width||1100}w" sizes="${sizes}"`:''} alt="${e(img.sight)}" width="${img.width||800}" height="${img.height||600}" loading="${loading}" decoding="async" ${loading==='eager'?'fetchpriority="high"':''}>`;
 };
 const photoButton=(id,cls='',prefix='',caption=true)=>`<button type="button" class="photo-button ${cls}${PHOTOS[id]?.illustration?' illustration-photo':''}" data-action="photo-zoom" data-place="${id}" aria-label="放大${e(PLACE[id].name)}照片">${photo(id)}${caption?`<span>${e(prefix+PLACE[id].name)}</span>`:''}</button>`;
-function placeInfo(id,omitName=false){const p=PLACE[id];return `<div class="place-info" data-place-info="${id}">${omitName?'':`<strong lang="ja">${e(p.name_ja)}</strong>`}${p.address_ja?`<p lang="ja">${e(p.address_ja)}</p>`:''}${PLACE_LOCATIONS[id]?`<p class="place-location">${e(PLACE_LOCATIONS[id])}</p>`:''}${PLACE_DETAILS[id]?`<p>${e(PLACE_DETAILS[id])}</p>`:''}</div>`;}
+function placeInfo(id,omitName=false,withDetails=true){const p=PLACE[id];return `<div class="place-info" data-place-info="${id}">${omitName?'':`<strong lang="ja">${e(p.name_ja)}</strong>`}${p.address_ja?`<p lang="ja">${e(p.address_ja)}</p>`:''}${PLACE_LOCATIONS[id]?`<p class="place-location">${e(PLACE_LOCATIONS[id])}</p>`:''}${withDetails&&PLACE_DETAILS[id]?`<p>${e(PLACE_DETAILS[id])}</p>`:''}</div>`;}
 
-function stayArrivalText(id){return id==='hotel_kyoto'?DETAILS['2026-11-30'].transport.slice(1,3).join(' '):'从新今宫站前往酒店；入住和取行李安排见当天活动。';}
+function stayArrivalText(id){return id==='hotel_kyoto'?DETAILS['2026-11-30'].transport[1]:'从新今宫站前往酒店；入住和取行李安排见当天活动。';}
 function stayInfo(id){return `<details class="stay-info" id="stay-info"><summary>${icon('bed')}<span>今晚住 <strong lang="ja">${e(PLACE[id].name_ja)}</strong></span></summary><div class="stay-info-body">${photoSrc(id)?photoButton(id,'stay-info-photo'):''}<div>${placeInfo(id)}<p>${e(stayArrivalText(id))}</p>${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'btn small')}</div></div></details>`;}
 const activityPhoto=(id,...args)=>PLACE_LOCATIONS[id]?`<div class="shop-photo">${photoButton(id,...args)}<small class="place-location">${e(PLACE_LOCATIONS[id])}</small></div>`:photoButton(id,...args);
 function progress(d){const {done,total}=DayFlow.forDay(d);return{done,total};}
@@ -1765,7 +1769,7 @@ const INTENSITY={'交通日':1,'清晨交通日':1,'中等':2,'中等偏高':3,'
 function intensityMarkup(d){const label=d.intensity.split('；')[0].replace(/，.*/,''),level=INTENSITY[label]||2;return `<span class="intensity" title="体力强度：${e(d.intensity)}"><span class="intensity-dots" aria-hidden="true">${[1,2,3,4].map(n=>`<i class="${n<=level?'on':''}"></i>`).join('')}</span>${e(label)}</span>`;}
 function dayTimes(d,i){
  const leave=i===0?['出发',flightDeparture('flight_out').replace(' 香港起飞','')+' 香港']:['离店',compactTime(d.departure_target||'开园时间待确认')];
- const back=i===0?['入住','19:00–20:00']:i===PLAN.days.length-1?['抵港',flightLocal(PLAN.bookings.find(b=>b.id==='flight_home'),'arrival').time]:['返店',compactTime(returnTarget(d))];
+ const back=i===0?['入住','19:00–20:00']:i===PLAN.days.length-1?['抵港',flightLocal(PLAN.bookings.find(b=>b.id==='flight_home'),'arrival').time]:['返店',...compactTime(returnTarget(d)).split(/[，；]\s*/)];
  return [leave,back];
 }
 
@@ -1840,7 +1844,7 @@ const GLOSSARY=[
 ];
 function dayCard(d,i){
  const info=dayPresentation(d),p=progress(d),today=todayIndex()===i,[leave,back]=dayTimes(d,i);
- return pageLink(`<span class="day-row-date"><strong>${dateLabel(d.date)}</strong><small>${e(d.weekday)}${today?' · 今天':''}</small></span><span class="day-row-thumb">${photo(info.cover,'','lazy','120px')}</span><span class="day-row-main"><strong>${e(info.short)}</strong><small>${e(info.summary)}</small></span><span class="day-row-times"><span><small>${leave[0]}</small>${e(leave[1])}</span><span><small>${back[0]}</small>${e(back[1].split(/[，；]/)[0])}</span></span><span class="day-row-meta">${intensityMarkup(d)}<small class="card-progress${p.done===p.total?' complete':''}">${p.done?`${p.done}/${p.total} 完成`:`${p.total} 项`}</small></span>${icon('chevron')}`,dayHash(i),'day-card'+(today?' is-today':''));
+ return pageLink(`<span class="day-row-date"><strong>${dateLabel(d.date)}</strong><small>${e(d.weekday)}${today?' · 今天':''}</small></span><span class="day-row-thumb">${photo(info.cover,'','lazy','120px')}</span><span class="day-row-main"><strong>${e(info.short)}</strong><small>${e(info.summary)}</small></span><span class="day-row-times"><span><small>${leave[0]}</small>${e(leave[1])}</span><span><small>${back[0]}</small>${e(back[1].split(/[，；]/)[0])}</span></span><span class="day-row-meta">${intensityMarkup(d)}${p.done?`<small class="card-progress${p.done===p.total?' complete':''}">${p.done===p.total?'全部完成':`已完成 ${p.done}/${p.total}`}</small>`:''}</span>${icon('chevron')}`,dayHash(i),'day-card'+(today?' is-today':''));
 }
 function overview(){return `
  <header class="overview-hero">
@@ -1854,9 +1858,8 @@ function overview(){return `
   return tripStatus().phase==='before'?guide:`<details class="how-to-fold"><summary>${icon('book')}怎么用这份手帖 · 术语说明</summary>${guide}</details>`;})()}
  </section>
  <section id="day-cards"><div class="section-title"><h2>8 天行程</h2></div><div class="day-grid">${PLAN.days.map(dayCard).join('')}</div></section>
- <section class="stay-section"><div class="section-title"><h2>住宿与航班</h2></div><div class="stays">${stayCard('hotel_kyoto','京都 · 3晚','11/30 入住 — 12/3 退房')}${stayCard('hotel_osaka','大阪 · 4晚','12/3 入住 — 12/7 退房')}</div>${flights()}</section>
+ <p class="overview-more">${icon('bed')}京都 3 晚、大阪 4 晚，往返香港航空 HX618 / HX617。${pageLink('航班时间与酒店地址 '+icon('arrow'),'#prep/bookings','text-link')}</p>
  `;}
-function stayCard(id,title,date){return `<article class="stay-card">${photoButton(id,'stay-photo','',false)}<div class="stay-copy"><p class="eyebrow">${title}</p><h3 lang="ja">${e(PLACE[id].name_ja)}</h3><p class="stay-date">${date}</p><details class="stay-info"><summary>地址与到店方式</summary>${placeInfo(id,true)}${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'text-link')}</details></div></article>`;}
 function flights(showConditions=false){const bookings=PLAN.bookings.filter(b=>b.type==='flight');return `<section class="flight-card flight-overview"><div class="flight-heading">${icon('plane')}<h3>${e([...new Set(bookings.map(b=>b.airline))].join(' / '))}</h3><span>往返航班 · 当地时间</span></div><div class="flight-grid">${bookings.map(b=>{const from=flightLocal(b,'departure'),to=flightLocal(b,'arrival');return `<div class="flight-leg"><p class="flight-leg-title">${e(from.date)} · ${b.from==='hkg'?'去程':'回程'} <b>${e(b.flight_number||'航班号待确认')}</b></p><div class="flight-times"><strong><span class="flight-action">起飞</span>${from.time}<small>${e(from.city)}</small></strong><span class="flight-line" aria-hidden="true">${icon('plane')}</span><strong><span class="flight-action">抵达</span>${to.time}<small>${e(to.city)}</small></strong></div><p class="flight-terminals">${e(flightTerminals(b))}</p>${showConditions?flightConditions(b):''}</div>`;}).join('')}</div></section>`;}
 
 function flightConditions(booking){
@@ -1871,7 +1874,7 @@ function ticketStatus(){
  const booked=[['往返机票','HX618 / HX617','ok'],['京都酒店','11/30—12/3 · 3晚','ok'],['大阪酒店','12/3—12/7 · 4晚','ok'],['HARUKA','11/30 · 班次现场选','ok']];
  const open=(PLAN.unconfirmed_purchases||[]).map(p=>[p.item+(p.quantity?' ×'+p.quantity:''),dateLabel(p.visit_date)+' 使用',...(PURCHASE_LABEL[p.status]?[PURCHASE_LABEL[p.status][1],PURCHASE_LABEL[p.status][0]]:['warn','待确认'])]);
  const row=([name,note,tone,label])=>`<li class="ticket tone-${tone}"><span class="ticket-state">${tone==='ok'?icon('check')+'已订':(tone==='danger'?icon('alert'):icon('info'))+label}</span><strong>${e(name)}</strong><small>${e(note)}</small></li>`;
- return `<section class="ticket-board" aria-labelledby="ticket-title"><div class="section-title"><h2 id="ticket-title">票务状态</h2></div><div class="ticket-groups"><div><h3>待处理</h3><ul class="ticket-list">${open.map(row).join('')}</ul></div><div><h3>已订好</h3><ul class="ticket-list">${booked.map(row).join('')}</ul></div></div></section>`;
+ return `<section class="ticket-board" aria-labelledby="ticket-title"><div class="section-title"><h2 id="ticket-title">票务状态</h2></div><ul class="ticket-list">${open.map(row).join('')}</ul><p class="ticket-booked">${icon('check')}${booked.map(([name])=>e(name)).join('、')} 已订好，详情见下方「机票与住宿」。</p></section>`;
 }
 function todoRow(i){const id=TODO_IDS[i];return `<label class="todo-row"><input type="checkbox" data-todo="${id}" ${state.todos[id]?'checked':''}><span class="todo-box" aria-hidden="true">${icon('check')}</span><span class="todo-text">${e(TODOS[i])}</span></label>`;}
 function todoGroups(){
@@ -1882,9 +1885,9 @@ function todoGroups(){
 }
 function todoProgressMarkup(){const done=todoDone();return `<span>已完成 <strong>${done} / ${TODOS.length}</strong></span><div class="progress-track" role="progressbar" aria-label="临行待办完成进度" aria-valuemin="0" aria-valuemax="${TODOS.length}" aria-valuenow="${done}"><span style="width:${done/TODOS.length*100}%"></span></div>`;}
 function prepBookings(){return `<section class="prep-bookings" id="prep-bookings" aria-labelledby="prep-bookings-title"><div class="section-title"><h2 id="prep-bookings-title">机票与住宿</h2></div>${flights(true)}
- <div class="prep-hotels">${PLAN.bookings.filter(b=>b.type==='hotel').map(b=>`<article><p class="eyebrow">${b.place_id==='hotel_kyoto'?'京都':'大阪'} · ${b.nights}晚</p><h3 lang="ja">${e(PLACE[b.place_id].name_ja)}</h3><p class="stay-date">${dateLabel(b.checkin_date)} 入住 — ${dateLabel(b.checkout_date)} 退房 · 不含早餐</p>${placeInfo(b.place_id,true)}<p>${e(stayArrivalText(b.place_id))}</p><div class="food-actions">${external(icon('pin')+'酒店地图',PLACE[b.place_id].map_search_url,'text-link')}${pageLink('查看入住安排 →',dayHash(PLAN.days.findIndex(d=>d.date===b.checkin_date))+'/'+(b.place_id==='hotel_kyoto'?'checkin_kyoto':'osaka_transfer'),'text-link')}</div></article>`).join('')}</div>
+ <div class="prep-hotels">${PLAN.bookings.filter(b=>b.type==='hotel').map(b=>`<article><p class="eyebrow">${b.place_id==='hotel_kyoto'?'京都':'大阪'} · ${b.nights}晚</p><h3 lang="ja">${e(PLACE[b.place_id].name_ja)}</h3><p class="stay-date">${dateLabel(b.checkin_date)} 入住 — ${dateLabel(b.checkout_date)} 退房 · 不含早餐</p>${placeInfo(b.place_id,true,false)}<p>${e(stayArrivalText(b.place_id))}</p><div class="food-actions">${external(icon('pin')+'酒店地图',PLACE[b.place_id].map_search_url,'text-link')}${pageLink('查看入住安排 →',dayHash(PLAN.days.findIndex(d=>d.date===b.checkin_date))+'/'+(b.place_id==='hotel_kyoto'?'checkin_kyoto':'osaka_transfer'),'text-link')}</div></article>`).join('')}</div>
  </section>`;}
-function prepPage(){return `<header class="page-heading"><h1>临行准备</h1><p>勾完下面的待办就可以出发了。</p><nav class="prep-jump" aria-label="准备页目录">${pageLink('待办清单','#prep/todos','chip')}${pageLink('机票与住宿','#prep/bookings','chip')}${pageLink('参考资料','#prep/reference','chip')}</nav></header>
+function prepPage(){return `<header class="page-heading"><h1>临行准备</h1><p>勾完下面的待办就可以出发了。</p></header>
  ${ticketStatus()}
  <div class="prep-layout"><section class="todo-card" id="prep-todos"><div class="section-title"><h2>待办清单</h2><div class="todo-progress" id="todo-count">${todoProgressMarkup()}</div></div>${todoGroups()}</section>${prepBookings()}</div>
  <details class="support-card prep-reference" id="prep-reference"><summary><span>参考资料</span><small>作品日文名 · 早季红叶预测 · 费用 · 使用说明</small></summary><div class="detail-body">

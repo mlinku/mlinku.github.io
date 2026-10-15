@@ -205,6 +205,7 @@ details[open]>summary::after {transform:translateY(-30%) rotate(-135deg)}
 .day-row-times>span {white-space:nowrap}
 .day-row-times small {display:block; font-size:12px; color:var(--muted)}
 .day-row-meta {display:flex; flex-direction:column; gap:2px; font-size:var(--fs-xs); color:var(--ink-2)}
+.day-row-meta small {font-size:13px}
 .card-progress {color:var(--muted)}
 .card-progress.complete {color:var(--ok)}
 .intensity {display:inline-flex; align-items:center; gap:7px; white-space:nowrap}
@@ -262,6 +263,7 @@ details[open]>summary::after {transform:translateY(-30%) rotate(-135deg)}
 .day-facts span .icon {width:14px; height:14px}
 .day-facts strong {display:block; font-size:var(--fs-xl); font-weight:600; color:var(--time); font-variant-numeric:tabular-nums; line-height:1.4; white-space:nowrap}
 .day-facts .intensity {font-size:var(--fs-md); color:var(--ink); font-weight:500}
+.fact-note {display:block; font-size:var(--fs-xs); color:var(--muted)}
 .stay-access {display:block; text-align:left}
 .stay-access:hover span {color:var(--accent-ink)}
 .day-brief {display:flex; flex-direction:column; gap:10px}
@@ -465,6 +467,11 @@ a.route-overview-place:hover {color:var(--accent-ink)}
 .page-heading>p:not(.eyebrow) {margin-top:8px; color:var(--ink-2)}
 .prep-jump {display:flex; flex-wrap:wrap; gap:8px; margin-top:18px}
 .ticket-board {margin-top:48px}
+.ticket-booked {display:flex; align-items:center; gap:6px; margin-top:14px; font-size:var(--fs-sm); color:var(--ink-2)}
+.ticket-booked .icon {color:var(--ok); width:16px; height:16px}
+.ticket-board>.ticket-list {grid-template-columns:repeat(3,minmax(0,1fr))}
+.overview-more {display:flex; flex-wrap:wrap; align-items:center; gap:4px 10px; margin-top:28px; font-size:var(--fs-sm); color:var(--ink-2)}
+.overview-more>.icon {color:var(--accent-ink)}
 .ticket-groups {display:grid; grid-template-columns:minmax(0,3fr) minmax(0,4fr); gap:20px 32px}
 .ticket-groups h3 {font-size:var(--fs-xs); font-weight:600; letter-spacing:.12em; color:var(--muted); margin-bottom:10px}
 .ticket-groups>div:first-child .ticket-list {grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -654,9 +661,9 @@ noscript p {padding:40px; text-align:center}
   .daily-page>.date-nav {display:flex; position:sticky; top:0; z-index:16; height:var(--date-h); align-items:center; gap:4px; margin:-24px calc(-1 * var(--gutter)) 20px; padding:8px var(--gutter); overflow-x:auto; scrollbar-width:none; background:rgba(20,24,35,.98); border-bottom:1px solid var(--line)}
   .date-nav::-webkit-scrollbar {display:none}
   .date-link {display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:66px; height:48px; padding:2px 6px; border-radius:var(--radius-sm); color:var(--ink-2); line-height:1.25; flex-shrink:0}
-  .date-link small {font-size:10px; letter-spacing:.08em; color:var(--muted)}
+  .date-link small {font-size:11px; letter-spacing:.08em; color:var(--muted)}
   .date-link strong {font-size:var(--fs-sm); font-variant-numeric:tabular-nums}
-  .date-link span {font-size:11px; color:var(--muted); max-width:72px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .date-link span {font-size:12px; color:var(--muted); max-width:72px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
   .date-link.active {background:var(--accent-strong); color:#fff}
   .date-link.active small, .date-link.active span {color:#dbeaff}
   .date-link.is-today:not(.active) small {color:var(--accent-ink)}
@@ -683,7 +690,7 @@ noscript p {padding:40px; text-align:center}
   .day-row-date strong {font-size:var(--fs-lg)}
   .day-row-thumb {height:48px}
   .day-row-main small {display:none}
-  .day-row-times {grid-column:3; grid-row:2; display:flex; gap:14px; font-size:var(--fs-sm); margin-top:-8px}
+  .day-row-times {grid-column:3; grid-row:2; display:flex; flex-wrap:wrap; gap:0 14px; font-size:var(--fs-sm); margin-top:-8px}
   .day-row-times small {display:inline; margin-right:4px}
   .day-card>.icon {grid-row:1; grid-column:4}
   .stays, .flight-grid {grid-template-columns:minmax(0,1fr)}
@@ -694,7 +701,8 @@ noscript p {padding:40px; text-align:center}
   .day-facts {padding-right:0}
   .day-hero-copy {padding:14px 16px}
   .day-hero h1 {font-size:26px}
-  .day-facts {grid-template-columns:auto auto auto; justify-content:space-between; gap:4px 12px}
+  .day-facts {grid-template-columns:auto auto; justify-content:start; gap:10px 32px}
+  .day-facts>div:last-child {grid-column:1 / -1}
   .day-facts strong {font-size:17px}
   .day-facts .intensity {font-size:var(--fs-sm)}
   .stay-info-body {flex-direction:column}
@@ -719,7 +727,8 @@ noscript p {padding:40px; text-align:center}
   .food-idea.with-photo {grid-template-columns:minmax(0,1fr)}
   .more-body {padding:12px 14px}
   .day-support {margin-left:0}
-  .ticket-list, .ticket-groups>div:first-child .ticket-list {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ticket-list, .ticket-board>.ticket-list {grid-template-columns:minmax(0,1fr)}
+  .ticket-link {max-width:100%}
   .prep-reference .detail-body {grid-template-columns:minmax(0,1fr)}
   .pilgrimage-intro {flex-wrap:wrap}
   .shot-heading h4 {font-size:var(--fs-lg)}
