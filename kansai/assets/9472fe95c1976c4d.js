@@ -1697,7 +1697,6 @@ function guideSources(d){
 
 /* Presentation only. Locked itinerary and selection rules live in app.js. */
 const BLOG_HOME='../';
-const KANSAI_MAP_URL='https://www.google.com/maps/@34.6062551,135.6203971,10z';
 Object.assign(icons,{
  calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18m-13 4h4m3 0h4"/>',
  list:'<path d="M9 5h12M9 12h12M9 19h12M3 5h1M3 12h1M3 19h1"/>',
@@ -1779,7 +1778,7 @@ function readHash(){
   if(dayView==='pilgrimage'&&!pilgrimageDay(PLAN.days[i].date).length){dayView='timeline';sectionTarget='';}
   if(parts[2]==='details')sectionTarget='day-support';
  }else if(parts[0]==='prep'){screen='prep';if(['todos','bookings','reference'].includes(parts[1]))sectionTarget='prep-'+parts[1];}
- else{screen='overview';if(parts[0]==='maps'||parts[1]==='map')sectionTarget='trip-map';else if(parts[1]==='days')sectionTarget='day-cards';else if(parts[1]==='guide')sectionTarget='how-to';}
+ else{screen='overview';if(parts[0]==='maps'||parts[1]==='map'||parts[1]==='days')sectionTarget='day-cards';else if(parts[1]==='guide')sectionTarget='how-to';}
 }
 // Reading position is session-only; completion and choices remain in localStorage.
 const viewMemory=new Map();
@@ -1855,7 +1854,6 @@ function overview(){return `
   return tripStatus().phase==='before'?guide:`<details class="how-to-fold"><summary>${icon('book')}怎么用这份手帖 · 术语说明</summary>${guide}</details>`;})()}
  </section>
  <section id="day-cards"><div class="section-title"><h2>8 天行程</h2></div><div class="day-grid">${PLAN.days.map(dayCard).join('')}</div></section>
- <section id="trip-map" class="trip-map-section"><div class="section-title"><h2>城市之间怎么走</h2></div><div class="map-layout"><a class="google-map-preview" href="${KANSAI_MAP_URL}" target="_blank" rel="noopener noreferrer" aria-label="打开关西区域的交互式 Google 地图"><img src="${REGION_MAP_IMAGE}" alt="Google 关西区域地图，展示京都、宇治、大阪、奈良、神户的真实位置" width="400" height="300" loading="lazy"><span>关西全图<em>打开 Google 地图 ↗</em></span></a><ol class="trip-connections">${[['11/30','关西机场 → 京都','HARUKA 特急，班次按入境进度选'],['12/1','京都 ⇄ 宇治','JR 奈良线往返'],['12/3','京都 → 大阪','先回京都酒店取行李'],['12/5','大阪 → 奈良 → 大阪','大阪城后经鹤桥乘近铁往返奈良'],['12/6','大阪 ⇄ 神户','生田、北野、三宫与神户大桥'],['12/7','大阪 → 关西机场','南海空港急行，清晨出发']].map(([date,path,note])=>`<li><span>${date}</span><p><strong>${path}</strong>${note?`<small>${note}</small>`:''}</p></li>`).join('')}</ol></div></section>
  <section class="stay-section"><div class="section-title"><h2>住宿与航班</h2></div><div class="stays">${stayCard('hotel_kyoto','京都 · 3晚','11/30 入住 — 12/3 退房')}${stayCard('hotel_osaka','大阪 · 4晚','12/3 入住 — 12/7 退房')}</div>${flights()}</section>
  `;}
 function stayCard(id,title,date){return `<article class="stay-card">${photoButton(id,'stay-photo','',false)}<div class="stay-copy"><p class="eyebrow">${title}</p><h3 lang="ja">${e(PLACE[id].name_ja)}</h3><p class="stay-date">${date}</p><details class="stay-info"><summary>地址与到店方式</summary>${placeInfo(id,true)}${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'text-link')}</details></div></article>`;}

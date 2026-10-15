@@ -163,7 +163,7 @@ const results=vm.runInContext(`
  assert.equal(returnTarget(umeda),'20:45—21:00，随晚餐时段调整');
  assert.ok(!overview().includes('city-map'),'删除旧城市示意');
  assert.ok(!overview().includes('<iframe'),'避免兼容性空框');
- assert.ok(overview().includes('google-map-preview'),'保留真实Google区域预览');
+ assert.ok(!overview().includes('google-map-preview'),'总览不再单列城市间交通与区域地图');
  dayIndex=1;state.checks={'2026-12-01:shot:eupho_bench':true,'2026-12-01:uji_lunch':true,'2026-11-30:flight_out':true};
  const unchangedEvents=JSON.stringify(effectiveEvents(uji)),unchangedChoices=JSON.stringify(state.choices);
  setCheck(uji.date,'uji_lunch',false);
@@ -340,7 +340,7 @@ const results=vm.runInContext(`
  assert.ok(!dayCard(kyoto,2).includes('高台寺'),'取消夜枫同步更新总览');
  state.choices[kyoto.date]={kodaijiPlan:'night'};
  assert.ok(dayCard(kyoto,2).includes('高台寺'),'恢复夜枫同步更新总览');
- assert.ok(overview().includes('关西区域地图')&&!overview().includes('全程地图'));
+ assert.ok(!overview().includes('城市之间怎么走')&&!overview().includes('全程地图'));
  // Current advice must follow the same choices as activities and routes.
  const sourceNotes=JSON.stringify(DETAILS);
  state.choices[kobe.date]={kobeAfternoon:'harbor',umedaSecond:true};

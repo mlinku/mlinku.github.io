@@ -68,9 +68,8 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false}){
   const name=crypto.createHash('sha256').update(content).digest('hex').slice(0,16)+'.'+extension;
   fs.writeFileSync(path.join(assetDir,name),content);used.add(name);return 'assets/'+name;
  }
- // Headings use Noto Serif SC online; the offline file keeps the system serif fallback so it never waits on the network.
- const fontTags='<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&display=swap">';
- const styleTag=offline?`<style>${css}</style>`:`<link rel="stylesheet" href="${resource(css,'css')}">${fontTags}`;
+ // No web fonts: Google Fonts is often unreachable for readers in mainland China and would block rendering.
+ const styleTag=offline?`<style>${css}</style>`:`<link rel="stylesheet" href="${resource(css,'css')}">`;
  const scriptTag=offline?`<script>${script}</script>`:`<script defer src="${resource(script,'js')}"></script>`;
  const html=`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#293246"><meta name="description" content="2026关西旅行：8天行程、路线定位、餐饮与动漫巡礼对照。"><title>关西秋日手帖 · 2026</title><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23a3422d'/%3E%3Ctext x='20' y='28' text-anchor='middle' fill='%23fff8ec' font-size='26'%3E旅%3C/text%3E%3C/svg%3E">${styleTag}</head><body><a class="skip" href="#main">跳到主要内容</a><div id="app"></div><div id="toast" role="status" aria-live="polite"></div><noscript><p>请启用JavaScript查看行程。</p></noscript>${scriptTag}</body></html>`;
  fs.writeFileSync(path.join(outputDir,'index.html'),html);

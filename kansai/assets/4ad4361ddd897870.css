@@ -28,7 +28,7 @@
   --danger:#f07a7a;
   --danger-soft:rgba(240,122,122,.12);
   /* type */
-  --display:'Noto Serif SC','Songti SC','STZhongsong','SimSun',serif;
+  --display:'Songti SC','Noto Serif SC','Source Han Serif SC','STZhongsong','SimSun',serif;
   --body:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',system-ui,sans-serif;
   --fs-xs:14px; --fs-sm:15.5px; --fs-md:17px; --fs-lg:20px; --fs-xl:24px; --fs-2xl:30px; --fs-3xl:42px;
   /* layout */
@@ -202,6 +202,7 @@ details[open]>summary::after {transform:translateY(-30%) rotate(-135deg)}
 .day-row-main strong {font:700 var(--fs-lg)/1.45 var(--display); letter-spacing:.04em}
 .day-row-main small {font-size:var(--fs-sm); color:var(--muted); margin-top:2px}
 .day-row-times {display:grid; grid-template-columns:1fr 1.3fr; gap:12px; font-size:var(--fs-md); color:var(--time); font-variant-numeric:tabular-nums; line-height:1.4}
+.day-row-times>span {white-space:nowrap}
 .day-row-times small {display:block; font-size:12px; color:var(--muted)}
 .day-row-meta {display:flex; flex-direction:column; gap:2px; font-size:var(--fs-xs); color:var(--ink-2)}
 .card-progress {color:var(--muted)}
@@ -210,16 +211,6 @@ details[open]>summary::after {transform:translateY(-30%) rotate(-135deg)}
 .intensity-dots {display:inline-flex; gap:3px}
 .intensity-dots i {width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.16)}
 .intensity-dots i.on {background:var(--time)}
-.map-layout {display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:40px; align-items:start}
-.google-map-preview {display:block; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); color:var(--ink)}
-.google-map-preview img {width:100%; height:auto; aspect-ratio:4/3; object-fit:cover}
-.google-map-preview>span {display:flex; justify-content:space-between; align-items:center; padding:10px 14px; font-size:var(--fs-sm); background:var(--raised)}
-.google-map-preview em {font-style:normal; color:var(--accent-ink)}
-.trip-connections li {display:grid; grid-template-columns:56px minmax(0,1fr); gap:16px; padding:14px 0; border-bottom:1px solid var(--line)}
-.trip-connections li:first-child {padding-top:0}
-.trip-connections li>span {font-size:var(--fs-md); font-weight:700; color:var(--time); font-variant-numeric:tabular-nums}
-.trip-connections strong {display:block; font-weight:600}
-.trip-connections small {display:block; font-size:var(--fs-sm); color:var(--muted)}
 .stays {display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px}
 .stay-card {display:flex; gap:18px; align-items:flex-start}
 .stay-card>.photo-button {width:132px; flex-shrink:0}
@@ -695,7 +686,7 @@ noscript p {padding:40px; text-align:center}
   .day-row-times {grid-column:3; grid-row:2; display:flex; gap:14px; font-size:var(--fs-sm); margin-top:-8px}
   .day-row-times small {display:inline; margin-right:4px}
   .day-card>.icon {grid-row:1; grid-column:4}
-  .map-layout, .stays, .flight-grid {grid-template-columns:minmax(0,1fr)}
+  .stays, .flight-grid {grid-template-columns:minmax(0,1fr)}
   .stay-card>.photo-button {width:100px}
   .day-hero {min-height:180px}
   .day-summary {padding:18px 18px 20px}
