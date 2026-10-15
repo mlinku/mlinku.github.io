@@ -1975,7 +1975,9 @@ body::before {
 .hidden {
   display: none;
 }
-:root {
+/* kansai: color modes */
+@media (prefers-color-scheme: dark) {
+html:not([data-user-color-scheme="light"]) {
   --hty-bg-color: #303030;
   --hty-text-color: #f2f2f2;
   --hty-secondary-text-color: #eee;
@@ -1985,70 +1987,147 @@ body::before {
   --smc-link-color: #3ca1ff;
   --color-mode: 'dark';
 }
-::-webkit-input-placeholder {
+html:not([data-user-color-scheme="light"]) ::-webkit-input-placeholder {
   color: #fff;
 }
-body {
+html:not([data-user-color-scheme="light"]) body {
   color: var(--hty-text-color);
 }
-body::before {
+html:not([data-user-color-scheme="light"]) body::before {
   background-image: url("/background2.jpg");
 }
-.char {
+html:not([data-user-color-scheme="light"]) .char {
   background-color: rgba(0,0,0,0.5);
 }
-.char:hover {
+html:not([data-user-color-scheme="light"]) .char:hover {
   color: #000;
   background-color: var(--banner-char-color);
 }
-.sidebar {
+html:not([data-user-color-scheme="light"]) .sidebar {
   background-color: rgba(27,31,46,0.95);
   background-image: none;
 }
-.post-title-link {
+html:not([data-user-color-scheme="light"]) .post-title-link {
   color: #3ca1ff;
 }
-.post-card {
+html:not([data-user-color-scheme="light"]) .post-card {
   color: #fff;
   background-color: rgba(27,31,46,0.9);
   box-shadow: 0 1px 8px rgba(27,31,46,0.1);
 }
-.post-block {
+html:not([data-user-color-scheme="light"]) .post-block {
   color: var(--hty-text-color);
   background-color: rgba(27,31,46,0.95);
 }
-.page-number-basic {
+html:not([data-user-color-scheme="light"]) .page-number-basic {
   background-color: rgba(0,0,0,0.5);
 }
-.pagination .prev,
-.pagination .next,
-.pagination .page-number,
-.pagination .space {
+html:not([data-user-color-scheme="light"]) .pagination .prev,
+html:not([data-user-color-scheme="light"]) .pagination .next,
+html:not([data-user-color-scheme="light"]) .pagination .page-number,
+html:not([data-user-color-scheme="light"]) .pagination .space {
   background-color: rgba(0,0,0,0.5);
 }
-.pagination .prev:hover,
-.pagination .next:hover,
-.pagination .page-number:hover,
-.pagination .space:hover {
+html:not([data-user-color-scheme="light"]) .pagination .prev:hover,
+html:not([data-user-color-scheme="light"]) .pagination .next:hover,
+html:not([data-user-color-scheme="light"]) .pagination .page-number:hover,
+html:not([data-user-color-scheme="light"]) .pagination .space:hover {
   background: rgba(199,228,255,0.9);
 }
-.pagination .prev:active,
-.pagination .next:active,
-.pagination .page-number:active,
-.pagination .space:active {
+html:not([data-user-color-scheme="light"]) .pagination .prev:active,
+html:not([data-user-color-scheme="light"]) .pagination .next:active,
+html:not([data-user-color-scheme="light"]) .pagination .page-number:active,
+html:not([data-user-color-scheme="light"]) .pagination .space:active {
   background: #0078e7;
 }
-.pagination .prev.current,
-.pagination .next.current,
-.pagination .page-number.current,
-.pagination .space.current {
+html:not([data-user-color-scheme="light"]) .pagination .prev.current,
+html:not([data-user-color-scheme="light"]) .pagination .next.current,
+html:not([data-user-color-scheme="light"]) .pagination .page-number.current,
+html:not([data-user-color-scheme="light"]) .pagination .space.current {
   background: rgba(227,242,255,0.9);
   cursor: default;
 }
-#footer {
+html:not([data-user-color-scheme="light"]) #footer {
   color: #eee;
 }
-.aplayer {
+html:not([data-user-color-scheme="light"]) .aplayer {
+  color: #000;
+}
+}
+html[data-user-color-scheme="dark"] {
+  --hty-bg-color: #303030;
+  --hty-text-color: #f2f2f2;
+  --hty-secondary-text-color: #eee;
+  --banner-line-color: #fff;
+  --banner-char-color: #fff;
+  --post-block-bg-color: #1b1f2e;
+  --smc-link-color: #3ca1ff;
+  --color-mode: 'dark';
+}
+html[data-user-color-scheme="dark"] ::-webkit-input-placeholder {
+  color: #fff;
+}
+html[data-user-color-scheme="dark"] body {
+  color: var(--hty-text-color);
+}
+html[data-user-color-scheme="dark"] body::before {
+  background-image: url("/background2.jpg");
+}
+html[data-user-color-scheme="dark"] .char {
+  background-color: rgba(0,0,0,0.5);
+}
+html[data-user-color-scheme="dark"] .char:hover {
+  color: #000;
+  background-color: var(--banner-char-color);
+}
+html[data-user-color-scheme="dark"] .sidebar {
+  background-color: rgba(27,31,46,0.95);
+  background-image: none;
+}
+html[data-user-color-scheme="dark"] .post-title-link {
+  color: #3ca1ff;
+}
+html[data-user-color-scheme="dark"] .post-card {
+  color: #fff;
+  background-color: rgba(27,31,46,0.9);
+  box-shadow: 0 1px 8px rgba(27,31,46,0.1);
+}
+html[data-user-color-scheme="dark"] .post-block {
+  color: var(--hty-text-color);
+  background-color: rgba(27,31,46,0.95);
+}
+html[data-user-color-scheme="dark"] .page-number-basic {
+  background-color: rgba(0,0,0,0.5);
+}
+html[data-user-color-scheme="dark"] .pagination .prev,
+html[data-user-color-scheme="dark"] .pagination .next,
+html[data-user-color-scheme="dark"] .pagination .page-number,
+html[data-user-color-scheme="dark"] .pagination .space {
+  background-color: rgba(0,0,0,0.5);
+}
+html[data-user-color-scheme="dark"] .pagination .prev:hover,
+html[data-user-color-scheme="dark"] .pagination .next:hover,
+html[data-user-color-scheme="dark"] .pagination .page-number:hover,
+html[data-user-color-scheme="dark"] .pagination .space:hover {
+  background: rgba(199,228,255,0.9);
+}
+html[data-user-color-scheme="dark"] .pagination .prev:active,
+html[data-user-color-scheme="dark"] .pagination .next:active,
+html[data-user-color-scheme="dark"] .pagination .page-number:active,
+html[data-user-color-scheme="dark"] .pagination .space:active {
+  background: #0078e7;
+}
+html[data-user-color-scheme="dark"] .pagination .prev.current,
+html[data-user-color-scheme="dark"] .pagination .next.current,
+html[data-user-color-scheme="dark"] .pagination .page-number.current,
+html[data-user-color-scheme="dark"] .pagination .space.current {
+  background: rgba(227,242,255,0.9);
+  cursor: default;
+}
+html[data-user-color-scheme="dark"] #footer {
+  color: #eee;
+}
+html[data-user-color-scheme="dark"] .aplayer {
   color: #000;
 }
 .prompt-block {

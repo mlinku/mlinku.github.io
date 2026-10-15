@@ -63,7 +63,7 @@ function pilgrimageEventLinks(d,ev){
  const points=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p));
  if(!points.length)return '';
  const works=[...new Set(points.map(p=>p.work))];
- return `<a class="scene-entry" href="#day/${d.date}/pilgrimage/${points[0].id}" data-nav>${icon('camera')}<span>巡礼对照 ${points.length} 组 · ${e(works.join(' · '))}</span>${icon('chevron')}</a>`;
+ return `<a class="scene-entry" href="#day/${d.date}/pilgrimage/${points[0].id}" data-nav title="${e(works.join(' · '))}">巡礼对照 ${points.length} 组</a>`;
 }
 function pilgrimagePlaceContent(id){const points=pilgrimagePlace(id);return points.length?`<section class="place-pilgrimage"><h3>实景 × 作品</h3>${points.map(p=>shotCard(p,'place')).join('')}</section>`:'';}
 function imageZoom(title,img,switcher=''){

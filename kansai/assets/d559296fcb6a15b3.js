@@ -1396,7 +1396,7 @@ function pilgrimageEventLinks(d,ev){
  const points=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p));
  if(!points.length)return '';
  const works=[...new Set(points.map(p=>p.work))];
- return `<a class="scene-entry" href="#day/${d.date}/pilgrimage/${points[0].id}" data-nav>${icon('camera')}<span>巡礼对照 ${points.length} 组 · ${e(works.join(' · '))}</span>${icon('chevron')}</a>`;
+ return `<a class="scene-entry" href="#day/${d.date}/pilgrimage/${points[0].id}" data-nav title="${e(works.join(' · '))}">巡礼对照 ${points.length} 组</a>`;
 }
 function pilgrimagePlaceContent(id){const points=pilgrimagePlace(id);return points.length?`<section class="place-pilgrimage"><h3>实景 × 作品</h3>${points.map(p=>shotCard(p,'place')).join('')}</section>`:'';}
 function imageZoom(title,img,switcher=''){
@@ -1439,20 +1439,19 @@ function navigationPlace(ev){
 function eventNavigation(ev,d,includeMeal=false){
  const first=d?mealRows(d,ev).find(row=>row[1]==='首选'):null;
  const hasMealMap=includeMeal||(first&&first[0]!=='早餐');
- const stops=NAVIGATION_PATHS[ev.id]||activityPlaceIds(ev);
- const names=[],links=stops.filter(stop=>!hasMealMap||stop!==first?.[7]).map(stop=>{
-  if(Array.isArray(stop)){names.push(stop[0]);return placeRow(stop[0],stop[1],mapURL(stop[1]));}
-  const p=PLACE[stop];names.push(p.name);
-  return placeRow(p.name,[PLACE_LOCATIONS[stop],p.address_ja||(p.name_ja!==p.name?p.name_ja:'')].filter(Boolean).join(' · '),p.map_search_url);
- });
- if(ev.id==='gion_dinner_walk'&&d){const row=DETAILS[d.date].meals.find(r=>r[0]==='晚餐'&&r[1]==='首选');names.push(row[2]);links.push(placeRow(row[2],row[4],mealMap(d,row),true));}
- if(includeMeal&&first&&first[0]!=='早餐'){names.push(first[2]);links.push(placeRow(first[8]?.pending?'餐饮区域':first[2],first[4],mealMap(d,first),true));}
- if(!links.length)return '';
- // One full-width row per place. Three or more stops show only the destination; the stops on the way fold above it.
- if(links.length>=3)return `<div class="activity-navigation place-list is-route is-folded" aria-label="沿途各站地图"><details class="place-via"><summary><span class="place-dot" aria-hidden="true"></span><span class="place-text"><strong>沿途 ${links.length-1} 站</strong><small>${e(names.slice(0,-1).join(' → '))}</small></span></summary>${links.slice(0,-1).join('')}</details>${links.at(-1)}</div>`;
- return `<div class="activity-navigation place-list${links.length>1?' is-route':''}" aria-label="${links.length>1?'沿途各站地图':'地图'}">${links.join('')}</div>`;
+ const stops=[];
+ for(const stop of NAVIGATION_PATHS[ev.id]||activityPlaceIds(ev)){
+  if(hasMealMap&&stop===first?.[7])continue;
+  if(Array.isArray(stop)){stops.push({name:stop[0],sub:stop[1],url:mapURL(stop[1])});continue;}
+  const p=PLACE[stop];stops.push({name:p.name,sub:[PLACE_LOCATIONS[stop],p.address_ja||(p.name_ja!==p.name?p.name_ja:'')].filter(Boolean).join(' · '),url:p.map_search_url});
+ }
+ if(ev.id==='gion_dinner_walk'&&d){const row=DETAILS[d.date].meals.find(r=>r[0]==='晚餐'&&r[1]==='首选');stops.push({name:row[2],sub:row[4],url:mealMap(d,row),meal:true});}
+ if(includeMeal&&first&&first[0]!=='早餐')stops.push({name:first[8]?.pending?'餐饮区域':first[2],sub:first[4],url:mealMap(d,first),meal:true});
+ if(!stops.length)return '';
+ // One map link to where this activity ends; any stops on the way fold into a numbered list.
+ const dest=stops.at(-1),via=stops.slice(0,-1);
+ return external(`导航：<b>${e(dest.name)}</b>`,dest.url,'nav-main'+(dest.meal?' is-meal':''))+(via.length?`<details class="nav-via"><summary>沿途 ${via.length} 站</summary><ol>${stops.map(s=>`<li>${external(`<b>${e(s.name)}</b>${s.sub?`<small lang="ja">${e(s.sub)}</small>`:''}`,s.url,'via-stop')}</li>`).join('')}</ol></details>`:'');
 }
-function placeRow(name,sub,url,meal=false){return external(`<span class="place-dot" aria-hidden="true"></span><span class="place-text"><strong>${e(name)}</strong>${sub?`<small lang="ja">${e(sub)}</small>`:''}</span><span class="place-go">${icon('pin')}导航</span>`,url,'place-row'+(meal?' is-meal':''));}
 // Supplemental station maps belong in travel order, before the destination.
 const NAVIGATION_PATHS={
  demachi_transfer:['hotel_kyoto',['京都站地铁烏丸线','京都駅 地下鉄 烏丸線'],['今出川站','今出川駅'],'demachi'],
@@ -1536,13 +1535,14 @@ function currentChoiceText(d){const c=choice(d),labels=[];
 }
 function dayPage(){const d=PLAN.days[dayIndex],info=dayPresentation(d),[leave,back]=dayTimes(d,dayIndex),isToday=todayIndex()===dayIndex,notes=dayNotes(d),hasPilgrimage=pilgrimageDay(d.date).length>0;return `
  ${dates()}
- <div class="day-top"><header class="day-hero"><button type="button" class="day-hero-photo" data-action="photo-zoom" data-place="${info.cover}" aria-label="查看${e(PLACE[info.cover].name)}照片">${photo(info.cover,'','eager','(max-width:720px) 100vw, 960px')}</button><div class="day-hero-copy"><p class="eyebrow">DAY ${String(dayIndex+1).padStart(2,'0')} · ${dateLabel(d.date)} ${d.weekday}${isToday?' · <em>今天</em>':''}</p><h1>${e(info.short)}</h1><p class="day-hero-route">${e(info.eyebrow)}</p></div></header>
- <div class="day-summary"><div class="day-facts"><div><span>${leave[0]}</span><strong>${e(leave[1])}</strong></div><div>${d.overnight?`<button class="stay-access" data-action="stay-info" data-place="${d.overnight}" aria-label="${dayIndex===0?'入住':'返店'} ${e(compactTime(returnTarget(d)))}，查看${e(PLACE[d.overnight].name)}详情"><span>${back[0]}${icon('bed')}</span><strong>${e(back[1])}</strong>${back[2]?`<small class="fact-note">${e(back[2])}</small>`:''}</button>`:`<span>回程航班</span><strong>${e(flightDeparture('flight_home'))}</strong>`}</div><div><span>强度</span><strong>${intensityMarkup(d)}</strong></div></div>
- <section class="day-brief" aria-label="今日要点"><p class="day-key"><span class="day-key-label">${icon('sparkle')}今日要点</span>${e(info.key)}</p>${notes.length?`<details class="day-notes"><summary>${icon('alert')}<span>情况有变时怎么办</span><small>${notes.length} 条</small></summary><ul>${notes.map(t=>`<li>${e(t)}</li>`).join('')}</ul></details>`:''}</section>${dayView==='timeline'?`<div class="ticket-links">${btn(icon('map')+`当天路线 · ${timedRoute(d).length} 站`,'route-jump','','ticket-link')}${d.overnight?btn(icon('bed')+`今晚住 <span>${e(PLACE[d.overnight].name)}</span>`,'stay-info','','ticket-link'):''}</div>`:''}</div></div>
- <div class="daily-toolbar">${hasPilgrimage?`<nav class="view-tabs" aria-label="当天查看方式">${pageLink(icon('list')+'行程',dayHash(dayIndex),'view-tab'+(dayView==='timeline'?' active':''),dayView==='timeline'?'aria-current="page"':'')}${pageLink(icon('camera')+'巡礼对照',dayHash(dayIndex,'pilgrimage'),'view-tab'+(dayView==='pilgrimage'?' active':''),dayView==='pilgrimage'?'aria-current="page"':'')}</nav>`:`<p class="view-title">${icon('list')}当天行程</p>`}${dayView==='timeline'?`${isToday&&currentEventId(d)?btn(icon('clock')+'现在','jump-now','aria-label="跳到现在进行的活动"','small now-button'):''}<div class="progress-area">${progressMarkup(d)}</div>`:''}</div>
- ${currentChoiceText(d)?`<p class="selected-choice">${icon('tune')}已调整：${e(currentChoiceText(d))}</p>`:''}
- ${dayView==='pilgrimage'?`<div class="day-layout is-single"><div class="day-main">${pilgrimagePage(d)}</div></div>${d.overnight?stayInfo(d.overnight):''}`:`<div class="day-layout"><div class="day-main">${timelinePage(d)}</div><aside class="day-aside" aria-label="当天路线与住宿">${routeOverview(d)}${d.overnight?stayInfo(d.overnight):''}</aside></div>${daySupport(d)}`}
- <nav class="prev-next" aria-label="相邻日期">${dayIndex>0?pageLink(`<small>${icon('back')}前一天</small><strong>${dateLabel(PLAN.days[dayIndex-1].date)} ${e(dayPresentation(PLAN.days[dayIndex-1]).short)}</strong>`,dayHash(dayIndex-1,dayView),'prev'):pageLink(`<small>${icon('back')}返回</small><strong>行程总览</strong>`,'#overview','prev')}${dayIndex<PLAN.days.length-1?pageLink(`<small>后一天${icon('arrow')}</small><strong>${dateLabel(PLAN.days[dayIndex+1].date)} ${e(dayPresentation(PLAN.days[dayIndex+1]).short)}</strong>`,dayHash(dayIndex+1,dayView),'next'):pageLink(`<small>回顾${icon('arrow')}</small><strong>临行待办</strong>`,'#prep','next')}</nav>`;}
+ <header class="day-head"><div class="day-date"><strong>${dateLabel(d.date)}</strong><small>${e(d.weekday)} · DAY ${String(dayIndex+1).padStart(2,'0')}${isToday?' · <em>今天</em>':''}</small></div><div class="day-title"><h1>${e(info.short)}</h1><p>${e(info.eyebrow)}</p></div><button type="button" class="day-cover" data-action="photo-zoom" data-place="${info.cover}" aria-label="查看${e(PLACE[info.cover].name)}照片">${photo(info.cover,'','eager','200px')}</button></header>
+ <div class="day-facts"><div><span>${leave[0]}</span><strong>${e(leave[1])}</strong></div><div>${d.overnight?`<button class="stay-access" data-action="stay-info" data-place="${d.overnight}" aria-label="${dayIndex===0?'入住':'返店'} ${e(compactTime(returnTarget(d)))}，查看${e(PLACE[d.overnight].name)}详情"><span>${back[0]}</span><strong>${e(back[1])}</strong>${back[2]?`<small class="fact-note">${e(back[2])}</small>`:''}</button>`:`<span>回程航班</span><strong>${e(flightDeparture('flight_home'))}</strong>`}</div><div><span>强度</span><strong>${intensityMarkup(d)}</strong></div></div>
+ <section class="day-brief" aria-label="今日要点"><p class="day-key"><span class="day-key-label">今日要点</span>${e(info.key)}</p>${notes.length?`<details class="day-notes"><summary>情况有变时（${notes.length} 条）</summary><ul>${notes.map(t=>`<li>${e(t)}</li>`).join('')}</ul></details>`:''}</section>
+ <div class="day-extras">${dayView==='timeline'?routeOverview(d):''}${d.overnight?stayInfo(d.overnight):''}</div>
+ <div class="daily-toolbar">${hasPilgrimage?`<nav class="view-tabs" aria-label="当天查看方式">${pageLink('行程',dayHash(dayIndex),'view-tab'+(dayView==='timeline'?' active':''),dayView==='timeline'?'aria-current="page"':'')}${pageLink('巡礼对照',dayHash(dayIndex,'pilgrimage'),'view-tab'+(dayView==='pilgrimage'?' active':''),dayView==='pilgrimage'?'aria-current="page"':'')}</nav>`:`<p class="view-title">当天行程</p>`}${dayView==='timeline'?`${isToday&&currentEventId(d)?btn('现在','jump-now','aria-label="跳到现在进行的活动"','small now-button'):''}<div class="progress-area">${progressMarkup(d)}</div>`:''}</div>
+ ${currentChoiceText(d)?`<p class="selected-choice">已调整：${e(currentChoiceText(d))}</p>`:''}
+ <div class="day-layout"><div class="day-main">${dayView==='pilgrimage'?pilgrimagePage(d):timelinePage(d)}</div></div>${dayView==='pilgrimage'?'':daySupport(d)}
+ <nav class="prev-next" aria-label="相邻日期">${dayIndex>0?pageLink(`<small>← 前一天</small><strong>${dateLabel(PLAN.days[dayIndex-1].date)} ${e(dayPresentation(PLAN.days[dayIndex-1]).short)}</strong>`,dayHash(dayIndex-1,dayView),'prev'):pageLink(`<small>← 返回</small><strong>行程总览</strong>`,'#overview','prev')}${dayIndex<PLAN.days.length-1?pageLink(`<small>后一天 →</small><strong>${dateLabel(PLAN.days[dayIndex+1].date)} ${e(dayPresentation(PLAN.days[dayIndex+1]).short)}</strong>`,dayHash(dayIndex+1,dayView),'next'):pageLink(`<small>回顾 →</small><strong>临行待办</strong>`,'#prep','next')}</nav>`;}
 function progressMarkup(d){const flow=DayFlow.forDay(d);return `<span id="progress-text" aria-live="polite">${flow.done===flow.total?'全部完成':'已完成'} <strong>${flow.done}/${flow.total}</strong></span><div class="progress-track" role="progressbar" aria-label="当天活动完成进度" aria-valuemin="0" aria-valuemax="${flow.total}" aria-valuenow="${flow.done}"><span style="width:${flow.done/flow.total*100}%"></span></div>`;}
 function refreshDayProgress(d){const area=document.querySelector('.progress-area');if(area)area.innerHTML=progressMarkup(d);}
 // "Now" only highlights where to read on the travel day; completion is always manual.
@@ -1589,17 +1589,14 @@ function eventCard(d,ev){
  <div class="event-time-col">${ev.time_hint?`<span class="time-hint">${e(ev.time_hint)}</span>`:''}${timeMarkup(ev)}</div>
  <div class="event-content"><div class="event-head"><div class="event-heading"><h3>${e(ev.title)}</h3>${isNow?'<span class="pill now">现在</span>':''}${ev.optional?'<span class="pill gold">可选</span>':''}${statusLabel(ev)}</div><label class="event-check"><input type="checkbox" data-event-check="${ev.id}" ${checked?'checked':''} aria-label="完成：${e(ev.title)}"><span class="check-box" aria-hidden="true">${icon('check')}</span><span class="check-text" aria-hidden="true"></span></label></div>
  ${hotelIds.filter(id=>!ev.title.includes(PLACE[id].name_ja)).map(id=>`<p class="activity-hotel" lang="ja">${icon('bed')}${e(PLACE[id].name_ja)}</p>`).join('')}${(brief??ev.condition)?`<p class="condition">${e(brief??ev.condition)}</p>`:''}${ev.optionNote?`<p class="selection-note">${icon('tune')}${e(ev.optionNote)}</p>`:''}${executionNotice(d,ev)}
- ${imageIds.length?`<div class="event-photos ${imageIds.length===1?'single-photo':''}" style="--photo-columns:${Math.min(imageIds.length,3)}">${imageIds.map(id=>activityPhoto(id,'',isMeal&&PLACE[id].category!=='restaurant'?'用餐周边 · ':'',id!==first?.[7]&&(imageIds.length!==1||PLACE[id].name!==ev.title))).join('')}</div>`:''}
  ${first?`<div class="meal-block"><p class="meal-preview"><span lang="ja">${e(first[2])}</span><small>${e(first[3])}${first[3].includes('菜单')?'':' / 人'}</small></p><p class="meal-conditions">${e(first[4].replace(' · Louie’s N.Y. Pizza Parlor',''))}${mealNotes(first).conditions?` · ${e(mealNotes(first).conditions)}`:''}</p></div>`:''}
  ${ev.id==='kodaiji_night'?`<p class="night-facts">17:00亮灯 · ¥800 / 人 <span>购票待确认</span></p>`:''}
  ${transportDetail(d,ev)}
- ${eventNavigation(ev,d,!!(first&&first[0]!=='早餐'))}
- ${pilgrimageEventLinks(d,ev)}${rallyActions(ev)}
- ${inlineChoices(d,ev)}
- ${moreBody?`<details class="event-more"><summary><span>更多</span><small>${e(moreLabels.join(' · '))}</small></summary><div class="more-body">${moreBody}</div></details>`:''}
+ ${imageIds.length?`<div class="event-photos">${imageIds.map(id=>activityPhoto(id,'',isMeal&&PLACE[id].category!=='restaurant'?'用餐周边 · ':'',id!==first?.[7]&&(imageIds.length!==1||PLACE[id].name!==ev.title))).join('')}</div>`:''}
+ <div class="event-actions">${eventNavigation(ev,d,!!(first&&first[0]!=='早餐'))}${pilgrimageEventLinks(d,ev)}${rallyActions(ev)}${inlineChoices(d,ev)}${moreBody?`<details class="event-more"><summary>更多<small>${e(moreLabels.join(' · '))}</small></summary><div class="more-body">${moreBody}</div></details>`:''}</div>
  </div></article>`;
 }
-function inlineChoices(d,ev){const fields=optionalControls(d,ev.id);return fields?`<details class="event-detail inline-choices" data-choice-group="${ev.id}"><summary>${icon('tune')}${ev.id==='gion_rest'?'可调整：夜间安排':ev.id==='usj_lunch'?'可调整：午餐':ev.id==='anime_shopping'?'可调整：日本桥门店与晚间安排':'可调整：加游乐项目'}</summary><div class="detail-body option-fields">${fields}</div></details>`:'';}
+function inlineChoices(d,ev){const fields=optionalControls(d,ev.id);return fields?`<details class="event-detail inline-choices" data-choice-group="${ev.id}"><summary>${ev.id==='gion_rest'?'可调整：夜间安排':ev.id==='usj_lunch'?'可调整：午餐':ev.id==='anime_shopping'?'可调整：门店与晚间':'可调整：加项目'}</summary><div class="detail-body option-fields">${fields}</div></details>`:'';}
 const TRANSPORT_AT_EVENT={
  flight_out:[3],arrival_transfer:[0,1],checkin_kyoto:[2],uji_transfer:[0],uji_pilgrimage:[1],suikan_stamp:[2],uji_return:[3],
  demachi_transfer:[0],kiyomizu_transfer:[1,2],higashiyama_walk:[3],kyoto_night_return:[4],
@@ -1642,11 +1639,11 @@ function mealMap(d,r){if(r[7]&&PLACE[r[7]])return PLACE[r[7]].map_search_url;let
 function foodRow(d,r){return `<article class="food-row"><span class="food-priority">${e(r[0])} · ${e(r[1])}</span><h4 lang="ja">${e(r[2])}</h4>${r[1]!=='首选'&&r[7]&&photoSrc(r[7])?photoButton(r[7],'food-row-photo'):''}<p class="budget">${e(r[3])}${r[3].includes('菜单')?'':' / 人'}</p><p>${e(r[4])}</p><p class="muted">${e(r[5])}</p><div class="food-actions">${r[0]!=='早餐'?external(icon('map')+(r[8]?.pending?'查看餐饮区域':'地图'),mealMap(d,r),'text-link'):''}${r[6]?external('店铺资料 ↗',r[6],'text-link'):''}</div></article>`;}
 
 // A compact index into the itinerary, not a second copy of its execution notes.
-function routeOverview(d){const stops=timedRoute(d),names=stops.map(s=>PLACE[s.id].name).filter((n,i,all)=>n!==all[i-1]),preview=names.length>5?[...names.slice(0,3),'…',names.at(-1)]:names;return `<details class="day-route" id="day-route" ${typeof matchMedia==='function'&&matchMedia('(min-width:1360px)').matches?'open':''}><summary id="route-content">${icon('map')}<span class="route-summary"><strong>当天路线 · ${stops.length} 站</strong><span class="route-preview">${preview.map(e).join(' → ')}</span></span></summary><ol class="route-overview-list">${stops.map(s=>{
+function routeOverview(d){const stops=timedRoute(d),names=stops.map(s=>PLACE[s.id].name).filter((n,i,all)=>n!==all[i-1]),preview=names.length>5?[...names.slice(0,3),'…',names.at(-1)]:names;return `<details class="day-route" id="day-route"><summary id="route-content"><span class="route-summary"><strong>当天路线 · ${stops.length} 站</strong><span class="route-preview">${preview.map(e).join(' → ')}</span></span></summary><ol class="route-overview-list">${stops.map(s=>{
  const p=PLACE[s.id],label=`<span>${e(p.name)}${s.purpose?`<small>${e(s.purpose)}</small>`:''}${s.optional?'<small>可选</small>':''}</span>`;
  return `<li data-route-id="${s.id}">${s.eventId?pageLink(label,`#day/${d.date}/timeline/${s.eventId}`,'route-overview-place'):`<span class="route-overview-place">${label}</span>`}${external(icon('pin')+'<span>地图</span>',p.map_search_url,'route-overview-map')}</li>`;
  }).join('')}</ol></details>`;}
-function daySupport(d){return `<aside class="day-support" id="day-support"><details class="support-card source-disclosure"><summary><span>${icon('book')}资料来源</span></summary><div class="detail-body">${guideSources(d)}</div></details></aside>`;}
+function daySupport(d){return `<aside class="day-support" id="day-support"><details class="support-card source-disclosure"><summary><span>资料来源</span></summary><div class="detail-body">${guideSources(d)}</div></details></aside>`;}
 
 
 function foodIdea(item){const p=PLACE[item.place],showPhoto=photoSrc(item.place)&&!item.hidePhoto;return `<article class="food-idea ${showPhoto?'with-photo':''}">${showPhoto?photoButton(item.place,'food-idea-photo'):''}<div><span class="food-priority">${e(item.label)}</span><h4>${e(item.title)}</h4><p class="food-name" lang="ja">${e(p.name_ja)}</p><p>${e(item.text)}</p><small>${e(item.budget)}</small><div class="food-actions">${external(icon('pin')+'地图',p.map_search_url,'text-link')}${external('店铺资料 ↗',item.source,'text-link')}</div></div></article>`;}
@@ -1702,6 +1699,7 @@ function guideSources(d){
 /* Presentation only. Locked itinerary and selection rules live in app.js. */
 const BLOG_HOME='../';
 Object.assign(icons,{
+ contrast:'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17Z" fill="currentColor"/>',
  calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18m-13 4h4m3 0h4"/>',
  list:'<path d="M9 5h12M9 12h12M9 19h12M3 5h1M3 12h1M3 19h1"/>',
  tune:'<path d="M4 7h8m4 0h4M4 17h3m4 0h9"/><circle cx="14" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>',
@@ -1899,8 +1897,16 @@ function prepPage(){return `<header class="page-heading"><h1>临行准备</h1><p
  </div></details>`;}
 
 /* ---------- Shell ---------- */
+// Same storage key and attribute as the blog's js/ui/mode.js, so one choice applies to the blog and the guide.
+const COLOR_MODE_KEY='user-color-scheme';
+const systemColorMode=()=>typeof matchMedia==='function'&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+function toggleColorMode(){
+ const root=document.documentElement,next=(root.getAttribute('data-user-color-scheme')||systemColorMode())==='dark'?'light':'dark';
+ if(next===systemColorMode())root.removeAttribute('data-user-color-scheme');else root.setAttribute('data-user-color-scheme',next);
+ try{if(next===systemColorMode())localStorage.removeItem(COLOR_MODE_KEY);else localStorage.setItem(COLOR_MODE_KEY,next);}catch{}
+}
 function sidebarDayIndex(){const today=todayIndex();return `<nav class="desktop-day-index" aria-label="旅行日期目录"><p>旅行目录</p>${PLAN.days.map((d,i)=>{const p=progress(d);return pageLink(`<span class="index-date">${dateLabel(d.date)}</span><strong>${e(dayPresentation(d).short)}</strong>${i===today?'<em>今天</em>':p.done===p.total?`<i class="index-done" aria-label="已全部完成">${icon('check')}</i>`:''}`,dayHash(i,dayView),screen==='day'&&i===dayIndex?'active':'',screen==='day'&&i===dayIndex?'aria-current="date"':'');}).join('')}</nav>`;}
-function render(){renderedHash=location.hash;const current=screen==='day'?'day':screen,today=todayIndex(),dayTarget=screen==='day'?dayIndex:today>=0?today:dayIndex;$('#app').innerHTML=`<div class="blog-backdrop" aria-hidden="true"><img src="${BLOG_BACKGROUND}" alt="" width="2000" height="1125"></div>${!storageOK?'<div class="storage-warning" role="alert">浏览器未允许本机保存，关闭后进度可能丢失。</div>':''}<header class="site-header"><div class="header-inner"><a class="brand" href="${BLOG_HOME}" aria-label="返回まひろ的小站"><strong>まひろ的小站</strong><small>${icon('back')}返回博客</small></a><a class="sidebar-trip-title" href="#overview" data-nav>关西秋日手帖<small>2026 · 11.30 — 12.07</small></a><nav class="main-nav" aria-label="主导航">${[['overview','总览','home'],['day','每日','calendar'],['prep','准备','bag']].map(([id,label,ico])=>pageLink(icon(ico)+`<span>${label}</span>`,id==='day'?dayHash(dayTarget,screen==='day'?dayView:'timeline'):'#'+id,current===id?'active':'',current===id?'aria-current="page"':'')).join('')}</nav>${sidebarDayIndex()}</div></header><main class="${screen==='day'?'daily-page view-'+dayView:'page-'+screen}" id="main">${screen==='overview'?overview():screen==='prep'?prepPage():dayPage()}</main><footer class="foot"><span><a href="${BLOG_HOME}">まひろ的小站</a> · 关西秋日手帖 · 2026</span></footer>`;document.title=screen==='day'?`${dateLabel(PLAN.days[dayIndex].date)} ${dayPresentation(PLAN.days[dayIndex]).short} · 关西秋日手帖`:screen==='prep'?'临行准备 · 关西秋日手帖':'关西秋日手帖 · 2026';}
+function render(){renderedHash=location.hash;const current=screen==='day'?'day':screen,today=todayIndex(),dayTarget=screen==='day'?dayIndex:today>=0?today:dayIndex;$('#app').innerHTML=`${!storageOK?'<div class="storage-warning" role="alert">浏览器未允许本机保存，关闭后进度可能丢失。</div>':''}<header class="site-header"><div class="header-inner"><a class="brand" href="${BLOG_HOME}" aria-label="返回まひろ的小站"><strong>まひろ的小站</strong><small>${icon('back')}返回博客</small></a>${btn(icon('contrast')+'<span>日间 / 夜间</span>','mode-toggle','aria-label="切换日间或夜间模式"','mode-toggle')}<a class="sidebar-trip-title" href="#overview" data-nav>关西秋日手帖<small>2026 · 11.30 — 12.07</small></a><nav class="main-nav" aria-label="主导航">${[['overview','总览','home'],['day','每日','calendar'],['prep','准备','bag']].map(([id,label,ico])=>pageLink(icon(ico)+`<span>${label}</span>`,id==='day'?dayHash(dayTarget,screen==='day'?dayView:'timeline'):'#'+id,current===id?'active':'',current===id?'aria-current="page"':'')).join('')}</nav>${sidebarDayIndex()}</div></header><main class="${screen==='day'?'daily-page view-'+dayView:'page-'+screen}" id="main">${screen==='overview'?overview():screen==='prep'?prepPage():dayPage()}</main><footer class="foot"><span><a href="${BLOG_HOME}">まひろ的小站</a> · 关西秋日手帖 · 2026</span></footer>`;document.title=screen==='day'?`${dateLabel(PLAN.days[dayIndex].date)} ${dayPresentation(PLAN.days[dayIndex]).short} · 关西秋日手帖`:screen==='prep'?'临行准备 · 关西秋日手帖':'关西秋日手帖 · 2026';}
 function refreshDayChecks(d){
  if(screen!=='day'||PLAN.days[dayIndex].date!==d.date)return;
  document.querySelectorAll('[data-event-check]').forEach(input=>{
@@ -1919,6 +1925,7 @@ document.addEventListener('click',ev=>{
  const a=ev.target.closest('a[data-nav]');if(a&&!ev.metaKey&&!ev.ctrlKey&&!ev.shiftKey&&!ev.altKey&&ev.button===0){ev.preventDefault();navigate(a.hash);return;}
  const target=ev.target.closest('[data-action]');if(!target)return;
  if(target.dataset.action==='stay-info'){const info=document.getElementById('stay-info');if(info){info.open=true;info.scrollIntoView({block:'center'});info.querySelector('summary').focus({preventScroll:true});}}
+ else if(target.dataset.action==='mode-toggle')toggleColorMode();
  else if(target.dataset.action==='route-jump'){const route=document.getElementById('day-route');if(route){route.open=true;route.scrollIntoView({block:'start'});route.querySelector('summary').focus({preventScroll:true});}}
  else if(target.dataset.action==='jump-now'){const now=document.querySelector('.event.is-now');if(now){now.scrollIntoView({block:'start'});now.setAttribute('tabindex','-1');now.focus({preventScroll:true});}}
  else if(target.dataset.action==='copy-close')$('#copy-dialog').close();
@@ -1942,5 +1949,5 @@ document.addEventListener('change',ev=>{const input=ev.target,d=PLAN.days[dayInd
 });
 if('scrollRestoration' in history)history.scrollRestoration='manual';
 window.addEventListener('hashchange',()=>{if(location.hash==='#main')return;rememberView();readHash();render();focusPage(true);});
-window.addEventListener('storage',ev=>{if(ev.key===STORAGE_KEY){try{const next=JSON.parse(ev.newValue);if(next?.checks&&next?.todos&&next?.choices){state=next;render();}}catch{}}});
+window.addEventListener('storage',ev=>{if(ev.key===COLOR_MODE_KEY){if(ev.newValue)document.documentElement.setAttribute('data-user-color-scheme',ev.newValue);else document.documentElement.removeAttribute('data-user-color-scheme');return;}if(ev.key===STORAGE_KEY){try{const next=JSON.parse(ev.newValue);if(next?.checks&&next?.todos&&next?.choices){state=next;render();}}catch{}}});
 readHash();render();focusPage();

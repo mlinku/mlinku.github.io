@@ -1,6 +1,7 @@
 /* Presentation only. Locked itinerary and selection rules live in app.js. */
 const BLOG_HOME='https://mlinku.github.io/';
 Object.assign(icons,{
+ contrast:'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17Z" fill="currentColor"/>',
  calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18m-13 4h4m3 0h4"/>',
  list:'<path d="M9 5h12M9 12h12M9 19h12M3 5h1M3 12h1M3 19h1"/>',
  tune:'<path d="M4 7h8m4 0h4M4 17h3m4 0h9"/><circle cx="14" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>',
@@ -198,8 +199,16 @@ function prepPage(){return `<header class="page-heading"><h1>临行准备</h1><p
  </div></details>`;}
 
 /* ---------- Shell ---------- */
+// Same storage key and attribute as the blog's js/ui/mode.js, so one choice applies to the blog and the guide.
+const COLOR_MODE_KEY='user-color-scheme';
+const systemColorMode=()=>typeof matchMedia==='function'&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+function toggleColorMode(){
+ const root=document.documentElement,next=(root.getAttribute('data-user-color-scheme')||systemColorMode())==='dark'?'light':'dark';
+ if(next===systemColorMode())root.removeAttribute('data-user-color-scheme');else root.setAttribute('data-user-color-scheme',next);
+ try{if(next===systemColorMode())localStorage.removeItem(COLOR_MODE_KEY);else localStorage.setItem(COLOR_MODE_KEY,next);}catch{}
+}
 function sidebarDayIndex(){const today=todayIndex();return `<nav class="desktop-day-index" aria-label="旅行日期目录"><p>旅行目录</p>${PLAN.days.map((d,i)=>{const p=progress(d);return pageLink(`<span class="index-date">${dateLabel(d.date)}</span><strong>${e(dayPresentation(d).short)}</strong>${i===today?'<em>今天</em>':p.done===p.total?`<i class="index-done" aria-label="已全部完成">${icon('check')}</i>`:''}`,dayHash(i,dayView),screen==='day'&&i===dayIndex?'active':'',screen==='day'&&i===dayIndex?'aria-current="date"':'');}).join('')}</nav>`;}
-function render(){renderedHash=location.hash;const current=screen==='day'?'day':screen,today=todayIndex(),dayTarget=screen==='day'?dayIndex:today>=0?today:dayIndex;$('#app').innerHTML=`<div class="blog-backdrop" aria-hidden="true"><img src="${BLOG_BACKGROUND}" alt="" width="2000" height="1125"></div>${!storageOK?'<div class="storage-warning" role="alert">浏览器未允许本机保存，关闭后进度可能丢失。</div>':''}<header class="site-header"><div class="header-inner"><a class="brand" href="${BLOG_HOME}" aria-label="返回まひろ的小站"><strong>まひろ的小站</strong><small>${icon('back')}返回博客</small></a><a class="sidebar-trip-title" href="#overview" data-nav>关西秋日手帖<small>2026 · 11.30 — 12.07</small></a><nav class="main-nav" aria-label="主导航">${[['overview','总览','home'],['day','每日','calendar'],['prep','准备','bag']].map(([id,label,ico])=>pageLink(icon(ico)+`<span>${label}</span>`,id==='day'?dayHash(dayTarget,screen==='day'?dayView:'timeline'):'#'+id,current===id?'active':'',current===id?'aria-current="page"':'')).join('')}</nav>${sidebarDayIndex()}</div></header><main class="${screen==='day'?'daily-page view-'+dayView:'page-'+screen}" id="main">${screen==='overview'?overview():screen==='prep'?prepPage():dayPage()}</main><footer class="foot"><span><a href="${BLOG_HOME}">まひろ的小站</a> · 关西秋日手帖 · 2026</span></footer>`;document.title=screen==='day'?`${dateLabel(PLAN.days[dayIndex].date)} ${dayPresentation(PLAN.days[dayIndex]).short} · 关西秋日手帖`:screen==='prep'?'临行准备 · 关西秋日手帖':'关西秋日手帖 · 2026';}
+function render(){renderedHash=location.hash;const current=screen==='day'?'day':screen,today=todayIndex(),dayTarget=screen==='day'?dayIndex:today>=0?today:dayIndex;$('#app').innerHTML=`${!storageOK?'<div class="storage-warning" role="alert">浏览器未允许本机保存，关闭后进度可能丢失。</div>':''}<header class="site-header"><div class="header-inner"><a class="brand" href="${BLOG_HOME}" aria-label="返回まひろ的小站"><strong>まひろ的小站</strong><small>${icon('back')}返回博客</small></a>${btn(icon('contrast')+'<span>日间 / 夜间</span>','mode-toggle','aria-label="切换日间或夜间模式"','mode-toggle')}<a class="sidebar-trip-title" href="#overview" data-nav>关西秋日手帖<small>2026 · 11.30 — 12.07</small></a><nav class="main-nav" aria-label="主导航">${[['overview','总览','home'],['day','每日','calendar'],['prep','准备','bag']].map(([id,label,ico])=>pageLink(icon(ico)+`<span>${label}</span>`,id==='day'?dayHash(dayTarget,screen==='day'?dayView:'timeline'):'#'+id,current===id?'active':'',current===id?'aria-current="page"':'')).join('')}</nav>${sidebarDayIndex()}</div></header><main class="${screen==='day'?'daily-page view-'+dayView:'page-'+screen}" id="main">${screen==='overview'?overview():screen==='prep'?prepPage():dayPage()}</main><footer class="foot"><span><a href="${BLOG_HOME}">まひろ的小站</a> · 关西秋日手帖 · 2026</span></footer>`;document.title=screen==='day'?`${dateLabel(PLAN.days[dayIndex].date)} ${dayPresentation(PLAN.days[dayIndex]).short} · 关西秋日手帖`:screen==='prep'?'临行准备 · 关西秋日手帖':'关西秋日手帖 · 2026';}
 function refreshDayChecks(d){
  if(screen!=='day'||PLAN.days[dayIndex].date!==d.date)return;
  document.querySelectorAll('[data-event-check]').forEach(input=>{
@@ -218,6 +227,7 @@ document.addEventListener('click',ev=>{
  const a=ev.target.closest('a[data-nav]');if(a&&!ev.metaKey&&!ev.ctrlKey&&!ev.shiftKey&&!ev.altKey&&ev.button===0){ev.preventDefault();navigate(a.hash);return;}
  const target=ev.target.closest('[data-action]');if(!target)return;
  if(target.dataset.action==='stay-info'){const info=document.getElementById('stay-info');if(info){info.open=true;info.scrollIntoView({block:'center'});info.querySelector('summary').focus({preventScroll:true});}}
+ else if(target.dataset.action==='mode-toggle')toggleColorMode();
  else if(target.dataset.action==='route-jump'){const route=document.getElementById('day-route');if(route){route.open=true;route.scrollIntoView({block:'start'});route.querySelector('summary').focus({preventScroll:true});}}
  else if(target.dataset.action==='jump-now'){const now=document.querySelector('.event.is-now');if(now){now.scrollIntoView({block:'start'});now.setAttribute('tabindex','-1');now.focus({preventScroll:true});}}
  else if(target.dataset.action==='copy-close')$('#copy-dialog').close();
@@ -241,5 +251,5 @@ document.addEventListener('change',ev=>{const input=ev.target,d=PLAN.days[dayInd
 });
 if('scrollRestoration' in history)history.scrollRestoration='manual';
 window.addEventListener('hashchange',()=>{if(location.hash==='#main')return;rememberView();readHash();render();focusPage(true);});
-window.addEventListener('storage',ev=>{if(ev.key===STORAGE_KEY){try{const next=JSON.parse(ev.newValue);if(next?.checks&&next?.todos&&next?.choices){state=next;render();}}catch{}}});
+window.addEventListener('storage',ev=>{if(ev.key===COLOR_MODE_KEY){if(ev.newValue)document.documentElement.setAttribute('data-user-color-scheme',ev.newValue);else document.documentElement.removeAttribute('data-user-color-scheme');return;}if(ev.key===STORAGE_KEY){try{const next=JSON.parse(ev.newValue);if(next?.checks&&next?.todos&&next?.choices){state=next;render();}}catch{}}});
 readHash();render();focusPage();
