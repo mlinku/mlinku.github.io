@@ -144,7 +144,7 @@ const GLOSSARY=[
 ];
 function dayCard(d,i){
  const info=dayPresentation(d),p=progress(d),today=todayIndex()===i,[leave,back]=dayTimes(d,i);
- return pageLink(`<span class="day-row-date"><strong>${dateLabel(d.date)}</strong><small>${e(d.weekday)}${today?' · 今天':''}</small></span><span class="day-row-thumb">${photo(info.cover,'','lazy','120px')}</span><span class="day-row-main"><strong>${e(info.short)}</strong><small>${e(info.summary)}</small></span><span class="day-row-times"><span><small>${leave[0]}</small>${e(leave[1])}</span><span><small>${back[0]}</small>${e(back[1].split(/[，；]/)[0])}</span></span><span class="day-row-meta">${intensityMarkup(d)}${p.done?`<small class="card-progress${p.done===p.total?' complete':''}">${p.done===p.total?'全部完成':`已完成 ${p.done}/${p.total}`}</small>`:''}</span>${icon('chevron')}`,dayHash(i),'day-card'+(today?' is-today':''));
+ return pageLink(`<span class="day-row-date"><strong>${dateLabel(d.date)}</strong><small>${today?'今天':e(d.weekday)}</small></span><span class="day-row-thumb">${photo(info.cover,'','lazy','120px')}</span><span class="day-row-main"><strong>${e(info.short)}</strong><small>${e(info.summary)}</small></span><span class="day-row-times"><span><small>${leave[0]}</small>${e(leave[1])}</span><span><small>${back[0]}</small>${e(back[1].split(/[，；]/)[0])}</span></span><span class="day-row-meta">${intensityMarkup(d)}${p.done?`<small class="card-progress${p.done===p.total?' complete':''}">${p.done===p.total?'全部完成':`已完成 ${p.done}/${p.total}`}</small>`:''}</span>${icon('chevron')}`,dayHash(i),'day-card'+(today?' is-today':''));
 }
 function overview(){return `
  <header class="overview-hero">

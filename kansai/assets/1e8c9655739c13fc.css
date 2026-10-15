@@ -123,7 +123,7 @@ details>summary::-webkit-details-marker {display:none}
 .btn.small {min-height:34px; padding:4px 12px; font-size:var(--fs-xs)}
 .btn .icon {width:16px; height:16px}
 .icon-button {min-width:38px; min-height:38px; padding:6px}
-.text-link {display:inline-flex; align-items:center; gap:5px; font-size:var(--fs-sm)}
+.text-link {display:inline-flex; align-items:center; gap:5px; font-size:var(--fs-sm); white-space:nowrap}
 .text-link .icon {width:16px; height:16px}
 .text-button {display:inline-flex; align-items:center; gap:5px; color:var(--link); font-size:var(--fs-sm)}
 .pill {display:inline-flex; align-items:center; font-size:12px; line-height:1.7; padding:0 8px; border-radius:20px; font-weight:600; white-space:nowrap}
@@ -148,6 +148,7 @@ details>summary::-webkit-details-marker {display:none}
 .place-info+.place-info {margin-top:10px}
 .place-location {font-size:var(--fs-xs); color:var(--muted)}
 .food-actions {display:flex; flex-wrap:wrap; gap:4px 16px; margin-top:6px}
+.food-actions .text-link .icon {display:none}
 .food-priority {font-size:var(--fs-xs); color:var(--muted); letter-spacing:.06em}
 .table-scroll {overflow-x:auto}
 .intensity {display:inline-flex; align-items:center; gap:7px; white-space:nowrap}
@@ -246,6 +247,7 @@ details[open]>summary::after {transform:translateY(1px) rotate(-135deg)}
 .day-notes li {list-style:disc; margin-top:4px}
 .day-extras {display:flex; flex-wrap:wrap; align-items:baseline; gap:0 28px; padding:8px 0; border-bottom:1px solid var(--rule)}
 .day-extras>details {min-width:0}
+.day-extras>details[open] {align-self:stretch; width:100%}
 .day-extras>details+details {padding-left:28px; border-left:1px solid var(--rule)}
 .day-extras>details[open] {flex-basis:100%; padding:0 0 8px; border-left:0}
 .day-extras>details[open]+details {padding-left:0; border-left:0}
@@ -314,6 +316,8 @@ details[open]>summary::after {transform:translateY(1px) rotate(-135deg)}
 .row-toggle:hover .row-title {color:var(--link)}
 .row-title::after {content:''; display:inline-block; width:5px; height:5px; margin:0 0 3px 8px; border-right:1.5px solid var(--muted); border-bottom:1.5px solid var(--muted); transform:rotate(45deg)}
 .event.expanded .row-title::after {transform:rotate(-135deg); margin-bottom:0}
+.row-when {font-size:var(--fs-xs); font-weight:400; color:var(--muted)}
+.event-when {font-size:var(--fs-xs); color:var(--muted); font-variant-numeric:tabular-nums; display:flex; flex-wrap:wrap; align-items:center; gap:4px 10px}
 .row-warn {font-size:var(--fs-xs); color:var(--warn); font-weight:600}
 .row-nav {flex-shrink:0; display:grid; place-items:center; width:36px; height:36px; border-radius:50%; color:var(--muted)}
 .row-nav .icon {width:18px; height:18px}
@@ -651,7 +655,7 @@ noscript p {padding:40px; text-align:center}
   .day-extras {flex-direction:column; gap:2px}
   .event.major .event-body {padding-left:0}
   .event.major {margin:0 -8px; padding-left:8px; padding-right:8px}
-  .event-photos>.photo-button, .event-photos>.shop-photo {width:calc(33.33% - 6px)}
+  .event-photos>.photo-button, .event-photos>.shop-photo {width:calc(50% - 4px)}
   .food-idea.with-photo {grid-template-columns:minmax(0,1fr)}
   .ticket-list {grid-template-columns:minmax(0,1fr)}
   .flight-grid, .prep-hotels, .prep-reference .detail-body {grid-template-columns:minmax(0,1fr)}
