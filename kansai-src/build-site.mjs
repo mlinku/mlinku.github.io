@@ -4,7 +4,7 @@ import os from 'node:os';
 import crypto from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 
-export const STYLE_FILES=['style.css','pilgrimage.css','journey.css','blog-theme.css','layout.css'];
+export const STYLE_FILES=['site.css'];
 export const SCRIPT_FILES=['details.js','app.js','day-flow.js','pilgrimage.js','execution.js','daily.js','interface.js'];
 const json=value=>JSON.stringify(value).replace(/</g,'\\u003c');
 
@@ -21,7 +21,7 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false}){
  fs.mkdirSync(outputDir,{recursive:true});
  const assetDir=path.join(outputDir,'assets');
  if(!offline)fs.mkdirSync(assetDir,{recursive:true});
- const published=new Map(),jobs=[];
+ const published=new Map(),jobs=[],used=new Set();
  function media(local,preview=false){
   const source=path.resolve(sourceDir,local);
   if(!source.startsWith(path.resolve(sourceDir)+path.sep))throw Error('Media must be inside source: '+local);
@@ -31,11 +31,11 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false}){
   const mime=ext==='.png'?'image/png':ext==='.webp'?'image/webp':'image/jpeg';
   if(offline){const result={src:`data:${mime};base64,${bytes.toString('base64')}`};published.set(source,result);return result;}
   const hash=crypto.createHash('sha256').update(bytes).digest('hex').slice(0,16);
-  const name=hash+ext,full=path.join(assetDir,name);
+  const name=hash+ext,full=path.join(assetDir,name);used.add(name);
   if(!fs.existsSync(full))fs.copyFileSync(source,full);
   const result={src:'assets/'+name};
   if(preview){
-   const previewName=hash+'-640q82.jpg';
+   const previewName=hash+'-640q82.jpg';used.add(previewName);
    result.thumbnail='assets/'+previewName;
    jobs.push({input:source,output:path.join(assetDir,previewName),result});
   }
@@ -66,11 +66,14 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false}){
  const script=data+'\n'+app;
  function resource(content,extension){
   const name=crypto.createHash('sha256').update(content).digest('hex').slice(0,16)+'.'+extension;
-  fs.writeFileSync(path.join(assetDir,name),content);return 'assets/'+name;
+  fs.writeFileSync(path.join(assetDir,name),content);used.add(name);return 'assets/'+name;
  }
  const styleTag=offline?`<style>${css}</style>`:`<link rel="stylesheet" href="${resource(css,'css')}">`;
  const scriptTag=offline?`<script>${script}</script>`:`<script defer src="${resource(script,'js')}"></script>`;
  const html=`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#293246"><meta name="description" content="2026关西旅行：8天行程、路线定位、餐饮与动漫巡礼对照。"><title>关西秋日手帖 · 2026</title><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23a3422d'/%3E%3Ctext x='20' y='28' text-anchor='middle' fill='%23fff8ec' font-size='26'%3E旅%3C/text%3E%3C/svg%3E">${styleTag}</head><body><a class="skip" href="#main">跳到主要内容</a><div id="app"></div><div id="toast" role="status" aria-live="polite"></div><noscript><p>请启用JavaScript查看行程。</p></noscript>${scriptTag}</body></html>`;
  fs.writeFileSync(path.join(outputDir,'index.html'),html);
- return {mode:offline?'offline':'web',file:path.join(outputDir,'index.html'),days:plan.days.length,events:plan.days.reduce((n,d)=>n+d.timeline.length,0),photos:Object.keys(photos).length,htmlBytes:Buffer.byteLength(html),scriptBytes:Buffer.byteLength(script),cssBytes:Buffer.byteLength(css),mediaFiles:published.size};
+ // Hashed files from earlier builds are never referenced again; keep the published folder to the current set.
+ let removed=0;
+ if(!offline)for(const file of fs.readdirSync(assetDir))if(!used.has(file)){fs.unlinkSync(path.join(assetDir,file));removed++;}
+ return {mode:offline?'offline':'web',file:path.join(outputDir,'index.html'),days:plan.days.length,events:plan.days.reduce((n,d)=>n+d.timeline.length,0),photos:Object.keys(photos).length,htmlBytes:Buffer.byteLength(html),scriptBytes:Buffer.byteLength(script),cssBytes:Buffer.byteLength(css),mediaFiles:published.size,staleAssetsRemoved:removed};
 }
