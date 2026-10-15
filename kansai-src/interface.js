@@ -152,8 +152,10 @@ function overview(){return `
   <div class="hero-photos">${[['byodoin','宇治 · 平等院'],['inari','京都 · 伏见稻荷'],['dotonbori','大阪 · 道顿堀']].map(([id,label],i)=>photoSrc(id)?`<figure>${photo(id,'',i?'lazy':'eager','(max-width:720px) 50vw, 420px')}<figcaption>${label}</figcaption></figure>`:'').join('')}</div>
  </header>
  ${tripStatusCard()}
- <section id="how-to" class="how-to" aria-labelledby="how-to-title"><div class="section-title"><h2 id="how-to-title">怎么用这份手帖</h2></div><ol class="how-to-steps">${HOW_TO.map(([ico,title,text])=>`<li><span class="how-to-icon">${icon(ico)}</span><div><strong>${title}</strong><p>${text}</p></div></li>`).join('')}</ol>
-  <details class="glossary"><summary>${icon('book')}看不懂的词？术语说明</summary><dl>${GLOSSARY.map(([t,d])=>`<div><dt>${t}</dt><dd>${d}</dd></div>`).join('')}</dl></details>
+ <section id="how-to" class="how-to" aria-labelledby="how-to-title"><div class="section-title"><h2 id="how-to-title">怎么用这份手帖</h2></div>${(()=>{const guide=`<ol class="how-to-steps">${HOW_TO.map(([ico,title,text])=>`<li><span class="how-to-icon">${icon(ico)}</span><div><strong>${title}</strong><p>${text}</p></div></li>`).join('')}</ol>
+  <details class="glossary"><summary>${icon('book')}看不懂的词？术语说明</summary><dl>${GLOSSARY.map(([t,d])=>`<div><dt>${t}</dt><dd>${d}</dd></div>`).join('')}</dl></details>`;
+  // First-time guidance stays open before departure and folds to one line once the trip has started.
+  return tripStatus().phase==='before'?guide:`<details class="how-to-fold"><summary>${icon('book')}怎么用这份手帖 · 术语说明</summary>${guide}</details>`;})()}
  </section>
  <section id="day-cards"><div class="section-title"><h2>8 天行程</h2></div><div class="day-grid">${PLAN.days.map(dayCard).join('')}</div></section>
  <section id="trip-map" class="trip-map-section"><div class="section-title"><h2>城市之间怎么走</h2></div><div class="map-layout"><a class="google-map-preview" href="${KANSAI_MAP_URL}" target="_blank" rel="noopener noreferrer" aria-label="打开关西区域的交互式 Google 地图"><img src="${REGION_MAP_IMAGE}" alt="Google 关西区域地图，展示京都、宇治、大阪、奈良、神户的真实位置" width="400" height="300" loading="lazy"><span>关西全图<em>打开 Google 地图 ↗</em></span></a><ol class="trip-connections">${[['11/30','关西机场 → 京都','HARUKA 特急，班次按入境进度选'],['12/1','京都 ⇄ 宇治','JR 奈良线往返'],['12/3','京都 → 大阪','先回京都酒店取行李'],['12/5','大阪 → 奈良 → 大阪','大阪城后经鹤桥乘近铁往返奈良'],['12/6','大阪 ⇄ 神户','生田、北野、三宫与神户大桥'],['12/7','大阪 → 关西机场','南海空港急行，清晨出发']].map(([date,path,note])=>`<li><span>${date}</span><p><strong>${path}</strong>${note?`<small>${note}</small>`:''}</p></li>`).join('')}</ol></div></section>
@@ -205,7 +207,7 @@ function refreshDayChecks(d){
  if(screen!=='day'||PLAN.days[dayIndex].date!==d.date)return;
  document.querySelectorAll('[data-event-check]').forEach(input=>{
   const status=activityState(d.date,input.dataset.eventCheck),checked=status==='done';
-  input.checked=checked;input.closest('.event').classList.toggle('done',checked);
+  input.checked=checked;input.closest('.event').classList.toggle('done',checked);if(!checked)input.closest('.event').classList.remove('expanded');
  });
  refreshDayProgress(d);
  pilgrimageDay(d.date).forEach(refreshShotCompletion);
@@ -214,9 +216,12 @@ function setCheck(date,id,checked){const d=PLAN.days.find(x=>x.date===date);if(!
 document.addEventListener('pointerdown',()=>{keyboardNavigation=false;document.querySelectorAll('.keyboard-focus').forEach(el=>el.classList.remove('keyboard-focus'));});
 document.addEventListener('keydown',ev=>{if(['Tab','Enter',' ','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(ev.key))keyboardNavigation=true;});
 document.addEventListener('click',ev=>{
+ // A finished activity folds to its title; tapping the title opens it again.
+ const doneTitle=ev.target.closest('.event.done .event-heading h3');if(doneTitle){doneTitle.closest('.event').classList.toggle('expanded');return;}
  const a=ev.target.closest('a[data-nav]');if(a&&!ev.metaKey&&!ev.ctrlKey&&!ev.shiftKey&&!ev.altKey&&ev.button===0){ev.preventDefault();navigate(a.hash);return;}
  const target=ev.target.closest('[data-action]');if(!target)return;
  if(target.dataset.action==='stay-info'){const info=document.getElementById('stay-info');if(info){info.open=true;info.scrollIntoView({block:'center'});info.querySelector('summary').focus({preventScroll:true});}}
+ else if(target.dataset.action==='route-jump'){const route=document.getElementById('day-route');if(route){route.open=true;route.scrollIntoView({block:'start'});route.querySelector('summary').focus({preventScroll:true});}}
  else if(target.dataset.action==='jump-now'){const now=document.querySelector('.event.is-now');if(now){now.scrollIntoView({block:'start'});now.setAttribute('tabindex','-1');now.focus({preventScroll:true});}}
  else if(target.dataset.action==='copy-close')$('#copy-dialog').close();
  else if(target.dataset.action==='copy')copyText(target.dataset.copy);

@@ -8,15 +8,16 @@ function eventNavigation(ev,d,includeMeal=false){
  const first=d?mealRows(d,ev).find(row=>row[1]==='首选'):null;
  const hasMealMap=includeMeal||(first&&first[0]!=='早餐');
  const stops=NAVIGATION_PATHS[ev.id]||activityPlaceIds(ev);
- const links=stops.filter(stop=>!hasMealMap||stop!==first?.[7]).map(stop=>{
-  if(Array.isArray(stop))return placeRow(stop[0],stop[1],mapURL(stop[1]));
-  const p=PLACE[stop];
+ const names=[],links=stops.filter(stop=>!hasMealMap||stop!==first?.[7]).map(stop=>{
+  if(Array.isArray(stop)){names.push(stop[0]);return placeRow(stop[0],stop[1],mapURL(stop[1]));}
+  const p=PLACE[stop];names.push(p.name);
   return placeRow(p.name,[PLACE_LOCATIONS[stop],p.address_ja||(p.name_ja!==p.name?p.name_ja:'')].filter(Boolean).join(' · '),p.map_search_url);
  });
- if(ev.id==='gion_dinner_walk'&&d){const row=DETAILS[d.date].meals.find(r=>r[0]==='晚餐'&&r[1]==='首选');links.push(placeRow(row[2],row[4],mealMap(d,row),true));}
- if(includeMeal&&first&&first[0]!=='早餐')links.push(placeRow(first[8]?.pending?'餐饮区域':first[2],first[4],mealMap(d,first),true));
+ if(ev.id==='gion_dinner_walk'&&d){const row=DETAILS[d.date].meals.find(r=>r[0]==='晚餐'&&r[1]==='首选');names.push(row[2]);links.push(placeRow(row[2],row[4],mealMap(d,row),true));}
+ if(includeMeal&&first&&first[0]!=='早餐'){names.push(first[2]);links.push(placeRow(first[8]?.pending?'餐饮区域':first[2],first[4],mealMap(d,first),true));}
  if(!links.length)return '';
- // One full-width row per place: name and address on the left, the whole row opens the map.
+ // One full-width row per place. Three or more stops show only the destination; the stops on the way fold above it.
+ if(links.length>=3)return `<div class="activity-navigation place-list is-route is-folded" aria-label="沿途各站地图"><details class="place-via"><summary><span class="place-dot" aria-hidden="true"></span><span class="place-text"><strong>沿途 ${links.length-1} 站</strong><small>${e(names.slice(0,-1).join(' → '))}</small></span></summary>${links.slice(0,-1).join('')}</details>${links.at(-1)}</div>`;
  return `<div class="activity-navigation place-list${links.length>1?' is-route':''}" aria-label="${links.length>1?'沿途各站地图':'地图'}">${links.join('')}</div>`;
 }
 function placeRow(name,sub,url,meal=false){return external(`<span class="place-dot" aria-hidden="true"></span><span class="place-text"><strong>${e(name)}</strong>${sub?`<small lang="ja">${e(sub)}</small>`:''}</span><span class="place-go">${icon('pin')}导航</span>`,url,'place-row'+(meal?' is-meal':''));}
