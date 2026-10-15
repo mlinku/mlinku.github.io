@@ -63,7 +63,7 @@ function currentEventId(d){
  return current;
 }
 let nowEventId=null;
-function timelinePage(d){const flow=DayFlow.forDay(d);nowEventId=currentEventId(d);return `<div class="timeline">${flow.sections.map(section=>{const [label,...rest]=section.name.split(' · ');return `<section class="timeline-phase" id="${section.id}"><div class="phase-heading"><h2>${e(label)}</h2>${rest.length?`<p>${e(rest.join(' · '))}</p>`:''}</div>${section.events.map(ev=>eventCard(d,ev)).join('')}</section>`;}).join('')}</div>`;}
+function timelinePage(d){const flow=DayFlow.forDay(d);nowEventId=currentEventId(d);return `<div class="timeline">${flow.sections.map(section=>{const [label,...rest]=section.name.split(' · ');const clocks=section.events.flatMap(ev=>[...compactTime(ev.time_label).matchAll(/\d{1,2}:\d{2}/g)].map(m=>m[0])),range=clocks.length?clocks[0]+(clocks.length>1?'–'+clocks.at(-1):''):'';return `<section class="timeline-phase" id="${section.id}"><div class="phase-heading"><h2>${e(label)}</h2>${rest.length?`<p>${e(rest.join(' · '))}</p>`:''}${range?`<span class="phase-range">${range}</span>`:''}</div>${section.events.map(ev=>eventCard(d,ev)).join('')}</section>`;}).join('')}</div>`;}
 
 // Ordinary identification photos belong to the first eligible activity, not transit.
 // Distinct entrance assets remain distinct place IDs; pilgrimage comparisons are independent.
@@ -123,8 +123,7 @@ function eventCard(d,ev){
  return `<article id="event-${ev.id}" class="event ${major?'major':'minor'} cat-${ev.category} ${checked?'done':''} ${ev.optional?'optional':''} ${isNow?'is-now':''}" data-event="${ev.id}">
  <div class="event-time-col" title="${e(compactTime(ev.time_label))}">${ev.time_hint?`<span class="time-hint">${e(ev.time_hint)}</span>`:''}${timeMarkup(ev,!major)}</div>
  <div class="event-content">${head}
- <div class="event-body${imageIds.length?' has-figure':''}"><div class="event-text">${text}</div>${imageIds.length?`<div class="event-figure">${photoFor(imageIds[0])}</div>`:''}</div>
- <div class="event-actions">${eventNavigation(ev,d,!!(first&&first[0]!=='早餐'))}${pilgrimageEventLinks(d,ev)}${rallyActions(ev)}${inlineChoices(d,ev)}${moreBody?`<details class="event-more"><summary>更多<small>${e(moreLabels.join(' · '))}</small></summary><div class="more-body">${moreBody}</div></details>`:''}</div>
+ <div class="event-body${imageIds.length?' has-figure':''}"><div class="event-text">${text}<div class="event-actions">${eventNavigation(ev,d,!!(first&&first[0]!=='早餐'))}${pilgrimageEventLinks(d,ev)}${rallyActions(ev)}${inlineChoices(d,ev)}${moreBody?`<details class="event-more"><summary>更多<small>${e(moreLabels.join(' · '))}</small></summary><div class="more-body">${moreBody}</div></details>`:''}</div></div>${imageIds.length?`<div class="event-figure">${imageIds.length>1?photoFor(imageIds[0]):activityPhoto(imageIds[0],'','',false)}</div>`:''}</div>
  </div></article>`;
 }
 function inlineChoices(d,ev){const fields=optionalControls(d,ev.id);return fields?`<details class="event-detail inline-choices" data-choice-group="${ev.id}"><summary>${ev.id==='gion_rest'?'可调整：夜间安排':ev.id==='usj_lunch'?'可调整：午餐':ev.id==='anime_shopping'?'可调整：门店与晚间':'可调整：加项目'}</summary><div class="detail-body option-fields">${fields}</div></details>`:'';}

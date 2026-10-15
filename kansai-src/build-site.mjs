@@ -28,7 +28,7 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false}){
   if(!fs.existsSync(source))throw Error('Missing media: '+local);
   if(published.has(source))return published.get(source);
   const bytes=fs.readFileSync(source),ext=path.extname(source).toLowerCase();
-  const mime=ext==='.png'?'image/png':ext==='.webp'?'image/webp':'image/jpeg';
+  const mime=ext==='.png'?'image/png':ext==='.webp'?'image/webp':ext==='.woff'?'font/woff':'image/jpeg';
   if(offline){const result={src:`data:${mime};base64,${bytes.toString('base64')}`};published.set(source,result);return result;}
   const hash=crypto.createHash('sha256').update(bytes).digest('hex').slice(0,16);
   const name=hash+ext,full=path.join(assetDir,name);used.add(name);
@@ -59,7 +59,8 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false}){
    for(const p of illustratedPoints)for(const kind of ['real','anime','comparison'])if(p[kind]?.local)Object.assign(p[kind],media(p[kind].local,true));
   }finally{if(fs.existsSync(temp))fs.unlinkSync(temp);}
  }
- const css=STYLE_FILES.map(read).join('\n');
+ // Heading fonts ship with the site: assets/ next to the stylesheet online, data URIs offline.
+ const css=STYLE_FILES.map(read).join('\n').replace(/url\(@font\/([\w-]+\.woff)\)/g,(_,name)=>`url("${offline?media('assets/fonts/'+name).src:media('assets/fonts/'+name).src.replace(/^assets\//,'')}")`);
  let app=SCRIPT_FILES.map(read).join('\n');
  if(!offline)app=app.replace("const BLOG_HOME='https://mlinku.github.io/';","const BLOG_HOME='../';");
  const data=`const DELIVERY_MODE=${json(offline?'offline':'web')};const BLOG_BACKGROUND=${json(background)};const REGION_MAP_IMAGE=${json(mapImage)};const PLAN=${json(plan)};const GUIDES=${json(guides)};const PHOTOS=${json(photos)};const PILGRIMAGE=${json(pilgrimage)};`;

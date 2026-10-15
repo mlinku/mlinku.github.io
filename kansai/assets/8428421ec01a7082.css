@@ -21,7 +21,7 @@
   --danger:#b33d2c;
   --danger-soft:#fbebe8;
   --shadow:0 1px 2px rgba(20,30,50,.05),0 12px 40px rgba(20,30,50,.08);
-  --serif:'Songti SC','Noto Serif SC','Source Han Serif SC','STZhongsong','SimSun',serif;
+  --serif:'Kansai Serif','Songti SC','Noto Serif SC','Source Han Serif SC','STZhongsong','SimSun',serif;
   --sans:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',system-ui,sans-serif;
   --fs-xs:13px; --fs-sm:15px; --fs-md:17px; --fs-lg:20px; --fs-xl:24px;
   --sidebar:248px;
@@ -35,7 +35,7 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-user-color-scheme="light"]) {
-    --desk:#11141b; --paper:#1a1e29; --sunk:#222736; --ink:#eef1f6; --ink-2:#b4bccb; --muted:#7f889b;
+    --desk:#11141b; --paper:#1a1e29; --sunk:#222736; --ink:#eef1f6; --ink-2:#bcc4d2; --muted:#949db0;
     --rule:#2a3040; --rule-2:#3a4256; --link:#8fb6ff; --link-soft:rgba(143,182,255,.12); --on-link:#0f1420;
     --ok:#62cf97; --ok-soft:rgba(98,207,151,.12); --warn:#e9ae5c; --warn-soft:rgba(233,174,92,.11); --danger:#f08c7e; --danger-soft:rgba(240,140,126,.12);
     --shadow:0 12px 40px rgba(0,0,0,.35);
@@ -43,12 +43,15 @@
   }
 }
 :root[data-user-color-scheme="dark"] {
-  --desk:#11141b; --paper:#1a1e29; --sunk:#222736; --ink:#eef1f6; --ink-2:#b4bccb; --muted:#7f889b;
+  --desk:#11141b; --paper:#1a1e29; --sunk:#222736; --ink:#eef1f6; --ink-2:#bcc4d2; --muted:#949db0;
   --rule:#2a3040; --rule-2:#3a4256; --link:#8fb6ff; --link-soft:rgba(143,182,255,.12); --on-link:#0f1420;
   --ok:#62cf97; --ok-soft:rgba(98,207,151,.12); --warn:#e9ae5c; --warn-soft:rgba(233,174,92,.11); --danger:#f08c7e; --danger-soft:rgba(240,140,126,.12);
   --shadow:0 12px 40px rgba(0,0,0,.35);
   color-scheme:dark;
 }
+/* Headings: a 232-character cut of Noto Serif SC (OFL, see kansai-src/assets/fonts/OFL.txt). Other characters fall back per glyph. */
+@font-face {font-family:'Kansai Serif'; src:url("358f4cde8764019b.woff") format('woff'); font-weight:400 799; font-display:swap}
+@font-face {font-family:'Kansai Serif'; src:url("ecdf4dd9d6fa3a04.woff") format('woff'); font-weight:800 900; font-display:swap}
 *, *::before, *::after {box-sizing:border-box}
 html {-webkit-text-size-adjust:100%}
 body {margin:0; background:var(--desk); color:var(--ink); font:var(--fs-md)/1.85 var(--sans); -webkit-font-smoothing:antialiased}
@@ -238,14 +241,17 @@ details[open]>summary::after {transform:translateY(1px) rotate(-135deg)}
 .day-notes>summary {font-size:var(--fs-sm); color:var(--warn)}
 .day-notes ul {margin-top:8px; padding-left:20px; font-size:var(--fs-sm); color:var(--ink-2)}
 .day-notes li {list-style:disc; margin-top:4px}
-.day-extras {display:flex; flex-direction:column}
-.day-extras>details {padding:12px 0; border-bottom:1px solid var(--rule)}
+.day-extras {display:flex; flex-wrap:wrap; align-items:baseline; gap:0 28px; padding:12px 0; border-bottom:1px solid var(--rule)}
+.day-extras>details {min-width:0}
+.day-extras>details+details {padding-left:28px; border-left:1px solid var(--rule)}
+.day-extras>details[open] {flex-basis:100%; padding:0 0 8px; border-left:0}
+.day-extras>details[open]+details {padding-left:0; border-left:0}
 .day-extras>details>summary {font-size:var(--fs-sm); color:var(--ink-2)}
 .day-extras>details>summary strong {color:var(--ink)}
 .route-summary {display:inline-flex; flex-wrap:wrap; align-items:baseline; gap:0 12px; min-width:0}
 .route-summary strong {font-weight:600; font-size:var(--fs-sm)}
 .route-preview {font-size:var(--fs-xs); color:var(--muted)}
-.day-route[open] .route-preview {display:none}
+.day-route[open] .route-preview, .day-extras .route-preview {display:none}
 .route-overview-list {columns:2; column-gap:32px; margin-top:10px; counter-reset:stop}
 .route-overview-list li {display:flex; align-items:baseline; gap:10px; padding:4px 0; break-inside:avoid; counter-increment:stop}
 .route-overview-list li::before {content:counter(stop); min-width:18px; font-size:var(--fs-xs); color:var(--muted); font-variant-numeric:tabular-nums; text-align:right}
@@ -273,10 +279,12 @@ details[open]>summary::after {transform:translateY(1px) rotate(-135deg)}
 .now-button+.progress-area {margin-left:0}
 .selected-choice {margin-top:14px; font-size:var(--fs-sm); color:var(--link)}
 .day-layout {margin-top:8px}
-.timeline-phase {margin-top:36px}
-.phase-heading {display:flex; align-items:baseline; gap:12px; padding-bottom:8px; border-bottom:1px solid var(--rule)}
-.phase-heading h2 {font:900 var(--fs-sm) var(--serif); letter-spacing:.3em; color:var(--muted)}
+#main .timeline-phase {margin-top:0}
+#main .timeline-phase+.timeline-phase {margin-top:28px}
+.phase-heading {display:flex; align-items:baseline; gap:12px; padding:6px 0 8px; border-bottom:1px solid var(--rule-2)}
+.phase-heading h2 {font:900 var(--fs-md) var(--serif); letter-spacing:.24em; color:var(--ink)}
 .phase-heading p {font-size:var(--fs-xs); color:var(--muted)}
+.phase-range {margin-left:auto; font-size:var(--fs-xs); color:var(--muted); font-variant-numeric:tabular-nums; letter-spacing:.04em}
 
 /* Activity row: time on the left, reading column on the right, a rule underneath. */
 .event {display:grid; grid-template-columns:var(--time-col) minmax(0,1fr); gap:24px; padding:20px 0; border-bottom:1px solid var(--rule); scroll-margin-top:calc(var(--sticky-top) + var(--toolbar-h) + 12px)}
@@ -322,8 +330,8 @@ details[open]>summary::after {transform:translateY(1px) rotate(-135deg)}
 /* Major rows carry one photo at a fixed spot on the right; minor rows are a single quiet line. */
 .event-body {display:block}
 .event-body.has-figure {display:grid; grid-template-columns:minmax(0,1fr) 168px; gap:20px; align-items:start}
+.event-body .event-actions {margin-top:2px}
 .event-text {display:flex; flex-direction:column; gap:8px; min-width:0}
-.event-text:empty {display:none}
 .event-figure .photo-button img {aspect-ratio:3/2}
 .event-figure .shop-photo .place-location {display:block; margin-top:2px}
 .event.major {padding:24px 0}
@@ -484,10 +492,13 @@ details[open]>summary::after {transform:translateY(1px) rotate(-135deg)}
 .pilgrimage-intro h2 {font:900 var(--fs-lg) var(--serif); letter-spacing:.1em}
 .shot-progress {white-space:nowrap; font-size:var(--fs-xs); color:var(--ok)}
 .shot-progress strong {font-variant-numeric:tabular-nums; margin-left:4px}
-.pilgrimage-layout {display:grid; grid-template-columns:170px minmax(0,1fr); gap:32px; align-items:start}
-.shot-index {position:sticky; top:calc(var(--sticky-top) + var(--toolbar-h) + 16px); max-height:calc(100dvh - var(--toolbar-h) - 40px); overflow:auto}
-.shot-index>p {font-size:12px; letter-spacing:.18em; color:var(--muted); margin-bottom:4px}
-.scene-index-group>span {display:block; font-size:var(--fs-xs); color:var(--muted); margin:12px 0 2px; letter-spacing:.1em}
+/* One column: the point index sits at the top like the day's route list, not as a second sidebar. */
+.pilgrimage-layout {display:block}
+.shot-index {columns:2; column-gap:40px; padding:0 0 16px; margin-bottom:8px; border-bottom:1px solid var(--rule-2)}
+.shot-index>p {column-span:all; font-size:var(--fs-xs); letter-spacing:.18em; color:var(--muted); margin-bottom:2px}
+.scene-index-group>span, .shot-index a {break-inside:avoid; break-after:avoid-column}
+.shot-index a {break-after:auto}
+.scene-index-group>span {display:block; font-size:var(--fs-xs); color:var(--muted); margin:10px 0 0; letter-spacing:.1em}
 .shot-index a {display:flex; gap:8px; align-items:flex-start; padding:4px 0; font-size:var(--fs-sm); line-height:1.55; color:var(--ink-2)}
 .shot-index a:hover {color:var(--ink); text-decoration:none}
 .shot-index a>span:first-child {color:var(--muted); font-size:12px; padding-top:2px; font-variant-numeric:tabular-nums}
@@ -495,7 +506,7 @@ details[open]>summary::after {transform:translateY(1px) rotate(-135deg)}
 .shot-index a>small {color:var(--ok)}
 .shot-index a[aria-current] {color:var(--link); font-weight:600}
 .shot-index a.complete>span:first-child {color:var(--ok)}
-.shot-index a.index-return {margin-top:10px; padding-top:10px; border-top:1px solid var(--rule); color:var(--link)}
+.shot-index a.index-return {display:none}
 .shot-mobile-jump {display:none}
 .scene-section-heading h3 {font:900 var(--fs-sm) var(--serif); letter-spacing:.3em; color:var(--muted); padding-bottom:8px; border-bottom:1px solid var(--rule)}
 .shot-card {padding:20px 0 28px; border-bottom:1px solid var(--rule); scroll-margin-top:calc(var(--sticky-top) + var(--toolbar-h) + 12px)}
