@@ -31,6 +31,8 @@ function timelinePage(d){const flow=DayFlow.forDay(d);nowEventId=currentEventId(
 // Distinct entrance assets remain distinct place IDs; pilgrimage comparisons are independent.
 function compactEvent(ev){return ev.category==='transport'||(ev.category==='rest'&&ev.place_ids.every(id=>id.startsWith('hotel_')||id==='usj'))||['nakamura_walk','usj_app','usj_finish'].includes(ev.id);}
 function eventPhotoIds(ev){return compactEvent(ev)?[]:ev.place_ids.filter(id=>photoSrc(id)&&(ev.category!=='meal'||PLACE[id].category==='restaurant'));}
+// Long time labels read as stacked lines: departure → arrival, then any "·" note in a quieter size.
+function timeMarkup(ev){const [main,...notes]=compactTime(ev.time_label).split(' · ');return `<span class="event-time">${main.split(' → ').map(part=>`<span>${e(part)}</span>`).join('')}</span>${notes.map(n=>`<span class="time-note">${e(n)}</span>`).join('')}`;}
 const CATEGORY_ICON={transport:'train',flight:'plane',meal:'food',visit:'camera',walk:'walk',rest:'clock',hotel:'bed',activity:'sparkle',shopping:'bag'};
 function eventCard(d,ev){
  const status=activityState(d.date,ev.id),checked=status==='done',isMeal=ev.category==='meal';
@@ -45,13 +47,13 @@ function eventCard(d,ev){
   foodRows.length?mealSupplement(d,ev,foodRows):'',
   activityDetails(d,ev.id),
   foodRows.length?'':foodSuggestions(d,ev.id),
-  placeIds.length&&!compact&&!first?`<details class="event-detail place-facts"><summary>地址</summary><div class="detail-body">${placeIds.map(id=>placeInfo(id,id===first?.[7]||hotelIds.includes(id))).join('')}</div></details>`:''
+  placeIds.some(id=>PLACE_DETAILS[id])?`<details class="event-detail place-facts"><summary>地点说明</summary><div class="detail-body">${placeIds.map(id=>placeInfo(id,id===first?.[7]||hotelIds.includes(id))).join('')}</div></details>`:''
  ].filter(Boolean);
  // Secondary material shares one disclosure per activity, so each card has a single "更多" row.
  const moreHTML=more.join(''),moreLabels=[...new Set([...moreHTML.matchAll(/<summary>([\s\S]*?)<\/summary>/g)].map(m=>m[1].replace(/<[^>]+>/g,'').replace(/^甜品备选 · .*/,'甜品备选')))];
  const moreBody=moreHTML.replace(/<details class="event-detail[^"]*"><summary>([\s\S]*?)<\/summary>/g,'<section class="more-block"><h4>$1</h4>').replace(/<\/details>/g,'</section>');
  return `<article id="event-${ev.id}" class="event cat-${ev.category} ${compact?'compact-event':''} ${checked?'done':''} ${ev.optional?'optional':''} ${isNow?'is-now':''}" data-event="${ev.id}">
- <div class="event-time-col">${ev.time_hint?`<span class="time-hint">${e(ev.time_hint)}</span>`:''}<span class="event-time">${e(compactTime(ev.time_label))}</span></div>
+ <div class="event-time-col">${ev.time_hint?`<span class="time-hint">${e(ev.time_hint)}</span>`:''}${timeMarkup(ev)}</div>
  <div class="event-content"><div class="event-head"><div class="event-heading"><h3>${e(ev.title)}</h3>${isNow?'<span class="pill now">现在</span>':''}${ev.optional?'<span class="pill gold">可选</span>':''}${statusLabel(ev)}</div><label class="event-check"><input type="checkbox" data-event-check="${ev.id}" ${checked?'checked':''} aria-label="完成：${e(ev.title)}"><span class="check-box" aria-hidden="true">${icon('check')}</span><span class="check-text" aria-hidden="true"></span></label></div>
  ${hotelIds.filter(id=>!ev.title.includes(PLACE[id].name_ja)).map(id=>`<p class="activity-hotel" lang="ja">${icon('bed')}${e(PLACE[id].name_ja)}</p>`).join('')}${ev.condition?`<p class="condition">${e(ev.condition)}</p>`:''}${ev.optionNote?`<p class="selection-note">${icon('tune')}${e(ev.optionNote)}</p>`:''}${executionNotice(d,ev)}
  ${imageIds.length?`<div class="event-photos ${imageIds.length===1?'single-photo':''}" style="--photo-columns:${Math.min(imageIds.length,3)}">${imageIds.map(id=>activityPhoto(id,'',isMeal&&PLACE[id].category!=='restaurant'?'用餐周边 · ':'',id!==first?.[7]&&(imageIds.length!==1||PLACE[id].name!==ev.title))).join('')}</div>`:''}

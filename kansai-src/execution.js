@@ -9,15 +9,17 @@ function eventNavigation(ev,d,includeMeal=false){
  const hasMealMap=includeMeal||(first&&first[0]!=='早餐');
  const stops=NAVIGATION_PATHS[ev.id]||activityPlaceIds(ev);
  const links=stops.filter(stop=>!hasMealMap||stop!==first?.[7]).map(stop=>{
-  const [label,url]=Array.isArray(stop)?[stop[0],mapURL(stop[1])]:[PLACE[stop].name,PLACE[stop].map_search_url];
-  return external(e(label),url,'nav-stop');
+  if(Array.isArray(stop))return placeRow(stop[0],stop[1],mapURL(stop[1]));
+  const p=PLACE[stop];
+  return placeRow(p.name,[PLACE_LOCATIONS[stop],p.address_ja||(p.name_ja!==p.name?p.name_ja:'')].filter(Boolean).join(' · '),p.map_search_url);
  });
- if(ev.id==='gion_dinner_walk'&&d){const row=DETAILS[d.date].meals.find(r=>r[0]==='晚餐'&&r[1]==='首选');links.push(external(e(row[2]),mealMap(d,row),'nav-stop is-meal'));}
- if(includeMeal&&first&&first[0]!=='早餐')links.push(external(e(first[8]?.pending?'餐饮区域':first[2]),mealMap(d,first),'nav-stop is-meal'));
+ if(ev.id==='gion_dinner_walk'&&d){const row=DETAILS[d.date].meals.find(r=>r[0]==='晚餐'&&r[1]==='首选');links.push(placeRow(row[2],row[4],mealMap(d,row),true));}
+ if(includeMeal&&first&&first[0]!=='早餐')links.push(placeRow(first[8]?.pending?'餐饮区域':first[2],first[4],mealMap(d,first),true));
  if(!links.length)return '';
- // Several stops read as a route in travel order; each one opens its own map search.
- return `<div class="activity-navigation${links.length>1?' is-chain':''}" aria-label="${links.length>1?'沿途各站地图':'地图'}"><div class="nav-stops">${links.join('<span class="nav-arrow" aria-hidden="true"></span>')}</div></div>`;
+ // One full-width row per place: name and address on the left, the whole row opens the map.
+ return `<div class="activity-navigation place-list${links.length>1?' is-route':''}" aria-label="${links.length>1?'沿途各站地图':'地图'}">${links.join('')}</div>`;
 }
+function placeRow(name,sub,url,meal=false){return external(`<span class="place-dot" aria-hidden="true"></span><span class="place-text"><strong>${e(name)}</strong>${sub?`<small lang="ja">${e(sub)}</small>`:''}</span><span class="place-go">${icon('pin')}导航</span>`,url,'place-row'+(meal?' is-meal':''));}
 // Supplemental station maps belong in travel order, before the destination.
 const NAVIGATION_PATHS={
  demachi_transfer:['hotel_kyoto',['京都站地铁烏丸线','京都駅 地下鉄 烏丸線'],['今出川站','今出川駅'],'demachi'],

@@ -11,8 +11,8 @@
   --line:rgba(205,215,235,.09);
   --line-2:rgba(205,215,235,.17);
   --ink:#eceff5;
-  --ink-2:#b3bccb;
-  --muted:#7d889c;
+  --ink-2:#c8d0dc;
+  --muted:#8e99ad;
   --accent:#4ba3f5;
   --accent-ink:#9ccbff;
   --accent-strong:#0078e7;
@@ -27,17 +27,17 @@
   /* type */
   --display:'Noto Serif SC','Songti SC','STZhongsong','SimSun',serif;
   --body:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',system-ui,sans-serif;
-  --fs-xs:13px; --fs-sm:14px; --fs-md:16px; --fs-lg:18px; --fs-xl:22px; --fs-2xl:28px; --fs-3xl:40px;
+  --fs-xs:14px; --fs-sm:15.5px; --fs-md:17px; --fs-lg:20px; --fs-xl:24px; --fs-2xl:30px; --fs-3xl:42px;
   /* layout */
   --sidebar:248px;
-  --content:1100px;
+  --content:1160px;
   --read:720px;
   --gutter:max(clamp(20px,4vw,56px),calc((100vw - var(--sidebar) - var(--content)) / 2));
   --radius:10px;
   --radius-sm:6px;
   --sticky-top:0px;
   --toolbar-h:58px;
-  --rail:118px;
+  --rail:140px;
   color-scheme:dark;
 }
 *, *::before, *::after {box-sizing:border-box}
@@ -306,34 +306,35 @@ details[open]>summary::after {transform:translateY(-30%) rotate(-135deg)}
 .route-preview {font-size:var(--fs-xs); color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .day-route[open] .route-preview {display:none}
 .route-overview-list {padding:4px 0 16px}
-.route-overview-list li {position:relative; display:flex; align-items:center; gap:12px; padding:5px 0 5px 22px}
+.route-overview-list li {position:relative; display:flex; align-items:center; gap:12px; padding:6px 0 6px 24px}
 .route-overview-list li::before {content:''; position:absolute; left:5px; top:0; bottom:0; width:2px; background:var(--line-2)}
 .route-overview-list li:first-child::before {top:50%}
 .route-overview-list li:last-child::before {bottom:50%}
 .route-overview-list li::after {content:''; position:absolute; left:1px; top:50%; width:10px; height:10px; margin-top:-5px; border-radius:50%; background:var(--panel); border:2px solid var(--accent)}
 .route-overview-place {flex:1; min-width:0; color:var(--ink); font-size:var(--fs-sm); line-height:1.5}
-.route-overview-place small {display:block; font-size:12px; color:var(--muted)}
+.route-overview-place small {display:block; font-size:13px; color:var(--muted)}
 a.route-overview-place:hover {color:var(--accent-ink)}
-.route-overview-map {display:inline-flex; align-items:center; gap:3px; font-size:12px; color:var(--muted); padding:2px 6px; border-radius:4px; flex-shrink:0}
-.route-overview-map:hover {color:var(--accent-ink); background:var(--accent-soft)}
+.route-overview-map {display:inline-flex; align-items:center; justify-content:center; gap:3px; min-width:52px; min-height:32px; font-size:13px; color:var(--accent-ink); padding:4px 10px; border-radius:20px; background:var(--accent-soft); flex-shrink:0}
+.route-overview-map:hover {color:#fff; background:var(--accent-strong)}
 .route-overview-map .icon {width:13px; height:13px}
 .timeline-phase+.timeline-phase {margin-top:44px}
-.phase-heading {display:flex; align-items:baseline; gap:12px; margin:0 0 20px calc(var(--rail) + 36px)}
+.phase-heading {display:flex; align-items:baseline; gap:12px; margin:0 0 20px calc(var(--rail) + 44px)}
 .phase-heading h2 {font-size:var(--fs-xl)}
 .phase-heading p {font-size:var(--fs-sm); color:var(--muted)}
 
 /* Activity: time on the left, a station dot on the rail, open content on the right. */
-.event {position:relative; display:grid; grid-template-columns:var(--rail) minmax(0,1fr); gap:36px; padding-bottom:36px; scroll-margin-top:calc(var(--sticky-top) + var(--toolbar-h) + 16px)}
-.event::before {content:''; position:absolute; left:calc(var(--rail) + 17px); top:12px; bottom:-12px; width:2px; background:var(--line-2)}
+.event {position:relative; display:grid; grid-template-columns:var(--rail) minmax(0,1fr); gap:44px; padding-bottom:36px; scroll-margin-top:calc(var(--sticky-top) + var(--toolbar-h) + 16px)}
+.event::before {content:''; position:absolute; left:calc(var(--rail) + 21px); top:12px; bottom:-12px; width:2px; background:var(--line-2)}
 .timeline-phase .event:last-child::before {display:none}
-.event::after {content:''; position:absolute; left:calc(var(--rail) + 12px); top:8px; width:12px; height:12px; border-radius:50%; background:var(--panel); border:2px solid var(--time)}
+.event::after {content:''; position:absolute; left:calc(var(--rail) + 16px); top:8px; width:12px; height:12px; border-radius:50%; background:var(--panel); border:2px solid var(--time)}
 .event-time-col {text-align:right}
-.event-time {display:block; font-size:15px; font-weight:700; white-space:nowrap; color:var(--time); font-variant-numeric:tabular-nums; line-height:1.5; overflow-wrap:anywhere}
-.time-hint {display:block; font-size:12px; color:var(--muted)}
+.event-time {display:flex; flex-direction:column; font-size:16px; font-weight:700; color:var(--time); font-variant-numeric:tabular-nums; line-height:1.5; overflow-wrap:anywhere}
+.time-hint, .time-note {display:block; font-size:12.5px; line-height:1.5; color:var(--muted); font-weight:400; margin-top:2px}
 .event-content {min-width:0; display:flex; flex-direction:column; gap:12px}
 .event-head {display:flex; align-items:flex-start; gap:16px; max-width:calc(var(--read) + 120px)}
 .event-heading {flex:1; min-width:0; display:flex; flex-wrap:wrap; align-items:center; gap:4px 10px}
 .event h3 {font-size:var(--fs-lg); font-weight:700; line-height:1.45; letter-spacing:.02em}
+.event .condition {font-size:var(--fs-md)}
 .event-check {position:relative; display:inline-flex; align-items:center; gap:6px; flex-shrink:0; min-height:34px; padding:2px 10px 2px 6px; border-radius:20px; font-size:var(--fs-xs); color:var(--muted); cursor:pointer; user-select:none; transition:background .15s,color .15s}
 .event-check:hover {background:var(--ok-soft); color:var(--ok)}
 .event-check input {position:absolute; opacity:0; width:1px; height:1px; margin:0}
@@ -351,13 +352,15 @@ a.route-overview-place:hover {color:var(--accent-ink)}
 .event.is-now::after {background:var(--accent); border-color:var(--accent); box-shadow:0 0 0 5px var(--accent-soft)}
 .event.is-now .event-time {color:var(--accent-ink)}
 .compact-event {padding-bottom:28px}
-.compact-event::after {width:8px; height:8px; left:calc(var(--rail) + 14px); top:10px; border-color:var(--muted); background:var(--muted)}
+.compact-event::after {width:8px; height:8px; left:calc(var(--rail) + 18px); top:10px; border-color:var(--muted); background:var(--muted)}
 .compact-event h3 {font-size:var(--fs-md); color:var(--ink-2); font-weight:600}
 .compact-event .event-time {font-size:var(--fs-sm); font-weight:600; color:var(--muted)}
 .activity-hotel {display:flex; align-items:center; gap:6px; font-size:var(--fs-sm); color:var(--ink-2)}
 .activity-hotel .icon {width:15px; height:15px; color:var(--muted)}
-.event-photos {display:grid; grid-template-columns:repeat(var(--photo-columns,2),minmax(0,1fr)); gap:8px; max-width:var(--read)}
-.event-photos.single-photo {grid-template-columns:minmax(0,340px)}
+.event-photos {display:flex; flex-wrap:wrap; gap:10px; max-width:var(--read)}
+.event-photos>.photo-button, .event-photos>.shop-photo {width:180px; flex:0 0 auto}
+.event-photos .photo-button img {aspect-ratio:3/2}
+.event-photos .photo-button>span {padding:16px 8px 5px}
 .shop-photo .place-location {display:block; margin-top:4px}
 .meal-block {max-width:var(--read)}
 .meal-preview {display:flex; align-items:baseline; flex-wrap:wrap; gap:2px 12px; font-weight:600}
@@ -367,14 +370,19 @@ a.route-overview-place:hover {color:var(--accent-ink)}
 .night-facts span {margin-left:8px; color:var(--warn)}
 .transport-detail {max-width:var(--read); font-size:var(--fs-sm); color:var(--ink-2)}
 .transport-detail li+li {margin-top:4px}
-/* Station-to-station map links drawn as a rail line. */
-.activity-navigation {max-width:var(--read)}
-.nav-stops {display:flex; flex-wrap:wrap; align-items:center; row-gap:6px}
-.nav-stop {display:inline-flex; align-items:center; gap:7px; min-height:32px; padding-right:10px; font-size:var(--fs-sm); color:var(--accent-ink)}
-.nav-stop::before {content:''; width:10px; height:10px; border-radius:50%; border:2px solid var(--accent); background:var(--panel); flex-shrink:0}
-.nav-stop.is-meal::before {border-color:var(--time)}
-.nav-stop:hover {color:#fff; text-decoration:underline; text-underline-offset:3px}
-.nav-arrow {display:inline-block; width:20px; height:2px; background:var(--accent); opacity:.5; margin-right:10px}
+/* Places: one tappable row each; several rows are joined by a line like a station list. */
+.place-list {display:flex; flex-direction:column; gap:6px; max-width:var(--read)}
+.place-row {position:relative; display:flex; align-items:center; gap:14px; min-height:54px; padding:8px 12px 8px 14px; border-radius:var(--radius-sm); background:var(--raised); color:var(--ink); transition:background .15s}
+.place-row:hover {background:var(--raised-2); color:var(--ink)}
+.place-dot {width:12px; height:12px; flex-shrink:0; border-radius:50%; border:2.5px solid var(--accent); background:var(--raised)}
+.place-row.is-meal .place-dot {border-color:var(--time)}
+.place-list.is-route .place-row:not(:last-child)::after {content:''; position:absolute; left:19px; top:calc(50% + 7px); height:calc(100% - 8px); width:2px; background:var(--accent); opacity:.45; z-index:1}
+.place-text {flex:1; min-width:0; display:flex; flex-direction:column; line-height:1.45}
+.place-text strong {font-size:var(--fs-md); font-weight:600}
+.place-text small {font-size:var(--fs-xs); color:var(--muted); overflow-wrap:anywhere}
+.place-go {display:inline-flex; align-items:center; gap:4px; flex-shrink:0; padding:6px 12px; border-radius:20px; background:var(--accent-soft); color:var(--accent-ink); font-size:var(--fs-xs); font-weight:600}
+.place-go .icon {width:15px; height:15px}
+.place-row:hover .place-go {background:var(--accent-strong); color:#fff}
 .scene-entry {display:inline-flex; align-items:center; gap:8px; align-self:flex-start; font-size:var(--fs-sm); color:var(--accent-ink); min-height:32px}
 .scene-entry .icon {width:16px; height:16px}
 .scene-entry:hover {color:#fff}
@@ -410,7 +418,7 @@ a.route-overview-place:hover {color:var(--accent-ink)}
 .food-idea.with-photo {display:grid; grid-template-columns:140px minmax(0,1fr); gap:14px}
 .food-idea.with-photo .food-idea-photo {margin:0}
 .food-idea small {color:var(--time)}
-.day-support {margin-top:24px; margin-left:calc(var(--rail) + 36px)}
+.day-support {margin-top:24px; margin-left:calc(var(--rail) + 44px)}
 .support-card {border-top:1px solid var(--line)}
 .support-card>summary {min-height:52px; flex-wrap:wrap}
 .support-card>summary>span {display:inline-flex; align-items:center; gap:7px; font-weight:600; font-size:var(--fs-sm)}
@@ -575,7 +583,7 @@ noscript p {padding:40px; text-align:center}
   .day-top {grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:stretch; gap:36px}
   .day-hero {min-height:260px}
   .day-summary {justify-content:center}
-  .day-layout {grid-template-columns:minmax(0,1fr) 250px; gap:48px; align-items:start}
+  .day-layout {grid-template-columns:minmax(0,1fr) 270px; gap:44px; align-items:start}
   .day-layout.is-single {grid-template-columns:minmax(0,1fr)}
   .day-aside {order:2; position:sticky; top:calc(var(--toolbar-h) + 24px); max-height:calc(100vh - var(--toolbar-h) - 48px); overflow-y:auto; scrollbar-width:thin; scrollbar-color:#3a4560 transparent}
   .day-aside .day-route {border-top:0}
@@ -627,7 +635,7 @@ noscript p {padding:40px; text-align:center}
 }
 @media (max-width:720px) {
   :root {--rail:0px; --gutter:16px; --fs-3xl:32px}
-  body {font-size:15.5px}
+  body {font-size:16.5px}
   #main section+section {margin-top:48px}
   .hero-photos {height:200px}
   .status-card {flex-direction:column; align-items:stretch; padding:20px; gap:14px; margin-top:28px}
@@ -662,10 +670,13 @@ noscript p {padding:40px; text-align:center}
   .event::after {left:0; top:7px}
   .compact-event::after {left:2px; top:9px}
   .event-time-col {text-align:left; display:flex; gap:8px; align-items:baseline}
-  .event-time {white-space:normal}
-  .event h3 {font-size:17px}
-  .event-photos {grid-template-columns:repeat(min(var(--photo-columns,2),2),minmax(0,1fr))}
-  .event-photos.single-photo {grid-template-columns:minmax(0,1fr)}
+  .event-time {flex-direction:row; flex-wrap:wrap; column-gap:8px}
+  .event-time>span+span::before {content:'→ '; color:var(--muted); font-weight:400}
+  .event-time-col {flex-wrap:wrap; column-gap:8px}
+  .time-note {margin-top:0}
+  .event h3 {font-size:19px}
+  .event-photos>.photo-button, .event-photos>.shop-photo {width:calc(50% - 5px)}
+  .place-row {min-height:56px}
   .food-idea.with-photo {grid-template-columns:minmax(0,1fr)}
   .more-body {padding:12px 14px}
   .day-support {margin-left:0}
