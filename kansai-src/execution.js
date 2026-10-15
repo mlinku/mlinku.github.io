@@ -10,13 +10,13 @@ function eventNavigation(ev,d,includeMeal=false){
  const stops=NAVIGATION_PATHS[ev.id]||activityPlaceIds(ev);
  const links=stops.filter(stop=>!hasMealMap||stop!==first?.[7]).map(stop=>{
   const [label,url]=Array.isArray(stop)?[stop[0],mapURL(stop[1])]:[PLACE[stop].name,PLACE[stop].map_search_url];
-  return external(icon('pin')+e(label),url,'nav-stop');
+  return external(e(label),url,'nav-stop');
  });
- if(ev.id==='gion_dinner_walk'&&d){const row=DETAILS[d.date].meals.find(r=>r[0]==='晚餐'&&r[1]==='首选');links.push(external(icon('food')+e(row[2]),mealMap(d,row),'nav-stop'));}
- if(includeMeal&&first&&first[0]!=='早餐')links.push(external(icon('food')+e(first[8]?.pending?'餐饮区域':first[2]),mealMap(d,first),'nav-stop'));
+ if(ev.id==='gion_dinner_walk'&&d){const row=DETAILS[d.date].meals.find(r=>r[0]==='晚餐'&&r[1]==='首选');links.push(external(e(row[2]),mealMap(d,row),'nav-stop is-meal'));}
+ if(includeMeal&&first&&first[0]!=='早餐')links.push(external(e(first[8]?.pending?'餐饮区域':first[2]),mealMap(d,first),'nav-stop is-meal'));
  if(!links.length)return '';
  // Several stops read as a route in travel order; each one opens its own map search.
- return `<div class="activity-navigation${links.length>1?' is-chain':''}"><span class="nav-label">${links.length>1?'沿途地图':'导航'}</span><div class="nav-stops">${links.join('<span class="nav-arrow" aria-hidden="true">'+icon('chevron')+'</span>')}</div></div>`;
+ return `<div class="activity-navigation${links.length>1?' is-chain':''}" aria-label="${links.length>1?'沿途各站地图':'地图'}"><div class="nav-stops">${links.join('<span class="nav-arrow" aria-hidden="true"></span>')}</div></div>`;
 }
 // Supplemental station maps belong in travel order, before the destination.
 const NAVIGATION_PATHS={

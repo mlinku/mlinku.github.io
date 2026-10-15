@@ -144,7 +144,7 @@ const GLOSSARY=[
 ];
 function dayCard(d,i){
  const info=dayPresentation(d),p=progress(d),today=todayIndex()===i,[leave,back]=dayTimes(d,i);
- return pageLink(`<div class="day-card-photo">${photo(info.cover,'','lazy','(max-width:720px) 100vw, 260px')}<span class="day-number">DAY ${String(i+1).padStart(2,'0')}</span>${today?'<span class="today-badge">今天</span>':''}</div><div class="day-card-copy"><p class="card-date">${dateLabel(d.date)} ${e(d.weekday)}</p><h3>${e(info.short)}</h3><p class="day-card-theme">${e(info.summary)}</p><dl class="card-practical"><div><dt>${leave[0]}</dt><dd>${e(leave[1])}</dd></div><div><dt>${back[0]}</dt><dd>${e(back[1].split(/[，；]/)[0])}</dd></div></dl><div class="card-foot">${intensityMarkup(d)}<span class="card-progress${p.done===p.total?' complete':''}">${p.done?`${p.done}/${p.total} 完成`:`${p.total} 项安排`}</span></div></div>`,dayHash(i),'day-card'+(today?' is-today':''));
+ return pageLink(`<span class="day-row-date"><strong>${dateLabel(d.date)}</strong><small>${e(d.weekday)}${today?' · 今天':''}</small></span><span class="day-row-thumb">${photo(info.cover,'','lazy','120px')}</span><span class="day-row-main"><strong>${e(info.short)}</strong><small>${e(info.summary)}</small></span><span class="day-row-times"><span><small>${leave[0]}</small>${e(leave[1])}</span><span><small>${back[0]}</small>${e(back[1].split(/[，；]/)[0])}</span></span><span class="day-row-meta">${intensityMarkup(d)}<small class="card-progress${p.done===p.total?' complete':''}">${p.done?`${p.done}/${p.total} 完成`:`${p.total} 项`}</small></span>${icon('chevron')}`,dayHash(i),'day-card'+(today?' is-today':''));
 }
 function overview(){return `
  <header class="overview-hero">
@@ -152,7 +152,7 @@ function overview(){return `
   <div class="hero-photos">${[['byodoin','宇治 · 平等院'],['inari','京都 · 伏见稻荷'],['dotonbori','大阪 · 道顿堀']].map(([id,label],i)=>photoSrc(id)?`<figure>${photo(id,'',i?'lazy':'eager','(max-width:720px) 50vw, 420px')}<figcaption>${label}</figcaption></figure>`:'').join('')}</div>
  </header>
  ${tripStatusCard()}
- <section id="how-to" class="how-to" aria-labelledby="how-to-title"><div class="section-title"><h2 id="how-to-title">怎么用这份手帖</h2></div><ol class="how-to-steps">${HOW_TO.map(([ico,title,text],i)=>`<li><span class="how-to-icon">${icon(ico)}</span><div><strong><em>${i+1}</em>${title}</strong><p>${text}</p></div></li>`).join('')}</ol>
+ <section id="how-to" class="how-to" aria-labelledby="how-to-title"><div class="section-title"><h2 id="how-to-title">怎么用这份手帖</h2></div><ol class="how-to-steps">${HOW_TO.map(([ico,title,text])=>`<li><span class="how-to-icon">${icon(ico)}</span><div><strong>${title}</strong><p>${text}</p></div></li>`).join('')}</ol>
   <details class="glossary"><summary>${icon('book')}看不懂的词？术语说明</summary><dl>${GLOSSARY.map(([t,d])=>`<div><dt>${t}</dt><dd>${d}</dd></div>`).join('')}</dl></details>
  </section>
  <section id="day-cards"><div class="section-title"><h2>8 天行程</h2></div><div class="day-grid">${PLAN.days.map(dayCard).join('')}</div></section>
