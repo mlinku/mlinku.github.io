@@ -3,9 +3,9 @@
 // An empty string hides the note on the card when 怎么走 already says the same thing.
 const EVENT_BRIEF={
  flight_out:'',
- uji_lunch:'吃饭加休息45分钟；延迟时先略过縣神社。',
+ uji_lunch:'吃饭加坐下休息约45分钟。',
  uji_pilgrimage:'约45分钟，久美子椅多留片刻，桥上顺拍。',
- daikichi_visit:'往返加展望台约75分钟；下雨或累了就取消。',
+ daikichi_visit:'往返加展望台约75分钟。',
  suikan_stamp:'河岸拍照，坐下休息约10分钟。',
  station_stage:'上4F室町小路广场，拍大阶梯和红色时钟。',
  delta_visit:'河岸拍照约25分钟，优先《玉子》高野川侧。',
@@ -24,13 +24,13 @@ const EVENT_BRIEF={
  nara_visit:'南大门和大佛殿内部约50分钟；冬季17:00闭门。',
  nara_station_walk:'步行约30分钟回近铁奈良站。',
  nara_return_train:'',
- anime_shopping:'先逛20:00关门的店，再吃饭。',
+ anime_shopping:'挑1—2家慢逛。',
  nippombashi_dinner:'坐下吃45—60分钟，沿途选有空位的店。',
  glico_photo:'戎桥、格力高、心斋桥筋南口短拍，再去南海难波。',
  nara_day_return:'',
  kitano_lunch:'午餐、咖啡和休息约50分钟；北野物语馆外观可顺路短拍。',
- sannomiya_shopping:'先看音像、毛绒和立牌；延迟就把余下的放到大桥之后。',
- kobe_bridge_visit:'现场约30分钟，尽量白天拍；争取15:00从三宫出发。',
+ sannomiya_shopping:'先看音像、毛绒和立牌。',
+ kobe_bridge_visit:'北公园现场拍摄约30分钟，尽量白天拍。',
  sannomiya_evening:'补逛没逛完的店，逛完就坐下休息。',
  last_evening_return:'预计20:45—21:00回店，整理行李、证件和早餐。',
  airport_checkin:''
@@ -43,7 +43,14 @@ function currentChoiceText(d){const c=choice(d),labels=[];
  if(d.date==='2026-12-05'&&c.spaworldEvening)labels.push('晚间泡汤');
  return labels.join(' · ');
 }
-function dayPage(){const d=PLAN.days[dayIndex],info=dayPresentation(d),[leave,back]=dayTimes(d,dayIndex),isToday=todayIndex()===dayIndex,notes=dayNotes(d),hasPilgrimage=pilgrimageDay(d.date).length>0;return `
+// Times are reference windows and re-checking is a preparation task (both stated once elsewhere),
+// so day pages drop the repeated "参考" before times and the "临行复核" clauses.
+function plainCopy(html){return html.replace(/>([^<]+)</g,(_,t)=>'>'+t
+ .replace(/参考(?=\d|套餐|24小时)/g,'')
+ .replace(/[^，；。<>]*临行(复核|确认)[^，；。<>]*/g,'')
+ .replace(/([，；])[，；]+/g,'$1').replace(/[，；]+。/g,'。').replace(/。[，；]+/g,'。').replace(/^[，；]+/,'').replace(/[，；]+$/,'')+'<');}
+function dayPage(){return plainCopy(dayPageMarkup());}
+function dayPageMarkup(){const d=PLAN.days[dayIndex],info=dayPresentation(d),[leave,back]=dayTimes(d,dayIndex),isToday=todayIndex()===dayIndex,notes=dayNotes(d),hasPilgrimage=pilgrimageDay(d.date).length>0;return `
  ${dates()}
  <header class="day-head"><div class="day-date"><strong>${dateLabel(d.date)}</strong><small>${e(d.weekday)} · DAY ${String(dayIndex+1).padStart(2,'0')}${isToday?' · <em>今天</em>':''}</small></div><div class="day-title"><h1>${e(info.short)}</h1><p>${e(info.eyebrow)}</p></div><button type="button" class="day-cover" data-action="photo-zoom" data-place="${info.cover}" aria-label="查看${e(PLACE[info.cover].name)}照片">${photo(info.cover,'','eager','200px')}</button></header>
  <div class="day-facts"><div><span>${leave[0]}</span><strong>${e(leave[1])}</strong></div><div>${d.overnight?`<button class="stay-access" data-action="stay-info" data-place="${d.overnight}" aria-label="${dayIndex===0?'入住':'返店'} ${e(compactTime(returnTarget(d)))}，查看${e(PLACE[d.overnight].name)}详情"><span>${back[0]}</span><strong>${e(back[1])}</strong>${back[2]?`<small class="fact-note">${e(back[2])}</small>`:''}</button>`:`<span>回程航班</span><strong>${e(flightDeparture('flight_home'))}</strong>`}</div><div><span>强度</span><strong>${intensityMarkup(d)}</strong></div></div>
@@ -100,15 +107,18 @@ function eventCard(d,ev){
  const placeIds=activityPlaceIds(ev),hotelIds=ev.category==='hotel'||ev.id==='luggage_pickup'?ev.place_ids.filter(id=>id.startsWith('hotel_')):[];
  const isNow=ev.id===nowEventId;
  const brief=ev.condition&&Object.hasOwn(EVENT_BRIEF,ev.id)?EVENT_BRIEF[ev.id]:null;
+ const daySaid=dayNotes(d).join(''),fullNote=ev.condition?dropSaid(ev.condition,daySaid+(brief||'')):'';
  const photoFor=id=>activityPhoto(id,'',isMeal&&PLACE[id].category!=='restaurant'?'用餐周边 · ':'',id!==first?.[7]&&(imageIds.length!==1||PLACE[id].name!==ev.title));
+ const notedBefore=new Set(earlier.flatMap(x=>activityPlaceIds(x)));
+ const placeNotes=!major||DETAILS[d.date].eventDetails?.[ev.id]?[]:placeIds.filter(id=>PLACE_DETAILS[id]&&!id.startsWith('hotel_')&&!notedBefore.has(id)&&!alreadySaid(PLACE_DETAILS[id],daySaid));
  const more=[
-  brief!==null?`<details class="event-detail"><summary>完整说明</summary><div class="detail-body"><p>${e(ev.condition)}</p></div></details>`:'',
+  brief!==null&&fullNote?`<details class="event-detail"><summary>完整说明</summary><div class="detail-body"><p>${e(fullNote)}</p></div></details>`:'',
   imageIds.length>1?`<details class="event-detail"><summary>更多照片</summary><div class="detail-body event-photos">${imageIds.map(photoFor).join('')}</div></details>`:'',
   ev.id==='kodaiji_night'?`<details class="event-detail"><summary>参拜详情</summary><div class="detail-body"><p>游览约60—75分钟，排队另计。</p><p>活动期2026/10/23—12/13；21:30停止入场，22:00闭门。昼夜不清场，离场后同票不能再入。</p><p>${external('活动官网 ↗','https://www.kodaiji.com/saiji.html')} · ${external('票价 ↗','https://www.kodaiji.com/haikan.html')}</p></div></details>`:'',
   foodRows.length?mealSupplement(d,ev,foodRows):'',
   activityDetails(d,ev.id),
   foodRows.length?'':foodSuggestions(d,ev.id),
-  placeIds.some(id=>PLACE_DETAILS[id])?`<details class="event-detail place-facts"><summary>地点说明</summary><div class="detail-body">${placeIds.map(id=>placeInfo(id,id===first?.[7]||hotelIds.includes(id))).join('')}</div></details>`:''
+  placeNotes.length?`<details class="event-detail place-facts"><summary>地点说明</summary><div class="detail-body">${placeNotes.map(id=>`<p>${e(PLACE_DETAILS[id])}</p>`).join('')}</div></details>`:''
  ].filter(Boolean);
  // Secondary material shares one disclosure per activity, so each card has a single "更多" row.
  const moreHTML=more.join(''),moreLabels=[...new Set([...moreHTML.matchAll(/<summary>([\s\S]*?)<\/summary>/g)].map(m=>m[1].replace(/<[^>]+>/g,'').replace(/^甜品备选 · .*/,'甜品备选')))];
@@ -184,15 +194,23 @@ function daySupport(d){return `<aside class="day-support" id="day-support"><deta
 
 function foodIdea(item){const p=PLACE[item.place],showPhoto=photoSrc(item.place)&&!item.hidePhoto;return `<article class="food-idea ${showPhoto?'with-photo':''}">${showPhoto?photoButton(item.place,'food-idea-photo','',false):''}<div><span class="food-priority">${e(item.label)}</span><h4>${e(item.title)}</h4><p class="food-name" lang="ja">${e(p.name_ja)}</p><p>${e(item.text)}</p><small>${e(item.budget)}</small><div class="food-actions">${external(icon('pin')+'地图',p.map_search_url,'text-link')}${external('店铺资料 ↗',item.source,'text-link')}</div></div></article>`;}
 
+// Sentence-level overlap check so a fact said in 情况有变时 is not printed again elsewhere on the day.
+const bigrams=t=>{t=String(t).replace(/[\s，。；、·：:（）()「」《》]/g,'');const out=new Set();for(let i=0;i<t.length-1;i++)out.add(t.slice(i,i+2));return out;};
+function alreadySaid(sentence,pool){const a=bigrams(sentence);if(a.size<4)return false;const b=bigrams(pool);let n=0;for(const x of a)if(b.has(x))n++;return n/a.size>=.6;}
+function dropSaid(text,pool){return String(text).split(/(?<=[。；])/).filter(s=>s.trim()&&!alreadySaid(s,pool)).join('').replace(/；$/,'。');}
 function dayFallbacks(d){const c=choice(d);return d.fallback_rules.flatMap(t=>{
+ if(d.date==='2026-12-01')t=t.replace('14:30仍未到登山口，不能确保白天下山就取消。','');
+ if(/^19:00—22:00 Amex|^马里奥赛车与咚奇刚择一优先/.test(t))return [];
  if(d.date==='2026-12-02'){
-  if(t.includes('高台寺')&&c.kodaijiPlan==='skip')return [];
-  if(t.includes('八坂神社'))return c.kodaijiPlan==='night'&&c.yasakaBrief?[t]:['晚饭长队时换简餐；おめん20:00最后点餐。'];
+  if(t.includes('高台寺'))return [];
+  if(t.includes('八坂神社'))return c.kodaijiPlan==='night'&&c.yasakaBrief?[t]:c.kodaijiPlan==='night'?['排队导致延误则省八坂神社。']:[];
   if(t.startsWith('不再排'))return [];
  }
  return [t];
 });}
 function dayNotes(d){const c=choice(d);const extra=(DETAILS[d.date].extra||[]).flatMap(t=>{
+ // Ticket prices and the Amex evening are stated on the activity itself.
+ if(/^(京都塔门票|19:00—22:00 Amex|大佛殿成人|马里奥赛车与咚奇刚择一优先)/.test(t))return [];
  if(d.date==='2026-12-02'&&t.startsWith('本次只安排'))return [];
  if(d.date==='2026-12-05'&&t.startsWith('日本桥默认'))return ['日本桥购物限1—2家，替换不增加总数；中古作品库存不保证。'];
  return [t];
@@ -210,10 +228,12 @@ function foodSuggestions(d,eventId){
 function activityDetails(d,id){
  const info=DETAILS[d.date].eventDetails?.[id];if(!info)return '';
  const selected=id==='anime_shopping'?selectedShops(choice(d)):null;
- const items=selected?[
+ const said=dayNotes(d).join('');
+ const keep=item=>!(item.text.includes('小吃沿中央街自选')&&said.includes('小吃沿中央街自选'));
+ const items=(selected?[
   ...selected.map(placeId=>info.items.find(item=>item.place_id===placeId)).filter(Boolean),
   ...info.items.filter(item=>!item.place_id)
- ]:info.items;
+ ]:info.items).filter(keep);
  return `<details class="event-detail"><summary>${e(info.title)}</summary><ul class="detail-body">${items.map(item=>`<li>${e(item.text)}${item.url?' '+external('资料 ↗',item.url):''}</li>`).join('')}</ul></details>`;
 }
 

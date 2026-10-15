@@ -1049,8 +1049,6 @@ const PHOTO_REFERENCES = {
   "asagiri": "https://media.kyototourism.org/en/photos/4151/"
 };
 
-PLACE_DETAILS.hotel_kyoto = (PLACE_DETAILS.hotel_kyoto||"")+" 本次3晚住宿已订，不含早餐。";
-PLACE_DETAILS.hotel_osaka = (PLACE_DETAILS.hotel_osaka||"")+" 本次4晚住宿已订，不含早餐。";
 
 PLACE_DETAILS["starbucks_kitano"] = "北野物语馆。保留午餐、咖啡、休息与外观巡礼；《魔女的夜宴》七绪咖啡店关联为玩家实景对照，非官方认定。";
 PLACE_DETAILS["lashinbang_kobe"] = "センタープラザ东馆2F 246-1；当前11:00—20:00。与骏河屋、BOOKOFF共用90分钟。";
@@ -1059,6 +1057,8 @@ PLACE_DETAILS["bookoff_kobe"] = "グレースコウベ5F，三宫町2-10-7；当
 PLACE_DETAILS["sannomiya_center"] = "中央街沿街可自行找小吃，さんプラザ及センタープラザB1有餐饮区。";
 PLACE_DETAILS["kobe_bridge"] = "导航到Port Island北公园，从桥南侧拍红色桥梁。中公園站步行约8分钟，不安排全程步行跨桥。";
 
+PLACE_DETAILS.hotel_kyoto = "3晚已订，不含早餐。";
+PLACE_DETAILS.hotel_osaka = "4晚已订，不含早餐。";
 PLACE_DETAILS.heiwa_books = "アル・プラザ宇治東3F，参考10:00—20:00。周边库存与京阿尼展陈以现场为准。";
 PLACE_DETAILS.keihan_obaku = "JR出站后步行换乘京阪；认宇治方向2号站台，乘一站到三室户。叶月贩售机只顺路短看。";
 PLACE_DETAILS.mimurodo = "出站可顺看小绿贩售机；向北步行约10分钟到アル・プラザ宇治東，书店在3F。";
@@ -1444,7 +1444,8 @@ function navigationStops(ev,d,includeMeal=false){
  for(const stop of NAVIGATION_PATHS[ev.id]||activityPlaceIds(ev)){
   if(hasMealMap&&stop===first?.[7])continue;
   if(Array.isArray(stop)){stops.push({name:stop[0],sub:stop[1],url:mapURL(stop[1])});continue;}
-  const p=PLACE[stop];stops.push({name:p.name,sub:[PLACE_LOCATIONS[stop],p.address_ja||(p.name_ja!==p.name?p.name_ja:'')].filter(Boolean).join(' · '),url:p.map_search_url});
+  // Hotels are named only; their address sits once in 今晚住.
+  const p=PLACE[stop];stops.push({name:p.name,sub:stop.startsWith('hotel_')?'':[PLACE_LOCATIONS[stop],p.address_ja||(p.name_ja!==p.name?p.name_ja:'')].filter(Boolean).join(' · '),url:p.map_search_url});
  }
  if(ev.id==='gion_dinner_walk'&&d){const row=DETAILS[d.date].meals.find(r=>r[0]==='晚餐'&&r[1]==='首选');stops.push({name:row[2],sub:row[4],url:mealMap(d,row),meal:true});}
  if(includeMeal&&first&&first[0]!=='早餐')stops.push({name:first[8]?.pending?'餐饮区域':first[2],sub:first[4],url:mealMap(d,first),meal:true});
@@ -1479,14 +1480,13 @@ function executionNotice(d,ev){
  const content={
   flight_out:'当前11:05关闭登机口（香港时间）；以航司最新通知及登机牌为准。',
   agata_stamp:'登录活动网站并开启定位，确认领章成功再离开；攻略勾选不代替领章。',
-  uji_parfait:'10:00开门，不接受预约；75分钟含候位与用餐。久等时缩短午饭前闲逛。',
+  uji_parfait:'10:00开门，不接受预约；75分钟含候位与用餐。',
   daikichi_visit:'14:30仍未到登山口时，须确认能白天下山，否则取消。',
   kodaiji_night:'17:45仍未入场、预计排队超过30分钟，或天气差、疲劳时，直接吃晚饭。稍有延迟时18:45前离寺，省去八坂神社并顺延晚餐。',
   gion_dinner:'おめん20:00最后点餐；晚到或长队时换简餐。',
   usj_transfer:`营业时间于10/2核实，临行再查是否调整。 ${external('官方营业日历 ↗',USJ_HOURS)}`,
   usj_app:`在官方App选中两张门票，一起申请区域资格。 ${external('官方操作说明 ↗',USJ_ENTRY)}`,
   usj_finish:'18:00后预留缓冲，19:00前结束普通票设施体验。19:00—22:00 Amex活动设施及部分餐饮需凭证，19:00并非统一离园时间。',
-  nara_visit:'抵奈良晚于15:30时，先核对入堂余量再决定接驳，不靠压缩参观硬赶。',
   airport_train:`南海空港急行，现行平日时刻已核实；临行复核改点及运行情况。 ${external('南海时刻表 ↗',NANKAI_TIMETABLE)} · ${external('新今宫站入口图 ↗',NANKAI_STATION)}`
  };
  return content[ev.id]?`<p class="execution-note">${content[ev.id]}</p>`:'';
@@ -1498,9 +1498,9 @@ function rallyActions(ev){return ev.rally_spot?`<div class="rally-actions">${ext
 // An empty string hides the note on the card when 怎么走 already says the same thing.
 const EVENT_BRIEF={
  flight_out:'',
- uji_lunch:'吃饭加休息45分钟；延迟时先略过縣神社。',
+ uji_lunch:'吃饭加坐下休息约45分钟。',
  uji_pilgrimage:'约45分钟，久美子椅多留片刻，桥上顺拍。',
- daikichi_visit:'往返加展望台约75分钟；下雨或累了就取消。',
+ daikichi_visit:'往返加展望台约75分钟。',
  suikan_stamp:'河岸拍照，坐下休息约10分钟。',
  station_stage:'上4F室町小路广场，拍大阶梯和红色时钟。',
  delta_visit:'河岸拍照约25分钟，优先《玉子》高野川侧。',
@@ -1519,13 +1519,13 @@ const EVENT_BRIEF={
  nara_visit:'南大门和大佛殿内部约50分钟；冬季17:00闭门。',
  nara_station_walk:'步行约30分钟回近铁奈良站。',
  nara_return_train:'',
- anime_shopping:'先逛20:00关门的店，再吃饭。',
+ anime_shopping:'挑1—2家慢逛。',
  nippombashi_dinner:'坐下吃45—60分钟，沿途选有空位的店。',
  glico_photo:'戎桥、格力高、心斋桥筋南口短拍，再去南海难波。',
  nara_day_return:'',
  kitano_lunch:'午餐、咖啡和休息约50分钟；北野物语馆外观可顺路短拍。',
- sannomiya_shopping:'先看音像、毛绒和立牌；延迟就把余下的放到大桥之后。',
- kobe_bridge_visit:'现场约30分钟，尽量白天拍；争取15:00从三宫出发。',
+ sannomiya_shopping:'先看音像、毛绒和立牌。',
+ kobe_bridge_visit:'北公园现场拍摄约30分钟，尽量白天拍。',
  sannomiya_evening:'补逛没逛完的店，逛完就坐下休息。',
  last_evening_return:'预计20:45—21:00回店，整理行李、证件和早餐。',
  airport_checkin:''
@@ -1538,7 +1538,14 @@ function currentChoiceText(d){const c=choice(d),labels=[];
  if(d.date==='2026-12-05'&&c.spaworldEvening)labels.push('晚间泡汤');
  return labels.join(' · ');
 }
-function dayPage(){const d=PLAN.days[dayIndex],info=dayPresentation(d),[leave,back]=dayTimes(d,dayIndex),isToday=todayIndex()===dayIndex,notes=dayNotes(d),hasPilgrimage=pilgrimageDay(d.date).length>0;return `
+// Times are reference windows and re-checking is a preparation task (both stated once elsewhere),
+// so day pages drop the repeated "参考" before times and the "临行复核" clauses.
+function plainCopy(html){return html.replace(/>([^<]+)</g,(_,t)=>'>'+t
+ .replace(/参考(?=\d|套餐|24小时)/g,'')
+ .replace(/[^，；。<>]*临行(复核|确认)[^，；。<>]*/g,'')
+ .replace(/([，；])[，；]+/g,'$1').replace(/[，；]+。/g,'。').replace(/。[，；]+/g,'。').replace(/^[，；]+/,'').replace(/[，；]+$/,'')+'<');}
+function dayPage(){return plainCopy(dayPageMarkup());}
+function dayPageMarkup(){const d=PLAN.days[dayIndex],info=dayPresentation(d),[leave,back]=dayTimes(d,dayIndex),isToday=todayIndex()===dayIndex,notes=dayNotes(d),hasPilgrimage=pilgrimageDay(d.date).length>0;return `
  ${dates()}
  <header class="day-head"><div class="day-date"><strong>${dateLabel(d.date)}</strong><small>${e(d.weekday)} · DAY ${String(dayIndex+1).padStart(2,'0')}${isToday?' · <em>今天</em>':''}</small></div><div class="day-title"><h1>${e(info.short)}</h1><p>${e(info.eyebrow)}</p></div><button type="button" class="day-cover" data-action="photo-zoom" data-place="${info.cover}" aria-label="查看${e(PLACE[info.cover].name)}照片">${photo(info.cover,'','eager','200px')}</button></header>
  <div class="day-facts"><div><span>${leave[0]}</span><strong>${e(leave[1])}</strong></div><div>${d.overnight?`<button class="stay-access" data-action="stay-info" data-place="${d.overnight}" aria-label="${dayIndex===0?'入住':'返店'} ${e(compactTime(returnTarget(d)))}，查看${e(PLACE[d.overnight].name)}详情"><span>${back[0]}</span><strong>${e(back[1])}</strong>${back[2]?`<small class="fact-note">${e(back[2])}</small>`:''}</button>`:`<span>回程航班</span><strong>${e(flightDeparture('flight_home'))}</strong>`}</div><div><span>强度</span><strong>${intensityMarkup(d)}</strong></div></div>
@@ -1595,15 +1602,18 @@ function eventCard(d,ev){
  const placeIds=activityPlaceIds(ev),hotelIds=ev.category==='hotel'||ev.id==='luggage_pickup'?ev.place_ids.filter(id=>id.startsWith('hotel_')):[];
  const isNow=ev.id===nowEventId;
  const brief=ev.condition&&Object.hasOwn(EVENT_BRIEF,ev.id)?EVENT_BRIEF[ev.id]:null;
+ const daySaid=dayNotes(d).join(''),fullNote=ev.condition?dropSaid(ev.condition,daySaid+(brief||'')):'';
  const photoFor=id=>activityPhoto(id,'',isMeal&&PLACE[id].category!=='restaurant'?'用餐周边 · ':'',id!==first?.[7]&&(imageIds.length!==1||PLACE[id].name!==ev.title));
+ const notedBefore=new Set(earlier.flatMap(x=>activityPlaceIds(x)));
+ const placeNotes=!major||DETAILS[d.date].eventDetails?.[ev.id]?[]:placeIds.filter(id=>PLACE_DETAILS[id]&&!id.startsWith('hotel_')&&!notedBefore.has(id)&&!alreadySaid(PLACE_DETAILS[id],daySaid));
  const more=[
-  brief!==null?`<details class="event-detail"><summary>完整说明</summary><div class="detail-body"><p>${e(ev.condition)}</p></div></details>`:'',
+  brief!==null&&fullNote?`<details class="event-detail"><summary>完整说明</summary><div class="detail-body"><p>${e(fullNote)}</p></div></details>`:'',
   imageIds.length>1?`<details class="event-detail"><summary>更多照片</summary><div class="detail-body event-photos">${imageIds.map(photoFor).join('')}</div></details>`:'',
   ev.id==='kodaiji_night'?`<details class="event-detail"><summary>参拜详情</summary><div class="detail-body"><p>游览约60—75分钟，排队另计。</p><p>活动期2026/10/23—12/13；21:30停止入场，22:00闭门。昼夜不清场，离场后同票不能再入。</p><p>${external('活动官网 ↗','https://www.kodaiji.com/saiji.html')} · ${external('票价 ↗','https://www.kodaiji.com/haikan.html')}</p></div></details>`:'',
   foodRows.length?mealSupplement(d,ev,foodRows):'',
   activityDetails(d,ev.id),
   foodRows.length?'':foodSuggestions(d,ev.id),
-  placeIds.some(id=>PLACE_DETAILS[id])?`<details class="event-detail place-facts"><summary>地点说明</summary><div class="detail-body">${placeIds.map(id=>placeInfo(id,id===first?.[7]||hotelIds.includes(id))).join('')}</div></details>`:''
+  placeNotes.length?`<details class="event-detail place-facts"><summary>地点说明</summary><div class="detail-body">${placeNotes.map(id=>`<p>${e(PLACE_DETAILS[id])}</p>`).join('')}</div></details>`:''
  ].filter(Boolean);
  // Secondary material shares one disclosure per activity, so each card has a single "更多" row.
  const moreHTML=more.join(''),moreLabels=[...new Set([...moreHTML.matchAll(/<summary>([\s\S]*?)<\/summary>/g)].map(m=>m[1].replace(/<[^>]+>/g,'').replace(/^甜品备选 · .*/,'甜品备选')))];
@@ -1679,15 +1689,23 @@ function daySupport(d){return `<aside class="day-support" id="day-support"><deta
 
 function foodIdea(item){const p=PLACE[item.place],showPhoto=photoSrc(item.place)&&!item.hidePhoto;return `<article class="food-idea ${showPhoto?'with-photo':''}">${showPhoto?photoButton(item.place,'food-idea-photo','',false):''}<div><span class="food-priority">${e(item.label)}</span><h4>${e(item.title)}</h4><p class="food-name" lang="ja">${e(p.name_ja)}</p><p>${e(item.text)}</p><small>${e(item.budget)}</small><div class="food-actions">${external(icon('pin')+'地图',p.map_search_url,'text-link')}${external('店铺资料 ↗',item.source,'text-link')}</div></div></article>`;}
 
+// Sentence-level overlap check so a fact said in 情况有变时 is not printed again elsewhere on the day.
+const bigrams=t=>{t=String(t).replace(/[\s，。；、·：:（）()「」《》]/g,'');const out=new Set();for(let i=0;i<t.length-1;i++)out.add(t.slice(i,i+2));return out;};
+function alreadySaid(sentence,pool){const a=bigrams(sentence);if(a.size<4)return false;const b=bigrams(pool);let n=0;for(const x of a)if(b.has(x))n++;return n/a.size>=.6;}
+function dropSaid(text,pool){return String(text).split(/(?<=[。；])/).filter(s=>s.trim()&&!alreadySaid(s,pool)).join('').replace(/；$/,'。');}
 function dayFallbacks(d){const c=choice(d);return d.fallback_rules.flatMap(t=>{
+ if(d.date==='2026-12-01')t=t.replace('14:30仍未到登山口，不能确保白天下山就取消。','');
+ if(/^19:00—22:00 Amex|^马里奥赛车与咚奇刚择一优先/.test(t))return [];
  if(d.date==='2026-12-02'){
-  if(t.includes('高台寺')&&c.kodaijiPlan==='skip')return [];
-  if(t.includes('八坂神社'))return c.kodaijiPlan==='night'&&c.yasakaBrief?[t]:['晚饭长队时换简餐；おめん20:00最后点餐。'];
+  if(t.includes('高台寺'))return [];
+  if(t.includes('八坂神社'))return c.kodaijiPlan==='night'&&c.yasakaBrief?[t]:c.kodaijiPlan==='night'?['排队导致延误则省八坂神社。']:[];
   if(t.startsWith('不再排'))return [];
  }
  return [t];
 });}
 function dayNotes(d){const c=choice(d);const extra=(DETAILS[d.date].extra||[]).flatMap(t=>{
+ // Ticket prices and the Amex evening are stated on the activity itself.
+ if(/^(京都塔门票|19:00—22:00 Amex|大佛殿成人|马里奥赛车与咚奇刚择一优先)/.test(t))return [];
  if(d.date==='2026-12-02'&&t.startsWith('本次只安排'))return [];
  if(d.date==='2026-12-05'&&t.startsWith('日本桥默认'))return ['日本桥购物限1—2家，替换不增加总数；中古作品库存不保证。'];
  return [t];
@@ -1705,10 +1723,12 @@ function foodSuggestions(d,eventId){
 function activityDetails(d,id){
  const info=DETAILS[d.date].eventDetails?.[id];if(!info)return '';
  const selected=id==='anime_shopping'?selectedShops(choice(d)):null;
- const items=selected?[
+ const said=dayNotes(d).join('');
+ const keep=item=>!(item.text.includes('小吃沿中央街自选')&&said.includes('小吃沿中央街自选'));
+ const items=(selected?[
   ...selected.map(placeId=>info.items.find(item=>item.place_id===placeId)).filter(Boolean),
   ...info.items.filter(item=>!item.place_id)
- ]:info.items;
+ ]:info.items).filter(keep);
  return `<details class="event-detail"><summary>${e(info.title)}</summary><ul class="detail-body">${items.map(item=>`<li>${e(item.text)}${item.url?' '+external('资料 ↗',item.url):''}</li>`).join('')}</ul></details>`;
 }
 
@@ -1773,8 +1793,7 @@ const photo=(id,cls='',loading='lazy',sizes='(max-width:720px) calc(100vw - 72px
 const photoButton=(id,cls='',prefix='',caption=true)=>`<button type="button" class="photo-button ${cls}${PHOTOS[id]?.illustration?' illustration-photo':''}" data-action="photo-zoom" data-place="${id}" aria-label="放大${e(PLACE[id].name)}照片">${photo(id)}${caption?`<span>${e(prefix+PLACE[id].name)}</span>`:''}</button>`;
 function placeInfo(id,omitName=false,withDetails=true){const p=PLACE[id];return `<div class="place-info" data-place-info="${id}">${omitName?'':`<strong lang="ja">${e(p.name_ja)}</strong>`}${p.address_ja?`<p lang="ja">${e(p.address_ja)}</p>`:''}${PLACE_LOCATIONS[id]?`<p class="place-location">${e(PLACE_LOCATIONS[id])}</p>`:''}${withDetails&&PLACE_DETAILS[id]?`<p>${e(PLACE_DETAILS[id])}</p>`:''}</div>`;}
 
-function stayArrivalText(id){return id==='hotel_kyoto'?DETAILS['2026-11-30'].transport[1]:'从新今宫站前往酒店；入住和取行李安排见当天活动。';}
-function stayInfo(id){return `<details class="stay-info" id="stay-info"><summary>${icon('bed')}<span>今晚住 <strong>${e(PLACE[id].name)}</strong></span></summary><div class="stay-info-body">${photoSrc(id)?photoButton(id,'stay-info-photo'):''}<div>${placeInfo(id)}<p>${e(stayArrivalText(id))}</p>${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'btn small')}</div></div></details>`;}
+function stayInfo(id){return `<details class="stay-info" id="stay-info"><summary>${icon('bed')}<span>今晚住 <strong>${e(PLACE[id].name)}</strong></span></summary><div class="stay-info-body">${photoSrc(id)?photoButton(id,'stay-info-photo'):''}<div>${placeInfo(id)}${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'btn small')}</div></div></details>`;}
 const activityPhoto=(id,...args)=>PLACE_LOCATIONS[id]?`<div class="shop-photo">${photoButton(id,...args)}<small class="place-location">${e(PLACE_LOCATIONS[id])}</small></div>`:photoButton(id,...args);
 function progress(d){const {done,total}=DayFlow.forDay(d);return{done,total};}
 
@@ -1864,12 +1883,12 @@ const HOW_TO=[
  ['walk','在路上','按时间往下走，做完一项点「完成」。']
 ];
 const GLOSSARY=[
- ['时间','都是含缓冲的参考窗口，不是预约；航班为当地时间，日本比香港快 1 小时。'],
- ['离店 · 返店','计划离开酒店与回到酒店的时间。晚了就按当天「情况有变时」减量。'],
- ['强度','当天的步行与体力消耗。●越多越累，前一晚早点休息。'],
- ['可选','需要额外时间或体力才加入的安排，在对应活动卡里切换，默认不占用时间。'],
- ['巡礼','动画、游戏取景地。「巡礼」页把作品画面与实景照片并排，方便找机位。'],
- ['完成 · 已拍','只记录在你这台设备的浏览器里，不与同行者同步，也不代表官方集章成功。']
+ ['时间','含缓冲的参考时段，不是预约；航班为当地时间，日本比香港快 1 小时。'],
+ ['离店 · 返店','计划离开、回到酒店的时间；晚了按当天「情况有变时」减量。'],
+ ['强度','步行与体力消耗，●越多越累。'],
+ ['可选','在对应活动里切换，默认不占用时间。'],
+ ['巡礼','动画、游戏取景地；「巡礼对照」页把作品画面和实景并排。'],
+ ['完成 · 已拍','只存在这台设备的浏览器里，不与同行者同步，也不代表官方集章。']
 ];
 function dayCard(d,i){
  const info=dayPresentation(d),p=progress(d),today=todayIndex()===i,[leave,back]=dayTimes(d,i);
@@ -1887,7 +1906,7 @@ function overview(){return `
   return tripStatus().phase==='before'?guide:`<details class="how-to-fold"><summary>${icon('book')}怎么用这份手帖 · 术语说明</summary>${guide}</details>`;})()}
  </section>
  <section id="day-cards"><div class="section-title"><h2>8 天行程</h2></div><div class="day-grid">${PLAN.days.map(dayCard).join('')}</div></section>
- <p class="overview-more">${icon('bed')}京都 3 晚、大阪 4 晚，往返香港航空 HX618 / HX617。${pageLink('航班时间与酒店地址 '+icon('arrow'),'#prep/bookings','text-link')}</p>
+ <p class="overview-more">${icon('bed')}京都 3 晚、大阪 4 晚，往返 HX618 / HX617。${pageLink('航班与酒店 '+icon('arrow'),'#prep/bookings','text-link')}</p>
  `;}
 function flights(showConditions=false){const bookings=PLAN.bookings.filter(b=>b.type==='flight');return `<section class="flight-card flight-overview"><div class="flight-heading">${icon('plane')}<h3>${e([...new Set(bookings.map(b=>b.airline))].join(' / '))}</h3><span>往返航班 · 当地时间</span></div><div class="flight-grid">${bookings.map(b=>{const from=flightLocal(b,'departure'),to=flightLocal(b,'arrival');return `<div class="flight-leg"><p class="flight-leg-title">${e(from.date)} · ${b.from==='hkg'?'去程':'回程'} <b>${e(b.flight_number||'航班号待确认')}</b></p><div class="flight-times"><strong><span class="flight-action">起飞</span>${from.time}<small>${e(from.city)}</small></strong><span class="flight-line" aria-hidden="true">${icon('plane')}</span><strong><span class="flight-action">抵达</span>${to.time}<small>${e(to.city)}</small></strong></div><p class="flight-terminals">${e(flightTerminals(b))}</p>${showConditions?flightConditions(b):''}</div>`;}).join('')}</div></section>`;}
 
@@ -1903,9 +1922,10 @@ function ticketStatus(){
  const booked=[['往返机票','HX618 / HX617','ok'],['京都酒店','11/30—12/3 · 3晚','ok'],['大阪酒店','12/3—12/7 · 4晚','ok'],['HARUKA','11/30 · 班次现场选','ok']];
  const open=(PLAN.unconfirmed_purchases||[]).map(p=>[p.item+(p.quantity?' ×'+p.quantity:''),dateLabel(p.visit_date)+' 使用',...(PURCHASE_LABEL[p.status]?[PURCHASE_LABEL[p.status][1],PURCHASE_LABEL[p.status][0]]:['warn','待确认'])]);
  const row=([name,note,tone,label])=>`<li class="ticket tone-${tone}"><span class="ticket-state">${tone==='ok'?icon('check')+'已订':(tone==='danger'?icon('alert'):icon('info'))+label}</span><strong>${e(name)}</strong><small>${e(note)}</small></li>`;
- return `<section class="ticket-board" aria-labelledby="ticket-title"><div class="section-title"><h2 id="ticket-title">票务状态</h2></div><ul class="ticket-list">${open.map(row).join('')}</ul><p class="ticket-booked">${icon('check')}${booked.map(([name])=>e(name)).join('、')} 已订好，详情见下方「机票与住宿」。</p></section>`;
+ return `<section class="ticket-board" aria-labelledby="ticket-title"><div class="section-title"><h2 id="ticket-title">票务状态</h2></div><ul class="ticket-list">${open.map(row).join('')}</ul><p class="ticket-booked">${icon('check')}${booked.map(([name])=>e(name)).join('、')} 已订好。</p></section>`;
 }
-function todoRow(i){const id=TODO_IDS[i];return `<label class="todo-row"><input type="checkbox" data-todo="${id}" ${state.todos[id]?'checked':''}><span class="todo-box" aria-hidden="true">${icon('check')}</span><span class="todo-text">${e(TODOS[i])}</span></label>`;}
+const TODO_PREFIX=/^(12\/\d+(?=高台寺|返店|集章|确认)|USJ前一晚：)/;
+function todoRow(i){const id=TODO_IDS[i];return `<label class="todo-row"><input type="checkbox" data-todo="${id}" ${state.todos[id]?'checked':''}><span class="todo-box" aria-hidden="true">${icon('check')}</span><span class="todo-text">${e(TODO_WHEN[id]?TODOS[i].replace(TODO_PREFIX,''):TODOS[i])}</span></label>`;}
 function todoGroups(){
  const index=TODOS.map((_,i)=>i),before=index.filter(i=>!TODO_WHEN[TODO_IDS[i]]);
  const trip=index.filter(i=>TODO_WHEN[TODO_IDS[i]]).sort((a,b)=>TODO_WHEN[TODO_IDS[a]].localeCompare(TODO_WHEN[TODO_IDS[b]]));
@@ -1913,18 +1933,18 @@ function todoGroups(){
  return `<div class="todo-group"><h3>${icon('home')}出发前完成 <small>${before.length} 项</small></h3>${before.map(todoRow).join('')}</div><div class="todo-group"><h3>${icon('calendar')}旅途中再确认 <small>${trip.length} 项</small></h3>${groups.map(date=>`<p class="todo-when">${e(TODO_WHEN_LABEL[date]||dateLabel(date))}</p>${trip.filter(i=>TODO_WHEN[TODO_IDS[i]]===date).map(todoRow).join('')}`).join('')}</div>`;
 }
 function todoProgressMarkup(){const done=todoDone();return `<span>已完成 <strong>${done} / ${TODOS.length}</strong></span><div class="progress-track" role="progressbar" aria-label="临行待办完成进度" aria-valuemin="0" aria-valuemax="${TODOS.length}" aria-valuenow="${done}"><span style="width:${done/TODOS.length*100}%"></span></div>`;}
-function prepBookings(){return `<section class="prep-bookings" id="prep-bookings" aria-labelledby="prep-bookings-title"><div class="section-title"><h2 id="prep-bookings-title">机票与住宿</h2></div>${flights(true)}
- <div class="prep-hotels">${PLAN.bookings.filter(b=>b.type==='hotel').map(b=>`<article><p class="eyebrow">${b.place_id==='hotel_kyoto'?'京都':'大阪'} · ${b.nights}晚</p><h3 lang="ja">${e(PLACE[b.place_id].name_ja)}</h3><p class="stay-date">${dateLabel(b.checkin_date)} 入住 — ${dateLabel(b.checkout_date)} 退房 · 不含早餐</p>${placeInfo(b.place_id,true,false)}<p>${e(stayArrivalText(b.place_id))}</p><div class="food-actions">${external(icon('pin')+'酒店地图',PLACE[b.place_id].map_search_url,'text-link')}${pageLink('查看入住安排 →',dayHash(PLAN.days.findIndex(d=>d.date===b.checkin_date))+'/'+(b.place_id==='hotel_kyoto'?'checkin_kyoto':'osaka_transfer'),'text-link')}</div></article>`).join('')}</div>
+function prepBookings(){return `<section class="prep-bookings" id="prep-bookings" aria-labelledby="prep-bookings-title"><div class="section-title"><h2 id="prep-bookings-title">机票与住宿</h2></div>${flights()}
+ <div class="prep-hotels">${PLAN.bookings.filter(b=>b.type==='hotel').map(b=>`<article><p class="eyebrow">${b.place_id==='hotel_kyoto'?'京都':'大阪'} · ${b.nights}晚</p><h3 lang="ja">${e(PLACE[b.place_id].name_ja)}</h3><p class="stay-date">${dateLabel(b.checkin_date)} 入住 — ${dateLabel(b.checkout_date)} 退房 · 不含早餐</p>${placeInfo(b.place_id,true,false)}<div class="food-actions">${external(icon('pin')+'酒店地图',PLACE[b.place_id].map_search_url,'text-link')}${pageLink('查看入住安排 →',dayHash(PLAN.days.findIndex(d=>d.date===b.checkin_date))+'/'+(b.place_id==='hotel_kyoto'?'checkin_kyoto':'osaka_transfer'),'text-link')}</div></article>`).join('')}</div>
  </section>`;}
-function prepPage(){return `<header class="page-heading"><h1>临行准备</h1><p>勾完下面的待办就可以出发了。</p></header>
+function prepPage(){return `<header class="page-heading"><h1>临行准备</h1></header>
  ${ticketStatus()}
  <div class="prep-layout"><section class="todo-card" id="prep-todos"><div class="section-title"><h2>待办清单</h2><div class="todo-progress" id="todo-count">${todoProgressMarkup()}</div></div>${todoGroups()}</section>${prepBookings()}</div>
- <details class="support-card prep-reference" id="prep-reference"><summary><span>参考资料</span><small>作品日文名 · 早季红叶预测 · 费用 · 使用说明</small></summary><div class="detail-body">
+ <details class="support-card prep-reference" id="prep-reference"><summary><span>参考资料</span><small>作品日文名 · 红叶预测 · 预算 · 说明</small></summary><div class="detail-body">
  <section><h2>作品日文名</h2>${WORK_NAMES.map(t=>`<div class="word-row"><span lang="ja">${e(t)}</span>${btn(icon('copy'),'copy',`data-copy="${e(t)}" aria-label="复制${e(t)}"`,'icon-button')}</div>`).join('')}</section>
  <section><h2>保存的早季红叶预测</h2><p class="muted">截至2026/9/28 · 非实时叶况</p>${PLAN.foliage.spots.map(s=>`<article class="forecast-row"><h3>${e(PLACE[s.place_id].name)}</h3><p>到访 ${dateLabel(s.visit_date)} · 预测观赏开始 ${dateLabel(s.forecast_viewing_start)} · 预测落叶开始 ${dateLabel(s.forecast_leaf_fall_start)}</p>${external('预测来源 ↗',s.source)}</article>`).join('')}<p class="muted">可能见到枝头红叶与落叶混合，不保证盛期。</p></section>
- <section><h2>出行信息</h2><p>普通正餐预算每人¥1,000—2,500；12/6和牛自助预算不超过¥6,000/人，尚未订位。</p><p>部分门票费用（两人）：京都塔¥2,000，未购票；大佛殿¥1,600、高台寺¥1,600，购买状态待确认。USJ、清水寺及购物费用另计。</p></section>
- <section><h2>资料说明</h2><p>行程时间为参考，不代表预约；营业时间、菜单与叶况请临行复核。</p><p>照片供地点识别与作品对照，拍摄时间、来源可在放大图或巡礼的“坐标与来源”查看；示意图另有标注。Google区域预览采集于2026/9/28。</p></section>
- <section><h2>离线与进度</h2><p>${typeof DELIVERY_MODE!=='undefined'&&DELIVERY_MODE==='web'?'博客图片按需加载；完整离线阅读请使用独立离线版。':'行程与照片可离线查看。'}地图和来源链接需联网。</p><p>活动、已拍、可选安排与待办仅保存在当前浏览器。不同浏览器、设备、网页版与离线文件各自记录，不互相同步。请使用同一网址或文件路径；清除浏览器数据或使用隐私模式可能丢失记录。</p></section>
+ <section><h2>预算</h2><p>普通正餐每人¥1,000—2,500；12/6和牛自助每人不超过¥6,000。</p><p>门票（两人）：京都塔¥2,000、大佛殿¥1,600、高台寺¥1,600；USJ、清水寺与购物另计。</p></section>
+ <section><h2>资料说明</h2><p>营业时间、菜单与叶况以临行复核为准。照片来源见放大图或巡礼的「坐标与来源」；Google区域预览采集于2026/9/28。</p></section>
+ <section><h2>离线使用</h2><p>${typeof DELIVERY_MODE!=='undefined'&&DELIVERY_MODE==='web'?'博客版图片按需加载，完整离线阅读请用离线版。':'行程与照片可离线查看。'}地图和来源链接需联网。网页版与离线文件的勾选各自保存；清除浏览器数据会丢失。</p></section>
  </div></details>`;}
 
 // One activity open at a time keeps the day readable as a list.

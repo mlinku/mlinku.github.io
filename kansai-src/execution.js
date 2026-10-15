@@ -12,7 +12,8 @@ function navigationStops(ev,d,includeMeal=false){
  for(const stop of NAVIGATION_PATHS[ev.id]||activityPlaceIds(ev)){
   if(hasMealMap&&stop===first?.[7])continue;
   if(Array.isArray(stop)){stops.push({name:stop[0],sub:stop[1],url:mapURL(stop[1])});continue;}
-  const p=PLACE[stop];stops.push({name:p.name,sub:[PLACE_LOCATIONS[stop],p.address_ja||(p.name_ja!==p.name?p.name_ja:'')].filter(Boolean).join(' · '),url:p.map_search_url});
+  // Hotels are named only; their address sits once in 今晚住.
+  const p=PLACE[stop];stops.push({name:p.name,sub:stop.startsWith('hotel_')?'':[PLACE_LOCATIONS[stop],p.address_ja||(p.name_ja!==p.name?p.name_ja:'')].filter(Boolean).join(' · '),url:p.map_search_url});
  }
  if(ev.id==='gion_dinner_walk'&&d){const row=DETAILS[d.date].meals.find(r=>r[0]==='晚餐'&&r[1]==='首选');stops.push({name:row[2],sub:row[4],url:mealMap(d,row),meal:true});}
  if(includeMeal&&first&&first[0]!=='早餐')stops.push({name:first[8]?.pending?'餐饮区域':first[2],sub:first[4],url:mealMap(d,first),meal:true});
@@ -47,14 +48,13 @@ function executionNotice(d,ev){
  const content={
   flight_out:'当前11:05关闭登机口（香港时间）；以航司最新通知及登机牌为准。',
   agata_stamp:'登录活动网站并开启定位，确认领章成功再离开；攻略勾选不代替领章。',
-  uji_parfait:'10:00开门，不接受预约；75分钟含候位与用餐。久等时缩短午饭前闲逛。',
+  uji_parfait:'10:00开门，不接受预约；75分钟含候位与用餐。',
   daikichi_visit:'14:30仍未到登山口时，须确认能白天下山，否则取消。',
   kodaiji_night:'17:45仍未入场、预计排队超过30分钟，或天气差、疲劳时，直接吃晚饭。稍有延迟时18:45前离寺，省去八坂神社并顺延晚餐。',
   gion_dinner:'おめん20:00最后点餐；晚到或长队时换简餐。',
   usj_transfer:`营业时间于10/2核实，临行再查是否调整。 ${external('官方营业日历 ↗',USJ_HOURS)}`,
   usj_app:`在官方App选中两张门票，一起申请区域资格。 ${external('官方操作说明 ↗',USJ_ENTRY)}`,
   usj_finish:'18:00后预留缓冲，19:00前结束普通票设施体验。19:00—22:00 Amex活动设施及部分餐饮需凭证，19:00并非统一离园时间。',
-  nara_visit:'抵奈良晚于15:30时，先核对入堂余量再决定接驳，不靠压缩参观硬赶。',
   airport_train:`南海空港急行，现行平日时刻已核实；临行复核改点及运行情况。 ${external('南海时刻表 ↗',NANKAI_TIMETABLE)} · ${external('新今宫站入口图 ↗',NANKAI_STATION)}`
  };
  return content[ev.id]?`<p class="execution-note">${content[ev.id]}</p>`:'';
