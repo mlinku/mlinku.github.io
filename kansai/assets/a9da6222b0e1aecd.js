@@ -1592,6 +1592,7 @@ function isMajorEvent(d,ev){
  if(ev.category==='rest')return ev.place_ids.some(id=>PLACE[id]?.category==='restaurant');
  return false;
 }
+const CATEGORY_ICON={transport:'train',flight:'plane',meal:'food',visit:'camera',walk:'walk',rest:'clock',hotel:'bed',activity:'sparkle',shopping:'bag'};
 function eventCard(d,ev){
  const status=activityState(d.date,ev.id),checked=status==='done',isMeal=ev.category==='meal',major=isMajorEvent(d,ev);
  const evs=effectiveEvents(d),earlier=evs.slice(0,evs.findIndex(item=>item.id===ev.id));
@@ -1619,7 +1620,7 @@ function eventCard(d,ev){
  const notice=executionNotice(d,ev);
  const open=isNow;
  // Collapsed: start time, a thumbnail slot, the title, a warning mark, navigation and completion.
- const head=`<div class="event-head"><span class="row-thumb">${imageIds.length?photoFor(imageIds[0]):''}</span><h3 class="row-heading"><button type="button" class="row-toggle" data-action="row-toggle" aria-expanded="${open}"><span class="row-title">${e(ev.title)}</span>${notice?'<span class="row-warn" title="有注意事项">⚠</span>':''}${ev.optional?'<span class="pill gold">可选</span>':''}</button></h3>${dest?external('导航',dest.url,'row-nav'):''}${check}</div>`;
+ const head=`<div class="event-head"><span class="row-thumb">${imageIds.length?photoFor(imageIds[0]):`<span class="row-ph" aria-hidden="true">${icon(CATEGORY_ICON[ev.category]||'pin')}</span>`}</span><h3 class="row-heading"><button type="button" class="row-toggle" data-action="row-toggle" aria-expanded="${open}"><span class="row-title">${e(ev.title)}</span>${notice?'<span class="row-warn" title="有注意事项">⚠</span>':''}${ev.optional?'<span class="pill gold">可选</span>':''}</button></h3>${dest?`<a class="row-nav" href="${e(dest.url)}" target="_blank" rel="noopener noreferrer" title="导航到${e(dest.name)}" aria-label="导航到${e(dest.name)}">${icon('pin')}</a>`:''}${check}</div>`;
  const text=`${statusLabel(ev)?`<p>${statusLabel(ev)}</p>`:''}${hotelIds.filter(id=>!ev.title.includes(PLACE[id].name_ja)).map(id=>`<p class="activity-hotel" lang="ja">${e(PLACE[id].name_ja)}</p>`).join('')}${line?`<p class="condition">${e(line)}</p>`:''}${ev.optionNote?`<p class="selection-note">${e(ev.optionNote)}</p>`:''}${notice}
  ${first?`<div class="meal-block"><p class="meal-preview"><span lang="ja">${e(first[2])}</span><small>${e(first[3])}${first[3].includes('菜单')?'':' / 人'}</small></p><p class="meal-conditions">${e(first[4].replace(' · Louie’s N.Y. Pizza Parlor',''))}${mealNotes(first).conditions?` · ${e(mealNotes(first).conditions)}`:''}</p></div>`:''}
  ${ev.id==='kodaiji_night'?`<p class="night-facts">17:00亮灯 · ¥800 / 人 <span>购票待确认</span></p>`:''}
