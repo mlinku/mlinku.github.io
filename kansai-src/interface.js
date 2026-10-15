@@ -228,6 +228,7 @@ document.addEventListener('click',ev=>{
  const target=ev.target.closest('[data-action]');if(!target)return;
  if(target.dataset.action==='stay-info'){const info=document.getElementById('stay-info');if(info){info.open=true;info.scrollIntoView({block:'center'});info.querySelector('summary').focus({preventScroll:true});}}
  else if(target.dataset.action==='mode-toggle')toggleColorMode();
+ else if(target.dataset.action==='minor-toggle'){const row=target.closest('.event');row.classList.toggle('expanded');target.setAttribute('aria-expanded',row.classList.contains('expanded'));}
  else if(target.dataset.action==='route-jump'){const route=document.getElementById('day-route');if(route){route.open=true;route.scrollIntoView({block:'start'});route.querySelector('summary').focus({preventScroll:true});}}
  else if(target.dataset.action==='jump-now'){const now=document.querySelector('.event.is-now');if(now){now.scrollIntoView({block:'start'});now.setAttribute('tabindex','-1');now.focus({preventScroll:true});}}
  else if(target.dataset.action==='copy-close')$('#copy-dialog').close();

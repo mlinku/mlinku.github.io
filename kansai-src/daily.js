@@ -69,23 +69,37 @@ function timelinePage(d){const flow=DayFlow.forDay(d);nowEventId=currentEventId(
 // Distinct entrance assets remain distinct place IDs; pilgrimage comparisons are independent.
 function compactEvent(ev){return ev.category==='transport'||(ev.category==='rest'&&ev.place_ids.every(id=>id.startsWith('hotel_')||id==='usj'))||['nakamura_walk','usj_app','usj_finish'].includes(ev.id);}
 function eventPhotoIds(ev){return compactEvent(ev)?[]:ev.place_ids.filter(id=>photoSrc(id)&&(ev.category!=='meal'||PLACE[id].category==='restaurant'));}
-// Long time labels read as stacked lines: departure → arrival, then any "·" note in a quieter size.
-function timeMarkup(ev){let [main,...notes]=compactTime(ev.time_label).split(' · ');
- // Keep the clock part on the rail; leading or trailing words ("参考", "抵达", "晚饭后") move to quieter lines.
- const m=!main.includes(' → ')&&main.length>10&&/^([^\d约]*)(约?[\d:.–→]+(?:分钟|小时)?)(.*)$/.exec(main);
- let hint='';if(m){hint=m[1];main=m[2];if(m[3])notes=[m[3],...notes];}return `${hint?`<span class="time-hint">${e(hint)}</span>`:''}<span class="event-time">${main.split(' → ').map(part=>`<span>${e(part)}</span>`).join('')}</span>${notes.map(n=>`<span class="time-note">${e(n)}</span>`).join('')}`;}
-const CATEGORY_ICON={transport:'train',flight:'plane',meal:'food',visit:'camera',walk:'walk',rest:'clock',hotel:'bed',activity:'sparkle',shopping:'bag'};
+// The rail shows when an activity starts; the full window stays in the title and the next row implies the end.
+function timeMarkup(ev,minor=false){
+ const full=compactTime(ev.time_label);
+ if(ev.category==='flight'){const [main,...notes]=full.split(' · ');return `<span class="event-time">${main.split(' → ').map(part=>`<span>${e(part)}</span>`).join('')}</span>${notes.map(n=>`<span class="time-note">${e(n)}</span>`).join('')}`;}
+ const [main,...notes]=full.split(' · '),start=/(约)?(\d{1,2}:\d{2})/.exec(main);
+ if(!start)return `<span class="event-time is-text">${e(main)}</span>${minor?'':notes.map(n=>`<span class="time-note">${e(n)}</span>`).join('')}`;
+ const end=/[–→](\d{1,2}:\d{2})/.exec(main.slice(start.index+start[0].length))?.[1];
+ const extra=[start[1]?'约':'',end?'至 '+end:''].filter(Boolean).join(' ');
+ return `<span class="event-time">${start[2]}</span>${minor?'':`${extra?`<span class="time-note">${e(extra)}</span>`:''}${notes.map(n=>`<span class="time-note">${e(n)}</span>`).join('')}`}`;
+}
+// Major activities are what the day is for; transfers, rests, arrivals and plain walks read as one quiet line.
+function isMajorEvent(d,ev){
+ if(optionalControls(d,ev.id))return true;
+ if(['flight','meal','visit','shopping'].includes(ev.category))return true;
+ if(ev.category==='activity')return !compactEvent(ev)&&ev.id!=='airport_checkin';
+ if(ev.category==='walk')return pilgrimageDay(d.date).some(p=>p.event_id===ev.id&&pointEnabled(p));
+ if(ev.category==='rest')return ev.place_ids.some(id=>PLACE[id]?.category==='restaurant');
+ return false;
+}
 function eventCard(d,ev){
- const status=activityState(d.date,ev.id),checked=status==='done',isMeal=ev.category==='meal';
- const compact=compactEvent(ev);
- const earlier=effectiveEvents(d).slice(0,effectiveEvents(d).findIndex(item=>item.id===ev.id));
- const seen=new Set(earlier.flatMap(eventPhotoIds)),imageIds=eventPhotoIds(ev).filter(id=>!seen.has(id));
+ const status=activityState(d.date,ev.id),checked=status==='done',isMeal=ev.category==='meal',major=isMajorEvent(d,ev);
+ const evs=effectiveEvents(d),earlier=evs.slice(0,evs.findIndex(item=>item.id===ev.id));
+ const seen=new Set(earlier.flatMap(eventPhotoIds)),imageIds=major?eventPhotoIds(ev).filter(id=>!seen.has(id)):[];
  const foodRows=mealRows(d,ev),first=foodRows.find(r=>r[1]==='首选');
  const placeIds=activityPlaceIds(ev),hotelIds=ev.category==='hotel'||ev.id==='luggage_pickup'?ev.place_ids.filter(id=>id.startsWith('hotel_')):[];
  const isNow=ev.id===nowEventId;
  const brief=ev.condition&&Object.hasOwn(EVENT_BRIEF,ev.id)?EVENT_BRIEF[ev.id]:null;
+ const photoFor=id=>activityPhoto(id,'',isMeal&&PLACE[id].category!=='restaurant'?'用餐周边 · ':'',id!==first?.[7]&&(imageIds.length!==1||PLACE[id].name!==ev.title));
  const more=[
   brief!==null?`<details class="event-detail"><summary>完整说明</summary><div class="detail-body"><p>${e(ev.condition)}</p></div></details>`:'',
+  imageIds.length>1?`<details class="event-detail"><summary>更多照片</summary><div class="detail-body event-photos">${imageIds.slice(1).map(photoFor).join('')}</div></details>`:'',
   ev.id==='kodaiji_night'?`<details class="event-detail"><summary>参拜详情</summary><div class="detail-body"><p>游览约60—75分钟，排队另计。</p><p>活动期2026/10/23—12/13；21:30停止入场，22:00闭门。昼夜不清场，离场后同票不能再入。</p><p>${external('活动官网 ↗','https://www.kodaiji.com/saiji.html')} · ${external('票价 ↗','https://www.kodaiji.com/haikan.html')}</p></div></details>`:'',
   foodRows.length?mealSupplement(d,ev,foodRows):'',
   activityDetails(d,ev.id),
@@ -95,14 +109,21 @@ function eventCard(d,ev){
  // Secondary material shares one disclosure per activity, so each card has a single "更多" row.
  const moreHTML=more.join(''),moreLabels=[...new Set([...moreHTML.matchAll(/<summary>([\s\S]*?)<\/summary>/g)].map(m=>m[1].replace(/<[^>]+>/g,'').replace(/^甜品备选 · .*/,'甜品备选')))];
  const moreBody=moreHTML.replace(/<details class="event-detail[^"]*"><summary>([\s\S]*?)<\/summary>/g,'<section class="more-block"><h4>$1</h4>').replace(/<\/details>/g,'</section>');
- return `<article id="event-${ev.id}" class="event cat-${ev.category} ${compact?'compact-event':''} ${checked?'done':''} ${ev.optional?'optional':''} ${isNow?'is-now':''}" data-event="${ev.id}">
- <div class="event-time-col">${ev.time_hint?`<span class="time-hint">${e(ev.time_hint)}</span>`:''}${timeMarkup(ev)}</div>
- <div class="event-content"><div class="event-head"><div class="event-heading"><h3>${e(ev.title)}</h3>${isNow?'<span class="pill now">现在</span>':''}${ev.optional?'<span class="pill gold">可选</span>':''}${statusLabel(ev)}</div><label class="event-check"><input type="checkbox" data-event-check="${ev.id}" ${checked?'checked':''} aria-label="完成：${e(ev.title)}"><span class="check-box" aria-hidden="true">${icon('check')}</span><span class="check-text" aria-hidden="true"></span></label></div>
- ${hotelIds.filter(id=>!ev.title.includes(PLACE[id].name_ja)).map(id=>`<p class="activity-hotel" lang="ja">${icon('bed')}${e(PLACE[id].name_ja)}</p>`).join('')}${(brief??ev.condition)?`<p class="condition">${e(brief??ev.condition)}</p>`:''}${ev.optionNote?`<p class="selection-note">${icon('tune')}${e(ev.optionNote)}</p>`:''}${executionNotice(d,ev)}
+ const line=brief??ev.condition??'';
+ const check=`<label class="event-check"><input type="checkbox" data-event-check="${ev.id}" ${checked?'checked':''} aria-label="完成：${e(ev.title)}"><span class="check-box" aria-hidden="true">${icon('check')}</span><span class="check-text" aria-hidden="true"></span></label>`;
+ const dest=major||ev.category==='rest'?null:navigationStops(ev,d,!!(first&&first[0]!=='早餐')).at(-1);
+ const sub=line||(TRANSPORT_AT_EVENT[ev.id]||[]).map(i=>DETAILS[d.date].transport[i]).filter(Boolean)[0]||'';
+ const head=major
+  ?`<div class="event-head"><div class="event-heading"><h3>${e(ev.title)}</h3>${isNow?'<span class="pill now">现在</span>':''}${ev.optional?'<span class="pill gold">可选</span>':''}${statusLabel(ev)}</div>${check}</div>`
+  :`<div class="event-head"><h3 class="minor-heading"><button type="button" class="minor-toggle" data-action="minor-toggle" aria-expanded="false"><span class="minor-title">${e(ev.title)}</span>${sub?`<span class="minor-sub">${e(sub)}</span>`:''}</button></h3>${isNow?'<span class="pill now">现在</span>':''}${dest?external('导航',dest.url,'minor-nav'):''}${check}</div>`;
+ const text=`${hotelIds.filter(id=>!ev.title.includes(PLACE[id].name_ja)).map(id=>`<p class="activity-hotel" lang="ja">${e(PLACE[id].name_ja)}</p>`).join('')}${line?`<p class="condition">${e(line)}</p>`:''}${ev.optionNote?`<p class="selection-note">${e(ev.optionNote)}</p>`:''}${executionNotice(d,ev)}
  ${first?`<div class="meal-block"><p class="meal-preview"><span lang="ja">${e(first[2])}</span><small>${e(first[3])}${first[3].includes('菜单')?'':' / 人'}</small></p><p class="meal-conditions">${e(first[4].replace(' · Louie’s N.Y. Pizza Parlor',''))}${mealNotes(first).conditions?` · ${e(mealNotes(first).conditions)}`:''}</p></div>`:''}
  ${ev.id==='kodaiji_night'?`<p class="night-facts">17:00亮灯 · ¥800 / 人 <span>购票待确认</span></p>`:''}
- ${transportDetail(d,ev)}
- ${imageIds.length?`<div class="event-photos">${imageIds.map(id=>activityPhoto(id,'',isMeal&&PLACE[id].category!=='restaurant'?'用餐周边 · ':'',id!==first?.[7]&&(imageIds.length!==1||PLACE[id].name!==ev.title))).join('')}</div>`:''}
+ ${transportDetail(d,ev)}`;
+ return `<article id="event-${ev.id}" class="event ${major?'major':'minor'} cat-${ev.category} ${checked?'done':''} ${ev.optional?'optional':''} ${isNow?'is-now':''}" data-event="${ev.id}">
+ <div class="event-time-col" title="${e(compactTime(ev.time_label))}">${ev.time_hint?`<span class="time-hint">${e(ev.time_hint)}</span>`:''}${timeMarkup(ev,!major)}</div>
+ <div class="event-content">${head}
+ <div class="event-body${imageIds.length?' has-figure':''}"><div class="event-text">${text}</div>${imageIds.length?`<div class="event-figure">${photoFor(imageIds[0])}</div>`:''}</div>
  <div class="event-actions">${eventNavigation(ev,d,!!(first&&first[0]!=='早餐'))}${pilgrimageEventLinks(d,ev)}${rallyActions(ev)}${inlineChoices(d,ev)}${moreBody?`<details class="event-more"><summary>更多<small>${e(moreLabels.join(' · '))}</small></summary><div class="more-body">${moreBody}</div></details>`:''}</div>
  </div></article>`;
 }

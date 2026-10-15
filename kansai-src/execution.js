@@ -4,7 +4,8 @@ function navigationPlace(ev){
  if(ev.category==='transport'||['nakamura_walk','checkout_osaka'].includes(ev.id))return ev.place_ids.at(-1);
  return null;
 }
-function eventNavigation(ev,d,includeMeal=false){
+// Places an activity passes through, in travel order; the last one is where it ends.
+function navigationStops(ev,d,includeMeal=false){
  const first=d?mealRows(d,ev).find(row=>row[1]==='首选'):null;
  const hasMealMap=includeMeal||(first&&first[0]!=='早餐');
  const stops=[];
@@ -15,6 +16,10 @@ function eventNavigation(ev,d,includeMeal=false){
  }
  if(ev.id==='gion_dinner_walk'&&d){const row=DETAILS[d.date].meals.find(r=>r[0]==='晚餐'&&r[1]==='首选');stops.push({name:row[2],sub:row[4],url:mealMap(d,row),meal:true});}
  if(includeMeal&&first&&first[0]!=='早餐')stops.push({name:first[8]?.pending?'餐饮区域':first[2],sub:first[4],url:mealMap(d,first),meal:true});
+ return stops;
+}
+function eventNavigation(ev,d,includeMeal=false){
+ const stops=navigationStops(ev,d,includeMeal);
  if(!stops.length)return '';
  // One map link to where this activity ends; any stops on the way fold into a numbered list.
  const dest=stops.at(-1),via=stops.slice(0,-1);

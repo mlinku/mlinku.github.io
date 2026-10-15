@@ -319,6 +319,33 @@ details[open]>summary::after {transform:translateY(1px) rotate(-135deg)}
 .event-photos>.photo-button, .event-photos>.shop-photo {width:132px; flex:0 0 auto}
 .event-photos .photo-button>span {font-size:12px}
 .shop-photo .place-location {display:block; margin-top:2px}
+/* Major rows carry one photo at a fixed spot on the right; minor rows are a single quiet line. */
+.event-body {display:block}
+.event-body.has-figure {display:grid; grid-template-columns:minmax(0,1fr) 168px; gap:20px; align-items:start}
+.event-text {display:flex; flex-direction:column; gap:8px; min-width:0}
+.event-text:empty {display:none}
+.event-figure .photo-button img {aspect-ratio:3/2}
+.event-figure .shop-photo .place-location {display:block; margin-top:2px}
+.event.major {padding:24px 0}
+.event.minor {padding:9px 0}
+.event.minor .event-time {font-size:var(--fs-sm); font-weight:500; color:var(--muted)}
+.event.minor .event-time.is-text {font-size:var(--fs-xs)}
+.event.minor .event-head {align-items:center; gap:12px}
+.minor-heading {flex:1; min-width:0; font-size:var(--fs-sm) !important; font-weight:400 !important}
+.minor-toggle {display:flex; align-items:baseline; gap:12px; width:100%; min-width:0; text-align:left; color:var(--ink-2)}
+.minor-toggle:hover .minor-title {color:var(--ink)}
+.minor-title {flex-shrink:0; max-width:60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.minor-title::after {content:''; display:inline-block; width:5px; height:5px; margin:0 0 3px 7px; border-right:1.5px solid var(--muted); border-bottom:1.5px solid var(--muted); transform:rotate(45deg)}
+.event.expanded .minor-title::after {transform:rotate(-135deg); margin-bottom:0}
+.minor-sub {flex:1; min-width:0; font-size:var(--fs-xs); color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.minor-nav {flex-shrink:0; font-size:var(--fs-xs)}
+.minor-nav::after {content:' ↗'}
+.event.minor .event-check {min-height:28px}
+.event.minor .check-text {display:none}
+.event.minor:not(.expanded) .event-content>*:not(.event-head) {display:none}
+.event.minor.expanded .event-content {padding-bottom:6px}
+.event.minor .event-content {gap:8px}
+.event.done.minor .minor-title {color:var(--muted); text-decoration:line-through; text-decoration-color:var(--rule-2)}
 /* The action line: navigation first, then the quieter links. Open disclosures take the full width. */
 .event-actions {display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 20px; font-size:var(--fs-sm)}
 .event-actions>details[open] {flex-basis:100%}
@@ -596,6 +623,15 @@ noscript p {padding:40px; text-align:center}
   .event-time>span+span::before {content:'→ '; color:var(--muted); font-weight:400}
   .event.is-now {margin-left:calc(-1 * var(--pad)); padding-left:calc(var(--pad) - 3px)}
   .event-photos>.photo-button, .event-photos>.shop-photo {width:calc(33.33% - 6px)}
+  .event-body.has-figure {grid-template-columns:minmax(0,1fr) 96px; gap:12px}
+  .event.minor {grid-template-columns:44px minmax(0,1fr); gap:10px}
+  .event.minor .event-time-col {display:block; padding-top:1px}
+  .event.minor .event-time {font-size:var(--fs-xs)}
+  .event.minor .time-hint {display:none}
+  .event.minor .event-head {gap:8px}
+  .minor-toggle {flex-wrap:wrap; row-gap:0}
+  .minor-title {max-width:100%}
+  .minor-sub {flex-basis:100%}
   .food-idea.with-photo {grid-template-columns:minmax(0,1fr)}
   .ticket-list {grid-template-columns:minmax(0,1fr)}
   .flight-grid, .prep-hotels, .prep-reference .detail-body {grid-template-columns:minmax(0,1fr)}
