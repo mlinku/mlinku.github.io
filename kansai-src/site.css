@@ -299,7 +299,7 @@ details[open]>summary::after {transform:translateY(1px) rotate(-135deg)}
 .event.minor .event-time {font-weight:500; color:var(--muted)}
 .event-time.is-text {font-size:var(--fs-xs); font-weight:600}
 .time-hint, .time-note {display:block; font-size:12px; color:var(--muted); font-weight:400}
-.event:not(.expanded) .time-hint, .event:not(.expanded) .time-note {display:none}
+.event:not(.expanded)>.event-time-col .time-hint, .event:not(.expanded)>.event-time-col .time-note {display:none}
 .event-content {min-width:0; display:flex; flex-direction:column}
 .event-head {display:flex; align-items:center; gap:14px; min-height:44px}
 .row-thumb {flex:0 0 52px; width:52px}
@@ -315,7 +315,7 @@ details[open]>summary::after {transform:translateY(1px) rotate(-135deg)}
 .event.minor .row-toggle {color:var(--ink-2)}
 .row-toggle:hover .row-title {color:var(--link)}
 .row-title::after {content:''; display:inline-block; width:5px; height:5px; margin:0 0 3px 8px; border-right:1.5px solid var(--muted); border-bottom:1.5px solid var(--muted); transform:rotate(45deg)}
-.event.expanded .row-title::after {transform:rotate(-135deg); margin-bottom:0}
+.event.expanded>.event-content>.event-head .row-title::after {transform:rotate(-135deg); margin-bottom:0}
 .row-when {font-size:var(--fs-xs); font-weight:400; color:var(--muted)}
 .event-when {font-size:var(--fs-xs); color:var(--muted); font-variant-numeric:tabular-nums; display:flex; flex-wrap:wrap; align-items:center; gap:4px 10px}
 .row-warn {font-size:var(--fs-xs); color:var(--warn); font-weight:600}
@@ -335,9 +335,15 @@ details[open]>summary::after {transform:translateY(1px) rotate(-135deg)}
 .event.done .row-title {text-decoration:line-through; text-decoration-color:var(--rule-2)}
 .event.done .row-thumb {opacity:.5}
 .event-body {display:none; padding:4px 0 10px}
-.event.expanded .event-body {display:block}
+.event.expanded>.event-content>.event-body {display:block}
 .event.major .event-body {padding-left:66px}
 
+.move-group>.event-content>.event-head .row-title {font-weight:600}
+.move-steps {padding:0 0 4px}
+.move-steps>.event {grid-template-columns:var(--time-col) minmax(0,1fr); margin:0; padding:4px 0; border-bottom:0; background:none}
+.move-steps>.event+.event {border-top:1px dashed var(--rule)}
+.move-steps .row-thumb {flex-basis:28px; width:28px}
+.move-steps .row-ph {background:none}
 .event-text {display:flex; flex-direction:column; gap:8px; min-width:0}
 .event.major {background:var(--major-bg); margin:0 -12px; padding-left:12px; padding-right:12px; border-radius:4px}
 .event.is-now {box-shadow:inset 3px 0 0 var(--link)}

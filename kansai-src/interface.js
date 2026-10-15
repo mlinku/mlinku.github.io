@@ -201,8 +201,10 @@ function prepPage(){return `<header class="page-heading"><h1>临行准备</h1></
 // One activity open at a time keeps the day readable as a list.
 function openEventRow(row,open){
  if(!row)return;
- if(open)document.querySelectorAll('.event.expanded').forEach(other=>{if(other!==row){other.classList.remove('expanded');other.querySelector('.row-toggle')?.setAttribute('aria-expanded','false');}});
+ if(open)document.querySelectorAll('.event.expanded').forEach(other=>{if(other!==row&&!other.contains(row)){other.classList.remove('expanded');other.querySelector('.row-toggle')?.setAttribute('aria-expanded','false');}});
  row.classList.toggle('expanded',open);row.querySelector('.row-toggle')?.setAttribute('aria-expanded',String(open));
+ // Opening a step inside 移动 also opens the 移动 line.
+ if(open)for(let up=row.parentElement?.closest('.event');up;up=up.parentElement?.closest('.event')){up.classList.add('expanded');up.querySelector('.row-toggle')?.setAttribute('aria-expanded','true');}
 }
 /* ---------- Shell ---------- */
 // Same storage key and attribute as the blog's js/ui/mode.js, so one choice applies to the blog and the guide.
@@ -221,6 +223,7 @@ function refreshDayChecks(d){
   const status=activityState(d.date,input.dataset.eventCheck),checked=status==='done';
   input.checked=checked;input.closest('.event').classList.toggle('done',checked);
  });
+ document.querySelectorAll('[data-move-check]').forEach(input=>{const all=input.dataset.moveCheck.split(' ').every(id=>activityState(d.date,id)==='done');input.checked=all;input.closest('.event').classList.toggle('done',all);});
  refreshDayProgress(d);
  pilgrimageDay(d.date).forEach(refreshShotCompletion);
 }
@@ -241,7 +244,8 @@ document.addEventListener('click',ev=>{
  else if(target.dataset.action==='undo'&&undoAction){const fn=undoAction;undoAction=null;fn();}
 });
 document.addEventListener('change',ev=>{const input=ev.target,d=PLAN.days[dayIndex];
- if(input.matches('[data-event-check]')){setCheck(d.date,input.dataset.eventCheck,input.checked);refreshDayChecks(d);if(input.checked)openEventRow(input.closest('.event'),false);}
+ if(input.matches('[data-move-check]')){for(const id of input.dataset.moveCheck.split(' '))setCheck(d.date,id,input.checked);refreshDayChecks(d);if(input.checked)openEventRow(input.closest('.event'),false);}
+ else if(input.matches('[data-event-check]')){setCheck(d.date,input.dataset.eventCheck,input.checked);refreshDayChecks(d);if(input.checked)openEventRow(input.closest('.event'),false);}
  else if(input.matches('[data-todo]')){state.todos[input.dataset.todo]=input.checked;save();$('#todo-count').innerHTML=todoProgressMarkup();}
  else if(input.dataset.choice){
   const y=input.getBoundingClientRect().top,dx=$('.date-nav')?.scrollLeft||0,open=captureReading($('#main')),key=input.dataset.choice,value=input.value,c=choice(d);

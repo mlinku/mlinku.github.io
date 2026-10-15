@@ -79,7 +79,29 @@ function nextStopMarkup(d){
  const when=wait<60?`${wait} 分钟后`:`${Math.floor(wait/60)} 小时${wait%60?` ${wait%60} 分`:''}后`;
  return `<p class="next-stop"><span class="next-label">下一站</span><button type="button" class="next-target" data-action="jump-event" data-event-id="${next.id}"><b>${String(eventStart(next)/60|0).padStart(2,'0')}:${String(eventStart(next)%60).padStart(2,'0')}</b> ${e(next.title)}</button><span class="next-wait">${when}</span></p>`;
 }
-function timelinePage(d){const flow=DayFlow.forDay(d);nowEventId=currentEventId(d);return `<div class="timeline">${flow.sections.map(section=>{const [label,...rest]=section.name.split(' · ');const clocks=section.events.flatMap(ev=>[...compactTime(ev.time_label).matchAll(/\d{1,2}:\d{2}/g)].map(m=>m[0])),range=clocks.length?clocks[0]+(clocks.length>1?'–'+clocks.at(-1):''):'';return `<section class="timeline-phase" id="${section.id}"><div class="phase-heading"><h2>${e(label)}</h2>${rest.length?`<p>${e(rest.join(' · '))}</p>`:''}${range?`<span class="phase-range">${range}</span>`:''}</div>${section.events.map(ev=>eventCard(d,ev)).join('')}</section>`;}).join('')}</div>`;}
+// Two or more transfer steps in a row read as one 移动 line; the steps open beneath it and keep their own checks.
+function moveRuns(d){
+ const events=effectiveEvents(d),runs=[];let run=[];
+ for(const ev of events){if(isMajorEvent(d,ev))run=[];else{run.push(ev);if(run.length===2)runs.push(run);}}
+ return runs;
+}
+function moveCard(d,steps){
+ const ids=steps.map(ev=>ev.id),done=ids.every(id=>activityState(d.date,id)==='done');
+ const stopsOf=ev=>{const first=mealRows(d,ev).find(r=>r[1]==='首选');return navigationStops(ev,d,!!(first&&first[0]!=='早餐'));};
+ const from=steps.map(stopsOf).find(s=>s.length)?.[0],dest=[...steps].reverse().map(stopsOf).find(s=>s.length)?.at(-1);
+ const open=steps.some(ev=>ev.id===nowEventId);
+ return `<article id="move-${ids[0]}" class="event minor move-group ${done?'done':''} ${open?'expanded':''}" data-move="${ids.join(' ')}">
+ <div class="event-time-col">${timeMarkup(steps[0])}</div>
+ <div class="event-content"><div class="event-head"><span class="row-thumb"><span class="row-ph" aria-hidden="true">${icon('train')}</span></span><h3 class="row-heading"><button type="button" class="row-toggle" data-action="row-toggle" aria-expanded="${open}"><span class="row-title">移动 · ${steps.length} 步</span>${from&&dest&&from.name!==dest.name?`<span class="row-when">${e(from.name)} → ${e(dest.name)}</span>`:''}</button></h3>${dest?`<a class="row-nav" href="${e(dest.url)}" target="_blank" rel="noopener noreferrer" title="导航到${e(dest.name)}" aria-label="导航到${e(dest.name)}">${icon('pin')}</a>`:''}<label class="event-check"><input type="checkbox" data-move-check="${ids.join(' ')}" ${done?'checked':''} aria-label="完成：移动 ${steps.length} 步"><span class="check-box" aria-hidden="true">${icon('check')}</span></label></div>
+ <div class="event-body move-steps">${steps.map(ev=>eventCard(d,ev)).join('')}</div>
+ </div></article>`;
+}
+function timelinePage(d){const flow=DayFlow.forDay(d);nowEventId=currentEventId(d);
+ const runs=moveRuns(d),runOf=new Map(runs.flatMap(run=>run.map(ev=>[ev.id,run])));
+ const rows=section=>section.events.map(ev=>{const run=runOf.get(ev.id);if(!run)return eventCard(d,ev);return run[0].id===ev.id?moveCard(d,run):'';}).join('');
+ // A run that starts in one period stays there whole; a period left with nothing of its own is skipped.
+ const sections=flow.sections.map(section=>({...section,events:section.events.flatMap(ev=>{const run=runOf.get(ev.id);return !run?[ev]:run[0].id===ev.id?run:[];})}));
+ return `<div class="timeline">${sections.filter(section=>section.events.length).map(section=>{const [label,...rest]=section.name.split(' · ');const clocks=section.events.flatMap(ev=>[...compactTime(ev.time_label).matchAll(/\d{1,2}:\d{2}/g)].map(m=>m[0])),range=clocks.length?clocks[0]+(clocks.length>1?'–'+clocks.at(-1):''):'';return `<section class="timeline-phase" id="${section.id}"><div class="phase-heading"><h2>${e(label)}</h2>${rest.length?`<p>${e(rest.join(' · '))}</p>`:''}${range?`<span class="phase-range">${range}</span>`:''}</div>${rows(section)}</section>`;}).join('')}</div>`;}
 
 // Ordinary identification photos belong to the first eligible activity, not transit.
 // Distinct entrance assets remain distinct place IDs; pilgrimage comparisons are independent.
