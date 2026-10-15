@@ -127,12 +127,12 @@ function tripStatusCard(){
   return `<section class="status-card is-during" aria-label="旅行进行中"><div class="status-copy"><p class="status-kicker">${icon('sparkle')}旅行中 · 第 ${s.index+1} 天 / 共 8 天</p><h2>今天：${dateLabel(d.date)} ${e(d.weekday)} · ${e(info.short)}</h2><p>${e(info.key)}</p></div><div class="status-actions">${pageLink('打开今天的行程 '+icon('arrow'),dayHash(s.index),'btn primary')}<span class="status-meta">已完成 ${p.done} / ${p.total} 项</span></div></section>`;
  }
  if(s.phase==='after')return `<section class="status-card is-after"><div class="status-copy"><p class="status-kicker">${icon('sparkle')}旅程已结束</p><h2>八天关西秋日，辛苦啦</h2><p>行程、照片与巡礼对照都还在，可以随时回看。</p></div><div class="status-actions">${pageLink('从第 1 天回看 '+icon('arrow'),dayHash(0),'btn primary')}</div></section>`;
- return `<section class="status-card is-before"><div class="status-count"><strong>${s.days}</strong><span>天后出发</span></div><div class="status-copy"><p class="status-kicker">${icon('clock')}出发前</p><h2>先完成临行准备，再按天熟悉行程</h2><p>临行待办已完成 <strong>${done} / ${TODOS.length}</strong>${done<TODOS.length?'，还有未购门票需要处理。':'，准备就绪。'}</p></div><div class="status-actions">${pageLink('去临行准备 '+icon('arrow'),'#prep/todos','btn primary')}${pageLink('从第 1 天开始看','#day/'+PLAN.days[0].date+'/timeline','btn ghost')}</div></section>`;
+ return `<section class="status-card is-before"><div class="status-count"><strong>${s.days}</strong><span>天后出发</span></div><div class="status-copy"><p class="status-kicker">${icon('clock')}出发前</p><h2>${done<TODOS.length?'先把临行准备做完':'准备就绪，可以出发'}</h2><p>临行待办 <strong>${done} / ${TODOS.length}</strong>${(PLAN.unconfirmed_purchases||[]).filter(p=>p.status==='not_purchased').map(p=>' · '+p.item.replace('普通门票','门票')+'未购买').join('')}</p></div><div class="status-actions">${pageLink('去临行准备 '+icon('arrow'),'#prep/todos','btn primary')}${pageLink('从第 1 天开始看','#day/'+PLAN.days[0].date+'/timeline','btn ghost')}</div></section>`;
 }
 const HOW_TO=[
- ['bag','出发前','打开「准备」页，逐条勾完待办，处理标红的未购门票。'],
- ['calendar','每天出门前','打开当天页面，先读顶部的「今日要点」和「情况有变时」。'],
- ['walk','在路上','按时间顺序往下走：点「导航」打开 Google 地图，做完一项就点「完成」。']
+ ['bag','出发前','在「准备」页勾完待办，先买门票。'],
+ ['calendar','每天出门前','读当天页面顶部的「今日要点」。'],
+ ['walk','在路上','按时间往下走，做完一项点「完成」。']
 ];
 const GLOSSARY=[
  ['时间','都是含缓冲的参考窗口，不是预约；航班为当地时间，日本比香港快 1 小时。'],
@@ -148,16 +148,16 @@ function dayCard(d,i){
 }
 function overview(){return `
  <header class="overview-hero">
-  <div class="hero-copy"><p class="eyebrow">まひろ的小站 · 旅行专题</p><h1>关西秋日手帖</h1><p class="trip-date">2026年11月30日 — 12月7日 · 京都 · 宇治 · 大阪 · 奈良 · 神户</p><div class="trip-facts" title="12/1—12/6为完整游览日"><span><strong>8</strong>天</span><span><strong>7</strong>晚</span><span><strong>6</strong>个完整游览日</span><span><strong>2</strong>家酒店</span></div></div>
+  <div class="hero-copy"><h1>关西秋日手帖</h1><p class="trip-date">2026.11.30 — 12.07 · 8 天 7 晚</p><p class="trip-cities">京都 · 宇治 · 大阪 · 奈良 · 神户</p></div>
   <div class="hero-photos">${[['byodoin','宇治 · 平等院'],['inari','京都 · 伏见稻荷'],['dotonbori','大阪 · 道顿堀']].map(([id,label],i)=>photoSrc(id)?`<figure>${photo(id,'',i?'lazy':'eager','(max-width:720px) 50vw, 420px')}<figcaption>${label}</figcaption></figure>`:'').join('')}</div>
  </header>
  ${tripStatusCard()}
  <section id="how-to" class="how-to" aria-labelledby="how-to-title"><div class="section-title"><h2 id="how-to-title">怎么用这份手帖</h2></div><ol class="how-to-steps">${HOW_TO.map(([ico,title,text],i)=>`<li><span class="how-to-icon">${icon(ico)}</span><div><strong><em>${i+1}</em>${title}</strong><p>${text}</p></div></li>`).join('')}</ol>
   <details class="glossary"><summary>${icon('book')}看不懂的词？术语说明</summary><dl>${GLOSSARY.map(([t,d])=>`<div><dt>${t}</dt><dd>${d}</dd></div>`).join('')}</dl></details>
  </section>
- <section id="day-cards"><div class="section-title"><h2>8 天行程</h2><p>点任意一天查看逐项安排</p></div><div class="day-grid">${PLAN.days.map(dayCard).join('')}</div></section>
- <section id="trip-map" class="trip-map-section"><div class="section-title"><h2>关西区域地图</h2><p>城市之间怎么移动</p></div><div class="map-layout"><a class="google-map-preview" href="${KANSAI_MAP_URL}" target="_blank" rel="noopener noreferrer" aria-label="打开关西区域的交互式 Google 地图"><img src="${REGION_MAP_IMAGE}" alt="Google 关西区域地图，展示京都、宇治、大阪、奈良、神户的真实位置" width="400" height="300" loading="lazy"><span>关西全图<em>打开 Google 地图 ↗</em></span></a><ol class="trip-connections">${[['11/30','关西机场 → 京都','HARUKA 特急，班次按入境进度选'],['12/1','京都 ⇄ 宇治','JR 奈良线往返'],['12/3','京都 → 大阪','先回京都酒店取行李'],['12/5','大阪 → 奈良 → 大阪','大阪城后经鹤桥乘近铁往返奈良'],['12/6','大阪 ⇄ 神户','生田、北野、三宫与神户大桥'],['12/7','大阪 → 关西机场','南海空港急行，清晨出发']].map(([date,path,note])=>`<li><span>${date}</span><p><strong>${path}</strong>${note?`<small>${note}</small>`:''}</p></li>`).join('')}</ol></div></section>
- <section class="stay-section"><div class="section-title"><h2>住宿与航班</h2><p>均已预订</p></div><div class="stays">${stayCard('hotel_kyoto','京都 · 3晚','11/30 入住 — 12/3 退房')}${stayCard('hotel_osaka','大阪 · 4晚','12/3 入住 — 12/7 退房')}</div>${flights()}</section>
+ <section id="day-cards"><div class="section-title"><h2>8 天行程</h2></div><div class="day-grid">${PLAN.days.map(dayCard).join('')}</div></section>
+ <section id="trip-map" class="trip-map-section"><div class="section-title"><h2>城市之间怎么走</h2></div><div class="map-layout"><a class="google-map-preview" href="${KANSAI_MAP_URL}" target="_blank" rel="noopener noreferrer" aria-label="打开关西区域的交互式 Google 地图"><img src="${REGION_MAP_IMAGE}" alt="Google 关西区域地图，展示京都、宇治、大阪、奈良、神户的真实位置" width="400" height="300" loading="lazy"><span>关西全图<em>打开 Google 地图 ↗</em></span></a><ol class="trip-connections">${[['11/30','关西机场 → 京都','HARUKA 特急，班次按入境进度选'],['12/1','京都 ⇄ 宇治','JR 奈良线往返'],['12/3','京都 → 大阪','先回京都酒店取行李'],['12/5','大阪 → 奈良 → 大阪','大阪城后经鹤桥乘近铁往返奈良'],['12/6','大阪 ⇄ 神户','生田、北野、三宫与神户大桥'],['12/7','大阪 → 关西机场','南海空港急行，清晨出发']].map(([date,path,note])=>`<li><span>${date}</span><p><strong>${path}</strong>${note?`<small>${note}</small>`:''}</p></li>`).join('')}</ol></div></section>
+ <section class="stay-section"><div class="section-title"><h2>住宿与航班</h2></div><div class="stays">${stayCard('hotel_kyoto','京都 · 3晚','11/30 入住 — 12/3 退房')}${stayCard('hotel_osaka','大阪 · 4晚','12/3 入住 — 12/7 退房')}</div>${flights()}</section>
  `;}
 function stayCard(id,title,date){return `<article class="stay-card">${photoButton(id,'stay-photo','',false)}<div class="stay-copy"><p class="eyebrow">${title}</p><h3 lang="ja">${e(PLACE[id].name_ja)}</h3><p class="stay-date">${date}</p><details class="stay-info"><summary>地址与到店方式</summary>${placeInfo(id,true)}${external(icon('pin')+'酒店地图',PLACE[id].map_search_url,'text-link')}</details></div></article>`;}
 function flights(showConditions=false){const bookings=PLAN.bookings.filter(b=>b.type==='flight');return `<section class="flight-card flight-overview"><div class="flight-heading">${icon('plane')}<h3>${e([...new Set(bookings.map(b=>b.airline))].join(' / '))}</h3><span>往返航班 · 当地时间</span></div><div class="flight-grid">${bookings.map(b=>{const from=flightLocal(b,'departure'),to=flightLocal(b,'arrival');return `<div class="flight-leg"><p class="flight-leg-title">${e(from.date)} · ${b.from==='hkg'?'去程':'回程'} <b>${e(b.flight_number||'航班号待确认')}</b></p><div class="flight-times"><strong><span class="flight-action">起飞</span>${from.time}<small>${e(from.city)}</small></strong><span class="flight-line" aria-hidden="true">${icon('plane')}</span><strong><span class="flight-action">抵达</span>${to.time}<small>${e(to.city)}</small></strong></div><p class="flight-terminals">${e(flightTerminals(b))}</p>${showConditions?flightConditions(b):''}</div>`;}).join('')}</div></section>`;}
@@ -165,7 +165,7 @@ function flights(showConditions=false){const bookings=PLAN.bookings.filter(b=>b.
 function flightConditions(booking){
  const d=PLAN.days.find(d=>d.timeline.some(ev=>ev.id===booking.id));
  const detail=d.visit_details?.[booking.id==='flight_out'?'flight_out':'airport_checkin'];
- return `<div class="flight-conditions">${(detail?.items||[]).map(item=>`<p>${e(item.text)}</p>`).join('')}${[...new Set((detail?.items||[]).map(item=>item.url).filter(Boolean))].map(url=>external('航司手续说明 ↗',url,'text-link')).join('')}</div>`;
+ return `<details class="flight-conditions"><summary>值机与登机须知</summary><div class="detail-body">${(detail?.items||[]).map(item=>`<p>${e(item.text)}</p>`).join('')}${[...new Set((detail?.items||[]).map(item=>item.url).filter(Boolean))].map(url=>external('航司手续说明 ↗',url,'text-link')).join('')}</div></details>`;
 }
 
 /* ---------- Preparation ---------- */
@@ -174,7 +174,7 @@ function ticketStatus(){
  const booked=[['往返机票','HX618 / HX617','ok'],['京都酒店','11/30—12/3 · 3晚','ok'],['大阪酒店','12/3—12/7 · 4晚','ok'],['HARUKA','11/30 · 班次现场选','ok']];
  const open=(PLAN.unconfirmed_purchases||[]).map(p=>[p.item+(p.quantity?' ×'+p.quantity:''),dateLabel(p.visit_date)+' 使用',...(PURCHASE_LABEL[p.status]?[PURCHASE_LABEL[p.status][1],PURCHASE_LABEL[p.status][0]]:['warn','待确认'])]);
  const row=([name,note,tone,label])=>`<li class="ticket tone-${tone}"><span class="ticket-state">${tone==='ok'?icon('check')+'已订':(tone==='danger'?icon('alert'):icon('info'))+label}</span><strong>${e(name)}</strong><small>${e(note)}</small></li>`;
- return `<section class="ticket-board" aria-labelledby="ticket-title"><div class="section-title"><h2 id="ticket-title">票务状态</h2><p>红色需在出发前处理</p></div><ul class="ticket-list">${open.map(row).join('')}${booked.map(row).join('')}</ul></section>`;
+ return `<section class="ticket-board" aria-labelledby="ticket-title"><div class="section-title"><h2 id="ticket-title">票务状态</h2></div><div class="ticket-groups"><div><h3>待处理</h3><ul class="ticket-list">${open.map(row).join('')}</ul></div><div><h3>已订好</h3><ul class="ticket-list">${booked.map(row).join('')}</ul></div></div></section>`;
 }
 function todoRow(i){const id=TODO_IDS[i];return `<label class="todo-row"><input type="checkbox" data-todo="${id}" ${state.todos[id]?'checked':''}><span class="todo-box" aria-hidden="true">${icon('check')}</span><span class="todo-text">${e(TODOS[i])}</span></label>`;}
 function todoGroups(){
@@ -184,10 +184,10 @@ function todoGroups(){
  return `<div class="todo-group"><h3>${icon('home')}出发前完成 <small>${before.length} 项</small></h3>${before.map(todoRow).join('')}</div><div class="todo-group"><h3>${icon('calendar')}旅途中再确认 <small>${trip.length} 项</small></h3>${groups.map(date=>`<p class="todo-when">${e(TODO_WHEN_LABEL[date]||dateLabel(date))}</p>${trip.filter(i=>TODO_WHEN[TODO_IDS[i]]===date).map(todoRow).join('')}`).join('')}</div>`;
 }
 function todoProgressMarkup(){const done=todoDone();return `<span>已完成 <strong>${done} / ${TODOS.length}</strong></span><div class="progress-track" role="progressbar" aria-label="临行待办完成进度" aria-valuemin="0" aria-valuemax="${TODOS.length}" aria-valuenow="${done}"><span style="width:${done/TODOS.length*100}%"></span></div>`;}
-function prepBookings(){return `<section class="prep-bookings" id="prep-bookings" aria-labelledby="prep-bookings-title"><div class="section-title"><h2 id="prep-bookings-title">机票与住宿</h2><p>往返航班及京都3晚、大阪4晚住宿已订</p></div>${flights(true)}<p class="booking-time-note">${icon('info')}航班按各机场当地时间显示；日本比香港快1小时。起降时间沿用机票记录，出发前查看航司通知。</p>
+function prepBookings(){return `<section class="prep-bookings" id="prep-bookings" aria-labelledby="prep-bookings-title"><div class="section-title"><h2 id="prep-bookings-title">机票与住宿</h2></div>${flights(true)}
  <div class="prep-hotels">${PLAN.bookings.filter(b=>b.type==='hotel').map(b=>`<article><p class="eyebrow">${b.place_id==='hotel_kyoto'?'京都':'大阪'} · ${b.nights}晚</p><h3 lang="ja">${e(PLACE[b.place_id].name_ja)}</h3><p class="stay-date">${dateLabel(b.checkin_date)} 入住 — ${dateLabel(b.checkout_date)} 退房 · 不含早餐</p>${placeInfo(b.place_id,true)}<p>${e(stayArrivalText(b.place_id))}</p><div class="food-actions">${external(icon('pin')+'酒店地图',PLACE[b.place_id].map_search_url,'text-link')}${pageLink('查看入住安排 →',dayHash(PLAN.days.findIndex(d=>d.date===b.checkin_date))+'/'+(b.place_id==='hotel_kyoto'?'checkin_kyoto':'osaka_transfer'),'text-link')}</div></article>`).join('')}</div>
- <p class="muted">11/30 HARUKA已购，班次未锁定；按入境进度选班次。</p></section>`;}
-function prepPage(){return `<header class="page-heading"><p class="eyebrow">出发前 · 旅途中</p><h1>临行准备</h1><p>按顺序勾完下面的待办。勾选只保存在这台设备的浏览器里。</p><nav class="prep-jump" aria-label="准备页目录">${pageLink('待办清单','#prep/todos','chip')}${pageLink('机票与住宿','#prep/bookings','chip')}${pageLink('参考资料','#prep/reference','chip')}</nav></header>
+ </section>`;}
+function prepPage(){return `<header class="page-heading"><h1>临行准备</h1><p>勾完下面的待办就可以出发了。</p><nav class="prep-jump" aria-label="准备页目录">${pageLink('待办清单','#prep/todos','chip')}${pageLink('机票与住宿','#prep/bookings','chip')}${pageLink('参考资料','#prep/reference','chip')}</nav></header>
  ${ticketStatus()}
  <div class="prep-layout"><section class="todo-card" id="prep-todos"><div class="section-title"><h2>待办清单</h2><div class="todo-progress" id="todo-count">${todoProgressMarkup()}</div></div>${todoGroups()}</section>${prepBookings()}</div>
  <details class="support-card prep-reference" id="prep-reference"><summary><span>参考资料</span><small>作品日文名 · 早季红叶预测 · 费用 · 使用说明</small></summary><div class="detail-body">
