@@ -4,17 +4,16 @@ import os from 'node:os';
 import crypto from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 
-export const STYLE_FILES=['site.css'];
-export const SCRIPT_FILES=['details.js','app.js','day-flow.js','pilgrimage.js','execution.js','daily.js','interface.js'];
+export const STYLE_FILES=['trip/trip.css'];
+// Domain first (plan rules, grouping, navigation), then the trip model and the interface.
+export const SCRIPT_FILES=['details.js','app.js','day-flow.js','execution.js','trip/model.js','trip/ui.js'];
 const json=value=>JSON.stringify(value).replace(/</g,'\\u003c');
 
 // Both deliveries use one renderer. Offline embeds media; the blog publishes cached assets.
-export function buildSite({sourceDir,dataDir,outputDir,offline=false}){
+// themeColor tints the phone's status bar: one colour, or [light, dark].
+export function buildSite({sourceDir,dataDir,outputDir,offline=false,styleFiles=STYLE_FILES,scriptFiles=SCRIPT_FILES,themeColor=['#f2f2e1','#0f150f']}){
  const read=name=>fs.readFileSync(path.join(sourceDir,name),'utf8').replace(/^\uFEFF/,'');
  const plan=JSON.parse(fs.readFileSync(path.join(dataDir,'关西行程_可视化数据.json'),'utf8').replace(/^\uFEFF/,''));
- const guide=fs.readFileSync(path.join(dataDir,'关西逐日执行攻略_2026-11-30至12-07.md'),'utf8').replace(/<!-- pilgrimage-(?:start|end) -->/g,'').replace(/完整图文见\[动漫巡礼对照手册\]\(动漫巡礼对照手册_2026-09-29.md\)。/g,'完整双图已收入当天“巡礼”页。');
- const parts=guide.split(/(?=\*\*(?:11\/30|12\/[1-7])｜)/);
- const guides=Object.fromEntries(plan.days.map((d,i)=>[d.date,parts[i+1]?.split('**大阪酒店附近的简餐备选。**')[0]||'']));
  const photos=JSON.parse(read('photos.json')),pilgrimage=JSON.parse(read('pilgrimage.json'));
  if(photos.asagiri?.file==='Uji bridge5.jpg')delete photos.asagiri;
  if(photos.glico?.file==='Dotonbori Canal 1.jpg'){photos.dotonbori=photos.glico;delete photos.glico;}
@@ -44,7 +43,6 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false}){
  for(const img of Object.values(photos)){if(!img.local)throw Error('Missing local photo');Object.assign(img,media(img.local,true));}
  const illustratedPoints=[...pilgrimage.points,...(pilgrimage.rally?.spots||[])];
  for(const p of illustratedPoints)for(const kind of ['real','anime','comparison']){const img=p[kind];if(img?.local)Object.assign(img,media(img.local,true));}
- const background=media('assets/blog-background.jpg').src,mapImage=media('assets/kansai-google-overview.jpg').src;
  if(jobs.length){
   const temp=path.join(os.tmpdir(),'kansai-media-'+crypto.randomUUID()+'.json');
   try{
@@ -60,10 +58,12 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false}){
   }finally{if(fs.existsSync(temp))fs.unlinkSync(temp);}
  }
  // Heading fonts ship with the site: assets/ next to the stylesheet online, data URIs offline.
- const css=STYLE_FILES.map(read).join('\n').replace(/url\(@font\/([\w-]+\.woff)\)/g,(_,name)=>`url("${offline?media('assets/fonts/'+name).src:media('assets/fonts/'+name).src.replace(/^assets\//,'')}")`);
- let app=SCRIPT_FILES.map(read).join('\n');
+ // Stylesheets name bundled files as url(@font/<file>) or url(@src/<path under kansai-src>); the stylesheet itself sits in assets/ online.
+ const cssURL=local=>`url("${offline?media(local).src:media(local).src.replace(/^assets\//,'')}")`;
+ const css=styleFiles.map(read).join('\n').replace(/url\(@font\/([\w-]+\.woff)\)/g,(_,name)=>cssURL('assets/fonts/'+name)).replace(/url\(@src\/([\w\/.-]+)\)/g,(_,local)=>cssURL(local));
+ let app=scriptFiles.map(read).join('\n');
  if(!offline)app=app.replace("const BLOG_HOME='https://mlinku.github.io/';","const BLOG_HOME='../';");
- const data=`const DELIVERY_MODE=${json(offline?'offline':'web')};const BLOG_BACKGROUND=${json(background)};const REGION_MAP_IMAGE=${json(mapImage)};const PLAN=${json(plan)};const GUIDES=${json(guides)};const PHOTOS=${json(photos)};const PILGRIMAGE=${json(pilgrimage)};`;
+ const data=`const DELIVERY_MODE=${json(offline?'offline':'web')};const PLAN=${json(plan)};const PHOTOS=${json(photos)};const PILGRIMAGE=${json(pilgrimage)};`;
  const script=data+'\n'+app;
  function resource(content,extension){
   const name=crypto.createHash('sha256').update(content).digest('hex').slice(0,16)+'.'+extension;
@@ -72,7 +72,7 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false}){
  // No web fonts: Google Fonts is often unreachable for readers in mainland China and would block rendering.
  const styleTag=offline?`<style>${css}</style>`:`<link rel="stylesheet" href="${resource(css,'css')}">`;
  const scriptTag=offline?`<script>${script}</script>`:`<script defer src="${resource(script,'js')}"></script>`;
- const html=`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#24478f"><script id="color-mode">try{var m=localStorage.getItem('user-color-scheme'),s=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(m&&m!==s)document.documentElement.setAttribute('data-user-color-scheme',m)}catch(e){}</script><meta name="description" content="2026关西旅行：8天行程、路线定位、餐饮与动漫巡礼对照。"><title>关西秋日手帖 · 2026</title><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23a3422d'/%3E%3Ctext x='20' y='28' text-anchor='middle' fill='%23fff8ec' font-size='26'%3E旅%3C/text%3E%3C/svg%3E">${styleTag}</head><body><a class="skip" href="#main">跳到主要内容</a><div id="app"></div><div id="toast" role="status" aria-live="polite"></div><noscript><p>请启用JavaScript查看行程。</p></noscript>${scriptTag}</body></html>`;
+ const html=`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">${(Array.isArray(themeColor)?themeColor:[themeColor]).map((c,i,all)=>`<meta name="theme-color" content="${c}"${all.length>1?` media="(prefers-color-scheme: ${i?'dark':'light'})"`:''}>`).join('')}<script id="color-mode">try{var m=localStorage.getItem('user-color-scheme'),s=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(m&&m!==s)document.documentElement.setAttribute('data-user-color-scheme',m)}catch(e){}</script><meta name="description" content="2026关西旅行：8天行程、路线定位、餐饮与动漫巡礼对照。"><title>关西秋日手帖 · 2026</title><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23a3422d'/%3E%3Ctext x='20' y='28' text-anchor='middle' fill='%23fff8ec' font-size='26'%3E旅%3C/text%3E%3C/svg%3E">${styleTag}</head><body><a class="skip" href="#main">跳到主要内容</a><div id="app"></div><div id="toast" role="status" aria-live="polite"></div><noscript><p>请启用JavaScript查看行程。</p></noscript>${scriptTag}</body></html>`;
  fs.writeFileSync(path.join(outputDir,'index.html'),html);
  // Hashed files from earlier builds are never referenced again; keep the published folder to the current set.
  let removed=0;

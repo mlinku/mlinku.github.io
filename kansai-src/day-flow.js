@@ -89,17 +89,3 @@ function timedRoute(d){
  });
 }
 
-const routeTimeKey=t=>JSON.stringify([t.eventId||t.label,t.text]);
-function routeGroups(d,phase='全部'){
- const all=timedRoute(d),groups=[];
- all.forEach((stop,index)=>{
-  if(phase!=='全部'&&stop.phase!==phase)return;
-  const node={...stop,index,seen:all.slice(0,index).some(s=>s.id===stop.id)};
-  const last=groups.at(-1);
-  const shared=last&&last.phase===node.phase&&last.eventId===node.eventId
-   ?last.times.filter(t=>node.times.some(other=>routeTimeKey(t)===routeTimeKey(other))):[];
-  if(shared.length){last.times=shared;last.stops.push(node);}
-  else groups.push({phase:node.phase,eventId:node.eventId,times:node.times,stops:[node]});
- });
- return groups;
-}

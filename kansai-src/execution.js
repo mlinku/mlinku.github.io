@@ -19,13 +19,6 @@ function navigationStops(ev,d,includeMeal=false){
  if(includeMeal&&first&&first[0]!=='早餐')stops.push({name:first[8]?.pending?'餐饮区域':first[2],sub:first[4],url:mealMap(d,first),meal:true});
  return stops;
 }
-function eventNavigation(ev,d,includeMeal=false){
- const stops=navigationStops(ev,d,includeMeal);
- if(!stops.length)return '';
- // One map link to where this activity ends; any stops on the way fold into a numbered list.
- const dest=stops.at(-1),via=stops.slice(0,-1);
- return external(`导航：<b>${e(dest.name)}</b>`,dest.url,'nav-main'+(dest.meal?' is-meal':''))+(via.length?`<details class="nav-via"><summary>沿途 ${via.length} 站</summary><ol>${stops.map(s=>`<li>${external(`<b>${e(s.name)}</b>${s.sub?`<small lang="ja">${e(s.sub)}</small>`:''}`,s.url,'via-stop')}</li>`).join('')}</ol></details>`:'');
-}
 // Supplemental station maps belong in travel order, before the destination.
 const NAVIGATION_PATHS={
  demachi_transfer:['hotel_kyoto',['京都站地铁烏丸线','京都駅 地下鉄 烏丸線'],['今出川站','今出川駅'],'demachi'],
@@ -39,7 +32,6 @@ const NAVIGATION_PATHS={
 // These activities stay inside USJ; the park entrance map remains on arrival.
 function activityPlaceIds(ev){return ['usj_app','usj_core','usj_lunch','usj_rest','usj_finish'].includes(ev.id)?ev.place_ids.filter(id=>id!=='usj'):ev.place_ids;}
 
-const CAFE_SOURCE='https://tokichi.jp/pages/honten-store-page';
 const USJ_HOURS='https://www.usj.co.jp/web/ja/jp/park-guide/schedule/park-hour';
 const USJ_ENTRY='https://www.usj.co.jp/web/ja/jp/enjoy/numbered-ticket/app/timed-entry-ticket';
 const NANKAI_TIMETABLE='https://www.nankai.co.jp/tc_railway/access-timetable';
@@ -59,4 +51,3 @@ function executionNotice(d,ev){
  };
  return content[ev.id]?`<p class="execution-note">${content[ev.id]}</p>`:'';
 }
-function rallyActions(ev){return ev.rally_spot?`<div class="rally-actions">${external('打开集章活动 ↗',PILGRIMAGE.rally.entry_url,'btn small')}${pageLink('点位与规则','#day/2026-12-01/pilgrimage/rally','text-link')}</div>`:'';}

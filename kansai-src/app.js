@@ -3,6 +3,21 @@ const $=s=>document.querySelector(s);
 const escapeHTML=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const e=escapeHTML;
 const PLACE=Object.fromEntries(PLAN.places.map(p=>[p.id,p]));
+// Offline delivery embeds photos as data: URIs. Swapping each for a short blob: URL once at startup keeps every
+// render's HTML small (a day page carried ~3.9M characters before); any image that fails to convert keeps its data URI.
+(function shortImageURLs(){
+ if(typeof DELIVERY_MODE==='undefined'||DELIVERY_MODE!=='offline'||typeof Blob==='undefined'||!URL.createObjectURL)return;
+ const made=new Map();
+ const short=src=>{
+  if(typeof src!=='string'||!src.startsWith('data:'))return src;
+  if(made.has(src))return made.get(src);
+  try{const comma=src.indexOf(','),bin=atob(src.slice(comma+1)),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+   const url=URL.createObjectURL(new Blob([bytes],{type:src.slice(5,src.indexOf(';'))}));made.set(src,url);return url;}catch{return src;}
+ };
+ const swap=img=>{if(img)for(const key of ['src','thumbnail'])if(img[key])img[key]=short(img[key]);};
+ Object.values(PHOTOS).forEach(swap);
+ for(const p of [...(PILGRIMAGE.points||[]),...(PILGRIMAGE.rally?.spots||[])])['real','anime','comparison'].forEach(kind=>swap(p[kind]));
+})();
 const STORAGE_KEY='kansai-autumn-notebook-v1';
 let storageOK=true, toastTimer, undoAction=null;
 let state={schemaVersion:3,checks:{},todos:{},choices:{}},pendingBackup=null;
@@ -26,14 +41,11 @@ try{
  for(const [key,value] of Object.entries(state.checks))if(!key.includes(':shot:')&&value==='skipped')state.checks[key]='pending';
  preserveLegacyRecord();localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
 }catch{storageOK=false;}
-let screen='overview',dayIndex=0,dayView='timeline',sectionTarget='';
-const types={flight:'航班',transport:'交通',hotel:'住宿',meal:'用餐',visit:'景点',walk:'步行',rest:'休息',activity:'体验',shopping:'购物'};
 const icons={map:'<path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2z"/><path d="M9 3v16M15 5v16"/>',arrow:'<path d="M4 12h16m-6-6 6 6-6 6"/>',copy:'<rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H3v13h5"/>',check:'<path d="m4 12 5 5L20 6"/>',pin:'<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',close:'<path d="m6 6 12 12M18 6 6 18"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M19 5l-1.5 1.5m-11 11L5 19"/>',bag:'<rect x="5" y="6" width="14" height="15" rx="2"/><path d="M9 6V3h6v3M9 10v7m6-7v7"/>'};
 const icon=(n)=>`<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${icons[n]||icons.pin}</svg>`;
 const btn=(label,action,extra='',cls='')=>`<button type="button" class="btn ${cls}" data-action="${action}" ${extra}>${label}</button>`;
 const external=(label,url,cls='')=>`<a href="${e(url)}" target="_blank" rel="noopener noreferrer" class="${cls}">${label}</a>`;
 const mapURL=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
-const directionURL=(a,b,mode)=>'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(PLACE[a].map_query)+'&destination='+encodeURIComponent(PLACE[b].map_query)+'&travelmode='+mode;
 // Booking timestamps include offsets; always display the airport's local time.
 function flightLocal(b,field){const place=field==='departure'?b.from:b.to,zone=place==='hkg'?'Asia/Hong_Kong':'Asia/Tokyo';const date=new Date(b[field]);return {time:new Intl.DateTimeFormat('en-GB',{timeZone:zone,hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(date),date:new Intl.DateTimeFormat('en-US',{timeZone:zone,month:'numeric',day:'numeric'}).format(date),city:place==='hkg'?'香港':'关西',region:place==='hkg'?'香港':'日本',terminal:b[field+'_terminal']||'航站楼待确认'};}
 function flightDeparture(id){const b=PLAN.bookings.find(b=>b.id===id),f=flightLocal(b,'departure');return f.time+' '+f.region+'起飞';}
@@ -61,7 +73,6 @@ async function copyText(value){
   if(ok)toast('已复制：'+value);else openManualCopy(value);
  }
 }
-function statusLabel(event){if(event.time_status==='booked')return'<span class="pill green">已订航班 · 当地时间</span>';if((event.time_status==='to_confirm'||event.time_status==='current_timetable_candidate')&&!/待确认|待复核|临行复核/.test(compactTime(event.time_label)))return'<span class="pill gold">待确认</span>';return'';}
 function selectedShops(c){return[c.shop1,c.shop2].filter(x=>x&&x!=='none');}
 // Titles name the activity; routes, restaurant details and planning notes retain the specifics.
 const EVENT_TITLES={
@@ -138,7 +149,6 @@ function optionalControls(d,eventId){if(!d.optional.length&&d.date!=='2026-12-05
 }
 function select(key,value,options){return `<select class="option-select" data-choice="${key}" aria-label="${({shop1:'日本桥第一家店',shop2:'日本桥第二家店',umedaMain:'梅田重点店'})[key]||key}">${options.map(([v,l])=>`<option value="${v}" ${v===value?'selected':''}>${e(l)}</option>`).join('')}</select>`;}
 
-function renderMarkdown(source){const inline=text=>e(text).replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,(_,label,url)=>external(label,url.replace(/&amp;/g,'&'))).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/`([^`]+)`/g,'<code>$1</code>');let result='',table=[],paragraph=[];const flushP=()=>{if(paragraph.length){result+='<p>'+inline(paragraph.join(' '))+'</p>';paragraph=[];}};const flushT=()=>{if(table.length){result+='<div class="table-scroll"><table>'+table.filter(line=>!/^\|[-: |]+\|$/.test(line.trim())).map((line,i)=>'<tr>'+line.trim().replace(/^\||\|$/g,'').split('|').map(cell=>`<${i?'td':'th'}>${inline(cell.trim())}</${i?'td':'th'}>`).join('')+'</tr>').join('')+'</table></div>';table=[];}};for(const line of source.split(/\r?\n/)){if(/^\|/.test(line)){flushP();table.push(line);}else{flushT();if(!line.trim()){flushP();}else if(/^\d+\. /.test(line)||/^- /.test(line)){flushP();result+='<p>'+inline(line)+'</p>';}else paragraph.push(line);}}flushP();flushT();return result;}
 
 if(document.modelContext?.registerTool){
  const tools=[{name:'read_itinerary_day',title:'读取当天行程',description:'读取既定关西行程、当前选择及完成进度，不改变数据。',inputSchema:{type:'object',properties:{date:{type:'string',enum:PLAN.days.map(d=>d.date)}},required:['date'],additionalProperties:false},annotations:{readOnlyHint:true},execute({date}){const d=PLAN.days.find(x=>x.date===date);if(!d)throw Error('无效日期');return {date,events:effectiveEvents(d),progress:progress(d),route:effectiveRoute(d),returnTarget:returnTarget(d)};}},{name:'set_activity_completion',title:'记录活动完成',description:'将指定日期的活动标记为完成或未完成，保存到本机并更新页面。',inputSchema:{type:'object',properties:{date:{type:'string'},eventId:{type:'string'},completed:{type:'boolean'}},required:['date','eventId','completed'],additionalProperties:false},annotations:{readOnlyHint:false},execute({date,eventId,completed}){if(typeof completed!=='boolean')throw Error('completed必须为布尔值');setCheck(date,eventId,completed);render();return{date,eventId,completed,savedLocally:storageOK};}}];

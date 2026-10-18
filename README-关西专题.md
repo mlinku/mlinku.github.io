@@ -9,7 +9,7 @@
 - 专题入口：`/kansai/`，生成文件 `kansai/index.html`。
 - 博客首页文章列表增加与文章卡片同结构的旅行专题卡，38个现有页面的侧栏增加行李箱图标入口。重复构建会替换旧版入口，不会重复插入。
 - 可编辑源码：`kansai-src/`。其中 `data/` 为此次既定行程与逐日攻略快照，`assets/` 为所需离线图片。
-- 样式：`kansai-src/site.css`（唯一样式表）；总览、准备页与页面框架：`interface.js`；每日页：`daily.js`；行程规则：`app.js`。
+- 界面：`kansai-src/trip/`（`model.js` 数据解析与文案取舍、`ui.js` 排版与交互、`trip.css` 唯一样式表）；行程规则：`app.js`、`day-flow.js`、`execution.js`；每日资料：`details.js`。详见 `kansai-src/BUILDING.md`。
 - 博客原为 Yun 的固定深色构建。`integrate-blog.mjs` 把 `css/hexo-theme-yun.css` 末尾的深色覆盖改为仅在系统深色或手动选择深色时生效，并在 38 个页面侧栏加入日／夜切换按钮（复用主题自带的 `js/ui/mode.js`）。默认跟随系统；手帖共用同一选择。
 - 旅行链接使用完整页面跳转，避开现有 PJAX 的局部替换；返回博客使用相对地址 `../`，本地预览与正式域名均适用。
 
@@ -24,18 +24,20 @@ python -m http.server 8876 --bind 127.0.0.1
 
 访问 `http://127.0.0.1:8876/` 看博客，进入旅行卡，或访问 `http://127.0.0.1:8876/kansai/`。
 
-build.mjs 生成嵌入数据、样式与图片的专题单文件，再调用 integrate-blog.mjs 补齐博客入口。重复构建不会重复插入链接。不要手工编辑 kansai/index.html。
+build.mjs 生成专题页面（数据、脚本与图片为带哈希的独立资源，图片用缩略图），再调用 integrate-blog.mjs 补齐博客入口。重复构建不会重复插入链接。不要手工编辑 kansai/index.html。
 
-可以直接双击专题 HTML 离线阅读，但返回博客及原博客其它页面建议通过上述本地服务器预览。专题地图、来源链接需联网。原 `D:\关西旅游\可视化网页\index.html` 也保留为离线手册。
+路上使用的离线单文件由旅行目录的 `可视化网页/build.mjs` 生成（`D:\关西旅游\可视化网页\index.html`），照片与字体全部内嵌，双击即可打开。专题地图、来源链接需联网。
 
 ## 检查
 
 ```powershell
-node kansai-src/verify-redesign.mjs
+node kansai-src/trip/verify.mjs
 node kansai-src/verify-polish.mjs
+node kansai-src/verify-oct3.mjs
+node kansai-src/verify-delivery.mjs
 ```
 
-包含8天67段既定行程、互斥可选安排、路线重复返程点、完成进度、复制失败回退的检查。
+包含每项活动在所有可选组合下的详情、关键时间出处、文案精简与删除规则、原文可见性、旧地址定位、复制失败回退、已确认行程未被改动，以及构建产物的资源检查。
 
 ## 后续维护
 
