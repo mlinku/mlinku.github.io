@@ -18,6 +18,7 @@
   --danger: #a01d18; --danger-soft: #f8e3dc;
   --warn: #6c4800; --warn-soft: #f7ebc2;
   --ok: #3a7040; --ok-soft: #e9f3d6;
+  --wash-shu: rgba(178,62,42,.16); --wash-moegi: rgba(150,200,90,.28); --wash-plum: rgba(111,67,133,.14); --wash-gold: rgba(201,163,58,.26); --wash-accent: rgba(58,112,64,.13);
   --glow: rgba(214,236,168,.7); --lattice: rgba(118,146,64,.085);
   --scrim: rgba(16,26,10,.66); --press: rgba(108,158,66,.5);
   --shadow: 0 1px 1px rgba(40,52,18,.05), 0 8px 24px -8px rgba(40,52,18,.16);
@@ -41,6 +42,7 @@
     --danger: #ff9b90; --danger-soft: rgba(255,155,144,.13);
     --warn: #f1c26f; --warn-soft: rgba(241,194,111,.12);
     --ok: #b7dc8c; --ok-soft: rgba(183,220,140,.14);
+    --wash-shu: rgba(240,144,111,.36); --wash-moegi: rgba(183,220,140,.2); --wash-plum: rgba(208,168,224,.2); --wash-gold: rgba(226,196,106,.32); --wash-accent: rgba(183,220,140,.12);
     --glow: rgba(150,200,110,.08); --lattice: rgba(183,220,140,.05);
     --scrim: rgba(5,9,4,.72); --press: rgba(0,0,0,.5);
     --shadow: 0 1px 1px rgba(0,0,0,.3), 0 8px 24px -8px rgba(0,0,0,.6);
@@ -59,7 +61,8 @@
   --danger: #ff9b90; --danger-soft: rgba(255,155,144,.13);
   --warn: #f1c26f; --warn-soft: rgba(241,194,111,.12);
   --ok: #b7dc8c; --ok-soft: rgba(183,220,140,.14);
-  --glow: rgba(150,200,110,.08); --lattice: rgba(183,220,140,.05);
+  --wash-shu: rgba(240,144,111,.36); --wash-moegi: rgba(183,220,140,.2); --wash-plum: rgba(208,168,224,.2); --wash-gold: rgba(226,196,106,.32); --wash-accent: rgba(183,220,140,.12);
+    --glow: rgba(150,200,110,.08); --lattice: rgba(183,220,140,.05);
   --scrim: rgba(5,9,4,.72); --press: rgba(0,0,0,.5);
   --shadow: 0 1px 1px rgba(0,0,0,.3), 0 8px 24px -8px rgba(0,0,0,.6);
   --lift: 0 2px 4px rgba(0,0,0,.3), 0 18px 40px -12px rgba(0,0,0,.7);
@@ -130,6 +133,49 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .icon-btn:active {background:var(--sunk)}
 .icon-btn.small {width:44px; height:44px}
 .icon-btn.small .icon {width:18px; height:18px}
+
+/* ---------- Hand-drawn doodles (trip/doodles.js): only in quiet places ---------- */
+.doodle {fill:none; stroke:currentColor; stroke-width:2.1; stroke-linecap:round; stroke-linejoin:round; overflow:visible}
+.doodle .wash {stroke:none}
+.wash.shu {fill:var(--wash-shu)}
+.wash.moegi {fill:var(--wash-moegi)}
+.wash.plum {fill:var(--wash-plum)}
+.wash.gold {fill:var(--wash-gold)}
+.wash.accent {fill:var(--wash-accent)}
+.doodle .pass2 {opacity:.3; transform:translate(.8px,.6px)}
+.doodle .soft {stroke-width:1.5; opacity:.75}
+.doodle .dash {stroke-dasharray:2 4.5}
+/* Wide scenes keep a pen-width line however wide the card is. */
+.doodle.scene {display:block; width:100%; height:auto}
+.doodle.scene :is(path,circle,rect,ellipse) {vector-effect:non-scaling-stroke; stroke-width:1.9}
+.doodle.scene .soft {stroke-width:1.4}
+.now-marks {display:flex; align-items:flex-end; gap:2px; flex:none}
+.now-marks .doodle {width:58px; height:58px; color:var(--ink-2); margin-bottom:-4px}
+.day-sticker {position:absolute; z-index:1; top:12px; right:12px; display:grid; place-items:center; width:62px; height:62px; border-radius:50%; background:rgba(255,254,244,.94); color:#22271b; box-shadow:0 4px 12px -4px rgba(0,0,0,.4); transform:rotate(7deg)}
+.day-sticker .doodle {width:46px; height:46px}
+.scene-band {padding:14px 18px 0; color:var(--ink-2)}
+.block .doodle.scene {margin:-4px 0 6px; color:var(--ink-2)}
+
+/* ---------- 喜多: cut-out sprites in quiet corners ---------- */
+.kita {display:block; flex:none; background:center/contain no-repeat; pointer-events:none}
+.kita-stand {background-image:url(@src/trip/assets/kita-stand.webp)}
+.kita-sit-happy {background-image:url(@src/trip/assets/kita-sit-happy.webp)}
+.kita-peek {background-image:url(@src/trip/assets/kita-peek.webp)}
+.kita-grin {background-image:url(@src/trip/assets/kita-grin.webp)}
+.kita-side {background-image:url(@src/trip/assets/kita-side.webp)}
+.kita-cheer {background-image:url(@src/trip/assets/kita-cheer.webp)}
+.kita-run {background-image:url(@src/trip/assets/kita-run.webp)}
+.countdown .focus-body {position:relative}
+.countdown .count, .countdown .lead {padding-right:92px}
+.kita.on-countdown {position:absolute; right:6px; top:-38px; width:96px; height:122px; animation:bob 3.2s ease-in-out infinite}
+@keyframes bob {50% {transform:translateY(-4px) rotate(-2deg)}}
+.block-title .kita.in-title {width:56px; height:66px; margin:-30px 0 -12px auto}
+.block-title .kita-stand.in-title {width:30px; height:62px; margin-top:-30px}
+.block.todos {position:relative; margin-top:84px !important}
+.kita.on-edge {position:absolute; z-index:1; right:18px; bottom:calc(100% - 16px); width:126px; height:102px}
+.kita-sit-happy.on-edge {width:100px; height:97px; bottom:calc(100% - 18px)}
+.screen-head .kita.in-head {width:54px; height:64px; margin:0 0 -6px auto}
+.screen-head .kita-grin.in-head {width:72px; height:55px}
 
 /* ---------- Seals ---------- */
 .day-seal {flex:none; display:flex; flex-direction:column; align-items:center; justify-content:center; width:56px; height:56px; border:2px solid var(--shu); border-radius:8px; color:var(--shu); transform:rotate(-5deg); background:var(--shu-soft); box-shadow:inset 0 0 0 3px var(--card), inset 0 0 0 4px var(--shu)}

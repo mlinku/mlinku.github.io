@@ -6,7 +6,7 @@ import {spawnSync} from 'node:child_process';
 
 export const STYLE_FILES=['trip/trip.css'];
 // Domain first (plan rules, grouping, navigation), then the trip model and the interface.
-export const SCRIPT_FILES=['details.js','app.js','day-flow.js','execution.js','trip/model.js','trip/ui.js'];
+export const SCRIPT_FILES=['details.js','app.js','day-flow.js','execution.js','trip/model.js','trip/doodles.js','trip/ui.js'];
 const json=value=>JSON.stringify(value).replace(/</g,'\\u003c');
 
 // Both deliveries use one renderer. Offline embeds media; the blog publishes cached assets.
