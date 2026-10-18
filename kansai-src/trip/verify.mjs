@@ -22,7 +22,7 @@ const checked=run(`
 
  // Every activity, under every itinerary choice, resolves and renders; transport keeps its test contract.
  const configurations={'2026-12-01':[{}],'2026-12-02':[{kodaijiPlan:'night'},{kodaijiPlan:'night',yasakaBrief:true},{kodaijiPlan:'skip'}],
-  '2026-12-04':[{},{usjExtra:true,kinopio:true}],'2026-12-05':[{},{shop1:'potato',shop2:'surugaya_main'},{shop1:'animate',shop2:'none'}]};
+  '2026-12-04':[{},{shop1:'potato',shop2:'surugaya_main'},{shop1:'animate',shop2:'none'},{shop1:'surugaya_main',shop2:'animate'},{shop1:'potato',shop2:'none'}]};
  let sheets=0;
  for(const d of PLAN.days)for(const selected of configurations[d.date]||[{}]){
   state.choices[d.date]=selected;
@@ -105,7 +105,72 @@ const checked=run(`
  assert.equal(cleanText('营业时间于10/2核实，临行再查是否调整。'),'','核实记录不进现场文案');
  assert.equal(cleanText('当前11:05关闭登机口（香港时间）；以航司最新通知及登机牌为准。'),'当前11:05关闭登机口（香港时间）；'.replace(/；$/,''));
  assert.equal(cleanText('参考10:00—21:00；临行复核营业。'),'10:00—21:00。');
+ // Final plan (2026-10-19): no USJ, 大阪城, ferry or 白须神社 anywhere a traveller can reach.
+ const everything=PLAN.days.map(d=>{ui.day=PLAN.days.indexOf(d);return text(dayScreen())+effectiveEvents(d).map(ev=>text(sheetHTML(d.date,ev.id))).join('')+text(sheetHTML(d.date,'route'))+text(sheetHTML(d.date,'notes'));}).join('')+text(prepScreen());
+ for(const word of ['USJ','Studio Pass','任天堂','大阪城','天守阁','森之宫','鹤桥','SPAWORLD','白须','渡轮班次','友岛航线'])assert.ok(!everything.includes(word),'最终版不出现：'+word);
+ const wakayama=PLAN.days.find(d=>d.date==='2026-12-05');
+ assert.ok(effectiveEvents(wakayama).some(ev=>ev.id==='wakayama_tower_visit')&&effectiveRoute(wakayama).some(n=>n.id==='wakayama_castle'),'12/5默认进天守');
+ assert.equal(returnTarget(wakayama),'19:00—19:30','12/5约19:00—19:30返店');
+ assert.equal(String(hardStops(wakayama).map(t=>t.time)),String(['14:40','16:45','17:00','17:30']),'庭园16:45早于天守17:00末入');
+ assert.ok(text(prepScreen()).includes('和歌山城天守 ¥820'),'门票预算含和歌山城两人¥820');
+ assert.ok(openPurchases().some(p=>p.item.includes('和牛')&&p.label==='尚未订位')&&!BOOKED.some(b=>b.join('').includes('和牛')),'和牛只是待订位');
+ const kobe=PLAN.days.find(d=>d.date==='2026-12-06');
+ assert.equal(String(effectiveEvents(kobe).find(ev=>ev.id==='motomachi_cd_shopping').place_ids),String(['kobe_banana_records','kobe_rhythmbox']),'元町两家CD店优先');
+ assert.ok(sheetHTML(kobe.date,'sannomiya_dinner').includes('尚未订位'),'17:00和牛待订位');
+ // 12/4 shop choices: every pair walks in order on the route and never more than two stores.
+ const nara=PLAN.days.find(d=>d.date==='2026-12-04');
+ for(const [shop1,shop2] of [['animate','surugaya'],['potato','surugaya_main'],['surugaya','none'],['surugaya_main','animate']]){
+  state.choices[nara.date]={shop1,shop2};const shops=[shop1,shop2].filter(x=>x!=='none');
+  assert.equal(String(effectiveEvents(nara).find(ev=>ev.id==='anime_shopping').place_ids),String(shops),'选店 '+shops);
+  const route=timedRoute(nara);assert.equal(String(route.filter(n=>shops.includes(n.id)).map(n=>n.id)),String(shops),'路线含所选店 '+shops);
+  assert.ok(route.filter(n=>shops.includes(n.id)).every(n=>n.eventId==='anime_shopping'),'选店时间绑定购物 '+shops);
+ }
+ state.choices={};
+ // Each route stop shows the time of its own visit, including repeat visits to the same station.
+ for(const d of PLAN.days)for(const n of timedRoute(d))assert.ok(n.times.every(t=>t.text&&!/undefined|待确认/.test(t.text))||d.date==='2026-12-07','路线时间 '+d.date+' '+n.id);
+ const kada=timedRoute(wakayama).filter(n=>n.id==='wakayamashi_station').map(n=>n.purpose);
+ assert.equal(String(kada),String(['','下车步行去城公园','乘南海回大阪']),'和歌山市站三次经过各自说明');
+ // 通天阁 is reference material only; 戎桥 moved to 12/3.
+ assert.ok(!dayShots(PLAN.days[3]).main.some(p=>p.id==='conan-tsutenkaku')&&dayShots(PLAN.days[3]).reference.some(p=>p.id==='conan-tsutenkaku'),'通天阁只作参考');
+ assert.equal(shotProgress('2026-12-03').total,1,'参考点不计进度');
+ assert.ok(dayShots(PLAN.days[3]).main.some(p=>p.id==='conan-ebisubashi'),'戎桥在12/3');
+ assert.equal(dayShots(wakayama).main.length,4,'加太4组对照');
+ for(const p of dayShots(wakayama).main)assert.ok(p.real?.local&&p.anime?.local&&p.real.license&&p.anime.credit&&p.sources.length,'加太对照图与来源 '+p.id);
+
+ // Old links land on the same content on its new day, or on the day with a note; never on a new 加太 activity.
+ location.hash='#day/2026-12-05/timeline/nara_visit';assert.equal(parseHash(),'nara_visit');assert.equal(PLAN.days[ui.day].date,'2026-12-04');assert.ok(ui.moved.includes('12/4'));
+ location.hash='#day/2026-12-05/timeline/glico_photo';assert.equal(parseHash(),'glico_photo');assert.equal(PLAN.days[ui.day].date,'2026-12-03');
+ location.hash='#day/2026-12-04/timeline/usj_core';assert.equal(parseHash(),'');assert.equal(PLAN.days[ui.day].date,'2026-12-04');assert.ok(ui.moved.includes('不在最终行程'));
+ location.hash='#day/2026-12-05/timeline/castle_visit';assert.equal(parseHash(),'');assert.equal(ui.tab,'day');
+ location.hash='#day/2026-12-05/pilgrimage/conan-ebisubashi';parseHash();assert.equal(ui.tab,'shots');assert.equal(PLAN.days[ui.shotsDay].date,'2026-12-03');
+ location.hash='#shots/2026-12-05/conan-ebisubashi';parseHash();assert.equal(PLAN.days[ui.shotsDay].date,'2026-12-03');
+ ui.moved='';location.hash='';parseHash();
  ({sheets,screens:screens.length,days:PLAN.days.length});
 `);
 assert.equal(JSON.stringify(PLAN),locked,'出行版不改变原始行程');
-console.log(JSON.stringify({ok:true,...checked}));
+
+// A record from the previous plan: backed up untouched, then only same-meaning activities follow to their new day.
+const KEY='kansai-autumn-notebook-v1',oldRecord={schemaVersion:3,
+ checks:{'2026-12-05:nara_visit':'done','2026-12-05:nara_lunch':'done','2026-12-05:castle_visit':'done','2026-12-04:usj_core':'done','2026-12-03:kyoto_lunch':'done',
+  '2026-12-06:sannomiya_shopping':'done','2026-12-06:ikuta_visit':'done','2026-12-05:glico_photo':'done','2026-12-05:shot:conan-ebisubashi':true,'2026-12-01:shot:eupho_bench':true},
+ todos:{'usj-app':true,weather:true,'kobe-dinner-20261003':true,'kyoto-tower-20261003':true,1:true},choices:{'2026-12-05':{shop1:'potato',shop2:'none',spaworldEvening:true},'2026-12-04':{usjExtra:true}}};
+function boot(record,failBackup=false){
+ const kept={[KEY]:JSON.stringify(record)};
+ const storage={getItem:k=>kept[k]??null,setItem:(k,v)=>{if(failBackup&&k!==KEY)throw Error('quota');kept[k]=String(v);},removeItem:k=>{delete kept[k];}};
+ const ctx=vm.createContext({PLAN,PILGRIMAGE:JSON.parse(read('pilgrimage.json')),PHOTOS:{},GUIDES:{},localStorage:storage,location:{search:'',hash:''},
+  document:{querySelector(){return null;},querySelectorAll(){return [];},addEventListener(){}},setTimeout(){return 1;},clearTimeout(){},console});
+ vm.runInContext(SCRIPT_FILES.map(read).join('\n'),ctx);
+ return {kept,state:JSON.parse(vm.runInContext('JSON.stringify(state)',ctx)),ok:vm.runInContext('storageOK',ctx),shops:vm.runInContext("String(selectedShops(choice(PLAN.days[4])))",ctx)};
+}
+const migrated=boot(oldRecord);
+assert.equal(migrated.kept[KEY+'-before-final-plan-2026-10-19'],JSON.stringify(oldRecord),'迁移前完整备份');
+assert.deepEqual(Object.keys(migrated.state.checks).sort(),['2026-12-01:shot:eupho_bench','2026-12-03:glico_photo','2026-12-03:shot:conan-ebisubashi','2026-12-04:nara_visit','2026-12-06:ikuta_visit'],'仅同语义记录迁到新日期');
+assert.equal(migrated.state.planRevision,PLAN.revision);
+assert.deepEqual(Object.keys(migrated.state.todos).sort(),['kyoto-tower-20261003','weather'],'USJ与旧和牛待办不串到新任务');
+assert.equal(migrated.shops,'potato','12/4沿用原12/5选店');
+assert.deepEqual(Object.keys(migrated.state.choices),['2026-12-04'],'旧泡汤与USJ选项不保留');
+assert.equal(JSON.stringify(boot(migrated.state).state),JSON.stringify(migrated.state),'迁移只做一次');
+const blocked=boot(oldRecord,true);
+assert.equal(blocked.kept[KEY],JSON.stringify(oldRecord),'备份写不进时不覆盖旧记录');
+assert.equal(blocked.ok,false);
+console.log(JSON.stringify({ok:true,...checked,migration:'ok'}));

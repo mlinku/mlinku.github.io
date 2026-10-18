@@ -33,11 +33,11 @@ build.mjs 生成专题页面（数据、脚本与图片为带哈希的独立资�
 ```powershell
 node kansai-src/trip/verify.mjs
 node kansai-src/verify-polish.mjs
-node kansai-src/verify-oct3.mjs
+node kansai-src/verify-final-plan.mjs
 node kansai-src/verify-delivery.mjs
 ```
 
-包含每项活动在所有可选组合下的详情、关键时间出处、文案精简与删除规则、原文可见性、旧地址定位、复制失败回退、已确认行程未被改动，以及构建产物的资源检查。
+包含每项活动在所有可选组合下的详情、关键时间出处、文案精简与删除规则、原文可见性、旧地址定位、复制失败回退、2026-10-19最终计划（12/4奈良与日本桥、12/5加太与和歌山城天守、12/6元町CD店；机酒与11/30、12/2、12/7不变），以及构建产物的资源检查。
 
 ## 后续维护
 

@@ -79,7 +79,7 @@ function nowScreen(){
  ${stayBlock(d,s.index)}
  <div class="links">${notes.length?openButton(d.date,'notes',`${icon('alert')}<span>情况有变时 · ${notes.length} 条</span>${icon('chevron')}`,'link-row warn'):''}<a class="link-row" href="#day/${d.date}">${icon('calendar')}<span>全天行程 · 已完成 ${p.done}/${p.total}</span>${icon('chevron')}</a></div>`;
 }
-function navStop(d,ev){const first=mealRows(d,ev).find(r=>r[1]==='首选');return ev.category==='rest'&&!isMajorEvent(d,ev)?null:navigationStops(ev,d,!!(first&&first[0]!=='早餐')).at(-1)||null;}
+function navStop(d,ev){const first=mealRows(d,ev).find(r=>r[1]==='首选');return ev.category==='rest'&&!isMajorEvent(d,ev)?null:navTarget(ev,navigationStops(ev,d,!!(first&&first[0]!=='早餐')));}
 function focusCard(d,st,minutes){
  const ev=st.focus,m=eventModel(d,ev),wait=m.start===null?null:m.start-minutes,photo=heroPhoto(ev);
  const label=st.started?'正在进行':wait>0?`${duration(wait)}后`:'下一项',primary=m.meals.find(x=>x.primary);
@@ -98,12 +98,12 @@ function focusCard(d,st,minutes){
 }
 function coverHero(title,sub){
  const ids=['byodoin','inari','dotonbori'].filter(id=>photoSrc(id));
- return `<header class="cover"><div class="cover-photos">${ids.map((id,i)=>`<span>${img(id,i===0)}</span>`).join('')}</div><a class="cover-back" href="${BLOG_HOME}">${icon('back')}<span>まひろ的小站</span></a><div class="cover-over"><p class="kicker">京都 · 宇治 · 大阪 · 奈良 · 神户</p><h1 class="display">${e(title)}</h1><p>${e(sub)}</p></div>${themeButton()}</header>`;
+ return `<header class="cover"><div class="cover-photos">${ids.map((id,i)=>`<span>${img(id,i===0)}</span>`).join('')}</div><a class="cover-back" href="${BLOG_HOME}">${icon('back')}<span>まひろ的小站</span></a><div class="cover-over"><p class="kicker">京都 · 宇治 · 大阪 · 奈良 · 和歌山 · 神户</p><h1 class="display">${e(title)}</h1><p>${e(sub)}</p></div>${themeButton()}</header>`;
 }
 function beforeScreen(s){
  const open=openPurchases().filter(p=>p.tone==='danger');
  return `${coverHero('关西秋日手帖','2026.11.30 — 12.07 · 8 天 7 晚')}
- <section class="focus countdown"><div class="scene-band">${scene('depart')}</div><div class="focus-body">${kita('cheer','on-countdown')}<p class="count"><b>${s.days}</b><span>天后出发</span></p><p class="lead">临行待办 ${todoDone()} / ${TODOS.length}${open.map(p=>` · <span class="danger-text">${e(p.item)}${e(p.label)}</span>`).join('')}</p><div class="focus-actions"><a class="btn primary" href="#prep">去准备</a><a class="btn" href="#day/${PLAN.days[0].date}">看第 1 天</a></div></div></section>
+ <section class="focus countdown"><div class="scene-band">${scene('depart')}</div><div class="focus-body">${kita('cheer','on-countdown')}<p class="count"><b>${s.days}</b><span>天后出发</span></p><p class="lead">临行待办 ${todoDone()} / ${TODOS.length}${open.map(p=>` · <span class="danger-text">${e(p.item.replace(/ ×\d+$/,''))} ${e(p.label)}</span>`).join('')}</p><div class="focus-actions"><a class="btn primary" href="#prep">去准备</a><a class="btn" href="#day/${PLAN.days[0].date}">看第 1 天</a></div></div></section>
  <p class="hint center">出发后，这一页显示正在做什么、下一站和今天的关键时间。</p>
  <section class="block"><h2 class="block-title">8 天行程</h2>${dayLine()}</section>`;
 }
@@ -115,7 +115,7 @@ function dayScreen(){
  const now=today?nowState(d,s.minutes):null,flow=DayFlow.forDay(d),level=intensity(d),notes=fieldNotes(d),shots=shotProgress(d.date);
  return `${strip(PLAN.days.map((x,j)=>['#day/'+x.date,j,j===todayIndex()?'今天':DETAILS[x.date].cityLabel]),i)}
  <article class="day-ticket"><header class="day-hero">${img(info.cover,true)}<span class="day-sticker">${dayDoodle(d.date)}</span><div class="hero-over"><p class="kicker">${dateLabel(d.date)} ${e(d.weekday)}${today?' · <em>今天</em>':''}</p><h1 class="display">${e(info.short)}</h1><p>${e(info.eyebrow)}</p></div>${daySeal(i+1)}</header>
- <dl class="ticket-facts"><div><dt>${e(leave[0])}</dt><dd>${e(leave[1])}</dd></div><div><dt>${e(back[0])}</dt><dd>${e(back[1])}</dd></div><div><dt>强度</dt><dd title="${e(level.full)}"><span class="dots" aria-hidden="true">${[1,2,3,4].map(n=>`<i${n<=level.level?' class="on"':''}></i>`).join('')}</span>${e(level.label)}</dd></div></dl></article>
+ <dl class="ticket-facts"><div><dt>${e(leave[0])}</dt><dd>${e(leave[1])}</dd></div><div><dt>${e(back[0])}</dt><dd>${e(back[1]).replace(/–/g,'–<wbr>')}</dd></div><div><dt>强度</dt><dd title="${e(level.full)}"><span class="dots" aria-hidden="true">${[1,2,3,4].map(n=>`<i${n<=level.level?' class="on"':''}></i>`).join('')}</span>${e(level.label)}</dd></div></dl></article>
  <p class="day-key">${e(cleanText(info.key))}</p>
  <div class="chips">${notes.length?openButton(d.date,'notes',`${icon('alert')}<span>情况有变时 · ${notes.length}</span>`,'chip warn'):''}${d.overnight?openButton(d.date,'stay',`${icon('bed')}<span>${e(PLACE[d.overnight].name)}</span>`,'chip'):''}${openButton(d.date,'route',`${icon('route')}<span>路线 · ${timedRoute(d).length} 站</span>`,'chip')}${shots.total?`<a class="chip" href="#shots/${d.date}">${icon('camera')}<span>巡礼 ${shots.done}/${shots.total}</span></a>`:''}</div>
  ${deadlines(d,today?s.minutes:null)}
@@ -134,7 +134,7 @@ function row(d,ev,now){
  const shots=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p)).length;if(shots)flags.push(`<span class="flag">巡礼 ${shots}</span>`);
  const words=start===null?compactTime(ev.time_label):'',thumb=major?eventPhotoIds(ev)[0]:'';
  const node=thumb?`<span class="node photo">${img(thumb)}</span>`:`<span class="node${major?' big':''}">${major?icon(CATEGORY_ICON[ev.category]||'pin'):''}</span>`;
- return `<li class="row ${major?'major':'minor'}${done?' done':''}${now?.current?.id===ev.id?' now':''}" id="row-${e(ev.id)}">${openButton(d.date,ev.id,`<span class="row-time">${start===null?'随后':clock(start)}</span>${node}<span class="row-text">${major?'':icon(CATEGORY_ICON[ev.category]||'pin')}<span class="row-title">${e(ev.title)}</span>${words||flags.length?`<span class="row-meta">${words?`<span>${e(words)}</span>`:''}${flags.join('')}</span>`:''}</span>`,'row-open')}${checkButton(d.date,ev)}</li>`;
+ return `<li class="row ${major?'major':'minor'}${done?' done':''}${now?.current?.id===ev.id?' now':''}" id="row-${e(ev.id)}">${openButton(d.date,ev.id,`<span class="row-time">${start===null?'随后':clock(start)}</span>${node}<span class="row-text"><span class="row-title">${major?'':icon(CATEGORY_ICON[ev.category]||'pin')}${e(ev.title)}</span>${words||flags.length?`<span class="row-meta">${words?`<span>${e(words)}</span>`:''}${flags.join('')}</span>`:''}</span>`,'row-open')}${checkButton(d.date,ev)}</li>`;
 }
 
 /* ---------- Sheets ---------- */
@@ -220,16 +220,16 @@ function shotHTML(p,n){
  const s=shotModel(p);
  return `<article class="shot${s.done?' done':''}" id="shot-${e(s.id)}">
  ${s.done?seal(ui.justDone==='shot:'+s.id?' shot-seal stamp-in':' shot-seal'):''}
- <header><p class="kicker">${n?`<span class="shot-n">${String(n).padStart(2,'0')}</span>`:''}${e(s.work)}${s.optional?' · 可选':''}</p><h2 class="title">${e(s.title)}</h2><p class="ja" lang="ja">${e(s.nameJa)}</p></header>
+ <header><p class="kicker">${n?`<span class="shot-n">${String(n).padStart(2,'0')}</span>`:''}${e(s.work)}${s.optional?' · 可选':s.reference?' · 参考':''}</p><h2 class="title">${e(s.title)}</h2><p class="ja" lang="ja">${e(s.nameJa)}</p></header>
  <div class="pair${s.images.length===1?' single':''}">${s.images.map(([kind,label])=>shotImage(p,kind,label)).join('')}</div>
  ${s.caption?`<p class="hint">${e(s.caption)}</p>`:''}
  ${s.note?`<p class="shot-note"><b>站位</b>${e(s.note)}</p>`:''}
- <div class="actions">${external(icon('pin')+'<span>地图</span>',s.map,'btn')}<button type="button" class="btn shot-toggle${s.done?' on':''}" data-action="shot" data-shot="${e(s.id)}" aria-pressed="${s.done}">${icon('check')}<span>${s.done?'已拍':'标记已拍'}</span></button>${s.eventId?openButton(s.date,s.eventId,'<span>行程</span>','btn ghost'):''}</div>
+ <div class="actions">${external(icon('pin')+'<span>地图</span>',s.map,'btn')}${s.reference?'':`<button type="button" class="btn shot-toggle${s.done?' on':''}" data-action="shot" data-shot="${e(s.id)}" aria-pressed="${s.done}">${icon('check')}<span>${s.done?'已拍':'标记已拍'}</span></button>`}${s.eventId?openButton(s.date,s.eventId,'<span>行程</span>','btn ghost'):''}</div>
  <details class="fold"><summary>场景与来源</summary>${s.scene?`<p>${e(s.scene)}</p>`:''}${s.coords?`<p class="muted">${s.coords.lat}, ${s.coords.lng} · ${e(s.coords.precision||'')} <button type="button" class="link" data-action="copy" data-copy="${s.coords.lat}, ${s.coords.lng}">复制坐标</button>${s.coords.source_url?' · '+external('定位依据 ↗',s.coords.source_url):''}</p>`:'<p class="muted">坐标待核准，按地点名称搜索。</p>'}${p.real?.source_url?`<p class="muted">实景：${e(p.real.credit||'原作者')} · ${external('来源 ↗',p.real.source_url)}</p>`:''}${p.anime?.source_url?`<p class="muted">作品画面：${e(p.anime.credit||'作品权利方')} · ${external('来源 ↗',p.anime.source_url)}</p>`:''}${p.comparison?`<p class="muted">${e(p.comparison.credit)} · ${external('对照原图 ↗',p.comparison.source_url)}</p>`:''}${(p.sources||[]).map(x=>`<p class="muted">${external(e(x.title)+' ↗',x.url)}</p>`).join('')}</details>
  </article>`;
 }
 function rallyHTML(d){
- if(d.date==='2026-12-03')return `<section class="block rally"><p class="kicker">10:00–11:30 · 京都塔</p><h2 class="title">京吹联动 · 叠印集章</h2><p>展望室5层领台纸，共7处章点；先完成收费区再出场，门票不能再次入场。</p><div class="actions">${external('<span>活动官网 ↗</span>','https://www.kyoto-tower.jp/event/eupho26autumn/','btn')}</div><details class="fold"><summary>参与规则</summary><p>攻略里的完成或已拍不代表已领取官方印章。</p><p>活动期2026/9/1—12/20。进入展望室须购票，当前成人¥1,000，未购票。</p><p>周边店10:00—20:30，在展望室1层（大楼11楼）。这项纸本叠印与宇治GPS数字集章分开。</p></details></section>`;
+ if(d.date==='2026-12-03')return `<section class="block rally"><p class="kicker">${e(compactTime(effectiveEvents(d).find(ev=>ev.id==='kyoto_tower_visit').time_label))} · 京都塔</p><h2 class="title">京吹联动 · 叠印集章</h2><p>展望室5层领台纸，共7处章点；先完成收费区再出场，门票不能再次入场。</p><div class="actions">${external('<span>活动官网 ↗</span>','https://www.kyoto-tower.jp/event/eupho26autumn/','btn')}</div><details class="fold"><summary>参与规则</summary><p>攻略里的完成或已拍不代表已领取官方印章。</p><p>活动期2026/9/1—12/20。进入展望室须购票，当前成人¥1,000，未购票。</p><p>周边店10:00—20:30，在展望室1层（大楼11楼）。这项纸本叠印与宇治GPS数字集章分开。</p></details></section>`;
  const r=PILGRIMAGE.rally;if(!r||r.date!==d.date)return '';
  return `<section class="block rally" id="shot-rally"><p class="kicker">11/1–12/20 · 后期</p><h2 class="title">京吹数字集章</h2><p>${e(cleanText(r.recommendation))}</p><div class="actions">${external('<span>参加活动 ↗</span>',r.entry_url,'btn primary')}</div>
  <details class="fold"><summary>集章点位 · ${r.spots.length}</summary>${r.spots.map(p=>`<article class="rally-spot"><h3>${e(p.title)}</h3><div class="pair">${p.real?.src?shotImage(p,'real','实景'):''}${shotImage(p,'anime','作品画面')}</div><p class="hint">${e(p.match_note||p.caption||'')}</p><p>${e(cleanText(p.note))}</p><div class="actions">${external(icon('pin')+'<span>地图</span>',p.map_url,'btn')}<button type="button" class="btn" data-action="copy" data-copy="${e(p.name_ja)}">${icon('copy')}<span>复制名称</span></button></div></article>`).join('')}</details>
@@ -239,12 +239,13 @@ const shotDays=()=>PLAN.days.map((_,i)=>i).filter(i=>pilgrimageDay(PLAN.days[i].
 function shotsScreen(){
  const days=shotDays();
  if(!days.includes(ui.shotsDay)){const t=todayIndex();ui.shotsDay=days.includes(t)?t:days.includes(ui.day)?ui.day:days[0];}
- const d=PLAN.days[ui.shotsDay],{main,optional}=dayShots(d),pg=shotProgress(d.date);
+ const d=PLAN.days[ui.shotsDay],{main,optional,reference}=dayShots(d),pg=shotProgress(d.date);
  return `${strip(days.map(i=>['#shots/'+PLAN.days[i].date,i,i===todayIndex()?'今天':DETAILS[PLAN.days[i].date].cityLabel]),ui.shotsDay)}
  <header class="screen-head"><div><p class="kicker">${dateLabel(d.date)} · 实景 × 作品</p><h1 class="display">巡礼对照</h1></div>${kita(pg.total&&pg.done===pg.total?'grin':'side','in-head')}<p class="count"><b>${pg.done}</b><span>/ ${pg.total} 已拍</span></p></header>
  ${rallyHTML(d)}
  ${main.map((p,n)=>shotHTML(p,n+1)).join('')}
- ${optional.length?`<details class="fold block"><summary>可选点位 · ${optional.length}</summary><p class="hint">时间有余时顺路拍，默认不安排。</p>${optional.map(p=>shotHTML(p,0)).join('')}</details>`:''}`;
+ ${optional.length?`<details class="fold block"><summary>可选点位 · ${optional.length}</summary><p class="hint">时间有余时顺路拍，默认不安排。</p>${optional.map(p=>shotHTML(p,0)).join('')}</details>`:''}
+ ${reference.length?`<details class="fold block"><summary>参考资料 · ${reference.length}</summary><p class="hint">不在当天路线，不计入巡礼进度。</p>${reference.map(p=>shotHTML(p,0)).join('')}</details>`:''}`;
 }
 
 /* ---------- 准备 ---------- */
@@ -259,14 +260,14 @@ function prepScreen(){
  <details class="fold block"><summary>参考资料</summary>
   <h3 class="sub">作品日文名</h3>${WORK_NAMES.map(t=>`<p class="copy-line"><span lang="ja">${e(t)}</span><button type="button" class="icon-btn small" data-action="copy" data-copy="${e(t)}" aria-label="复制${e(t)}">${icon('copy')}</button></p>`).join('')}
   <h3 class="sub">保存的早季红叶预测 · 截至2026/9/28</h3>${PLAN.foliage.spots.map(s=>`<p>${e(PLACE[s.place_id].name)}：到访 ${dateLabel(s.visit_date)} · 预测观赏 ${dateLabel(s.forecast_viewing_start)} · 预测落叶 ${dateLabel(s.forecast_leaf_fall_start)} · ${external('来源 ↗',s.source)}</p>`).join('')}<p class="muted">可能见到枝头红叶与落叶混合，不保证盛期。</p>
-  <h3 class="sub">预算</h3><p>普通正餐每人¥1,000—2,500；12/6和牛自助每人不超过¥6,000。</p><p>门票（两人）：京都塔¥2,000、大佛殿¥1,600、高台寺¥1,600；USJ、清水寺与购物另计。</p>
+  <h3 class="sub">预算</h3><p>普通正餐每人¥1,000—2,500；12/6和牛自助现价¥5,000/人、上限¥6,000/人，尚未订位。</p><p>门票（两人）：${PLAN.visit_budget.filter(v=>!v.item).map(v=>e(({kodaiji:'高台寺',kyoto_tower:'京都塔',todaiji:'大佛殿'})[v.place_id]||PLACE[v.place_id].name)+' ¥'+v.two_adults_jpy.toLocaleString('en-US')).join('、')}；清水寺与购物另计。</p>
   <h3 class="sub">离线使用</h3><p>${isWeb?'网页版的照片按需加载；路上请用离线单文件版。':'行程与照片可离线查看。'}地图和来源链接需联网。勾选只存在这台设备的浏览器里，不与同行者同步，网页版与离线文件各自保存；清除浏览器数据会丢失。</p>
  </details>
  <a class="link-row" href="${BLOG_HOME}">${icon('back')}<span>返回まひろ的小站</span>${icon('chevron')}</a>`;
 }
 
 /* ---------- Shell ---------- */
-const ui={tab:'now',day:Math.max(0,todayIndex()),shotsDay:null,target:'',justDone:''};
+const ui={tab:'now',day:Math.max(0,todayIndex()),shotsDay:null,target:'',justDone:'',moved:''};
 const TABS=[['now','clock'],['day','calendar'],['shots','camera'],['prep','bag']];
 const TAB_LABEL={day:'行程',shots:'巡礼',prep:'准备'};
 function tabHref(id){return id==='day'?'#day/'+PLAN.days[ui.day].date:id==='shots'?'#shots'+(ui.shotsDay!=null?'/'+PLAN.days[ui.shotsDay].date:''):'#'+id;}
@@ -277,10 +278,15 @@ function parseHash(){
  ui.target='';
  if(parts[0]==='day'&&at(parts[1])>=0){
   ui.day=at(parts[1]);
-  if(parts[2]==='pilgrimage'){ui.tab='shots';ui.shotsDay=ui.day;if(parts[3])ui.target='shot-'+parts[3];return '';}
-  ui.tab='day';const rest=parts.slice(2).filter(x=>x&&x!=='timeline'&&x!=='details');return rest[0]||'';
+  if(parts[2]==='pilgrimage'){ui.tab='shots';const p=parts[3]&&pilgrimagePoints.find(x=>x.id===parts[3]);ui.shotsDay=p?at(p.date):ui.day;if(parts[3])ui.target='shot-'+parts[3];return '';}
+  ui.tab='day';const key=parts.slice(2).filter(x=>x&&x!=='timeline'&&x!=='details')[0]||'';
+  const d=PLAN.days[ui.day];
+  if(!key||['notes','route','stay'].includes(key)||effectiveEvents(d).some(ev=>ev.id===key))return key;
+  const moved=MOVED_LINKS[d.date]?.[key];
+  if(moved){ui.day=at(moved);ui.moved='这项已移到 '+dateLabel(moved);return key;}
+  ui.moved='这项已不在最终行程，已打开 '+dateLabel(d.date)+' 全天';return '';
  }
- if(parts[0]==='shots'){ui.tab='shots';if(at(parts[1])>=0)ui.shotsDay=at(parts[1]);if(parts[2])ui.target='shot-'+parts[2];return '';}
+ if(parts[0]==='shots'){ui.tab='shots';const p=parts[2]&&pilgrimagePoints.find(x=>x.id===parts[2]);if(p)ui.shotsDay=at(p.date);else if(at(parts[1])>=0)ui.shotsDay=at(parts[1]);if(parts[2])ui.target='shot-'+parts[2];return '';}
  ui.tab=parts[0]==='prep'?'prep':'now';return '';
 }
 function renderMain(){
@@ -307,6 +313,7 @@ function route(){
  const target=ui.target&&document.getElementById(ui.target);
  if(target)target.scrollIntoView({block:'start'});else window.scrollTo({top:scrollMemory.get(viewKey)||0,behavior:'instant'});
  const kept=history.state?.sheet;
+ if(ui.moved){toast(ui.moved);ui.moved='';}
  if(deep)openSheet(PLAN.days[ui.day].date,deep,{push:false});
  else if(kept)openSheet(kept.date,kept.key,{push:false,pushed:true});
  else hideSheet();
@@ -362,7 +369,8 @@ function zoomShot(id,kind){
 function zoomPhoto(id){const p=PHOTOS[id];if(p?.src)openZoom(PLACE[id].name,{src:p.src,alt:p.sight,credit:[p.sight,p.author,p.date].filter(Boolean).join(' · '),source_url:p.sourcePage});}
 
 function boot(){
- $('#app').innerHTML=`${DOODLE_DEFS}<main id="main" tabindex="-1"></main><nav class="tabbar" aria-label="主导航"></nav><dialog id="sheet" class="sheet" aria-label="详情"></dialog><dialog id="zoom" class="zoom" aria-label="放大图片"></dialog>`;
+ const margin=['maple','tea','torii','bridge'].map((name,i)=>doodle(name).replace('class="doodle"',`class="doodle m${i+1}"`)).join('');
+ $('#app').innerHTML=`${DOODLE_DEFS}<div class="margin-art" aria-hidden="true">${margin}${kita('sit-happy','')}</div><main id="main" tabindex="-1"></main><nav class="tabbar" aria-label="主导航"></nav><dialog id="sheet" class="sheet" aria-label="详情"></dialog><dialog id="zoom" class="zoom" aria-label="放大图片"></dialog>`;
  document.addEventListener('click',ev=>{
   const tab=ev.target.closest('a.tab.on');
   if(tab){ev.preventDefault();window.scrollTo({top:0,behavior:'smooth'});return;}

@@ -18,7 +18,7 @@
   --danger: #a01d18; --danger-soft: #f8e3dc;
   --warn: #6c4800; --warn-soft: #f7ebc2;
   --ok: #3a7040; --ok-soft: #e9f3d6;
-  --wash-shu: rgba(178,62,42,.16); --wash-moegi: rgba(150,200,90,.28); --wash-plum: rgba(111,67,133,.14); --wash-gold: rgba(201,163,58,.26); --wash-accent: rgba(58,112,64,.13);
+  --wash-shu: rgba(178,62,42,.16); --wash-moegi: rgba(150,200,90,.28); --wash-plum: rgba(111,67,133,.14); --wash-gold: rgba(201,163,58,.26); --wash-accent: rgba(58,112,64,.13); --tape-a: rgba(150,200,90,.5); --tape-b: rgba(222,188,84,.45);
   --glow: rgba(214,236,168,.7); --lattice: rgba(118,146,64,.085);
   --scrim: rgba(16,26,10,.66); --press: rgba(108,158,66,.5);
   --shadow: 0 1px 1px rgba(40,52,18,.05), 0 8px 24px -8px rgba(40,52,18,.16);
@@ -42,7 +42,7 @@
     --danger: #ff9b90; --danger-soft: rgba(255,155,144,.13);
     --warn: #f1c26f; --warn-soft: rgba(241,194,111,.12);
     --ok: #b7dc8c; --ok-soft: rgba(183,220,140,.14);
-    --wash-shu: rgba(240,144,111,.36); --wash-moegi: rgba(183,220,140,.2); --wash-plum: rgba(208,168,224,.2); --wash-gold: rgba(226,196,106,.32); --wash-accent: rgba(183,220,140,.12);
+    --wash-shu: rgba(240,144,111,.36); --wash-moegi: rgba(183,220,140,.2); --wash-plum: rgba(208,168,224,.2); --wash-gold: rgba(226,196,106,.32); --wash-accent: rgba(183,220,140,.12); --tape-a: rgba(183,220,140,.34); --tape-b: rgba(226,196,106,.36);
     --glow: rgba(150,200,110,.08); --lattice: rgba(183,220,140,.05);
     --scrim: rgba(5,9,4,.72); --press: rgba(0,0,0,.5);
     --shadow: 0 1px 1px rgba(0,0,0,.3), 0 8px 24px -8px rgba(0,0,0,.6);
@@ -61,7 +61,7 @@
   --danger: #ff9b90; --danger-soft: rgba(255,155,144,.13);
   --warn: #f1c26f; --warn-soft: rgba(241,194,111,.12);
   --ok: #b7dc8c; --ok-soft: rgba(183,220,140,.14);
-  --wash-shu: rgba(240,144,111,.36); --wash-moegi: rgba(183,220,140,.2); --wash-plum: rgba(208,168,224,.2); --wash-gold: rgba(226,196,106,.32); --wash-accent: rgba(183,220,140,.12);
+  --wash-shu: rgba(240,144,111,.36); --wash-moegi: rgba(183,220,140,.2); --wash-plum: rgba(208,168,224,.2); --wash-gold: rgba(226,196,106,.32); --wash-accent: rgba(183,220,140,.12); --tape-a: rgba(183,220,140,.34); --tape-b: rgba(226,196,106,.36);
     --glow: rgba(150,200,110,.08); --lattice: rgba(183,220,140,.05);
   --scrim: rgba(5,9,4,.72); --press: rgba(0,0,0,.5);
   --shadow: 0 1px 1px rgba(0,0,0,.3), 0 8px 24px -8px rgba(0,0,0,.6);
@@ -272,17 +272,17 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .countdown .count b {font:900 68px/1 var(--serif); color:var(--shu); letter-spacing:-.02em}
 .countdown .count span {font:700 18px var(--serif)}
 .countdown .btn {flex:1}
-.mini {--rail:66px}
+.mini {--t:3.1rem; --rail:calc(var(--t) + 12px + 8px)}
 .mini li {display:flex; align-items:center}
 .mini-row {flex:1; min-width:0; display:flex; align-items:center; gap:12px; min-height:52px}
-.mini-row .t {flex:none; min-width:46px; font-weight:800; font-variant-numeric:tabular-nums}
+.mini-row .t {flex:none; width:var(--t); font-size:1rem; font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap}
 .mini-row .node {width:16px; height:16px}
 .mini .major .node {border-color:var(--ink-2)}
 .mini-title {overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .mini .minor .mini-title {color:var(--ink-2); font-size:15px}
-.timetable li {display:grid; grid-template-columns:58px minmax(0,1fr) auto; gap:10px; align-items:baseline; padding:10px 0; border-top:1px dashed var(--line)}
+.timetable li {display:grid; grid-template-columns:3.6rem minmax(0,1fr) auto; gap:10px; align-items:baseline; padding:10px 0; border-top:1px dashed var(--line)}
 .timetable li:first-child {border-top:0; padding-top:2px}
-.timetable b {font-size:19px; font-weight:800; font-variant-numeric:tabular-nums}
+.timetable b {font-size:1.15rem; font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap}
 .timetable small {font-size:13px; color:var(--muted); white-space:nowrap}
 .stop.close b {color:var(--danger)}
 .stop.decide b {color:var(--accent)}
@@ -307,9 +307,9 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .cover-back {position:absolute; z-index:2; top:12px; left:12px; display:inline-flex; align-items:center; gap:4px; min-height:44px; padding:0 14px 0 10px; border-radius:999px; color:#fff; font-size:14px; font-weight:700; background:rgba(0,0,0,.25); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px)}
 .cover-back .icon {width:18px; height:18px}
 .cover > .icon-btn {position:absolute; z-index:2; top:10px; right:10px; color:#fff; background:rgba(0,0,0,.25); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px)}
-.days {--rail:90px}
-.day-link {display:grid; grid-template-columns:52px 52px minmax(0,1fr) auto; gap:12px; align-items:center; min-height:76px; padding:8px 0; color:var(--ink)}
-.dl-date b {display:block; font-size:18px; font-weight:800; font-variant-numeric:tabular-nums}
+.days {--d:3.3rem; --rail:calc(var(--d) + 12px + 26px)}
+.day-link {display:grid; grid-template-columns:var(--d) 52px minmax(0,1fr) auto; gap:12px; align-items:center; min-height:76px; padding:8px 0; color:var(--ink)}
+.dl-date b {display:block; font-size:1.1rem; font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap}
 .dl-date small, .dl-main small {display:block; font-size:13px; color:var(--muted)}
 .dl-main b {font:700 18px/1.35 var(--serif)}
 .node.photo {width:52px; height:52px; border:3px solid var(--card); overflow:hidden; box-shadow:0 0 0 1.5px var(--line-2)}
@@ -343,17 +343,17 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .hero-over {position:absolute; z-index:1; left:20px; right:84px; bottom:18px; color:#fff}
 .hero-over .kicker {color:rgba(255,255,255,.88)}
 .hero-over .kicker em {color:#fff; background:var(--shu); padding:0 6px; border-radius:4px}
-.hero-over .display {font-size:34px; text-shadow:0 2px 12px rgba(0,0,0,.35)}
+.hero-over .display {font-size:clamp(27px,8vw,34px); text-shadow:0 2px 12px rgba(0,0,0,.35)}
 .hero-over p:last-child {font-size:15px; opacity:.92}
 .day-hero .day-seal {position:absolute; z-index:1; right:18px; bottom:18px; background:rgba(255,254,244,.94); box-shadow:inset 0 0 0 3px rgba(255,254,244,.94), inset 0 0 0 4px #b23e2a; color:#b23e2a; border-color:#b23e2a}
 .ticket-facts {position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:2px dashed var(--line)}
 .ticket-facts::before, .ticket-facts::after {content:''; position:absolute; z-index:2; top:-11px; width:20px; height:20px; border-radius:50%; background:var(--paper)}
 .ticket-facts::before {left:-10px}
 .ticket-facts::after {right:-10px}
-.ticket-facts div {padding:12px 10px 14px; text-align:center}
+.ticket-facts div {min-width:0; padding:12px 6px 14px; text-align:center}
 .ticket-facts div + div {border-left:1px solid var(--line)}
 .ticket-facts dt {font-size:12px; letter-spacing:.1em; color:var(--muted)}
-.ticket-facts dd {margin-top:2px; font-size:16px; font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap}
+.ticket-facts dd {margin-top:2px; font-size:clamp(14px,4.1vw,16px); line-height:1.35; font-weight:800; font-variant-numeric:tabular-nums}
 .dots {display:inline-flex; gap:3px; margin-right:5px; vertical-align:1px}
 .dots i {width:6px; height:6px; border-radius:50%; background:var(--line)}
 .dots i.on {background:var(--ink)}
@@ -370,14 +370,15 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .bar i {display:block; height:100%; border-radius:6px; background:linear-gradient(90deg, var(--moegi), var(--accent))}
 .phase {margin-top:26px !important}
 .phase-title {display:flex; align-items:baseline; gap:10px; padding:0 4px 10px}
-.phase-name {font:900 20px/1 var(--serif); letter-spacing:.12em}
+.phase-name {font:900 20px/1 var(--serif); letter-spacing:.12em; padding:0 3px; margin-left:-3px; border-radius:3px 8px 4px 10px;
+  background:linear-gradient(176deg, transparent 56%, var(--wash-moegi) 57%, var(--wash-moegi) 93%, transparent 94%)}
 .phase-title small {font-size:14px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .phase-title .range {margin-left:auto; font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
-.rows {--rail:84px; --rail-y:30px; padding:6px; border-radius:var(--r); background:var(--card); box-shadow:var(--shadow)}
+.rows {--t:3.1rem; --rail:calc(8px + var(--t) + 10px + 20px); --rail-y:30px; padding:6px; border-radius:var(--r); background:var(--card); box-shadow:var(--shadow)}
 .row {display:flex; align-items:flex-start; border-radius:var(--r-md)}
 .row-open {flex:1; min-width:0; display:flex; align-items:flex-start; gap:10px; min-height:60px; padding:10px 0 10px 8px; border-radius:var(--r-md)}
 .row-open:active {background:var(--sunk)}
-.row-time {flex:none; width:46px; height:40px; display:flex; align-items:center; font-size:15px; font-weight:800; font-variant-numeric:tabular-nums}
+.row-time {flex:none; width:var(--t); height:40px; padding-top:2px; display:flex; align-items:center; font-size:.95rem; font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap}
 .rows .node {width:40px; height:40px; background:none; border:0}
 .rows .node::after {content:''; width:10px; height:10px; border-radius:50%; background:var(--card); border:2.5px solid var(--line-2)}
 .rows .node.big::after, .rows .node.photo::after {content:none}
@@ -385,14 +386,15 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .rows .node.big .icon {width:16px; height:16px}
 .rows .node.photo {width:40px; height:40px; border:2.5px solid var(--card); box-shadow:0 0 0 1.5px var(--line-2)}
 .row-text {flex:1; min-width:0; display:flex; flex-wrap:wrap; align-items:center; gap:2px 6px; padding-top:8px}
-.row-text > .icon {width:15px; height:15px; color:var(--muted)}
-.row-title {font-weight:700}
+.row-title > .icon {display:inline-block; width:15px; height:15px; margin-right:6px; vertical-align:-2px; color:var(--muted)}
+.row-title {font-weight:700; line-height:24px}
 .row-meta {flex-basis:100%; display:flex; flex-wrap:wrap; gap:4px 8px; font-size:13px; color:var(--muted)}
 .flag {padding:0 6px; border-radius:5px; background:var(--sunk); color:var(--ink-2); font-weight:600}
 .flag.warn {background:var(--warn-soft); color:var(--warn)}
 .row .check {margin-top:4px}
 .row.minor .row-time {font-weight:600; color:var(--muted)}
-.row.minor .row-title {font-weight:500; font-size:15px; color:var(--ink-2)}
+.row.minor .row-text {padding-top:9px}
+.row.minor .row-title {font-weight:500; font-size:15px; line-height:22px; color:var(--ink-2)}
 .row.now {background:var(--accent-soft)}
 .row.now .row-time {color:var(--accent)}
 .row.now .node.big, .row.now .node.photo {box-shadow:0 0 0 2.5px var(--accent), 0 0 0 7px var(--card)}
@@ -499,6 +501,9 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .pair .shot-img:nth-child(1) {transform:rotate(-1.2deg)}
 .pair .shot-img:nth-child(2) {transform:rotate(1deg)}
 .pair.single .shot-img {transform:none}
+.shot-img::before {content:''; position:absolute; z-index:1; top:-7px; left:50%; width:54px; height:16px; margin-left:-27px; transform:rotate(-4deg); border-radius:1px; opacity:.9;
+  background:repeating-linear-gradient(135deg, var(--tape-a) 0 5px, var(--tape-b) 5px 10px); box-shadow:0 1px 1px rgba(0,0,0,.05)}
+.pair .shot-img:nth-child(2)::before {transform:rotate(5deg); background:repeating-linear-gradient(45deg, var(--wash-plum) 0 5px, var(--tape-a) 5px 10px)}
 .shot-img img {width:100%; aspect-ratio:16/10; object-fit:cover; border-radius:2px; background:#0c0f16}
 .pair.single .shot-img img {aspect-ratio:auto}
 .shot-img span {position:absolute; left:8px; bottom:3px; color:#464d39; font:700 11.5px var(--serif); letter-spacing:.1em}
@@ -518,7 +523,7 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .ticket-main {flex:1; min-width:0}
 .ticket-main b {display:block; font:700 16px var(--serif)}
 .ticket-main small {color:var(--muted); font-size:13.5px}
-.ticket-state {flex:none; width:68px; padding-left:14px; border-left:2px dashed var(--line-2); font-weight:800; font-size:14px; text-align:center}
+.ticket-state {flex:none; min-width:68px; padding-left:14px; white-space:nowrap; border-left:2px dashed var(--line-2); font-weight:800; font-size:14px; text-align:center}
 .tickets li::before, .tickets li::after {content:''; position:absolute; right:89px; width:14px; height:14px; border-radius:50%; background:var(--card)}
 .tickets li::before {top:-7px}
 .tickets li::after {bottom:-7px}
@@ -576,6 +581,17 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .copy-dialog textarea {width:100%; min-height:90px; margin-top:8px; padding:10px; border-radius:var(--r-md); border:1.5px solid var(--line-2); background:var(--sunk); color:var(--ink); font:inherit}
 noscript p {padding:40px; text-align:center}
 
+.margin-art {display:none}
+@media (min-width:1120px) {
+  #main {position:relative; z-index:1}
+  .margin-art {display:block; position:fixed; z-index:0; inset:0; pointer-events:none}
+  .margin-art .doodle {position:absolute; width:132px; height:132px; color:var(--ink-2); opacity:.32}
+  .margin-art .m1 {left:calc(50% - 320px - 230px); top:16%; transform:rotate(-8deg)}
+  .margin-art .m2 {left:calc(50% - 320px - 170px); top:58%; width:104px; height:104px; transform:rotate(6deg)}
+  .margin-art .m3 {right:calc(50% - 320px - 220px); top:12%; transform:rotate(7deg)}
+  .margin-art .m4 {right:calc(50% - 320px - 160px); top:46%; width:110px; height:110px; transform:rotate(-5deg)}
+  .margin-art .kita {position:absolute; right:calc(50% - 320px - 210px); bottom:calc(var(--tabbar) + 28px); width:120px; height:116px; opacity:.95}
+}
 @media (min-width:720px) {
   .display {font-size:36px}
   .strip {margin-left:0; margin-right:0; border-radius:0 0 var(--r) var(--r)}

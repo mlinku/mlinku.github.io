@@ -15,7 +15,7 @@ export function headingText(){
   localStorage:{getItem:()=>null,setItem(){},removeItem(){}},location:{search:'',hash:''},document:{querySelector(){return null;},querySelectorAll(){return [];},addEventListener(){}},setTimeout(){return 1;},clearTimeout(){},console});
  vm.runInContext(SCRIPT_FILES.map(read).join('\n'),scope);
  return vm.runInContext(`(()=>{const out=[];
-  const variants={'2026-12-02':[{},{kodaijiPlan:'skip'},{yasakaBrief:true}],'2026-12-04':[{},{kinopio:true}],'2026-12-05':[{},{shop1:'potato',shop2:'surugaya_main'},{shop2:'none'}]};
+  const variants={'2026-12-02':[{},{kodaijiPlan:'skip'},{yasakaBrief:true}],'2026-12-04':[{},{shop1:'potato',shop2:'surugaya_main'},{shop2:'none'}]};
   for(const d of PLAN.days)for(const c of variants[d.date]||[{}]){state.choices[d.date]=c;const info=dayPresentation(d);out.push(info.short,info.eyebrow,...DETAILS[d.date].phases.map(p=>p[0]),...effectiveEvents(d).map(ev=>ev.title));}
   state.choices={};
   out.push(...PLAN.places.map(p=>p.name),...pilgrimagePoints.map(p=>p.title+p.work),...(PILGRIMAGE.rally?.spots||[]).map(p=>p.title));

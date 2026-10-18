@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-10-18T19:03:27.573Z",
+  "baseline": "fbe1a9d",
+  "revision": "2026-10-19-final-no-usj-no-ferry-tower-default",
+  "bookingsUnchanged": true,
+  "unchangedDates": [
+    "2026-11-30",
+    "2026-12-02",
+    "2026-12-07"
+  ],
+  "final": {
+    "12/4": "奈良大佛殿 + 日本桥1—2家",
+    "12/5": "加太巡礼 → 淡嶋神社 → 红叶溪庭园 → 天守（默认）→ 约19:00—19:30返店",
+    "12/6": "元町两家CD店优先；17:00和牛待订位"
+  },
+  "excluded": [
+    "USJ",
+    "大阪城",
+    "友岛登船",
+    "白须神社",
+    "奈良博物馆",
+    "春日本殿",
+    "若草山登顶",
+    "完整奈良町游览"
+  ],
+  "tickets": {
+    "kodaiji": 1600,
+    "kyoto_tower": 2000,
+    "todaiji": 1600,
+    "wakayama_castle": 820,
+    "fufutei_kobe": 10000
+  },
+  "pilgrimage": {
+    "points": 28,
+    "kada": [
+      "summer-kada-info",
+      "summer-kada-kojima",
+      "summer-kada-tsutsumi",
+      "summer-kada-kishimoto"
+    ]
+  }
+}

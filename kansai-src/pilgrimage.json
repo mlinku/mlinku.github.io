@@ -1,5 +1,5 @@
 {
-  "checked_on": "2026-10-01",
+  "checked_on": "2026-10-19",
   "points": [
     {
       "id": "eupho_uji_bridge",
@@ -7,11 +7,11 @@
         "uji_bridge"
       ],
       "date": "2026-12-01",
-      "event_id": "uji_lunch_walk",
+      "event_id": "uji_parfait",
       "title": "宇治桥 · 桥上栏杆",
       "work": "吹响！上低音号",
       "scene": "官方巡礼地图收录宇治桥；第一季第12集也是久美子抒发心情的桥。",
-      "shooting_note": "在行人通道看桥栏与河景；保留原行程返程再次经过宇治桥。",
+      "shooting_note": "在行人通道看桥栏与河景；保留原行程返程再次经过宇治桥。 中村藤吉等号有余量时短拍，不另算时间。",
       "pair_match": "同一座桥、不同方向：动画为桥上步行画面，实景为桥栏与河景参考",
       "coordinates": {
         "lat": 34.892948,
@@ -1030,7 +1030,7 @@
         "shinsekai"
       ],
       "date": "2026-12-03",
-      "event_id": "shinsekai_dinner",
+      "event_id": null,
       "title": "通天阁·天空楼阁",
       "work": "名侦探柯南：世纪末的魔术师",
       "scene": "怪盗基德登场的通天阁；电影画面呈现塔顶、展望层和塔身。",
@@ -1075,21 +1075,22 @@
           "url": "https://www.latlong.net/place/ts-tenkaku-japan-22689.html"
         }
       ],
-      "status": "已找到电影建筑画面与实景；地点可辨认，两图不是同机位",
+      "status": "参考资料：不在默认路线，不计当天已拍",
       "match_note": "",
-      "name_ja": "通天閣"
+      "name_ja": "通天閣",
+      "reference": true
     },
     {
       "id": "conan-ebisubashi",
       "place_ids": [
         "glico"
       ],
-      "date": "2026-12-05",
+      "date": "2026-12-03",
       "event_id": "glico_photo",
       "title": "戎桥·恋爱的暗号",
       "work": "名侦探柯南",
       "scene": "日版第763—764集《柯南与平次 恋爱的暗号》：平次在戎桥调查，桥栏、道顿堀商店招牌为对照。",
-      "shooting_note": "在桥面寻找弧形桥栏，对照南侧道顿堀商店入口与招牌。动画构图有改绘；示例实景拍摄较早，当前广告可能不同。沿用20:40—21:00的格力高短拍时段。",
+      "shooting_note": "在桥面寻找弧形桥栏，对照南侧道顿堀商店入口与招牌。动画构图有改绘；示例实景拍摄较早，当前广告可能不同。12/3约18:00—18:30短拍。",
       "coordinates": {
         "lat": 34.669074,
         "lng": 135.50129,
@@ -1128,6 +1129,214 @@
       "status": "官方剧情确认地点；动画与实景已目视核对，非精确同机位",
       "match_note": "",
       "name_ja": "戎橋"
+    },
+    {
+      "id": "summer-kada-info",
+      "place_ids": [
+        "kada_tourist_info"
+      ],
+      "date": "2026-12-05",
+      "event_id": "kada_pilgrimage",
+      "title": "加太观光协会 · 雨棚",
+      "work": "夏日重现",
+      "scene": "第10话：小舟澪与菱形朱鹭子所在的雨棚。",
+      "shooting_note": "站前观光协会外，对照雨棚、屋顶、柱子与靠坡道路。室内是否开放不保证。",
+      "coordinates": null,
+      "real": {
+        "local": "assets/pilgrimage/kada/kada-info-real.jpg",
+        "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/x/xoc/20221219/20221219121622.jpg",
+        "width": 1000,
+        "height": 667,
+        "credit": "实拍：xckb（作者实地访问，2022-12（依据作者访问记录及图床路径））",
+        "license": "原作者版权；未声明开放许可",
+        "usage": "copyrighted_reference",
+        "changes": "长边缩至1000px并重新压缩为JPEG；未裁剪、未调色。"
+      },
+      "anime": {
+        "local": "assets/pilgrimage/kada/kada-info-anime.jpg",
+        "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/x/xoc/20221222/20221222184007.jpg",
+        "width": 1000,
+        "height": 562,
+        "credit": "动画画面 ©田中靖規／集英社・サマータイムレンダ製作委員会；对照来源 xckb",
+        "license": "作品版权所有；非开放许可",
+        "usage": "copyrighted_reference",
+        "changes": "长边缩至1000px并重新压缩为JPEG；未裁剪、未调色。"
+      },
+      "sources": [
+        {
+          "title": "xckb：加太巡礼实地对照（第10话）",
+          "url": "https://xckb.hatenablog.com/entry/2022/07/17/153318"
+        },
+        {
+          "title": "オタスポガイド：加太实地报道",
+          "url": "https://otaspoguide.com/14070/"
+        },
+        {
+          "title": "和歌山市：官方《夏日重现》舞台地图 PDF",
+          "url": "https://www.city.wakayama.wakayama.jp/_res/projects/default_project/_page_/001/027/769/STR_map2.pdf"
+        }
+      ],
+      "status": "作者实地对照，已目视核对；非官方同机位认定。图片为原作者与作品权利方版权，仅作本机行程对照",
+      "match_note": "雨棚、屋顶、柱子和靠坡道路可辨；作品把周边改成近港环境，现实前方是街道。",
+      "name_ja": "加太観光協会案内所",
+      "episode": "10",
+      "usage": "copyrighted_reference"
+    },
+    {
+      "id": "summer-kada-kojima",
+      "place_ids": [
+        "kada_kojima"
+      ],
+      "date": "2026-12-05",
+      "event_id": "kada_pilgrimage",
+      "title": "小嶋一商店 · コバマート",
+      "work": "夏日重现",
+      "scene": "第1话：コバマート店前的斜向街景。",
+      "shooting_note": "在店前公共道路斜向对照；点心与营业不保证，不为买到而早起。",
+      "coordinates": null,
+      "real": {
+        "local": "assets/pilgrimage/kada/kada-kojima-stairs-real.jpg",
+        "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/x/xoc/20220710/20220710075412.jpg",
+        "width": 1000,
+        "height": 667,
+        "credit": "实拍：xckb（作者实地访问，2022-07（依据作者访问记录及图床路径））",
+        "license": "原作者版权；未声明开放许可",
+        "usage": "copyrighted_reference",
+        "changes": "长边缩至1000px并重新压缩为JPEG；未裁剪、未调色。"
+      },
+      "anime": {
+        "local": "assets/pilgrimage/kada/kada-kojima-stairs-anime.jpg",
+        "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/x/xoc/20220716/20220716125713.jpg",
+        "width": 1000,
+        "height": 562,
+        "credit": "动画画面 ©田中靖規／集英社・サマータイムレンダ製作委員会；对照来源 xckb",
+        "license": "作品版权所有；非开放许可",
+        "usage": "copyrighted_reference",
+        "changes": "长边缩至1000px并重新压缩为JPEG；未裁剪、未调色。"
+      },
+      "sources": [
+        {
+          "title": "xckb：加太巡礼实地对照（第1话）",
+          "url": "https://xckb.hatenablog.com/entry/2022/07/17/153318"
+        },
+        {
+          "title": "オタスポガイド：加太实地报道",
+          "url": "https://otaspoguide.com/14070/"
+        },
+        {
+          "title": "和歌山市：官方《夏日重现》舞台地图 PDF",
+          "url": "https://www.city.wakayama.wakayama.jp/_res/projects/default_project/_page_/001/027/769/STR_map2.pdf"
+        }
+      ],
+      "status": "作者实地对照，已目视核对；非官方同机位认定。图片为原作者与作品权利方版权，仅作本机行程对照",
+      "match_note": "同一店前斜向街景；动画为卷帘关闭状态，实拍为营业状态；标牌、邻屋、道路布局有改编，不声称逐像素一致。",
+      "name_ja": "小嶋一商店 加太",
+      "episode": "1",
+      "usage": "copyrighted_reference"
+    },
+    {
+      "id": "summer-kada-tsutsumi",
+      "place_ids": [
+        "kada_tsutsumi"
+      ],
+      "date": "2026-12-05",
+      "event_id": "kada_pilgrimage",
+      "title": "堤川沿岸 · 河边街道",
+      "work": "夏日重现",
+      "scene": "第3话：河道、石岸与沿河街道。",
+      "shooting_note": "沿公共道路对照河道、石岸、右侧街道与左侧白楼轮廓；按资料再往后站一些，不走入私宅。",
+      "coordinates": null,
+      "real": {
+        "local": "assets/pilgrimage/kada/kada-tsutsumi-real.jpg",
+        "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/x/xoc/20220710/20220710144433.jpg",
+        "width": 1000,
+        "height": 667,
+        "credit": "实拍：xckb（作者实地访问，2022-07（依据作者访问记录及图床路径））",
+        "license": "原作者版权；未声明开放许可",
+        "usage": "copyrighted_reference",
+        "changes": "长边缩至1000px并重新压缩为JPEG；未裁剪、未调色。"
+      },
+      "anime": {
+        "local": "assets/pilgrimage/kada/kada-tsutsumi-anime.jpg",
+        "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/x/xoc/20220716/20220716184442.jpg",
+        "width": 1000,
+        "height": 562,
+        "credit": "动画画面 ©田中靖規／集英社・サマータイムレンダ製作委員会；对照来源 xckb",
+        "license": "作品版权所有；非开放许可",
+        "usage": "copyrighted_reference",
+        "changes": "长边缩至1000px并重新压缩为JPEG；未裁剪、未调色。"
+      },
+      "sources": [
+        {
+          "title": "xckb：加太巡礼实地对照（第3话）",
+          "url": "https://xckb.hatenablog.com/entry/2022/07/17/153318"
+        },
+        {
+          "title": "オタスポガイド：加太实地报道",
+          "url": "https://otaspoguide.com/14070/"
+        },
+        {
+          "title": "和歌山市：官方《夏日重现》舞台地图 PDF",
+          "url": "https://www.city.wakayama.wakayama.jp/_res/projects/default_project/_page_/001/027/769/STR_map2.pdf"
+        }
+      ],
+      "status": "作者实地对照，已目视核对；非官方同机位认定。图片为原作者与作品权利方版权，仅作本机行程对照",
+      "match_note": "河道、石岸、右侧街道及左侧白楼轮廓可对照；作者自述应更往后站，非相同机位。",
+      "name_ja": "加太 堤川",
+      "episode": "3",
+      "usage": "copyrighted_reference"
+    },
+    {
+      "id": "summer-kada-kishimoto",
+      "place_ids": [
+        "kada_kishimoto"
+      ],
+      "date": "2026-12-05",
+      "event_id": "kada_pilgrimage",
+      "title": "キシモト商店 · 雨宿店前",
+      "work": "夏日重现",
+      "scene": "第3话：慎平与澪在春日神社旁商店前避雨。",
+      "shooting_note": "在加太春日神社旁，以入口竖框、门侧和背景作局部对照；不是网上同名的其他岸本商店。",
+      "coordinates": null,
+      "real": {
+        "local": "assets/pilgrimage/kada/kada-kishimoto-shop-real.jpg",
+        "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/x/xoc/20220710/20220710145939.jpg",
+        "width": 1000,
+        "height": 667,
+        "credit": "实拍：xckb（作者实地访问，2022-07（依据作者访问记录及图床路径））",
+        "license": "原作者版权；未声明开放许可",
+        "usage": "copyrighted_reference",
+        "changes": "长边缩至1000px并重新压缩为JPEG；未裁剪、未调色。"
+      },
+      "anime": {
+        "local": "assets/pilgrimage/kada/kada-kishimoto-shop-anime.jpg",
+        "source_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/x/xoc/20220716/20220716202840.jpg",
+        "width": 1000,
+        "height": 562,
+        "credit": "动画画面 ©田中靖規／集英社・サマータイムレンダ製作委員会；对照来源 xckb",
+        "license": "作品版权所有；非开放许可",
+        "usage": "copyrighted_reference",
+        "changes": "长边缩至1000px并重新压缩为JPEG；未裁剪、未调色。"
+      },
+      "sources": [
+        {
+          "title": "xckb：加太巡礼实地对照（第3话）",
+          "url": "https://xckb.hatenablog.com/entry/2022/07/17/153318"
+        },
+        {
+          "title": "オタスポガイド：加太实地报道",
+          "url": "https://otaspoguide.com/14070/"
+        },
+        {
+          "title": "和歌山市：官方《夏日重现》舞台地图 PDF",
+          "url": "https://www.city.wakayama.wakayama.jp/_res/projects/default_project/_page_/001/027/769/STR_map2.pdf"
+        }
+      ],
+      "status": "作者实地对照，已目视核对；非官方同机位认定。图片为原作者与作品权利方版权，仅作本机行程对照",
+      "match_note": "以入口竖框、门侧和背景作局部对照；动画人物遮挡大，实拍无人物，属于局部场景而非整条街严格同构。",
+      "name_ja": "キシモト商店 加太",
+      "episode": "3",
+      "usage": "copyrighted_reference"
     },
     {
       "id": "senren-ikuta",
@@ -1267,11 +1476,6 @@
   ],
   "coverage": [
     {
-      "date": "2026-12-04",
-      "title": "USJ柯南与任天堂",
-      "note": "这是主题园区体验，不是原作实景取景地；沿用园区照片，不虚构实景／动画同机位。"
-    },
-    {
       "date": "2026-12-01",
       "title": "平和书店 · 京阿尼周边",
       "note": "店内逛30—40分钟；照片、地图与营业信息见行程。",
@@ -1282,6 +1486,17 @@
       "title": "车站联动展示",
       "note": "久美子贩售机与三人立牌；位置和入场提示见行程。",
       "event_id": "keihan_uji_visit"
+    },
+    {
+      "date": "2026-12-05",
+      "title": "淡嶋神社与前方海边",
+      "note": "作品中的社殿与海边有改绘；本次没有成对画面，只放实景照片，不称所有画面都能复现。",
+      "event_id": "awashima_visit"
+    },
+    {
+      "date": "2026-12-03",
+      "title": "通天阁（参考资料）",
+      "note": "不在默认路线，不计当天已拍；对照图保留在巡礼页底部。"
     }
   ],
   "rally": {

@@ -28,7 +28,6 @@ const DayFlow={
 const ROUTE_EVENTS={
  '2026-11-30':['flight_out','flight_out','arrival_transfer','checkin_kyoto'],
  '2026-12-02':['demachi_transfer','demachi_visit','delta_visit','kiyomizu_transfer','kiyomizu_transfer','kiyomizu_visit','higashiyama_walk','higashiyama_walk','higashiyama_walk','higashiyama_walk','kodaiji_night','kyoto_night_return'],
- '2026-12-04':['usj_transfer','usj_transfer','usj_core','usj_dinner'],
  '2026-12-07':['checkout_osaka','airport_train','airport_train','flight_home']
 };
 function routePurpose(node,eventId,index,nodes){
@@ -36,8 +35,8 @@ function routePurpose(node,eventId,index,nodes){
   if(eventId==='checkout_kyoto')return '退房寄存';
   if(eventId==='checkout_osaka')return '退房离店';
   if(eventId==='luggage_pickup')return '取行李';
-  if(eventId==='nara_day_return'&&nodes.some(n=>n.id==='spaworld'))return '放购物袋、整理行李';
-  if(eventId==='checkin_osaka')return '抵达入住，随后休息30—45分钟';
+  if(eventId==='checkin_osaka')return '抵达入住，随后休息约1小时';
+  if(eventId==='kada_day_return')return '返店后附近吃饭、收主要行李';
   if(eventId?.startsWith('checkin_'))return '入住';
   return index===0?'离店':'返店';
  }
@@ -49,8 +48,12 @@ function routePurpose(node,eventId,index,nodes){
  if(eventId==='osaka_transfer'&&node.id==='kyoto_station')return '取行李后乘车去大阪';
  if(eventId==='kobe_bridge_visit')return node.id==='port_nakakoen'?'乘车回三宫':'出站回三宫商圈';
  if(eventId==='last_evening_return')return node.id==='sannomiya'?'晚餐后乘车返大阪':node.id==='jr_osaka'?'换环状线返店':'下车返店';
- if(eventId==='castle_station_walk'&&node.id==='morinomiya')return '回车站附近吃午饭，再乘JR';
- if(eventId==='nara_return_train'&&node.id==='kintetsu_nara')return '乘车返回大阪';
+ if(eventId==='nara_park_scenery')return '午饭后走一段草地与步道';
+ if(eventId==='nara_return_train'&&node.id==='kintetsu_nara')return '乘车回大阪日本桥';
+ if(['osaka_evening_return','nara_day_return'].includes(eventId))return node.id==='nankai_namba'?'饭后乘南海返店':'下车返店';
+ if(eventId==='wakayamashi_return')return node.id==='kada_station'?'14:40前进站候车':'下车步行去城公园';
+ if(eventId==='wakayama_station_return')return '乘南海回大阪';
+ if(eventId==='kada_day_return')return '下车返店';
  if(eventId==='sannomiya_dinner')return '返回商圈，晚餐地点待选';
  return '';
 }
@@ -61,7 +64,7 @@ function timedRoute(d){
  return nodes.map((node,i)=>{
   let id=node.eventId||(d.route_event_ids||ROUTE_EVENTS[d.date])?.[node.original-1];
   if(d.date==='2026-12-02'&&node.id==='yasaka_shrine')id='gion_dinner_walk';
-  if(d.date==='2026-12-05'&&selectedShops(c).includes(node.id))id='anime_shopping';
+  if(d.date==='2026-12-04'&&selectedShops(c).includes(node.id))id='anime_shopping';
   let times=[eventTime(id)].filter(Boolean);
   if(i===0&&node.id.startsWith('hotel_')&&d.date!=='2026-12-07')times=id==='checkout_kyoto'?[eventTime(id,'退房寄存')]:[{text:d.departure_target||'开园时间待确认',label:'离店'}];
   if(i===nodes.length-1&&node.id.startsWith('hotel_'))times=[{text:returnTarget(d),label:d.date==='2026-11-30'?'入住':'返店'}];
@@ -72,16 +75,9 @@ function timedRoute(d){
    if(node.id==='kix')times=[eventTime('airport_train','机场列车')];
    if(node.id==='hkg')times=[flightTime('flight_home','arrival')];
   }
- if(d.date==='2026-12-04'&&node.id==='usj'){id='usj_app';times=[eventTime('usj_app','申请区域资格')];}
-  if(d.date==='2026-12-05'){
-   if(node.id==='osaka_castle'&&id==='castle_visit')times=[eventTime(id,'步行与外观拍照')];
-   if(node.id==='spaworld')times=[eventTime('spaworld_visit','预计抵达'),{text:'60—75分钟',label:'洗浴与休息 · 22:15前离馆'}];
-   if(node.id==='kintetsu_nara')times=[eventTime(id,id==='nara_return_train'?'返程，含候车':'交通')];
-   if(node.id==='kintetsu_nippombashi')times=[{text:'到站时刻待确认',label:'下车步行去首店'}];
-   if(node.id===c.shop1)times=[eventTime('nippombashi_arrival','抵达'),eventTime('anime_shopping','购物')];
-   if(['nankai_namba','nankai_shinimamiya'].includes(node.id))times=[{eventId:'nara_day_return',text:'拍照后',label:'乘车返店'}];
-  }
-  const shared=['uji_pilgrimage','uji_shrines','higashiyama_walk','nara_visit','glico_photo','byodoin_visit','delta_visit'].includes(id);
+  if(d.date==='2026-12-04'&&node.id==='kintetsu_nara')times=[eventTime(id,id==='nara_return_train'?'返程，含候车':'交通')];
+  if(d.date==='2026-12-05'&&node.id==='wakayamashi_station'&&id==='kada_transfer')times=[{eventId:id,text:'途中换乘',label:'换加太线'}];
+  const shared=['uji_pilgrimage','uji_shrines','higashiyama_walk','nara_visit','anime_shopping','kada_pilgrimage','awashima_visit','motomachi_cd_shopping','delta_visit'].includes(id);
   if(shared&&times.length===1)times[0].label='同段共用';
   const purpose=routePurpose(node,id,i,nodes);
   if(node.id.startsWith('hotel_')&&times.length===1)times[0].label=purpose;
