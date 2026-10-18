@@ -60,12 +60,15 @@ assert.ok(!plan.pending_checks.some(t=>/usj/i.test(t.id+t.text)),'没有USJ待�
 const pg=JSON.parse(read('pilgrimage.json')),oldPg=JSON.parse(before('pilgrimage.json'));
 for(const previous of oldPg.points){
  const point=pg.points.find(p=>p.id===previous.id);assert.ok(point,'巡礼点保留 '+previous.id);
- for(const key of ['real','anime','comparison','coordinates','place_ids'])assert.deepEqual(point[key],previous[key],'图片与定位保留 '+previous.id);
+ // 神户大桥's stacked comparison is split into a landscape anime/real pair; its source and licence carry over.
+ const kinds=previous.id==='fate-kobe-bridge'?['coordinates','place_ids']:['real','anime','comparison','coordinates','place_ids'];
+ for(const key of kinds)assert.deepEqual(point[key],previous[key],'图片与定位保留 '+previous.id);
 }
 const pt=id=>pg.points.find(p=>p.id===id);
 assert.equal(pt('conan-ebisubashi').date,'2026-12-03');assert.equal(pt('conan-ebisubashi').event_id,'glico_photo');
 assert.equal(pt('eupho_uji_bridge').event_id,'uji_parfait');
 assert.equal(pt('conan-tsutenkaku').reference,true,'通天阁只作参考');
+{const b=pt('fate-kobe-bridge');assert.ok(!b.comparison&&b.anime.width>b.anime.height&&b.real.width>b.real.height&&b.anime.license&&b.real.credit,'神户大桥两张横图');for(const k of ['real','anime'])assert.ok(fs.existsSync(path.join(src,b[k].local)));}
 const kada=pg.points.filter(p=>p.date==='2026-12-05');
 assert.equal(kada.length,4,'加太4组对照');
 for(const p of kada)for(const kind of ['real','anime']){assert.ok(fs.existsSync(path.join(src,p[kind].local)),'图片存在 '+p[kind].local);assert.ok(p[kind].credit&&p[kind].license&&p[kind].changes,'来源与许可 '+p.id);}

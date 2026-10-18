@@ -1452,16 +1452,6 @@
       "coordinates": null,
       "status": "ready",
       "checked_on": "2026-10-01",
-      "comparison": {
-        "local": "assets/pilgrimage/kobe/bridge-comparison.jpeg",
-        "source_url": "https://aurakaze.blog/fate-jyunreihyogo/",
-        "image_url": "https://aurakaze.blog/wp-content/uploads/2023/11/38-3-scaled.jpeg",
-        "credit": "上：游戏画面 © TYPE-MOON；下：Aura Kaze，2023年实景。保留原作者对照图。",
-        "license": "原权利方保留版权；用于地点识别与作品场景对照，非开放许可",
-        "visual_verified": true,
-        "width": 1529,
-        "height": 2560
-      },
       "sources": [
         {
           "title": "北公园官方位置与交通",
@@ -1471,7 +1461,29 @@
           "title": "作品与实景对照",
           "url": "https://aurakaze.blog/fate-jyunreihyogo/"
         }
-      ]
+      ],
+      "anime": {
+        "source_url": "https://aurakaze.blog/fate-jyunreihyogo/",
+        "image_url": "https://aurakaze.blog/wp-content/uploads/2023/11/38-3-scaled.jpeg",
+        "license": "原权利方保留版权；用于地点识别与作品场景对照，非开放许可",
+        "visual_verified": true,
+        "local": "assets/pilgrimage/kobe/bridge-anime.jpg",
+        "width": 1000,
+        "height": 747,
+        "credit": "游戏画面 © TYPE-MOON；对照图 Aura Kaze",
+        "changes": "从原对照图上半部分裁出（0—1142px），长边缩至1000px。"
+      },
+      "real": {
+        "source_url": "https://aurakaze.blog/fate-jyunreihyogo/",
+        "image_url": "https://aurakaze.blog/wp-content/uploads/2023/11/38-3-scaled.jpeg",
+        "license": "原权利方保留版权；用于地点识别与作品场景对照，非开放许可",
+        "visual_verified": true,
+        "local": "assets/pilgrimage/kobe/bridge-real.jpg",
+        "width": 1000,
+        "height": 925,
+        "credit": "实景：Aura Kaze，2023年",
+        "changes": "从原对照图下半部分裁出（1146—2560px，保留水印），长边缩至1000px。"
+      }
     }
   ],
   "coverage": [

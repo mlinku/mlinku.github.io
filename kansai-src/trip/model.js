@@ -36,12 +36,12 @@ const EVENT_BRIEF={
  kada_station_return:'',
  wakayamashi_return:'',
  wakayama_castle_transfer:'',
- wakayama_garden_visit:'不保证当天红叶盛期。',
+ wakayama_garden_visit:'',
  wakayama_tower_ascent:'',
  wakayama_tower_visit:'默认进天守。',
  kada_day_return:'',
  kobe_bridge_visit:'16:30前回三宫；大风雨或疲劳就取消。',
- sannomiya_dinner:'尚未订位；订不到再看17:30。',
+ sannomiya_dinner:'17:00订不到再看17:30。',
  last_evening_return:'回店只留行李收尾。',
  anime_shopping:'重点1—2家，晚到只选一家。',
  checkout_osaka:'离店前或抵机场后吃早餐。',
@@ -74,7 +74,8 @@ const TRANSPORT_SHORT=[
 const DROP_COPY=[
  /以(航司最新通知|现场设施|现场)[^，；。]*为准/,/按(登机牌和)?现场指引/,/按航司通知及登机牌复核/,/提前完成托运后前往登机口/,
  /不锁定车次/,/(于\d+\/\d+|平日时刻已)核实/,/^配图为/,/须现场核对/,/遇活动占用时在允许通行处拍摄/,
- /查下一班关西机场方向列车/,/^若选择Rapi:t/,/须结合宇治市巡礼图/,/(找|向)站员确认替代交通/,/^(攻略)?勾选不等于官方领章/,/^12\/6晚把证件、钱包/
+ /查下一班关西机场方向列车/,/^若选择Rapi:t/,/须结合宇治市巡礼图/,/(找|向)站员确认替代交通/,/^(攻略)?勾选不等于官方领章/,/^攻略勾选不会替你/,/^这是手机GPS数字集章/,/旧图中的座椅与后方护岸可能已有变化/,/^不是傍晚看展示/,/^不是新兰合影逐帧截图/,
+ /^(店铺)?营业与点心库存不保证/,/^室内是否开放不保证/,/不为买到而早起/,/^现行周末候选，不是12\/5锁定班次/,/不保证当天红叶盛期/,/^傍晚案内所可能已关/,/^纸本现场询问/,/^12\/6晚把证件、钱包/
 ];
 const DROP_SENTENCES=new Set([
  '关西T1抵达','默认在酒店附近吃简餐','从餐厅步行到表参道，沿街拍照',
@@ -93,7 +94,8 @@ const DROP_DETAILS=new Set(['flight_out','airport_checkin']);
 const keepSentence=s=>{const x=s.trim(),key=x.replace(/[。；]$/,'');return x&&!DROP_SENTENCES.has(key)&&!DROP_COPY.some(r=>r.test(x));};
 // Times are reference windows and re-checking is a preparation task, so field copy drops the repeated
 // "参考" before times and the "临行复核" clauses. cleanHTML does the same inside markup, text nodes only.
-const cleanText=t=>String(t??'').replace(/参考(?=\d|套餐|24小时)/g,'').replace(/[^，；。<>]*临行(复核|确认|再查|查询|按)[^，；。<>]*/g,'')
+const BOOKING_STATUS=/（待订位）|[，、；]?(尚)?未订位(?=[。；，]|$)|[，、；]?未购票(?=[。；，]|$)|[，、；]?购票待确认/g;
+const cleanText=t=>String(t??'').replace(BOOKING_STATUS,'').replace(/为待订位目标/g,'为目标').replace(/参考(?=\d|套餐|24小时)/g,'').replace(/[^，；。<>]*临行(复核|确认|再查|查询|按)[^，；。<>]*/g,'')
  .split(/(?<=[。；])/).filter(keepSentence).join('')
  .replace(/([，；])[，；]+/g,'$1').replace(/[，；]+。/g,'。').replace(/。[，；]+/g,'。').replace(/^[，；\s]+/,'').replace(/[，；\s]+$/,'');
 const cleanHTML=html=>String(html).replace(/>([^<]+)</g,(_,t)=>'>'+cleanText(t)+'<');
@@ -147,8 +149,10 @@ function hardStops(d){
 }
 // Where to look now: the activity that started most recently unless it is done, else the next unfinished one.
 // Unchecked earlier rows are ignored; people do not tick everything.
+// A connector (no stamp) counts as passed once anything after it is ticked.
 function nowState(d,minutes){
- const events=effectiveEvents(d),pending=i=>activityState(d.date,events[i].id)!=='done';
+ const events=effectiveEvents(d),ticked=i=>activityState(d.date,events[i].id)==='done';
+ const pending=i=>!ticked(i)&&(isMajorEvent(d,events[i])||!events.slice(i+1).some((_,j)=>ticked(i+1+j)));
  let current=-1;
  for(let i=0;i<events.length;i++){const start=eventStart(events[i]);if(start!==null&&start>minutes)break;if(start!==null)current=i;}
  let focus=current>=0&&pending(current)?current:-1;
@@ -159,6 +163,11 @@ function nowState(d,minutes){
 }
 
 /* ---------- Activities ---------- */
+// Times the plan cannot move: flights, timetable trains, the reservation target. Everything else is a planning slot.
+const fixedTime=ev=>ev.category==='flight'||['booked','current_timetable_candidate'].includes(ev.time_status)||/^意向/.test(ev.time_label||'');
+// "25分钟" for a connector, read from its own window.
+function spanText(ev){const m=/(\d{1,2}):(\d{2})\D+?(\d{1,2}):(\d{2})/.exec(ev.time_label||'');if(!m)return '';const min=(m[3]*60+ +m[4])-(m[1]*60+ +m[2]);return min>0?(min<60?min+'分钟':Math.floor(min/60)+'小时'+(min%60?min%60+'分':'')):'';}
+const passedConnector=(d,ev)=>{const events=effectiveEvents(d),i=events.findIndex(x=>x.id===ev.id);return events.slice(i+1).some(x=>activityState(d.date,x.id)==='done');};
 // Ordinary identification photos belong to the first eligible activity, not transit.
 function compactEvent(ev){return ev.category==='transport'||(ev.category==='rest'&&ev.place_ids.every(id=>id.startsWith('hotel_')))||['wakayama_tower_ascent','wakayama_tower_descent','kada_station_return','wakayama_station_return'].includes(ev.id);}
 function eventPhotoIds(ev){return compactEvent(ev)?[]:ev.place_ids.filter(id=>photoSrc(id)&&(ev.category!=='meal'||PLACE[id].category==='restaurant'));}
@@ -205,7 +214,7 @@ function mealModel(d,r,said){
  const notes=mealNotes(r);
  const where=(r[4]||'').replace(' · Louie’s N.Y. Pizza Parlor','').replace(/，.*$/,'').trim();
  const conditions=cleanText(dropSaid(String(notes.conditions||'').replace(/参考(营业)?\s*|；?定休日现场确认/g,''),said));
- return {kind:r[0],rank:r[1],primary:r[1]==='首选',name:r[2],budget:r[3]?r[3]+(r[3].includes('菜单')?'':' / 人'):'',
+ return {kind:r[0],rank:r[1],primary:r[1]==='首选',name:r[2],budget:r[3]&&!/为准$/.test(r[3])?r[3]+(r[3].includes('菜单')?'':' / 人'):'',
   hint:[where,conditions,notes.suggestion&&'点餐：'+notes.suggestion].filter(Boolean).join(' · '),
   map:r[0]!=='早餐'?mealMap(d,r):'',mapLabel:r[8]?.pending?'片区地图':'地图',source:r[6]||''};
 }
@@ -251,7 +260,7 @@ function noticeParts(d,ev){
 }
 // Facts for one activity that the plan keeps outside the timeline.
 const EVENT_EXTRA={
- kodaiji_night:{facts:'17:00亮灯 · ¥800 / 人 · 购票待确认',detail:{title:'参拜详情',items:[
+ kodaiji_night:{facts:'17:00亮灯 · ¥800 / 人',detail:{title:'参拜详情',items:[
   {text:'游览约60—75分钟，排队另计。'},
   {text:'活动期2026/10/23—12/13；21:30停止入场，22:00闭门。昼夜不清场，离场后同票不能再入。'},
   {text:'活动官网',url:'https://www.kodaiji.com/saiji.html'},{text:'票价',url:'https://www.kodaiji.com/haikan.html'}]}}
@@ -297,6 +306,10 @@ function dayShots(d){
 // Where the big 导航 button goes: the destination, except a shopping run starts at its first store.
 const navTarget=(ev,stops)=>(ev.category==='shopping'?stops[0]:stops.at(-1))||null;
 
+// The 票务 entry an activity depends on, with its live state (尚未订位 → 已订位 once ticked).
+const TICKET_PLACE={'高台寺':'kodaiji','京都塔':'kyoto_tower','东大寺':'todaiji','和歌山城':'wakayama_castle','ふうふう亭':'fufutei_kobe'};
+function eventTicket(d,ev){return openPurchases().find(t=>t.visitDate===d.date&&ev.place_ids.includes(Object.entries(TICKET_PLACE).find(([k])=>t.item.includes(k))?.[1]))||null;}
+
 /* ---------- One activity, fully resolved ---------- */
 function eventModel(d,ev){
  const events=effectiveEvents(d),earlier=events.slice(0,events.findIndex(x=>x.id===ev.id));
@@ -315,10 +328,10 @@ function eventModel(d,ev){
  const said=daySaid+line+noticeText+transport.join('')+placeNotes.join('')+details.flatMap(x=>x.items.map(it=>it.text)).join('');
  const fullNote=brief!==null&&ev.condition?cleanText(dropSaid(ev.condition,said)):'';
  const pending=(ev.time_status==='to_confirm'||ev.time_status==='current_timetable_candidate')&&!/待确认|待复核|临行复核/.test(compactTime(ev.time_label));
- const shots=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p));
+ const shots=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p)),ticket=major?eventTicket(d,ev):null;
  return {
   id:ev.id,date:d.date,title:ev.title,time:compactTime(ev.time_label),timeHint:ev.time_hint||'',start:eventStart(ev),category:ev.category,major,optional:!!ev.optional,
-  status:ev.time_status==='booked'?'已订航班 · 当地时间':pending?'待确认':'',
+  status:ev.time_status==='booked'?'已订航班 · 当地时间':ticket?ticket.label:pending?'待确认':'',ticket,
   done:activityState(d.date,ev.id)==='done',line,optionNote:ev.optionNote||'',notice,links,transport,
   hotels:(ev.category==='hotel'||ev.id==='luggage_pickup'?ev.place_ids.filter(id=>id.startsWith('hotel_')):[]).filter(id=>!ev.title.includes(PLACE[id].name_ja)).map(id=>PLACE[id]),
   meals:rows.map(r=>mealModel(d,r,line+noticeText)),nav:ev.category==='rest'&&!major?null:navTarget(ev,stops),via:stops.length>1?stops:[],
@@ -329,7 +342,10 @@ function eventModel(d,ev){
 
 /* ---------- Preparation ---------- */
 // Tasks carry their own IDs and due dates in the plan; a task's text and ID change together.
-const TODO_LIST=[...PLAN.pending_checks,...(PLAN.additional_checks||[])];
+// Bookings already listed under 票务 (tap a ticket to mark it done) are not repeated as todos;
+// the 京都塔 todo's storage half is on the 11/30 check-in card.
+const COVERED_BY_TICKETS=new Set(['wagyu-1700-20261019','kodaiji-tickets','kyoto-tower-20261003']);
+const TODO_LIST=[...PLAN.pending_checks,...(PLAN.additional_checks||[])].filter(t=>!COVERED_BY_TICKETS.has(t.id));
 const TODOS=TODO_LIST.map(t=>t.text),TODO_IDS=TODO_LIST.map(t=>t.id);
 // When each task is due. Tasks without a trip date belong before departure.
 const TODO_WHEN=Object.fromEntries(TODO_LIST.filter(t=>t.when).map(t=>[t.id,t.when]));
@@ -343,4 +359,7 @@ function todoGroups(){
 }
 const BOOKED=[['往返机票','HX618 / HX617'],['京都酒店','11/30—12/3 · 3晚'],['大阪酒店','12/3—12/7 · 4晚'],['HARUKA','11/30 · 班次现场选']];
 const PURCHASE_LABEL={not_purchased:['未购买','danger'],not_reserved:['尚未订位','danger'],purchase_not_confirmed:['待确认','warn'],pay_on_site:['现场付款','plain']};
-const openPurchases=()=>(PLAN.unconfirmed_purchases||[]).map(p=>({item:p.item+(p.quantity?' ×'+p.quantity:''),date:dateLabel(p.visit_date),label:(PURCHASE_LABEL[p.status]||['待确认'])[0],tone:(PURCHASE_LABEL[p.status]||[,'warn'])[1]}));
+// A ticket the traveller has sorted (bought, reserved, paid) is ticked on 准备 and stored with the todos.
+const PURCHASE_DONE={not_reserved:'已订位',pay_on_site:'已付款'};
+const ticketId=p=>'ticket:'+p.visit_date+':'+p.item;
+const openPurchases=()=>(PLAN.unconfirmed_purchases||[]).map(p=>{const done=!!state.todos[ticketId(p)];return {id:ticketId(p),done,visitDate:p.visit_date,item:p.item+(p.quantity?' ×'+p.quantity:''),date:dateLabel(p.visit_date),label:done?PURCHASE_DONE[p.status]||'已购票':(PURCHASE_LABEL[p.status]||['待确认'])[0],tone:done?'ok':(PURCHASE_LABEL[p.status]||[,'warn'])[1]};});

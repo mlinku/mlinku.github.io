@@ -19,8 +19,9 @@ const DayFlow={
    const scenePoints=PILGRIMAGE.points.filter(p=>p.date===d.date&&items.some(ev=>ev.id===p.event_id)&&(!p.option||choice(d).ujiExtra===p.option));
    return {id:'section-'+index,name,short,events:items,scenePoints};
   }).filter(section=>section.events.length);
-  const done=events.filter(ev=>activityState(d.date,ev.id)==='done').length;
-  return {sections,events,done,total:events.length};
+  // Only main activities carry a 済 stamp; transfers, walks and rests are connectors (trip/model.js isMajorEvent).
+  const counted=events.filter(ev=>typeof isMajorEvent!=='function'||isMajorEvent(d,ev));
+  return {sections,events,done:counted.filter(ev=>activityState(d.date,ev.id)==='done').length,total:counted.length};
  }
 };
 

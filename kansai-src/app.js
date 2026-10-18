@@ -175,10 +175,10 @@ function compactTime(value){
   '12:45—13:30／13:45':'12:45–13:45',
   '13:30／13:45—14:15':'约13:30–14:15',
   '参考18:00前后出发，约19:00—19:30到酒店':'约18:00出发 · 19:00–19:30到店',
-  '意向17:00—19:00':'17:00–19:00 · 待订位',
+  '意向17:00—19:00':'17:00–19:00',
   '19:00后至约20:20—20:45':'19:00后 · 20:20–20:45到店'
  };
- return String(windows[value]||value).replace(/^目标|^争取/,'').replace(/到店$/,'抵达').replace(/左右$/,'').replace(/^当前候选/,'').replace(/^候选(?=d)/,'候选 ').replace('，临行复核',' · 待复核').replace('到店后 · 不等到19:00','到店后').replace(/—/g,'–');
+ return String(windows[value]||value).replace(/^目标|^争取/,'').replace(/到店$/,'抵达').replace(/左右$/,'').replace(/^当前候选/,'').replace(/^候选(?=d)/,'候选 ').replace('，临行复核',' · 待复核').replace('到店后 · 不等到19:00','到店后').replace(/s*[—–]s*/g,' – ');
 }
 function effectiveRoute(d){const c=choice(d);let nodes=d.route_stop_ids.map((id,i)=>({id,phase:DETAILS[d.date].routePhases[i],original:i+1,optional:false}));
  if(d.date==='2026-12-02'){if(c.kodaijiPlan==='skip')nodes=nodes.filter(n=>n.id!=='kodaiji');else if(c.yasakaBrief)nodes.splice(nodes.length-1,0,{id:'yasaka_shrine',phase:'夜间',optional:true});}
@@ -188,7 +188,7 @@ function effectiveRoute(d){const c=choice(d);let nodes=d.route_stop_ids.map((id,
 
 function optionalControls(d,eventId){if(!d.optional.length)return'';const c=choice(d),show=id=>!eventId||eventId===id;let fields='';
  if(d.date==='2026-12-02'&&show('gion_rest'))fields=`<fieldset class="night-options"><legend>夜间安排</legend>${[['night','高台寺夜枫','17:15—18:30参拜，20:45—21:15返店。'],['skip','晚餐后休息','高台寺附近休息半小时，再吃晚饭、返店。']].map(([value,label,note])=>`<label class="option-row"><input type="radio" name="kodaijiPlan" data-choice="kodaijiPlan" value="${value}" ${c.kodaijiPlan===value?'checked':''}>${label}<small>${note}</small></label>`).join('')}</fieldset><label class="option-row"><input type="checkbox" data-choice="yasakaBrief" ${c.yasakaBrief?'checked':''} ${c.kodaijiPlan==='skip'?'disabled':''}>八坂神社顺路短停<small>仅夜枫准时结束且体力有余；包含在晚饭前步行时段。</small></label>`;
- if(d.date==='2026-12-04'&&show('anime_shopping')){const stores=NIPPOMBASHI_SHOPS.map(id=>[id,PLACE[id].name]);fields=`<p class="small">总数不超过两家，晚到只留一家；中古库存不保证。</p><label class="small">第一家${select('shop1',c.shop1,stores)}</label><label class="small">第二家${select('shop2',c.shop2,[['none','不加第二家'],...stores.filter(([id])=>id!==c.shop1)])}</label>`;}
+ if(d.date==='2026-12-04'&&show('anime_shopping')){const stores=NIPPOMBASHI_SHOPS.map(id=>[id,PLACE[id].name]);fields=`<p class="small">总数不超过两家，晚到只留一家。</p><label class="small">第一家${select('shop1',c.shop1,stores)}</label><label class="small">第二家${select('shop2',c.shop2,[['none','不加第二家'],...stores.filter(([id])=>id!==c.shop1)])}</label>`;}
  return fields;
 }
 function select(key,value,options){return `<select class="option-select" data-choice="${key}" aria-label="${({shop1:'日本桥第一家店',shop2:'日本桥第二家店',umedaMain:'梅田重点店'})[key]||key}">${options.map(([v,l])=>`<option value="${v}" ${v===value?'selected':''}>${e(l)}</option>`).join('')}</select>`;}

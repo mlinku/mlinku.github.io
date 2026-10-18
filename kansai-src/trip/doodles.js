@@ -18,6 +18,16 @@ const DOODLES={
   '<path d="M13 50 18 39H46L51 50Z"/><path class="soft" d="M20 45H44M17 47.5H47"/><path d="M20 39V31H44V39"/><path d="M13 32C20 30.5 26 28 32 25.5 38 28 44 30.5 51 32"/><path d="M24.5 27V20.5H39.5V27"/><path d="M18.5 21.5C24 19.5 28 17 32 14.5 36 17 40 19.5 45.5 21.5"/><path d="M28 15.5V10.5H36V15.5"/><path d="M24.5 11.5C27.5 10 30 8 32 5.5 34 8 36.5 10 39.5 11.5"/><path class="soft" d="M30 6 28.6 3.8M34 6 35.4 3.8M26 35h3.5M34.5 35h3.5M30 23.5h4"/><path d="M4 57c4-2 6 2 10 0s6 2 10 0 6 2 10 0 6 2 10 0 6 2 10 0"/><path class="soft" d="M10 61c4-2 6 2 10 0s6 2 10 0"/>'},
  bridge:{wash:'<path class="wash shu" d="M8 41C19 17 45 17 56 41Z"/>',lines:
   '<path d="M6 40C18 14 46 14 58 40"/><path d="M4 42H60"/><path class="soft" d="M14 29.5V42M22 22V42M32 18.5V42M42 22V42M50 29.5V42"/><path d="M10 42V51M54 42V51"/><path d="M4 55c4-2 6 2 10 0s6 2 10 0 6 2 10 0 6 2 10 0 6 2 10 0"/><path class="soft" d="M12 60c4-2 6 2 10 0s6 2 10 0 6 2 10 0"/><path d="M42 9q3-3 5 0 2-3 5 0"/>'},
+ // 巡礼 · 写真帖: a film camera and the sparkle of a finished set.
+ camera:{wash:'<rect class="wash gold" x="9" y="21" width="46" height="30" rx="6"/>',lines:
+  '<path d="M12 22H23.5L27.5 16H37.5L41.5 22H52A4 4 0 0 1 56 26V48A4 4 0 0 1 52 52H12A4 4 0 0 1 8 48V26A4 4 0 0 1 12 22Z"/><circle cx="32" cy="37" r="10"/><circle class="soft" cx="32" cy="37" r="5.5"/><path d="M45.5 27.5H51M13 18.5H19"/><path class="soft" d="M57 7V13M54 10H60"/>'},
+ sparkle:{wash:'<circle class="wash gold" cx="29" cy="32" r="15"/>',lines:
+  '<path d="M29 11C30 24 33 29 46 31 33 33 30 38 29 52 28 38 25 33 12 31 25 29 28 24 29 11Z"/><path d="M50 9C50.5 14 52 15.5 57 16 52 16.5 50.5 18 50 23 49.5 18 48 16.5 43 16 48 15.5 49.5 14 50 9Z"/><path class="soft" d="M51 45 53 47M53 45 51 47M11 53h.1M57 35h.1"/>'},
+ // 准备 · 支度: a ticked clipboard and a rail ticket.
+ clipboard:{wash:'<rect class="wash moegi" x="15" y="13" width="35" height="44" rx="4"/>',lines:
+  '<path d="M16 12H48A3 3 0 0 1 51 15V55A3 3 0 0 1 48 58H16A3 3 0 0 1 13 55V15A3 3 0 0 1 16 12Z"/><path d="M24 12V8H40V12"/><path d="M19 24 22 27 27.5 20.5M19 36 22 39 27.5 32.5"/><path class="soft" d="M19.5 45.5H26.5V52.5H19.5Z"/><path class="soft" d="M31 25H45M31 37H45M31 49.5H42"/><path d="M54 32 60.5 25.5 63 28 56.5 34.5 53 35.5Z"/>'},
+ ticket:{wash:'<path class="wash shu" d="M9 21H55V29A4 4 0 0 0 55 37V45H9V37A4 4 0 0 0 9 29Z" transform="rotate(-6 32 33)"/>',lines:
+  '<g transform="rotate(-6 32 33)"><path d="M8 20H56V29A4 4 0 0 0 56 37V46H8V37A4 4 0 0 0 8 29Z"/><path class="dash" d="M43 21.5V44.5"/><path class="soft" d="M14 28H35M14 33.5H31M14 39H27"/><circle cx="49.5" cy="33" r="3"/></g>'},
  suitcase:{wash:'<rect class="wash plum" x="16" y="25" width="38" height="28" rx="5"/>',lines:
   '<path d="M14 22H50A4 4 0 0 1 54 26V50A4 4 0 0 1 50 54H14A4 4 0 0 1 10 50V26A4 4 0 0 1 14 22Z"/><path d="M26 22V16H38V22"/><path d="M22 22V54M42 22V54"/><circle cx="18" cy="57" r="2"/><circle cx="46" cy="57" r="2"/><path class="soft" d="M29 33 32 30 35 33 32 41Z"/><path class="dash" d="M47 14C52 10 56 11 60 7"/>'}
 };

@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 import {SCRIPT_FILES} from '../build-site.mjs';
+import {headingText,SERIF_EXTRA} from './fonts.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8').replace(/^\uFEFF/,'');
 const PLAN=JSON.parse(read('data/关西行程_可视化数据.json')),locked=JSON.stringify(PLAN);
@@ -29,7 +30,7 @@ const checked=run(`
   for(const ev of effectiveEvents(d)){
    const html=sheetHTML(d.date,ev.id);sheets++;
    assert.ok(html.includes(e(ev.title)),'详情含标题 '+ev.id);
-   assert.ok(html.includes('data-action="check"'),'详情可标记完成 '+ev.id);
+   assert.equal(html.includes('data-action="check"'),isMajorEvent(d,ev),'只有主活动可盖章 '+ev.id);
    if(transportNotes(d,ev).length)assert.ok(html.includes('aria-label="交通说明"'),'交通说明 '+ev.id);
    assert.ok(!html.includes('undefined')&&!html.includes('null<'),'没有空值 '+ev.id);
   }
@@ -145,6 +146,17 @@ const checked=run(`
  location.hash='#day/2026-12-05/pilgrimage/conan-ebisubashi';parseHash();assert.equal(ui.tab,'shots');assert.equal(PLAN.days[ui.shotsDay].date,'2026-12-03');
  location.hash='#shots/2026-12-05/conan-ebisubashi';parseHash();assert.equal(PLAN.days[ui.shotsDay].date,'2026-12-03');
  ui.moved='';location.hash='';parseHash();
+ for(const [i,d] of PLAN.days.entries()){ui.day=i;const first=effectiveEvents(d)[0];assert.ok(new RegExp('id="row-'+first.id+'"[^]*?class="row-time[^"]*">[0-9]').test(dayScreen())||eventStart(first)===null,'每天第一行有出发时刻 '+d.date);}
+ assert.ok(!TODOS.some(x=>/门票|17:00ふうふう亭/.test(x))&&openPurchases().length===5,'票务里的事项不再重复成待办');
+ // Connectors: no stamp, a length instead of a clock, passed once a later activity is ticked; fixed times stay bold.
+ const uji=PLAN.days[1];ui.day=1;let html=dayScreen();
+ assert.ok(!/id="row-uji_transfer"[^]*?data-action="check"[^]*?id="row-uji_parfait"/.test(html),'交通行没有勾选');
+ assert.ok(html.includes('1小时')&&progress(uji).total===effectiveEvents(uji).filter(ev=>isMajorEvent(uji,ev)).length,'连接行显示时长，进度只算主活动');
+ setCheck(uji.date,'uji_parfait',true);assert.ok(!nowState(uji,9*60+40).events.length||nowState(uji,9*60+40).focus.id!=='uji_transfer','勾选后续活动后交通行视为已过');
+ assert.ok(dayScreen().includes('id="row-uji_transfer"')&&/class="row minor done" id="row-uji_transfer"/.test(dayScreen()),'已过的交通行变淡');
+ setCheck(uji.date,'uji_parfait',false);
+ ui.day=5;assert.ok(/row-time fixed">14:59/.test(dayScreen()),'现行候选列车保留粗体时刻');
+ assert.ok(PLAN.days.every((d,i)=>{ui.day=i;return !/day-key">d{1,2}:d{2}出门/.test(dayScreen());}),'车票已有离店时间，标题不重复');
  ({sheets,screens:screens.length,days:PLAN.days.length});
 `);
 assert.equal(JSON.stringify(PLAN),locked,'出行版不改变原始行程');
@@ -173,4 +185,7 @@ assert.equal(JSON.stringify(boot(migrated.state).state),JSON.stringify(migrated.
 const blocked=boot(oldRecord,true);
 assert.equal(blocked.kept[KEY],JSON.stringify(oldRecord),'备份写不进时不覆盖旧记录');
 assert.equal(blocked.ok,false);
+// Every character a serif line can draw is in the heading subset; otherwise phones mix in their own font.
+const subset=new Set(read('assets/fonts/trip-serif-chars.txt')),lacking=[...new Set(headingText()+SERIF_EXTRA)].filter(ch=>ch.trim()&&!subset.has(ch));
+assert.equal(lacking.join(''),'','标题字体缺字，请运行 node kansai-src/trip/fonts.mjs');
 console.log(JSON.stringify({ok:true,...checked,migration:'ok'}));

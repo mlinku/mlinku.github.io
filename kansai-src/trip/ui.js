@@ -46,9 +46,9 @@ const transitHTML=note=>e(note).replace(TRANSIT_CAUTION,'<strong class="caution"
 // Test contract: the transport container keeps aria-label="交通说明".
 const transportBlock=notes=>`<div class="transport" role="group" aria-label="交通说明"><ul>${notes.map(n=>`<li>${transitHTML(n)}</li>`).join('')}</ul></div>`;
 const linkItem=it=>it.url?(it.text.length<8?external(e(it.text)+' ↗',it.url):`${e(it.text)} ${external('资料 ↗',it.url)}`):e(it.text);
-function deadlines(d,minutes){
+function deadlines(d,minutes,mascot=''){
  const list=hardStops(d);if(!list.length)return '';
- return `<section class="block timetable"><h2 class="block-title">关键时间</h2><ul>${list.map(t=>{
+ return `<section class="block timetable"><h2 class="block-title">关键时间${mascot}</h2><ul>${list.map(t=>{
   const left=minutes==null?null:t.minutes-minutes,state=left==null?'':left<0?' past':left<=60?' soon':'';
   return `<li class="stop ${t.kind}${state}"><b>${t.time}</b><span>${e(t.text)}</span>${left==null?'':`<small>${left<0?'已过':'还有 '+duration(left)}</small>`}</li>`;
  }).join('')}</ul></section>`;
@@ -62,15 +62,15 @@ const passHTML=(b,from,to)=>`<div class="pass"><div class="pass-end"><small>${e(
 // The trip as a line: each day a station, today lit.
 function dayLine(){
  const today=todayIndex();
- return `<ol class="line days">${PLAN.days.map((d,i)=>{const info=dayPresentation(d),[leave,back]=dayTimes(d,i),p=progress(d);
-  return `<li class="${i===today?'now':''}${p.done&&p.done===p.total?' done':''}"><a class="day-link" href="#day/${d.date}"><span class="dl-date"><b>${dateLabel(d.date)}</b><small>${i===today?'今天':e(d.weekday)}</small></span><span class="node photo">${img(info.cover)}</span><span class="dl-main"><b>${e(info.short)}</b><small>${e(leave[0])} ${e(leave[1])} · ${e(back[0])} ${e(back[1].split(/[，；]/)[0])}</small></span>${p.done?(p.done===p.total?seal(' small'):`<span class="dl-done">${p.done}/${p.total}</span>`):''}</a></li>`;}).join('')}</ol>`;
+ return `<ol class="line days">${PLAN.days.map((d,i)=>{const info=dayPresentation(d),p=progress(d);
+  return `<li class="${i===today?'now':''}${p.done&&p.done===p.total?' done':''}"><a class="day-link" href="#day/${d.date}"><span class="dl-date"><b>${dateLabel(d.date)}</b><small>${i===today?'今天':e(d.weekday)}</small></span><span class="node photo">${img(info.cover)}</span><span class="dl-main"><b>${e(info.short)}</b><small>${e(info.summary||info.eyebrow)}</small></span>${p.done?(p.done===p.total?seal(' small'):`<span class="dl-done">${p.done}/${p.total}</span>`):''}</a></li>`;}).join('')}</ol>`;
 }
 
 /* ---------- 现在 ---------- */
 function nowScreen(){
  const s=tripStatus();
  if(s.phase==='before')return beforeScreen(s);
- if(s.phase==='after')return `${coverHero('旅程已结束','2026.11.30 — 12.07 · 辛苦了')}<section class="block">${scene('home')}<h2 class="block-title">回看 8 天${kita('stand','in-title')}</h2>${dayLine()}</section>`;
+ if(s.phase==='after')return `${coverHero('旅程已结束','2026.11.30 — 12.07 · 辛苦了')}<section class="block">${scene('home')}<h2 class="block-title">回看 8 天${kita('cheer','in-title')}</h2>${dayLine()}</section>`;
  const d=PLAN.days[s.index],info=dayPresentation(d),st=nowState(d,s.minutes),p=progress(d),notes=fieldNotes(d);
  return `<header class="now-head"><div><p class="kicker">${dateLabel(d.date)} ${e(d.weekday)} · 日本时间 <b>${clock(s.minutes)}</b></p><h1 class="display">${e(info.short)}</h1><p class="muted">${e(info.eyebrow)}</p></div><div class="now-marks">${dayDoodle(d.date)}${daySeal(s.index+1)}</div></header>
  ${st.focus?focusCard(d,st,s.minutes):`<section class="focus finished"><div class="band murasame" role="img" aria-label="丛雨"></div><div class="focus-body"><p class="focus-label">今天</p><h2 class="title">安排已经走完</h2><p class="lead">辛苦了，早点休息。</p></div></section>`}
@@ -92,7 +92,7 @@ function focusCard(d,st,minutes){
  ${m.notice?`<div class="notice">${icon('alert')}<div>${m.notice}</div></div>`:''}
  ${m.transport.length?transportBlock(m.transport):''}
  ${primary?`<p class="focus-meal"><span class="tag ok">首选</span><b lang="ja">${e(primary.name)}</b><button type="button" class="icon-btn small" data-action="copy" data-copy="${e(primary.name)}" aria-label="复制店名">${icon('copy')}</button></p>`:''}
- <div class="focus-actions">${m.nav?navButton(m.nav,true):''}${checkButton(d.date,ev,true)}</div>
+ <div class="focus-actions">${m.nav?navButton(m.nav,true):''}${m.major?checkButton(d.date,ev,true):''}</div>
  ${openButton(d.date,ev.id,`全部详情${icon('chevron')}`,'more')}
  </div></section>`;
 }
@@ -101,10 +101,10 @@ function coverHero(title,sub){
  return `<header class="cover"><div class="cover-photos">${ids.map((id,i)=>`<span>${img(id,i===0)}</span>`).join('')}</div><a class="cover-back" href="${BLOG_HOME}">${icon('back')}<span>まひろ的小站</span></a><div class="cover-over"><p class="kicker">京都 · 宇治 · 大阪 · 奈良 · 和歌山 · 神户</p><h1 class="display">${e(title)}</h1><p>${e(sub)}</p></div>${themeButton()}</header>`;
 }
 function beforeScreen(s){
- const open=openPurchases().filter(p=>p.tone==='danger');
+ const open=openPurchases().filter(p=>p.tone==='danger'&&!p.done);
  return `${coverHero('关西秋日手帖','2026.11.30 — 12.07 · 8 天 7 晚')}
- <section class="focus countdown"><div class="scene-band">${scene('depart')}</div><div class="focus-body">${kita('cheer','on-countdown')}<p class="count"><b>${s.days}</b><span>天后出发</span></p><p class="lead">临行待办 ${todoDone()} / ${TODOS.length}${open.map(p=>` · <span class="danger-text">${e(p.item.replace(/ ×\d+$/,''))} ${e(p.label)}</span>`).join('')}</p><div class="focus-actions"><a class="btn primary" href="#prep">去准备</a><a class="btn" href="#day/${PLAN.days[0].date}">看第 1 天</a></div></div></section>
- <p class="hint center">出发后，这一页显示正在做什么、下一站和今天的关键时间。</p>
+ <section class="focus countdown"><div class="scene-band">${scene('depart')}</div><div class="focus-body">${kita('cheer','on-countdown')}<p class="count"><b>${s.days}</b><span>天后出发</span></p><p class="lead">临行待办 ${todoDone()} / ${TODOS.length}</p>${open.map(p=>`<p class="alert-line">${icon('alert')}<span>${e(p.item.replace(/ ×\d+$/,''))} · ${e(p.label)}</span></p>`).join('')}<div class="focus-actions"><a class="btn primary" href="#prep">去准备</a><a class="btn" href="#day/${PLAN.days[0].date}">看第 1 天</a></div></div></section>
+ <p class="hint center">出发后，这里显示当下行程。</p>
  <section class="block"><h2 class="block-title">8 天行程</h2>${dayLine()}</section>`;
 }
 
@@ -115,26 +115,31 @@ function dayScreen(){
  const now=today?nowState(d,s.minutes):null,flow=DayFlow.forDay(d),level=intensity(d),notes=fieldNotes(d),shots=shotProgress(d.date);
  return `${strip(PLAN.days.map((x,j)=>['#day/'+x.date,j,j===todayIndex()?'今天':DETAILS[x.date].cityLabel]),i)}
  <article class="day-ticket"><header class="day-hero">${img(info.cover,true)}<span class="day-sticker">${dayDoodle(d.date)}</span><div class="hero-over"><p class="kicker">${dateLabel(d.date)} ${e(d.weekday)}${today?' · <em>今天</em>':''}</p><h1 class="display">${e(info.short)}</h1><p>${e(info.eyebrow)}</p></div>${daySeal(i+1)}</header>
- <dl class="ticket-facts"><div><dt>${e(leave[0])}</dt><dd>${e(leave[1])}</dd></div><div><dt>${e(back[0])}</dt><dd>${e(back[1]).replace(/–/g,'–<wbr>')}</dd></div><div><dt>强度</dt><dd title="${e(level.full)}"><span class="dots" aria-hidden="true">${[1,2,3,4].map(n=>`<i${n<=level.level?' class="on"':''}></i>`).join('')}</span>${e(level.label)}</dd></div></dl></article>
- <p class="day-key">${e(cleanText(info.key))}</p>
+ <dl class="ticket-facts"><div><dt>${e(leave[0])}</dt><dd>${e(leave[1])}</dd></div><div><dt>${e(back[0])}</dt><dd>${e(back[1]).replace(' – ',' – ')}</dd></div><div><dt>强度</dt><dd title="${e(level.full)}"><span class="dots" aria-hidden="true">${[1,2,3,4].map(n=>`<i${n<=level.level?' class="on"':''}></i>`).join('')}</span>${e(level.label)}</dd></div></dl></article>
+ <p class="day-key">${e(dayKey(info))}</p>
  <div class="chips">${notes.length?openButton(d.date,'notes',`${icon('alert')}<span>情况有变时 · ${notes.length}</span>`,'chip warn'):''}${d.overnight?openButton(d.date,'stay',`${icon('bed')}<span>${e(PLACE[d.overnight].name)}</span>`,'chip'):''}${openButton(d.date,'route',`${icon('route')}<span>路线 · ${timedRoute(d).length} 站</span>`,'chip')}${shots.total?`<a class="chip" href="#shots/${d.date}">${icon('camera')}<span>巡礼 ${shots.done}/${shots.total}</span></a>`:''}</div>
- ${deadlines(d,today?s.minutes:null)}
+ ${deadlines(d,today?s.minutes:null,kita(flow.done===flow.total?'grin':'peek','in-title'))}
  <div class="day-progress"><span>已完成 <b>${flow.done}/${flow.total}</b></span><div class="bar" role="progressbar" aria-label="当天完成进度" aria-valuemin="0" aria-valuemax="${flow.total}" aria-valuenow="${flow.done}"><i style="width:${flow.done/flow.total*100}%"></i></div></div>
  ${flow.sections.map(section=>{
   const [label,...rest]=section.name.split(' · ');
-  const clocks=section.events.flatMap(ev=>[...compactTime(ev.time_label).matchAll(/\d{1,2}:\d{2}/g)].map(x=>x[0])),range=clocks.length?clocks[0]+(clocks.length>1?'–'+clocks.at(-1):''):'';
+  const clocks=section.events.flatMap(ev=>[...compactTime(ev.time_label).matchAll(/\d{1,2}:\d{2}/g)].map(x=>x[0])),range=clocks.length?clocks[0]+(clocks.length>1?' – '+clocks.at(-1):''):'';
   return `<section class="phase"><h2 class="phase-title"><span class="phase-name">${e(label)}</span>${rest.length?`<small>${e(rest.join(' · '))}</small>`:''}${range?`<span class="range">${range}</span>`:''}</h2><ol class="line rows">${section.events.map(ev=>row(d,ev,now)).join('')}</ol></section>`;
  }).join('')}
  <nav class="pager" aria-label="相邻日期">${i>0?`<a href="#day/${PLAN.days[i-1].date}">${icon('back')}<span>${dateLabel(PLAN.days[i-1].date)} ${e(dayPresentation(PLAN.days[i-1]).short)}</span></a>`:'<span></span>'}${i<PLAN.days.length-1?`<a class="next" href="#day/${PLAN.days[i+1].date}"><span>${dateLabel(PLAN.days[i+1].date)} ${e(dayPresentation(PLAN.days[i+1]).short)}</span>${icon('chevron')}</a>`:''}</nav>`;
 }
+// The ticket already shows when to leave and return; the headline keeps only what the day is.
+const dayKey=info=>cleanText(info.key).replace(/^\d{1,2}:\d{2}出门；/,'').replace(/，约\d{1,2}:\d{2}—\d{1,2}:\d{2}回店(?=。|$)/,'');
 function row(d,ev,now){
  const done=activityState(d.date,ev.id)==='done',major=isMajorEvent(d,ev),start=eventStart(ev),flags=[];
  if(noticeParts(d,ev).notice)flags.push('<span class="flag warn">注意</span>');
  if(ev.optional)flags.push('<span class="flag">可选</span>');
+ const ticket=major?eventTicket(d,ev):null;if(ticket&&!ticket.done&&ticket.tone!=='plain')flags.push(`<span class="flag ${ticket.tone==='danger'?'warn':''}">${e(ticket.label)}</span>`);
  const shots=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p)).length;if(shots)flags.push(`<span class="flag">巡礼 ${shots}</span>`);
- const words=start===null?compactTime(ev.time_label):'',thumb=major?eventPhotoIds(ev)[0]:'';
+ // The day's first row keeps its clock even when it is a transfer: it is when the day starts.
+ const fixed=fixedTime(ev),showClock=major||fixed||effectiveEvents(d)[0]?.id===ev.id,passed=!major&&passedConnector(d,ev);
+ const words=showClock?(start===null?compactTime(ev.time_label):''):spanText(ev),thumb=major?eventPhotoIds(ev)[0]:'';
  const node=thumb?`<span class="node photo">${img(thumb)}</span>`:`<span class="node${major?' big':''}">${major?icon(CATEGORY_ICON[ev.category]||'pin'):''}</span>`;
- return `<li class="row ${major?'major':'minor'}${done?' done':''}${now?.current?.id===ev.id?' now':''}" id="row-${e(ev.id)}">${openButton(d.date,ev.id,`<span class="row-time">${start===null?'随后':clock(start)}</span>${node}<span class="row-text"><span class="row-title">${major?'':icon(CATEGORY_ICON[ev.category]||'pin')}${e(ev.title)}</span>${words||flags.length?`<span class="row-meta">${words?`<span>${e(words)}</span>`:''}${flags.join('')}</span>`:''}</span>`,'row-open')}${checkButton(d.date,ev)}</li>`;
+ return `<li class="row ${major?'major':'minor'}${done||passed?' done':''}${now?.current?.id===ev.id?' now':''}" id="row-${e(ev.id)}">${openButton(d.date,ev.id,`<span class="row-time${fixed?' fixed':''}">${showClock?(start===null?'随后':clock(start)):''}</span>${node}<span class="row-text"><span class="row-title">${major?'':icon(CATEGORY_ICON[ev.category]||'pin')}${e(ev.title)}</span>${words||flags.length?`<span class="row-meta">${words?`<span>${e(words)}</span>`:''}${flags.join('')}</span>`:''}</span>`,'row-open')}${major?checkButton(d.date,ev):''}</li>`;
 }
 
 /* ---------- Sheets ---------- */
@@ -164,13 +169,13 @@ function eventSheet(d,ev){
  ${m.placeNotes.length?`<section class="sec"><h3>地点说明</h3>${m.placeNotes.map(t=>`<p>${e(t)}</p>`).join('')}</section>`:''}
  ${m.fullNote?`<details class="fold"><summary>完整说明</summary><p>${e(m.fullNote)}</p></details>`:''}
  </div>
- <footer class="sheet-foot">${m.nav?navButton(m.nav,true):''}${checkButton(d.date,ev,true)}</footer>`;
+ ${m.nav||m.major?`<footer class="sheet-foot">${m.nav?navButton(m.nav,true):''}${m.major?checkButton(d.date,ev,true):''}</footer>`:''}`;
 }
 function sheetHTML(date,key){
  const i=PLAN.days.findIndex(x=>x.date===date),d=PLAN.days[i];if(!d)return '';
  if(key==='notes')return `${sheetHead(dateLabel(date)+' · 延误或天气变化时','情况有变时')}<div class="sheet-body"><ul class="plain roomy">${fieldNotes(d).map(t=>`<li>${e(t)}</li>`).join('')}</ul></div>`;
  if(key==='stay'&&d.overnight){const p=PLACE[d.overnight];return `${sheetHead(dateLabel(date)+' · 今晚住',e(p.name))}<div class="sheet-body">${photoSrc(p.id)?`<button type="button" class="sheet-cover" data-action="zoom-photo" data-place="${p.id}">${img(p.id,true)}</button>`:''}<p class="ja big" lang="ja">${e(p.name_ja)}</p>${p.address_ja?`<p class="ja" lang="ja">${e(p.address_ja)}</p>`:''}${PLACE_LOCATIONS[p.id]?`<p class="muted">${e(PLACE_LOCATIONS[p.id])}</p>`:''}${PLACE_DETAILS[p.id]?`<p>${e(cleanText(PLACE_DETAILS[p.id]))}</p>`:''}</div><footer class="sheet-foot">${external(icon('pin')+'<span>酒店地图</span>',p.map_search_url,'nav nav-big')}${p.address_ja?`<button type="button" class="check-big copy" data-action="copy" data-copy="${e(p.address_ja)}">${icon('copy')}<span>复制地址</span></button>`:''}</footer>`;}
- if(key==='route')return `${sheetHead(dateLabel(date)+' · 按到达顺序','当天路线')}<div class="sheet-body"><ol class="line route">${timedRoute(d).map(s=>`<li><span class="node"></span><div><b>${e(PLACE[s.id].name)}</b>${s.purpose?`<small>${e(s.purpose)}</small>`:''}<small class="muted">${s.times.map(t=>e(compactTime(t.text))).join(' · ')}${s.optional?' · 可选':''}</small></div>${external(icon('pin'),PLACE[s.id].map_search_url,'nav')}</li>`).join('')}</ol><p class="hint">按先后排列，不代表实际距离。</p></div>`;
+ if(key==='route')return `${sheetHead(dateLabel(date)+' · 按到达顺序','当天路线')}<div class="sheet-body"><ol class="line route">${timedRoute(d).map(s=>`<li><span class="node"></span><div><b>${e(PLACE[s.id].name)}</b>${s.purpose?`<small>${e(s.purpose)}</small>`:''}<small class="muted">${s.times.map(t=>e(compactTime(t.text))).join(' · ')}${s.optional?' · 可选':''}</small></div>${external(icon('pin'),PLACE[s.id].map_search_url,'nav')}</li>`).join('')}</ol></div>`;
  const ev=effectiveEvents(d).find(x=>x.id===key);
  return ev?eventSheet(d,ev):'';
 }
@@ -224,16 +229,16 @@ function shotHTML(p,n){
  <div class="pair${s.images.length===1?' single':''}">${s.images.map(([kind,label])=>shotImage(p,kind,label)).join('')}</div>
  ${s.caption?`<p class="hint">${e(s.caption)}</p>`:''}
  ${s.note?`<p class="shot-note"><b>站位</b>${e(s.note)}</p>`:''}
- <div class="actions">${external(icon('pin')+'<span>地图</span>',s.map,'btn')}${s.reference?'':`<button type="button" class="btn shot-toggle${s.done?' on':''}" data-action="shot" data-shot="${e(s.id)}" aria-pressed="${s.done}">${icon('check')}<span>${s.done?'已拍':'标记已拍'}</span></button>`}${s.eventId?openButton(s.date,s.eventId,'<span>行程</span>','btn ghost'):''}</div>
- <details class="fold"><summary>场景与来源</summary>${s.scene?`<p>${e(s.scene)}</p>`:''}${s.coords?`<p class="muted">${s.coords.lat}, ${s.coords.lng} · ${e(s.coords.precision||'')} <button type="button" class="link" data-action="copy" data-copy="${s.coords.lat}, ${s.coords.lng}">复制坐标</button>${s.coords.source_url?' · '+external('定位依据 ↗',s.coords.source_url):''}</p>`:'<p class="muted">坐标待核准，按地点名称搜索。</p>'}${p.real?.source_url?`<p class="muted">实景：${e(p.real.credit||'原作者')} · ${external('来源 ↗',p.real.source_url)}</p>`:''}${p.anime?.source_url?`<p class="muted">作品画面：${e(p.anime.credit||'作品权利方')} · ${external('来源 ↗',p.anime.source_url)}</p>`:''}${p.comparison?`<p class="muted">${e(p.comparison.credit)} · ${external('对照原图 ↗',p.comparison.source_url)}</p>`:''}${(p.sources||[]).map(x=>`<p class="muted">${external(e(x.title)+' ↗',x.url)}</p>`).join('')}</details>
+ <div class="actions">${external(icon('pin')+'<span>地图</span>',s.map,'btn')}${s.reference?'':`<button type="button" class="btn shot-toggle${s.done?' on':''}" data-action="shot" data-shot="${e(s.id)}" aria-pressed="${s.done}">${icon('check')}<span>${s.done?'已拍':'标记已拍'}</span></button>`}</div>
+ <details class="fold"><summary>场景与来源</summary>${s.scene?`<p>${e(s.scene)}</p>`:''}${s.coords?`<p class="muted">${s.coords.lat}, ${s.coords.lng} · ${e(String(s.coords.precision||'').split(/[，,；]/).filter(x=>!/^s*(不是|非)/.test(x)).join('，'))} <button type="button" class="link" data-action="copy" data-copy="${s.coords.lat}, ${s.coords.lng}">复制坐标</button>${s.coords.source_url?' · '+external('定位依据 ↗',s.coords.source_url):''}</p>`:'<p class="muted">坐标待核准，按地点名称搜索。</p>'}${p.real?.source_url?`<p class="muted">实景：${e(p.real.credit||'原作者')} · ${external('来源 ↗',p.real.source_url)}</p>`:''}${p.anime?.source_url?`<p class="muted">作品画面：${e(p.anime.credit||'作品权利方')} · ${external('来源 ↗',p.anime.source_url)}</p>`:''}${p.comparison?`<p class="muted">${e(p.comparison.credit)} · ${external('对照原图 ↗',p.comparison.source_url)}</p>`:''}${(p.sources||[]).map(x=>`<p class="muted">${external(e(x.title)+' ↗',x.url)}</p>`).join('')}</details>
  </article>`;
 }
 function rallyHTML(d){
- if(d.date==='2026-12-03')return `<section class="block rally"><p class="kicker">${e(compactTime(effectiveEvents(d).find(ev=>ev.id==='kyoto_tower_visit').time_label))} · 京都塔</p><h2 class="title">京吹联动 · 叠印集章</h2><p>展望室5层领台纸，共7处章点；先完成收费区再出场，门票不能再次入场。</p><div class="actions">${external('<span>活动官网 ↗</span>','https://www.kyoto-tower.jp/event/eupho26autumn/','btn')}</div><details class="fold"><summary>参与规则</summary><p>攻略里的完成或已拍不代表已领取官方印章。</p><p>活动期2026/9/1—12/20。进入展望室须购票，当前成人¥1,000，未购票。</p><p>周边店10:00—20:30，在展望室1层（大楼11楼）。这项纸本叠印与宇治GPS数字集章分开。</p></details></section>`;
+ if(d.date==='2026-12-03')return `<section class="block rally"><p class="kicker">${e(compactTime(effectiveEvents(d).find(ev=>ev.id==='kyoto_tower_visit').time_label))} · 京都塔</p><h2 class="title">京吹联动 · 叠印集章</h2><p>展望室5层领台纸，共7处章点；先完成收费区再出场，门票不能再次入场。</p><div class="actions">${external('<span>活动官网 ↗</span>','https://www.kyoto-tower.jp/event/eupho26autumn/','btn')}</div><details class="fold"><summary>参与规则</summary><p>活动期2026/9/1—12/20。进入展望室须购票，当前成人¥1,000。</p><p>周边店10:00—20:30，在展望室1层（大楼11楼）。这项纸本叠印与宇治GPS数字集章分开。</p></details></section>`;
  const r=PILGRIMAGE.rally;if(!r||r.date!==d.date)return '';
  return `<section class="block rally" id="shot-rally"><p class="kicker">11/1–12/20 · 后期</p><h2 class="title">京吹数字集章</h2><p>${e(cleanText(r.recommendation))}</p><div class="actions">${external('<span>参加活动 ↗</span>',r.entry_url,'btn primary')}</div>
- <details class="fold"><summary>集章点位 · ${r.spots.length}</summary>${r.spots.map(p=>`<article class="rally-spot"><h3>${e(p.title)}</h3><div class="pair">${p.real?.src?shotImage(p,'real','实景'):''}${shotImage(p,'anime','作品画面')}</div><p class="hint">${e(p.match_note||p.caption||'')}</p><p>${e(cleanText(p.note))}</p><div class="actions">${external(icon('pin')+'<span>地图</span>',p.map_url,'btn')}<button type="button" class="btn" data-action="copy" data-copy="${e(p.name_ja)}">${icon('copy')}<span>复制名称</span></button></div></article>`).join('')}</details>
- <details class="fold"><summary>规则与来源</summary><p>攻略里的完成或已拍不代表已领取官方数字章。</p>${r.rules.map(t=>cleanText(t)).filter(Boolean).map(t=>`<p>${e(t)}</p>`).join('')}<p>${external('活动官网 ↗',r.source_url)} · ${external('官方巡礼地图 PDF ↗',r.map_pdf)}</p><p class="muted">作品画面：©武田綾乃・宝島社／「響け！」製作委員会2024，京阪活动官网。核查：2026/10/1。</p></details></section>`;
+ <details class="fold"><summary>集章点位 · ${r.spots.length}</summary>${r.spots.map(p=>`<article class="rally-spot"><h3>${e(p.title)}</h3><div class="pair">${p.real?.src?shotImage(p,'real','实景'):''}${shotImage(p,'anime','作品画面')}</div><p class="hint">${e(cleanText(p.match_note||p.caption||''))}</p><p>${e(cleanText(p.note))}</p><div class="actions">${external(icon('pin')+'<span>地图</span>',p.map_url,'btn')}<button type="button" class="btn" data-action="copy" data-copy="${e(p.name_ja)}">${icon('copy')}<span>复制名称</span></button></div></article>`).join('')}</details>
+ <details class="fold"><summary>规则与来源</summary>${r.rules.map(t=>cleanText(t)).filter(Boolean).map(t=>`<p>${e(t)}</p>`).join('')}<p>${external('活动官网 ↗',r.source_url)} · ${external('官方巡礼地图 PDF ↗',r.map_pdf)}</p><p class="muted">作品画面：©武田綾乃・宝島社／「響け！」製作委員会2024，京阪活动官网。核查：2026/10/1。</p></details></section>`;
 }
 const shotDays=()=>PLAN.days.map((_,i)=>i).filter(i=>pilgrimageDay(PLAN.days[i].date).length);
 function shotsScreen(){
@@ -241,7 +246,7 @@ function shotsScreen(){
  if(!days.includes(ui.shotsDay)){const t=todayIndex();ui.shotsDay=days.includes(t)?t:days.includes(ui.day)?ui.day:days[0];}
  const d=PLAN.days[ui.shotsDay],{main,optional,reference}=dayShots(d),pg=shotProgress(d.date);
  return `${strip(days.map(i=>['#shots/'+PLAN.days[i].date,i,i===todayIndex()?'今天':DETAILS[PLAN.days[i].date].cityLabel]),ui.shotsDay)}
- <header class="screen-head"><div><p class="kicker">${dateLabel(d.date)} · 实景 × 作品</p><h1 class="display">巡礼对照</h1></div>${kita(pg.total&&pg.done===pg.total?'grin':'side','in-head')}<p class="count"><b>${pg.done}</b><span>/ ${pg.total} 已拍</span></p></header>
+ <header class="screen-head"><div><p class="kicker">${dateLabel(d.date)} · 实景 × 作品</p><h1 class="display">巡礼对照${doodle(pg.total&&pg.done===pg.total?'sparkle':'camera').replace('class="doodle"','class="doodle head-mark"')}</h1></div>${kita('side','in-head')}<p class="count"><b>${pg.done}</b><span>/ ${pg.total} 已拍</span></p></header>
  ${rallyHTML(d)}
  ${main.map((p,n)=>shotHTML(p,n+1)).join('')}
  ${optional.length?`<details class="fold block"><summary>可选点位 · ${optional.length}</summary><p class="hint">时间有余时顺路拍，默认不安排。</p>${optional.map(p=>shotHTML(p,0)).join('')}</details>`:''}
@@ -252,16 +257,16 @@ function shotsScreen(){
 const todoRow=t=>`<button type="button" class="todo${t.done?' on':''}" data-action="todo" data-todo="${e(t.id)}" aria-pressed="${t.done}"><span class="box">${icon('check')}</span><span>${e(t.text)}</span></button>`;
 function prepScreen(){
  const g=todoGroups(),open=openPurchases();
- return `<header class="screen-head"><div><p class="kicker">出发前与旅途中</p><h1 class="display">准备</h1></div>${themeButton()}</header>
- <section class="block"><h2 class="block-title">票务</h2><ul class="tickets">${open.map(t=>`<li class="ticket ${t.tone}"><div class="ticket-main"><b>${e(t.item)}</b><small>${e(t.date)} 使用</small></div><span class="ticket-state">${e(t.label)}</span></li>`).join('')}</ul><p class="hint">${BOOKED.map(b=>b[0]).join('、')} 已订好。</p></section>
- <section class="block todos">${kita(todoDone()===TODOS.length?'sit-happy':'peek','on-edge')}<h2 class="block-title">待办 <small>${todoDone()} / ${TODOS.length}</small></h2><h3 class="sub">出发前完成</h3>${g.before.map(todoRow).join('')}<h3 class="sub">旅途中再确认</h3>${g.trip.map(x=>`<p class="when">${e(x.label)}</p>${x.items.map(todoRow).join('')}`).join('')}</section>
+ return `<header class="screen-head"><div><p class="kicker">出发前与旅途中</p><h1 class="display">准备${doodle('clipboard').replace('class="doodle"','class="doodle head-mark"')}</h1></div>${themeButton()}</header>
+ <section class="block tickets-block"><span class="corner-sketch">${doodle('ticket')}</span><h2 class="block-title">票务</h2><ul class="tickets">${open.map(t=>`<li class="ticket ${t.tone}"><button type="button" class="ticket-tap" data-action="todo" data-todo="${e(t.id)}" aria-pressed="${t.done}" aria-label="${e(t.item)}：${e(t.label)}，点按${t.done?'取消':'标记已办'}"><span class="ticket-main"><b>${e(t.item)}</b><small>${e(t.date)} 使用</small></span><span class="ticket-state">${t.done?icon('check'):''}${e(t.label)}</span></button></li>`).join('')}</ul><p class="hint">${BOOKED.map(b=>b[0]).join('、')} 已订好。</p></section>
+ <section class="block todos"><h2 class="block-title">待办 <small>${todoDone()} / ${TODOS.length}</small>${kita('sit-happy','in-title')}</h2><h3 class="sub">出发前完成</h3>${g.before.map(todoRow).join('')}<h3 class="sub">旅途中再确认</h3>${g.trip.map(x=>`<p class="when">${e(x.label)}</p>${x.items.map(todoRow).join('')}`).join('')}</section>
  <section class="block"><h2 class="block-title">航班 · 当地时间</h2>${PLAN.bookings.filter(b=>b.type==='flight').map(b=>`<div class="flight"><p class="kicker">${b.from==='hkg'?'去程':'回程'}</p>${passHTML(b,flightLocal(b,'departure'),flightLocal(b,'arrival'))}</div>`).join('')}</section>
  <section class="block"><h2 class="block-title">酒店</h2>${PLAN.bookings.filter(b=>b.type==='hotel').map(b=>{const p=PLACE[b.place_id];return `<div class="hotel"><p class="kicker">${b.place_id==='hotel_kyoto'?'京都':'大阪'} · ${b.nights}晚 · ${dateLabel(b.checkin_date)}—${dateLabel(b.checkout_date)} · 不含早餐</p><p class="ja big" lang="ja">${e(p.name_ja)}</p>${p.address_ja?`<p class="ja" lang="ja">${e(p.address_ja)}</p>`:''}<div class="actions">${external(icon('pin')+'<span>地图</span>',p.map_search_url,'btn')}${p.address_ja?`<button type="button" class="btn" data-action="copy" data-copy="${e(p.address_ja)}">${icon('copy')}<span>复制地址</span></button>`:''}</div></div>`;}).join('')}</section>
  <details class="fold block"><summary>参考资料</summary>
   <h3 class="sub">作品日文名</h3>${WORK_NAMES.map(t=>`<p class="copy-line"><span lang="ja">${e(t)}</span><button type="button" class="icon-btn small" data-action="copy" data-copy="${e(t)}" aria-label="复制${e(t)}">${icon('copy')}</button></p>`).join('')}
   <h3 class="sub">保存的早季红叶预测 · 截至2026/9/28</h3>${PLAN.foliage.spots.map(s=>`<p>${e(PLACE[s.place_id].name)}：到访 ${dateLabel(s.visit_date)} · 预测观赏 ${dateLabel(s.forecast_viewing_start)} · 预测落叶 ${dateLabel(s.forecast_leaf_fall_start)} · ${external('来源 ↗',s.source)}</p>`).join('')}<p class="muted">可能见到枝头红叶与落叶混合，不保证盛期。</p>
-  <h3 class="sub">预算</h3><p>普通正餐每人¥1,000—2,500；12/6和牛自助现价¥5,000/人、上限¥6,000/人，尚未订位。</p><p>门票（两人）：${PLAN.visit_budget.filter(v=>!v.item).map(v=>e(({kodaiji:'高台寺',kyoto_tower:'京都塔',todaiji:'大佛殿'})[v.place_id]||PLACE[v.place_id].name)+' ¥'+v.two_adults_jpy.toLocaleString('en-US')).join('、')}；清水寺与购物另计。</p>
-  <h3 class="sub">离线使用</h3><p>${isWeb?'网页版的照片按需加载；路上请用离线单文件版。':'行程与照片可离线查看。'}地图和来源链接需联网。勾选只存在这台设备的浏览器里，不与同行者同步，网页版与离线文件各自保存；清除浏览器数据会丢失。</p>
+  <h3 class="sub">预算</h3><p>普通正餐每人¥1,000—2,500；12/6和牛自助现价¥5,000/人、上限¥6,000/人。</p><p>门票（两人）：${PLAN.visit_budget.filter(v=>!v.item).map(v=>e(({kodaiji:'高台寺',kyoto_tower:'京都塔',todaiji:'大佛殿'})[v.place_id]||PLACE[v.place_id].name)+' ¥'+v.two_adults_jpy.toLocaleString('en-US')).join('、')}；清水寺与购物另计。</p>
+  <h3 class="sub">离线使用</h3><p>${isWeb?'网页版的照片按需加载；路上请用离线单文件版。':'行程与照片可离线查看。'}地图和来源链接需联网。勾选只存在本机浏览器，网页版与离线文件各自保存。</p>
  </details>
  <a class="link-row" href="${BLOG_HOME}">${icon('back')}<span>返回まひろ的小站</span>${icon('chevron')}</a>`;
 }
@@ -337,14 +342,12 @@ function toggleCheck(date,id){
  // Completing from the sheet means "done here": close it and show the list moving on.
  if(sheetState?.key===id)closeSheet();
  refresh();
- toast('已完成：'+title,()=>{setCheck(date,id,false);refresh();});
 }
 function toggleShot(id){
  const p=pilgrimagePoints.find(x=>x.id===id);if(!p)return;
  const key=shotKey(p),now=!state.checks[key];state.checks[key]=now;save();
  if(now)ui.justDone='shot:'+id;
  refresh();
- if(now)toast('已拍：'+p.title,()=>{state.checks[key]=false;save();refresh();});
 }
 function toggleTodo(id){state.todos[id]=!state.todos[id];save();refresh();}
 const COLOR_MODE_KEY='user-color-scheme';
@@ -369,8 +372,7 @@ function zoomShot(id,kind){
 function zoomPhoto(id){const p=PHOTOS[id];if(p?.src)openZoom(PLACE[id].name,{src:p.src,alt:p.sight,credit:[p.sight,p.author,p.date].filter(Boolean).join(' · '),source_url:p.sourcePage});}
 
 function boot(){
- const margin=['maple','tea','torii','bridge'].map((name,i)=>doodle(name).replace('class="doodle"',`class="doodle m${i+1}"`)).join('');
- $('#app').innerHTML=`${DOODLE_DEFS}<div class="margin-art" aria-hidden="true">${margin}${kita('sit-happy','')}</div><main id="main" tabindex="-1"></main><nav class="tabbar" aria-label="主导航"></nav><dialog id="sheet" class="sheet" aria-label="详情"></dialog><dialog id="zoom" class="zoom" aria-label="放大图片"></dialog>`;
+ $('#app').innerHTML=`${DOODLE_DEFS}<main id="main" tabindex="-1"></main><nav class="tabbar" aria-label="主导航"></nav><dialog id="sheet" class="sheet" aria-label="详情"></dialog><dialog id="zoom" class="zoom" aria-label="放大图片"></dialog>`;
  document.addEventListener('click',ev=>{
   const tab=ev.target.closest('a.tab.on');
   if(tab){ev.preventDefault();window.scrollTo({top:0,behavior:'smooth'});return;}

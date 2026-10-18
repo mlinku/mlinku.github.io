@@ -169,12 +169,14 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .countdown .count, .countdown .lead {padding-right:92px}
 .kita.on-countdown {position:absolute; right:6px; top:-38px; width:96px; height:122px; animation:bob 3.2s ease-in-out infinite}
 @keyframes bob {50% {transform:translateY(-4px) rotate(-2deg)}}
-.block-title .kita.in-title {width:56px; height:66px; margin:-30px 0 -12px auto}
+.block-title .kita.in-title {width:64px; height:75px; margin:-30px 0 -22px auto}
 .block-title .kita-stand.in-title {width:30px; height:62px; margin-top:-30px}
-.block.todos {position:relative; margin-top:84px !important}
-.kita.on-edge {position:absolute; z-index:1; right:18px; bottom:calc(100% - 16px); width:126px; height:102px}
-.kita-sit-happy.on-edge {width:100px; height:97px; bottom:calc(100% - 18px)}
-.screen-head .kita.in-head {width:54px; height:64px; margin:0 0 -6px auto}
+/* Inside a card's title row, flush with the card's top edge: nothing pokes over the content above, no space is reserved. */
+.timetable .block-title {margin-bottom:22px}
+.timetable .block-title .kita.in-title {width:74px; height:60px; margin:-20px 0 -20px auto}
+.timetable .block-title .kita-grin.in-title {width:72px; height:55px; margin:-18px 0 -18px auto}
+.todos .block-title .kita-sit-happy.in-title {width:68px; height:66px; margin:-24px 0 -22px 10px}
+.screen-head .kita.in-head {width:64px; height:76px; margin:0 0 -6px auto}
 .screen-head .kita-grin.in-head {width:72px; height:55px}
 
 /* ---------- Seals ---------- */
@@ -223,6 +225,14 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .block {padding:18px; border-radius:var(--r); background:var(--card); box-shadow:var(--shadow)}
 .block-title {display:flex; align-items:center; gap:8px; margin-bottom:10px; font:700 16px/1.3 var(--serif); letter-spacing:.08em; color:var(--ink)}
 .block-title::before {content:''; width:13px; height:13px; flex:none; background:var(--plum); -webkit-mask:var(--flower) center/contain no-repeat; mask:var(--flower) center/contain no-repeat}
+/* Each tab has its own heading mark: ✿ 现在, a station ring for 行程, a sparkle for 巡礼, a tick for 准备. */
+.screen-day .block-title::before {background:var(--accent); -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='6' fill='none' stroke='black' stroke-width='3.6'/%3E%3C/svg%3E"); mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='6' fill='none' stroke='black' stroke-width='3.6'/%3E%3C/svg%3E")}
+.screen-shots .block-title::before {width:14px; height:14px; background:var(--gold); -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0C10.6 6.6 13.4 9.4 20 10 13.4 10.6 10.6 13.4 10 20 9.4 13.4 6.6 10.6 0 10 6.6 9.4 9.4 6.6 10 0Z'/%3E%3C/svg%3E"); mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0C10.6 6.6 13.4 9.4 20 10 13.4 10.6 10.6 13.4 10 20 9.4 13.4 6.6 10.6 0 10 6.6 9.4 9.4 6.6 10 0Z'/%3E%3C/svg%3E")}
+.screen-prep .block-title::before {background:var(--accent); -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M2.5 10.5 8 16 17.5 4' fill='none' stroke='black' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M2.5 10.5 8 16 17.5 4' fill='none' stroke='black' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.display .doodle.head-mark {display:inline-block; width:42px; height:42px; margin:-10px 0 -8px 8px; vertical-align:middle; color:var(--ink-2)}
+.tickets-block {position:relative}
+.corner-sketch {position:absolute; top:-14px; right:12px; transform:rotate(8deg)}
+.corner-sketch .doodle {width:54px; height:54px; color:var(--ink-2)}
 .block-title small {font:600 13px var(--sans); color:var(--muted); letter-spacing:0; margin-left:auto}
 .links {display:flex; flex-direction:column; gap:10px}
 .link-row {display:flex; align-items:center; gap:12px; width:100%; min-height:58px; padding:0 18px; border-radius:var(--r); background:var(--card); box-shadow:var(--shadow); color:var(--ink); font-weight:600}
@@ -272,6 +282,8 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .countdown .count b {font:900 68px/1 var(--serif); color:var(--shu); letter-spacing:-.02em}
 .countdown .count span {font:700 18px var(--serif)}
 .countdown .btn {flex:1}
+.alert-line {display:flex; align-items:center; gap:6px; margin-top:4px !important; color:var(--danger); font-weight:700; font-size:15px}
+.alert-line .icon {flex:none; width:16px; height:16px}
 .mini {--t:3.1rem; --rail:calc(var(--t) + 12px + 8px)}
 .mini li {display:flex; align-items:center}
 .mini-row {flex:1; min-width:0; display:flex; align-items:center; gap:12px; min-height:52px}
@@ -280,10 +292,10 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .mini .major .node {border-color:var(--ink-2)}
 .mini-title {overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .mini .minor .mini-title {color:var(--ink-2); font-size:15px}
-.timetable li {display:grid; grid-template-columns:3.6rem minmax(0,1fr) auto; gap:10px; align-items:baseline; padding:10px 0; border-top:1px dashed var(--line)}
+.timetable li {display:grid; grid-template-columns:3.6rem minmax(0,1fr); gap:0 10px; align-items:baseline; padding:10px 0; border-top:1px dashed var(--line)}
 .timetable li:first-child {border-top:0; padding-top:2px}
 .timetable b {font-size:1.15rem; font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap}
-.timetable small {font-size:13px; color:var(--muted); white-space:nowrap}
+.timetable small {grid-column:2; margin-top:1px; font-size:13px; line-height:1.4; color:var(--muted); white-space:nowrap}
 .stop.close b {color:var(--danger)}
 .stop.decide b {color:var(--accent)}
 .stop.soon {margin:0 -10px; padding:10px; border-radius:var(--r-sm); background:var(--danger-soft); border-top-color:transparent}
@@ -353,7 +365,7 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .ticket-facts div {min-width:0; padding:12px 6px 14px; text-align:center}
 .ticket-facts div + div {border-left:1px solid var(--line)}
 .ticket-facts dt {font-size:12px; letter-spacing:.1em; color:var(--muted)}
-.ticket-facts dd {margin-top:2px; font-size:clamp(14px,4.1vw,16px); line-height:1.35; font-weight:800; font-variant-numeric:tabular-nums}
+.ticket-facts dd {margin-top:2px; font-size:clamp(13px,3.8vw,16px); line-height:1.35; font-weight:800; font-variant-numeric:tabular-nums}
 .dots {display:inline-flex; gap:3px; margin-right:5px; vertical-align:1px}
 .dots i {width:6px; height:6px; border-radius:50%; background:var(--line)}
 .dots i.on {background:var(--ink)}
@@ -378,7 +390,8 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .row {display:flex; align-items:flex-start; border-radius:var(--r-md)}
 .row-open {flex:1; min-width:0; display:flex; align-items:flex-start; gap:10px; min-height:60px; padding:10px 0 10px 8px; border-radius:var(--r-md)}
 .row-open:active {background:var(--sunk)}
-.row-time {flex:none; width:var(--t); height:40px; padding-top:2px; display:flex; align-items:center; font-size:.95rem; font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap}
+.row-time {flex:none; width:var(--t); height:40px; padding-top:2px; display:flex; align-items:center; font-size:.95rem; font-weight:650; color:var(--ink-2); font-variant-numeric:tabular-nums; white-space:nowrap}
+.row-time.fixed {font-weight:800; color:var(--ink)}
 .rows .node {width:40px; height:40px; background:none; border:0}
 .rows .node::after {content:''; width:10px; height:10px; border-radius:50%; background:var(--card); border:2.5px solid var(--line-2)}
 .rows .node.big::after, .rows .node.photo::after {content:none}
@@ -518,11 +531,18 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .rally-spot h3 {font:700 17px var(--serif)}
 
 /* ---------- 准备 ---------- */
-.tickets li {position:relative; display:flex; align-items:center; gap:14px; padding:12px 16px; border-radius:var(--r-md); background:var(--sunk)}
+.tickets li {position:relative; border-radius:var(--r-md); background:var(--sunk)}
+.ticket-tap {display:flex; align-items:center; gap:14px; width:100%; min-height:56px; padding:12px 16px; border-radius:inherit; text-align:left; color:var(--ink)}
+.ticket-tap:active {background:var(--line)}
+.ticket.ok {background:var(--accent-soft)}
+.ticket.ok .ticket-state {color:var(--accent)}
+.ticket.ok .ticket-main b {color:var(--ink-2)}
+.ticket-state .icon {width:15px; height:15px; margin-right:3px; vertical-align:-2px}
 .tickets li + li {margin-top:8px}
 .ticket-main {flex:1; min-width:0}
+.ticket-main {display:block}
 .ticket-main b {display:block; font:700 16px var(--serif)}
-.ticket-main small {color:var(--muted); font-size:13.5px}
+.ticket-main small {display:block; color:var(--muted); font-size:13.5px}
 .ticket-state {flex:none; min-width:68px; padding-left:14px; white-space:nowrap; border-left:2px dashed var(--line-2); font-weight:800; font-size:14px; text-align:center}
 .tickets li::before, .tickets li::after {content:''; position:absolute; right:89px; width:14px; height:14px; border-radius:50%; background:var(--card)}
 .tickets li::before {top:-7px}
@@ -581,17 +601,6 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .copy-dialog textarea {width:100%; min-height:90px; margin-top:8px; padding:10px; border-radius:var(--r-md); border:1.5px solid var(--line-2); background:var(--sunk); color:var(--ink); font:inherit}
 noscript p {padding:40px; text-align:center}
 
-.margin-art {display:none}
-@media (min-width:1120px) {
-  #main {position:relative; z-index:1}
-  .margin-art {display:block; position:fixed; z-index:0; inset:0; pointer-events:none}
-  .margin-art .doodle {position:absolute; width:132px; height:132px; color:var(--ink-2); opacity:.32}
-  .margin-art .m1 {left:calc(50% - 320px - 230px); top:16%; transform:rotate(-8deg)}
-  .margin-art .m2 {left:calc(50% - 320px - 170px); top:58%; width:104px; height:104px; transform:rotate(6deg)}
-  .margin-art .m3 {right:calc(50% - 320px - 220px); top:12%; transform:rotate(7deg)}
-  .margin-art .m4 {right:calc(50% - 320px - 160px); top:46%; width:110px; height:110px; transform:rotate(-5deg)}
-  .margin-art .kita {position:absolute; right:calc(50% - 320px - 210px); bottom:calc(var(--tabbar) + 28px); width:120px; height:116px; opacity:.95}
-}
 @media (min-width:720px) {
   .display {font-size:36px}
   .strip {margin-left:0; margin-right:0; border-radius:0 0 var(--r) var(--r)}

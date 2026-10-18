@@ -19,6 +19,9 @@ export function headingText(){
   for(const d of PLAN.days)for(const c of variants[d.date]||[{}]){state.choices[d.date]=c;const info=dayPresentation(d);out.push(info.short,info.eyebrow,...DETAILS[d.date].phases.map(p=>p[0]),...effectiveEvents(d).map(ev=>ev.title));}
   state.choices={};
   out.push(...PLAN.places.map(p=>p.name),...pilgrimagePoints.map(p=>p.title+p.work),...(PILGRIMAGE.rally?.spots||[]).map(p=>p.title));
+  // Serif lines outside titles: day headlines, detail and food section titles, ticket names, hotels, work names.
+  for(const d of PLAN.days){const info=DETAILS[d.date];out.push(info.key,...Object.values(info.eventDetails||{}).map(x=>x.title),...[...(info.foodIdeas||[]),...Object.values(info.eventFood||{}).flat()].flatMap(x=>[x.label,x.title]));}
+  out.push(...Object.values(EVENT_EXTRA).map(x=>x.detail?.title||''),...(PLAN.unconfirmed_purchases||[]).map(p=>p.item),...Object.values(PURCHASE_DONE),...PLAN.bookings.map(b=>PLACE[b.place_id]?.name||''),...WORK_NAMES);
   return out.join('');})()`,scope)+read('trip/ui.js').match(/[\u3000-\u9FFF\uFF00-\uFFEF]/g).join('');
 }
 export const SERIF_EXTRA=' 0123456789/:·→—–-+×／（）《》「」、，。：・済日第天';
