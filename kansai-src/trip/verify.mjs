@@ -34,7 +34,7 @@ const checked=run(`
    if(transportNotes(d,ev).length)assert.ok(html.includes('aria-label="交通说明"'),'交通说明 '+ev.id);
    assert.ok(!html.includes('undefined')&&!html.includes('null<'),'没有空值 '+ev.id);
   }
-  for(const key of ['notes','route',...(d.overnight?['stay']:[])])assert.ok(sheetHTML(d.date,key).includes('sheet-head'),key+' '+d.date);
+  for(const key of ['notes',...(d.overnight?['stay']:[])])assert.ok(sheetHTML(d.date,key).includes('sheet-head'),key+' '+d.date);
   ui.day=PLAN.days.indexOf(d);
   assert.ok(!/move-group|移动 · \\d+ 步/.test(dayScreen()),'交通步骤各占一行 '+d.date);
  }
@@ -98,7 +98,8 @@ const checked=run(`
  // Old addresses still land in the right place.
  location.hash='#day/2026-12-02/timeline/kodaiji_night';assert.equal(parseHash(),'kodaiji_night');assert.equal(ui.tab,'day');assert.equal(ui.day,2);
  location.hash='#day/2026-12-01/pilgrimage/eupho_uji_bridge';assert.equal(parseHash(),'');assert.equal(ui.tab,'shots');assert.equal(ui.target,'shot-eupho_uji_bridge');
- location.hash='#day/2026-12-03/timeline/route';assert.equal(parseHash(),'route');
+ location.hash='#day/2026-12-03/timeline/route';assert.equal(parseHash(),'');assert.equal(PLAN.days[ui.day].date,'2026-12-03','旧路线地址打开当天行程');
+ assert.ok(!PLAN.days.some((d,i)=>{ui.day=i;return /路线 · \d+ 站|data-key="route"/.test(dayScreen());}),'行程页不再有路线入口');
  location.hash='#prep/todos';parseHash();assert.equal(ui.tab,'prep');
  location.hash='';parseHash();assert.equal(ui.tab,'now');
 
@@ -107,7 +108,7 @@ const checked=run(`
  assert.equal(cleanText('当前11:05关闭登机口（香港时间）；以航司最新通知及登机牌为准。'),'当前11:05关闭登机口（香港时间）；'.replace(/；$/,''));
  assert.equal(cleanText('参考10:00—21:00；临行复核营业。'),'10:00—21:00。');
  // Final plan (2026-10-19): no USJ, 大阪城, ferry or 白须神社 anywhere a traveller can reach.
- const everything=PLAN.days.map(d=>{ui.day=PLAN.days.indexOf(d);return text(dayScreen())+effectiveEvents(d).map(ev=>text(sheetHTML(d.date,ev.id))).join('')+text(sheetHTML(d.date,'route'))+text(sheetHTML(d.date,'notes'));}).join('')+text(prepScreen());
+ const everything=PLAN.days.map(d=>{ui.day=PLAN.days.indexOf(d);return text(dayScreen())+effectiveEvents(d).map(ev=>text(sheetHTML(d.date,ev.id))).join('')+text(sheetHTML(d.date,'notes'));}).join('')+text(prepScreen());
  for(const word of ['USJ','Studio Pass','任天堂','大阪城','天守阁','森之宫','鹤桥','SPAWORLD','白须','渡轮班次','友岛航线'])assert.ok(!everything.includes(word),'最终版不出现：'+word);
  const wakayama=PLAN.days.find(d=>d.date==='2026-12-05');
  assert.ok(effectiveEvents(wakayama).some(ev=>ev.id==='wakayama_tower_visit')&&effectiveRoute(wakayama).some(n=>n.id==='wakayama_castle'),'12/5默认进天守');
@@ -123,14 +124,9 @@ const checked=run(`
  for(const [shop1,shop2] of [['animate','surugaya'],['potato','surugaya_main'],['surugaya','none'],['surugaya_main','animate']]){
   state.choices[nara.date]={shop1,shop2};const shops=[shop1,shop2].filter(x=>x!=='none');
   assert.equal(String(effectiveEvents(nara).find(ev=>ev.id==='anime_shopping').place_ids),String(shops),'选店 '+shops);
-  const route=timedRoute(nara);assert.equal(String(route.filter(n=>shops.includes(n.id)).map(n=>n.id)),String(shops),'路线含所选店 '+shops);
-  assert.ok(route.filter(n=>shops.includes(n.id)).every(n=>n.eventId==='anime_shopping'),'选店时间绑定购物 '+shops);
+  assert.equal(String(effectiveRoute(nara).filter(n=>shops.includes(n.id)).map(n=>n.id)),String(shops),'路线含所选店 '+shops);
  }
  state.choices={};
- // Each route stop shows the time of its own visit, including repeat visits to the same station.
- for(const d of PLAN.days)for(const n of timedRoute(d))assert.ok(n.times.every(t=>t.text&&!/undefined|待确认/.test(t.text))||d.date==='2026-12-07','路线时间 '+d.date+' '+n.id);
- const kada=timedRoute(wakayama).filter(n=>n.id==='wakayamashi_station').map(n=>n.purpose);
- assert.equal(String(kada),String(['','下车步行去城公园','乘南海回大阪']),'和歌山市站三次经过各自说明');
  // 通天阁 is reference material only; 戎桥 moved to 12/3.
  assert.ok(!dayShots(PLAN.days[3]).main.some(p=>p.id==='conan-tsutenkaku')&&dayShots(PLAN.days[3]).reference.some(p=>p.id==='conan-tsutenkaku'),'通天阁只作参考');
  assert.equal(shotProgress('2026-12-03').total,1,'参考点不计进度');

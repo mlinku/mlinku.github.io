@@ -15,8 +15,7 @@ Object.assign(icons,{
  walk:'<circle cx="13" cy="4.5" r="1.8"/><path d="m10 21 2-6 3 3v3M8 12l2-4 4 1 2 3m-4-3-2 6"/>',
  bed:'<path d="M3 18V6m0 8h18v4M3 14V10h7v4m11 0v-2a3 3 0 0 0-3-3h-8"/>',
  plane:'<path d="M21 15.5 13.5 11V5a1.5 1.5 0 0 0-3 0v6L3 15.5V18l7.5-2.5V19L8 21v1l4-1 4 1v-1l-2.5-2v-3.5L21 18z"/>',
- sparkle:'<path d="M12 3v4m0 10v4M3 12h4m10 0h4M6 6l2.5 2.5m7 7L18 18M18 6l-2.5 2.5m-7 7L6 18"/>',
- route:'<circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h7a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h7"/>'
+ sparkle:'<path d="M12 3v4m0 10v4M3 12h4m10 0h4M6 6l2.5 2.5m7 7L18 18M18 6l-2.5 2.5m-7 7L6 18"/>'
 });
 
 /* ---------- Small parts ---------- */
@@ -117,7 +116,7 @@ function dayScreen(){
  <article class="day-ticket"><header class="day-hero">${img(info.cover,true)}<span class="day-sticker">${dayDoodle(d.date)}</span><div class="hero-over"><p class="kicker">${dateLabel(d.date)} ${e(d.weekday)}${today?' · <em>今天</em>':''}</p><h1 class="display">${e(info.short)}</h1><p>${e(info.eyebrow)}</p></div>${daySeal(i+1)}</header>
  <dl class="ticket-facts"><div><dt>${e(leave[0])}</dt><dd>${e(leave[1])}</dd></div><div><dt>${e(back[0])}</dt><dd>${e(back[1]).replace(' – ',' – ')}</dd></div><div><dt>强度</dt><dd title="${e(level.full)}"><span class="dots" aria-hidden="true">${[1,2,3,4].map(n=>`<i${n<=level.level?' class="on"':''}></i>`).join('')}</span>${e(level.label)}</dd></div></dl></article>
  <p class="day-key">${e(dayKey(info))}</p>
- <div class="chips">${notes.length?openButton(d.date,'notes',`${icon('alert')}<span>情况有变时 · ${notes.length}</span>`,'chip warn'):''}${d.overnight?openButton(d.date,'stay',`${icon('bed')}<span>${e(PLACE[d.overnight].name)}</span>`,'chip'):''}${openButton(d.date,'route',`${icon('route')}<span>路线 · ${timedRoute(d).length} 站</span>`,'chip')}${shots.total?`<a class="chip" href="#shots/${d.date}">${icon('camera')}<span>巡礼 ${shots.done}/${shots.total}</span></a>`:''}</div>
+ <div class="chips">${notes.length?openButton(d.date,'notes',`${icon('alert')}<span>情况有变时 · ${notes.length}</span>`,'chip warn'):''}${d.overnight?openButton(d.date,'stay',`${icon('bed')}<span>酒店</span>`,'chip'):''}${shots.total?`<a class="chip" href="#shots/${d.date}">${icon('camera')}<span>巡礼 ${shots.done}/${shots.total}</span></a>`:''}</div>
  ${deadlines(d,today?s.minutes:null,kita(flow.done===flow.total?'grin':'peek','in-title'))}
  <div class="day-progress"><span>已完成 <b>${flow.done}/${flow.total}</b></span><div class="bar" role="progressbar" aria-label="当天完成进度" aria-valuemin="0" aria-valuemax="${flow.total}" aria-valuenow="${flow.done}"><i style="width:${flow.done/flow.total*100}%"></i></div></div>
  ${flow.sections.map(section=>{
@@ -175,7 +174,6 @@ function sheetHTML(date,key){
  const i=PLAN.days.findIndex(x=>x.date===date),d=PLAN.days[i];if(!d)return '';
  if(key==='notes')return `${sheetHead(dateLabel(date)+' · 延误或天气变化时','情况有变时')}<div class="sheet-body"><ul class="plain roomy">${fieldNotes(d).map(t=>`<li>${e(t)}</li>`).join('')}</ul></div>`;
  if(key==='stay'&&d.overnight){const p=PLACE[d.overnight];return `${sheetHead(dateLabel(date)+' · 今晚住',e(p.name))}<div class="sheet-body">${photoSrc(p.id)?`<button type="button" class="sheet-cover" data-action="zoom-photo" data-place="${p.id}">${img(p.id,true)}</button>`:''}<p class="ja big" lang="ja">${e(p.name_ja)}</p>${p.address_ja?`<p class="ja" lang="ja">${e(p.address_ja)}</p>`:''}${PLACE_LOCATIONS[p.id]?`<p class="muted">${e(PLACE_LOCATIONS[p.id])}</p>`:''}${PLACE_DETAILS[p.id]?`<p>${e(cleanText(PLACE_DETAILS[p.id]))}</p>`:''}</div><footer class="sheet-foot">${external(icon('pin')+'<span>酒店地图</span>',p.map_search_url,'nav nav-big')}${p.address_ja?`<button type="button" class="check-big copy" data-action="copy" data-copy="${e(p.address_ja)}">${icon('copy')}<span>复制地址</span></button>`:''}</footer>`;}
- if(key==='route')return `${sheetHead(dateLabel(date)+' · 按到达顺序','当天路线')}<div class="sheet-body"><ol class="line route">${timedRoute(d).map(s=>`<li><span class="node"></span><div><b>${e(PLACE[s.id].name)}</b>${s.purpose?`<small>${e(s.purpose)}</small>`:''}<small class="muted">${s.times.map(t=>e(compactTime(t.text))).join(' · ')}${s.optional?' · 可选':''}</small></div>${external(icon('pin'),PLACE[s.id].map_search_url,'nav')}</li>`).join('')}</ol></div>`;
  const ev=effectiveEvents(d).find(x=>x.id===key);
  return ev?eventSheet(d,ev):'';
 }
@@ -286,7 +284,9 @@ function parseHash(){
   if(parts[2]==='pilgrimage'){ui.tab='shots';const p=parts[3]&&pilgrimagePoints.find(x=>x.id===parts[3]);ui.shotsDay=p?at(p.date):ui.day;if(parts[3])ui.target='shot-'+parts[3];return '';}
   ui.tab='day';const key=parts.slice(2).filter(x=>x&&x!=='timeline'&&x!=='details')[0]||'';
   const d=PLAN.days[ui.day];
-  if(!key||['notes','route','stay'].includes(key)||effectiveEvents(d).some(ev=>ev.id===key))return key;
+  // The old 路线 sheet is gone; its address opens the day itself.
+  if(key==='route')return '';
+  if(!key||['notes','stay'].includes(key)||effectiveEvents(d).some(ev=>ev.id===key))return key;
   const moved=MOVED_LINKS[d.date]?.[key];
   if(moved){ui.day=at(moved);ui.moved='这项已移到 '+dateLabel(moved);return key;}
   ui.moved='这项已不在最终行程，已打开 '+dateLabel(d.date)+' 全天';return '';

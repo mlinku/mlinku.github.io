@@ -126,7 +126,7 @@ const INTENSITY={'交通日':1,'清晨交通日':1,'中等':2,'中等偏高':3,'
 function intensity(d){const label=d.intensity.split('；')[0].replace(/，.*/,'');return {label,level:INTENSITY[label]||2,full:d.intensity};}
 function dayTimes(d,i){
  const leave=i===0?['出发',flightDeparture('flight_out').replace(' 香港起飞','')+' 香港']:['离店',compactTime(d.departure_target||'开园时间待确认')];
- const back=i===0?['入住','19:00–20:00']:i===PLAN.days.length-1?['抵港',flightLocal(PLAN.bookings.find(b=>b.id==='flight_home'),'arrival').time]:['返店',...compactTime(returnTarget(d)).split(/[，；]\s*/)];
+ const back=i===0?['入住','19:00 – 20:00']:i===PLAN.days.length-1?['抵港',flightLocal(PLAN.bookings.find(b=>b.id==='flight_home'),'arrival').time]:['返店',...compactTime(returnTarget(d)).split(/[，；]\s*/)];
  return [leave,back];
 }
 function progress(d){const {done,total}=DayFlow.forDay(d);return {done,total};}

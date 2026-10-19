@@ -1382,67 +1382,6 @@ const DayFlow={
  }
 };
 
-// Bind each original route occurrence, not just its place ID: return visits have different times.
-const ROUTE_EVENTS={
- '2026-11-30':['flight_out','flight_out','arrival_transfer','checkin_kyoto'],
- '2026-12-02':['demachi_transfer','demachi_visit','delta_visit','kiyomizu_transfer','kiyomizu_transfer','kiyomizu_visit','higashiyama_walk','higashiyama_walk','higashiyama_walk','higashiyama_walk','kodaiji_night','kyoto_night_return'],
- '2026-12-07':['checkout_osaka','airport_train','airport_train','flight_home']
-};
-function routePurpose(node,eventId,index,nodes){
- if(node.id.startsWith('hotel_')){
-  if(eventId==='checkout_kyoto')return '退房寄存';
-  if(eventId==='checkout_osaka')return '退房离店';
-  if(eventId==='luggage_pickup')return '取行李';
-  if(eventId==='checkin_osaka')return '抵达入住，随后休息约1小时';
-  if(eventId==='kada_day_return')return '返店后附近吃饭、收主要行李';
-  if(eventId?.startsWith('checkin_'))return '入住';
-  return index===0?'离店':'返店';
- }
- if(node.id==='hkg'&&eventId==='flight_out')return '建议08:25抵达T2，先办理值机';
- if(node.id==='kix'&&eventId==='airport_train')return '到站后前往T1值机';
- if(!nodes.slice(0,index).some(p=>p.id===node.id))return '';
- if(node.id==='uji_bridge')return eventId==='uji_shrines'?'过桥去神社':'过桥去晚餐';
- if(eventId==='uji_return')return node.id==='jr_uji'?'乘车回京都':nodes[index+1]?.id==='kyoto_stage'?'下车去4F舞台':'下车返店';
- if(eventId==='osaka_transfer'&&node.id==='kyoto_station')return '取行李后乘车去大阪';
- if(eventId==='kobe_bridge_visit')return node.id==='port_nakakoen'?'乘车回三宫':'出站回三宫商圈';
- if(eventId==='last_evening_return')return node.id==='sannomiya'?'晚餐后乘车返大阪':node.id==='jr_osaka'?'换环状线返店':'下车返店';
- if(eventId==='nara_park_scenery')return '午饭后走一段草地与步道';
- if(eventId==='nara_return_train'&&node.id==='kintetsu_nara')return '乘车回大阪日本桥';
- if(['osaka_evening_return','nara_day_return'].includes(eventId))return node.id==='nankai_namba'?'饭后乘南海返店':'下车返店';
- if(eventId==='wakayamashi_return')return node.id==='kada_station'?'14:40前进站候车':'下车步行去城公园';
- if(eventId==='wakayama_station_return')return '乘南海回大阪';
- if(eventId==='kada_day_return')return '下车返店';
- if(eventId==='sannomiya_dinner')return '返回商圈，晚餐地点待选';
- return '';
-}
-function timedRoute(d){
- const nodes=effectiveRoute(d),events=effectiveEvents(d),c=choice(d);
- const eventTime=(id,label)=>{const ev=events.find(ev=>ev.id===id);return ev?{eventId:id,text:ev.time_label,label:label||({transport:'交通',meal:'用餐',rest:'休息',walk:'步行',visit:'参观',shopping:'购物'}[ev.category]||'行程')}:null;};
- const flightTime=(id,field)=>{const b=PLAN.bookings.find(b=>b.id===id),f=flightLocal(b,field);return {text:f.time,label:f.region+(field==='departure'?'起飞':'抵达')+' · 当地时间'};};
- return nodes.map((node,i)=>{
-  let id=node.eventId||(d.route_event_ids||ROUTE_EVENTS[d.date])?.[node.original-1];
-  if(d.date==='2026-12-02'&&node.id==='yasaka_shrine')id='gion_dinner_walk';
-  if(d.date==='2026-12-04'&&selectedShops(c).includes(node.id))id='anime_shopping';
-  let times=[eventTime(id)].filter(Boolean);
-  if(i===0&&node.id.startsWith('hotel_')&&d.date!=='2026-12-07')times=id==='checkout_kyoto'?[eventTime(id,'退房寄存')]:[{text:d.departure_target||'开园时间待确认',label:'离店'}];
-  if(i===nodes.length-1&&node.id.startsWith('hotel_'))times=[{text:returnTarget(d),label:d.date==='2026-11-30'?'入住':'返店'}];
-  if(d.date==='2026-11-30'&&['hkg','kix'].includes(node.id))times=[flightTime('flight_out',node.id==='hkg'?'departure':'arrival')];
-  if(d.date==='2026-12-07'){
-   if(node.id==='hotel_osaka')times=[eventTime('checkout_osaka','退房离店')];
-   if(node.id==='nankai_shinimamiya')times=[eventTime('airport_train','候选列车')];
-   if(node.id==='kix')times=[eventTime('airport_train','机场列车')];
-   if(node.id==='hkg')times=[flightTime('flight_home','arrival')];
-  }
-  if(d.date==='2026-12-04'&&node.id==='kintetsu_nara')times=[eventTime(id,id==='nara_return_train'?'返程，含候车':'交通')];
-  if(d.date==='2026-12-05'&&node.id==='wakayamashi_station'&&id==='kada_transfer')times=[{eventId:id,text:'途中换乘',label:'换加太线'}];
-  const shared=['uji_pilgrimage','uji_shrines','higashiyama_walk','nara_visit','anime_shopping','kada_pilgrimage','awashima_visit','motomachi_cd_shopping','delta_visit'].includes(id);
-  if(shared&&times.length===1)times[0].label='同段共用';
-  const purpose=routePurpose(node,id,i,nodes);
-  if(node.id.startsWith('hotel_')&&times.length===1)times[0].label=purpose;
-  return {...node,eventId:id,purpose,times:times.length?times:[{text:'时间待确认',label:'参考'}]};
- });
-}
-
 
 /* On-the-day actions. Never infer completion from the clock or a link click. */
 function navigationPlace(ev){
@@ -1619,7 +1558,7 @@ const INTENSITY={'交通日':1,'清晨交通日':1,'中等':2,'中等偏高':3,'
 function intensity(d){const label=d.intensity.split('；')[0].replace(/，.*/,'');return {label,level:INTENSITY[label]||2,full:d.intensity};}
 function dayTimes(d,i){
  const leave=i===0?['出发',flightDeparture('flight_out').replace(' 香港起飞','')+' 香港']:['离店',compactTime(d.departure_target||'开园时间待确认')];
- const back=i===0?['入住','19:00–20:00']:i===PLAN.days.length-1?['抵港',flightLocal(PLAN.bookings.find(b=>b.id==='flight_home'),'arrival').time]:['返店',...compactTime(returnTarget(d)).split(/[，；]\s*/)];
+ const back=i===0?['入住','19:00 – 20:00']:i===PLAN.days.length-1?['抵港',flightLocal(PLAN.bookings.find(b=>b.id==='flight_home'),'arrival').time]:['返店',...compactTime(returnTarget(d)).split(/[，；]\s*/)];
  return [leave,back];
 }
 function progress(d){const {done,total}=DayFlow.forDay(d);return {done,total};}
@@ -1930,8 +1869,7 @@ Object.assign(icons,{
  walk:'<circle cx="13" cy="4.5" r="1.8"/><path d="m10 21 2-6 3 3v3M8 12l2-4 4 1 2 3m-4-3-2 6"/>',
  bed:'<path d="M3 18V6m0 8h18v4M3 14V10h7v4m11 0v-2a3 3 0 0 0-3-3h-8"/>',
  plane:'<path d="M21 15.5 13.5 11V5a1.5 1.5 0 0 0-3 0v6L3 15.5V18l7.5-2.5V19L8 21v1l4-1 4 1v-1l-2.5-2v-3.5L21 18z"/>',
- sparkle:'<path d="M12 3v4m0 10v4M3 12h4m10 0h4M6 6l2.5 2.5m7 7L18 18M18 6l-2.5 2.5m-7 7L6 18"/>',
- route:'<circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h7a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h7"/>'
+ sparkle:'<path d="M12 3v4m0 10v4M3 12h4m10 0h4M6 6l2.5 2.5m7 7L18 18M18 6l-2.5 2.5m-7 7L6 18"/>'
 });
 
 /* ---------- Small parts ---------- */
@@ -2032,7 +1970,7 @@ function dayScreen(){
  <article class="day-ticket"><header class="day-hero">${img(info.cover,true)}<span class="day-sticker">${dayDoodle(d.date)}</span><div class="hero-over"><p class="kicker">${dateLabel(d.date)} ${e(d.weekday)}${today?' · <em>今天</em>':''}</p><h1 class="display">${e(info.short)}</h1><p>${e(info.eyebrow)}</p></div>${daySeal(i+1)}</header>
  <dl class="ticket-facts"><div><dt>${e(leave[0])}</dt><dd>${e(leave[1])}</dd></div><div><dt>${e(back[0])}</dt><dd>${e(back[1]).replace(' – ',' – ')}</dd></div><div><dt>强度</dt><dd title="${e(level.full)}"><span class="dots" aria-hidden="true">${[1,2,3,4].map(n=>`<i${n<=level.level?' class="on"':''}></i>`).join('')}</span>${e(level.label)}</dd></div></dl></article>
  <p class="day-key">${e(dayKey(info))}</p>
- <div class="chips">${notes.length?openButton(d.date,'notes',`${icon('alert')}<span>情况有变时 · ${notes.length}</span>`,'chip warn'):''}${d.overnight?openButton(d.date,'stay',`${icon('bed')}<span>${e(PLACE[d.overnight].name)}</span>`,'chip'):''}${openButton(d.date,'route',`${icon('route')}<span>路线 · ${timedRoute(d).length} 站</span>`,'chip')}${shots.total?`<a class="chip" href="#shots/${d.date}">${icon('camera')}<span>巡礼 ${shots.done}/${shots.total}</span></a>`:''}</div>
+ <div class="chips">${notes.length?openButton(d.date,'notes',`${icon('alert')}<span>情况有变时 · ${notes.length}</span>`,'chip warn'):''}${d.overnight?openButton(d.date,'stay',`${icon('bed')}<span>酒店</span>`,'chip'):''}${shots.total?`<a class="chip" href="#shots/${d.date}">${icon('camera')}<span>巡礼 ${shots.done}/${shots.total}</span></a>`:''}</div>
  ${deadlines(d,today?s.minutes:null,kita(flow.done===flow.total?'grin':'peek','in-title'))}
  <div class="day-progress"><span>已完成 <b>${flow.done}/${flow.total}</b></span><div class="bar" role="progressbar" aria-label="当天完成进度" aria-valuemin="0" aria-valuemax="${flow.total}" aria-valuenow="${flow.done}"><i style="width:${flow.done/flow.total*100}%"></i></div></div>
  ${flow.sections.map(section=>{
@@ -2090,7 +2028,6 @@ function sheetHTML(date,key){
  const i=PLAN.days.findIndex(x=>x.date===date),d=PLAN.days[i];if(!d)return '';
  if(key==='notes')return `${sheetHead(dateLabel(date)+' · 延误或天气变化时','情况有变时')}<div class="sheet-body"><ul class="plain roomy">${fieldNotes(d).map(t=>`<li>${e(t)}</li>`).join('')}</ul></div>`;
  if(key==='stay'&&d.overnight){const p=PLACE[d.overnight];return `${sheetHead(dateLabel(date)+' · 今晚住',e(p.name))}<div class="sheet-body">${photoSrc(p.id)?`<button type="button" class="sheet-cover" data-action="zoom-photo" data-place="${p.id}">${img(p.id,true)}</button>`:''}<p class="ja big" lang="ja">${e(p.name_ja)}</p>${p.address_ja?`<p class="ja" lang="ja">${e(p.address_ja)}</p>`:''}${PLACE_LOCATIONS[p.id]?`<p class="muted">${e(PLACE_LOCATIONS[p.id])}</p>`:''}${PLACE_DETAILS[p.id]?`<p>${e(cleanText(PLACE_DETAILS[p.id]))}</p>`:''}</div><footer class="sheet-foot">${external(icon('pin')+'<span>酒店地图</span>',p.map_search_url,'nav nav-big')}${p.address_ja?`<button type="button" class="check-big copy" data-action="copy" data-copy="${e(p.address_ja)}">${icon('copy')}<span>复制地址</span></button>`:''}</footer>`;}
- if(key==='route')return `${sheetHead(dateLabel(date)+' · 按到达顺序','当天路线')}<div class="sheet-body"><ol class="line route">${timedRoute(d).map(s=>`<li><span class="node"></span><div><b>${e(PLACE[s.id].name)}</b>${s.purpose?`<small>${e(s.purpose)}</small>`:''}<small class="muted">${s.times.map(t=>e(compactTime(t.text))).join(' · ')}${s.optional?' · 可选':''}</small></div>${external(icon('pin'),PLACE[s.id].map_search_url,'nav')}</li>`).join('')}</ol></div>`;
  const ev=effectiveEvents(d).find(x=>x.id===key);
  return ev?eventSheet(d,ev):'';
 }
@@ -2201,7 +2138,9 @@ function parseHash(){
   if(parts[2]==='pilgrimage'){ui.tab='shots';const p=parts[3]&&pilgrimagePoints.find(x=>x.id===parts[3]);ui.shotsDay=p?at(p.date):ui.day;if(parts[3])ui.target='shot-'+parts[3];return '';}
   ui.tab='day';const key=parts.slice(2).filter(x=>x&&x!=='timeline'&&x!=='details')[0]||'';
   const d=PLAN.days[ui.day];
-  if(!key||['notes','route','stay'].includes(key)||effectiveEvents(d).some(ev=>ev.id===key))return key;
+  // The old 路线 sheet is gone; its address opens the day itself.
+  if(key==='route')return '';
+  if(!key||['notes','stay'].includes(key)||effectiveEvents(d).some(ev=>ev.id===key))return key;
   const moved=MOVED_LINKS[d.date]?.[key];
   if(moved){ui.day=at(moved);ui.moved='这项已移到 '+dateLabel(moved);return key;}
   ui.moved='这项已不在最终行程，已打开 '+dateLabel(d.date)+' 全天';return '';
