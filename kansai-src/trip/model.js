@@ -362,4 +362,4 @@ const PURCHASE_LABEL={not_purchased:['未购买','danger'],not_reserved:['尚未
 // A ticket the traveller has sorted (bought, reserved, paid) is ticked on 准备 and stored with the todos.
 const PURCHASE_DONE={not_reserved:'已订位',pay_on_site:'已付款'};
 const ticketId=p=>'ticket:'+p.visit_date+':'+p.item;
-const openPurchases=()=>(PLAN.unconfirmed_purchases||[]).map(p=>{const done=!!state.todos[ticketId(p)];return {id:ticketId(p),done,visitDate:p.visit_date,item:p.item+(p.quantity?' ×'+p.quantity:''),date:dateLabel(p.visit_date),label:done?PURCHASE_DONE[p.status]||'已购票':(PURCHASE_LABEL[p.status]||['待确认'])[0],tone:done?'ok':(PURCHASE_LABEL[p.status]||[,'warn'])[1]};});
+const openPurchases=()=>(PLAN.unconfirmed_purchases||[]).map(p=>{const done=!!state.todos[ticketId(p)];return {id:ticketId(p),done,visitDate:p.visit_date,item:p.item+(p.quantity?'\u00a0×'+p.quantity:''),date:dateLabel(p.visit_date),label:done?PURCHASE_DONE[p.status]||'已购票':(PURCHASE_LABEL[p.status]||['待确认'])[0],tone:done?'ok':(PURCHASE_LABEL[p.status]||[,'warn'])[1]};});

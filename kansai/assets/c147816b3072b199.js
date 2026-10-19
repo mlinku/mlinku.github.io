@@ -1794,7 +1794,7 @@ const PURCHASE_LABEL={not_purchased:['未购买','danger'],not_reserved:['尚未
 // A ticket the traveller has sorted (bought, reserved, paid) is ticked on 准备 and stored with the todos.
 const PURCHASE_DONE={not_reserved:'已订位',pay_on_site:'已付款'};
 const ticketId=p=>'ticket:'+p.visit_date+':'+p.item;
-const openPurchases=()=>(PLAN.unconfirmed_purchases||[]).map(p=>{const done=!!state.todos[ticketId(p)];return {id:ticketId(p),done,visitDate:p.visit_date,item:p.item+(p.quantity?' ×'+p.quantity:''),date:dateLabel(p.visit_date),label:done?PURCHASE_DONE[p.status]||'已购票':(PURCHASE_LABEL[p.status]||['待确认'])[0],tone:done?'ok':(PURCHASE_LABEL[p.status]||[,'warn'])[1]};});
+const openPurchases=()=>(PLAN.unconfirmed_purchases||[]).map(p=>{const done=!!state.todos[ticketId(p)];return {id:ticketId(p),done,visitDate:p.visit_date,item:p.item+(p.quantity?'\u00a0×'+p.quantity:''),date:dateLabel(p.visit_date),label:done?PURCHASE_DONE[p.status]||'已购票':(PURCHASE_LABEL[p.status]||['待确认'])[0],tone:done?'ok':(PURCHASE_LABEL[p.status]||[,'warn'])[1]};});
 
 /* Hand-drawn line art for the quiet places of the guide — never on rows, sheets or transport notes.
    One-colour strokes in currentColor (so night mode follows), a soft colour wash underneath like a sketchbook
@@ -1938,7 +1938,7 @@ function focusCard(d,st,minutes){
  const label=st.started?'正在进行':wait>0?`${duration(wait)}后`:'下一项',primary=m.meals.find(x=>x.primary);
  const over=`<span class="live-pill${st.started?' on':''}">${label}</span><span class="band-time">${e(m.time)}</span>`;
  return `<section class="focus${st.started?' live':''}" aria-label="${label}：${e(m.title)}">
- ${photo?`<div class="band">${img(photo,true)}<div class="band-over">${over}</div></div>`:`<div class="band plain">${icon(CATEGORY_ICON[ev.category]||'pin')}<div class="band-over">${over}</div></div>`}
+ ${photo?`<div class="band">${img(photo,true)}<div class="band-over">${over}</div></div>`:`<div class="band plain">${dayDoodle(d.date)}<div class="band-over">${over}</div></div>`}
  <div class="focus-body">
  <h2 class="title">${e(m.title)}</h2>
  ${m.line?`<p class="lead">${e(m.line)}</p>`:''}
@@ -1956,7 +1956,7 @@ function coverHero(title,sub){
 function beforeScreen(s){
  const open=openPurchases().filter(p=>p.tone==='danger'&&!p.done);
  return `${coverHero('关西秋日手帖','2026.11.30 — 12.07 · 8 天 7 晚')}
- <section class="focus countdown"><div class="scene-band">${scene('depart')}</div><div class="focus-body">${kita('cheer','on-countdown')}<p class="count"><b>${s.days}</b><span>天后出发</span></p><p class="lead">临行待办 ${todoDone()} / ${TODOS.length}</p>${open.map(p=>`<p class="alert-line">${icon('alert')}<span>${e(p.item.replace(/ ×\d+$/,''))} · ${e(p.label)}</span></p>`).join('')}<div class="focus-actions"><a class="btn primary" href="#prep">去准备</a><a class="btn" href="#day/${PLAN.days[0].date}">看第 1 天</a></div></div></section>
+ <section class="focus countdown"><div class="scene-band">${scene('depart')}</div><div class="focus-body">${kita('cheer','on-countdown')}<p class="count"><b>${s.days}</b><span>天后出发</span></p><p class="lead">临行待办 ${todoDone()} / ${TODOS.length}</p>${open.map(p=>`<p class="alert-line">${icon('alert')}<span>${e(p.item.replace(/\s×\d+$/,''))} · ${e(p.label)}</span></p>`).join('')}<div class="focus-actions"><a class="btn primary" href="#prep">去准备</a><a class="btn" href="#day/${PLAN.days[0].date}">看第 1 天</a></div></div></section>
  <p class="hint center">出发后，这里显示当下行程。</p>
  <section class="block"><h2 class="block-title">8 天行程</h2>${dayLine()}</section>`;
 }
@@ -1989,7 +1989,7 @@ function row(d,ev,now){
  const ticket=major?eventTicket(d,ev):null;if(ticket&&!ticket.done&&ticket.tone!=='plain')flags.push(`<span class="flag ${ticket.tone==='danger'?'warn':''}">${e(ticket.label)}</span>`);
  const shots=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p)).length;if(shots)flags.push(`<span class="flag">巡礼 ${shots}</span>`);
  // The day's first row keeps its clock even when it is a transfer: it is when the day starts.
- const fixed=fixedTime(ev),showClock=major||fixed||effectiveEvents(d)[0]?.id===ev.id,passed=!major&&passedConnector(d,ev);
+ const fixed=fixedTime(ev),showClock=major||fixed||effectiveEvents(d)[0]?.id===ev.id||now?.current?.id===ev.id,passed=!major&&passedConnector(d,ev);
  const words=showClock?(start===null?compactTime(ev.time_label):''):spanText(ev),thumb=major?eventPhotoIds(ev)[0]:'';
  const node=thumb?`<span class="node photo">${img(thumb)}</span>`:`<span class="node${major?' big':''}">${major?icon(CATEGORY_ICON[ev.category]||'pin'):''}</span>`;
  return `<li class="row ${major?'major':'minor'}${done||passed?' done':''}${now?.current?.id===ev.id?' now':''}" id="row-${e(ev.id)}">${openButton(d.date,ev.id,`<span class="row-time${fixed?' fixed':''}">${showClock?(start===null?'随后':clock(start)):''}</span>${node}<span class="row-text"><span class="row-title">${major?'':icon(CATEGORY_ICON[ev.category]||'pin')}${e(ev.title)}</span>${words||flags.length?`<span class="row-meta">${words?`<span>${e(words)}</span>`:''}${flags.join('')}</span>`:''}</span>`,'row-open')}${major?checkButton(d.date,ev):''}</li>`;
