@@ -172,8 +172,7 @@ function hardStops(d){
 // Unchecked earlier rows are ignored; people do not tick everything.
 // A connector (no stamp) counts as passed once anything after it is ticked.
 function nowState(d,minutes){
- const events=effectiveEvents(d),ticked=i=>activityState(d.date,events[i].id)==='done';
- const pending=i=>!ticked(i)&&(isMajorEvent(d,events[i])||!events.slice(i+1).some((_,j)=>ticked(i+1+j)));
+ const events=effectiveEvents(d),pending=i=>!eventDone(d,events[i]);
  let current=-1;
  for(let i=0;i<events.length;i++){const start=eventStart(events[i]);if(start!==null&&start>minutes)break;if(start!==null)current=i;}
  let focus=current>=0&&pending(current)?current:-1;
@@ -188,7 +187,8 @@ function nowState(d,minutes){
 const fixedTime=ev=>ev.category==='flight'||['booked','current_timetable_candidate'].includes(ev.time_status)||/^意向/.test(ev.time_label||'');
 // "25分钟" for a connector, read from its own window.
 function spanText(ev){const m=/(\d{1,2}):(\d{2})\D+?(\d{1,2}):(\d{2})/.exec(ev.time_label||'');if(!m)return '';const min=(m[3]*60+ +m[4])-(m[1]*60+ +m[2]);return min>0?(min<60?min+'分钟':Math.floor(min/60)+'小时'+(min%60?min%60+'分':'')):'';}
-const passedConnector=(d,ev)=>{const events=effectiveEvents(d),i=events.findIndex(x=>x.id===ev.id);return events.slice(i+1).some(x=>activityState(d.date,x.id)==='done');};
+const passedConnector=(d,ev)=>{const events=effectiveEvents(d),next=events.slice(events.findIndex(x=>x.id===ev.id)+1).find(x=>isMajorEvent(d,x));return !!next&&activityState(d.date,next.id)==='done';};
+const eventDone=(d,ev)=>isMajorEvent(d,ev)?activityState(d.date,ev.id)==='done':passedConnector(d,ev);
 // Ordinary identification photos belong to the first eligible activity, not transit.
 function compactEvent(ev){return ev.category==='transport'||(ev.category==='rest'&&ev.place_ids.every(id=>id.startsWith('hotel_')))||['wakayama_tower_ascent','wakayama_tower_descent','kada_station_return','wakayama_station_return'].includes(ev.id);}
 function eventPhotoIds(ev){return compactEvent(ev)?[]:ev.place_ids.filter(id=>photoSrc(id)&&(ev.category!=='meal'||PLACE[id].category==='restaurant'));}

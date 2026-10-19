@@ -423,7 +423,8 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .rows .node.big::after, .rows .node.photo::after {content:none}
 .rows .node.big {width:34px; height:34px; margin:3px; border-radius:50%; background:var(--card); border:2px solid var(--ink-2); color:var(--ink-2)}
 .rows .node.big .icon {width:16px; height:16px}
-.rows .node.photo {width:40px; height:40px; border:2.5px solid var(--card); box-shadow:0 0 0 1.5px var(--line-2)}
+/* Opaque behind the photo: a ticked row fades the photo, and the rail must not show through it. */
+.rows .node.photo {width:40px; height:40px; background:var(--card); border:2.5px solid var(--card); box-shadow:0 0 0 1.5px var(--line-2)}
 .row-text {flex:1; min-width:0; display:flex; flex-wrap:wrap; align-items:center; gap:2px 6px; padding-top:8px}
 .row-title > .icon {display:inline-block; width:15px; height:15px; margin-right:6px; vertical-align:-2px; color:var(--muted)}
 .row-title {font-weight:700; line-height:24px}

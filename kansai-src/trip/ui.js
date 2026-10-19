@@ -126,7 +126,7 @@ function dayScreen(){
  <nav class="pager" aria-label="相邻日期">${i>0?`<a href="#day/${PLAN.days[i-1].date}">${icon('back')}<span>${dateLabel(PLAN.days[i-1].date)} ${e(dayPresentation(PLAN.days[i-1]).short)}</span></a>`:'<span></span>'}${i<PLAN.days.length-1?`<a class="next" href="#day/${PLAN.days[i+1].date}"><span>${dateLabel(PLAN.days[i+1].date)} ${e(dayPresentation(PLAN.days[i+1]).short)}</span>${icon('chevron')}</a>`:''}</nav>`;
 }
 function row(d,ev,now){
- const done=activityState(d.date,ev.id)==='done',major=isMajorEvent(d,ev),start=eventStart(ev),flags=[];
+ const major=isMajorEvent(d,ev),done=major&&activityState(d.date,ev.id)==='done',start=eventStart(ev),flags=[];
  if(noticeParts(d,ev).notice)flags.push('<span class="flag warn">注意</span>');
  if(ev.optional)flags.push('<span class="flag">可选</span>');
  const ticket=major?eventTicket(d,ev):null;if(ticket&&!ticket.done&&ticket.tone!=='plain')flags.push(`<span class="flag ${ticket.tone==='danger'?'warn':''}">${e(ticket.label)}</span>`);
