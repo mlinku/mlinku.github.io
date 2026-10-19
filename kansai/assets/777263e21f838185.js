@@ -1442,9 +1442,7 @@ const EVENT_BRIEF={
  dinner_arrival:'酒店附近简餐；到得早且无需久等再选车站餐厅。',
  uji_parfait:'不接受预约；75分钟含取号与用餐，11:00判断能否11:45前吃完。',
  uji_approach:'沿街拍照，不进收费区。',
- agata_stamp:'延误时可略过。',
  uji_pilgrimage:'约45分钟，久美子椅多留片刻，桥上顺拍。',
- uji_shrines:'短看两神社后前往登山口。',
  daikichi_visit:'往返加展望台约75分钟。',
  suikan_stamp:'河岸拍照，坐下休息约10分钟。',
  heiwa_visit:'商场3F，逛30—40分钟。',
@@ -1453,14 +1451,12 @@ const EVENT_BRIEF={
  station_stage:'上4F室町小路广场，拍大阶梯和红色时钟。',
  demachi_visit:'拍入口、吊鱼与拱廊；小吃只排短队。',
  delta_visit:'河岸拍照约25分钟，优先《玉子》高野川侧。',
- higashiyama_walk:'步行与巡礼短拍约75分钟。',
  kodaiji_night:'排队超30分钟或疲劳直接吃晚饭；18:45前离寺顺延晚餐。',
  gion_dinner_walk:'夜枫准时结束且有余量时短停八坂神社。',
  kyoto_tower_visit:'展望室5层领台纸，集齐7处章再出场。',
  inari_transfer:'',
  inari_visit:'千本鸟居到奥社折返，不登顶，留出回京都取箱时间。',
  osaka_transfer:'',
- osaka_evening_return:'饭后直接回酒店。',
  nara_transfer:'',
  nara_visit:'仅现金；大佛殿内部约30—40分钟。',
  nara_park_scenery:'',
@@ -1470,11 +1466,10 @@ const EVENT_BRIEF={
  wakayama_castle_transfer:'',
  wakayama_garden_visit:'',
  wakayama_tower_ascent:'',
- wakayama_tower_visit:'默认进天守。',
+ wakayama_tower_visit:'',
  kada_day_return:'',
  kobe_bridge_visit:'16:30前回三宫；大风雨或疲劳就取消。',
  sannomiya_dinner:'17:00订不到再看17:30。',
- last_evening_return:'回店只留行李收尾。',
  anime_shopping:'重点1—2家，晚到只选一家。',
  checkout_osaka:'离店前或抵机场后吃早餐。',
  airport_checkin:''
@@ -1482,15 +1477,21 @@ const EVENT_BRIEF={
 // Shorter wording for 情况有变时. Each source must still occur in the planning notes (trip/verify.mjs checks this);
 // a short form keeps every status word (待确认／未购买／尚未订位), safety limit and deadline of its source.
 const FALLBACK_SHORT=[
- // 大阪城 is not in the final plan at all, so the note need not rule it out.
- ['默认进天守；延误、明显疲劳或雨天石阶湿滑时改看外观，17:00后不能入天守。','延误、疲劳或雨天石阶湿滑时改看天守外观；17:00后不能入天守。'],
+  ['默认进天守；延误、明显疲劳或雨天石阶湿滑时改看外观，17:00后不能入天守。','延误、疲劳或雨天石阶湿滑时改看天守外观；17:00后不能入天守。'],
  ['庭园16:45停止入园，晚到时不能改走庭园，直接看外观或返程。','16:45后才到就不进庭园，直接看外观或返程。'],
  ['加太拍照、午饭或交通延误时，城可只看外观或取消；更多拍照或参观会顺延回店，不压缩返程步行。','加太段延误时，城只看外观或取消；多停留就顺延回店。'],
  ['风雨大时缩短海边停留；当天没有渡轮，不上友岛。','风雨大时缩短海边停留。'],
- ['不追加道顿堀、春日本殿、博物馆、奈良町、若草山或大阪城。','不追加道顿堀、春日本殿、博物馆、奈良町或若草山。'],
  ['航班或入境延迟时，抵达后直接入住、吃简餐，再回酒店休息。','航班或入境延迟：直接入住、吃简餐后休息。'],
- ['商店街巡礼看西入口、拱廊与吊鱼装饰。','商店街看西入口、拱廊与吊鱼装饰。'],
  ['飞石可在岸边拍；水位高或雨天不下河。','水位高或雨天不下河，飞石在岸边拍。']
+];
+const TEXT_SHORT=[
+ ['，含上下楼与结账，14:20停止购物。','。'],
+ ['只选一段公共步道和草地，不喂鹿、不要求近距离互动。','不喂鹿。'],
+ ['优先《玉子》高野川侧，《轻音》仅有余量时拍，不来回补机位。','《轻音》仅有余量时拍。'],
+ ['店铺与咖啡10:00—17:30，咖啡末单16:30、受付至16:00；不接受座位预约，拥挤时可能提早截止。','拥挤时可能提早截止。'],
+ ['京吹粉丝聚集的餐厅，非动画取景点。','京吹粉丝聚集的餐厅。'],
+ ['可改在JR宇治站或京都站吃简餐；若回京都后才吃，返店相应顺延，仍保留4F《宝岛》舞台15—20分钟。','JR宇治站或京都站简餐。'],
+ ['DELTA满座时，11:40—12:50改为先拍鸭川，再到站旁汉堡店午餐；约13:00乘京阪，不再重复河岸段。','DELTA满座时改这里，先拍鸭川再吃。']
 ];
 const compactFallback=t=>FALLBACK_SHORT.reduce((s,[from,to])=>s.replace(from,to),String(t||''));
 // Transport notes that spell out airport routine; the short form keeps every time and the one non-obvious fact.
@@ -1514,7 +1515,13 @@ const DROP_SENTENCES=new Set([
  '縣神社 → 久美子椅 → 喜撰桥 → 塔之岛 → 朝雾桥','从朝雾桥东桥头依次短看两神社，再到大吉山登山口',
  '从书店步行到站，看展示约10分钟','小吃只买短队，不逐家进店','等号暂离按当日规则，宇治桥短拍不额外重复算时',
  '从表参道顺路前往','延误可省，不承诺完成全套后期集章','从河岸步行到商场3F，约16:40到店，逛30—40分钟','从京阪宇治站经宇治桥过河，到西岸萨莉亚',
- '晚到就缩短夜逛，不压酒店休息','取号与用餐75分钟为预算，不保证等位','11:00左右判断不能11:45前吃完则放弃堂食','09:30离店，到店前含酒店到站、候车与步行',
+ '晚到就缩短夜逛，不压酒店休息','三年坂 → 八坂塔短支线 → 二年坂 → 宁宁之道','75分钟用于步行与巡礼短拍，保留之后半小时休息',
+ 'TUNE当日寄存，按订单与前台说明','放箱后坐下休息约1小时，不为赶夜逛压缩','饭后直接回酒店','参道简餐，长队约20分钟就换店','长队约20分钟换店，保留坐下用餐',
+ '奈良公园附近坐下吃饭并休息','找有座位的咖啡店坐下休息，再开始购物','候车有余量才拍市站站台，不为巡礼错过接续','有空位优先','午饭用时长就减少拍照',
+ '默认进天守，成人¥410','17:00停止入场、17:30闭门','坐下约20分钟，其余时间步行回三宫','从三宫去餐厅、准备入店，不再补逛店','回店只留行李收尾',
+ '从展望层到稻荷街面预留约25—35分钟','门到近铁奈良约70分钟，含步行与候车','含候车、出站与步行到咖啡店，预留约90分钟','含候车约1小时45分钟，衔接差时晚到加太',
+ '门到神社预留约75分钟','含到站、候车、换乘及回酒店步行，预留75—90分钟','60分钟为预算，余量不足少挑周边','约11:10从南大门向内参观，大佛殿内部保留约30—40分钟',
+ '冬季17:00闭门','先领台纸、完成收费区章点再出场','一段公园草地与公共步道，不喂鹿','官方建议庭园、御桥与天守往返至少90分钟','25分钟含河岸短拍与前往京阪站','营业16:00—23:00，末单22:30','取号与用餐75分钟为预算，不保证等位','11:00左右判断不能11:45前吃完则放弃堂食','09:30离店，到店前含酒店到站、候车与步行',
  '天气、路况与体力合适才登山','往返与停留预留75分钟，白天完成','京都塔叠印与12/1宇治GPS数字集章是不同活动','先完成收费区章点再出场是减少折返的安排',
  '南海难波到近铁大阪难波需步行，含进站候车','二月堂、浮见堂只能替换本段，不叠加','沿城内道路上坡与台阶约20分钟，按体力选路线','多看会顺延回店，不压缩下坡与返程步行',
  '大风雨或疲劳取消，不挤晚饭','中公園站步行约8分钟，不安排全程步行跨桥','当前120分钟软饮和牛约5000/人，预算上限6000','含结账及75—90分钟返程','保留午餐、咖啡、休息与外观巡礼','Animate先，骏河屋后，含移动和结账','酒店官方的约 5 分钟步行不包含站台到出口','含候车、换乘、拖箱步行与入住，抵店随交通调整',
@@ -1523,13 +1530,13 @@ const DROP_SENTENCES=new Set([
 ]);
 // Whole detail panels that only repeat the airport routine already covered by 怎么走 and 关键时间.
 const DROP_DETAILS=new Set(['flight_out','airport_checkin']);
-const keepSentence=s=>{const x=s.trim(),key=x.replace(/[。；]$/,'');return x&&!DROP_SENTENCES.has(key)&&!DROP_COPY.some(r=>r.test(x));};
+const keepSentence=s=>{const x=s.trim(),key=x.replace(/[。；，]+$/,'');return x&&!DROP_SENTENCES.has(key)&&!DROP_COPY.some(r=>r.test(x));};
 // Times are reference windows and re-checking is a preparation task, so field copy drops the repeated
 // "参考" before times and the "临行复核" clauses. cleanHTML does the same inside markup, text nodes only.
 const BOOKING_STATUS=/（待订位）|[，、；]?(尚)?未订位(?=[。；，]|$)|[，、；]?未购票(?=[。；，]|$)|[，、；]?购票待确认/g;
-const cleanText=t=>String(t??'').replace(BOOKING_STATUS,'').replace(/为待订位目标/g,'为目标').replace(/参考(?=\d|套餐|24小时)/g,'').replace(/[^，；。<>]*临行(复核|确认|再查|查询|按)[^，；。<>]*/g,'')
+const cleanText=t=>TEXT_SHORT.reduce((s,[from,to])=>s.replace(from,to),String(t??'')).replace(BOOKING_STATUS,'').replace(/为待订位目标/g,'为目标').replace(/参考(?=\d|套餐|24小时)/g,'').replace(/[^，；。<>]*临行(复核|确认|再查|查询|按)[^，；。<>]*/g,'')
  .split(/(?<=[。；])/).filter(keepSentence).join('')
- .replace(/([，；])[，；]+/g,'$1').replace(/[，；]+。/g,'。').replace(/。[，；]+/g,'。').replace(/^[，；\s]+/,'').replace(/[，；\s]+$/,'');
+ .replace(/([，；])[，；]+/g,'$1').replace(/[，；]+。/g,'。').replace(/。[，；]+/g,'。').replace(/^[，；\s]+/,'').replace(/[，；\s]+$/,'').replace(/^[。；，、\s]+$/,'');
 const cleanHTML=html=>String(html).replace(/>([^<]+)</g,(_,t)=>'>'+cleanText(t)+'<');
 
 /* ---------- Clock ---------- */
@@ -1627,7 +1634,8 @@ function transportNotes(d,ev){
  const notes=(TRANSPORT_AT_EVENT[ev.id]||[]).map(i=>DETAILS[d.date].transport[i]).filter(Boolean);
  // The walking order Animate → 骏河屋 only holds for the default pair.
  if(ev.id==='anime_shopping'&&selectedShops(choice(d)).join()==='animate,surugaya')notes.push(DETAILS[d.date].transport[2]);
- return notes.map(n=>cleanText(TRANSPORT_SHORT.reduce((s,[from,to])=>s.replace(from,to),n))).filter(Boolean);
+ // A note whose tail was trimmed still ends as a sentence.
+ return notes.map(n=>cleanText(TRANSPORT_SHORT.reduce((s,[from,to])=>s.replace(from,to),n))).filter(Boolean).map(n=>/[。！？）」]$/.test(n)?n:n+'。');
 }
 // The mistakes that cost a train: shown in bold wherever the note appears.
 const TRANSIT_CAUTION=/(不要在京阪宇治站乘车|勿上大阪线往伊势|不要误进JR闸机|不去JR难波|认中央口／京都塔侧|认「関西空港」方向|部分地图道路不能入寺)/g;
@@ -1657,6 +1665,7 @@ function alreadySaid(sentence,pool){const a=bigrams(sentence);if(a.size<4){const
 function dropSaid(text,pool){return String(text).split(/(?<=[。；])/).filter(s=>s.trim()&&!alreadySaid(s,pool)).join('').replace(/；$/,'。');}
 
 function dayFallbacks(d){const c=choice(d);return d.fallback_rules.flatMap(t=>{
+ if(/^(法善寺横丁或心斋桥南段只能替换|不追加道顿堀)/.test(t))return [];
  if(d.date==='2026-12-02'){
   if(t.includes('高台寺'))return [];
   if(t.includes('八坂神社'))return c.kodaijiPlan==='night'&&c.yasakaBrief?[t]:c.kodaijiPlan==='night'?['排队导致延误则省八坂神社。']:[];
@@ -1667,7 +1676,7 @@ function dayFallbacks(d){const c=choice(d);return d.fallback_rules.flatMap(t=>{
 function dayNotes(d){const c=choice(d);const extra=(DETAILS[d.date].extra||[]).filter(t=>{
  // Ticket prices and the Amex evening are stated on the activity itself.
  // The 集章 notice and the 三宫 snack note are already covered on the activity or no longer fit the day.
- if(/^(京都塔门票|大佛殿成人|和歌山城天守成人|法善寺横丁或心斋桥筋南段|集章需手机联网定位|三宫小吃)/.test(t))return false;
+ if(/^(京都塔门票|大佛殿成人|和歌山城天守成人|法善寺横丁或心斋桥筋南段|集章需手机联网定位|三宫小吃|后期数字章三点|商店街巡礼看西入口)/.test(t))return false;
  return !(d.date==='2026-12-02'&&t.startsWith('本次只安排'));
 });return [...dayFallbacks(d),...extra];}
 const fieldNotes=d=>dayNotes(d).map(t=>cleanText(compactFallback(t))).filter(Boolean);

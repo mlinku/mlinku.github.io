@@ -6,8 +6,8 @@
    never text); red = deadline or danger, always with an icon or word; amber = caution. Text ≥ 4.5:1 and control
    outlines ≥ 3:1 in both themes; touch targets ≥ 44px. Night (夜の穂織) only swaps the variables; shares
    data-user-color-scheme with the blog. */
-@font-face {font-family:'Trip Serif'; src:url("bbe013e4de1f25dd.woff") format('woff'); font-weight:400 799; font-display:swap}
-@font-face {font-family:'Trip Serif'; src:url("dc9485cab26637c2.woff") format('woff'); font-weight:800 900; font-display:swap}
+@font-face {font-family:'Trip Serif'; src:url("cc3764d10471de25.woff") format('woff'); font-weight:400 799; font-display:swap}
+@font-face {font-family:'Trip Serif'; src:url("ae60b411ff415562.woff") format('woff'); font-weight:800 900; font-display:swap}
 :root {
   --paper: #f2f2e1; --card: #fffef4; --sunk: #ecefd8;
   --ink: #22271b; --ink-2: #464d39; --muted: #5c634e;
