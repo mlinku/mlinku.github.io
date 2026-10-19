@@ -37,7 +37,7 @@ function checkButton(date,ev,big=false){
  const mark=done?`<span class="done-face${fresh}" aria-hidden="true"></span>`:icon('check');
  return `<button type="button" class="check${big?' check-big':''}${done?' on':''}" data-action="check" data-date="${date}" data-event="${e(ev.id)}" aria-pressed="${done}" aria-label="${done?'已完成，点按撤销':'标记完成'}：${e(ev.title)}">${mark}${big?`<span>${done?'已完成':'完成'}</span>`:''}</button>`;
 }
-const navButton=(stop,big=false)=>`<a class="nav${big?' nav-big':''}" href="${e(stop.url)}" target="_blank" rel="noopener noreferrer" aria-label="导航到${e(stop.name)}">${icon('pin')}${big?`<span>导航 · ${e(stop.name)}</span>`:''}</a>`;
+const navButton=(stop,big=false)=>`<a class="nav${big?' nav-big':''}" href="${e(stop.url)}" target="_blank" rel="noopener noreferrer" aria-label="导航到${e(stop.name)}">${icon('pin')}${big?`<span class="nav-text"><b>导航</b><small>${e(stop.name)}</small></span>`:''}</a>`;
 const openButton=(date,key,inner,cls)=>`<button type="button" class="${cls}" data-action="open" data-date="${date}" data-key="${e(key)}">${inner}</button>`;
 // Line names read like station signage; every company gets the same badge (no guessed brand colours).
 const LINE_NAMES=/(大阪环状线|环状线|JR|京阪|近铁|近鉄|阪急|南海|地铁|地下鉄|Port Liner|梦咲线|ゆめ咲線|HARUKA|Rapi:t|APM)/g;

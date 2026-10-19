@@ -163,7 +163,7 @@ assert.equal(JSON.stringify(PLAN),locked,'出行版不改变原始行程');
 const KEY='kansai-autumn-notebook-v1',oldRecord={schemaVersion:3,
  checks:{'2026-12-05:nara_visit':'done','2026-12-05:nara_lunch':'done','2026-12-05:castle_visit':'done','2026-12-04:usj_core':'done','2026-12-03:kyoto_lunch':'done',
   '2026-12-06:sannomiya_shopping':'done','2026-12-06:ikuta_visit':'done','2026-12-05:glico_photo':'done','2026-12-05:shot:conan-ebisubashi':true,'2026-12-01:shot:eupho_bench':true},
- todos:{'usj-app':true,weather:true,'kobe-dinner-20261003':true,'kyoto-tower-20261003':true,1:true},choices:{'2026-12-05':{shop1:'potato',shop2:'none',spaworldEvening:true},'2026-12-04':{usjExtra:true}}};
+ todos:{'usj-app':true,weather:true,'kobe-dinner-20261003':true,'kyoto-tower-20261003':true,2:true},choices:{'2026-12-05':{shop1:'potato',shop2:'none',spaworldEvening:true},'2026-12-04':{usjExtra:true}}};
 function boot(record,failBackup=false){
  const kept={[KEY]:JSON.stringify(record)};
  const storage={getItem:k=>kept[k]??null,setItem:(k,v)=>{if(failBackup&&k!==KEY)throw Error('quota');kept[k]=String(v);},removeItem:k=>{delete kept[k];}};
@@ -176,7 +176,7 @@ const migrated=boot(oldRecord);
 assert.equal(migrated.kept[KEY+'-before-final-plan-2026-10-19'],JSON.stringify(oldRecord),'迁移前完整备份');
 assert.deepEqual(Object.keys(migrated.state.checks).sort(),['2026-12-01:shot:eupho_bench','2026-12-03:glico_photo','2026-12-03:shot:conan-ebisubashi','2026-12-04:nara_visit','2026-12-06:ikuta_visit'],'仅同语义记录迁到新日期');
 assert.equal(migrated.state.planRevision,PLAN.revision);
-assert.deepEqual(Object.keys(migrated.state.todos).sort(),['kyoto-tower-20261003','weather'],'USJ与旧和牛待办不串到新任务');
+assert.deepEqual(Object.keys(migrated.state.todos).sort(),['kyoto-tower-20261003','restaurants','weather'],'USJ与旧和牛待办不串到新任务，按位置的旧待办迁到对应ID');
 assert.equal(migrated.shops,'potato','12/4沿用原12/5选店');
 assert.deepEqual(Object.keys(migrated.state.choices),['2026-12-04'],'旧泡汤与USJ选项不保留');
 assert.equal(JSON.stringify(boot(migrated.state).state),JSON.stringify(migrated.state),'迁移只做一次');

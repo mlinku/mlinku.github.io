@@ -144,8 +144,8 @@ function setCheck(date,id,checked){const d=PLAN.days.find(x=>x.date===date);if(!
 const HARD_STOPS={
  '2026-11-30':[['10:25','香港T2停止值机','flight_out','close'],['11:05','登机口关闭（香港时间）','flight_out','close']],
  '2026-12-01':[['11:00','芭菲：判断能否11:45前吃完','uji_parfait','decide'],['14:40','未到大吉山登山口就取消登山','daikichi_visit','decide']],
- '2026-12-02':[['17:45','高台寺仍未入场：直接去吃晚饭','kodaiji_night','decide'],['20:00','おめん最后点餐','gion_dinner','close'],['21:30','高台寺停止入场','kodaiji_night','close']],
- '2026-12-04':[['17:00','大佛殿闭门','nara_visit','close'],['20:00','Animate关门','anime_shopping','close']],
+ '2026-12-02':[['17:45','仍未入场就改去吃晚饭','kodaiji_night','decide'],['20:00','おめん最后点餐','gion_dinner','close']],
+ '2026-12-04':[['20:00','Animate关门','anime_shopping','close']],
  '2026-12-05':[['14:40','加太站进站候车','kada_station_return','decide'],['16:45','庭园停止入园','wakayama_garden_visit','close'],['17:00','天守停止入场','wakayama_tower_visit','close'],['17:30','天守闭门','wakayama_tower_visit','close']],
  '2026-12-06':[['14:20','元町停止购物','motomachi_cd_shopping','decide'],['15:00','出发去神户大桥','kobe_bridge_visit','decide']],
  '2026-12-07':[['09:10','关西T1值机截止','airport_checkin','close']]

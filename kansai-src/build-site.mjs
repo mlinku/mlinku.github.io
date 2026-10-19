@@ -11,6 +11,8 @@ const json=value=>JSON.stringify(value).replace(/</g,'\\u003c');
 
 // Both deliveries use one renderer. Offline embeds media; the blog publishes cached assets.
 // themeColor tints the phone's status bar: one colour, or [light, dark].
+// Phone-sized offline copies, reused between builds; never inside the repository.
+const OFFLINE_CACHE=path.join(os.tmpdir(),'kansai-offline-media');
 export function buildSite({sourceDir,dataDir,outputDir,offline=false,styleFiles=STYLE_FILES,scriptFiles=SCRIPT_FILES,themeColor=['#f2f2e1','#0f150f']}){
  const read=name=>fs.readFileSync(path.join(sourceDir,name),'utf8').replace(/^\uFEFF/,'');
  const plan=JSON.parse(fs.readFileSync(path.join(dataDir,'关西行程_可视化数据.json'),'utf8').replace(/^\uFEFF/,''));
@@ -28,6 +30,11 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false,styleFiles=
   if(published.has(source))return published.get(source);
   const bytes=fs.readFileSync(source),ext=path.extname(source).toLowerCase();
   const mime=ext==='.png'?'image/png':ext==='.webp'?'image/webp':ext==='.woff'?'font/woff':'image/jpeg';
+  if(offline&&preview){
+   const hash=crypto.createHash('sha256').update(bytes).digest('hex').slice(0,16),result={};
+   jobs.push({input:source,output:path.join(OFFLINE_CACHE,hash+'-1000q72.webp'),result,size:1000,quality:72,offline:true});
+   published.set(source,result);return result;
+  }
   if(offline){const result={src:`data:${mime};base64,${bytes.toString('base64')}`};published.set(source,result);return result;}
   const hash=crypto.createHash('sha256').update(bytes).digest('hex').slice(0,16);
   const name=hash+ext,full=path.join(assetDir,name);used.add(name);
@@ -46,13 +53,17 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false,styleFiles=
  if(jobs.length){
   const temp=path.join(os.tmpdir(),'kansai-media-'+crypto.randomUUID()+'.json');
   try{
-   fs.writeFileSync(temp,JSON.stringify(jobs.map(({input,output})=>({input,output}))));
+   fs.mkdirSync(OFFLINE_CACHE,{recursive:true});
+   fs.writeFileSync(temp,JSON.stringify(jobs.map(({input,output,size,quality})=>({input,output,size,quality}))));
    const bundled=path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/python',process.platform==='win32'?'python.exe':'bin/python3');
    const python=process.env.KANSAI_PYTHON||(fs.existsSync(bundled)?bundled:'python');
    const result=spawnSync(python,[path.join(sourceDir,'prepare-media.py'),temp],{encoding:'utf8'});
    if(result.error||result.status!==0)throw Error('Preview generation failed: '+(result.error?.message||result.stderr));
    const sizes=JSON.parse(fs.readFileSync(temp,'utf8'));
-   jobs.forEach((job,i)=>{job.result.thumbnailWidth=sizes[i].width;job.result.thumbnailHeight=sizes[i].height;});
+   jobs.forEach((job,i)=>{
+    if(job.offline){const file=sizes[i].output;job.result.src=`data:${({'.webp':'image/webp','.png':'image/png'})[path.extname(file).toLowerCase()]||'image/jpeg'};base64,${fs.readFileSync(file).toString('base64')}`;return;}
+    job.result.thumbnailWidth=sizes[i].width;job.result.thumbnailHeight=sizes[i].height;
+   });
    for(const img of Object.values(photos))Object.assign(img,media(img.local,true));
    for(const p of illustratedPoints)for(const kind of ['real','anime','comparison'])if(p[kind]?.local)Object.assign(p[kind],media(p[kind].local,true));
   }finally{if(fs.existsSync(temp))fs.unlinkSync(temp);}

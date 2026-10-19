@@ -1,6 +1,8 @@
 /* Shared presentation keeps selected plans consistent across overview and daily views. */
+// The ticket photo's subtitle: at most three stops.
+const DAY_EYEBROW={'2026-12-02':'出町 → 清水寺 → 高台寺','2026-12-05':'加太 → 淡嶋神社 → 和歌山城','2026-12-06':'北野 → 元町 → 神户大桥'};
 function dayPresentation(d){
- const info={...DETAILS[d.date]},c=choice(d);
+ const info={...DETAILS[d.date],...(DAY_EYEBROW[d.date]?{eyebrow:DAY_EYEBROW[d.date]}:{})},c=choice(d);
  if(d.date==='2026-12-02'&&c.kodaijiPlan==='skip'){
   info.short='京都';info.focus='《玉子市场》巡礼与清水寺赏枫。';
   info.summary='出町、清水寺、东山散步';info.cover='kiyomizu';info.eyebrow='京都 · 出町 → 清水寺 → 东山';

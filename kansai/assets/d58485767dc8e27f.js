@@ -1225,7 +1225,7 @@ function migrateFinalPlan(){
  if(nippombashi?.shop1)Object.assign(nara,{shop1:nippombashi.shop1,shop2:nippombashi.shop2||'none'});
  delete choices['2026-12-05'];if(Object.keys(nara).length)choices['2026-12-04']=nara;else delete choices['2026-12-04'];
  const ids=new Set([...PLAN.pending_checks,...(PLAN.additional_checks||[])].map(t=>t.id)),todos={};
- for(const [key,value] of Object.entries(state.todos)){const id=/^d+$/.test(key)?LEGACY_TODO_IDS[key]:key;if(id&&ids.has(id)&&!Object.hasOwn(todos,id))todos[id]=value;}
+ for(const [key,value] of Object.entries(state.todos)){const id=/^\d+$/.test(key)?LEGACY_TODO_IDS[key]:key;if(id&&ids.has(id)&&!Object.hasOwn(todos,id))todos[id]=value;}
  // If the backup cannot be written, this throws first and the record stays exactly as it was.
  if(Object.keys(state.checks).length+Object.keys(state.todos).length+Object.keys(state.choices).length){
   let key=STORAGE_KEY+'-before-final-plan-2026-10-19';
@@ -1273,22 +1273,26 @@ async function copyText(value){
 }
 function selectedShops(c){return[c.shop1,c.shop2].filter(x=>x&&x!=='none');}
 // Titles name the activity; routes, restaurant details and planning notes retain the specifics.
+// Transfers read start → end; the stations between are in the sheet.
 const EVENT_TITLES={
+ arrival_transfer:'入境 → HARUKA去京都',dinner_arrival:'晚餐 · 京都站附近',
+ uji_transfer:'京都 → 中村藤吉',agata_stamp:'縣神社 · 集章',suikan_stamp:'水管桥河岸',keihan_uji_visit:'京阪宇治站 · 立牌',station_stage:'京都站《宝岛》舞台',
  byodoin_visit:'平等院 · 庭园与凤翔馆',uji_pilgrimage:'宇治川巡礼',
- demachi_transfer:'前往出町',demachi_lunch:'午餐 · 出町',delta_visit:'鸭川三角洲',
+ demachi_transfer:'前往出町',demachi_visit:'出町桝形商店街',demachi_lunch:'午餐 · 出町',delta_visit:'鸭川三角洲',
  kiyomizu_transfer:'前往清水寺',kiyomizu_visit:'清水寺赏枫',higashiyama_walk:'东山散步',
- inari_transfer:'京都站 → JR稻荷',
- inari_visit:'伏见稻荷 · 千本鸟居',osaka_transfer:'前往大阪酒店',
- nara_transfer:'新今宫 → 难波 → 近铁奈良',nara_lunch:'午餐 · 奈良公园附近',nara_return_train:'近铁奈良 → 日本桥',
- dotonbori_transfer:'新今宫 → 难波 → 戎桥',glico_photo:'戎桥 · 格力高',kyoto_tower_visit:'京都塔 · 京吹联动集章',
- nara_park_scenery:'奈良公园散步',nara_station_walk:'回近铁奈良站',
- kada_pilgrimage:'加太镇巡礼',kada_lunch:'午餐 · 加太港附近',wakayama_garden_visit:'红叶溪庭园',wakayama_tower_ascent:'上坡到天守',
- wakayama_tower_visit:'和歌山城天守',wakayama_tower_descent:'下坡离开天守',kada_day_dinner:'晚餐 · 酒店附近',
- sannomiya_dinner:'晚餐 · ふうふう亭和牛自助',last_evening_return:'返回大阪酒店',
- kada_transfer:'新今宫 → 和歌山市 → 加太',wakayamashi_return:'加太线 → 和歌山市',kada_day_return:'南海 → 新今宫，返店',
+ kyoto_tower_visit:'京都塔 · 京吹集章',inari_transfer:'京都站 → JR稻荷',kyoto_lunch:'午餐 · 稻荷参道',
+ inari_visit:'伏见稻荷 · 千本鸟居',osaka_transfer:'前往大阪酒店',osaka_checkin_rest:'酒店休息',
+ dotonbori_transfer:'新今宫 → 戎桥',glico_photo:'戎桥 · 格力高',dotonbori_walk:'道顿堀河边',
+ nara_transfer:'新今宫 → 近铁奈良',nara_park_walk:'步行到南大门',nara_visit:'东大寺大佛殿',nara_lunch:'午餐 · 奈良公园附近',
+ nara_park_scenery:'奈良公园散步',nara_station_walk:'回近铁奈良站',nara_return_train:'近铁奈良 → 日本桥',nippombashi_cafe:'咖啡休息',
+ kada_transfer:'新今宫 → 加太',kada_pilgrimage:'加太镇巡礼',kada_lunch:'午餐 · 加太港附近',awashima_visit:'淡嶋神社与海边',
+ kada_station_return:'回加太站',wakayamashi_return:'加太 → 和歌山市',wakayama_castle_transfer:'和歌山市站 → 红叶溪庭园',
+ wakayama_garden_visit:'红叶溪庭园',wakayama_tower_ascent:'上坡到天守',wakayama_tower_visit:'和歌山城天守',wakayama_tower_descent:'下坡离开天守',
+ wakayama_station_return:'回和歌山市站',kada_day_return:'和歌山市 → 酒店',kada_day_dinner:'晚餐 · 酒店附近',
+ kobe_transfer:'前往生田神社',ikuta_visit:'生田神社巡礼',kitano_lunch:'北野星巴克 · 午餐',
  anime_shopping:'日本桥 · 动漫购物',motomachi_cd_shopping:'元町 · 两家CD店',sannomiya_rest:'坐下休息，回三宫',kobe_bridge_visit:'神户大桥巡礼',
- kobe_transfer:'前往生田神社',ikuta_visit:'生田神社巡礼',
- airport_checkin:'T1值机、托运与出境'
+ sannomiya_evening:'去餐厅',sannomiya_dinner:'晚餐 · ふうふう亭和牛',last_evening_return:'返回大阪酒店',
+ checkout_osaka:'退房，去南海新今宫',airport_train:'新今宫 → 关西机场',airport_checkin:'T1值机、托运与出境'
 };
 function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...x,title:EVENT_TITLES[x.id]||x.title,place_ids:[...x.place_ids]}));const by=id=>events.find(x=>x.id===id);
  for(const ev of events.filter(ev=>ev.category==='flight')){
@@ -1334,7 +1338,7 @@ function compactTime(value){
   '意向17:00—19:00':'17:00–19:00',
   '19:00后至约20:20—20:45':'19:00后 · 20:20–20:45到店'
  };
- return String(windows[value]||value).replace(/^目标|^争取/,'').replace(/到店$/,'抵达').replace(/左右$/,'').replace(/^当前候选/,'').replace(/^候选(?=d)/,'候选 ').replace('，临行复核',' · 待复核').replace('到店后 · 不等到19:00','到店后').replace(/s*[—–]s*/g,' – ');
+ return String(windows[value]||value).replace(/^目标|^争取/,'').replace(/到店$/,'抵达').replace(/左右$/,'').replace(/^当前候选/,'').replace(/^候选(?=\d)/,'候选 ').replace(/约(?=\d)/g,'').replace('，临行复核',' · 待复核').replace('到店后 · 不等到19:00','到店后').replace(/(\d{1,2}:\d{2})\s*[—–]\s*(?=\d{1,2}:\d{2})/g,'$1 – ').replace(/(\d)—(?=\d)/g,'$1–');
 }
 function effectiveRoute(d){const c=choice(d);let nodes=d.route_stop_ids.map((id,i)=>({id,phase:DETAILS[d.date].routePhases[i],original:i+1,optional:false}));
  if(d.date==='2026-12-02'){if(c.kodaijiPlan==='skip')nodes=nodes.filter(n=>n.id!=='kodaiji');else if(c.yasakaBrief)nodes.splice(nodes.length-1,0,{id:'yasaka_shrine',phase:'夜间',optional:true});}
@@ -1356,8 +1360,10 @@ if(document.modelContext?.registerTool){
 }
 
 /* Shared presentation keeps selected plans consistent across overview and daily views. */
+// The ticket photo's subtitle: at most three stops.
+const DAY_EYEBROW={'2026-12-02':'出町 → 清水寺 → 高台寺','2026-12-05':'加太 → 淡嶋神社 → 和歌山城','2026-12-06':'北野 → 元町 → 神户大桥'};
 function dayPresentation(d){
- const info={...DETAILS[d.date]},c=choice(d);
+ const info={...DETAILS[d.date],...(DAY_EYEBROW[d.date]?{eyebrow:DAY_EYEBROW[d.date]}:{})},c=choice(d);
  if(d.date==='2026-12-02'&&c.kodaijiPlan==='skip'){
   info.short='京都';info.focus='《玉子市场》巡礼与清水寺赏枫。';
   info.summary='出町、清水寺、东山散步';info.cover='kiyomizu';info.eyebrow='京都 · 出町 → 清水寺 → 东山';
@@ -1581,8 +1587,8 @@ function setCheck(date,id,checked){const d=PLAN.days.find(x=>x.date===date);if(!
 const HARD_STOPS={
  '2026-11-30':[['10:25','香港T2停止值机','flight_out','close'],['11:05','登机口关闭（香港时间）','flight_out','close']],
  '2026-12-01':[['11:00','芭菲：判断能否11:45前吃完','uji_parfait','decide'],['14:40','未到大吉山登山口就取消登山','daikichi_visit','decide']],
- '2026-12-02':[['17:45','高台寺仍未入场：直接去吃晚饭','kodaiji_night','decide'],['20:00','おめん最后点餐','gion_dinner','close'],['21:30','高台寺停止入场','kodaiji_night','close']],
- '2026-12-04':[['17:00','大佛殿闭门','nara_visit','close'],['20:00','Animate关门','anime_shopping','close']],
+ '2026-12-02':[['17:45','仍未入场就改去吃晚饭','kodaiji_night','decide'],['20:00','おめん最后点餐','gion_dinner','close']],
+ '2026-12-04':[['20:00','Animate关门','anime_shopping','close']],
  '2026-12-05':[['14:40','加太站进站候车','kada_station_return','decide'],['16:45','庭园停止入园','wakayama_garden_visit','close'],['17:00','天守停止入场','wakayama_tower_visit','close'],['17:30','天守闭门','wakayama_tower_visit','close']],
  '2026-12-06':[['14:20','元町停止购物','motomachi_cd_shopping','decide'],['15:00','出发去神户大桥','kobe_bridge_visit','decide']],
  '2026-12-07':[['09:10','关西T1值机截止','airport_checkin','close']]
@@ -1920,7 +1926,7 @@ function checkButton(date,ev,big=false){
  const mark=done?`<span class="done-face${fresh}" aria-hidden="true"></span>`:icon('check');
  return `<button type="button" class="check${big?' check-big':''}${done?' on':''}" data-action="check" data-date="${date}" data-event="${e(ev.id)}" aria-pressed="${done}" aria-label="${done?'已完成，点按撤销':'标记完成'}：${e(ev.title)}">${mark}${big?`<span>${done?'已完成':'完成'}</span>`:''}</button>`;
 }
-const navButton=(stop,big=false)=>`<a class="nav${big?' nav-big':''}" href="${e(stop.url)}" target="_blank" rel="noopener noreferrer" aria-label="导航到${e(stop.name)}">${icon('pin')}${big?`<span>导航 · ${e(stop.name)}</span>`:''}</a>`;
+const navButton=(stop,big=false)=>`<a class="nav${big?' nav-big':''}" href="${e(stop.url)}" target="_blank" rel="noopener noreferrer" aria-label="导航到${e(stop.name)}">${icon('pin')}${big?`<span class="nav-text"><b>导航</b><small>${e(stop.name)}</small></span>`:''}</a>`;
 const openButton=(date,key,inner,cls)=>`<button type="button" class="${cls}" data-action="open" data-date="${date}" data-key="${e(key)}">${inner}</button>`;
 // Line names read like station signage; every company gets the same badge (no guessed brand colours).
 const LINE_NAMES=/(大阪环状线|环状线|JR|京阪|近铁|近鉄|阪急|南海|地铁|地下鉄|Port Liner|梦咲线|ゆめ咲線|HARUKA|Rapi:t|APM)/g;
