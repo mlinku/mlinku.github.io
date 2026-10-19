@@ -153,7 +153,8 @@ const checked=run(`
  assert.ok(dayScreen().includes('id="row-uji_transfer"')&&/class="row minor done" id="row-uji_transfer"/.test(dayScreen()),'已过的交通行变淡');
  setCheck(uji.date,'uji_parfait',false);
  ui.day=5;assert.ok(/row-time fixed">14:59/.test(dayScreen()),'现行候选列车保留粗体时刻');
- assert.ok(PLAN.days.every((d,i)=>{ui.day=i;return !/day-key">d{1,2}:d{2}出门/.test(dayScreen());}),'车票已有离店时间，标题不重复');
+ assert.ok(TODO_IDS.every(id=>TODO_SHORT[id]),'每条待办都有一行标题');
+ ui.tab='prep';assert.ok(text(prepScreen()).includes(TODOS[0]),'待办全文仍可展开');
  ({sheets,screens:screens.length,days:PLAN.days.length});
 `);
 assert.equal(JSON.stringify(PLAN),locked,'出行版不改变原始行程');

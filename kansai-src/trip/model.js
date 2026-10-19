@@ -360,9 +360,15 @@ const TODOS=TODO_LIST.map(t=>t.text),TODO_IDS=TODO_LIST.map(t=>t.id);
 const TODO_WHEN=Object.fromEntries(TODO_LIST.filter(t=>t.when).map(t=>[t.id,t.when]));
 const TODO_WHEN_LABEL={'2026-11-30':'抵达当晚','2026-12-02':'12/2 当天下午','2026-12-03':'12/3 晚上 · 奈良前一晚','2026-12-04':'12/4 晚上 · 加太前一晚','2026-12-05':'12/5 晚上 · 神户前一晚','2026-12-06':'12/6 晚上 · 回程前一晚'};
 const TODO_PREFIX=/^12\/\d+(前夜|前|晚)?/;
+const TODO_SHORT={'weather':'查叶况与天气','restaurants':'核对餐厅营业与菜单','return-travel':'核对航班通知与回程南海时刻',
+ 'transport-tickets':'备好IC卡与HARUKA订单','uji-cafes':'确认宇治店铺营业与候位','rally-account':'登录集章账户、开定位',
+ 'kodaiji-weather':'查高台寺天气与排队','nara-cash-20261019':'备大佛殿现金，查日本桥临休','kada-wakayama-20261019':'查南海列车与景点临时关闭',
+ 'kobe-1205-20261019':'收好行李，查CD店临休与和牛订位','packing':'整理行李、证件和次晨早餐'};
+// The traps on a transfer, for the 现在 card: the rest of the route is under 全部详情.
+const transitCautions=notes=>notes.flatMap(n=>n.split(/(?<=[。；])/)).filter(s=>new RegExp(TRANSIT_CAUTION.source).test(s)).map(s=>s.replace(/[；。]$/,''));
 const todoDone=()=>TODOS.filter((_,i)=>state.todos[TODO_IDS[i]]).length;
 function todoGroups(){
- const all=TODOS.map((text,i)=>({id:TODO_IDS[i],text,when:TODO_WHEN[TODO_IDS[i]]||'',done:!!state.todos[TODO_IDS[i]]}));
+ const all=TODOS.map((text,i)=>({id:TODO_IDS[i],text,short:TODO_SHORT[TODO_IDS[i]]||'',when:TODO_WHEN[TODO_IDS[i]]||'',done:!!state.todos[TODO_IDS[i]]}));
  const trip=all.filter(t=>t.when).sort((a,b)=>a.when.localeCompare(b.when)).map(t=>({...t,text:t.text.replace(TODO_PREFIX,'')}));
  return {before:all.filter(t=>!t.when),trip:[...new Set(trip.map(t=>t.when))].map(when=>({when,label:TODO_WHEN_LABEL[when]||dateLabel(when),items:trip.filter(t=>t.when===when)}))};
 }
@@ -371,4 +377,4 @@ const PURCHASE_LABEL={not_purchased:['未购买','danger'],not_reserved:['尚未
 // A ticket the traveller has sorted (bought, reserved, paid) is ticked on 准备 and stored with the todos.
 const PURCHASE_DONE={not_reserved:'已订位',pay_on_site:'已付款'};
 const ticketId=p=>'ticket:'+p.visit_date+':'+p.item;
-const openPurchases=()=>(PLAN.unconfirmed_purchases||[]).map(p=>{const done=!!state.todos[ticketId(p)];return {id:ticketId(p),done,visitDate:p.visit_date,item:p.item+(p.quantity?'\u00a0×'+p.quantity:''),date:dateLabel(p.visit_date),label:done?PURCHASE_DONE[p.status]||'已购票':(PURCHASE_LABEL[p.status]||['待确认'])[0],tone:done?'ok':(PURCHASE_LABEL[p.status]||[,'warn'])[1]};});
+const openPurchases=()=>(PLAN.unconfirmed_purchases||[]).map(p=>{const done=!!state.todos[ticketId(p)];return {id:ticketId(p),done,visitDate:p.visit_date,item:p.item,qty:p.quantity||0,date:dateLabel(p.visit_date),label:done?PURCHASE_DONE[p.status]||'已购票':(PURCHASE_LABEL[p.status]||['待确认'])[0],tone:done?'ok':(PURCHASE_LABEL[p.status]||[,'warn'])[1]};});

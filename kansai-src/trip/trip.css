@@ -99,7 +99,7 @@ img.contain {object-fit:contain !important; background:var(--sunk)}
 .hint.center {text-align:center}
 .lead {font-size:17px; color:var(--ink)}
 p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-wrap:pretty}
-.dl-main small, .hero-over p:last-child, .now-head .muted, .ticket-main b, .phase-title small, .mini-title {word-break:keep-all; overflow-wrap:anywhere}
+.dl-main small, .hero-over p:last-child, .now-head .muted, .now-head .display, .hero-over .display, .ticket-main b, .phase-title small, .mini-title {word-break:keep-all; overflow-wrap:anywhere}
 .hero-over p:last-child, .now-head .muted {text-wrap:balance}
 .note {font-size:15px; color:var(--accent)}
 .ja {font-size:15px; color:var(--ink-2)}
@@ -232,8 +232,18 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .screen-day .block-title::before {background:var(--accent); -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='6' fill='none' stroke='black' stroke-width='3.6'/%3E%3C/svg%3E"); mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='6' fill='none' stroke='black' stroke-width='3.6'/%3E%3C/svg%3E")}
 .screen-shots .block-title::before {width:14px; height:14px; background:var(--gold); -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0C10.6 6.6 13.4 9.4 20 10 13.4 10.6 10.6 13.4 10 20 9.4 13.4 6.6 10.6 0 10 6.6 9.4 9.4 6.6 10 0Z'/%3E%3C/svg%3E"); mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0C10.6 6.6 13.4 9.4 20 10 13.4 10.6 10.6 13.4 10 20 9.4 13.4 6.6 10.6 0 10 6.6 9.4 9.4 6.6 10 0Z'/%3E%3C/svg%3E")}
 .screen-prep .block-title::before {background:var(--accent); -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M2.5 10.5 8 16 17.5 4' fill='none' stroke='black' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M2.5 10.5 8 16 17.5 4' fill='none' stroke='black' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.screen-head .display {white-space:nowrap}
+.kicker .doodle.kicker-mark {display:inline-block; width:22px; height:22px; margin:-6px 4px -5px -2px; vertical-align:middle; color:var(--ink-2)}
 .display .doodle.head-mark {display:inline-block; width:42px; height:42px; margin:-10px 0 -8px 8px; vertical-align:middle; color:var(--ink-2)}
-.tickets-block {position:relative}
+.tickets-block, .sketched, .stay {position:relative}
+.ticket-facts dt .doodle.dt-mark {display:inline-block; width:17px; height:17px; margin:-3px 3px -3px 0; vertical-align:middle; color:var(--ink-2)}
+.murasame-face {display:block; flex:none; border-radius:50%; background:center/cover no-repeat, var(--sunk); box-shadow:0 0 0 2px var(--card), 0 0 0 3.5px var(--moegi), 0 4px 10px -3px var(--press)}
+.murasame-face.shock {background-image:url(@src/trip/assets/murasame-shock.jpg)}
+.murasame-face.curious {background-image:url(@src/trip/assets/murasame-curious.jpg)}
+.murasame-face.on-card {position:absolute; top:12px; right:14px; width:46px; height:46px; transform:rotate(6deg)}
+.sheet-head .murasame-face.in-sheet {width:42px; height:42px; margin-right:12px}
+.banner {display:flex; align-items:center; gap:10px}
+.banner .murasame-face.in-banner {width:34px; height:34px}
 .corner-sketch {position:absolute; top:-14px; right:12px; transform:rotate(8deg)}
 .corner-sketch .doodle {width:54px; height:54px; color:var(--ink-2)}
 .block-title small {font:600 13px var(--sans); color:var(--muted); letter-spacing:0; margin-left:auto}
@@ -541,8 +551,8 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .ticket-main {display:block}
 .ticket-main b {display:block; font:700 16px var(--serif)}
 .ticket-main small {display:block; color:var(--muted); font-size:13.5px}
-.ticket-state {flex:none; min-width:68px; padding-left:14px; white-space:nowrap; border-left:2px dashed var(--line-2); font-weight:800; font-size:14px; text-align:center}
-.tickets li::before, .tickets li::after {content:''; position:absolute; right:89px; width:14px; height:14px; border-radius:50%; background:var(--card)}
+.ticket-state {flex:none; width:84px; padding-left:12px; white-space:nowrap; border-left:2px dashed var(--line-2); font-weight:800; font-size:14px; text-align:center}
+.tickets li::before, .tickets li::after {content:''; position:absolute; right:93px; width:14px; height:14px; border-radius:50%; background:var(--card)}
 .tickets li::before {top:-7px}
 .tickets li::after {bottom:-7px}
 .ticket.danger .ticket-state {color:var(--danger)}

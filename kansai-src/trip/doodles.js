@@ -28,6 +28,15 @@ const DOODLES={
   '<path d="M16 12H48A3 3 0 0 1 51 15V55A3 3 0 0 1 48 58H16A3 3 0 0 1 13 55V15A3 3 0 0 1 16 12Z"/><path d="M24 12V8H40V12"/><path d="M19 24 22 27 27.5 20.5M19 36 22 39 27.5 32.5"/><path class="soft" d="M19.5 45.5H26.5V52.5H19.5Z"/><path class="soft" d="M31 25H45M31 37H45M31 49.5H42"/><path d="M54 32 60.5 25.5 63 28 56.5 34.5 53 35.5Z"/>'},
  ticket:{wash:'<path class="wash shu" d="M9 21H55V29A4 4 0 0 0 55 37V45H9V37A4 4 0 0 0 9 29Z" transform="rotate(-6 32 33)"/>',lines:
   '<g transform="rotate(-6 32 33)"><path d="M8 20H56V29A4 4 0 0 0 56 37V46H8V37A4 4 0 0 0 8 29Z"/><path class="dash" d="M43 21.5V44.5"/><path class="soft" d="M14 28H35M14 33.5H31M14 39H27"/><circle cx="49.5" cy="33" r="3"/></g>'},
+ // Small marks: the sun on 离店, the moon on 返店; an inn for 酒店 and a hanko for the 集章 cards.
+ sun:{wash:'<circle class="wash gold" cx="32" cy="32" r="13"/>',lines:
+  '<circle cx="32" cy="32" r="10"/><path class="soft" d="M32 12V17M32 47V52M12 32H17M47 32H52M18 18 21.5 21.5M42.5 42.5 46 46M46 18 42.5 21.5M21.5 42.5 18 46"/>'},
+ moon:{wash:'<circle class="wash plum" cx="31" cy="33" r="15"/>',lines:
+  '<path d="M38 13A19 19 0 1 0 52 42 15 15 0 1 1 38 13Z"/><path class="soft" d="M14 14V20M11 17H17M50 50h.1M18 50h.1"/>'},
+ inn:{wash:'<rect class="wash moegi" x="12" y="28" width="40" height="26" rx="2"/>',lines:
+  '<path d="M6 29C16 25 24 19 32 12 40 19 48 25 58 29"/><path d="M28.5 14.5 32 10.5 35.5 14.5"/><path d="M12 28V54H52V28"/><path d="M20 34H44V42C42 44.5 40 44.5 38 42 36 44.5 34 44.5 32 42 30 44.5 28 44.5 26 42 24 44.5 22 44.5 20 42Z"/><path class="soft" d="M27 54V47H37V54M26 34V42M32 34V42M38 34V42"/><circle cx="49" cy="37" r="2.6"/><path class="soft" d="M49 31.5V34.4"/><path d="M4 56.5H60"/>'},
+ stamp:{wash:'<circle class="wash shu" cx="30" cy="32" r="16"/>',lines:
+  '<circle cx="30" cy="32" r="15"/><circle class="soft" cx="30" cy="32" r="11.5"/><path d="M24 26H36M30 26V39M24 32.5H36M25.5 39H34.5"/><path class="soft" d="M51 10V16M48 13H54M49 45 55 48M50 51 54.5 55"/>'},
  suitcase:{wash:'<rect class="wash plum" x="16" y="25" width="38" height="28" rx="5"/>',lines:
   '<path d="M14 22H50A4 4 0 0 1 54 26V50A4 4 0 0 1 50 54H14A4 4 0 0 1 10 50V26A4 4 0 0 1 14 22Z"/><path d="M26 22V16H38V22"/><path d="M22 22V54M42 22V54"/><circle cx="18" cy="57" r="2"/><circle cx="46" cy="57" r="2"/><path class="soft" d="M29 33 32 30 35 33 32 41Z"/><path class="dash" d="M47 14C52 10 56 11 60 7"/>'}
 };
