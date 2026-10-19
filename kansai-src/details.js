@@ -1127,8 +1127,6 @@ PLACE_DETAILS["bookoff_kobe"] = "グレースコウベ5F，三宫町2-10-7；当
 PLACE_DETAILS["sannomiya_center"] = "中央街沿街可自行找小吃，さんプラザ及センタープラザB1有餐饮区。";
 PLACE_DETAILS["kobe_bridge"] = "导航到Port Island北公园，从桥南侧拍红色桥梁。中公園站步行约8分钟，不安排全程步行跨桥。";
 
-PLACE_DETAILS.hotel_kyoto = "3晚已订，不含早餐。";
-PLACE_DETAILS.hotel_osaka = "4晚已订，不含早餐。";
 PLACE_DETAILS.heiwa_books = "アル・プラザ宇治東3F，参考10:00—20:00。周边库存与京阿尼展陈以现场为准。";
 PLACE_DETAILS.keihan_obaku = "JR出站后步行换乘京阪；认宇治方向2号站台，乘一站到三室户。叶月贩售机只顺路短看。";
 PLACE_DETAILS.mimurodo = "出站可顺看小绿贩售机；向北步行约10分钟到アル・プラザ宇治東，书店在3F。";

@@ -1128,8 +1128,6 @@ PLACE_DETAILS["bookoff_kobe"] = "グレースコウベ5F，三宫町2-10-7；当
 PLACE_DETAILS["sannomiya_center"] = "中央街沿街可自行找小吃，さんプラザ及センタープラザB1有餐饮区。";
 PLACE_DETAILS["kobe_bridge"] = "导航到Port Island北公园，从桥南侧拍红色桥梁。中公園站步行约8分钟，不安排全程步行跨桥。";
 
-PLACE_DETAILS.hotel_kyoto = "3晚已订，不含早餐。";
-PLACE_DETAILS.hotel_osaka = "4晚已订，不含早餐。";
 PLACE_DETAILS.heiwa_books = "アル・プラザ宇治東3F，参考10:00—20:00。周边库存与京阿尼展陈以现场为准。";
 PLACE_DETAILS.keihan_obaku = "JR出站后步行换乘京阪；认宇治方向2号站台，乘一站到三室户。叶月贩售机只顺路短看。";
 PLACE_DETAILS.mimurodo = "出站可顺看小绿贩售机；向北步行约10分钟到アル・プラザ宇治東，书店在3F。";
@@ -1450,11 +1448,11 @@ function executionNotice(d,ev){
 const EVENT_BRIEF={
  flight_out:'',
  checkin_kyoto:'入住确认12/3退房后的行李寄存位置。',
- dinner_arrival:'酒店附近简餐；到得早且无需久等再选车站餐厅。',
+ dinner_arrival:'酒店附近简餐。',
  uji_parfait:'不接受预约；75分钟含取号与用餐，11:00判断能否11:45前吃完。',
  uji_approach:'沿街拍照，不进收费区。',
- uji_pilgrimage:'约45分钟，久美子椅多留片刻，桥上顺拍。',
- daikichi_visit:'往返加展望台约75分钟。',
+ uji_pilgrimage:'久美子椅多留片刻，桥上顺拍。',
+ daikichi_visit:'',
  suikan_stamp:'河岸拍照，坐下休息约10分钟。',
  heiwa_visit:'商场3F，逛30—40分钟。',
  keihan_uji_visit:'站内看展示约10分钟。',
@@ -1501,6 +1499,15 @@ const TEXT_SHORT=[
  ['优先《玉子》高野川侧，《轻音》仅有余量时拍，不来回补机位。','《轻音》仅有余量时拍。'],
  ['店铺与咖啡10:00—17:30，咖啡末单16:30、受付至16:00；不接受座位预约，拥挤时可能提早截止。','拥挤时可能提早截止。'],
  ['京吹粉丝聚集的餐厅，非动画取景点。','京吹粉丝聚集的餐厅。'],
+ ['，官网标年中无休。','，年中无休。'],
+ ['；标牌、邻屋、道路布局有改编，不声称逐像素一致。','；标牌、邻屋、道路布局有改编。'],
+ ['；动画人物遮挡大，实拍无人物，属于局部场景而非整条街严格同构。','。'],
+ ['；画面有改绘，不到车道上追机位。','；画面有改绘。'],
+ ['；不必走完整座桥。','。'],
+ ['；作品为夏祭场景，与12月现场不同。','；作品为夏祭场景。'],
+ ['按现场单价；',''],
+ ['，官方未规定盖章顺序。','。'],
+ ['导航到Port Island北公园，从桥南侧拍红色桥梁。','从北公园、桥南侧拍红色桥梁。'],
  ['可改在JR宇治站或京都站吃简餐；若回京都后才吃，返店相应顺延，仍保留4F《宝岛》舞台15—20分钟。','JR宇治站或京都站简餐。'],
  ['DELTA满座时，11:40—12:50改为先拍鸭川，再到站旁汉堡店午餐；约13:00乘京阪，不再重复河岸段。','DELTA满座时改这里，先拍鸭川再吃。']
 ];
@@ -1508,8 +1515,8 @@ const compactFallback=t=>FALLBACK_SHORT.reduce((s,[from,to])=>s.replace(from,to)
 // Transport notes that spell out airport routine; the short form keeps every time and the one non-obvious fact.
 const TRANSPORT_SHORT=[
  ['去程建议08:25抵达香港T2；当前10:25停止值机。T2值机、安检和出境后，乘APM前往T1中场客运廊（T1M）登机。','建议08:25到香港T2，10:25停止值机；T2出境后乘APM到T1M登机。'],
- ['关西T1入境、取行李后，按Railway／鉄道指引到车站；按订单兑换或使用已购HARUKA票，依入境进度选班次。','HARUKA已购：按订单兑换，依入境进度选班次。'],
- ['入住时确认 12/3 退房寄存位置；两间酒店均不含早餐。','两间酒店均不含早餐。'],
+ ['关西T1入境、取行李后，按Railway／鉄道指引到车站；按订单兑换或使用已购HARUKA票，依入境进度选班次。','HARUKA按订单兑换，依入境进度选班次。'],
+ ['入住时确认 12/3 退房寄存位置；两间酒店均不含早餐。',''],
  ['抵达机场站后前往T1值机、托运、安检和出境；HX617于09:50日本时间起飞，现行柜台截止09:10，登机时限看登机牌。','HX617 09:50起飞；T1柜台09:10停止值机。']
 ];
 // Reminders a seasoned traveller does not need — airport routine, "以现场为准" disclaimers, verification notes —
@@ -1532,7 +1539,12 @@ const DROP_SENTENCES=new Set([
  '默认进天守，成人¥410','17:00停止入场、17:30闭门','坐下约20分钟，其余时间步行回三宫','从三宫去餐厅、准备入店，不再补逛店','回店只留行李收尾',
  '从展望层到稻荷街面预留约25—35分钟','门到近铁奈良约70分钟，含步行与候车','含候车、出站与步行到咖啡店，预留约90分钟','含候车约1小时45分钟，衔接差时晚到加太',
  '门到神社预留约75分钟','含到站、候车、换乘及回酒店步行，预留75—90分钟','60分钟为预算，余量不足少挑周边','约11:10从南大门向内参观，大佛殿内部保留约30—40分钟',
- '冬季17:00闭门','先领台纸、完成收费区章点再出场','一段公园草地与公共步道，不喂鹿','官方建议庭园、御桥与天守往返至少90分钟','25分钟含河岸短拍与前往京阪站','营业16:00—23:00，末单22:30','取号与用餐75分钟为预算，不保证等位','11:00左右判断不能11:45前吃完则放弃堂食','09:30离店，到店前含酒店到站、候车与步行',
+ '冬季17:00闭门','往返与展望台75分钟','到得早且无需久等时再选京都站餐厅','实景为夜间照片，本次在15:00—16:30时段到访',
+ '12/1不能补前期章','前期9/1—10/31：井川用水機場前（久美子）、宇治桥（奏）、大吉山展望台（丽奈）','单点可领对应角色相框，后期三点完成可领三人集合相框',
+ '参加免费，交通与流量另计','日本境外销售的部分机型可能不受支持','相框可用至2027/1/31','未取得前期3枚印章，仅12月一天不能满足6枚印章的抽奖条件','非地下街','长队时换简餐','等位较久时换附近简餐','附近简餐，优先有座位的店','未指定店铺','长队约20分钟就换店，保留坐下用餐',
+ '坐下吃饭并休息','优先能及时入座的店','购物后吃饭','地图为餐饮片区，餐厅现场选择','回店后就近吃简餐，再收主要行李','附近找座位休息30分钟',
+ '无座位就保留外观短拍，下坡找有座位的简餐','二月堂有坡阶、浮见堂需跨区步行，只能替换公园或大佛殿的部分时间，不同时追加',
+ '《魔女的夜宴》七绪咖啡店关联为玩家实景对照，非官方认定','先领台纸、完成收费区章点再出场','一段公园草地与公共步道，不喂鹿','官方建议庭园、御桥与天守往返至少90分钟','25分钟含河岸短拍与前往京阪站','营业16:00—23:00，末单22:30','取号与用餐75分钟为预算，不保证等位','11:00左右判断不能11:45前吃完则放弃堂食','09:30离店，到店前含酒店到站、候车与步行',
  '天气、路况与体力合适才登山','往返与停留预留75分钟，白天完成','京都塔叠印与12/1宇治GPS数字集章是不同活动','先完成收费区章点再出场是减少折返的安排',
  '南海难波到近铁大阪难波需步行，含进站候车','二月堂、浮见堂只能替换本段，不叠加','沿城内道路上坡与台阶约20分钟，按体力选路线','多看会顺延回店，不压缩下坡与返程步行',
  '大风雨或疲劳取消，不挤晚饭','中公園站步行约8分钟，不安排全程步行跨桥','当前120分钟软饮和牛约5000/人，预算上限6000','含结账及75—90分钟返程','保留午餐、咖啡、休息与外观巡礼','Animate先，骏河屋后，含移动和结账','酒店官方的约 5 分钟步行不包含站台到出口','含候车、换乘、拖箱步行与入住，抵店随交通调整',
@@ -1713,7 +1725,6 @@ function noticeParts(d,ev){
 // Facts for one activity that the plan keeps outside the timeline.
 const EVENT_EXTRA={
  kodaiji_night:{facts:'17:00亮灯 · ¥800 / 人',detail:{title:'参拜详情',items:[
-  {text:'游览约60—75分钟，排队另计。'},
   {text:'活动期2026/10/23—12/13；21:30停止入场，22:00闭门。昼夜不清场，离场后同票不能再入。'},
   {text:'活动官网',url:'https://www.kodaiji.com/saiji.html'},{text:'票价',url:'https://www.kodaiji.com/haikan.html'}]}}
 };
@@ -1733,14 +1744,14 @@ const SHOT_COPY={
  'kyoto-stage-stairs':{scene:'第7集车站音乐会，《宝岛》演出广场。',note:'中央口一侧上4F室町小路广场，对照大阶梯、扶梯和红色时钟。无需登顶；遇活动占用时在允许通行处拍摄。'},
  'kyoto-stage-clock':{note:'在4F广场抬头找红色方框时钟与钢架；别与红色雕塑「朱甲舞」混淆。'},
  'demachi-west-gate':{scene:'宣传PV里的商店街西入口；招牌与建筑有改绘。',note:'从寺町通一侧仰拍入口招牌与左侧建筑。'},
- 'demachi-fish':{scene:'官方主视觉里的商店街吊鱼与拱廊。',note:'进拱廊后找吊鱼和屋顶纵深；构图不完全一致，勿堵店铺通道。'},
+ 'demachi-fish':{scene:'官方主视觉里的商店街吊鱼与拱廊。',note:'进拱廊后找吊鱼和屋顶纵深。'},
  'delta-tamako':{note:'找东侧高野川的飞石与下河台阶，对照石块排列。雨天或水量大时留在岸边拍。'},
- 'delta-kon':{note:'从贺茂川侧飞石朝东拍中洲，与《玉子》告白位置分开。玉子点位优先，余量不足就省此机位，不延误京阪换乘。'},
+ 'delta-kon':{note:'从贺茂川侧飞石朝东拍中洲，与《玉子》告白位置分开。余量不足就省此机位。'},
  'kiyomizu-conan':{scene:'第927—928集清水寺与新兰剧情；亦见于《迷宫的十字路》。',note:'在本堂舞台对照屋顶与木栏杆；定位为本堂参考点。',caption:'官方上映会宣传视觉，非动画单帧；两图视角不同。'},
- 'senren-sannenzaka':{note:'在玩家标点附近，沿街对照石板路与两侧屋檐；店名有改写，顺路拍即可。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
+ 'senren-sannenzaka':{note:'在玩家标点附近，沿街对照石板路与两侧屋檐；店名有改写。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
  'senren-ninenzaka':{note:'在二年坂南端附近找右侧店铺转角、屋檐与弯路；别只在台阶中央找。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
- 'conan-tsutenkaku':{note:'本次主线不去新世界；路过时从地面辨认塔体即可，不计入当天巡礼。',caption:'同建筑、不同视角；用于辨认塔体。'},
- 'conan-ebisubashi':{scene:'第763—764集《恋爱的暗号》，平次在戎桥调查。',note:'桥面找弧形栏杆与南侧店招；动画有改绘，广告可能变化。'},
+ 'conan-tsutenkaku':{note:'路过时从地面辨认塔体即可。',caption:'同建筑、不同视角；用于辨认塔体。'},
+ 'conan-ebisubashi':{scene:'第763—764集《恋爱的暗号》，平次在戎桥调查。',note:'桥面找弧形栏杆与南侧店招；动画有改绘。'},
  'senren-ikuta':{note:'在拝殿前稍侧处对照屋顶、红柱与狛犬；游戏将楼房改绘为树木。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'}
 };
 function shotModel(p){
@@ -1783,7 +1794,7 @@ function eventModel(d,ev){
  const shots=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p)),ticket=major?eventTicket(d,ev):null;
  return {
   id:ev.id,date:d.date,title:ev.title,time:compactTime(ev.time_label),timeHint:ev.time_hint||'',start:eventStart(ev),category:ev.category,major,optional:!!ev.optional,
-  status:ev.time_status==='booked'?'已订航班 · 当地时间':ticket?ticket.label:pending?'待确认':'',ticket,
+  status:ev.time_status==='booked'?'当地时间':ticket?ticket.label:pending?'待确认':'',ticket,
   done:activityState(d.date,ev.id)==='done',line,optionNote:ev.optionNote||'',notice,links,transport,
   hotels:(ev.category==='hotel'||ev.id==='luggage_pickup'?ev.place_ids.filter(id=>id.startsWith('hotel_')):[]).filter(id=>!ev.title.includes(PLACE[id].name_ja)).map(id=>PLACE[id]),
   meals:rows.map(r=>mealModel(d,r,line+noticeText)),nav:ev.category==='rest'&&!major?null:navTarget(ev,stops),via:stops.length>1?stops:[],
@@ -2031,7 +2042,7 @@ function row(d,ev,now){
 const murasame=(mood,cls='')=>`<span class="murasame-face ${mood} ${cls}" aria-hidden="true"></span>`;
 const sheetHead=(kicker,title,mark='')=>`<header class="sheet-head">${mark}<div>${kicker?`<p class="kicker">${kicker}</p>`:''}<h2 class="title" tabindex="-1" autofocus>${title}</h2></div><button type="button" class="icon-btn" data-action="close-sheet" aria-label="关闭">${icon('close')}</button></header>`;
 function mealHTML(m){return `<article class="meal${m.primary?' primary':''}"><p class="meal-rank"><span class="tag${m.primary?' ok':''}">${e(m.rank)}</span>${m.budget?`<span>${e(m.budget)}</span>`:''}</p><h4 lang="ja">${e(m.name)}</h4>${m.hint?`<p class="muted">${e(m.hint)}</p>`:''}<div class="actions">${m.map?external(icon('map')+`<span>${m.mapLabel}</span>`,m.map,'btn'):''}<button type="button" class="btn" data-action="copy" data-copy="${e(m.name)}">${icon('copy')}<span>复制店名</span></button>${m.source?external('<span>官网 ↗</span>',m.source,'btn ghost'):''}</div></article>`;}
-function foodHTML(item){const p=PLACE[item.place];return `<section class="sec"><h3>${e(item.label)}</h3><article class="meal">${photoSrc(item.place)&&!item.hidePhoto?`<button type="button" class="photo wide" data-action="zoom-photo" data-place="${item.place}">${img(item.place)}</button>`:''}<h4>${e(item.title)}</h4><p class="ja" lang="ja">${e(p.name_ja)}</p><p>${e(cleanText(item.text))}</p><p class="muted">${e(item.budget)}</p><div class="actions">${external(icon('pin')+'<span>地图</span>',p.map_search_url,'btn')}${external('<span>店铺资料 ↗</span>',item.source,'btn ghost')}</div></article></section>`;}
+function foodHTML(item){const p=PLACE[item.place];return `<section class="sec"><h3>${e(item.label)}</h3><article class="meal">${photoSrc(item.place)&&!item.hidePhoto?`<button type="button" class="photo wide" data-action="zoom-photo" data-place="${item.place}">${img(item.place)}</button>`:''}<h4>${e(item.title)}</h4><p class="ja" lang="ja">${e(p.name_ja)}</p><p>${e(cleanText(item.text))}</p><p class="muted">${e(cleanText(item.budget))}</p><div class="actions">${external(icon('pin')+'<span>地图</span>',p.map_search_url,'btn')}${external('<span>店铺资料 ↗</span>',item.source,'btn ghost')}</div></article></section>`;}
 function eventSheet(d,ev){
  const m=eventModel(d,ev),cover=m.photos[0]||'',rest=m.photos.slice(1);
  return `${sheetHead(`${e((m.timeHint?m.timeHint+' ':'')+m.time)}${m.status?` · <span class="tag">${e(m.status)}</span>`:''}`,e(m.title))}
@@ -2117,7 +2128,7 @@ function shotHTML(p,n){
  </article>`;
 }
 function rallyHTML(d){
- if(d.date==='2026-12-03')return `<section class="block rally sketched"><span class="corner-sketch">${doodle('stamp')}</span><p class="kicker">${e(compactTime(effectiveEvents(d).find(ev=>ev.id==='kyoto_tower_visit').time_label))} · 京都塔</p><h2 class="title">京吹联动 · 叠印集章</h2><p>展望室5层领台纸，共7处章点；先完成收费区再出场，门票不能再次入场。</p><div class="actions">${external('<span>活动官网 ↗</span>','https://www.kyoto-tower.jp/event/eupho26autumn/','btn')}</div><details class="fold"><summary>参与规则</summary><p>活动期2026/9/1—12/20。进入展望室须购票，当前成人¥1,000。</p><p>周边店10:00—20:30，在展望室1层（大楼11楼）。这项纸本叠印与宇治GPS数字集章分开。</p></details></section>`;
+ if(d.date==='2026-12-03')return `<section class="block rally sketched"><span class="corner-sketch">${doodle('stamp')}</span><p class="kicker">${e(compactTime(effectiveEvents(d).find(ev=>ev.id==='kyoto_tower_visit').time_label))} · 京都塔</p><h2 class="title">京吹联动 · 叠印集章</h2><p>展望室5层领台纸，共7处章点；先完成收费区再出场，门票不能再次入场。</p><div class="actions">${external('<span>活动官网 ↗</span>','https://www.kyoto-tower.jp/event/eupho26autumn/','btn')}</div><details class="fold"><summary>参与规则</summary><p>活动期2026/9/1—12/20。进入展望室须购票，当前成人¥1,000。</p><p>周边店10:00—20:30，在展望室1层（大楼11楼）。</p></details></section>`;
  const r=PILGRIMAGE.rally;if(!r||r.date!==d.date)return '';
  return `<section class="block rally sketched" id="shot-rally"><span class="corner-sketch">${doodle('stamp')}</span><p class="kicker">11/1–12/20 · 后期</p><h2 class="title">京吹数字集章</h2><p>${e(cleanText(r.recommendation))}</p><div class="actions">${external('<span>参加活动 ↗</span>',r.entry_url,'btn primary')}</div>
  <details class="fold"><summary>集章点位 · ${r.spots.length}</summary>${r.spots.map(p=>`<article class="rally-spot"><h3>${e(p.title)}</h3><div class="pair">${p.real?.src?shotImage(p,'real','实景'):''}${shotImage(p,'anime','作品画面')}</div><p class="hint">${e(cleanText(p.match_note||p.caption||''))}</p><p>${e(cleanText(p.note))}</p><div class="actions">${external(icon('pin')+'<span>地图</span>',p.map_url,'btn')}<button type="button" class="btn" data-action="copy" data-copy="${e(p.name_ja)}">${icon('copy')}<span>复制名称</span></button></div></article>`).join('')}</details>
@@ -2144,12 +2155,12 @@ function prepScreen(){
  <section class="block tickets-block"><span class="corner-sketch">${doodle('ticket')}</span><h2 class="block-title">票务</h2><ul class="tickets">${open.map(t=>`<li class="ticket ${t.tone}"><button type="button" class="ticket-tap" data-action="todo" data-todo="${e(t.id)}" aria-pressed="${t.done}" aria-label="${e(t.item)}：${e(t.label)}，点按${t.done?'取消':'标记已办'}"><span class="ticket-main"><b>${e(t.item)}</b><small>${t.qty?'×'+t.qty+' · ':''}${e(t.date)} 使用</small></span><span class="ticket-state">${t.done?icon('check'):''}${e(t.label)}</span></button></li>`).join('')}</ul></section>
  <section class="block todos"><h2 class="block-title">待办 <small>${todoDone()} / ${TODOS.length}</small>${kita('sit-happy','in-title')}</h2><h3 class="sub">出发前完成</h3>${g.before.map(todoRow).join('')}<h3 class="sub">旅途中再确认</h3>${g.trip.map(x=>`<p class="when">${e(x.label)}</p>${x.items.map(todoRow).join('')}`).join('')}<details class="fold"><summary>展开全文</summary><ul class="plain">${[...g.before,...g.trip.flatMap(x=>x.items)].map(t=>`<li>${e(t.text)}</li>`).join('')}</ul></details></section>
  <section class="block sketched"><span class="corner-sketch">${doodle('plane')}</span><h2 class="block-title">航班 · 当地时间</h2>${PLAN.bookings.filter(b=>b.type==='flight').map(b=>`<div class="flight"><p class="kicker">${b.from==='hkg'?'去程':'回程'}</p>${passHTML(b,flightLocal(b,'departure'),flightLocal(b,'arrival'))}</div>`).join('')}</section>
- <section class="block sketched"><span class="corner-sketch">${doodle('inn')}</span><h2 class="block-title">酒店</h2>${PLAN.bookings.filter(b=>b.type==='hotel').map(b=>{const p=PLACE[b.place_id];return `<div class="hotel"><p class="kicker">${b.place_id==='hotel_kyoto'?'京都':'大阪'} · ${b.nights}晚 · ${dateLabel(b.checkin_date)}—${dateLabel(b.checkout_date)} · 不含早餐</p><p class="ja big" lang="ja">${e(p.name_ja)}</p>${p.address_ja?`<p class="ja" lang="ja">${e(p.address_ja)}</p>`:''}<div class="actions">${external(icon('pin')+'<span>地图</span>',p.map_search_url,'btn')}${p.address_ja?`<button type="button" class="btn" data-action="copy" data-copy="${e(p.address_ja)}">${icon('copy')}<span>复制地址</span></button>`:''}</div></div>`;}).join('')}</section>
+ <section class="block sketched"><span class="corner-sketch">${doodle('inn')}</span><h2 class="block-title">酒店</h2>${PLAN.bookings.filter(b=>b.type==='hotel').map(b=>{const p=PLACE[b.place_id];return `<div class="hotel"><p class="kicker">${b.place_id==='hotel_kyoto'?'京都':'大阪'} · ${dateLabel(b.checkin_date)}—${dateLabel(b.checkout_date)}</p><p class="ja big" lang="ja">${e(p.name_ja)}</p>${p.address_ja?`<p class="ja" lang="ja">${e(p.address_ja)}</p>`:''}<div class="actions">${external(icon('pin')+'<span>地图</span>',p.map_search_url,'btn')}${p.address_ja?`<button type="button" class="btn" data-action="copy" data-copy="${e(p.address_ja)}">${icon('copy')}<span>复制地址</span></button>`:''}</div></div>`;}).join('')}</section>
  <details class="fold block"><summary>参考资料</summary>
   <h3 class="sub">作品日文名</h3>${WORK_NAMES.map(t=>`<p class="copy-line"><span lang="ja">${e(t)}</span><button type="button" class="icon-btn small" data-action="copy" data-copy="${e(t)}" aria-label="复制${e(t)}">${icon('copy')}</button></p>`).join('')}
   <h3 class="sub">保存的早季红叶预测 · 截至2026/9/28</h3>${PLAN.foliage.spots.map(s=>`<p>${e(PLACE[s.place_id].name)}：到访 ${dateLabel(s.visit_date)} · 预测观赏 ${dateLabel(s.forecast_viewing_start)} · 预测落叶 ${dateLabel(s.forecast_leaf_fall_start)} · ${external('来源 ↗',s.source)}</p>`).join('')}
   <h3 class="sub">预算</h3><p>普通正餐每人¥1,000—2,500；12/6和牛自助现价¥5,000/人、上限¥6,000/人。</p><p>门票（两人）：${PLAN.visit_budget.filter(v=>!v.item).map(v=>e(({kodaiji:'高台寺',kyoto_tower:'京都塔',todaiji:'大佛殿'})[v.place_id]||PLACE[v.place_id].name)+' ¥'+v.two_adults_jpy.toLocaleString('en-US')).join('、')}；清水寺与购物另计。</p>
-  <h3 class="sub">离线使用</h3><p>${isWeb?'网页版的照片按需加载；路上请用离线单文件版。':'行程与照片可离线查看。'}地图和来源链接需联网。勾选只存在本机浏览器，网页版与离线文件各自保存。</p>
+  <h3 class="sub">离线使用</h3><p>地图和来源链接需联网；勾选只存在本机浏览器。</p>
  </details>
  <a class="link-row" href="${BLOG_HOME}">${icon('back')}<span>返回まひろ的小站</span>${icon('chevron')}</a>`;
 }

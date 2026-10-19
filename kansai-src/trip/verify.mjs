@@ -83,7 +83,7 @@ const checked=run(`
 
  // Every copy rule still matches the plan's own text, so none goes dead silently when the plan changes.
  const sources=JSON.stringify([DETAILS,PLAN,PLACE_DETAILS,SHOT_COPY,PILGRIMAGE])+PLAN.days.flatMap(d=>effectiveEvents(d).map(ev=>(ev.condition||'')+executionNotice(d,ev))).join('');
- for(const [from] of TEXT_SHORT)assert.ok(JSON.stringify([DETAILS,PLAN]).includes(from),'文字精简已失效：'+from.slice(0,16));
+ for(const [from] of TEXT_SHORT)assert.ok(JSON.stringify([DETAILS,PLAN,PLACE_DETAILS,PILGRIMAGE]).includes(from),'文字精简已失效：'+from.slice(0,16));
  for(const [from] of TRANSPORT_SHORT)assert.ok(PLAN.days.some(d=>DETAILS[d.date].transport.includes(from)),'交通精简已失效：'+from.slice(0,16));
  for(const sentence of DROP_SENTENCES)assert.ok(sources.includes(sentence),'删除句已不在原文：'+sentence);
  const pieces=sources.split(/(?<=[。；])|"/).map(x=>x.trim());
