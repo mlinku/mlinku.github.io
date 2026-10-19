@@ -116,7 +116,7 @@ const checked=run(`
  assert.equal(returnTarget(wakayama),'19:00—19:30','12/5约19:00—19:30返店');
  assert.equal(String(hardStops(wakayama).map(t=>t.time)),String(['14:40','16:45','17:00','17:30']),'庭园16:45早于天守17:00末入');
  assert.ok(text(prepScreen()).includes('和歌山城天守 ¥820'),'门票预算含和歌山城两人¥820');
- assert.ok(openPurchases().some(p=>p.item.includes('和牛')&&p.label==='尚未订位')&&!BOOKED.some(b=>b.join('').includes('和牛')),'和牛只是待订位');
+ assert.ok(openPurchases().some(p=>p.item.includes('和牛')&&p.label==='尚未订位'),'和牛只是待订位');
  const kobe=PLAN.days.find(d=>d.date==='2026-12-06');
  assert.equal(String(effectiveEvents(kobe).find(ev=>ev.id==='motomachi_cd_shopping').place_ids),String(['kobe_banana_records','kobe_rhythmbox']),'元町两家CD店优先');
  assert.ok(sheetHTML(kobe.date,'sannomiya_dinner').includes('尚未订位'),'17:00和牛待订位');

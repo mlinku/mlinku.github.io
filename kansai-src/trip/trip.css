@@ -172,6 +172,15 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .countdown .count, .countdown .lead {padding-right:92px}
 .kita.on-countdown {position:absolute; right:6px; top:-38px; width:96px; height:122px; animation:bob 3.2s ease-in-out infinite}
 @keyframes bob {50% {transform:translateY(-4px) rotate(-2deg)}}
+/* Every 喜多 drifts a little, each pose on its own rhythm so they never move in step; reduced motion stops them all. */
+@keyframes drift {50% {transform:translateY(var(--lift-y,-3px)) rotate(var(--tilt,0deg))}}
+.kita:not(.on-countdown) {animation:drift 4.4s ease-in-out infinite}
+.kita-run {--lift-y:-4px; --tilt:1.5deg; animation-duration:3.6s !important}
+.kita-peek {--lift-y:-2px; animation-duration:5s !important}
+.kita-grin {--lift-y:-3px; --tilt:-1.5deg; animation-duration:4s !important}
+.kita-side {--lift-y:-3px; --tilt:1deg; animation-duration:4.8s !important}
+.kita-sit-happy {--lift-y:-2.5px; animation-duration:5.4s !important}
+.kita-cheer.in-title {--tilt:-2deg; animation-duration:3.4s !important}
 .block-title .kita.in-title {width:64px; height:75px; margin:-30px 0 -22px auto}
 .block-title .kita-stand.in-title {width:30px; height:62px; margin-top:-30px}
 /* Inside a card's title row, flush with the card's top edge: nothing pokes over the content above, no space is reserved. */
@@ -431,7 +440,9 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .row.now .node::after {border-color:var(--accent); background:var(--accent)}
 .row.done .row-title, .row.done .row-time {color:var(--muted)}
 .row.done .row-title {text-decoration:line-through; text-decoration-color:var(--line-2)}
-.row.done .node {filter:grayscale(.8); opacity:.6}
+.row.done .node.photo img {filter:grayscale(.85); opacity:.5}
+.row.done .node.big {border-color:var(--line-2); color:var(--muted)}
+.row.done .node::after {border-color:var(--line)}
 .pager {display:flex; justify-content:space-between; gap:12px; margin-top:26px !important}
 .pager a {display:flex; align-items:center; gap:6px; min-height:52px; padding:0 16px; border-radius:var(--r); background:var(--card); box-shadow:var(--shadow); color:var(--ink); font:700 15px var(--serif); min-width:0}
 .pager a span {overflow:hidden; text-overflow:ellipsis; white-space:nowrap}

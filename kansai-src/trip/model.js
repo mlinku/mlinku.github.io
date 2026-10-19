@@ -372,7 +372,6 @@ function todoGroups(){
  const trip=all.filter(t=>t.when).sort((a,b)=>a.when.localeCompare(b.when)).map(t=>({...t,text:t.text.replace(TODO_PREFIX,'')}));
  return {before:all.filter(t=>!t.when),trip:[...new Set(trip.map(t=>t.when))].map(when=>({when,label:TODO_WHEN_LABEL[when]||dateLabel(when),items:trip.filter(t=>t.when===when)}))};
 }
-const BOOKED=[['往返机票','HX618 / HX617'],['京都酒店','11/30—12/3 · 3晚'],['大阪酒店','12/3—12/7 · 4晚'],['HARUKA','11/30 · 班次现场选']];
 const PURCHASE_LABEL={not_purchased:['未购买','danger'],not_reserved:['尚未订位','danger'],purchase_not_confirmed:['待确认','warn'],pay_on_site:['现场付款','plain']};
 // A ticket the traveller has sorted (bought, reserved, paid) is ticked on 准备 and stored with the todos.
 const PURCHASE_DONE={not_reserved:'已订位',pay_on_site:'已付款'};
