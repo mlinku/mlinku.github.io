@@ -44,7 +44,7 @@ assert.ok(d4.transport_notes[0].includes('勿上大阪线往伊势'),'近铁换�
 assert.equal(d5.departure_target,'10:00');
 assert.ok(event(d5,'himeji_castle_visit')&&event(d5,'kokoen_visit')&&d5.route_stop_ids.includes('himeji_castle'),'12/5姬路城与好古园');
 assert.ok(d5.timeline.findIndex(e=>e.id==='himeji_dinner')<d5.timeline.findIndex(e=>e.id==='himeji_return'),'在姬路吃晚饭再回');
-assert.equal(d5.hotel_return_target,'约20:00','约20:00返店');
+assert.equal(d5.hotel_return_target,'约20:15','约20:15返店');
 assert.ok(d5.fallback_rules.join('').includes('16:00停止入城'),'姬路城16:00停止入城');
 assert.deepEqual(event(d6,'motomachi_cd_shopping').place_ids,['lashinbang_kobe','surugaya_kobe','bookoff_kobe','kobe_banana_records','kobe_rhythmbox'],'三宫三店快速看，再去元町两家CD店');
 assert.equal(d6.hotel_return_target,'约20:15');
@@ -81,7 +81,7 @@ for(const id of ['kada_coast','awashima_shrine','wakayama_castle','wakayama_momi
 for(const [id,p] of Object.entries(photos))assert.ok(p.local&&fs.existsSync(path.join(src,p.local))&&(p.license||p.illustration||p.author),'照片文件与署名 '+id);
 
 const report={checkedAt:new Date().toISOString(),baseline:BASELINE,revision:plan.revision,bookingsUnchanged:true,unchangedDates:unchanged,
- final:{'12/3':'伏见稻荷 → 京都站午饭 → 京都塔 → 大阪 → 道顿堀','12/4':'大佛殿 → 二月堂 → 日本桥1—2家','12/5':'姬路城 → 好古园点灯 → 姬路站晚饭 → 约20:00返店','12/6':'三宫三店快速看 → 元町两家CD店；17:00和牛待订位'},
+ final:{'12/3':'伏见稻荷 → 京都站午饭 → 京都塔 → 大阪 → 道顿堀','12/4':'大佛殿 → 二月堂 → 日本桥1—2家','12/5':'姬路城 → 好古园点灯 → 姬路站晚饭 → 约20:15返店','12/6':'三宫三店快速看 → 元町两家CD店；17:00和牛待订位'},
  excluded:plan.excluded_default,tickets,pilgrimage:{points:pg.points.length}};
 fs.writeFileSync(path.join(src,'检查记录/修订计划-2026-11-08.json'),JSON.stringify(report,null,2));
 console.log(JSON.stringify(report));

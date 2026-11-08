@@ -2653,7 +2653,7 @@
       "weekday": "周六",
       "title": "姬路城 · 好古园",
       "departure_target": "10:00",
-      "hotel_return_target": "约20:00",
+      "hotel_return_target": "约20:15",
       "intensity": "中等；天守台阶陡",
       "cities": [
         "姬路",
@@ -2742,7 +2742,7 @@
         },
         {
           "id": "himeji_return",
-          "time_label": "约18:50—20:00",
+          "time_label": "约18:50—20:15",
           "time_status": "planning_window",
           "title": "姬路 → 酒店",
           "place_ids": [

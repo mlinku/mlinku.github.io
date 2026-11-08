@@ -42,42 +42,66 @@ try{
  for(const [key,value] of Object.entries(state.checks))if(!key.includes(':shot:')&&value==='skipped')state.checks[key]='pending';
  preserveLegacyRecord();localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
 }catch{storageOK=false;}
-// The final plan of 2026-10-19 moved Nara and Nippombashi to 12/4 and 戎桥 to 12/3, and dropped USJ, 大阪城 and
-// SPAWORLD. Only activities that kept their meaning carry their record to the new day (02-最终行程规格 record_migrations);
-// a changed lunch, the new 元町 shops or the castle never start out done. The untouched record is saved first.
+// 10/19 moved these activities with their meaning intact (02-最终行程规格 record_migrations); new activities, such as the
+// castle or the 元町 shops, never start out done. The untouched record is saved before any migration.
 const MOVED_EVENTS={'2026-12-05':{nara_transfer:'2026-12-04',nara_park_walk:'2026-12-04',nara_visit:'2026-12-04',nara_station_walk:'2026-12-04',
  nara_return_train:'2026-12-04',anime_shopping:'2026-12-04',nippombashi_dinner:'2026-12-04',nara_day_return:'2026-12-04',glico_photo:'2026-12-03'}};
-// Same ID, different activity: the 稻荷参道 lunch replaces the 京都站 one; 12/6 傍晚 is now the walk to dinner.
-const CHANGED_EVENTS=['2026-12-03:kyoto_lunch','2026-12-06:sannomiya_evening'];
 // Old links open the same content on its new day; the 森之宫 lunch link lands on the Nara day's lunch.
 const MOVED_LINKS={'2026-12-05':{...MOVED_EVENTS['2026-12-05'],nara_lunch:'2026-12-04',dotonbori_walk:'2026-12-03'}};
 // Before todo IDs existed, records were keyed by position in this list (two entries changed meaning since).
 const LEGACY_TODO_IDS=['usj-details','weather','restaurants',null,'return-travel','kodaiji-weather',null,'rally-account','transport-tickets','usj-app','packing','kodaiji-tickets'];
+// Each plan revision lists the records it moves or resets. A record catches up through the revisions after the one it
+// last saw (one from before 10/19 saw none), so every rule applies once, in the revision that introduced it.
+const PLAN_REVISIONS=[
+ // 10/19: Nara and Nippombashi to 12/4 with their shop choice, 戎桥 to 12/3; the 稻荷参道 lunch replaces the 京都站 one,
+ // and 12/6 傍晚 becomes the walk to dinner.
+ {id:'2026-10-19-final-no-usj-no-ferry-tower-default',moved:MOVED_EVENTS,changed:['2026-12-03:kyoto_lunch','2026-12-06:sannomiya_evening'],nippombashiTo124:true},
+ // 11/08: 12/3 lunch is back at 京都站 after 稻荷.
+ {id:'2026-11-08-himeji-revision',moved:{},changed:['2026-12-03:kyoto_lunch']}
+];
 function migrateFinalPlan(){
  if(state.planRevision===PLAN.revision)return;
  const before=JSON.stringify(state),points=typeof PILGRIMAGE==='undefined'?null:new Map(PILGRIMAGE.points.map(p=>[p.id,p.date]));
- const events=new Map(PLAN.days.map(d=>[d.date,new Set(d.timeline.map(ev=>ev.id))])),checks={};
- for(const [key,value] of Object.entries(state.checks)){
-  const [date,id,point]=key.split(':');
-  if(id==='shot'){const to=points?points.get(point):date;if(to&&!Object.hasOwn(checks,to+':shot:'+point))checks[to+':shot:'+point]=value;continue;}
-  if(CHANGED_EVENTS.includes(key))continue;
-  const moved=MOVED_EVENTS[date]?.[id],to=moved||(events.get(date)?.has(id)?date:null);
-  if(to&&!(moved&&Object.hasOwn(state.checks,to+':'+id)))checks[to+':'+id]=value;
+ const steps=PLAN_REVISIONS.slice(PLAN_REVISIONS.findIndex(r=>r.id===state.planRevision)+1);
+ let checks={...state.checks};
+ for(const step of steps){
+  const next={};
+  for(const [key,value] of Object.entries(checks)){
+   const [date,id]=key.split(':');
+   if(id==='shot'){next[key]=value;continue;}
+   if(step.changed.includes(key))continue;
+   const moved=step.moved[date]?.[id],to=moved?moved+':'+id:key;
+   if(!(moved&&Object.hasOwn(checks,to)))next[to]=value;
+  }
+  checks=next;
  }
- const choices={...state.choices},nippombashi=choices['2026-12-05'];
- const {usjExtra,kinopio,...nara}=choices['2026-12-04']||{};
- if(nippombashi?.shop1)Object.assign(nara,{shop1:nippombashi.shop1,shop2:nippombashi.shop2||'none'});
- delete choices['2026-12-05'];if(Object.keys(nara).length)choices['2026-12-04']=nara;else delete choices['2026-12-04'];
+ // Whatever the revision: a record stays only on an activity of its day; a shot follows its point's day.
+ const events=new Map(PLAN.days.map(d=>[d.date,new Set(d.timeline.map(ev=>ev.id))])),kept={};
+ for(const [key,value] of Object.entries(checks)){
+  const [date,id,point]=key.split(':');
+  if(id==='shot'){const to=points?points.get(point):date;if(to&&!Object.hasOwn(kept,to+':shot:'+point))kept[to+':shot:'+point]=value;continue;}
+  if(events.get(date)?.has(id))kept[key]=value;
+ }
+ const choices={...state.choices};
+ if(steps.some(step=>step.nippombashiTo124)){
+  const nippombashi=choices['2026-12-05'],{usjExtra,kinopio,...nara}=choices['2026-12-04']||{};
+  if(nippombashi?.shop1)Object.assign(nara,{shop1:nippombashi.shop1,shop2:nippombashi.shop2||'none'});
+  delete choices['2026-12-05'];if(Object.keys(nara).length)choices['2026-12-04']=nara;else delete choices['2026-12-04'];
+ }
  const ids=new Set([...PLAN.pending_checks,...(PLAN.additional_checks||[])].map(t=>t.id)),todos={};
- for(const [key,value] of Object.entries(state.todos)){const id=/^\d+$/.test(key)?LEGACY_TODO_IDS[key]:key;if(id&&ids.has(id)&&!Object.hasOwn(todos,id))todos[id]=value;}
+ for(const [key,value] of Object.entries(state.todos)){
+  const id=/^\d+$/.test(key)?LEGACY_TODO_IDS[key]:key;
+  // Ticked tickets on 准备 are stored with the todos under their own ids.
+  if(id&&(ids.has(id)||id.startsWith('ticket:'))&&!Object.hasOwn(todos,id))todos[id]=value;
+ }
  // If the backup cannot be written, this throws first and the record stays exactly as it was.
  if(Object.keys(state.checks).length+Object.keys(state.todos).length+Object.keys(state.choices).length){
-  let key=STORAGE_KEY+'-before-final-plan-2026-10-19';
+  let key=STORAGE_KEY+'-before-'+PLAN.revision;
   const existing=localStorage.getItem(key);
   if(existing!==null&&existing!==before)key+='-'+Date.now();
   localStorage.setItem(key,before);
  }
- const next={...state,checks,choices,todos,planRevision:PLAN.revision};
+ const next={...state,checks:kept,choices,todos,planRevision:PLAN.revision};
  localStorage.setItem(STORAGE_KEY,JSON.stringify(next));state=next;
 }
 if(storageOK)try{migrateFinalPlan();}catch{storageOK=false;}

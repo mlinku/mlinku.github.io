@@ -115,7 +115,7 @@ const checked=run(`
  const himeji=PLAN.days.find(d=>d.date==='2026-12-05');
  assert.ok(effectiveEvents(himeji).some(ev=>ev.id==='himeji_castle_visit')&&effectiveEvents(himeji).some(ev=>ev.id==='kokoen_visit'),'12/5姬路城与好古园');
  assert.ok(effectiveEvents(himeji).findIndex(ev=>ev.id==='himeji_dinner')<effectiveEvents(himeji).findIndex(ev=>ev.id==='himeji_return'),'晚饭在姬路吃完再回');
- assert.equal(returnTarget(himeji),'20:00','12/5约20:00返店');
+ assert.equal(returnTarget(himeji),'20:15','12/5约20:15返店');
  assert.equal(String(hardStops(himeji).map(t=>t.time)),String(['16:00']),'姬路城16:00停止入城');
  assert.ok(!/加太|和歌山|淡嶋/.test(everything),'不再出现加太与和歌山');
  assert.ok(text(prepScreen()).includes('姬路城＋好古园 ¥5,200'),'门票预算含姬路城＋好古园两人¥5,200');
@@ -184,13 +184,20 @@ function boot(record,failBackup=false){
  return {kept,state:JSON.parse(vm.runInContext('JSON.stringify(state)',ctx)),ok:vm.runInContext('storageOK',ctx),shops:vm.runInContext("String(selectedShops(choice(PLAN.days[4])))",ctx)};
 }
 const migrated=boot(oldRecord);
-assert.equal(migrated.kept[KEY+'-before-final-plan-2026-10-19'],JSON.stringify(oldRecord),'迁移前完整备份');
+assert.equal(migrated.kept[KEY+'-before-'+PLAN.revision],JSON.stringify(oldRecord),'迁移前完整备份');
 assert.deepEqual(Object.keys(migrated.state.checks).sort(),['2026-12-01:shot:eupho_bench','2026-12-03:glico_photo','2026-12-03:shot:conan-ebisubashi','2026-12-04:nara_visit','2026-12-06:ikuta_visit'],'仅同语义记录迁到新日期');
 assert.equal(migrated.state.planRevision,PLAN.revision);
 assert.deepEqual(Object.keys(migrated.state.todos).sort(),['kyoto-tower-20261003','restaurants','weather'],'USJ与旧和牛待办不串到新任务，按位置的旧待办迁到对应ID');
 assert.equal(migrated.shops,'potato','12/4沿用原12/5选店');
 assert.deepEqual(Object.keys(migrated.state.choices),['2026-12-04'],'旧泡汤与USJ选项不保留');
 assert.equal(JSON.stringify(boot(migrated.state).state),JSON.stringify(migrated.state),'迁移只做一次');
+// A record already on the 10/19 plan: only the 11/08 rules run. 12/6 傍晚 keeps its tick; the 12/3 lunch (now at
+// 京都站) and the retired 加太 activity start over.
+const on1019={schemaVersion:3,planRevision:'2026-10-19-final-no-usj-no-ferry-tower-default',todos:{},choices:{'2026-12-04':{shop1:'potato',shop2:'none'}},
+ checks:{'2026-12-06:sannomiya_evening':'done','2026-12-03:kyoto_lunch':'done','2026-12-05:kada_pilgrimage':'done','2026-12-04:nara_visit':'done'}};
+const caughtUp=boot(on1019);
+assert.equal(Object.keys(caughtUp.state.checks).sort().join(),'2026-12-04:nara_visit,2026-12-06:sannomiya_evening','10/19之后的记录只套用11/08的规则');
+assert.equal(caughtUp.shops,'potato','12/4选店保留');
 const blocked=boot(oldRecord,true);
 assert.equal(blocked.kept[KEY],JSON.stringify(oldRecord),'备份写不进时不覆盖旧记录');
 assert.equal(blocked.ok,false);
