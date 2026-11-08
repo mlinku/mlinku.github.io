@@ -61,9 +61,9 @@ const checked=run(`
 
  // 现在: the latest started activity, then the next unfinished one once it is ticked.
  const day3=PLAN.days.find(d=>d.date==='2026-12-03');
- let s=nowState(day3,10*60+30);
+ let s=nowState(day3,13*60+30);
  assert.equal(s.focus.id,'kyoto_tower_visit');assert.ok(s.started);
- setCheck(day3.date,'kyoto_tower_visit',true);s=nowState(day3,10*60+30);
+ setCheck(day3.date,'kyoto_tower_visit',true);s=nowState(day3,13*60+30);
  assert.notEqual(s.focus.id,'kyoto_tower_visit');assert.ok(!s.started,'完成后转到下一项');
  assert.ok(s.upcoming.every(ev=>activityState(day3.date,ev.id)!=='done'));
  setCheck(day3.date,'kyoto_tower_visit',false);
@@ -111,14 +111,20 @@ const checked=run(`
  // Final plan (2026-10-19): no USJ, 大阪城, ferry or 白须神社 anywhere a traveller can reach.
  const everything=PLAN.days.map(d=>{ui.day=PLAN.days.indexOf(d);return text(dayScreen())+effectiveEvents(d).map(ev=>text(sheetHTML(d.date,ev.id))).join('')+text(sheetHTML(d.date,'notes'));}).join('')+text(prepScreen());
  for(const word of ['USJ','Studio Pass','任天堂','大阪城','天守阁','森之宫','鹤桥','SPAWORLD','白须','渡轮班次','友岛航线'])assert.ok(!everything.includes(word),'最终版不出现：'+word);
- const wakayama=PLAN.days.find(d=>d.date==='2026-12-05');
- assert.ok(effectiveEvents(wakayama).some(ev=>ev.id==='wakayama_tower_visit')&&effectiveRoute(wakayama).some(n=>n.id==='wakayama_castle'),'12/5默认进天守');
- assert.equal(returnTarget(wakayama),'19:00—19:30','12/5约19:00—19:30返店');
- assert.equal(String(hardStops(wakayama).map(t=>t.time)),String(['14:40','16:45','17:00','17:30']),'庭园16:45早于天守17:00末入');
- assert.ok(text(prepScreen()).includes('和歌山城天守 ¥820'),'门票预算含和歌山城两人¥820');
+ // 2026-11-08 revision: 12/5 is 姬路城 + 好古园 with dinner in 姬路; 加太 and 和歌山 are gone.
+ const himeji=PLAN.days.find(d=>d.date==='2026-12-05');
+ assert.ok(effectiveEvents(himeji).some(ev=>ev.id==='himeji_castle_visit')&&effectiveEvents(himeji).some(ev=>ev.id==='kokoen_visit'),'12/5姬路城与好古园');
+ assert.ok(effectiveEvents(himeji).findIndex(ev=>ev.id==='himeji_dinner')<effectiveEvents(himeji).findIndex(ev=>ev.id==='himeji_return'),'晚饭在姬路吃完再回');
+ assert.equal(returnTarget(himeji),'20:00','12/5约20:00返店');
+ assert.equal(String(hardStops(himeji).map(t=>t.time)),String(['16:00']),'姬路城16:00停止入城');
+ assert.ok(!/加太|和歌山|淡嶋/.test(everything),'不再出现加太与和歌山');
+ assert.ok(text(prepScreen()).includes('姬路城＋好古园 ¥5,200'),'门票预算含姬路城＋好古园两人¥5,200');
+ const day3order=effectiveEvents(PLAN.days[3]).map(ev=>ev.id);
+ assert.ok(day3order.indexOf('inari_visit')<day3order.indexOf('kyoto_lunch')&&day3order.indexOf('kyoto_lunch')<day3order.indexOf('kyoto_tower_visit'),'12/3先稻荷、京都站午饭，再京都塔');
+ assert.ok(effectiveEvents(PLAN.days[4]).some(ev=>ev.id==='nigatsudo_visit')&&!effectiveEvents(PLAN.days[4]).some(ev=>ev.id==='nippombashi_cafe'),'12/4二月堂，日本桥直接逛店');
  assert.ok(openPurchases().some(p=>p.item.includes('和牛')&&p.label==='尚未订位'),'和牛只是待订位');
  const kobe=PLAN.days.find(d=>d.date==='2026-12-06');
- assert.equal(String(effectiveEvents(kobe).find(ev=>ev.id==='motomachi_cd_shopping').place_ids),String(['kobe_banana_records','kobe_rhythmbox']),'元町两家CD店优先');
+ assert.equal(String(effectiveEvents(kobe).find(ev=>ev.id==='motomachi_cd_shopping').place_ids),String(['lashinbang_kobe','surugaya_kobe','bookoff_kobe','kobe_banana_records','kobe_rhythmbox']),'三宫三店快速看，再去元町两家CD店');
  assert.ok(sheetHTML(kobe.date,'sannomiya_dinner').includes('尚未订位'),'17:00和牛待订位');
  // 12/4 shop choices: every pair walks in order on the route and never more than two stores.
  const nara=PLAN.days.find(d=>d.date==='2026-12-04');
@@ -132,8 +138,8 @@ const checked=run(`
  assert.ok(!dayShots(PLAN.days[3]).main.some(p=>p.id==='conan-tsutenkaku')&&dayShots(PLAN.days[3]).reference.some(p=>p.id==='conan-tsutenkaku'),'通天阁只作参考');
  assert.equal(shotProgress('2026-12-03').total,1,'参考点不计进度');
  assert.ok(dayShots(PLAN.days[3]).main.some(p=>p.id==='conan-ebisubashi'),'戎桥在12/3');
- assert.equal(dayShots(wakayama).main.length,4,'加太4组对照');
- for(const p of dayShots(wakayama).main)assert.ok(p.real?.local&&p.anime?.local&&p.real.license&&p.anime.credit&&p.sources.length,'加太对照图与来源 '+p.id);
+ assert.equal(String(pilgrimageDay('2026-12-05').map(p=>p.id)),'sekiro-himeji-keep','12/5只狼打卡');
+ assert.ok(/class="pair single"/.test((ui.shotsDay=5,shotsScreen()))&&!shotsScreen().includes('作品画面待补'),'只狼只放实景，不留空图位');
 
  // Old links land on the same content on its new day, or on the day with a note; never on a new 加太 activity.
  location.hash='#day/2026-12-05/timeline/nara_visit';assert.equal(parseHash(),'nara_visit');assert.equal(PLAN.days[ui.day].date,'2026-12-04');assert.ok(ui.moved.includes('12/4'));
@@ -152,7 +158,7 @@ const checked=run(`
  setCheck(uji.date,'uji_parfait',true);assert.ok(!nowState(uji,9*60+40).events.length||nowState(uji,9*60+40).focus.id!=='uji_transfer','勾选后续活动后交通行视为已过');
  assert.ok(dayScreen().includes('id="row-uji_transfer"')&&/class="row minor done" id="row-uji_transfer"/.test(dayScreen()),'已过的交通行变淡');
  setCheck(uji.date,'uji_parfait',false);
- ui.day=5;assert.ok(/row-time fixed">14:59/.test(dayScreen()),'现行候选列车保留粗体时刻');
+ ui.day=7;assert.ok(/row-time fixed">05:47/.test(dayScreen()),'现行候选列车保留粗体时刻');
  const arrive=PLAN.days[0];ui.day=0;state.checks[arrive.date+':checkin_kyoto']='done';
  assert.ok(!/class="row minor done" id="row-arrival_transfer"/.test(dayScreen()),'旧版留在交通行上的勾选不再划线');
  assert.equal(nowState(arrive,17*60).focus.id,'arrival_transfer','旧勾选不让「现在」跳过交通');

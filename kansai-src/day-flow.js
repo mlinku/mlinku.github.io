@@ -1,6 +1,6 @@
 /* Shared presentation keeps selected plans consistent across overview and daily views. */
 // The ticket photo's subtitle: at most three stops.
-const DAY_EYEBROW={'2026-12-02':'出町 → 清水寺 → 高台寺','2026-12-05':'加太 → 淡嶋神社 → 和歌山城','2026-12-06':'北野 → 元町 → 神户大桥'};
+const DAY_EYEBROW={'2026-12-02':'出町 → 清水寺 → 高台寺','2026-12-06':'北野 → 元町 → 神户大桥'};
 function dayPresentation(d){
  const info={...DETAILS[d.date],...(DAY_EYEBROW[d.date]?{eyebrow:DAY_EYEBROW[d.date]}:{})},c=choice(d);
  if(d.date==='2026-12-02'&&c.kodaijiPlan==='skip'){
@@ -11,8 +11,8 @@ function dayPresentation(d){
 }
 
 // The overview's one-line highlights: at most three, short.
-const DAY_HIGHLIGHTS={'2026-11-30':'机场 → 酒店','2026-12-01':'抹茶、京吹巡礼','2026-12-02':'玉子巡礼、清水寺、夜枫','2026-12-03':'京都塔集章、稻荷、道顿堀',
- '2026-12-04':'大佛殿、奈良公园、日本桥','2026-12-05':'加太巡礼、和歌山城','2026-12-06':'巡礼、元町CD、和牛','2026-12-07':'南海 → 机场 → 香港'};
+const DAY_HIGHLIGHTS={'2026-11-30':'机场 → 酒店','2026-12-01':'抹茶、京吹巡礼','2026-12-02':'玉子巡礼、清水寺、夜枫','2026-12-03':'稻荷、京都塔集章、道顿堀',
+ '2026-12-04':'大佛殿、二月堂、日本桥','2026-12-05':'姬路城、好古园','2026-12-06':'巡礼、元町CD、和牛','2026-12-07':'南海 → 机场 → 香港'};
 function dayHighlights(d){if(d.date==='2026-12-02'&&choice(d).kodaijiPlan==='skip')return '玉子巡礼、清水寺、东山';return DAY_HIGHLIGHTS[d.date]||dayPresentation(d).summary;}
 
 /* Shared activity order for the timetable and scene references. */

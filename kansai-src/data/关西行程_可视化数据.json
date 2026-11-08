@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "plan_id": "kansai-2026-1130-1207",
-  "revision": "2026-10-19-final-no-usj-no-ferry-tower-default",
+  "revision": "2026-11-08-himeji-revision",
   "recorded_on": "2026-09-28",
   "language": "zh-CN",
   "title": "关西旅行规划基准",
@@ -49,9 +49,9 @@
     "protected_priorities": [
       "作品巡礼与联动集章",
       "京都红叶与高台寺一次夜枫",
-      "奈良大佛殿与公园短逛",
+      "奈良大佛殿与二月堂",
       "日本桥重点1—2家动漫店",
-      "加太巡礼与和歌山城天守",
+      "姬路城与好古园",
       "生田神社、北野物语馆与神户大桥巡礼",
       "元町两家CD店"
     ],
@@ -156,7 +156,7 @@
       "quantity": 2
     },
     {
-      "item": "和歌山城天守",
+      "item": "姬路城＋好古园套票",
       "visit_date": "2026-12-05",
       "status": "pay_on_site",
       "quantity": 2
@@ -231,19 +231,6 @@
       "pilgrimage_point_ids": [
         "eupho_asagiri"
       ]
-    },
-    {
-      "id": "awashima_shrine",
-      "name": "淡嶋神社",
-      "name_ja": "淡嶋神社 加太",
-      "city": "和歌山",
-      "category": "visit",
-      "address_ja": "和歌山市加太118",
-      "map_query": "淡嶋神社 加太 和歌山市加太118",
-      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E6%B7%A1%E5%B6%8B%E7%A5%9E%E7%A4%BE%20%E5%8A%A0%E5%A4%AA%20%E5%92%8C%E6%AD%8C%E5%B1%B1%E5%B8%82%E5%8A%A0%E5%A4%AA118",
-      "coordinates": null,
-      "coordinate_status": "not_geocoded",
-      "source_url": "https://www.wakayama-kanko.or.jp/spots/detail_217.html"
     },
     {
       "id": "bench",
@@ -498,97 +485,6 @@
       "pilgrimage_point_ids": [
         "eupho_jr_uji"
       ]
-    },
-    {
-      "id": "kada_coast",
-      "name": "淡嶋神社前海边",
-      "name_ja": "淡嶋神社前 海岸 加太",
-      "city": "和歌山",
-      "category": "walk",
-      "address_ja": null,
-      "map_query": "淡嶋神社前 海岸 加太 和歌山",
-      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E6%B7%A1%E5%B6%8B%E7%A5%9E%E7%A4%BE%E5%89%8D%20%E6%B5%B7%E5%B2%B8%20%E5%8A%A0%E5%A4%AA%20%E5%92%8C%E6%AD%8C%E5%B1%B1",
-      "coordinates": null,
-      "coordinate_status": "not_geocoded",
-      "source_url": "https://www.kada.jp/"
-    },
-    {
-      "id": "kada_kasuga",
-      "name": "加太春日神社旁",
-      "name_ja": "加太春日神社",
-      "city": "和歌山",
-      "category": "visit",
-      "address_ja": "和歌山市加太1343",
-      "map_query": "加太春日神社 和歌山市加太1343",
-      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%8A%A0%E5%A4%AA%E6%98%A5%E6%97%A5%E7%A5%9E%E7%A4%BE%20%E5%92%8C%E6%AD%8C%E5%B1%B1%E5%B8%82%E5%8A%A0%E5%A4%AA1343",
-      "coordinates": null,
-      "coordinate_status": "not_geocoded",
-      "source_url": "https://www.city.wakayama.wakayama.jp/kankou/kankouspot/1001038/1000591.html"
-    },
-    {
-      "id": "kada_kishimoto",
-      "name": "キシモト商店前",
-      "name_ja": "キシモト商店 加太",
-      "city": "和歌山",
-      "category": "visit",
-      "address_ja": null,
-      "map_query": "キシモト商店 加太 和歌山",
-      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E3%82%AD%E3%82%B7%E3%83%A2%E3%83%88%E5%95%86%E5%BA%97%20%E5%8A%A0%E5%A4%AA%20%E5%92%8C%E6%AD%8C%E5%B1%B1",
-      "coordinates": null,
-      "coordinate_status": "not_geocoded",
-      "source_url": "https://xckb.hatenablog.com/entry/2022/07/17/153318"
-    },
-    {
-      "id": "kada_kojima",
-      "name": "小嶋一商店",
-      "name_ja": "小嶋一商店 加太",
-      "city": "和歌山",
-      "category": "shop",
-      "address_ja": null,
-      "map_query": "小嶋一商店 加太 和歌山",
-      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%B0%8F%E5%B6%8B%E4%B8%80%E5%95%86%E5%BA%97%20%E5%8A%A0%E5%A4%AA%20%E5%92%8C%E6%AD%8C%E5%B1%B1",
-      "coordinates": null,
-      "coordinate_status": "not_geocoded",
-      "source_url": "https://otaspoguide.com/14070/"
-    },
-    {
-      "id": "kada_station",
-      "name": "加太站",
-      "name_ja": "加太駅",
-      "city": "和歌山",
-      "category": "station",
-      "address_ja": null,
-      "map_query": "加太駅 和歌山",
-      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%8A%A0%E5%A4%AA%E9%A7%85%20%E5%92%8C%E6%AD%8C%E5%B1%B1",
-      "coordinates": null,
-      "coordinate_status": "not_geocoded",
-      "source_url": "https://www.nankai.co.jp/traffic/station/kada.html"
-    },
-    {
-      "id": "kada_tourist_info",
-      "name": "加太观光协会案内所",
-      "name_ja": "加太観光協会案内所",
-      "city": "和歌山",
-      "category": "visit",
-      "address_ja": null,
-      "map_query": "加太観光協会案内所 和歌山",
-      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%8A%A0%E5%A4%AA%E8%A6%B3%E5%85%89%E5%8D%94%E4%BC%9A%E6%A1%88%E5%86%85%E6%89%80%20%E5%92%8C%E6%AD%8C%E5%B1%B1",
-      "coordinates": null,
-      "coordinate_status": "not_geocoded",
-      "source_url": "https://www.kada.jp/"
-    },
-    {
-      "id": "kada_tsutsumi",
-      "name": "堤川沿岸小路",
-      "name_ja": "加太 堤川",
-      "city": "和歌山",
-      "category": "walk",
-      "address_ja": null,
-      "map_query": "加太 堤川 和歌山",
-      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%8A%A0%E5%A4%AA%20%E5%A0%A4%E5%B7%9D%20%E5%92%8C%E6%AD%8C%E5%B1%B1",
-      "coordinates": null,
-      "coordinate_status": "not_geocoded",
-      "source_url": "https://www.kada.jp/kada_new_hp/wp-content/themes/gravit/img/top/tekutekumap_u.pdf"
     },
     {
       "id": "keihan_uji",
@@ -1126,45 +1022,6 @@
       ]
     },
     {
-      "id": "wakayama_castle",
-      "name": "和歌山城天守",
-      "name_ja": "和歌山城 天守閣",
-      "city": "和歌山",
-      "category": "visit",
-      "address_ja": "和歌山市一番丁3",
-      "map_query": "和歌山城 天守閣 和歌山市一番丁3",
-      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%92%8C%E6%AD%8C%E5%B1%B1%E5%9F%8E%20%E5%A4%A9%E5%AE%88%E9%96%A3%20%E5%92%8C%E6%AD%8C%E5%B1%B1%E5%B8%82%E4%B8%80%E7%95%AA%E4%B8%813",
-      "coordinates": null,
-      "coordinate_status": "not_geocoded",
-      "source_url": "https://wakayamajo.jp/riyou/"
-    },
-    {
-      "id": "wakayama_momijidani",
-      "name": "红叶溪庭园",
-      "name_ja": "西之丸庭園 紅葉渓庭園",
-      "city": "和歌山",
-      "category": "visit",
-      "address_ja": "和歌山市一番丁3",
-      "map_query": "西之丸庭園 紅葉渓庭園 和歌山市一番丁3",
-      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E8%A5%BF%E4%B9%8B%E4%B8%B8%E5%BA%AD%E5%9C%92%20%E7%B4%85%E8%91%89%E6%B8%93%E5%BA%AD%E5%9C%92%20%E5%92%8C%E6%AD%8C%E5%B1%B1%E5%B8%82%E4%B8%80%E7%95%AA%E4%B8%813",
-      "coordinates": null,
-      "coordinate_status": "not_geocoded",
-      "source_url": "https://wakayamajo.jp/riyou/"
-    },
-    {
-      "id": "wakayamashi_station",
-      "name": "南海和歌山市站",
-      "name_ja": "和歌山市駅 南海",
-      "city": "和歌山",
-      "category": "station",
-      "address_ja": null,
-      "map_query": "和歌山市駅 南海 和歌山",
-      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%92%8C%E6%AD%8C%E5%B1%B1%E5%B8%82%E9%A7%85%20%E5%8D%97%E6%B5%B7%20%E5%92%8C%E6%AD%8C%E5%B1%B1",
-      "coordinates": null,
-      "coordinate_status": "not_geocoded",
-      "source_url": "https://www.nankai.co.jp/traffic/station/wakayamashi.html"
-    },
-    {
       "id": "yasaka_shrine",
       "name": "八坂神社",
       "name_ja": "八坂神社",
@@ -1369,6 +1226,80 @@
       "coordinates": null,
       "coordinate_status": "not_geocoded",
       "description": "戎桥北侧的心斋桥筋南口，只短拍；之后前往南海难波返店。"
+    },
+    {
+      "id": "hozenji",
+      "name": "法善寺横丁",
+      "name_ja": "法善寺横丁",
+      "city": "大阪",
+      "category": "walk",
+      "address_ja": "大阪市中央区難波1丁目",
+      "map_query": "法善寺横丁 大阪",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E6%B3%95%E5%96%84%E5%AF%BA%E6%A8%AA%E4%B8%81%20%E5%A4%A7%E9%98%AA",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "nigatsudo",
+      "name": "东大寺二月堂",
+      "name_ja": "東大寺 二月堂",
+      "city": "奈良",
+      "category": "visit",
+      "address_ja": "奈良市雑司町406-1",
+      "source_url": "https://www.todaiji.or.jp/information/keidai/",
+      "map_query": "東大寺 二月堂",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E5%A4%A7%E5%AF%BA%20%E4%BA%8C%E6%9C%88%E5%A0%82",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "himeji_station",
+      "name": "姬路站",
+      "name_ja": "姫路駅",
+      "city": "姬路",
+      "category": "station",
+      "address_ja": null,
+      "map_query": "JR姫路駅",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=JR%E5%A7%AB%E8%B7%AF%E9%A7%85",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "himeji_castle",
+      "name": "姬路城",
+      "name_ja": "姫路城",
+      "city": "姬路",
+      "category": "visit",
+      "address_ja": "姫路市本町68",
+      "source_url": "https://www.city.himeji.lg.jp/castle/",
+      "map_query": "姫路城",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A7%AB%E8%B7%AF%E5%9F%8E",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "kokoen",
+      "name": "好古园",
+      "name_ja": "姫路城西御屋敷跡庭園 好古園",
+      "city": "姬路",
+      "category": "visit",
+      "address_ja": "姫路市本町68",
+      "map_query": "好古園 姫路",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A5%BD%E5%8F%A4%E5%9C%92%20%E5%A7%AB%E8%B7%AF",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "otemae_dori",
+      "name": "大手前通",
+      "name_ja": "大手前通り",
+      "city": "姬路",
+      "category": "walk",
+      "address_ja": null,
+      "map_query": "大手前通り 姫路",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E6%89%8B%E5%89%8D%E9%80%9A%E3%82%8A%20%E5%A7%AB%E8%B7%AF",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
     }
   ],
   "days": [
@@ -2111,9 +2042,9 @@
     {
       "date": "2026-12-03",
       "weekday": "周四",
-      "title": "京都塔 · 稻荷 · 大阪夜景",
+      "title": "伏见稻荷 · 京都塔 · 道顿堀",
       "departure_target": "10:00",
-      "hotel_return_target": "20:00—20:30；延误可至21:00",
+      "hotel_return_target": "20:00—20:30",
       "intensity": "中等",
       "cities": [
         "京都",
@@ -2123,7 +2054,7 @@
       "timeline": [
         {
           "id": "checkout_kyoto",
-          "time_label": "10:00前后",
+          "time_label": "10:00",
           "time_status": "planning_window",
           "title": "退房、寄存行李",
           "place_ids": [
@@ -2133,90 +2064,88 @@
           "condition": "TUNE当日寄存，按订单与前台说明。"
         },
         {
-          "id": "kyoto_tower_transfer",
-          "time_label": "10:00—10:15",
+          "id": "inari_transfer",
+          "time_label": "10:00—10:20",
           "time_status": "planning_window",
-          "title": "步行去京都塔",
+          "title": "京都站 → JR稻荷",
           "place_ids": [
             "hotel_kyoto",
-            "kyoto_tower"
+            "kyoto_station",
+            "inari"
           ],
           "category": "transport"
         },
         {
-          "id": "kyoto_tower_visit",
-          "time_label": "10:15—11:15",
+          "id": "inari_visit",
+          "time_label": "10:20—11:50",
           "time_status": "planning_window",
-          "title": "京都塔京吹联动集章",
+          "title": "伏见稻荷 · 千本鸟居",
+          "place_ids": [
+            "inari"
+          ],
+          "category": "visit",
+          "condition": "楼门→千本鸟居→奥社奉拜所，原路回；比中午人少，不登顶。"
+        },
+        {
+          "id": "inari_return",
+          "time_label": "11:50—12:05",
+          "time_status": "planning_window",
+          "title": "稻荷 → 京都站",
+          "place_ids": [
+            "inari",
+            "kyoto_station"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "kyoto_lunch",
+          "time_label": "12:05—13:00",
+          "time_status": "planning_window",
+          "title": "午餐 · 京都站附近",
+          "place_ids": [
+            "kyoto_station"
+          ],
+          "category": "meal"
+        },
+        {
+          "id": "kyoto_tower_visit",
+          "time_label": "13:00—14:00",
+          "time_status": "planning_window",
+          "title": "京都塔 · 京吹集章",
           "place_ids": [
             "kyoto_tower"
           ],
           "category": "visit",
-          "condition": "先领台纸、完成收费区章点再出场；60分钟为预算，余量不足少挑周边。"
-        },
-        {
-          "id": "inari_transfer",
-          "time_label": "11:15—11:50",
-          "time_status": "planning_window",
-          "title": "出塔、京都站→JR稻荷",
-          "place_ids": [
-            "kyoto_station",
-            "inari"
-          ],
-          "category": "transport",
-          "condition": "京都→东福寺→稻荷两站，确认停稻荷。"
-        },
-        {
-          "id": "kyoto_lunch",
-          "time_label": "11:50—12:35",
-          "time_status": "planning_window",
-          "title": "午餐 · 稻荷参道简餐",
-          "place_ids": [
-            "inari"
-          ],
-          "category": "meal",
-          "condition": "参道简餐，长队约20分钟就换店。"
-        },
-        {
-          "id": "inari_visit",
-          "time_label": "12:35—13:45",
-          "time_status": "planning_window",
-          "title": "千本鸟居、奥社折返",
-          "place_ids": [
-            "inari"
-          ],
-          "category": "visit",
-          "condition": "不登顶，保留回京都取箱时间。"
+          "condition": "先在收费区集完章再出场；不长时间挑周边。",
+          "rally_spot": true
         },
         {
           "id": "luggage_pickup",
-          "time_label": "13:45—14:30",
+          "time_label": "14:00—14:30",
           "time_status": "planning_window",
-          "title": "回TUNE取齐行李",
+          "title": "回TUNE取行李",
           "place_ids": [
-            "inari",
-            "kyoto_station",
+            "kyoto_tower",
             "hotel_kyoto"
           ],
           "category": "transport"
         },
         {
           "id": "osaka_transfer",
-          "time_label": "14:30—约16:30",
+          "time_label": "14:30—16:15",
           "time_status": "planning_window",
-          "title": "取箱后去大阪新今宫酒店",
+          "title": "前往大阪酒店",
           "place_ids": [
             "kyoto_station",
             "jr_osaka",
             "jr_shinimamiya",
             "hotel_osaka"
           ],
-          "category": "transport",
-          "condition": "含候车、换乘、拖箱步行与入住，抵店随交通调整。"
+          "category": "transport"
         },
         {
           "id": "checkin_osaka",
-          "time_label": "约16:30",
+          "time_label": "约16:15",
           "time_status": "planning_window",
           "title": "入住大阪酒店",
           "place_ids": [
@@ -2226,20 +2155,19 @@
         },
         {
           "id": "osaka_checkin_rest",
-          "time_label": "入住后约1小时",
+          "time_label": "16:15—17:30",
           "time_status": "planning_window",
-          "title": "酒店坐下休息",
+          "title": "酒店休息",
           "place_ids": [
             "hotel_osaka"
           ],
-          "category": "rest",
-          "condition": "放箱后坐下休息约1小时，不为赶夜逛压缩。"
+          "category": "rest"
         },
         {
           "id": "dotonbori_transfer",
-          "time_label": "约17:30—18:00",
+          "time_label": "17:30—17:45",
           "time_status": "planning_window",
-          "title": "南海新今宫→难波，步行戎桥",
+          "title": "新今宫 → 难波",
           "place_ids": [
             "hotel_osaka",
             "nankai_shinimamiya",
@@ -2250,9 +2178,9 @@
         },
         {
           "id": "glico_photo",
-          "time_label": "约18:00—18:30",
+          "time_label": "17:45—18:15",
           "time_status": "planning_window",
-          "title": "戎桥柯南对照、格力高短拍",
+          "title": "戎桥 · 格力高",
           "place_ids": [
             "glico"
           ],
@@ -2260,28 +2188,29 @@
         },
         {
           "id": "dotonbori_walk",
-          "time_label": "约18:30—18:45",
+          "time_label": "18:15—18:45",
           "time_status": "planning_window",
-          "title": "道顿堀河边短走",
+          "title": "道顿堀 · 法善寺横丁",
           "place_ids": [
-            "dotonbori"
+            "dotonbori",
+            "hozenji"
           ],
-          "category": "walk"
+          "category": "visit",
+          "condition": "沿运河看招牌和夜景；心斋桥筋南段只走一小段。"
         },
         {
           "id": "dotonbori_dinner",
-          "time_label": "约18:45—19:45",
+          "time_label": "18:45—19:45",
           "time_status": "planning_window",
           "title": "晚餐 · 道顿堀／难波",
           "place_ids": [
             "namba_area"
           ],
-          "category": "meal",
-          "condition": "长队约20分钟换店，保留坐下用餐。"
+          "category": "meal"
         },
         {
           "id": "osaka_evening_return",
-          "time_label": "约20:00—20:30到店",
+          "time_label": "20:00—20:30",
           "time_status": "planning_window",
           "title": "返回酒店",
           "place_ids": [
@@ -2289,15 +2218,15 @@
             "nankai_shinimamiya",
             "hotel_osaka"
           ],
-          "category": "transport",
-          "condition": "饭后直接回酒店；晚到就缩短夜逛，不压酒店休息。"
+          "category": "transport"
         }
       ],
       "route_stop_ids": [
         "hotel_kyoto",
-        "kyoto_tower",
         "kyoto_station",
         "inari",
+        "kyoto_station",
+        "kyoto_tower",
         "hotel_kyoto",
         "kyoto_station",
         "jr_osaka",
@@ -2307,29 +2236,31 @@
         "nankai_namba",
         "glico",
         "dotonbori",
+        "hozenji",
         "namba_area",
         "nankai_namba",
         "nankai_shinimamiya",
         "hotel_osaka"
       ],
       "transport_notes": [
-        "酒店到京都塔步行预留10—15分钟；先退房寄存，不带大箱上塔。",
-        "出塔后到京都站乘JR奈良线，京都→东福寺→稻荷共两站，确认列车停靠稻荷；从展望层到稻荷街面预留约25—35分钟。",
-        "稻荷参观后乘JR奈良线回京都，步行到TUNE前台取齐寄存行李。",
-        "取箱后京都站JR新快速→大阪，换环状线至JR新今宫，再拖箱步行到酒店；含换乘与入住约2小时，不锁定车次。",
-        "南海新今宫乘往难波的列车：南海本线可一站到难波，高野线各停可能先停今宫戎；难波出站后步行到戎桥约10分钟。",
+        "退房寄存后步行到京都站，乘JR奈良线一站到稻荷，确认列车停靠稻荷。",
+        "稻荷乘JR奈良线回京都站，午饭后步行到京都塔。",
+        "京都塔后步行回TUNE前台取齐寄存行李。",
+        "取箱后京都站JR新快速→大阪，换环状线至JR新今宫，再拖箱步行到酒店；酒店15:00起入住。",
+        "南海新今宫乘往难波的列车，一站到难波，出站步行到戎桥约10分钟；也可从酒店步行约25分钟。",
         "饭后步行回南海难波，乘南海到新今宫，再步行回酒店；不去JR难波。"
       ],
       "fallback_rules": [
-        "抵大阪晚时缩短夜逛，不压入住休息。",
-        "法善寺横丁或心斋桥南段只能替换短逛的一部分，不叠加完整购物。"
+        "到大阪晚就缩短道顿堀，不压缩酒店休息。",
+        "京都塔延误就少挑周边。"
       ],
       "optional": [],
       "route_event_ids": [
         "checkout_kyoto",
-        "kyoto_tower_visit",
         "inari_transfer",
         "inari_visit",
+        "inari_return",
+        "kyoto_tower_visit",
         "luggage_pickup",
         "osaka_transfer",
         "osaka_transfer",
@@ -2338,6 +2269,7 @@
         "dotonbori_transfer",
         "dotonbori_transfer",
         "glico_photo",
+        "dotonbori_walk",
         "dotonbori_walk",
         "dotonbori_dinner",
         "osaka_evening_return",
@@ -2443,13 +2375,14 @@
           "id": "nara_park_walk",
           "time_label": "约10:40—11:10",
           "time_status": "planning_window",
-          "title": "公园步行至南大门",
+          "title": "步行到南大门",
           "place_ids": [
             "kintetsu_nara",
             "nara_park",
             "nara_nandaimon"
           ],
-          "category": "walk"
+          "category": "walk",
+          "condition": "不买鹿饼，包拉好；鹿靠近就摊开空手走开。"
         },
         {
           "id": "nara_visit",
@@ -2467,31 +2400,30 @@
           "id": "nara_lunch",
           "time_label": "12:10—13:10",
           "time_status": "planning_window",
-          "title": "午餐与坐下休息 · 奈良",
+          "title": "午餐 · 奈良公园附近",
           "place_ids": [
             "nara_park"
           ],
-          "category": "meal",
-          "condition": "奈良公园附近坐下吃饭并休息。"
+          "category": "meal"
         },
         {
-          "id": "nara_park_scenery",
+          "id": "nigatsudo_visit",
           "time_label": "13:10—14:00",
           "time_status": "planning_window",
-          "title": "一片公园草地与公共步道",
+          "title": "二月堂 · 俯瞰奈良",
           "place_ids": [
-            "nara_park"
+            "nigatsudo"
           ],
-          "category": "walk",
-          "condition": "一段公园草地与公共步道，不喂鹿；二月堂、浮见堂只能替换本段，不叠加。"
+          "category": "visit",
+          "condition": "大佛殿后坡道约10分钟；顺路从外面看法华堂（三月堂）。"
         },
         {
           "id": "nara_station_walk",
           "time_label": "14:00—14:30",
           "time_status": "planning_window",
-          "title": "往近铁奈良站返回",
+          "title": "回近铁奈良站",
           "place_ids": [
-            "nara_park",
+            "nigatsudo",
             "kintetsu_nara"
           ],
           "category": "walk"
@@ -2508,19 +2440,8 @@
           "category": "transport"
         },
         {
-          "id": "nippombashi_cafe",
-          "time_label": "16:00—16:30",
-          "time_status": "planning_window",
-          "title": "咖啡或坐下休息",
-          "place_ids": [
-            "kintetsu_nippombashi"
-          ],
-          "category": "rest",
-          "condition": "找有座位的咖啡店坐下休息，再开始购物。"
-        },
-        {
           "id": "anime_shopping",
-          "time_label": "16:30—18:30",
+          "time_label": "16:00—18:30",
           "time_status": "planning_window",
           "title": "日本桥动漫购物 · 重点1—2家",
           "place_ids": [
@@ -2528,7 +2449,7 @@
             "surugaya"
           ],
           "category": "shopping",
-          "condition": "Animate先，骏河屋后，含移动和结账；晚到只选一家。"
+          "condition": "先逛关门早的小店，再去Animate、骏河屋；晚到只选一家。"
         },
         {
           "id": "nippombashi_dinner",
@@ -2562,7 +2483,7 @@
         "nara_park",
         "nara_nandaimon",
         "todaiji",
-        "nara_park",
+        "nigatsudo",
         "kintetsu_nara",
         "kintetsu_nippombashi",
         "animate",
@@ -2574,13 +2495,12 @@
       ],
       "transport_notes": [
         "南海新今宫乘往难波的列车到南海难波，出站步行换乘近铁大阪难波站，乘奈良线往近铁奈良；勿上大阪线往伊势。门到近铁奈良约70分钟，含步行与候车。",
-        "回程乘大阪难波方向且停近铁日本桥的列车；含候车、出站与步行到咖啡店，预留约90分钟。",
-        "近铁日本桥站沿东侧街道向南到Animate，再沿御宅路向北到骏河屋动漫·Hobby馆；重点1—2家，按收获分配时间。",
+        "回程乘大阪难波方向且停近铁日本桥的列车，出站直接去逛店。",
+        "近铁日本桥站沿东侧街道向南到Animate，再沿御宅路向北到骏河屋动漫·Hobby馆；骏河屋也有CD区。",
         "饭后步行到南海难波，乘南海到新今宫，再步行回酒店；不去JR难波。"
       ],
       "fallback_rules": [
-        "延误先减公园段；晚到大阪时只逛一家，保护咖啡休息与晚饭。",
-        "不追加道顿堀、春日本殿、博物馆、奈良町、若草山或大阪城。"
+        "延误先缩短二月堂停留；晚到大阪就日本桥只逛一家，保留晚饭。"
       ],
       "optional": [
         {
@@ -2603,9 +2523,9 @@
         "nara_park_walk",
         "nara_visit",
         "nara_visit",
-        "nara_park_scenery",
+        "nigatsudo_visit",
         "nara_return_train",
-        "nippombashi_cafe",
+        "anime_shopping",
         "anime_shopping",
         "anime_shopping",
         "nippombashi_dinner",
@@ -2731,245 +2651,155 @@
     {
       "date": "2026-12-05",
       "weekday": "周六",
-      "title": "加太巡礼 · 和歌山城",
+      "title": "姬路城 · 好古园",
       "departure_target": "10:00",
-      "hotel_return_target": "约19:00—19:30；顺利可早回",
-      "intensity": "中等；含长交通与登城坡阶",
+      "hotel_return_target": "约20:00",
+      "intensity": "中等；天守台阶陡",
       "cities": [
-        "和歌山",
+        "姬路",
         "大阪"
       ],
       "overnight": "hotel_osaka",
       "timeline": [
         {
-          "id": "kada_transfer",
-          "time_label": "10:00—约11:45",
+          "id": "himeji_transfer",
+          "time_label": "10:00—11:30",
           "time_status": "planning_window",
-          "title": "南海新今宫→和歌山市→加太",
+          "title": "新今宫 → 姬路",
           "place_ids": [
             "hotel_osaka",
-            "nankai_shinimamiya",
-            "wakayamashi_station",
-            "kada_station"
+            "jr_shinimamiya",
+            "jr_osaka",
+            "himeji_station"
           ],
-          "category": "transport",
-          "condition": "候车有余量才拍市站站台，不为巡礼错过接续。"
+          "category": "transport"
         },
         {
-          "id": "kada_pilgrimage",
-          "time_label": "约11:45—12:45",
+          "id": "himeji_lunch",
+          "time_label": "11:30—12:15",
           "time_status": "planning_window",
-          "title": "加太镇巡礼，挑3—4处顺拍",
+          "title": "午餐 · 姬路站附近",
           "place_ids": [
-            "kada_tourist_info",
-            "kada_tsutsumi",
-            "kada_kojima",
-            "kada_kishimoto",
-            "kada_kasuga"
-          ],
-          "category": "walk",
-          "condition": "挑3—4处顺路短拍；店铺营业与点心库存不保证。"
-        },
-        {
-          "id": "kada_lunch",
-          "time_label": "12:45—13:30／13:45",
-          "time_status": "planning_window",
-          "title": "港口／参道附近午饭",
-          "place_ids": [
-            "kada_coast"
-          ],
-          "category": "meal",
-          "condition": "有空位优先；午饭用时长就减少拍照。"
-        },
-        {
-          "id": "awashima_visit",
-          "time_label": "13:30／13:45—14:15",
-          "time_status": "planning_window",
-          "title": "淡嶋神社与海边短停",
-          "place_ids": [
-            "awashima_shrine",
-            "kada_coast"
-          ],
-          "category": "visit",
-          "condition": "社殿与前方海边短停；风雨大时缩短海边。"
-        },
-        {
-          "id": "kada_station_return",
-          "time_label": "14:15—14:40",
-          "time_status": "planning_window",
-          "title": "步行回加太站、进站候车",
-          "place_ids": [
-            "awashima_shrine",
-            "kada_station"
-          ],
-          "category": "walk",
-          "condition": "步行约20分钟回加太站，留进站余量。"
-        },
-        {
-          "id": "wakayamashi_return",
-          "time_label": "候选14:59→15:22",
-          "time_status": "current_timetable_candidate",
-          "title": "加太→和歌山市",
-          "place_ids": [
-            "kada_station",
-            "wakayamashi_station"
-          ],
-          "category": "transport",
-          "condition": "现行周末候选，不是12/5锁定班次；临行按真实日期重查。"
-        },
-        {
-          "id": "wakayama_castle_transfer",
-          "time_label": "约15:22—15:45",
-          "time_status": "planning_window",
-          "title": "和歌山市站→城庭园入口",
-          "place_ids": [
-            "wakayamashi_station",
-            "wakayama_momijidani"
-          ],
-          "category": "walk",
-          "condition": "市站到城公园约15分钟，从庭园一侧进入。"
-        },
-        {
-          "id": "wakayama_garden_visit",
-          "time_label": "约15:45—16:05",
-          "time_status": "planning_window",
-          "title": "红叶溪庭园、御桥附近短看",
-          "place_ids": [
-            "wakayama_momijidani"
-          ],
-          "category": "visit",
-          "condition": "免费；16:45停止入园，不保证当天红叶盛期。"
-        },
-        {
-          "id": "wakayama_tower_ascent",
-          "time_label": "约16:05—16:25",
-          "time_status": "planning_window",
-          "title": "上坡与台阶到天守",
-          "place_ids": [
-            "wakayama_momijidani",
-            "wakayama_castle"
-          ],
-          "category": "walk",
-          "condition": "沿城内道路上坡与台阶约20分钟，按体力选路线。"
-        },
-        {
-          "id": "wakayama_tower_visit",
-          "time_label": "约16:25—16:55",
-          "time_status": "planning_window",
-          "title": "和歌山城天守内部与观景",
-          "place_ids": [
-            "wakayama_castle"
-          ],
-          "category": "visit",
-          "condition": "默认进天守，成人¥410；17:00停止入场、17:30闭门。"
-        },
-        {
-          "id": "wakayama_tower_descent",
-          "time_label": "约16:55—17:15",
-          "time_status": "planning_window",
-          "title": "从天守下坡离开",
-          "place_ids": [
-            "wakayama_castle"
-          ],
-          "category": "walk"
-        },
-        {
-          "id": "wakayama_station_return",
-          "time_label": "约17:15—17:40",
-          "time_status": "planning_window",
-          "title": "回和歌山市站、候车",
-          "place_ids": [
-            "wakayama_castle",
-            "wakayamashi_station"
-          ],
-          "category": "walk"
-        },
-        {
-          "id": "kada_day_return",
-          "time_label": "参考18:00前后出发，约19:00—19:30到酒店",
-          "time_status": "planning_window",
-          "title": "南海回新今宫、返店",
-          "place_ids": [
-            "wakayamashi_station",
-            "nankai_shinimamiya",
-            "hotel_osaka"
-          ],
-          "category": "transport",
-          "condition": "参考18:00前后发车，约19:00—19:30回店。"
-        },
-        {
-          "id": "kada_day_dinner",
-          "time_label": "返店后",
-          "time_status": "planning_window",
-          "title": "酒店附近晚饭、收主要行李",
-          "place_ids": [
-            "hotel_osaka"
+            "himeji_station"
           ],
           "category": "meal"
+        },
+        {
+          "id": "himeji_walk",
+          "time_label": "12:15—12:35",
+          "time_status": "planning_window",
+          "title": "大手前通 → 姬路城",
+          "place_ids": [
+            "himeji_station",
+            "himeji_castle"
+          ],
+          "category": "walk",
+          "condition": "一路正对天守。"
+        },
+        {
+          "id": "himeji_castle_visit",
+          "time_label": "12:35—14:45",
+          "time_status": "planning_window",
+          "title": "姬路城",
+          "place_ids": [
+            "himeji_castle"
+          ],
+          "category": "visit",
+          "condition": "城门→西之丸→天守；天守楼梯陡，周六可能排队。"
+        },
+        {
+          "id": "kokoen_visit",
+          "time_label": "14:50—17:15",
+          "time_status": "planning_window",
+          "title": "好古园 · 红叶点灯",
+          "place_ids": [
+            "kokoen"
+          ],
+          "category": "visit",
+          "condition": "白天看庭园和红叶，园内坐坐，日落约16:45后点灯；红叶可能已是尾声。"
+        },
+        {
+          "id": "himeji_lights",
+          "time_label": "17:15—17:45",
+          "time_status": "planning_window",
+          "title": "大手前通灯饰 → 姬路站",
+          "place_ids": [
+            "otemae_dori",
+            "himeji_station"
+          ],
+          "category": "walk",
+          "condition": "经三之丸广场，沿「あたら夜」灯饰走回车站。"
+        },
+        {
+          "id": "himeji_dinner",
+          "time_label": "17:45—18:45",
+          "time_status": "planning_window",
+          "title": "晚餐 · 姬路站附近",
+          "place_ids": [
+            "himeji_station"
+          ],
+          "category": "meal"
+        },
+        {
+          "id": "himeji_return",
+          "time_label": "约18:50—20:00",
+          "time_status": "planning_window",
+          "title": "姬路 → 酒店",
+          "place_ids": [
+            "himeji_station",
+            "jr_osaka",
+            "jr_shinimamiya",
+            "hotel_osaka"
+          ],
+          "category": "transport"
         }
       ],
       "route_stop_ids": [
         "hotel_osaka",
-        "nankai_shinimamiya",
-        "wakayamashi_station",
-        "kada_station",
-        "kada_tourist_info",
-        "kada_tsutsumi",
-        "kada_kojima",
-        "kada_kishimoto",
-        "awashima_shrine",
-        "kada_coast",
-        "kada_station",
-        "wakayamashi_station",
-        "wakayama_momijidani",
-        "wakayama_castle",
-        "wakayamashi_station",
-        "nankai_shinimamiya",
+        "jr_shinimamiya",
+        "jr_osaka",
+        "himeji_station",
+        "himeji_castle",
+        "kokoen",
+        "otemae_dori",
+        "himeji_station",
+        "jr_osaka",
+        "jr_shinimamiya",
         "hotel_osaka"
       ],
       "transport_notes": [
-        "南海新今宫乘南海本线往和歌山市（特急Southern或急行），在和歌山市站换加太线到加太；含候车约1小时45分钟，衔接差时晚到加太。",
-        "淡嶋神社步行回加太站约20分钟，14:40前进站。现行周末候选14:59→15:22到和歌山市，另有14:29班次；12/5临行按真实日期重查。",
-        "和歌山市站步行到城公园约15分钟，从红叶溪庭园一侧进入；到天守另有上坡。",
-        "庭园后沿城内道路上坡到天守：表坂约300米70阶、里坂约225米79阶、新里坂约130米102阶，按体力选。",
-        "回和歌山市站乘南海往难波方向，在新今宫下车再步行回酒店；参考18:00前后发车的Southern，约19:00—19:30回店，具体班次临行查询。"
+        "新今宫乘JR环状线到大阪，换JR神户线新快速往姬路，约1小时；途经三宫。",
+        "姬路站北口沿大手前通步行约20分钟到姬路城。",
+        "姬路乘JR新快速到大阪，换环状线回新今宫，约1小时15分钟。"
       ],
       "fallback_rules": [
-        "默认进天守；延误、明显疲劳或雨天石阶湿滑时改看外观，17:00后不能入天守。",
-        "庭园16:45停止入园，晚到时不能改走庭园，直接看外观或返程。",
-        "加太拍照、午饭或交通延误时，城可只看外观或取消；更多拍照或参观会顺延回店，不压缩返程步行。",
-        "风雨大时缩短海边停留；当天没有渡轮，不上友岛。"
+        "先保姬路城，16:00停止入城；周六排队长就缩短好古园。",
+        "累了就不等点灯，好古园逛完在姬路站吃饭后回。"
       ],
       "optional": [],
       "route_event_ids": [
-        "kada_transfer",
-        "kada_transfer",
-        "kada_transfer",
-        "kada_transfer",
-        "kada_pilgrimage",
-        "kada_pilgrimage",
-        "kada_pilgrimage",
-        "kada_pilgrimage",
-        "awashima_visit",
-        "awashima_visit",
-        "kada_station_return",
-        "wakayamashi_return",
-        "wakayama_garden_visit",
-        "wakayama_tower_visit",
-        "wakayama_station_return",
-        "kada_day_return",
-        "kada_day_return"
+        "himeji_transfer",
+        "himeji_transfer",
+        "himeji_transfer",
+        "himeji_transfer",
+        "himeji_castle_visit",
+        "kokoen_visit",
+        "himeji_lights",
+        "himeji_dinner",
+        "himeji_return",
+        "himeji_return",
+        "himeji_return"
       ],
       "meals": {
         "lunch": {
-          "primary": "加太港・淡嶋神社参道周辺の飲食店",
+          "primary": "姫路駅周辺の飲食店",
           "budget": "预算 ¥1,000–2,500",
-          "where": "加太港至淡嶋神社参道一带"
+          "where": "姬路站北口一带"
         },
         "dinner": {
-          "primary": "新今宮駅周辺の飲食店",
-          "budget": "预算 ¥1,000–2,000",
-          "where": "酒店与新今宫站一带"
+          "primary": "姫路駅周辺の飲食店",
+          "budget": "预算 ¥1,000–2,500",
+          "where": "姬路站北口一带"
         }
       },
       "dining_recommendations": {
@@ -3071,7 +2901,7 @@
       "weekday": "周日",
       "title": "神户巡礼 · 元町CD · 和牛",
       "departure_target": "09:30",
-      "hotel_return_target": "约20:20—20:45；随订位调整",
+      "hotel_return_target": "约20:15",
       "intensity": "中等",
       "cities": [
         "大阪",
@@ -3118,13 +2948,16 @@
           "id": "motomachi_cd_shopping",
           "time_label": "13:00—14:20",
           "time_status": "planning_window",
-          "title": "三宫→元町，两家CD店优先",
+          "title": "三宫动漫店 · 元町CD",
           "place_ids": [
+            "lashinbang_kobe",
+            "surugaya_kobe",
+            "bookoff_kobe",
             "kobe_banana_records",
             "kobe_rhythmbox"
           ],
           "category": "shopping",
-          "condition": "含步行、上下楼和结账。"
+          "condition": "らしんばん、骏河屋各约10分钟，BOOKOFF看音像，重点放在元町两家CD店。"
         },
         {
           "id": "sannomiya_rest",
@@ -3178,7 +3011,7 @@
         },
         {
           "id": "last_evening_return",
-          "time_label": "19:00后至约20:20—20:45",
+          "time_label": "19:00—20:15",
           "time_status": "planning_window",
           "title": "结账、返回大阪酒店",
           "place_ids": [
@@ -3199,6 +3032,9 @@
         "sannomiya",
         "ikuta",
         "starbucks_kitano",
+        "lashinbang_kobe",
+        "surugaya_kobe",
+        "bookoff_kobe",
         "kobe_banana_records",
         "kobe_rhythmbox",
         "sannomiya_center",
@@ -3216,26 +3052,15 @@
       "transport_notes": [
         "新今宫乘JR环状线到大阪，换JR神户线新快速到三ノ宮，再步行至生田神社；门到神社预留约75分钟。",
         "生田神社→北野，上坡预留20分钟；午饭后沿北野坂下坡至三宫，预留20分钟。",
-        "下坡回三宫后沿商店街向西步行到元町约15—20分钟；バナナレコード在新元町ビル4F，りずむぼっくす在辰巳ビル2F，含上下楼与结账，14:20停止购物。",
+        "北野下坡到三宫，先看らしんばん、骏河屋和BOOKOFF，再沿商店街向西到元町约10分钟；バナナレコード在新元町ビル4F，りずむぼっくす在辰巳ビル2F。",
         "从元町步行回三宫，到Port Liner三宫站乘车至中公園，步行约8分钟到北公园；拍摄后原路回三宫。全段约90分钟含候车与步行，16:30前回到三宫，不锁定车次。",
         "晚餐后步行回JR三ノ宮，乘JR神户线到大阪，换停靠新今宫的环状线列车；含到站、候车、换乘及回酒店步行，预留75—90分钟。"
       ],
       "fallback_rules": [
-        "14:20停购物，不回头补店；BOOKOFF／らしんばん／骏河屋只在前段明显提前时替换部分时间。",
+        "14:20停购物，不回头补店。",
         "北野无座位保留外观后换简餐；天气或疲劳不适合大桥则在三宫休息。"
       ],
-      "optional": [
-        {
-          "id": "kobe_extra_shop",
-          "title": "三宫其他动漫店（机会项）",
-          "place_ids": [
-            "bookoff_kobe",
-            "lashinbang_kobe",
-            "surugaya_kobe"
-          ],
-          "rule": "只在前段明显提前时替换部分购物时间；不保证进店，不挤休息、大桥或17点晚饭。"
-        }
-      ],
+      "optional": [],
       "route_event_ids": [
         "kobe_transfer",
         "kobe_transfer",
@@ -3243,6 +3068,9 @@
         "kobe_transfer",
         "ikuta_visit",
         "kitano_lunch",
+        "motomachi_cd_shopping",
+        "motomachi_cd_shopping",
+        "motomachi_cd_shopping",
         "motomachi_cd_shopping",
         "motomachi_cd_shopping",
         "sannomiya_rest",
@@ -3468,12 +3296,12 @@
     {
       "id": "nara-cash-20261019",
       "when": "2026-12-03",
-      "text": "12/4前备好大佛殿现金（两人¥1,600），查Animate与骏河屋临休；日本桥咖啡店留替代。"
+      "text": "12/4前备好大佛殿现金（两人¥1,600），查Animate与骏河屋临休。"
     },
     {
-      "id": "kada-wakayama-20261019",
+      "id": "himeji-20261108",
       "when": "2026-12-04",
-      "text": "12/5前夜按真实日期查加太14点与和歌山市18点前后的南海列车；查淡嶋神社、庭园与天守临时关闭。"
+      "text": "12/5前确认姬路城、好古园开放时间与套票价格，查好古园红叶点灯日程。"
     },
     {
       "id": "kobe-1205-20261019",
@@ -3862,50 +3690,6 @@
       }
     },
     {
-      "id": "summer-kada-info",
-      "place_ids": [
-        "kada_tourist_info"
-      ],
-      "date": "2026-12-05",
-      "event_id": "kada_pilgrimage",
-      "title": "加太观光协会 · 雨棚",
-      "work": "夏日重现",
-      "coordinates": null
-    },
-    {
-      "id": "summer-kada-kojima",
-      "place_ids": [
-        "kada_kojima"
-      ],
-      "date": "2026-12-05",
-      "event_id": "kada_pilgrimage",
-      "title": "小嶋一商店 · コバマート",
-      "work": "夏日重现",
-      "coordinates": null
-    },
-    {
-      "id": "summer-kada-tsutsumi",
-      "place_ids": [
-        "kada_tsutsumi"
-      ],
-      "date": "2026-12-05",
-      "event_id": "kada_pilgrimage",
-      "title": "堤川沿岸 · 河边街道",
-      "work": "夏日重现",
-      "coordinates": null
-    },
-    {
-      "id": "summer-kada-kishimoto",
-      "place_ids": [
-        "kada_kishimoto"
-      ],
-      "date": "2026-12-05",
-      "event_id": "kada_pilgrimage",
-      "title": "キシモト商店 · 雨宿店前",
-      "work": "夏日重现",
-      "coordinates": null
-    },
-    {
       "id": "senren-ikuta",
       "place_ids": [
         "ikuta"
@@ -4002,12 +3786,12 @@
       "source": "https://www.todaiji.or.jp/information/haikan/"
     },
     {
-      "place_id": "wakayama_castle",
+      "place_id": "himeji_castle",
       "date": "2026-12-05",
-      "adult_jpy": 410,
-      "two_adults_jpy": 820,
-      "status": "现场购票；默认进天守，庭园免费",
-      "source": "https://wakayamajo.jp/riyou/"
+      "adult_jpy": 2600,
+      "two_adults_jpy": 5200,
+      "status": "现场购票；姬路城＋好古园套票",
+      "source": "https://tanosu.com/trip/35849/"
     },
     {
       "place_id": "fufutei_kobe",
@@ -4021,7 +3805,7 @@
       "source": "https://fufutei-44.owst.jp/courses"
     }
   ],
-  "revision_note": "最终计划：不去USJ、大阪城、友岛登船与白须神社；12/4奈良与日本桥，12/5加太、淡嶋神社与和歌山城（默认进天守），12/6元町两家CD店与17:00和牛（待订位）。机酒与HARUKA订单不变。",
+  "revision_note": "修订：12/3先稻荷后京都塔；12/4奈良加二月堂、直接逛日本桥；12/5改去姬路城与好古园，在姬路吃晚饭；12/6三宫动漫店快速看后去元町CD店。机酒与HARUKA不变。",
   "excluded_default": [
     "USJ",
     "大阪城",
@@ -4030,7 +3814,8 @@
     "奈良博物馆",
     "春日本殿",
     "若草山登顶",
-    "完整奈良町游览"
+    "完整奈良町游览",
+    "和歌山"
   ],
   "hard_stops": {
     "2026-12-01": [
@@ -4077,22 +3862,10 @@
     ],
     "2026-12-05": [
       {
-        "time": "16:45",
-        "event_id": "wakayama_garden_visit",
+        "time": "16:00",
+        "event_id": "himeji_castle_visit",
         "type": "official_last_entry",
-        "text": "红叶溪庭园停止入园"
-      },
-      {
-        "time": "17:00",
-        "event_id": "wakayama_tower_visit",
-        "type": "official_last_entry",
-        "text": "天守停止入场"
-      },
-      {
-        "time": "17:30",
-        "event_id": "wakayama_tower_visit",
-        "type": "official_close",
-        "text": "天守闭门"
+        "text": "姬路城停止入城"
       }
     ],
     "2026-12-06": [

@@ -62,7 +62,7 @@ const passHTML=(b,from,to)=>`<div class="pass"><div class="pass-end"><small>${e(
 function dayLine(){
  const today=todayIndex();
  return `<ol class="line days">${PLAN.days.map((d,i)=>{const info=dayPresentation(d),p=progress(d);
-  return `<li class="${i===today?'now':''}${p.done&&p.done===p.total?' done':''}"><a class="day-link" href="#day/${d.date}"><span class="dl-date"><b>${dateLabel(d.date)}</b><small>${i===today?'今天':e(d.weekday)}</small></span><span class="node photo">${img(info.cover)}</span><span class="dl-main"><b>${e(info.short)}</b><small>${e(dayHighlights(d))}</small></span>${p.done?(p.done===p.total?seal(' small'):`<span class="dl-done">${p.done}/${p.total}</span>`):''}</a></li>`;}).join('')}</ol>`;
+  return `<li class="${i===today?'now':''}${p.done&&p.done===p.total?' done':''}"><a class="day-link" href="#day/${d.date}"><span class="dl-date"><b>${dateLabel(d.date)}</b><small>${i===today?'今天':e(d.weekday)}</small></span><span class="node photo">${img(info.cover)||dayDoodle(d.date)}</span><span class="dl-main"><b>${e(info.short)}</b><small>${e(dayHighlights(d))}</small></span>${p.done?(p.done===p.total?seal(' small'):`<span class="dl-done">${p.done}/${p.total}</span>`):''}</a></li>`;}).join('')}</ol>`;
 }
 
 /* ---------- 现在 ---------- */
@@ -97,7 +97,7 @@ function focusCard(d,st,minutes){
 }
 function coverHero(title,sub){
  const ids=['byodoin','inari','dotonbori'].filter(id=>photoSrc(id));
- return `<header class="cover"><div class="cover-photos">${ids.map((id,i)=>`<span>${img(id,i===0)}</span>`).join('')}</div><a class="cover-back" href="${BLOG_HOME}">${icon('back')}<span>まひろ的小站</span></a><div class="cover-over"><p class="kicker">京都 · 宇治 · 大阪 · 奈良 · 和歌山 · 神户</p><h1 class="display">${e(title)}</h1><p>${e(sub)}</p></div>${themeButton()}</header>`;
+ return `<header class="cover"><div class="cover-photos">${ids.map((id,i)=>`<span>${img(id,i===0)}</span>`).join('')}</div><a class="cover-back" href="${BLOG_HOME}">${icon('back')}<span>まひろ的小站</span></a><div class="cover-over"><p class="kicker">京都 · 宇治 · 大阪 · 奈良 · 姬路 · 神户</p><h1 class="display">${e(title)}</h1><p>${e(sub)}</p></div>${themeButton()}</header>`;
 }
 function beforeScreen(s){
  const open=openPurchases().filter(p=>p.tone==='danger'&&!p.done);
@@ -113,7 +113,7 @@ function dayScreen(){
  const i=ui.day,d=PLAN.days[i],info=dayPresentation(d),[leave,back]=dayTimes(d,i),s=tripStatus(),today=s.phase==='during'&&s.index===i;
  const now=today?nowState(d,s.minutes):null,flow=DayFlow.forDay(d),level=intensity(d),notes=fieldNotes(d),shots=shotProgress(d.date);
  return `${strip(PLAN.days.map((x,j)=>['#day/'+x.date,j,j===todayIndex()?'今天':DETAILS[x.date].cityLabel]),i)}
- <article class="day-ticket"><header class="day-hero">${img(info.cover,true)}<span class="day-sticker">${dayDoodle(d.date)}</span><div class="hero-over"><p class="kicker">${dateLabel(d.date)} ${e(d.weekday)}${today?' · <em>今天</em>':''}</p><h1 class="display">${e(info.short)}</h1><p>${e(info.eyebrow)}</p></div>${daySeal(i+1)}</header>
+ <article class="day-ticket"><header class="day-hero${photoSrc(info.cover)?'':' sketched-hero'}">${photoSrc(info.cover)?img(info.cover,true)+'<span class="day-sticker">'+dayDoodle(d.date)+'</span>':'<span class="hero-sketch">'+dayDoodle(d.date)+'</span>'}<div class="hero-over"><p class="kicker">${dateLabel(d.date)} ${e(d.weekday)}${today?' · <em>今天</em>':''}</p><h1 class="display">${e(info.short)}</h1><p>${e(info.eyebrow)}</p></div>${daySeal(i+1)}</header>
  <dl class="ticket-facts"><div><dt>${doodle('sun').replace('class="doodle"','class="doodle dt-mark"')}${e(leave[0])}</dt><dd>${e(leave[1])}</dd></div><div><dt>${doodle('moon').replace('class="doodle"','class="doodle dt-mark"')}${e(back[0])}</dt><dd>${e(back[1]).replace(' – ',' – ')}</dd></div><div><dt>强度</dt><dd title="${e(level.full)}"><span class="dots" aria-hidden="true">${[1,2,3,4].map(n=>`<i${n<=level.level?' class="on"':''}></i>`).join('')}</span>${e(level.label)}</dd></div></dl></article>
  <div class="chips">${notes.length?openButton(d.date,'notes',`${icon('alert')}<span>情况有变时 · ${notes.length}</span>`,'chip warn'):''}${d.overnight?openButton(d.date,'stay',`${icon('bed')}<span>酒店</span>`,'chip'):''}${shots.total?`<a class="chip" href="#shots/${d.date}">${icon('camera')}<span>巡礼 ${shots.done}/${shots.total}</span></a>`:''}</div>
  ${deadlines(d,today?s.minutes:null,kita(flow.done===flow.total?'grin':'peek','in-title'))}
@@ -260,7 +260,7 @@ function prepScreen(){
  <details class="fold block"><summary>参考资料</summary>
   <h3 class="sub">作品日文名</h3>${WORK_NAMES.map(t=>`<p class="copy-line"><span lang="ja">${e(t)}</span><button type="button" class="icon-btn small" data-action="copy" data-copy="${e(t)}" aria-label="复制${e(t)}">${icon('copy')}</button></p>`).join('')}
   <h3 class="sub">保存的早季红叶预测 · 截至2026/9/28</h3>${PLAN.foliage.spots.map(s=>`<p>${e(PLACE[s.place_id].name)}：到访 ${dateLabel(s.visit_date)} · 预测观赏 ${dateLabel(s.forecast_viewing_start)} · 预测落叶 ${dateLabel(s.forecast_leaf_fall_start)} · ${external('来源 ↗',s.source)}</p>`).join('')}
-  <h3 class="sub">预算</h3><p>普通正餐每人¥1,000—2,500；12/6和牛自助现价¥5,000/人、上限¥6,000/人。</p><p>门票（两人）：${PLAN.visit_budget.filter(v=>!v.item).map(v=>e(({kodaiji:'高台寺',kyoto_tower:'京都塔',todaiji:'大佛殿'})[v.place_id]||PLACE[v.place_id].name)+' ¥'+v.two_adults_jpy.toLocaleString('en-US')).join('、')}；清水寺与购物另计。</p>
+  <h3 class="sub">预算</h3><p>普通正餐每人¥1,000—2,500；12/6和牛自助现价¥5,000/人、上限¥6,000/人。</p><p>门票（两人）：${PLAN.visit_budget.filter(v=>!v.item).map(v=>e(({kodaiji:'高台寺',kyoto_tower:'京都塔',todaiji:'大佛殿',himeji_castle:'姬路城＋好古园'})[v.place_id]||PLACE[v.place_id].name)+' ¥'+v.two_adults_jpy.toLocaleString('en-US')).join('、')}；清水寺与购物另计。</p>
   <h3 class="sub">离线使用</h3><p>地图和来源链接需联网；勾选只存在本机浏览器。</p>
  </details>
  <a class="link-row" href="${BLOG_HOME}">${icon('back')}<span>返回まひろ的小站</span>${icon('chevron')}</a>`;

@@ -23,19 +23,9 @@ const EVENT_BRIEF={
  gion_dinner_walk:'夜枫准时结束且有余量时短停八坂神社。',
  kyoto_tower_visit:'展望室5层领台纸，集齐7处章再出场。',
  inari_transfer:'',
- inari_visit:'千本鸟居到奥社折返，不登顶，留出回京都取箱时间。',
  osaka_transfer:'',
  nara_transfer:'',
  nara_visit:'仅现金；大佛殿内部约30—40分钟。',
- nara_park_scenery:'',
- kada_pilgrimage:'挑3—4处顺路短拍，不必全到。',
- kada_station_return:'',
- wakayamashi_return:'',
- wakayama_castle_transfer:'',
- wakayama_garden_visit:'',
- wakayama_tower_ascent:'',
- wakayama_tower_visit:'',
- kada_day_return:'',
  kobe_bridge_visit:'16:30前回三宫；大风雨或疲劳就取消。',
  sannomiya_dinner:'17:00订不到再看17:30。',
  anime_shopping:'重点1—2家，晚到只选一家。',
@@ -45,22 +35,15 @@ const EVENT_BRIEF={
 // Shorter wording for 情况有变时. Each source must still occur in the planning notes (trip/verify.mjs checks this);
 // a short form keeps every status word (待确认／未购买／尚未订位), safety limit and deadline of its source.
 const FALLBACK_SHORT=[
-  ['默认进天守；延误、明显疲劳或雨天石阶湿滑时改看外观，17:00后不能入天守。','延误、疲劳或雨天石阶湿滑时改看天守外观；17:00后不能入天守。'],
- ['庭园16:45停止入园，晚到时不能改走庭园，直接看外观或返程。','16:45后才到就不进庭园，直接看外观或返程。'],
- ['加太拍照、午饭或交通延误时，城可只看外观或取消；更多拍照或参观会顺延回店，不压缩返程步行。','加太段延误时，城只看外观或取消；多停留就顺延回店。'],
- ['风雨大时缩短海边停留；当天没有渡轮，不上友岛。','风雨大时缩短海边停留。'],
  ['航班或入境延迟时，抵达后直接入住、吃简餐，再回酒店休息。','航班或入境延迟：直接入住、吃简餐后休息。'],
  ['飞石可在岸边拍；水位高或雨天不下河。','水位高或雨天不下河，飞石在岸边拍。']
 ];
 const TEXT_SHORT=[
- ['，含上下楼与结账，14:20停止购物。','。'],
  ['只选一段公共步道和草地，不喂鹿、不要求近距离互动。','不喂鹿。'],
  ['优先《玉子》高野川侧，《轻音》仅有余量时拍，不来回补机位。','《轻音》仅有余量时拍。'],
  ['店铺与咖啡10:00—17:30，咖啡末单16:30、受付至16:00；不接受座位预约，拥挤时可能提早截止。','拥挤时可能提早截止。'],
  ['京吹粉丝聚集的餐厅，非动画取景点。','京吹粉丝聚集的餐厅。'],
  ['，官网标年中无休。','，年中无休。'],
- ['；标牌、邻屋、道路布局有改编，不声称逐像素一致。','；标牌、邻屋、道路布局有改编。'],
- ['；动画人物遮挡大，实拍无人物，属于局部场景而非整条街严格同构。','。'],
  ['；画面有改绘，不到车道上追机位。','；画面有改绘。'],
  ['；不必走完整座桥。','。'],
  ['；作品为夏祭场景，与12月现场不同。','；作品为夏祭场景。'],
@@ -85,28 +68,28 @@ const DROP_COPY=[
  /以(航司最新通知|现场设施|现场)[^，；。]*为准/,/按(登机牌和)?现场指引/,/按航司通知及登机牌复核/,/提前完成托运后前往登机口/,
  /不锁定车次/,/(于\d+\/\d+|平日时刻已)核实/,/^配图为/,/须现场核对/,/遇活动占用时在允许通行处拍摄/,
  /查下一班关西机场方向列车/,/^若选择Rapi:t/,/须结合宇治市巡礼图/,/(找|向)站员确认替代交通/,/^(攻略)?勾选不等于官方领章/,/^攻略勾选不会替你/,/^这是手机GPS数字集章/,/旧图中的座椅与后方护岸可能已有变化/,/^不是傍晚看展示/,/^不是新兰合影逐帧截图/,
- /^(店铺)?营业与点心库存不保证/,/^室内是否开放不保证/,/不为买到而早起/,/^现行周末候选，不是12\/5锁定班次/,/不保证当天红叶盛期/,/^傍晚案内所可能已关/,/^纸本现场询问/,/^12\/6晚把证件、钱包/
+ /^(店铺)?营业与点心库存不保证/,/^室内是否开放不保证/,/^傍晚案内所可能已关/,/^纸本现场询问/,/^12\/6晚把证件、钱包/
 ];
 const DROP_SENTENCES=new Set([
  '关西T1抵达','默认在酒店附近吃简餐','从餐厅步行到表参道，沿街拍照',
  '縣神社 → 久美子椅 → 喜撰桥 → 塔之岛 → 朝雾桥','从朝雾桥东桥头依次短看两神社，再到大吉山登山口',
  '从书店步行到站，看展示约10分钟','小吃只买短队，不逐家进店','等号暂离按当日规则，宇治桥短拍不额外重复算时',
  '从表参道顺路前往','延误可省，不承诺完成全套后期集章','从河岸步行到商场3F，约16:40到店，逛30—40分钟','从京阪宇治站经宇治桥过河，到西岸萨莉亚',
- '晚到就缩短夜逛，不压酒店休息','三年坂 → 八坂塔短支线 → 二年坂 → 宁宁之道','75分钟用于步行与巡礼短拍，保留之后半小时休息',
- 'TUNE当日寄存，按订单与前台说明','放箱后坐下休息约1小时，不为赶夜逛压缩','饭后直接回酒店','参道简餐，长队约20分钟就换店','长队约20分钟换店，保留坐下用餐',
- '奈良公园附近坐下吃饭并休息','找有座位的咖啡店坐下休息，再开始购物','候车有余量才拍市站站台，不为巡礼错过接续','有空位优先','午饭用时长就减少拍照',
- '默认进天守，成人¥410','17:00停止入场、17:30闭门','坐下约20分钟，其余时间步行回三宫','从三宫去餐厅、准备入店，不再补逛店','回店只留行李收尾',
- '从展望层到稻荷街面预留约25—35分钟','门到近铁奈良约70分钟，含步行与候车','含候车、出站与步行到咖啡店，预留约90分钟','含候车约1小时45分钟，衔接差时晚到加太',
- '门到神社预留约75分钟','含到站、候车、换乘及回酒店步行，预留75—90分钟','60分钟为预算，余量不足少挑周边','约11:10从南大门向内参观，大佛殿内部保留约30—40分钟',
+ '三年坂 → 八坂塔短支线 → 二年坂 → 宁宁之道','75分钟用于步行与巡礼短拍，保留之后半小时休息',
+ 'TUNE当日寄存，按订单与前台说明','参道简餐，长队约20分钟就换店',
+ '有空位优先','午饭用时长就减少拍照',
+ '坐下约20分钟，其余时间步行回三宫','从三宫去餐厅、准备入店，不再补逛店','回店只留行李收尾',
+ '门到近铁奈良约70分钟，含步行与候车',
+ '门到神社预留约75分钟','含到站、候车、换乘及回酒店步行，预留75—90分钟','约11:10从南大门向内参观，大佛殿内部保留约30—40分钟',
  '冬季17:00闭门','往返与展望台75分钟','到得早且无需久等时再选京都站餐厅','实景为夜间照片，本次在15:00—16:30时段到访',
  '12/1不能补前期章','前期9/1—10/31：井川用水機場前（久美子）、宇治桥（奏）、大吉山展望台（丽奈）','单点可领对应角色相框，后期三点完成可领三人集合相框',
  '参加免费，交通与流量另计','日本境外销售的部分机型可能不受支持','相框可用至2027/1/31','未取得前期3枚印章，仅12月一天不能满足6枚印章的抽奖条件','非地下街','长队时换简餐','等位较久时换附近简餐','附近简餐，优先有座位的店','未指定店铺','长队约20分钟就换店，保留坐下用餐',
  '坐下吃饭并休息','优先能及时入座的店','购物后吃饭','地图为餐饮片区，餐厅现场选择','回店后就近吃简餐，再收主要行李','附近找座位休息30分钟',
  '无座位就保留外观短拍，下坡找有座位的简餐','二月堂有坡阶、浮见堂需跨区步行，只能替换公园或大佛殿的部分时间，不同时追加',
- '《魔女的夜宴》七绪咖啡店关联为玩家实景对照，非官方认定','先领台纸、完成收费区章点再出场','一段公园草地与公共步道，不喂鹿','官方建议庭园、御桥与天守往返至少90分钟','25分钟含河岸短拍与前往京阪站','营业16:00—23:00，末单22:30','取号与用餐75分钟为预算，不保证等位','11:00左右判断不能11:45前吃完则放弃堂食','09:30离店，到店前含酒店到站、候车与步行',
+ '《魔女的夜宴》七绪咖啡店关联为玩家实景对照，非官方认定','官方建议庭园、御桥与天守往返至少90分钟','25分钟含河岸短拍与前往京阪站','营业16:00—23:00，末单22:30','取号与用餐75分钟为预算，不保证等位','11:00左右判断不能11:45前吃完则放弃堂食','09:30离店，到店前含酒店到站、候车与步行',
  '天气、路况与体力合适才登山','往返与停留预留75分钟，白天完成','京都塔叠印与12/1宇治GPS数字集章是不同活动','先完成收费区章点再出场是减少折返的安排',
- '南海难波到近铁大阪难波需步行，含进站候车','二月堂、浮见堂只能替换本段，不叠加','沿城内道路上坡与台阶约20分钟，按体力选路线','多看会顺延回店，不压缩下坡与返程步行',
- '大风雨或疲劳取消，不挤晚饭','中公園站步行约8分钟，不安排全程步行跨桥','当前120分钟软饮和牛约5000/人，预算上限6000','含结账及75—90分钟返程','保留午餐、咖啡、休息与外观巡礼','Animate先，骏河屋后，含移动和结账','酒店官方的约 5 分钟步行不包含站台到出口','含候车、换乘、拖箱步行与入住，抵店随交通调整',
+ '南海难波到近铁大阪难波需步行，含进站候车','多看会顺延回店，不压缩下坡与返程步行',
+ '大风雨或疲劳取消，不挤晚饭','中公園站步行约8分钟，不安排全程步行跨桥','当前120分钟软饮和牛约5000/人，预算上限6000','含结账及75—90分钟返程','保留午餐、咖啡、休息与外观巡礼','酒店官方的约 5 分钟步行不包含站台到出口',
  '按登机牌时限到登机口',
  '到站后前往T1，办理值机、托运、安检与出境','当前值机截止09:10日本时间','早餐前晚备好，离店前或抵达机场后吃'
 ]);
@@ -160,7 +143,7 @@ const HARD_STOPS={
  '2026-12-01':[['11:00','芭菲：判断能否11:45前吃完','uji_parfait','decide'],['14:40','未到大吉山登山口就取消登山','daikichi_visit','decide']],
  '2026-12-02':[['17:45','仍未入场就改去吃晚饭','kodaiji_night','decide'],['20:00','おめん最后点餐','gion_dinner','close']],
  '2026-12-04':[['20:00','Animate关门','anime_shopping','close']],
- '2026-12-05':[['14:40','加太站进站候车','kada_station_return','decide'],['16:45','庭园停止入园','wakayama_garden_visit','close'],['17:00','天守停止入场','wakayama_tower_visit','close'],['17:30','天守闭门','wakayama_tower_visit','close']],
+ '2026-12-05':[['16:00','姬路城停止入城','himeji_castle_visit','close']],
  '2026-12-06':[['14:20','元町停止购物','motomachi_cd_shopping','decide'],['15:00','出发去神户大桥','kobe_bridge_visit','decide']],
  '2026-12-07':[['09:10','关西T1值机截止','airport_checkin','close']]
 };
@@ -190,7 +173,7 @@ function spanText(ev){const m=/(\d{1,2}):(\d{2})\D+?(\d{1,2}):(\d{2})/.exec(ev.t
 const passedConnector=(d,ev)=>{const events=effectiveEvents(d),next=events.slice(events.findIndex(x=>x.id===ev.id)+1).find(x=>isMajorEvent(d,x));return !!next&&activityState(d.date,next.id)==='done';};
 const eventDone=(d,ev)=>isMajorEvent(d,ev)?activityState(d.date,ev.id)==='done':passedConnector(d,ev);
 // Ordinary identification photos belong to the first eligible activity, not transit.
-function compactEvent(ev){return ev.category==='transport'||(ev.category==='rest'&&ev.place_ids.every(id=>id.startsWith('hotel_')))||['wakayama_tower_ascent','wakayama_tower_descent','kada_station_return','wakayama_station_return'].includes(ev.id);}
+function compactEvent(ev){return ev.category==='transport'||(ev.category==='rest'&&ev.place_ids.every(id=>id.startsWith('hotel_')))||false;}
 function eventPhotoIds(ev){return compactEvent(ev)?[]:ev.place_ids.filter(id=>photoSrc(id)&&(ev.category!=='meal'||PLACE[id].category==='restaurant'));}
 // Major activities are what the day is for; transfers, rests, arrivals and plain walks are quiet rows.
 function isMajorEvent(d,ev){
@@ -206,9 +189,9 @@ const CATEGORY_ICON={transport:'train',flight:'plane',meal:'food',visit:'camera'
 const TRANSPORT_AT_EVENT={
  flight_out:[3],arrival_transfer:[0,1],checkin_kyoto:[2],uji_transfer:[0],uji_pilgrimage:[1],suikan_stamp:[2],uji_return:[3],
  demachi_transfer:[0],kiyomizu_transfer:[1,2],higashiyama_walk:[3],kyoto_night_return:[4],
- kyoto_tower_transfer:[0],inari_transfer:[1],luggage_pickup:[2],osaka_transfer:[3],dotonbori_transfer:[4],osaka_evening_return:[5],
+ inari_transfer:[0],inari_return:[1],luggage_pickup:[2],osaka_transfer:[3],dotonbori_transfer:[4],osaka_evening_return:[5],
  nara_transfer:[0],nara_return_train:[1],nara_day_return:[3],
- kada_transfer:[0],kada_station_return:[1],wakayama_castle_transfer:[2],wakayama_tower_ascent:[3],kada_day_return:[4],
+ himeji_transfer:[0],himeji_walk:[1],himeji_return:[2],
  kobe_transfer:[0],kitano_lunch:[1],motomachi_cd_shopping:[2],kobe_bridge_visit:[3],last_evening_return:[4],
  checkout_osaka:[0],airport_train:[1,2],airport_checkin:[3]
 };
@@ -231,7 +214,7 @@ function mealNotes(row){
  const suggestions=['牛丼／定食；','餐盘1,400起。','轻食配饮品。'].filter(text=>row[5].includes(text));
  return {conditions:suggestions.reduce((text,note)=>text.replace(note,''),row[5]),suggestion:suggestions.join('').replace(/；$/,'。')};
 }
-function mealMap(d,r){if(r[7]&&PLACE[r[7]])return PLACE[r[7]].map_search_url;let city=d.cities.includes('宇治')&&['午餐','晚餐'].includes(r[0])?'宇治':d.date==='2026-12-04'&&r[0]==='午餐'?'奈良':d.date==='2026-12-05'&&r[0]==='午餐'?'和歌山 加太':d.date==='2026-12-06'&&r[0]==='午餐'?'神戸':d.date==='2026-12-03'&&r[0]==='午餐'?'京都':d.overnight==='hotel_kyoto'?'京都':'大阪';if(r[2].startsWith('通圓'))city='宇治';return mapURL(city+' '+r[2]);}
+function mealMap(d,r){if(r[7]&&PLACE[r[7]])return PLACE[r[7]].map_search_url;let city=d.cities.includes('宇治')&&['午餐','晚餐'].includes(r[0])?'宇治':d.date==='2026-12-04'&&r[0]==='午餐'?'奈良':d.date==='2026-12-05'?'姫路':d.date==='2026-12-06'&&r[0]==='午餐'?'神戸':d.date==='2026-12-03'&&r[0]==='午餐'?'京都':d.overnight==='hotel_kyoto'?'京都':'大阪';if(r[2].startsWith('通圓'))city='宇治';return mapURL(city+' '+r[2]);}
 function mealModel(d,r,said){
  const notes=mealNotes(r);
  const where=(r[4]||'').replace(' · Louie’s N.Y. Pizza Parlor','').replace(/，.*$/,'').trim();
@@ -258,7 +241,7 @@ function dayFallbacks(d){const c=choice(d);return d.fallback_rules.flatMap(t=>{
 function dayNotes(d){const c=choice(d);const extra=(DETAILS[d.date].extra||[]).filter(t=>{
  // Ticket prices and the Amex evening are stated on the activity itself.
  // The 集章 notice and the 三宫 snack note are already covered on the activity or no longer fit the day.
- if(/^(京都塔门票|大佛殿成人|和歌山城天守成人|法善寺横丁或心斋桥筋南段|集章需手机联网定位|三宫小吃|后期数字章三点|商店街巡礼看西入口)/.test(t))return false;
+ if(/^(京都塔门票|大佛殿成人|姬路城＋好古园套票|法善寺横丁或心斋桥筋南段|集章需手机联网定位|三宫小吃|后期数字章三点|商店街巡礼看西入口)/.test(t))return false;
  return !(d.date==='2026-12-02'&&t.startsWith('本次只安排'));
 });return [...dayFallbacks(d),...extra];}
 const fieldNotes=d=>dayNotes(d).map(t=>cleanText(compactFallback(t))).filter(Boolean);
@@ -317,7 +300,7 @@ function shotModel(p){
  const copy=SHOT_COPY[p.id]||{};
  return {id:p.id,date:p.date,eventId:p.event_id,work:p.work,title:p.title,optional:!!p.option,reference:!!p.reference,nameJa:p.name_ja||PLACE[p.place_ids[0]]?.name_ja||p.title,
   scene:cleanText(copy.scene||p.scene),note:cleanText(copy.note||p.shooting_note),caption:cleanText(copy.caption||p.match_note),map:pointMap(p),done:!!state.checks[shotKey(p)],
-  coords:p.coordinates||null,images:p.comparison?[['comparison','作品 × 实景']]:[['anime','作品画面'],['real','实景']],point:p};
+  coords:p.coordinates||null,images:p.comparison?[['comparison','作品 × 实景']]:p.anime?[['anime','作品画面'],['real','实景']]:[['real','实景']],point:p};
 }
 // Shots in the order they are passed during the day.
 function dayShots(d){
@@ -329,7 +312,7 @@ function dayShots(d){
 const navTarget=(ev,stops)=>(ev.category==='shopping'?stops[0]:stops.at(-1))||null;
 
 // The 票务 entry an activity depends on, with its live state (尚未订位 → 已订位 once ticked).
-const TICKET_PLACE={'高台寺':'kodaiji','京都塔':'kyoto_tower','东大寺':'todaiji','和歌山城':'wakayama_castle','ふうふう亭':'fufutei_kobe'};
+const TICKET_PLACE={'高台寺':'kodaiji','京都塔':'kyoto_tower','东大寺':'todaiji','姬路城':'himeji_castle','ふうふう亭':'fufutei_kobe'};
 function eventTicket(d,ev){return openPurchases().find(t=>t.visitDate===d.date&&ev.place_ids.includes(Object.entries(TICKET_PLACE).find(([k])=>t.item.includes(k))?.[1]))||null;}
 
 /* ---------- One activity, fully resolved ---------- */
@@ -371,11 +354,11 @@ const TODO_LIST=[...PLAN.pending_checks,...(PLAN.additional_checks||[])].filter(
 const TODOS=TODO_LIST.map(t=>t.text),TODO_IDS=TODO_LIST.map(t=>t.id);
 // When each task is due. Tasks without a trip date belong before departure.
 const TODO_WHEN=Object.fromEntries(TODO_LIST.filter(t=>t.when).map(t=>[t.id,t.when]));
-const TODO_WHEN_LABEL={'2026-11-30':'抵达当晚','2026-12-02':'12/2 当天下午','2026-12-03':'12/3 晚上 · 奈良前一晚','2026-12-04':'12/4 晚上 · 加太前一晚','2026-12-05':'12/5 晚上 · 神户前一晚','2026-12-06':'12/6 晚上 · 回程前一晚'};
+const TODO_WHEN_LABEL={'2026-11-30':'抵达当晚','2026-12-02':'12/2 当天下午','2026-12-03':'12/3 晚上 · 奈良前一晚','2026-12-04':'12/4 晚上 · 姬路前一晚','2026-12-05':'12/5 晚上 · 神户前一晚','2026-12-06':'12/6 晚上 · 回程前一晚'};
 const TODO_PREFIX=/^12\/\d+(前夜|前|晚)?/;
 const TODO_SHORT={'weather':'查叶况与天气','restaurants':'核对餐厅营业与菜单','return-travel':'核对航班通知与回程南海时刻',
  'transport-tickets':'备好IC卡与HARUKA订单','uji-cafes':'确认宇治店铺营业与候位','rally-account':'登录集章账户、开定位',
- 'kodaiji-weather':'查高台寺天气与排队','nara-cash-20261019':'备大佛殿现金，查日本桥临休','kada-wakayama-20261019':'查南海列车与景点临时关闭',
+ 'kodaiji-weather':'查高台寺天气与排队','nara-cash-20261019':'备大佛殿现金，查日本桥临休','himeji-20261108':'查姬路城、好古园开放与点灯',
  'kobe-1205-20261019':'收好行李，查CD店临休与和牛订位','packing':'整理行李、证件和次晨早餐'};
 // The traps on a transfer, for the 现在 card: the rest of the route is under 全部详情.
 const transitCautions=notes=>notes.flatMap(n=>n.split(/(?<=[。；])/)).filter(s=>new RegExp(TRANSIT_CAUTION.source).test(s)).map(s=>s.replace(/[；。]$/,''));
