@@ -73,7 +73,7 @@ assert.equal(pt('conan-ebisubashi').date,'2026-12-03');assert.equal(pt('conan-eb
 assert.equal(pt('eupho_uji_bridge').event_id,'uji_parfait');
 assert.equal(pt('conan-tsutenkaku').reference,true,'通天阁只作参考');
 {const b=pt('fate-kobe-bridge');assert.ok(!b.comparison&&b.anime.width>b.anime.height&&b.real.width>b.real.height&&b.anime.license&&b.real.credit,'神户大桥两张横图');for(const k of ['real','anime'])assert.ok(fs.existsSync(path.join(src,b[k].local)));}
-{const s=pg.points.filter(p=>p.date==='2026-12-05');assert.equal(String(s.map(p=>p.id)),'sekiro-himeji-keep','12/5只狼打卡');assert.ok(!s[0].anime&&s[0].real.license&&fs.existsSync(path.join(src,s[0].real.local))&&s[0].match_note.includes('非官方'),'只狼打卡只放实景并注明玩家联想');}
+{const s=pg.points.filter(p=>p.date==='2026-12-05');assert.equal(String(s.map(p=>p.id)),'sekiro-himeji-keep','12/5只狼打卡');assert.ok(s[0].anime.license.includes('非开放许可')&&s[0].real.license&&[s[0].anime,s[0].real].every(i=>fs.existsSync(path.join(src,i.local)))&&s[0].match_note.includes('非官方'),'只狼打卡并排官方截图与实景并注明玩家联想');}
 assert.ok(!pg.points.some(p=>KADA.includes(p.id)),'加太对照移除');
 const photos=JSON.parse(read('photos.json'));
 for(const id of ['usj','osaka_castle','spaworld'])assert.ok(!photos[id],'不再注册取消地点的照片 '+id);

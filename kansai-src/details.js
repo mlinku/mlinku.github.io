@@ -658,7 +658,7 @@ const DETAILS = {
       "大佛殿成人¥800、两人¥1,600，仅现金；冬季17:00闭门。"
     ],
     "foodIdeas": [],
-    "cityLabel": "奈良·大阪",
+    "cityLabel": "奈良·日本桥",
     "summary": "东大寺大佛殿、二月堂、日本桥",
     "eventDetails": {
       "nara_visit": {

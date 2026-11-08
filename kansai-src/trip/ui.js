@@ -23,7 +23,8 @@ Object.assign(icons,{
 const BLOG_HOME='https://mlinku.github.io/';
 const isWeb=typeof DELIVERY_MODE!=='undefined'&&DELIVERY_MODE==='web';
 const PHASE_LABEL={before:'总览',during:'现在',after:'回顾'};
-function img(id,eager=false){const p=PHOTOS[id];if(!p?.src)return '';return `<img src="${p.thumbnail||p.src}" alt="${e(p.sight||PLACE[id]?.name||'')}" width="${p.width||800}" height="${p.height||600}" loading="${eager?'eager':'lazy'}" decoding="async"${p.illustration?' class="contain"':''}>`;}
+// small: a round thumbnail of 64px or less, which uses the 160px copy when the build made one.
+function img(id,eager=false,small=false){const p=PHOTOS[id];if(!p?.src)return '';return `<img src="${small&&p.tiny||p.thumbnail||p.src}" alt="${e(p.sight||PLACE[id]?.name||'')}" width="${p.width||800}" height="${p.height||600}" loading="${eager?'eager':'lazy'}" decoding="async"${p.illustration?' class="contain"':''}>`;}
 // The place an activity is about: its destination if it is a transfer, else its own place.
 const heroPhoto=ev=>[...ev.place_ids].reverse().find(id=>photoSrc(id))||'';
 const themeButton=()=>`<button type="button" class="icon-btn" data-action="theme" aria-label="切换日间或夜间模式">${icon('contrast')}</button>`;
@@ -55,14 +56,14 @@ function deadlines(d,minutes,mascot=''){
 function stayBlock(d,i){
  if(!d.overnight){const b=PLAN.bookings.find(x=>x.id==='flight_home'),from=flightLocal(b,'departure'),to=flightLocal(b,'arrival');return `<section class="block"><h2 class="block-title">回程</h2>${passHTML(b,from,to)}</section>`;}
  const p=PLACE[d.overnight],[,back]=dayTimes(d,i);
- return `<section class="block stay">${murasame('curious','on-card')}<h2 class="block-title">今晚住</h2><div class="stay-row">${photoSrc(p.id)?`<span class="stay-photo">${img(p.id)}</span>`:''}<div><p class="stay-name">${e(p.name)}</p><p class="muted">${e(back[0])} ${e(back[1])}${back[2]?' · '+e(back[2]):''}</p></div></div><div class="actions">${external(icon('pin')+'<span>酒店地图</span>',p.map_search_url,'btn')}${p.address_ja?`<button type="button" class="btn" data-action="copy" data-copy="${e(p.address_ja)}">${icon('copy')}<span>复制地址</span></button>`:''}</div></section>`;
+ return `<section class="block stay">${murasame('curious','on-card')}<h2 class="block-title">今晚住</h2><div class="stay-row">${photoSrc(p.id)?`<span class="stay-photo">${img(p.id,false,true)}</span>`:''}<div><p class="stay-name">${e(p.name)}</p><p class="muted">${e(back[0])} ${e(back[1])}${back[2]?' · '+e(back[2]):''}</p></div></div><div class="actions">${external(icon('pin')+'<span>酒店地图</span>',p.map_search_url,'btn')}${p.address_ja?`<button type="button" class="btn" data-action="copy" data-copy="${e(p.address_ja)}">${icon('copy')}<span>复制地址</span></button>`:''}</div></section>`;
 }
 const passHTML=(b,from,to)=>`<div class="pass"><div class="pass-end"><small>${e(from.city)}</small><b>${from.time}</b></div><span class="pass-line" aria-hidden="true">${icon('plane')}</span><div class="pass-end"><small>${e(to.city)}</small><b>${to.time}</b></div></div><p class="muted">${e(b.airline)} ${e(b.flight_number||'')} · ${e(from.date)} · ${e(flightTerminals(b))}</p>`;
 // The trip as a line: each day a station, today lit.
 function dayLine(){
  const today=todayIndex();
  return `<ol class="line days">${PLAN.days.map((d,i)=>{const info=dayPresentation(d),p=progress(d);
-  return `<li class="${i===today?'now':''}${p.done&&p.done===p.total?' done':''}"><a class="day-link" href="#day/${d.date}"><span class="dl-date"><b>${dateLabel(d.date)}</b><small>${i===today?'今天':e(d.weekday)}</small></span><span class="node photo">${img(info.cover)||dayDoodle(d.date)}</span><span class="dl-main"><b>${e(info.short)}</b><small>${e(dayHighlights(d))}</small></span>${p.done?(p.done===p.total?seal(' small'):`<span class="dl-done">${p.done}/${p.total}</span>`):''}</a></li>`;}).join('')}</ol>`;
+  return `<li class="${i===today?'now':''}${p.done&&p.done===p.total?' done':''}"><a class="day-link" href="#day/${d.date}"><span class="dl-date"><b>${dateLabel(d.date)}</b><small>${i===today?'今天':e(d.weekday)}</small></span><span class="node photo">${img(info.cover,false,true)||dayDoodle(d.date)}</span><span class="dl-main"><b>${e(info.short)}</b><small>${e(dayHighlights(d))}</small></span>${p.done?(p.done===p.total?seal(' small'):`<span class="dl-done">${p.done}/${p.total}</span>`):''}</a></li>`;}).join('')}</ol>`;
 }
 
 /* ---------- 现在 ---------- */
@@ -134,7 +135,7 @@ function row(d,ev,now){
  // The day's first row keeps its clock even when it is a transfer: it is when the day starts.
  const fixed=fixedTime(ev),showClock=major||fixed||effectiveEvents(d)[0]?.id===ev.id||now?.current?.id===ev.id,passed=!major&&passedConnector(d,ev);
  const words=showClock?(start===null?compactTime(ev.time_label):''):spanText(ev),thumb=major?eventPhotoIds(ev)[0]:'';
- const node=thumb?`<span class="node photo">${img(thumb)}</span>`:`<span class="node${major?' big':''}">${major?icon(CATEGORY_ICON[ev.category]||'pin'):''}</span>`;
+ const node=thumb?`<span class="node photo">${img(thumb,false,true)}</span>`:`<span class="node${major?' big':''}">${major?icon(CATEGORY_ICON[ev.category]||'pin'):''}</span>`;
  return `<li class="row ${major?'major':'minor'}${done||passed?' done':''}${now?.current?.id===ev.id?' now':''}" id="row-${e(ev.id)}">${openButton(d.date,ev.id,`<span class="row-time${fixed?' fixed':''}">${showClock?(start===null?'随后':clock(start)):''}</span>${node}<span class="row-text"><span class="row-title">${major?'':icon(CATEGORY_ICON[ev.category]||'pin')}${e(ev.title)}</span>${words||flags.length?`<span class="row-meta">${words?`<span>${e(words)}</span>`:''}${flags.join('')}</span>`:''}</span>`,'row-open')}${major?checkButton(d.date,ev):''}</li>`;
 }
 

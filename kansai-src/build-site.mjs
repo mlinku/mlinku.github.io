@@ -23,7 +23,7 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false,styleFiles=
  const assetDir=path.join(outputDir,'assets');
  if(!offline)fs.mkdirSync(assetDir,{recursive:true});
  const published=new Map(),jobs=[],used=new Set();
- function media(local,preview=false){
+ function media(local,preview=false,tiny=false){
   const source=path.resolve(sourceDir,local);
   if(!source.startsWith(path.resolve(sourceDir)+path.sep))throw Error('Media must be inside source: '+local);
   if(!fs.existsSync(source))throw Error('Missing media: '+local);
@@ -45,16 +45,22 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false,styleFiles=
    result.thumbnail='assets/'+previewName;
    jobs.push({input:source,output:path.join(assetDir,previewName),result});
   }
+  // Round thumbnails are at most 64px; 160px on the short side stays sharp at 2.5x.
+  if(preview&&tiny){
+   const tinyName=hash+'-160s.jpg';used.add(tinyName);
+   result.tiny='assets/'+tinyName;
+   jobs.push({input:source,output:path.join(assetDir,tinyName),result,size:160,quality:80,short:true,tiny:true});
+  }
   published.set(source,result);return result;
  }
- for(const img of Object.values(photos)){if(!img.local)throw Error('Missing local photo');Object.assign(img,media(img.local,true));}
+ for(const img of Object.values(photos)){if(!img.local)throw Error('Missing local photo');Object.assign(img,media(img.local,true,true));}
  const illustratedPoints=[...pilgrimage.points,...(pilgrimage.rally?.spots||[])];
  for(const p of illustratedPoints)for(const kind of ['real','anime','comparison']){const img=p[kind];if(img?.local)Object.assign(img,media(img.local,true));}
  if(jobs.length){
   const temp=path.join(os.tmpdir(),'kansai-media-'+crypto.randomUUID()+'.json');
   try{
    fs.mkdirSync(OFFLINE_CACHE,{recursive:true});
-   fs.writeFileSync(temp,JSON.stringify(jobs.map(({input,output,size,quality})=>({input,output,size,quality}))));
+   fs.writeFileSync(temp,JSON.stringify(jobs.map(({input,output,size,quality,short})=>({input,output,size,quality,short}))));
    const bundled=path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/python',process.platform==='win32'?'python.exe':'bin/python3');
    const python=process.env.KANSAI_PYTHON||(fs.existsSync(bundled)?bundled:'python');
    const result=spawnSync(python,[path.join(sourceDir,'prepare-media.py'),temp],{encoding:'utf8'});
@@ -62,9 +68,10 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false,styleFiles=
    const sizes=JSON.parse(fs.readFileSync(temp,'utf8'));
    jobs.forEach((job,i)=>{
     if(job.offline){const file=sizes[i].output;job.result.src=`data:${({'.webp':'image/webp','.png':'image/png'})[path.extname(file).toLowerCase()]||'image/jpeg'};base64,${fs.readFileSync(file).toString('base64')}`;return;}
+    if(job.tiny)return;
     job.result.thumbnailWidth=sizes[i].width;job.result.thumbnailHeight=sizes[i].height;
    });
-   for(const img of Object.values(photos))Object.assign(img,media(img.local,true));
+   for(const img of Object.values(photos))Object.assign(img,media(img.local,true,true));
    for(const p of illustratedPoints)for(const kind of ['real','anime','comparison'])if(p[kind]?.local)Object.assign(p[kind],media(p[kind].local,true));
   }finally{if(fs.existsSync(temp))fs.unlinkSync(temp);}
  }

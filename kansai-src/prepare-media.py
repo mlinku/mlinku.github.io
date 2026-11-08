@@ -1,5 +1,6 @@
 """Create proportional previews from the existing, credited local images.
-Web: 640px q82 previews beside the originals. Offline: one 1000px q72 WebP copy per image, or the original
+Web: 640px q82 previews beside the originals, and for photos a copy whose short side is 160px (q80) for the small
+round thumbnails. Offline: one 1000px q72 WebP copy per image, or the original
 when that is already smaller; the job's output is set to whichever file should be embedded."""
 from pathlib import Path
 from PIL import Image, ImageOps
@@ -12,7 +13,12 @@ for job in jobs:
     if not target.exists():
         with Image.open(job['input']) as original:
             image = ImageOps.exif_transpose(original).convert('RGB')
-            image.thumbnail((size, size), Image.Resampling.LANCZOS)
+            if job.get('short'):
+                scale = size / min(image.size)
+                if scale < 1:
+                    image = image.resize((round(image.width * scale), round(image.height * scale)), Image.Resampling.LANCZOS)
+            else:
+                image.thumbnail((size, size), Image.Resampling.LANCZOS)
             if target.suffix == '.webp':
                 image.save(target, 'WEBP', quality=quality, method=6)
             else:

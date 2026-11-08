@@ -1289,12 +1289,23 @@
       "work": "只狼：影逝二度",
       "scene": "苇名城没有官方原型；白色多层天守与层层石垣，是玩家最常拿来对照的城。",
       "shooting_note": "从三之丸广场或西之丸一侧，把天守和下方石垣拍进同一画面。",
-      "match_note": "玩家联想，非官方原型；不放游戏截图。",
+      "match_note": "玩家联想，非官方原型：游戏画面取自官方宣传截图，仅作外观对照。",
       "coordinates": {
         "lat": 34.8394,
         "lng": 134.6939,
         "precision": "天守参考点",
         "source_url": "https://www.city.himeji.lg.jp/castle/"
+      },
+      "anime": {
+        "local": "assets/pilgrimage/himeji/sekiro-ashina-castle.jpg",
+        "source_url": "https://store.steampowered.com/app/814380/",
+        "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/814380/ss_0f7b0f8ed9ffc49aba26f9328caa9a1d59ad60f0.1920x1080.jpg",
+        "credit": "Steam商店页官方截图 / ©2019-2020 FromSoftware, Inc. All rights reserved. ACTIVISION is a trademark of Activision Publishing Inc.",
+        "license": "版权所有；个人行程中的小尺寸场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 800,
+        "height": 450,
+        "changes": "由1920×1080缩至800×450；未裁剪、未调色。"
       },
       "real": {
         "local": "assets/himeji_castle.jpg",

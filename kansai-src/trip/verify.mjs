@@ -139,7 +139,12 @@ const checked=run(`
  assert.equal(shotProgress('2026-12-03').total,1,'参考点不计进度');
  assert.ok(dayShots(PLAN.days[3]).main.some(p=>p.id==='conan-ebisubashi'),'戎桥在12/3');
  assert.equal(String(pilgrimageDay('2026-12-05').map(p=>p.id)),'sekiro-himeji-keep','12/5只狼打卡');
- assert.ok(/class="pair single"/.test((ui.shotsDay=5,shotsScreen()))&&!shotsScreen().includes('作品画面待补'),'只狼只放实景，不留空图位');
+ // The source photos.json has no built src; give these photos one for the check, then put them back.
+ {const added=['himeji_castle','kix'].filter(id=>!PHOTOS[id].src);added.forEach(id=>PHOTOS[id].src=PHOTOS[id].local);
+ const photoOf=(date,id)=>{const d=PLAN.days.find(x=>x.date===date);return eventModel(d,d.timeline.find(x=>x.id===id)).photos;};
+ try{assert.ok(photoOf('2026-12-05','himeji_castle_visit').includes('himeji_castle')&&photoOf('2026-12-07','flight_home').includes('kix'),'路过同一地点的步行或交通行不占用活动照片');}finally{added.forEach(id=>delete PHOTOS[id].src);}
+ assert.equal(DETAILS['2026-12-04'].cityLabel,'奈良·日本桥','日期条与总览同名');}
+ assert.ok((ui.shotsDay=5,shotsScreen()).includes('作品画面')&&!shotsScreen().includes('pair single')&&shotsScreen().includes('非官方原型'),'只狼并排游戏画面与实景，并注明非官方');
 
  // Old links land on the same content on its new day, or on the day with a note; never on a new 加太 activity.
  location.hash='#day/2026-12-05/timeline/nara_visit';assert.equal(parseHash(),'nara_visit');assert.equal(PLAN.days[ui.day].date,'2026-12-04');assert.ok(ui.moved.includes('12/4'));

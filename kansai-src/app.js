@@ -14,7 +14,7 @@ const PLACE=Object.fromEntries(PLAN.places.map(p=>[p.id,p]));
   try{const comma=src.indexOf(','),bin=atob(src.slice(comma+1)),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
    const url=URL.createObjectURL(new Blob([bytes],{type:src.slice(5,src.indexOf(';'))}));made.set(src,url);return url;}catch{return src;}
  };
- const swap=img=>{if(img)for(const key of ['src','thumbnail'])if(img[key])img[key]=short(img[key]);};
+ const swap=img=>{if(img)for(const key of ['src','thumbnail','tiny'])if(img[key])img[key]=short(img[key]);};
  Object.values(PHOTOS).forEach(swap);
  for(const p of [...(PILGRIMAGE.points||[]),...(PILGRIMAGE.rally?.spots||[])])['real','anime','comparison'].forEach(kind=>swap(p[kind]));
 })();

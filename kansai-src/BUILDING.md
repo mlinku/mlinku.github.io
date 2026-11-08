@@ -15,7 +15,7 @@ node kansai-src/verify-delivery.mjs [离线文件路径]   # 构建产物：数�
 
 - 领域：`details.js`（每日资料）、`app.js`（存储与迁移、可选安排 `choice`／`effectiveEvents`、复制与提示）、`day-flow.js`（时段分组）、`execution.js`（导航站点、现场注意事项）。
 - 界面：`trip/model.js` 把规划数据解析成界面要显示的对象，`trip/ui.js` 只负责排版与交互，`trip/trip.css` 是唯一样式表，`trip/assets/` 放界面图片。
-- 构建：`build-site.mjs` 的 `SCRIPT_FILES`／`STYLE_FILES` 决定打包顺序（领域在前）。博客版的数据与脚本为独立文件，图片用 640px 缩略图并延迟加载，放大时读取原图，资源名含内容哈希，每次构建删除 `kansai/assets` 中未引用的旧文件；离线版把照片、数据、字体和样式全部嵌入 HTML，双击即可打开；照片与对照图各嵌入一份手机尺寸的 WebP（长边 1000px、q72，缓存在系统临时目录 `kansai-offline-media`，原图更小时直接用原图），整个文件约 12.7MB。启动时 `app.js` 把内嵌照片的 data URI 一次性换成短的 `blob:` 地址，渲染时不再携带图片数据。博客缩略图需要 Python + Pillow（`KANSAI_PYTHON` 可指定路径），读者不需要。离线目录里的源码文件是构建同步的镜像，只读。
+- 构建：`build-site.mjs` 的 `SCRIPT_FILES`／`STYLE_FILES` 决定打包顺序（领域在前）。博客版的数据与脚本为独立文件，图片用 640px 缩略图并延迟加载（64px 以下的小圆图另用短边 160px 的小图），放大时读取原图，资源名含内容哈希，每次构建删除 `kansai/assets` 中未引用的旧文件；离线版把照片、数据、字体和样式全部嵌入 HTML，双击即可打开；照片与对照图各嵌入一份手机尺寸的 WebP（长边 1000px、q72，缓存在系统临时目录 `kansai-offline-media`，原图更小时直接用原图），整个文件约 12.7MB。启动时 `app.js` 把内嵌照片的 data URI 一次性换成短的 `blob:` 地址，渲染时不再携带图片数据。博客缩略图需要 Python + Pillow（`KANSAI_PYTHON` 可指定路径），读者不需要。离线目录里的源码文件是构建同步的镜像，只读。
 - 在旅行目录构建时以旅行目录的三份规划文件为准，博客构建会同步到 `kansai-src/data`；独立克隆仓库时使用已提交的数据副本。
 
 ## 界面

@@ -321,7 +321,8 @@ function eventModel(d,ev){
  const major=isMajorEvent(d,ev),rows=mealRows(d,ev),first=rows.find(r=>r[1]==='首选');
  const brief=ev.condition&&Object.hasOwn(EVENT_BRIEF,ev.id)?EVENT_BRIEF[ev.id]:null;
  const line=cleanText(brief??ev.condition??'');
- const seen=new Set(earlier.flatMap(eventPhotoIds)),photos=major?eventPhotoIds(ev).filter(id=>!seen.has(id)):[];
+ // A photo belongs to the first activity that shows one; a walk or transfer through the same place does not claim it.
+ const seen=new Set(earlier.filter(x=>isMajorEvent(d,x)).flatMap(eventPhotoIds)),photos=major?eventPhotoIds(ev).filter(id=>!seen.has(id)):[];
  const transport=transportNotes(d,ev);
  const stops=navigationStops(ev,d,!!(first&&first[0]!=='早餐'));
  const {notice,links}=noticeParts(d,ev),noticeText=notice.replace(/<[^>]+>/g,'');

@@ -13,15 +13,16 @@ const scope=vm.createContext({});
 vm.runInContext(script.split('const DETAILS =')[0],scope);
 const planSource=JSON.parse(fs.readFileSync(path.join(source,'data/关西行程_可视化数据.json'),'utf8'));
 assert.deepEqual(JSON.parse(vm.runInContext('JSON.stringify(PLAN)',scope)),planSource,'博客采用当前规划数据');
-const mediaFields=new Set(['src','thumbnail','thumbnailWidth','thumbnailHeight']);
+const mediaFields=new Set(['src','thumbnail','thumbnailWidth','thumbnailHeight','tiny']);
 const metadata=value=>JSON.stringify(value,(key,item)=>mediaFields.has(key)?undefined:item);
 for(const [name,file] of [['PHOTOS','photos.json'],['PILGRIMAGE','pilgrimage.json']]){
  const original=JSON.parse(fs.readFileSync(path.join(source,file),'utf8'));
  assert.equal(metadata(JSON.parse(vm.runInContext('JSON.stringify('+name+')',scope))),metadata(original),'博客采用当前资料 '+name);
 }
-const assets=vm.runInContext('[...Object.values(PHOTOS).flatMap(p=>[p.src,p.thumbnail]),...PILGRIMAGE.points.flatMap(p=>[p.real,p.anime,p.comparison]).filter(Boolean).flatMap(p=>[p.src,p.thumbnail])]',scope);
+const assets=vm.runInContext('[...Object.values(PHOTOS).flatMap(p=>[p.src,p.thumbnail,p.tiny]),...PILGRIMAGE.points.flatMap(p=>[p.real,p.anime,p.comparison]).filter(Boolean).flatMap(p=>[p.src,p.thumbnail])]',scope);
 for(const file of assets){assert.ok(file?.startsWith('assets/'),'本地资源 '+file);assert.ok(fs.existsSync(path.join(output,file)),'资源存在 '+file);}
-assert.ok(vm.runInContext('Object.values(PHOTOS).every(p=>p.thumbnailWidth>0)',scope));
+assert.ok(vm.runInContext('Object.values(PHOTOS).every(p=>p.thumbnailWidth>0&&p.tiny)',scope));
+for(const file of vm.runInContext('Object.values(PHOTOS).map(p=>p.tiny)',scope))assert.ok(fs.statSync(path.join(output,file)).size<40_000,'小圆图用小尺寸 '+file);
 assert.ok(Buffer.byteLength(script)<600_000,'博客代码不混入大图');
 const offlinePath=process.argv[2];
 if(offlinePath){
