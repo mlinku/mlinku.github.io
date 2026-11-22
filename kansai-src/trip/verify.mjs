@@ -12,6 +12,7 @@ const PLAN=JSON.parse(read('data/关西行程_可视化数据.json')),locked=JSO
 const store={},localStorage={getItem:k=>store[k]??null,setItem:(k,v)=>{store[k]=String(v);},removeItem:k=>{delete store[k];}};
 const location={search:'',hash:''};
 const scope=vm.createContext({PLAN,PILGRIMAGE:JSON.parse(read('pilgrimage.json')),PHOTOS:JSON.parse(read('photos.json')),GUIDES:{},localStorage,location,assert,
+ TextEncoder,TextDecoder,btoa,atob,
  document:{querySelector(){return null;},querySelectorAll(){return [];},addEventListener(){}},setTimeout(){return 1;},clearTimeout(){},console});
 vm.runInContext(SCRIPT_FILES.map(read).join('\n'),scope,{filename:'trip-bundle.js'});
 const run=code=>vm.runInContext(code,scope);
@@ -171,6 +172,31 @@ const checked=run(`
  delete state.checks[arrive.date+':checkin_kyoto'];setCheck(arrive.date,'dinner_arrival',false);
  assert.ok(TODO_IDS.every(id=>TODO_SHORT[id]),'每条待办都有一行标题');
  ui.tab='prep';assert.ok(text(prepScreen()).includes(TODOS[0]),'待办全文仍可展开');
+ // Day 1 HK timezone: 10:30 JST = 09:30 HKT -> 10:25 HKT check-in close has 55 min left, flight_out not yet started.
+ location.search='?now=2026-11-30T10:30';
+ const d0=PLAN.days[0],hs0=hardStops(d0);
+ assert.equal(hs0[0].jstMinutes-630,55,'出发日香港时间截止按JST正确换算');
+ assert.equal(nowState(d0,630).started,false,'10:30 JST (=09:30 HKT) 航班尚未起飞');
+ const now0=nowScreen();
+ assert.ok(now0.includes('香港 <b>09:30</b>')&&now0.includes('还有 55 分钟')&&now0.includes('data-action="open" data-date="2026-11-30" data-key="flight_out"'),'出发日显示香港时间且关键时间可点击');
+ assert.ok(now0.includes('data-action="taxi-card"')&&sheetHTML('2026-11-30','stay').includes('data-action="taxi-card"'),'酒店提供出示给司机卡');
+ // Ticket stubs show 2-adult budget; progress export/import round-trips and rejects invalid input.
+ assert.ok(openPurchases().every(p=>/^¥[\\d,]+$/.test(p.budget)),'票务含两人预算');
+ assert.ok(prepScreen().includes('¥5,200')&&prepScreen().includes('data-action="export-state"'),'准备页显示票价与进度备份');
+ const sample={planRevision:PLAN.revision,checks:{'2026-12-01:uji_parfait':'done'},todos:{weather:true},choices:{'2026-12-02':{kodaijiPlan:'skip'}}};
+ const roundTrip=decodeProgress(encodeProgress(sample));
+ assert.deepEqual(roundTrip.checks,sample.checks,'进度码导出导入一致');
+ assert.deepEqual(roundTrip.todos,sample.todos);
+ assert.deepEqual(roundTrip.choices,sample.choices);
+ assert.throws(()=>decodeProgress('invalid'),'无效进度码被拒绝');
+ // Pilgrimage back-link & hide-done filter.
+ ui.shotsDay=1;const shot1=shotsScreen();
+ assert.ok(shot1.includes('class="shot-event"')&&shot1.includes('data-key="uji_parfait"'),'巡礼卡显示对应活动时间并可点开');
+ const firstPt=dayShots(PLAN.days[1]).main[0];state.checks[shotKey(firstPt)]=true;ui.hideDoneShots=true;
+ const filtered=shotsScreen();
+ assert.ok(filtered.includes('data-action="toggle-hide-shots"')&&!filtered.includes('id="shot-'+firstPt.id+'"'),'只看未拍过滤已拍点位');
+ delete state.checks[shotKey(firstPt)];ui.hideDoneShots=false;
+ location.search='';
  ({sheets,screens:screens.length,days:PLAN.days.length});
 `);
 assert.equal(JSON.stringify(PLAN),locked,'出行版不改变原始行程');

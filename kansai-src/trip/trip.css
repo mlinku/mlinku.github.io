@@ -12,7 +12,7 @@
   --paper: #f2f2e1; --card: #fffef4; --sunk: #ecefd8;
   --ink: #22271b; --ink-2: #464d39; --muted: #5c634e;
   --line: #dfe3c7; --line-2: #879070;
-  --accent: #3a7040; --accent-fill: #a8d27a; --accent-pale: #d8eab6; --nav-fill: #c9e4a3; --accent-ink: #1f3a17; --accent-soft: #e9f3d6; --fill-edge: rgba(31,58,23,.16);
+  --accent: #3a7040; --accent-fill: #a8d27a; --accent-pale: #d8eab6; --nav-fill: #c9e4a3; --accent-ink: #1f3a17; --tab-on-ink: #1f3a17; --accent-soft: #e9f3d6; --fill-edge: rgba(31,58,23,.16);
   --moegi: #a8d27a; --plum: #6f4385; --plum-soft: rgba(111,67,133,.09); --gold: #c9a33a;
   --shu: #b23e2a; --shu-soft: rgba(178,62,42,.08);
   --danger: #a01d18; --danger-soft: #f8e3dc;
@@ -36,7 +36,7 @@
     --paper: #0f150f; --card: #162017; --sunk: #1d281e;
     --ink: #eef2e1; --ink-2: #cdd6bb; --muted: #a2ab8f;
     --line: #28352a; --line-2: #6e7a62;
-    --accent: #b7dc8c; --accent-fill: #b7dc8c; --accent-pale: #b7dc8c; --nav-fill: #b7dc8c; --accent-ink: #12200f; --accent-soft: rgba(183,220,140,.14); --fill-edge: transparent;
+    --accent: #b7dc8c; --accent-fill: #b7dc8c; --accent-pale: #b7dc8c; --nav-fill: #b7dc8c; --accent-ink: #12200f; --tab-on-ink: #d9f0ba; --accent-soft: rgba(183,220,140,.14); --fill-edge: transparent;
     --moegi: #b7dc8c; --plum: #d0a8e0; --plum-soft: rgba(208,168,224,.12); --gold: #e2c46a;
     --shu: #f0906f; --shu-soft: rgba(240,144,111,.1);
     --danger: #ff9b90; --danger-soft: rgba(255,155,144,.13);
@@ -55,7 +55,7 @@
   --paper: #0f150f; --card: #162017; --sunk: #1d281e;
   --ink: #eef2e1; --ink-2: #cdd6bb; --muted: #a2ab8f;
   --line: #28352a; --line-2: #6e7a62;
-  --accent: #b7dc8c; --accent-fill: #b7dc8c; --accent-pale: #b7dc8c; --nav-fill: #b7dc8c; --accent-ink: #12200f; --accent-soft: rgba(183,220,140,.14); --fill-edge: transparent;
+  --accent: #b7dc8c; --accent-fill: #b7dc8c; --accent-pale: #b7dc8c; --nav-fill: #b7dc8c; --accent-ink: #12200f; --tab-on-ink: #d9f0ba; --accent-soft: rgba(183,220,140,.14); --fill-edge: transparent;
   --moegi: #b7dc8c; --plum: #d0a8e0; --plum-soft: rgba(208,168,224,.12); --gold: #e2c46a;
   --shu: #f0906f; --shu-soft: rgba(240,144,111,.1);
   --danger: #ff9b90; --danger-soft: rgba(255,155,144,.13);
@@ -126,8 +126,8 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 }
 .tab {position:relative; flex:1; max-width:140px; min-height:52px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; border-radius:var(--r-md); color:var(--muted); font-size:11.5px; font-weight:700; letter-spacing:.06em}
 .tab .icon {width:24px; height:24px; stroke-width:1.7}
-.tab.on {color:var(--accent-ink); background:var(--accent-soft)}
-.tab.on::before {content:''; position:absolute; top:-6px; left:50%; width:22px; height:3px; margin-left:-11px; border-radius:0 0 3px 3px; background:var(--accent)}
+.tab.on {color:var(--tab-on-ink); background:var(--accent-soft)}
+.tab.on::before {content:''; position:absolute; top:0; left:50%; width:24px; height:3px; margin-left:-12px; border-radius:0 0 3px 3px; background:var(--accent)}
 .tab:active {background:var(--sunk)}
 .screen-head {display:flex; align-items:flex-end; justify-content:space-between; gap:12px}
 .screen-head .count {display:flex; align-items:baseline; gap:6px; white-space:nowrap; color:var(--muted); font-size:14px}
@@ -184,9 +184,9 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .block-title .kita.in-title {width:64px; height:75px; margin:-30px 0 -22px auto}
 .block-title .kita-stand.in-title {width:30px; height:62px; margin-top:-30px}
 /* Inside a card's title row, flush with the card's top edge: nothing pokes over the content above, no space is reserved. */
-.timetable .block-title {margin-bottom:22px}
-.timetable .block-title .kita.in-title {width:74px; height:60px; margin:-20px 0 -20px auto}
-.timetable .block-title .kita-grin.in-title {width:72px; height:55px; margin:-18px 0 -18px auto}
+.timetable .block-title {margin-bottom:24px}
+.timetable .block-title .kita.in-title {width:72px; height:58px; margin:-24px 0 -14px auto}
+.timetable .block-title .kita-grin.in-title {width:70px; height:54px; margin:-22px 0 -14px auto}
 .todos .block-title .kita-sit-happy.in-title {width:68px; height:66px; margin:-24px 0 -22px 10px}
 .screen-head .kita.in-head {width:64px; height:76px; margin:0 0 -6px auto}
 .screen-head .kita-grin.in-head {width:72px; height:55px}
@@ -288,10 +288,11 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .band.plain {height:118px}
 .band.plain > .doodle {width:78px; height:78px; color:var(--ink-2); margin-top:-18px}
 .band-over {position:absolute; z-index:1; left:0; right:0; bottom:0; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 16px}
-.live-pill {display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:999px; background:rgba(255,254,244,.94); color:#22271b; font-size:13px; font-weight:800; letter-spacing:.06em}
+.live-pill {flex:none; white-space:nowrap; display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:999px; background:rgba(255,254,244,.94); color:#22271b; font-size:13px; font-weight:800; letter-spacing:.06em}
 .live-pill.on::before {content:''; width:8px; height:8px; border-radius:50%; background:#5d9a3a; box-shadow:0 0 0 3px rgba(93,154,58,.25); animation:pulse 2s ease-in-out infinite}
 @keyframes pulse {50% {box-shadow:0 0 0 6px rgba(93,154,58,0)}}
-.band-time {color:#fff; font-size:15px; font-weight:700; font-variant-numeric:tabular-nums; text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.band-time {color:#fff; font-size:14.5px; font-weight:700; font-variant-numeric:tabular-nums; text-align:right; word-break:keep-all; text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.nowrap {white-space:nowrap}
 .focus-body {padding:16px 18px 10px}
 .focus-body > * + * {margin-top:12px}
 .focus-body .title {font-size:25px; line-height:1.3}
@@ -308,8 +309,9 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .countdown .count b {font:900 68px/1 var(--serif); color:var(--shu); letter-spacing:-.02em}
 .countdown .count span {font:700 18px var(--serif)}
 .countdown .btn {flex:1}
-.alert-line {display:flex; align-items:center; gap:6px; margin-top:4px !important; color:var(--danger); font-weight:700; font-size:15px}
+.alert-line {display:flex; align-items:center; gap:6px; margin-top:4px !important; padding:6px 0; color:var(--danger); font-weight:700; font-size:15px}
 .alert-line .icon {flex:none; width:16px; height:16px}
+.alert-line .icon:last-child {margin-left:auto; opacity:.75}
 .mini {--t:3.1rem; --rail:calc(var(--t) + 12px + 8px)}
 .mini li {display:flex; align-items:center}
 .mini-row {flex:1; min-width:0; display:flex; align-items:center; gap:12px; min-height:52px}
@@ -318,14 +320,19 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .mini .major .node {border-color:var(--ink-2)}
 .mini-title {overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .mini .minor .mini-title {color:var(--ink-2); font-size:15px}
-.timetable li {display:grid; grid-template-columns:3.6rem minmax(0,1fr); gap:0 10px; align-items:baseline; padding:10px 0; border-top:1px dashed var(--line)}
-.timetable li:first-child {border-top:0; padding-top:2px}
+.timetable li {border-top:1px dashed var(--line)}
+.timetable li:first-child {border-top:0}
+.stop-btn {display:grid; grid-template-columns:3.6rem minmax(0,1fr) auto; gap:0 10px; align-items:baseline; width:100%; min-height:48px; padding:10px 4px; border-radius:var(--r-sm); text-align:left; transition:background-color .2s ease}
+.timetable li:first-child .stop-btn {padding-top:4px}
+.stop-btn:active {background:var(--sunk)}
+.stop-btn > .icon {grid-column:3; grid-row:1; align-self:center; width:16px; height:16px; color:var(--muted); opacity:.7}
 .timetable b {font-size:1.15rem; font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap}
-.timetable small {grid-column:2; margin-top:1px; font-size:13px; line-height:1.4; color:var(--muted); white-space:nowrap}
+.timetable small {grid-column:2 / 4; margin-top:1px; font-size:13px; line-height:1.4; color:var(--muted); white-space:nowrap}
 .stop.close b {color:var(--danger)}
 .stop.decide b {color:var(--accent)}
-.stop.soon {margin:0 -10px; padding:10px; border-radius:var(--r-sm); background:var(--danger-soft); border-top-color:transparent}
-.stop.soon span, .stop.soon small {color:var(--danger); font-weight:700}
+.stop.soon {margin:2px -10px; border-top-color:transparent}
+.stop.soon .stop-btn {padding:10px 10px !important; border-radius:var(--r-sm); background:var(--danger-soft)}
+.stop.soon b, .stop.soon span, .stop.soon small, .stop.soon .icon {color:var(--danger); font-weight:700}
 .stop.past b, .stop.past span {color:var(--muted); text-decoration:line-through; text-decoration-color:var(--line-2)}
 .stay-row {display:flex; align-items:center; gap:14px}
 .stay-photo {flex:none; width:64px; height:64px; border-radius:var(--r-md); overflow:hidden; background:var(--sunk)}
@@ -337,11 +344,11 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .cover-photos span {overflow:hidden; background:var(--sunk)}
 .cover-photos span:first-child {grid-row:1/3}
 .cover-photos img {width:100%; height:100%; object-fit:cover}
-.cover::after {content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(16,26,10,.25), transparent 35%, var(--scrim))}
+.cover::after {content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(16,26,10,.28), transparent 32%, rgba(16,26,10,.44) 60%, rgba(16,26,10,.82))}
 .cover-over {position:absolute; z-index:1; left:20px; right:20px; bottom:22px; color:#fff}
-.cover-over .kicker {color:rgba(255,255,255,.85)}
-.cover-over .display {font-size:38px; text-shadow:0 2px 12px rgba(0,0,0,.35)}
-.cover-over p:last-child {font-weight:600; opacity:.92}
+.cover-over .kicker {color:rgba(255,255,255,.92); text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.cover-over .display {font-size:38px; text-shadow:0 2px 12px rgba(0,0,0,.45)}
+.cover-over p:last-child {font-weight:600; opacity:.95; text-shadow:0 1px 6px rgba(0,0,0,.55)}
 .cover-back {position:absolute; z-index:2; top:12px; left:12px; display:inline-flex; align-items:center; gap:4px; min-height:44px; padding:0 14px 0 10px; border-radius:999px; color:#fff; font-size:14px; font-weight:700; background:rgba(0,0,0,.25); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px)}
 .cover-back .icon {width:18px; height:18px}
 .cover > .icon-btn {position:absolute; z-index:2; top:10px; right:10px; color:#fff; background:rgba(0,0,0,.25); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px)}
@@ -383,12 +390,12 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .hero-sketch .doodle {width:100%; height:100%}
 .sketched-hero::after {background:linear-gradient(180deg, transparent 45%, rgba(16,26,10,.28))}
 .node.photo .doodle {width:100%; height:100%; padding:6px; color:var(--ink-2); background:var(--accent-soft)}
-.day-hero::after {content:''; position:absolute; inset:0; background:linear-gradient(180deg, transparent 30%, var(--scrim))}
+.day-hero::after {content:''; position:absolute; inset:0; background:linear-gradient(180deg, transparent 28%, rgba(16,26,10,.38) 62%, rgba(16,26,10,.78))}
 .hero-over {position:absolute; z-index:1; left:20px; right:84px; bottom:18px; color:#fff}
-.hero-over .kicker {color:rgba(255,255,255,.88)}
-.hero-over .kicker em {color:#fff; background:var(--shu); padding:0 6px; border-radius:4px}
-.hero-over .display {font-size:clamp(27px,8vw,34px); text-shadow:0 2px 12px rgba(0,0,0,.35)}
-.hero-over p:last-child {font-size:15px; opacity:.92}
+.hero-over .kicker {color:rgba(255,255,255,.92); text-shadow:0 1px 5px rgba(0,0,0,.55)}
+.hero-over .kicker em {color:#fff; background:#b23e2a; padding:1px 6px; border-radius:4px; text-shadow:none}
+.hero-over .display {font-size:clamp(27px,8vw,34px); text-shadow:0 2px 12px rgba(0,0,0,.45)}
+.hero-over p:last-child {font-size:15px; opacity:.95; text-shadow:0 1px 5px rgba(0,0,0,.55)}
 .day-hero .day-seal {position:absolute; z-index:1; right:18px; bottom:18px; background:rgba(255,254,244,.94); box-shadow:inset 0 0 0 3px rgba(255,254,244,.94), inset 0 0 0 4px #b23e2a; color:#b23e2a; border-color:#b23e2a}
 .ticket-facts {position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:2px dashed var(--line)}
 .ticket-facts::before, .ticket-facts::after {content:''; position:absolute; z-index:2; top:-11px; width:20px; height:20px; border-radius:50%; background:var(--paper)}
@@ -403,11 +410,13 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .dots i.on {background:var(--ink)}
 .day-key {position:relative; padding:4px 0 4px 16px; font:600 17px/1.7 var(--serif); color:var(--ink)}
 .day-key::before {content:''; position:absolute; left:0; top:6px; bottom:6px; width:3px; border-radius:3px; background:linear-gradient(var(--moegi), var(--plum))}
-.chips {display:flex; gap:6px}
+.chips {display:flex; flex-wrap:wrap; gap:6px}
 .chip {display:inline-flex; align-items:center; gap:5px; flex:none; min-height:44px; padding:0 11px; border-radius:999px; background:var(--card); box-shadow:var(--shadow); color:var(--ink); font-size:14.5px; font-weight:600; white-space:nowrap}
 .chip .icon {flex:none; width:18px; height:18px; color:var(--muted)}
 .chip.warn {color:var(--warn); box-shadow:inset 0 0 0 1.5px var(--warn)}
 .chip.warn .icon {color:var(--warn)}
+.chip.locate {background:var(--accent-soft); color:var(--tab-on-ink); box-shadow:inset 0 0 0 1px var(--fill-edge)}
+.chip.locate .icon {color:var(--accent)}
 .day-progress {display:flex; align-items:center; gap:12px; font-size:14px; color:var(--muted)}
 .day-progress b {color:var(--ink); font-variant-numeric:tabular-nums}
 .bar {flex:1; height:6px; border-radius:6px; background:var(--line); overflow:hidden}
@@ -442,6 +451,8 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .row.minor .row-text {padding-top:9px}
 .row.minor .row-title {font-weight:500; font-size:15px; line-height:22px; color:var(--ink-2)}
 .row.now {background:var(--accent-soft)}
+.row.flash {animation:row-flash 1.1s var(--ease-out)}
+@keyframes row-flash {0%,25% {box-shadow:inset 0 0 0 2px var(--accent)} 100% {box-shadow:inset 0 0 0 2px transparent}}
 .row.now .row-time {color:var(--accent)}
 .row.now .node.big, .row.now .node.photo {box-shadow:0 0 0 2.5px var(--accent), 0 0 0 7px var(--card)}
 .row.now .node::after {border-color:var(--accent); background:var(--accent)}
@@ -461,7 +472,8 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
   padding: 0; border: 0; border-radius: var(--r-xl) var(--r-xl) 0 0; background: var(--card); color: var(--ink);
   box-shadow: 0 -10px 50px rgba(16,26,10,.25); overflow: hidden;
 }
-.sheet[open] {display:flex; flex-direction:column; animation:sheet-in .44s var(--ease-out)}
+.sheet[open] {display:flex; flex-direction:column; animation:sheet-in .44s var(--ease-out); transition:transform .24s var(--ease-out)}
+.sheet.dragging {animation:none; transition:none}
 .sheet.closing {animation:sheet-out .2s cubic-bezier(.4,0,1,1) forwards}
 .sheet::backdrop {background:rgba(16,26,10,.42); animation:fade-in .32s ease}
 .sheet.closing::backdrop {animation:fade-out .2s ease forwards}
@@ -509,8 +521,9 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .choices legend {font-size:14px; color:var(--muted); padding:0; margin-bottom:6px}
 .choices label.small {display:flex; flex-direction:column; gap:4px; margin-top:8px; font-size:14px; color:var(--muted)}
 .choices .option-select {min-height:48px; padding:0 12px; border-radius:var(--r-md); border:1.5px solid var(--line-2); background:var(--card); color:var(--ink); font-size:17px}
-.photos {display:flex; gap:10px; overflow-x:auto; scrollbar-width:none; margin-left:-20px !important; margin-right:-20px; padding:2px 20px}
-.photo {flex:none; width:150px; text-align:left}
+.photos {display:flex; gap:10px; overflow-x:auto; scrollbar-width:none; scroll-snap-type:x proximity; margin-left:-20px !important; margin-right:-20px; padding:2px 20px}
+.photos::-webkit-scrollbar {display:none}
+.photo {flex:none; width:150px; text-align:left; scroll-snap-align:start}
 .photo img {width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:var(--r-sm)}
 .photo span {display:block; padding:4px 2px; font-size:13px; color:var(--muted)}
 .photo.wide {width:100%}
@@ -533,10 +546,18 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .via small {font-size:13px; color:var(--muted)}
 
 /* ---------- 巡礼 ---------- */
+.shot, #shot-rally, .row {scroll-margin-top:calc(78px + env(safe-area-inset-top,0px))}
 .shot {position:relative; padding:18px; border-radius:var(--r); background:var(--card); box-shadow:var(--shadow)}
 .shot .title {font-size:21px; line-height:1.35; padding-right:56px}
 .shot-n {display:inline-block; margin-right:8px; font:900 15px var(--serif); color:var(--plum); letter-spacing:0}
 .shot-seal {position:absolute; top:14px; right:14px; width:50px; height:50px; font-size:24px}
+.shot-event {display:inline-flex; align-items:center; gap:5px; max-width:100%; min-height:36px; margin-top:6px; padding:4px 10px 4px 8px; border-radius:999px; background:var(--sunk); color:var(--ink-2); font-size:13px; font-weight:600; font-variant-numeric:tabular-nums; transition:background-color .2s, color .2s}
+.shot-event span {overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.shot-event .icon {width:14px; height:14px; color:var(--muted)}
+.shot-event:active {background:var(--accent-soft); color:var(--accent)}
+.shot-filter {margin-top:10px !important}
+.shot-all-done {text-align:center}
+.shot-all-done .actions {justify-content:center}
 .pair {display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:14px}
 .pair.single {grid-template-columns:1fr}
 .shot-img {position:relative; display:block; padding:4px 4px 22px; border-radius:6px; background:#fffef4; box-shadow:0 1px 2px rgba(0,0,0,.12), 0 6px 14px -6px rgba(0,0,0,.25)}
@@ -603,15 +624,38 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .zoom.closing::backdrop {animation:fade-out .18s ease forwards}
 @keyframes zoom-in {from {opacity:0; transform:scale(.97)}}
 .zoom-top {display:flex; align-items:center; gap:8px; padding:calc(6px + env(safe-area-inset-top,0px)) 6px 6px 18px}
-.zoom-top h2 {flex:1; font:700 17px var(--serif)}
+.zoom-top h2 {flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font:700 17px var(--serif)}
 .zoom-top .icon-btn {color:#fff}
-.zoom-stage {flex:1; min-height:0; display:grid; place-items:center; padding:0 4px}
-.zoom-stage img {max-width:100%; max-height:100%; object-fit:contain}
-.zoom-switch {display:flex; justify-content:center; gap:4px; margin:12px auto; padding:4px; border-radius:999px; background:rgba(255,255,255,.12)}
-.zoom-switch button {min-height:44px; min-width:110px; padding:0 18px; border-radius:999px; color:#fff; font-weight:700}
+.zoom-mag[aria-pressed="true"] {background:rgba(183,220,140,.22); color:#c9e69a}
+.zoom-shot-btn {display:inline-flex; align-items:center; gap:5px; min-height:38px; padding:0 12px; border-radius:999px; border:1.5px solid rgba(255,255,255,.32); color:#fff; font-size:13.5px; font-weight:700; flex:none; transition:background-color .2s, border-color .2s, color .2s}
+.zoom-shot-btn .icon {width:16px; height:16px}
+.zoom-shot-btn.on {background:rgba(240,144,111,.22); border-color:#f0906f; color:#ffb49b}
+.zoom-stage {flex:1; min-height:0; display:grid; place-items:center; padding:0 4px; overflow:hidden}
+.zoom-stage img {max-width:100%; max-height:100%; object-fit:contain; user-select:none; -webkit-user-drag:none}
+.zoom-stage.single img {cursor:zoom-in; transition:transform .24s var(--ease-out); touch-action:none}
+.zoom-stage.single.zoomed img {cursor:grab}
+.zoom-stage.single.panning img {transition:none; cursor:grabbing}
+.zoom-stage.split {display:grid; grid-template-columns:1fr; grid-template-rows:1fr 1fr; gap:8px; padding:6px 10px; align-items:stretch; justify-items:stretch}
+.zoom-stage.split figure {position:relative; min-height:0; display:grid; place-items:center; overflow:hidden; border-radius:var(--r-sm); background:rgba(255,255,255,.04)}
+.zoom-stage.split img {width:100%; height:100%; object-fit:contain}
+.zoom-stage.split figcaption {position:absolute; left:8px; top:8px; padding:2px 8px; border-radius:6px; background:rgba(7,8,11,.72); color:#fff; font:700 12px var(--serif); letter-spacing:.08em}
+.zoom-stance {display:flex; align-items:baseline; gap:8px; max-width:640px; margin:8px auto 0; padding:8px 14px; border-radius:var(--r-sm); background:rgba(255,255,255,.09); color:rgba(255,255,255,.92); font-size:14px; line-height:1.5}
+.zoom-stance b {flex:none; padding:0 6px; border-radius:4px; background:rgba(183,220,140,.22); color:#c9e69a; font-size:12px; letter-spacing:.06em}
+.zoom-switch {display:flex; justify-content:center; gap:4px; margin:10px auto; padding:4px; border-radius:999px; background:rgba(255,255,255,.12)}
+.zoom-switch button {min-height:44px; min-width:92px; padding:0 14px; border-radius:999px; color:#fff; font-size:14.5px; font-weight:700}
 .zoom-switch button[aria-pressed="true"] {background:#fff; color:#07080b}
-.zoom-credit {padding:4px 18px calc(12px + env(safe-area-inset-bottom,0px)); font-size:12px; color:rgba(255,255,255,.65)}
+.zoom-credit {padding:4px 18px calc(12px + env(safe-area-inset-bottom,0px)); font-size:12px; color:rgba(255,255,255,.65); text-align:center}
 .zoom-credit a {color:#c9e69a}
+.zoom.card-mode {background:#f2f2e1; color:#22271b}
+.zoom.card-mode::backdrop {background:#f2f2e1}
+.zoom.card-mode .zoom-top .icon-btn {color:#22271b}
+.taxi-stage {padding:16px 20px calc(24px + env(safe-area-inset-bottom,0px))}
+.taxi-card {width:min(540px,100%); padding:28px 24px; border-radius:var(--r-xl); background:#fffef4; color:#1a1f14; box-shadow:0 2px 6px rgba(40,52,18,.08), 0 18px 40px -12px rgba(40,52,18,.22); border-top:6px solid #3a7040; text-align:left}
+.taxi-lead {font-size:16px; font-weight:700; color:#3a7040; letter-spacing:.08em}
+.taxi-name {margin-top:12px; font-size:clamp(26px,7vw,36px); font-weight:800; line-height:1.25; color:#1a1f14; overflow-wrap:anywhere}
+.taxi-addr {margin-top:16px; padding-top:16px; border-top:2px dashed #dfe3c7; font-size:clamp(20px,5.2vw,26px); font-weight:700; line-height:1.5; color:#22271b; overflow-wrap:anywhere}
+.taxi-sub {margin-top:10px; font-size:15px; color:#5c634e}
+.taxi-tip {margin-top:22px; font-size:13px; color:#879070; text-align:center}
 #toast {
   position: fixed; z-index: 60; left: 50%; bottom: calc(var(--tabbar) + 18px + env(safe-area-inset-bottom,0px));
   display: flex; align-items: center; gap: 14px; max-width: min(92vw,520px); padding: 6px 8px 6px 18px; min-height: 52px;
@@ -620,7 +664,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 }
 #toast:empty {padding:0}
 #toast.show {opacity:1; transform:translate(-50%,0); pointer-events:auto}
-#toast button {min-height:44px; padding:0 12px; color:var(--toast-action); font-weight:800}
+#toast button {flex:none; white-space:nowrap; min-height:44px; padding:0 12px; color:var(--toast-action); font-weight:800}
 .copy-dialog {width:min(460px,92vw); padding:0; border:0; border-radius:var(--r-xl); background:var(--card); color:var(--ink); box-shadow:var(--lift)}
 .copy-dialog::backdrop {background:rgba(16,26,10,.42)}
 .copy-dialog .dialog-top {display:flex; align-items:center; justify-content:space-between; padding:8px 8px 8px 20px; box-shadow:0 1px 0 var(--line)}
@@ -634,6 +678,18 @@ noscript p {padding:40px; text-align:center}
   .display {font-size:36px}
   .strip {margin-left:0; margin-right:0; border-radius:0 0 var(--r) var(--r)}
   .cover {height:340px}
+  .zoom-stage.split {grid-template-columns:1fr 1fr; grid-template-rows:1fr; padding:10px 18px}
+}
+@media (hover:hover) {
+  .btn:hover {border-color:var(--accent)}
+  .btn.primary:hover, .nav-big:hover {filter:brightness(.96)}
+  .row-open:hover, .mini-row:hover, .stop-btn:hover, .icon-btn:hover, .strip-day:not(.on):hover, .tab:not(.on):hover {background:var(--sunk)}
+  .day-link:hover .dl-main b, .link-row:hover, .pager a:hover {color:var(--accent)}
+  .chip:hover {transform:translateY(-1px)}
+  .ticket-tap:hover {background:color-mix(in srgb, var(--line) 45%, transparent)}
+  .shot-img:hover {box-shadow:0 4px 16px -4px rgba(0,0,0,.3)}
+  .shot-event:hover {background:var(--accent-soft); color:var(--accent)}
+  .alert-line:hover span {text-decoration:underline}
 }
 @media (prefers-reduced-motion:reduce) {
   *, *::before, *::after {animation:none !important; transition:none !important}

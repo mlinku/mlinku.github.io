@@ -122,7 +122,10 @@ function tripStatus(){
 }
 const todayIndex=()=>{const s=tripStatus();return s.phase==='during'?s.index:-1;};
 const eventStart=ev=>{const m=/(\d{1,2}):(\d{2})/.exec(ev.time_label||'');return m?Number(m[1])*60+Number(m[2]):null;};
-const clock=min=>String(Math.floor(min/60)).padStart(2,'0')+':'+String(min%60).padStart(2,'0');
+// Hong Kong departure times are UTC+8 (60 min behind Japan time); compare against tokyoNow() in JST.
+const isHKTime=t=>/^\d{1,2}:\d{2}\s*香港/.test(String(t||''));
+const eventStartJST=ev=>{const s=eventStart(ev);return s===null?null:s+(isHKTime(ev.time_label)?60:0);};
+const clock=min=>{const n=((min%1440)+1440)%1440;return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');};
 const duration=min=>min<60?`${min} 分钟`:`${Math.floor(min/60)} 小时${min%60?` ${min%60} 分`:''}`;
 
 /* ---------- Day facts ---------- */
@@ -139,7 +142,7 @@ function setCheck(date,id,checked){const d=PLAN.days.find(x=>x.date===date);if(!
 // Hard times of each day: miss these and the plan changes. Each one is stated in the plan's own notes;
 // `decide` marks a check-point (decide whether to cut), `close` a door or counter that shuts.
 const HARD_STOPS={
- '2026-11-30':[['10:25','香港T2停止值机','flight_out','close'],['11:05','登机口关闭（香港时间）','flight_out','close']],
+ '2026-11-30':[['10:25','香港T2停止值机（香港时间）','flight_out','close','hkt'],['11:05','登机口关闭（香港时间）','flight_out','close','hkt']],
  '2026-12-01':[['11:00','芭菲：判断能否11:45前吃完','uji_parfait','decide'],['14:40','未到大吉山登山口就取消登山','daikichi_visit','decide']],
  '2026-12-02':[['17:45','仍未入场就改去吃晚饭','kodaiji_night','decide'],['20:00','おめん最后点餐','gion_dinner','close']],
  '2026-12-04':[['20:00','Animate关门','anime_shopping','close']],
@@ -149,7 +152,10 @@ const HARD_STOPS={
 };
 function hardStops(d){
  const ids=new Set(effectiveEvents(d).map(ev=>ev.id));
- return (HARD_STOPS[d.date]||[]).filter(([,,id])=>ids.has(id)).map(([time,text,eventId,kind])=>({time,minutes:Number(time.slice(0,2))*60+Number(time.slice(3)),text,eventId,kind}));
+ return (HARD_STOPS[d.date]||[]).filter(([,,id])=>ids.has(id)).map(([time,text,eventId,kind,tz])=>{
+  const minutes=Number(time.slice(0,2))*60+Number(time.slice(3));
+  return {time,minutes,jstMinutes:minutes+(tz==='hkt'?60:0),text,eventId,kind,tz:tz||'jst'};
+ });
 }
 // Where to look now: the activity that started most recently unless it is done, else the next unfinished one.
 // Unchecked earlier rows are ignored; people do not tick everything.
@@ -157,7 +163,7 @@ function hardStops(d){
 function nowState(d,minutes){
  const events=effectiveEvents(d),pending=i=>!eventDone(d,events[i]);
  let current=-1;
- for(let i=0;i<events.length;i++){const start=eventStart(events[i]);if(start!==null&&start>minutes)break;if(start!==null)current=i;}
+ for(let i=0;i<events.length;i++){const start=eventStartJST(events[i]);if(start!==null&&start>minutes)break;if(start!==null)current=i;}
  let focus=current>=0&&pending(current)?current:-1;
  if(focus<0)for(let i=current+1;i<events.length;i++)if(pending(i)){focus=i;break;}
  const upcoming=[];
@@ -297,8 +303,10 @@ const SHOT_COPY={
  'senren-ikuta':{note:'在拝殿前稍侧处对照屋顶、红柱与狛犬；游戏将楼房改绘为树木。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'}
 };
 function shotModel(p){
- const copy=SHOT_COPY[p.id]||{};
- return {id:p.id,date:p.date,eventId:p.event_id,work:p.work,title:p.title,optional:!!p.option,reference:!!p.reference,nameJa:p.name_ja||PLACE[p.place_ids[0]]?.name_ja||p.title,
+ const copy=SHOT_COPY[p.id]||{},d=PLAN.days.find(x=>x.date===p.date),ev=d&&p.event_id?effectiveEvents(d).find(x=>x.id===p.event_id):null;
+ const start=ev?eventStart(ev):null;
+ return {id:p.id,date:p.date,eventId:p.event_id,hasEvent:!!ev,eventTitle:ev?.title||'',eventTime:ev?(start!==null?clock(start):compactTime(ev.time_label)):'',
+  work:p.work,title:p.title,optional:!!p.option,reference:!!p.reference,nameJa:p.name_ja||PLACE[p.place_ids[0]]?.name_ja||p.title,
   scene:cleanText(copy.scene||p.scene),note:cleanText(copy.note||p.shooting_note),caption:cleanText(copy.caption||p.match_note),map:pointMap(p),done:!!state.checks[shotKey(p)],
   coords:p.coordinates||null,images:p.comparison?[['comparison','作品 × 实景']]:p.anime?[['anime','作品画面'],['real','实景']]:[['real','实景']],point:p};
 }
@@ -336,7 +344,7 @@ function eventModel(d,ev){
  const pending=(ev.time_status==='to_confirm'||ev.time_status==='current_timetable_candidate')&&!/待确认|待复核|临行复核/.test(compactTime(ev.time_label));
  const shots=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p)),ticket=major?eventTicket(d,ev):null;
  return {
-  id:ev.id,date:d.date,title:ev.title,time:compactTime(ev.time_label),timeHint:ev.time_hint||'',start:eventStart(ev),category:ev.category,major,optional:!!ev.optional,
+  id:ev.id,date:d.date,title:ev.title,time:compactTime(ev.time_label),timeHint:ev.time_hint||'',start:eventStart(ev),startJST:eventStartJST(ev),category:ev.category,major,optional:!!ev.optional,
   status:ev.time_status==='booked'?'当地时间':ticket?ticket.label:pending?'待确认':'',ticket,
   done:activityState(d.date,ev.id)==='done',line,optionNote:ev.optionNote||'',notice,links,transport,
   hotels:(ev.category==='hotel'||ev.id==='luggage_pickup'?ev.place_ids.filter(id=>id.startsWith('hotel_')):[]).filter(id=>!ev.title.includes(PLACE[id].name_ja)).map(id=>PLACE[id]),
@@ -373,4 +381,26 @@ const PURCHASE_LABEL={not_purchased:['未购买','danger'],not_reserved:['尚未
 // A ticket the traveller has sorted (bought, reserved, paid) is ticked on 准备 and stored with the todos.
 const PURCHASE_DONE={not_reserved:'已订位',pay_on_site:'已付款'};
 const ticketId=p=>'ticket:'+p.visit_date+':'+p.item;
-const openPurchases=()=>(PLAN.unconfirmed_purchases||[]).map(p=>{const done=!!state.todos[ticketId(p)];return {id:ticketId(p),done,visitDate:p.visit_date,item:p.item,qty:p.quantity||0,date:dateLabel(p.visit_date),label:done?PURCHASE_DONE[p.status]||'已购票':(PURCHASE_LABEL[p.status]||['待确认'])[0],tone:done?'ok':(PURCHASE_LABEL[p.status]||[,'warn'])[1]};});
+const ticketPlaceId=item=>Object.entries(TICKET_PLACE).find(([k])=>item.includes(k))?.[1]||'';
+const openPurchases=()=>(PLAN.unconfirmed_purchases||[]).map(p=>{
+ const done=!!state.todos[ticketId(p)],pid=ticketPlaceId(p.item),vb=(PLAN.visit_budget||[]).find(v=>v.place_id===pid);
+ return {id:ticketId(p),done,visitDate:p.visit_date,item:p.item,qty:p.quantity||0,date:dateLabel(p.visit_date),budget:vb?.two_adults_jpy?'¥'+vb.two_adults_jpy.toLocaleString('en-US'):'',
+  label:done?PURCHASE_DONE[p.status]||'已购票':(PURCHASE_LABEL[p.status]||['待确认'])[0],tone:done?'ok':(PURCHASE_LABEL[p.status]||[,'warn'])[1]};
+});
+
+// Portable progress code for backing up or transferring local checks/todos/choices between devices or online/offline copies.
+function encodeProgress(s=state){
+ const payload={v:3,r:s.planRevision||PLAN.revision,c:s.checks||{},t:s.todos||{},o:s.choices||{}};
+ const bytes=new TextEncoder().encode(JSON.stringify(payload));
+ let bin='';for(const b of bytes)bin+=String.fromCharCode(b);
+ return 'KANSAI:'+btoa(bin);
+}
+function decodeProgress(raw){
+ const text=String(raw||'').trim();
+ if(!text.startsWith('KANSAI:'))throw Error('进度码应以 KANSAI: 开头');
+ const bin=atob(text.slice(7).replace(/\s+/g,''));
+ const bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+ const data=JSON.parse(new TextDecoder().decode(bytes));
+ if(!data||typeof data!=='object'||typeof data.c!=='object'||Array.isArray(data.c)||typeof data.t!=='object'||Array.isArray(data.t)||typeof data.o!=='object'||Array.isArray(data.o))throw Error('进度码格式无效');
+ return {schemaVersion:3,planRevision:typeof data.r==='string'?data.r:PLAN.revision,checks:data.c,todos:data.t,choices:data.o};
+}
