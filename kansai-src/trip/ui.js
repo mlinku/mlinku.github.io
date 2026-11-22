@@ -74,7 +74,7 @@ function nowScreen(){
  if(s.phase==='before')return beforeScreen(s);
  if(s.phase==='after')return `${coverHero('旅程已结束','2026.11.30 — 12.07 · 辛苦了')}<section class="block">${scene('home')}<h2 class="block-title">回看 8 天${kita('cheer','in-title')}</h2>${dayLine()}</section>`;
  const d=PLAN.days[s.index],info=dayPresentation(d),st=nowState(d,s.minutes),p=progress(d),notes=fieldNotes(d);
- const clockLabel=d.date==='2026-11-30'&&s.minutes<16*60?`香港 <b>${clock(s.minutes-60)}</b> · 日本 ${clock(s.minutes)}`:`日本时间 <b>${clock(s.minutes)}</b>`;
+ const clockLabel=d.date==='2026-11-30'&&s.minutes<16*60?`<span class="nowrap">香港 <b>${clock(s.minutes-60)}</b></span> · <span class="nowrap">日本 ${clock(s.minutes)}</span>`:`日本时间 <b>${clock(s.minutes)}</b>`;
  return `<header class="now-head"><div><p class="kicker">${dateLabel(d.date)} ${e(d.weekday)} · ${clockLabel}</p><h1 class="display">${e(info.short)}</h1><p class="muted">${e(info.eyebrow)}</p></div><div class="now-marks">${dayDoodle(d.date)}${daySeal(s.index+1)}</div></header>
  ${st.focus?focusCard(d,st,s.minutes):`<section class="focus finished"><div class="band murasame" role="img" aria-label="丛雨"></div><div class="focus-body"><p class="focus-label">今天</p><h2 class="title">安排已经走完</h2><p class="lead">辛苦了，早点休息。</p></div></section>`}
  ${st.upcoming.length?`<section class="block"><h2 class="block-title">接下来${kita('run','in-title')}</h2><ol class="line mini">${st.upcoming.map(ev=>{const start=eventStart(ev),stop=navStop(d,ev),major=isMajorEvent(d,ev);return `<li class="${major?'major':'minor'}">${openButton(d.date,ev.id,`<b class="t">${start===null?'随后':clock(start)}</b><span class="node"></span><span class="mini-title">${e(ev.title)}</span>`,'mini-row')}${stop?navButton(stop):''}</li>`;}).join('')}</ol></section>`:''}
@@ -105,7 +105,7 @@ function coverHero(title,sub){
 }
 function beforeScreen(s){
  const open=openPurchases().filter(p=>p.tone==='danger'&&!p.done),g=todoGroups(),beforeDone=g.before.filter(t=>t.done).length;
- const todoLine=beforeDone===g.before.length?`出发前待办已齐 · 全程 ${todoDone()} / ${TODOS.length}`:`出发前待办 ${beforeDone} / ${g.before.length} · <span class="nowrap">全程 ${todoDone()} / ${TODOS.length}</span>`;
+ const todoLine=beforeDone===g.before.length?`出发前待办已齐<span class="sub-stat">全程 ${todoDone()} / ${TODOS.length}</span>`:`出发前待办 ${beforeDone} / ${g.before.length}<span class="sub-stat">全程 ${todoDone()} / ${TODOS.length}</span>`;
  return `${coverHero('关西秋日手帖','2026.11.30 — 12.07 · 8 天 7 晚')}
  <section class="focus countdown"><div class="scene-band">${scene('depart')}</div><div class="focus-body">${kita('cheer','on-countdown')}<p class="count"><b>${s.days}</b><span>天后出发</span></p><p class="lead">${todoLine}</p>${open.map(p=>`<a class="alert-line" href="#prep">${icon('alert')}<span>${e(p.item)} · ${e(p.label)}</span>${icon('chevron')}</a>`).join('')}<div class="focus-actions"><a class="btn primary" href="#prep">去准备</a><a class="btn" href="#day/${PLAN.days[0].date}">看第 1 天</a></div></div></section>
  
