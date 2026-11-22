@@ -123,10 +123,10 @@ const checked=run(`
  const day3order=effectiveEvents(PLAN.days[3]).map(ev=>ev.id);
  assert.ok(day3order.indexOf('inari_visit')<day3order.indexOf('kyoto_lunch')&&day3order.indexOf('kyoto_lunch')<day3order.indexOf('kyoto_tower_visit'),'12/3先稻荷、京都站午饭，再京都塔');
  assert.ok(effectiveEvents(PLAN.days[4]).some(ev=>ev.id==='nigatsudo_visit')&&!effectiveEvents(PLAN.days[4]).some(ev=>ev.id==='nippombashi_cafe'),'12/4二月堂，日本桥直接逛店');
- assert.ok(openPurchases().some(p=>p.item.includes('和牛')&&p.label==='尚未订位'),'和牛只是待订位');
+ assert.ok(openPurchases().some(p=>p.item.includes('和牛')&&p.label==='现场付款'),'和牛现场Walk-in付款');
  const kobe=PLAN.days.find(d=>d.date==='2026-12-06');
  assert.equal(String(effectiveEvents(kobe).find(ev=>ev.id==='motomachi_cd_shopping').place_ids),String(['lashinbang_kobe','surugaya_kobe','bookoff_kobe','kobe_banana_records','kobe_rhythmbox']),'三宫三店快速看，再去元町两家CD店');
- assert.ok(sheetHTML(kobe.date,'sannomiya_dinner').includes('尚未订位'),'17:00和牛待订位');
+ assert.ok(sheetHTML(kobe.date,'sannomiya_dinner').includes('Walk-in')&&sheetHTML(kobe.date,'sannomiya_dinner').includes('焼肉あらし')&&sheetHTML(kobe.date,'sannomiya_dinner').includes('牛角'),'三宫和牛Walk-in且含两家备选');
  // 12/4 shop choices: every pair walks in order on the route and never more than two stores.
  const nara=PLAN.days.find(d=>d.date==='2026-12-04');
  for(const [shop1,shop2] of [['animate','surugaya'],['potato','surugaya_main'],['surugaya','none'],['surugaya_main','animate']]){

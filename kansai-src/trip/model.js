@@ -27,7 +27,7 @@ const EVENT_BRIEF={
  nara_transfer:'',
  nara_visit:'仅现金；大佛殿内部约30—40分钟。',
  kobe_bridge_visit:'16:30前回三宫；大风雨或疲劳就取消。',
- sannomiya_dinner:'17:00订不到再看17:30。',
+ sannomiya_dinner:'不预约，回三宫直接Walk-in（16:00开门）；满座换隔壁备选。',
  anime_shopping:'重点1—2家，晚到只选一家。',
  checkout_osaka:'离店前或抵机场后吃早餐。',
  airport_checkin:''
@@ -368,7 +368,7 @@ const TODO_PREFIX=/^12\/\d+(前夜|前|晚)?/;
 const TODO_SHORT={'weather':'查叶况与天气','restaurants':'核对餐厅营业与菜单','return-travel':'核对航班通知与回程南海时刻',
  'transport-tickets':'备好IC卡与HARUKA订单','uji-cafes':'确认宇治店铺营业与候位','rally-account':'登录集章账户、开定位',
  'kodaiji-weather':'查高台寺天气与排队','nara-cash-20261019':'备大佛殿现金，查日本桥临休','himeji-20261108':'查姬路城、好古园开放与点灯',
- 'kobe-1205-20261019':'收好行李，查CD店临休与和牛订位','packing':'整理行李、证件和次晨早餐'};
+ 'kobe-1205-20261019':'收好行李，查CD店临休','packing':'整理行李、证件和次晨早餐'};
 // The traps on a transfer, for the 现在 card: the rest of the route is under 全部详情.
 const transitCautions=notes=>notes.flatMap(n=>n.split(/(?<=[。；])/)).filter(s=>new RegExp(TRANSIT_CAUTION.source).test(s)).map(s=>s.replace(/[；。]$/,''));
 const todoDone=()=>TODOS.filter((_,i)=>state.todos[TODO_IDS[i]]).length;

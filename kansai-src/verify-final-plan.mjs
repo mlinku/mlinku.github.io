@@ -52,7 +52,7 @@ assert.deepEqual(event(d6,'sannomiya_dinner').place_ids,['fufutei_kobe']);
 const tickets=Object.fromEntries(plan.visit_budget.map(v=>[v.place_id,v.two_adults_jpy]));
 assert.deepEqual([tickets.kodaiji,tickets.kyoto_tower,tickets.todaiji,tickets.himeji_castle],[1600,2000,1600,5200],'门票两人预算');
 const purchase=item=>plan.unconfirmed_purchases.find(p=>p.item.includes(item));
-assert.equal(purchase('ふうふう亭').status,'not_reserved','和牛尚未订位');
+assert.equal(purchase('ふうふう亭').status,'pay_on_site','和牛现场Walk-in付款');
 assert.equal(purchase('姬路城').status,'pay_on_site');
 assert.ok(!plan.unconfirmed_purchases.some(p=>p.item.includes('和歌山')),'不再有和歌山门票');
 assert.ok(!plan.unconfirmed_purchases.some(p=>/USJ|Studio/.test(p.item)),'不再购买USJ门票');
@@ -81,7 +81,7 @@ for(const id of ['kada_coast','awashima_shrine','wakayama_castle','wakayama_momi
 for(const [id,p] of Object.entries(photos))assert.ok(p.local&&fs.existsSync(path.join(src,p.local))&&(p.license||p.illustration||p.author),'照片文件与署名 '+id);
 
 const report={checkedAt:new Date().toISOString(),baseline:BASELINE,revision:plan.revision,bookingsUnchanged:true,unchangedDates:unchanged,
- final:{'12/3':'伏见稻荷 → 京都站午饭 → 京都塔 → 大阪 → 道顿堀','12/4':'大佛殿 → 二月堂 → 日本桥1—2家','12/5':'姬路城 → 好古园点灯 → 姬路站晚饭 → 约20:15返店','12/6':'三宫三店快速看 → 元町两家CD店；17:00和牛待订位'},
+ final:{'12/3':'伏见稻荷 → 京都站午饭 → 京都塔 → 大阪 → 道顿堀','12/4':'大佛殿 → 二月堂 → 日本桥1—2家','12/5':'姬路城 → 好古园点灯 → 姬路站晚饭 → 约20:15返店','12/6':'三宫三店快速看 → 元町两家CD店；傍晚和牛Walk-in含备选'},
  excluded:plan.excluded_default,tickets,pilgrimage:{points:pg.points.length}};
 fs.writeFileSync(path.join(src,'检查记录/修订计划-2026-11-08.json'),JSON.stringify(report,null,2));
 console.log(JSON.stringify(report));
