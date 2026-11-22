@@ -140,13 +140,13 @@
     {
       "item": "高台寺夜间参拜门票",
       "visit_date": "2026-12-02",
-      "status": "purchase_not_confirmed",
+      "status": "pay_on_site",
       "quantity": 2
     },
     {
       "item": "京都塔展望室门票",
       "visit_date": "2026-12-03",
-      "status": "purchase_not_confirmed",
+      "status": "pay_on_site",
       "quantity": 2
     },
     {
@@ -2283,9 +2283,9 @@
           "where": "稻荷站前至楼门参道"
         },
         "dinner": {
-          "primary": "道頓堀・難波周辺の飲食店",
-          "budget": "预算 ¥1,000–2,500",
-          "where": "戎桥至难波一带"
+          "primary": "元祖串かつ だるま 法善寺店",
+          "budget": "¥1,500–2,500",
+          "where": "難波1-1-4（法善寺横丁口）"
         }
       },
       "dining_recommendations": {
@@ -2535,9 +2535,9 @@
       ],
       "meals": {
         "lunch": {
-          "primary": "奈良公園周辺の飲食店",
-          "budget": "预算 ¥1,000–2,500",
-          "where": "东大寺南大门至近铁奈良一带"
+          "primary": "東大寺絵馬堂茶屋",
+          "budget": "¥1,000–1,600",
+          "where": "雑司町406-1（二月堂下）"
         },
         "tea": {
           "primary": "日本橋周辺のカフェ",
@@ -2545,9 +2545,9 @@
           "where": "近铁日本桥站至御宅路一带"
         },
         "dinner": {
-          "primary": "日本橋・難波周辺の飲食店",
-          "budget": "预算 ¥1,000–2,500",
-          "where": "日本桥／难波一带"
+          "primary": "かつ丼吉兵衛 なんば道具屋筋店",
+          "budget": "¥900–1,400",
+          "where": "難波千日前14-2"
         }
       },
       "dining_recommendations": {
@@ -2792,14 +2792,14 @@
       ],
       "meals": {
         "lunch": {
-          "primary": "姫路駅周辺の飲食店",
-          "budget": "预算 ¥1,000–2,500",
-          "where": "姬路站北口一带"
+          "primary": "炭焼あなご やま義",
+          "budget": "¥1,500–2,300",
+          "where": "駅前町301（おみぞ筋商店街）"
         },
         "dinner": {
-          "primary": "姫路駅周辺の飲食店",
-          "budget": "预算 ¥1,000–2,500",
-          "where": "姬路站北口一带"
+          "primary": "さち福や CAFÉ ピオレ姫路店",
+          "budget": "¥1,300–1,800",
+          "where": "ピオレ1 B1F（姬路站直连）"
         }
       },
       "dining_recommendations": {
@@ -3780,7 +3780,7 @@
       "date": "2026-12-02",
       "adult_jpy": 800,
       "two_adults_jpy": 1600,
-      "status": "购票待确认；2026-04-01起成人¥800",
+      "status": "现场购票；2026-04-01起成人¥800",
       "source": "https://www.kodaiji.com/topi_ryokinkaitei.html"
     },
     {
@@ -3788,7 +3788,7 @@
       "date": "2026-12-03",
       "adult_jpy": 1000,
       "two_adults_jpy": 2000,
-      "status": "未购票；2026-10-01起成人¥1,000",
+      "status": "现场购票；2026-10-01起成人¥1,000",
       "source": "https://www.kyoto-tower.jp/event/eupho26autumn/"
     },
     {
