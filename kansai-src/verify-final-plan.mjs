@@ -62,11 +62,17 @@ assert.ok(!plan.pending_checks.some(t=>/usj/i.test(t.id+t.text)),'没有USJ待�
 // Pilgrimage: every earlier point and its pictures stay; only the bindings the handoff lists change.
 const pg=JSON.parse(read('pilgrimage.json')),oldPg=JSON.parse(before('pilgrimage.json'));
 const KADA=['summer-kada-info','summer-kada-kojima','summer-kada-tsutsumi','summer-kada-kishimoto'];
+const UPGRADED_MEDIA=new Set(['eupho_uji_bridge','eupho_kisen','eupho_asagiri','eupho_saizeriya_uji','witch-kitano','fate-kobe-bridge']);
 for(const previous of oldPg.points.filter(p=>!KADA.includes(p.id))){
  const point=pg.points.find(p=>p.id===previous.id);assert.ok(point,'巡礼点保留 '+previous.id);
- // 神户大桥's stacked comparison is split into a landscape anime/real pair; its source and licence carry over.
- const kinds=previous.id==='fate-kobe-bridge'?['coordinates','place_ids']:['real','anime','comparison','coordinates','place_ids'];
+ // Upgraded same-angle HD pairs keep coordinates/place_ids and verify local files + credits below.
+ const kinds=UPGRADED_MEDIA.has(previous.id)?['coordinates','place_ids']:['real','anime','comparison','coordinates','place_ids'];
  for(const key of kinds)assert.deepEqual(point[key],previous[key],'图片与定位保留 '+previous.id);
+ if(UPGRADED_MEDIA.has(previous.id)){
+  for(const k of ['real','anime']){
+   assert.ok(point[k]?.local&&fs.existsSync(path.join(src,point[k].local))&&point[k].width>point[k].height&&point[k].credit&&point[k].source_url,'升级对照图有效 '+previous.id+' '+k);
+  }
+ }
 }
 const pt=id=>pg.points.find(p=>p.id===id);
 assert.equal(pt('conan-ebisubashi').date,'2026-12-03');assert.equal(pt('conan-ebisubashi').event_id,'glico_photo');

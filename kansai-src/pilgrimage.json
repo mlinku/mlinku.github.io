@@ -12,7 +12,7 @@
       "work": "吹响！上低音号",
       "scene": "官方巡礼地图收录宇治桥；第一季第12集也是久美子抒发心情的桥。",
       "shooting_note": "在行人通道看桥栏与河景；保留原行程返程再次经过宇治桥。 中村藤吉等号有余量时短拍，不另算时间。",
-      "pair_match": "同一座桥、不同方向：动画为桥上步行画面，实景为桥栏与河景参考",
+      "pair_match": "同机位：宇治桥三之间木观景台",
       "coordinates": {
         "lat": 34.892948,
         "lng": 135.806267,
@@ -22,23 +22,23 @@
       },
       "real": {
         "local": "assets/pilgrimage/uji/bridge_r.jpg",
-        "source_url": "https://anitabi.net/anime-eupho/",
-        "image_url": "https://anitabi.net/blog/%E9%9F%BF%E3%81%91%E3%80%80%E3%83%A6%E3%83%BC%E3%83%95%E3%82%A9%E3%83%8B%E3%82%A2%E3%83%A0%E8%81%96%E5%9C%B044.jpg",
-        "credit": "あにたび（约2015年历史参考）",
+        "source_url": "https://ameblo.jp/shin-yas/entry-12456916383.html",
+        "image_url": "https://stat.ameba.jp/user_images/20190426/16/shin-yas/49/aa/j/o1080060714398038171.jpg?caw=800",
+        "credit": "shin-yas / Ameba（宇治桥三之间实景）",
         "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
         "visual_verified": true,
-        "width": 400,
-        "height": 225
+        "width": 800,
+        "height": 450
       },
       "anime": {
-        "local": "assets/pilgrimage/uji/bridge_a.png",
-        "source_url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf",
-        "image_url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf#page=2",
-        "credit": "京阪电车官方舞台探访地图 / ©武田綾乃・宝島社／「響け！」製作委員会",
+        "local": "assets/pilgrimage/uji/bridge_a.jpg",
+        "source_url": "https://note.com/loyal_wasp2136/n/n88b7b73ecc59",
+        "image_url": "https://assets.st-note.com/img/1760261909-cRjfGJTrDC8gFQI5mX4aYwz2.png?width=1200",
+        "credit": "©武田綾乃・宝島社／「響け！」製作委員会 · 引自巡礼记录",
         "license": "版权所有；个人行程中的小尺寸场景对照引用，非开放许可",
         "visual_verified": true,
-        "width": 366,
-        "height": 198
+        "width": 1200,
+        "height": 675
       },
       "sources": [
         {
@@ -56,7 +56,7 @@
       ],
       "status": "ready",
       "checked_on": "2026-09-29",
-      "match_note": "同一座桥、不同方向：作品展示桥上观景处，实景为桥栏与河景参考。",
+      "match_note": "同机位参考：宇治桥南侧步道「三之间」木观景台面向宇治川上游。",
       "name_ja": "宇治橋"
     },
     {
@@ -186,7 +186,7 @@
       "work": "吹响！上低音号",
       "scene": "官方巡礼地图第8点；第二季第1集有桥上场景。",
       "shooting_note": "过桥时对照红色栏杆；作品画面为夜间。",
-      "pair_match": "同一地点，拍摄角度不同。",
+      "pair_match": "同机位：喜撰桥朱红栏杆",
       "coordinates": {
         "lat": 34.888178,
         "lng": 135.809929,
@@ -195,24 +195,24 @@
         "verified": "地点级来源已核；不是摄影站位"
       },
       "real": {
-        "local": "assets/kisen.jpg",
-        "source_url": "https://commons.wikimedia.org/wiki/File:Kisen_bridge%2C_Uji_river.jpg",
-        "image_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kisen_bridge%2C_Uji_river.jpg",
-        "credit": "喜撰桥 — Motokoka / Wikimedia Commons / CC BY-SA 4.0",
-        "license": "CC BY-SA 4.0",
+        "local": "assets/pilgrimage/uji/kisen_r.jpg",
+        "source_url": "https://blog.pastak.net/entry/2019/04/30/103000",
+        "image_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/P/Pasta-K/20010425/20010425092410.jpg",
+        "credit": "Pasta-K / ぱすたけ日記（喜撰桥红栏杆实景）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
         "visual_verified": true,
-        "width": 960,
-        "height": 720
+        "width": 800,
+        "height": 533
       },
       "anime": {
-        "local": "assets/pilgrimage/uji/kisen_a.png",
-        "source_url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf",
-        "image_url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf#page=2",
-        "credit": "京阪电车官方舞台探访地图 / ©武田綾乃・宝島社／「響け！」製作委員会",
+        "local": "assets/pilgrimage/uji/kisen_a.jpg",
+        "source_url": "https://blog.pastak.net/entry/2019/04/30/103000",
+        "image_url": "https://i.gyazo.com/thumb/1000/e0779cbfe008a86ceb4e39b4667a5059-png.jpg",
+        "credit": "©武田綾乃・宝島社／「響け！」製作委員会 · 引自ぱすたけ日記",
         "license": "版权所有；个人行程中的小尺寸场景对照引用，非开放许可",
         "visual_verified": true,
-        "width": 455,
-        "height": 246
+        "width": 1000,
+        "height": 625
       },
       "sources": [
         {
@@ -230,7 +230,7 @@
       ],
       "status": "ready",
       "checked_on": "2026-09-29",
-      "match_note": "同一地点，拍摄角度不同。",
+      "match_note": "同机位参考：喜撰桥朱红栏杆与对岸山景。",
       "name_ja": "喜撰橋"
     },
     {
@@ -244,7 +244,7 @@
       "work": "吹响！上低音号",
       "scene": "京阪官方巡礼地图第9点：朝雾桥。",
       "shooting_note": "对照红色栏杆，过桥后前往东桥头的宇治神社。",
-      "pair_match": "实景为桥头与源氏物语像，与动画角度不同。",
+      "pair_match": "同角度：宇治川朝雾桥侧影",
       "coordinates": {
         "lat": 34.890189,
         "lng": 135.809394,
@@ -253,24 +253,24 @@
         "verified": "地点级来源已核；不是摄影站位"
       },
       "real": {
-        "local": "assets/asagiri.jpg",
-        "source_url": "https://commons.wikimedia.org/wiki/File:Asagiri_Bashi%26Hikaru_Genji_statue.jpg",
-        "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Asagiri_Bashi%26Hikaru_Genji_statue.jpg",
-        "credit": "御影守駒氏",
-        "license": "CC BY-SA 4.0",
+        "local": "assets/pilgrimage/uji/asagiri_r.jpg",
+        "source_url": "https://note.com/loyal_wasp2136/n/n88b7b73ecc59",
+        "image_url": "https://assets.st-note.com/img/1730037120-gXLCHRG9Ftvhu0PoxNzUZy2l.jpg?width=1200",
+        "credit": "巡礼记录实景（宇治川朝雾桥侧影）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
         "visual_verified": true,
-        "width": 825,
-        "height": 1100
+        "width": 1200,
+        "height": 904
       },
       "anime": {
-        "local": "assets/pilgrimage/uji/asagiri_a.png",
-        "source_url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf",
-        "image_url": "https://www.keihan.co.jp/euphonium/assets/img/pamphlet2.pdf#page=2",
-        "credit": "京阪电车官方舞台探访地图 / ©武田綾乃・宝島社／「響け！」製作委員会",
+        "local": "assets/pilgrimage/uji/asagiri_a.jpg",
+        "source_url": "https://note.com/loyal_wasp2136/n/n88b7b73ecc59",
+        "image_url": "https://assets.st-note.com/img/1760263122-gpe0a7U53KFfyWdvwQzqGMul.png?width=1200",
+        "credit": "©武田綾乃・宝島社／「響け！」製作委員会 · 引自巡礼记录",
         "license": "版权所有；个人行程中的小尺寸场景对照引用，非开放许可",
         "visual_verified": true,
-        "width": 372,
-        "height": 212
+        "width": 1200,
+        "height": 675
       },
       "sources": [
         {
@@ -288,7 +288,7 @@
       ],
       "status": "ready",
       "checked_on": "2026-09-29",
-      "match_note": "实景为桥头与源氏物语像，与动画角度不同。",
+      "match_note": "同角度参考：沿宇治川岸侧望朱红色朝雾桥全景。",
       "name_ja": "朝霧橋"
     },
     {
@@ -477,14 +477,14 @@
       "work": "吹响！上低音号 · 誓言的终章",
       "scene": "剧场版中久美子与奏谈话的家庭餐厅。",
       "shooting_note": "晚饭前顺拍二层窗户与店招；在公共通道取景，避让停车场车辆。",
-      "match_note": "巡礼者外观比对；作品改绘了店招，实景角度不同。",
+      "match_note": "巡礼者正面外观对照；作品改绘了店招，隔停车场面向建筑正面。",
       "real": {
-        "local": "assets/food-saizeriya-uji.jpg",
-        "source_url": "https://tabelog.com/kyoto/A2607/A260701/26017218/dtlphotolst/4/smp2/",
-        "image_url": "https://tblg.k-img.com/restaurant/images/Rvw/384390/640x640_rect_12341448f4d6cb28ba48a464a84b9234.jpg",
-        "credit": "ゑつ / 食べログ",
-        "width": 640,
-        "height": 481
+        "local": "assets/pilgrimage/uji/saizeriya_r.jpg",
+        "source_url": "https://ameblo.jp/shin-yas/entry-12456916383.html",
+        "image_url": "https://stat.ameba.jp/user_images/20190426/16/shin-yas/fe/2d/j/o1007056014398038175.jpg?caw=800",
+        "credit": "shin-yas / Ameba（萨莉亚宇治里尻店正面实景）",
+        "width": 800,
+        "height": 445
       },
       "anime": {
         "local": "assets/pilgrimage/uji/saizeriya_a.png",
@@ -1193,19 +1193,19 @@
       "work": "魔女的夜宴／サノバウィッチ",
       "scene": "七绪的咖啡店 Schwarze Katze 外观背景。",
       "shooting_note": "在北野坂人行道对照绿色门廊、窗框和石墙；画面有改绘，不到车道上追机位。",
-      "match_note": "玩家实景对照，非官方认定；两图角度略有差异。",
+      "match_note": "玩家实景对照，非官方认定；正面门廊、白墙与墨绿窗框同角度。",
       "coordinates": null,
       "status": "ready",
       "checked_on": "2026-10-01",
       "real": {
         "local": "assets/pilgrimage/kobe/kitano-real.jpg",
-        "source_url": "https://azusairi.com/?p=2576",
-        "image_url": "https://azusairi.com/wp-content/uploads/2024/02/IMG_5614-1-1024x576.jpg",
-        "credit": "アズサイリ，2024年文章历史照片",
-        "license": "原权利方保留版权；用于地点识别与作品场景对照，非开放许可",
+        "source_url": "https://commons.wikimedia.org/wiki/File:The_old_freundlieb_residence03n4272.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/The_old_freundlieb_residence03n4272.jpg/960px-The_old_freundlieb_residence03n4272.jpg",
+        "credit": "663highland / Wikimedia Commons / CC BY-SA 3.0（北野物语馆正面）",
+        "license": "CC BY-SA 3.0",
         "visual_verified": true,
-        "width": 1024,
-        "height": 576
+        "width": 960,
+        "height": 640
       },
       "anime": {
         "local": "assets/pilgrimage/kobe/kitano-game.png",
@@ -1240,7 +1240,7 @@
       "work": "Fate/stay night",
       "scene": "冬木大桥的红色桥梁背景，取景参考在桥南侧北公园。",
       "shooting_note": "从北公园海边朝桥北端拍，找红色拱架、桥下水面与石墩；不必走完整座桥。",
-      "match_note": "原作者对照图：上方作品画面，下方实景。实景为夜间照片，本次在15:00—16:30时段到访。",
+      "match_note": "同机位日景对照：从港岛北公园海边仰望红色拱桥与水岸石墩，与15:00—16:30白天到访时段一致。",
       "coordinates": null,
       "status": "ready",
       "checked_on": "2026-10-01",
@@ -1266,15 +1266,14 @@
         "changes": "从原对照图上半部分裁出（0—1142px），长边缩至1000px。"
       },
       "real": {
-        "source_url": "https://aurakaze.blog/fate-jyunreihyogo/",
-        "image_url": "https://aurakaze.blog/wp-content/uploads/2023/11/38-3-scaled.jpeg",
+        "source_url": "https://torusu7.hatenablog.com/entry/2019/05/13/055120",
+        "image_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/t/torusu7/20181206/20181206083049.jpg",
         "license": "原权利方保留版权；用于地点识别与作品场景对照，非开放许可",
         "visual_verified": true,
         "local": "assets/pilgrimage/kobe/bridge-real.jpg",
-        "width": 1000,
-        "height": 925,
-        "credit": "实景：Aura Kaze，2023年",
-        "changes": "从原对照图下半部分裁出（1146—2560px，保留水印），长边缩至1000px。"
+        "width": 800,
+        "height": 600,
+        "credit": "torusu7 / hollow hollow（北公园海边日景实拍）"
       }
     },
     {
