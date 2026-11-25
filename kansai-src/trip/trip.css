@@ -202,10 +202,18 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 
 /* ---------- Buttons ---------- */
 .actions {display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
-.btn {display:inline-flex; align-items:center; justify-content:center; gap:6px; min-height:46px; padding:0 16px; border-radius:var(--r-md); border:1.5px solid var(--line-2); background:var(--card); color:var(--ink); font-size:15px; font-weight:600}
-.btn .icon {width:18px; height:18px}
+.btn {display:inline-flex; align-items:center; justify-content:center; gap:6px; min-height:44px; padding:0 14px; border-radius:var(--r-md); border:1px solid color-mix(in srgb, var(--line-2) 68%, var(--line)); background:var(--card); box-shadow:0 1px 2px rgba(40,52,18,.04); color:var(--ink); font-size:14.5px; font-weight:600}
+.btn .icon {width:17px; height:17px}
 .btn.primary {background:var(--accent-pale); border-color:var(--accent-pale); color:var(--accent-ink); box-shadow:inset 0 0 0 1px var(--fill-edge)}
-.btn.ghost {border-color:transparent; background:none; color:var(--accent); padding:0 10px}
+.btn.ghost {border-color:transparent; background:none; box-shadow:none; color:var(--accent); padding:0 10px}
+.inline-actions {display:flex; align-items:center; margin-top:10px; border-top:1px solid var(--line)}
+.block > .inline-actions:last-child, .hotel:last-child .inline-actions {margin-bottom:-6px}
+.inline-actions > * {flex:1; min-width:0; display:inline-flex; align-items:center; justify-content:center; gap:5px; min-height:44px; padding:0 4px; color:var(--ink-2); font-size:13.5px; font-weight:600; white-space:nowrap; transition:background-color .2s ease, color .2s ease}
+.inline-actions > * + * {position:relative}
+.inline-actions > * + *::before {content:''; position:absolute; left:0; top:12px; bottom:12px; width:1px; background:var(--line)}
+.inline-actions .icon {width:15px; height:15px; color:var(--accent); flex:none}
+.hotel.osaka .inline-actions .icon {color:var(--plum)}
+.inline-actions > *:active {background:var(--sunk); border-radius:var(--r-sm); color:var(--ink)}
 .btn, .nav, .nav-big, .check, .chip, .link-row, .row, .row-open, .mini-row, .pager a, .tab, .icon-btn, .strip-day, .todo, .day-link, .zoom-switch button {transition:transform .2s var(--ease-out), background-color .25s ease, box-shadow .25s ease, color .2s ease, border-color .2s ease}
 .btn:active, .nav-big:active, .check-big:active, .chip:active, .link-row:active, .pager a:active {transform:scale(.97); transition-duration:.08s}
 .link {color:var(--accent); font-weight:600; min-height:44px; padding:0 4px}
@@ -501,19 +509,17 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .notice {display:flex; gap:10px; padding:12px 14px; border-radius:var(--r-md); background:var(--warn-soft); color:var(--warn); font-weight:600; font-size:15px}
 .notice .icon {margin-top:2px}
 .notice a {color:inherit; text-decoration:underline}
-.transport {padding:12px 14px; border-radius:var(--r-md); background:var(--sunk)}
+.transport {padding:2px 0 2px 14px; border-left:2px solid var(--line-2)}
 .transport li {font-size:15px; line-height:1.7; color:var(--ink)}
-.transport li + li {margin-top:8px; padding-top:8px; border-top:1px dashed var(--line-2)}
+.transport li + li {margin-top:8px; padding-top:8px; border-top:1px dashed var(--line)}
 .ln {display:inline-block; margin:0 2px; padding:0 6px; border-radius:5px; background:var(--ink); color:var(--card); font-size:12px; font-weight:800; line-height:1.65; letter-spacing:.03em; vertical-align:1px}
 .caution {padding:0 4px; border-radius:4px; background:var(--warn-soft); color:var(--warn); -webkit-box-decoration-break:clone; box-decoration-break:clone}
 .caution .ln {background:var(--warn); color:var(--card)}
-.meal {padding:14px 16px; border-radius:var(--r-md); background:var(--sunk)}
-.meal + .meal {margin-top:10px}
-.meal.primary {background:var(--card); box-shadow:inset 0 0 0 1.5px var(--ok)}
+.meal {padding:0}
+.meal + .meal {margin-top:14px; padding-top:14px; border-top:1px dashed var(--line)}
 .meal-rank {display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums}
-.meal h4 {font-size:17.5px; line-height:1.4; margin:5px 0 2px}
+.meal h4 {font-size:17px; line-height:1.4; margin:5px 0 2px}
 .meal .muted {font-size:14px}
-.meal .actions .btn {min-height:44px; padding:0 12px}
 .choices .option-row {display:grid; grid-template-columns:auto 1fr; column-gap:10px; align-items:start; padding:12px 14px; border-radius:var(--r-md); background:var(--sunk); box-shadow:inset 0 0 0 1.5px var(--line); font-weight:600; cursor:pointer}
 .choices .option-row + .option-row, .choices fieldset + .option-row {margin-top:8px}
 .choices .option-row input {width:20px; height:20px; margin:3px 0 0; accent-color:var(--accent)}
@@ -580,22 +586,18 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .rally-spot h3 {font:700 17px var(--serif)}
 
 /* ---------- 准备 ---------- */
-.tickets li {position:relative; border-radius:var(--r-md); background:var(--sunk)}
-.ticket-tap {display:flex; align-items:center; gap:14px; width:100%; min-height:56px; padding:12px 16px; border-radius:inherit; text-align:left; color:var(--ink)}
-.ticket-tap:active {background:var(--line)}
-.ticket.ok {background:var(--accent-soft)}
+.tickets li {border-top:1px dashed var(--line)}
+.tickets li:first-child {border-top:0}
+.ticket-tap {display:flex; align-items:center; gap:12px; width:100%; min-height:54px; padding:10px 2px; border-radius:var(--r-sm); text-align:left; color:var(--ink); transition:background-color .2s ease}
+.tickets li:first-child .ticket-tap {padding-top:4px}
+.ticket-tap:active {background:var(--sunk)}
 .ticket.ok .ticket-state {color:var(--accent)}
-.ticket.ok .ticket-main b {color:var(--ink-2)}
-.ticket-state .icon {width:15px; height:15px; margin-right:3px; vertical-align:-2px}
-.tickets li + li {margin-top:8px}
-.ticket-main {flex:1; min-width:0}
-.ticket-main {display:block}
-.ticket-main b {display:block; font:700 16px var(--serif)}
-.ticket-main small {display:block; color:var(--muted); font-size:13.5px}
-.ticket-state {flex:none; width:84px; padding-left:12px; white-space:nowrap; border-left:2px dashed var(--line-2); font-weight:800; font-size:14px; text-align:center}
-.tickets li::before, .tickets li::after {content:''; position:absolute; right:93px; width:14px; height:14px; border-radius:50%; background:var(--card)}
-.tickets li::before {top:-7px}
-.tickets li::after {bottom:-7px}
+.ticket.ok .ticket-main b {color:var(--muted); text-decoration:line-through; text-decoration-color:var(--line-2)}
+.ticket-state .icon {width:14px; height:14px; margin-right:3px; vertical-align:-2px}
+.ticket-main {flex:1; min-width:0; display:block}
+.ticket-main b {display:block; font:700 15.5px/1.35 var(--serif)}
+.ticket-main small {display:block; margin-top:1px; color:var(--muted); font-size:13px}
+.ticket-state {flex:none; white-space:nowrap; font-weight:750; font-size:13.5px; letter-spacing:.03em; text-align:right}
 .ticket.danger .ticket-state {color:var(--danger)}
 .ticket.warn .ticket-state {color:var(--warn)}
 .sub {font:700 14px var(--serif); letter-spacing:.1em; color:var(--muted); margin:16px 0 4px}
@@ -625,6 +627,12 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .pass-line .icon {position:relative; z-index:1; transform:rotate(90deg); padding:0 4px; background:var(--card); width:28px; height:20px}
 .pass-tz {font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap; opacity:.85}
 .pass-note {font-size:13px; color:var(--muted)}
+.hotel-top {display:flex; align-items:baseline; justify-content:space-between; gap:10px}
+.hotel-top .kicker b {color:var(--accent); font-weight:800}
+.hotel.osaka .hotel-top .kicker b {color:var(--plum)}
+.hotel-nights {font-size:12.5px; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
+.hotel-name {margin-top:5px; font-size:19px; font-weight:800; line-height:1.28; color:var(--ink); letter-spacing:-.01em}
+.hotel-addr {margin-top:3px; font-size:13px; color:var(--muted); line-height:1.5}
 .flight + .flight, .hotel + .hotel {margin-top:18px; padding-top:18px; border-top:1px dashed var(--line)}
 .copy-line {display:flex; align-items:center; justify-content:space-between; gap:8px; border-top:1px dashed var(--line)}
 
