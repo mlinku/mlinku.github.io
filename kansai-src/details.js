@@ -20,7 +20,7 @@ const DETAILS = {
         ]
       ],
       [
-        "夜间 · 打卡、动漫店与晚饭",
+        "夜间 · 逛店与晚饭",
         [
           "checkin_kyoto",
           "kyoto_station_visit",
@@ -127,7 +127,7 @@ const DETAILS = {
     ],
     "phases": [
       [
-        "上午 · 抹茶与表参道",
+        "上午 · 抹茶表参道",
         [
           "uji_transfer",
           "uji_parfait",
@@ -136,13 +136,13 @@ const DETAILS = {
         ]
       ],
       [
-        "午间 · 午餐",
+        "午间",
         [
           "uji_lunch"
         ]
       ],
       [
-        "下午 · 河岸与登山",
+        "下午 · 河岸登山",
         [
           "uji_pilgrimage",
           "uji_shrines",
@@ -151,7 +151,7 @@ const DETAILS = {
         ]
       ],
       [
-        "傍晚 · 书店与晚餐",
+        "傍晚 · 书店晚饭",
         [
           "heiwa_visit",
           "keihan_uji_visit",
@@ -160,7 +160,7 @@ const DETAILS = {
         ]
       ],
       [
-        "夜间 · 返回京都",
+        "夜间 · 回京都",
         [
           "uji_return",
           "station_stage",
@@ -307,21 +307,21 @@ const DETAILS = {
     ],
     "phases": [
       [
-        "上午 · 出町巡礼",
+        "上午 · 出町",
         [
           "demachi_transfer",
           "demachi_visit"
         ]
       ],
       [
-        "午间 · 午饭与鸭川",
+        "午间 · 鸭川",
         [
           "demachi_lunch",
           "delta_visit"
         ]
       ],
       [
-        "下午 · 清水寺与东山",
+        "下午 · 清水东山",
         [
           "kiyomizu_transfer",
           "kiyomizu_visit",
@@ -329,14 +329,14 @@ const DETAILS = {
         ]
       ],
       [
-        "傍晚 · 先休息再赏夜枫",
+        "傍晚 · 歇脚夜枫",
         [
           "gion_rest",
           "kodaiji_night"
         ]
       ],
       [
-        "夜间 · 晚饭与返店",
+        "夜间 · 晚饭回店",
         [
           "gion_dinner_walk",
           "gion_dinner",
@@ -434,7 +434,7 @@ const DETAILS = {
     ],
     "phases": [
       [
-        "上午 · 伏见稻荷",
+        "上午 · 稻荷",
         [
           "checkout_kyoto",
           "inari_transfer",
@@ -442,7 +442,7 @@ const DETAILS = {
         ]
       ],
       [
-        "午间 · 京都站午饭与京都塔",
+        "午间 · 京都塔",
         [
           "inari_return",
           "kyoto_lunch",
@@ -450,7 +450,7 @@ const DETAILS = {
         ]
       ],
       [
-        "下午 · 搬去大阪",
+        "下午 · 赴大阪",
         [
           "luggage_pickup",
           "osaka_transfer",
@@ -468,7 +468,7 @@ const DETAILS = {
         ]
       ],
       [
-        "夜间 · 回酒店",
+        "夜间",
         [
           "osaka_evening_return"
         ]
@@ -590,7 +590,7 @@ const DETAILS = {
     ],
     "phases": [
       [
-        "上午 · 东大寺大佛殿",
+        "上午 · 大佛殿",
         [
           "nara_transfer",
           "nara_park_walk",
@@ -598,7 +598,7 @@ const DETAILS = {
         ]
       ],
       [
-        "午间 · 午饭与二月堂",
+        "午间 · 二月堂",
         [
           "nara_lunch",
           "nigatsudo_visit",
@@ -613,13 +613,13 @@ const DETAILS = {
         ]
       ],
       [
-        "傍晚 · 晚饭",
+        "傍晚",
         [
           "nippombashi_dinner"
         ]
       ],
       [
-        "夜间 · 回酒店",
+        "夜间",
         [
           "nara_day_return"
         ]
@@ -762,7 +762,7 @@ const DETAILS = {
         ]
       ],
       [
-        "午间 · 午饭与姬路城",
+        "午间 · 姬路城",
         [
           "himeji_lunch",
           "himeji_walk",
@@ -770,13 +770,13 @@ const DETAILS = {
         ]
       ],
       [
-        "下午 · 好古园",
+        "下午",
         [
           "kokoen_visit"
         ]
       ],
       [
-        "傍晚 · 灯饰与晚饭",
+        "傍晚 · 灯饰晚饭",
         [
           "himeji_lights",
           "himeji_dinner"
@@ -900,20 +900,20 @@ const DETAILS = {
     ],
     "phases": [
       [
-        "上午 · 生田神社",
+        "上午",
         [
           "kobe_transfer",
           "ikuta_visit"
         ]
       ],
       [
-        "午间 · 北野物语馆",
+        "午间",
         [
           "kitano_lunch"
         ]
       ],
       [
-        "下午 · 元町CD与神户大桥",
+        "下午 · 逛店看桥",
         [
           "motomachi_cd_shopping",
           "sannomiya_rest",
@@ -921,7 +921,7 @@ const DETAILS = {
         ]
       ],
       [
-        "傍晚 · 三宫和牛",
+        "傍晚 · 和牛",
         [
           "sannomiya_evening",
           "sannomiya_dinner"
@@ -1053,7 +1053,7 @@ const DETAILS = {
         ]
       ],
       [
-        "返港 · 当地时间",
+        "返港",
         [
           "flight_home"
         ]

@@ -143,20 +143,28 @@ function selectedShops(c){return[c.shop1,c.shop2].filter(x=>x&&x!=='none');}
 // Titles name the activity; routes, restaurant details and planning notes retain the specifics.
 // Transfers read start → end; the stations between are in the sheet.
 const EVENT_TITLES={
- arrival_transfer:'入境 → HARUKA去京都',dinner_arrival:'晚餐 · 京都拉面小路',
- uji_transfer:'京都 → 中村藤吉',agata_stamp:'縣神社 · 集章',suikan_stamp:'水管桥河岸',keihan_uji_visit:'京阪宇治站 · 立牌',station_stage:'京都站《宝岛》舞台',
- uji_pilgrimage:'宇治川巡礼',
- demachi_transfer:'前往出町',demachi_visit:'出町桝形商店街',demachi_lunch:'午餐 · 出町',delta_visit:'鸭川三角洲',
- kiyomizu_transfer:'前往清水寺',kiyomizu_visit:'清水寺赏枫',higashiyama_walk:'东山散步',
- kyoto_tower_visit:'京都塔 · 京吹集章',inari_transfer:'京都站 → JR稻荷',
- inari_visit:'伏见稻荷 · 千本鸟居',osaka_transfer:'前往大阪酒店',osaka_checkin_rest:'酒店休息',
- dotonbori_transfer:'新今宫 → 戎桥',glico_photo:'戎桥 · 格力高',
- nara_transfer:'新今宫 → 近铁奈良',nara_park_walk:'步行到南大门',nara_visit:'东大寺大佛殿',nara_lunch:'午餐 · 奈良公园附近',
- nara_station_walk:'回近铁奈良站',nara_return_train:'近铁奈良 → 日本桥',
- kobe_transfer:'前往生田神社',ikuta_visit:'生田神社巡礼',kitano_lunch:'北野星巴克 · 午餐',
- anime_shopping:'日本桥 · 动漫购物',sannomiya_rest:'坐下休息，回三宫',kobe_bridge_visit:'神户大桥巡礼',
- sannomiya_evening:'去餐厅',sannomiya_dinner:'晚餐 · ふうふう亭和牛',last_evening_return:'返回大阪酒店',
- checkout_osaka:'退房，去南海新今宫',airport_train:'新今宫 → 关西机场',airport_checkin:'T1值机、托运与出境'
+ flight_out:'HX618 香港 → 关西',arrival_transfer:'入境 → HARUKA',checkin_kyoto:'入住 TUNE STAY',
+ kyoto_station_visit:'京都站中央口',avanti_shopping:'Avanti 6F 动漫店',dinner_arrival:'京都拉面小路',
+ skyway_visit:'空中径路夜景',kyoto_arrival_return:'回酒店',
+ uji_transfer:'京都 → 中村藤吉',uji_parfait:'中村藤吉',uji_approach:'平等院表参道',agata_stamp:'縣神社',
+ uji_lunch:'きく咖喱',uji_pilgrimage:'宇治川巡礼',uji_shrines:'宇治两神社',daikichi_visit:'大吉山展望台',
+ suikan_stamp:'水管桥河岸',heiwa_visit:'平和书店',keihan_uji_visit:'京阪宇治站',
+ uji_saizeriya_dinner:'萨莉亚晚餐',station_stage:'京都站《宝岛》舞台',kyoto_rest:'回酒店',
+ demachi_transfer:'前往出町',demachi_visit:'出町桝形商店街',demachi_lunch:'DELTA 午餐',delta_visit:'鸭川三角洲',
+ kiyomizu_transfer:'前往清水寺',kiyomizu_visit:'清水寺',higashiyama_walk:'东山散步',
+ gion_rest:'高台寺附近歇脚',kodaiji_night:'高台寺夜枫',gion_dinner_walk:'前往晚饭',gion_dinner:'祇园／河原町晚餐',kyoto_night_return:'回酒店',
+ checkout_kyoto:'退房寄行李',inari_transfer:'京都站 → JR稻荷',inari_visit:'伏见稻荷',
+ kyoto_lunch:'京都站午餐',kyoto_tower_visit:'京都塔',luggage_pickup:'回酒店取行李',
+ osaka_transfer:'前往大阪酒店',osaka_checkin_rest:'酒店休息',
+ dotonbori_transfer:'新今宫 → 戎桥',glico_photo:'戎桥格力高',dotonbori_walk:'道顿堀／法善寺',dotonbori_dinner:'道顿堀晚餐',osaka_evening_return:'回酒店',
+ nara_transfer:'新今宫 → 近铁奈良',nara_park_walk:'步行至南大门',nara_visit:'东大寺大佛殿',nara_lunch:'绘马堂午餐',
+ nigatsudo_visit:'二月堂',nara_station_walk:'回近铁奈良站',nara_return_train:'近铁奈良 → 日本桥',
+ anime_shopping:'日本桥逛店',nippombashi_dinner:'难波晚餐',nara_day_return:'回酒店',
+ himeji_lunch:'穴子饭午餐',kokoen_visit:'好古园夜枫',himeji_lights:'大手前通 → 姬路站',himeji_dinner:'姬路站晚餐',
+ kobe_transfer:'前往生田神社',ikuta_visit:'生田神社',kitano_lunch:'北野星巴克',
+ motomachi_cd_shopping:'三宫＆元町CD',sannomiya_rest:'休息回三宫',kobe_bridge_visit:'神户大桥',
+ sannomiya_evening:'步行去餐厅',sannomiya_dinner:'ふうふう亭和牛',last_evening_return:'回酒店',
+ checkout_osaka:'退房去南海站',airport_train:'新今宫 → 关西机场',airport_checkin:'T1 值机出境',flight_home:'HX617 关西 → 香港'
 };
 function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...x,title:EVENT_TITLES[x.id]||x.title,place_ids:[...x.place_ids]}));const by=id=>events.find(x=>x.id===id);
  for(const ev of events.filter(ev=>ev.category==='flight')){

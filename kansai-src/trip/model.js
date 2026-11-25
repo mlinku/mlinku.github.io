@@ -139,13 +139,13 @@ function setCheck(date,id,checked){const d=PLAN.days.find(x=>x.date===date);if(!
 // Hard times of each day: miss these and the plan changes. Each one is stated in the plan's own notes;
 // `decide` marks a check-point (decide whether to cut), `close` a door or counter that shuts.
 const HARD_STOPS={
- '2026-11-30':[['10:25','香港T2停止值机（香港时间）','flight_out','close','hkt'],['11:05','登机口关闭（香港时间）','flight_out','close','hkt'],['21:00','Avanti 6F 动漫店关门','avanti_shopping','close']],
- '2026-12-01':[['11:00','芭菲：判断能否11:45前吃完','uji_parfait','decide'],['14:40','未到大吉山登山口就取消登山','daikichi_visit','decide']],
- '2026-12-02':[['17:45','仍未入场就改去吃晚饭','kodaiji_night','decide'],['20:00','おめん最后点餐','gion_dinner','close']],
- '2026-12-04':[['20:00','Animate关门','anime_shopping','close']],
+ '2026-11-30':[['10:25','T2 值机截止（港时）','flight_out','close','hkt'],['11:05','登机口关闭（港时）','flight_out','close','hkt'],['21:00','Avanti 动漫店关门','avanti_shopping','close']],
+ '2026-12-01':[['11:00','中村藤吉过久弃吃','uji_parfait','decide'],['14:40','未到登山口取消大吉山','daikichi_visit','decide']],
+ '2026-12-02':[['17:45','高台寺未入场改晚饭','kodaiji_night','decide'],['20:00','おめん最后点餐','gion_dinner','close']],
+ '2026-12-04':[['20:00','Animate 关门','anime_shopping','close']],
  '2026-12-05':[['16:00','姬路城停止入城','himeji_castle_visit','close']],
  '2026-12-06':[['14:20','元町停止购物','motomachi_cd_shopping','decide'],['15:00','出发去神户大桥','kobe_bridge_visit','decide']],
- '2026-12-07':[['09:10','关西T1值机截止','airport_checkin','close']]
+ '2026-12-07':[['09:10','关西 T1 值机截止','airport_checkin','close']]
 };
 function hardStops(d){
  const ids=new Set(effectiveEvents(d).map(ev=>ev.id));
