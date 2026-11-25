@@ -137,19 +137,20 @@ function dayScreen(){
  <section class="block day-plan">${flow.sections.map(section=>{
   const [label,...rest]=section.name.split(' · ');
   const clocks=section.events.flatMap(ev=>[...compactTime(ev.time_label).matchAll(/\d{1,2}:\d{2}/g)].map(x=>x[0])),range=clocks.length?clocks[0]+(clocks.length>1?' – '+clocks.at(-1):''):'';
-  return `<div class="phase"><h2 class="phase-title"><span class="phase-name">${e(label)}</span>${rest.length?`<small>${e(rest.join(' · '))}</small>`:''}${range?`<span class="range">${range}</span>`:''}</h2><ol class="line rows">${section.events.map(ev=>row(d,ev,now)).join('')}</ol></div>`;
+  return `<div class="phase"><h2 class="phase-title"><span class="phase-name">${e(label)}</span>${rest.length?`<small>${e(rest.join(' · '))}</small>`:''}${range?`<span class="range">${range}</span>`:''}</h2><ol class="line rows">${section.events.map((ev,idx)=>row(d,ev,now,idx===0)).join('')}</ol></div>`;
  }).join('')}</section>
  <nav class="pager" aria-label="相邻日期">${i>0?`<a href="#day/${PLAN.days[i-1].date}">${icon('back')}<span>${dateLabel(PLAN.days[i-1].date)} ${e(dayPresentation(PLAN.days[i-1]).short)}</span></a>`:'<span></span>'}${i<PLAN.days.length-1?`<a class="next" href="#day/${PLAN.days[i+1].date}"><span>${dateLabel(PLAN.days[i+1].date)} ${e(dayPresentation(PLAN.days[i+1]).short)}</span>${icon('chevron')}</a>`:''}</nav>`;
 }
-function row(d,ev,now){
+const ROW_SUB={arrival_transfer:'17:16 或 17:46 班次',avanti_roselia_cd:'CD 区 ·《Lehre der Rose》未拆封初回'};
+function row(d,ev,now,phaseFirst=false){
  const major=isMajorEvent(d,ev),done=major&&activityState(d.date,ev.id)==='done',start=eventStart(ev),flags=[];
  if(noticeParts(d,ev).notice)flags.push('<span class="flag warn">注意</span>');
  if(ev.optional)flags.push('<span class="flag">可选</span>');
  const ticket=major?eventTicket(d,ev):null;if(ticket&&!ticket.done&&ticket.tone!=='plain')flags.push(`<span class="flag ${ticket.tone==='danger'?'warn':''}">${e(ticket.label)}</span>`);
  const shots=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p)).length;if(shots)flags.push(`<span class="flag">巡礼 ${shots}</span>`);
- // The day's first row keeps its clock even when it is a transfer: it is when the day starts.
- const fixed=fixedTime(ev),showClock=major||fixed||effectiveEvents(d)[0]?.id===ev.id||now?.current?.id===ev.id,passed=!major&&passedConnector(d,ev);
- const words=showClock?(start===null?compactTime(ev.time_label):''):spanText(ev);
+ // Each phase's first row keeps its clock even when it is a transfer or check-in, so the phase start reads cleanly.
+ const fixed=fixedTime(ev),showClock=major||fixed||phaseFirst||effectiveEvents(d)[0]?.id===ev.id||now?.current?.id===ev.id,passed=!major&&passedConnector(d,ev);
+ const words=ROW_SUB[ev.id]||(showClock?(start===null?compactTime(ev.time_label):(!major&&!fixed?spanText(ev):'')):spanText(ev));
  const node=`<span class="node${major?' big':''}" aria-hidden="true"></span>`;
  return `<li class="row ${major?'major':'minor'}${done||passed?' done':''}${now?.current?.id===ev.id?' now':''}" id="row-${e(ev.id)}">${openButton(d.date,ev.id,`<span class="row-time${fixed?' fixed':''}">${showClock?(start===null?'随后':clock(start)):''}</span>${node}<span class="row-text"><span class="row-title">${major?'':icon(CATEGORY_ICON[ev.category]||'pin')}${e(ev.title)}</span>${words||flags.length?`<span class="row-meta">${words?`<span>${e(words)}</span>`:''}${flags.join('')}</span>`:''}</span>`,'row-open')}${major?checkButton(d.date,ev):''}</li>`;
 }
