@@ -1379,14 +1379,15 @@
         },
         {
           "id": "arrival_transfer",
-          "time_label": "16:00 落地后",
-          "time_status": "planning_window",
-          "title": "入境取行李 → HARUKA往京都",
+          "time_label": "17:16→18:36（备选 17:46→19:06）",
+          "time_status": "verified_timetable",
+          "title": "入境取行李 → HARUKA 往京都（17:16 / 17:46）",
           "place_ids": [
             "kix",
             "kyoto_station"
           ],
-          "category": "transport"
+          "category": "transport",
+          "condition": "16:00落地后入境取行李换票，乘 17:16（18:36到）或 17:46（19:06到）HARUKA 往京都站。"
         },
         {
           "id": "checkin_kyoto",
@@ -1411,15 +1412,26 @@
           "condition": "站前广场拍《魔女的夜宴》玻璃幕墙，随后穿南北自由通路去八条口。"
         },
         {
-          "id": "avanti_shopping",
-          "time_label": "19:55—20:50",
+          "id": "avanti_roselia_cd",
+          "time_label": "19:55—20:20",
           "time_status": "planning_window",
-          "title": "Avanti 6F · Animate & 指南针",
+          "title": "Animate CD 区找《Lehre der Rose》未拆封初回",
           "place_ids": [
             "kyoto_avanti"
           ],
           "category": "shopping",
-          "condition": "八条口即达，6F 同层逛 Animate 与指南针；21:00 关门，晚到只选一家。"
+          "condition": "八条口即达 Avanti 6F，先直奔 Animate CD 区找 Roselia《Lehre der Rose》未拆封初回，买完再逛周边；21:00 关门。"
+        },
+        {
+          "id": "avanti_shopping",
+          "time_label": "20:20—20:50",
+          "time_status": "planning_window",
+          "title": "Avanti 6F · 指南针 / 顺逛周边",
+          "place_ids": [
+            "kyoto_avanti"
+          ],
+          "category": "shopping",
+          "condition": "买完盘后同层顺逛指南针与 Animate 周边；21:00 关门，晚到可省。"
         },
         {
           "id": "dinner_arrival",
@@ -3252,7 +3264,7 @@
       ],
       "intensity": "清晨交通日",
       "overnight": null,
-      "departure_target": "05:15—05:25",
+      "departure_target": "06:25—06:35",
       "hotel_return_target": null,
       "route_stop_ids": [
         "hotel_osaka",
@@ -3263,7 +3275,7 @@
       "timeline": [
         {
           "id": "checkout_osaka",
-          "time_label": "05:15—05:25",
+          "time_label": "06:25—06:35",
           "time_status": "planning_window",
           "title": "退房离店，前往南海新今宫",
           "place_ids": [
@@ -3276,14 +3288,15 @@
         },
         {
           "id": "airport_train",
-          "time_label": "05:47→06:28，临行复核",
-          "time_status": "current_timetable_candidate",
+          "time_label": "06:52→07:33",
+          "time_status": "verified_timetable",
           "title": "南海新今宫→关西机场",
           "place_ids": [
             "nankai_shinimamiya",
             "kix"
           ],
-          "category": "transport"
+          "category": "transport",
+          "condition": "南海空港急行 ¥970，刷 IC 卡直接上车免特急券；想更早可搭 05:47→06:28。"
         },
         {
           "id": "airport_checkin",

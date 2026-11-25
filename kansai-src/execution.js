@@ -39,7 +39,7 @@ function executionNotice(d,ev){
   gion_dinner:'おめん20:00最后点餐；晚到或长队时换简餐。',
   kada_transfer:`${external('南海时刻表 ↗',NANKAI_TIMETABLE)}`,
   kada_day_return:`${external('南海时刻表 ↗',NANKAI_TIMETABLE)}`,
-  airport_train:`南海空港急行，现行平日时刻已核实；临行复核改点及运行情况。 ${external('南海时刻表 ↗',NANKAI_TIMETABLE)} · ${external('新今宫站入口图 ↗',NANKAI_STATION)}`
+  airport_train:`南海空港急行 ¥970（免特急券），06:52 发 → 07:33 到；早班备选 05:47→06:28。 ${external('南海时刻表 ↗',NANKAI_TIMETABLE)} · ${external('新今宫站入口图 ↗',NANKAI_STATION)}`
  };
  return content[ev.id]?`<p class="execution-note">${content[ev.id]}</p>`:'';
 }

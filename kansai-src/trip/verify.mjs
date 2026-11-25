@@ -164,10 +164,11 @@ const checked=run(`
  setCheck(uji.date,'uji_parfait',true);assert.ok(!nowState(uji,9*60+40).events.length||nowState(uji,9*60+40).focus.id!=='uji_transfer','勾选后续活动后交通行视为已过');
  assert.ok(dayScreen().includes('id="row-uji_transfer"')&&/class="row minor done" id="row-uji_transfer"/.test(dayScreen()),'已过的交通行变淡');
  setCheck(uji.date,'uji_parfait',false);
- ui.day=7;assert.ok(/row-time fixed">05:47/.test(dayScreen()),'现行候选列车保留粗体时刻');
+ ui.day=7;assert.ok(/row-time fixed">06:52/.test(dayScreen()),'已核实南海空港急行保留粗体时刻');
+ assert.ok(!dayScreen().includes('待复核'),'12/7不再显示待复核');
  const arrive=PLAN.days[0];ui.day=0;state.checks[arrive.date+':checkin_kyoto']='done';
  assert.ok(!/class="row minor done" id="row-arrival_transfer"/.test(dayScreen()),'旧版留在交通行上的勾选不再划线');
- assert.equal(nowState(arrive,17*60).focus.id,'arrival_transfer','旧勾选不让「现在」跳过交通');
+ assert.equal(nowState(arrive,17*60+30).focus.id,'arrival_transfer','旧勾选不让「现在」跳过交通');
  setCheck(arrive.date,'kyoto_station_visit',true);assert.ok(/class="row minor done" id="row-arrival_transfer"/.test(dayScreen()),'下一项主活动完成后交通行才划线');
  delete state.checks[arrive.date+':checkin_kyoto'];setCheck(arrive.date,'kyoto_station_visit',false);
  assert.ok(TODO_IDS.every(id=>TODO_SHORT[id]),'每条待办都有一行标题');

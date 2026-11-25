@@ -20,10 +20,11 @@ const DETAILS = {
         ]
       ],
       [
-        "夜间 · 逛店与晚饭",
+        "夜间 · 买盘与晚饭",
         [
           "checkin_kyoto",
           "kyoto_station_visit",
+          "avanti_roselia_cd",
           "avanti_shopping",
           "dinner_arrival",
           "skyway_visit",
@@ -79,7 +80,7 @@ const DETAILS = {
       ]
     ],
     "cityLabel": "抵达京都",
-    "summary": "机场 → 酒店 → Avanti → 拉面小路",
+    "summary": "机场 → 酒店 → Roselia 买盘 → 拉面小路",
     "eventDetails": {
       "flight_out": {
         "title": "值机与登机",
@@ -94,16 +95,25 @@ const DETAILS = {
           }
         ]
       },
+      "avanti_roselia_cd": {
+        "title": "买盘重点",
+        "items": [
+          {
+            "text": "Animate 京都 Avanti 店：6F，10:00—21:00。先直奔 CD 区找 Roselia《Lehre der Rose》未拆封初回，买完再看谷子。",
+            "url": "https://www.animate.co.jp/shop/kyoto/"
+          }
+        ]
+      },
       "avanti_shopping": {
         "title": "6F 店铺营业",
         "items": [
           {
-            "text": "Animate 京都 Avanti 店：6F，10:00—21:00。",
-            "url": "https://www.animate.co.jp/shop/kyoto/"
-          },
-          {
             "text": "指南针（らしんばん）京都店：同层 6F，10:00—21:00，中古周边与谷子。",
             "url": "https://www.lashinbang.com/store/kyoto/"
+          },
+          {
+            "text": "Animate 京都 Avanti 店：同层 6F，10:00—21:00。",
+            "url": "https://www.animate.co.jp/shop/kyoto/"
           }
         ]
       }
@@ -1005,7 +1015,7 @@ const DETAILS = {
     "short": "返回香港",
     "eyebrow": "新今宫 → 关西机场 → 香港",
     "focus": "清晨前往机场，搭乘HX617返港。",
-    "key": "05:15—05:25离店；计划乘南海空港急行05:47→06:28，临行复核。",
+    "key": "06:25—06:35离店；南海空港急行 06:52→07:33（¥970 免特急券，早班备选 05:47→06:28）。",
     "cover": "kix",
     "photos": [],
     "phases": [
@@ -1032,7 +1042,7 @@ const DETAILS = {
     ],
     "transport": [
       "12/6晚把证件、钱包、交通卡、随身物品与早餐单独准备好。",
-      "进南海新今宫站（不要误进JR闸机），认「関西空港」方向坐05:47急行，直接刷卡；具体班次临行复核。",
+      "进南海新今宫站（不要误进JR闸机），认「関西空港」方向坐 06:52 空港急行（07:33 到，¥970 直接刷卡免特急券；想更早可搭 05:47→06:28）。",
       "若选择Rapi:t，需相应特急座席票，按最终确认的列车购票。",
       "抵达机场站后前往T1值机、托运、安检和出境；HX617于09:50日本时间起飞，现行柜台截止09:10，登机时限看登机牌。"
     ],

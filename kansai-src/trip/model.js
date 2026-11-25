@@ -57,7 +57,7 @@ const compactFallback=t=>FALLBACK_SHORT.reduce((s,[from,to])=>s.replace(from,to)
 // Transport notes that spell out airport routine; the short form keeps every time and the one non-obvious fact.
 const TRANSPORT_SHORT=[
  ['去程建议08:25抵达香港T2；当前10:25停止值机。T2值机、安检和出境后，乘APM前往T1中场客运廊（T1M）登机。','永东大巴到 T2 三楼（09-10 柜台），直接上楼值机出境（10:25 截止），再搭机场小火车去登机口。'],
- ['关西T1入境、取行李后，按Railway／鉄道指引到车站；按订单兑换或使用已购HARUKA票，依入境进度选班次。','拿完行李换HARUKA车票。'],
+ ['关西T1入境、取行李后，按Railway／鉄道指引到车站；按订单兑换或使用已购HARUKA票，依入境进度选班次。','拿完行李换 HARUKA 车票，搭 17:16（18:36 到）或 17:46（19:06 到）班次。'],
  ['京都站认中央口／京都塔侧。酒店官方的约 5 分钟步行不包含站台到出口。','京都站从中央口（京都塔侧）出站。'],
  ['入住时确认 12/3 退房寄存位置；两间酒店均不含早餐。',''],
  ['抵达机场站后前往T1值机、托运、安检和出境；HX617于09:50日本时间起飞，现行柜台截止09:10，登机时限看登机牌。','到T1办值机托运和出境，09:10停值机（09:50飞）。']
@@ -67,7 +67,7 @@ const TRANSPORT_SHORT=[
 // shown; the plan data keeps them. trip/verify.mjs checks each one still matches the plan.
 const DROP_COPY=[
  /以(航司最新通知|现场设施|现场)[^，；。]*为准/,/按(登机牌和)?现场指引/,/按航司通知及登机牌复核/,/提前完成托运后前往登机口/,
- /不锁定车次/,/(于\d+\/\d+|平日时刻已)核实/,/^配图为/,/须现场核对/,/遇活动占用时在允许通行处拍摄/,
+ /不锁定车次/,/^配图为/,/须现场核对/,/遇活动占用时在允许通行处拍摄/,
  /查下一班关西机场方向列车/,/^若选择Rapi:t/,/须结合宇治市巡礼图/,/(找|向)站员确认替代交通/,/^(攻略)?勾选不等于官方领章/,/^攻略勾选不会替你/,/^这是手机GPS数字集章/,/旧图中的座椅与后方护岸可能已有变化/,/^不是傍晚看展示/,/^不是新兰合影逐帧截图/,
  /^(店铺)?营业与点心库存不保证/,/^室内是否开放不保证/,/^傍晚案内所可能已关/,/^纸本现场询问/,/^12\/6晚把证件、钱包/
 ];
@@ -101,7 +101,7 @@ const keepSentence=s=>{const x=s.trim(),key=x.replace(/[。；，]+$/,'');return
 // Times are reference windows and re-checking is a preparation task, so field copy drops the repeated
 // "参考" before times and the "临行复核" clauses. cleanHTML does the same inside markup, text nodes only.
 const BOOKING_STATUS=/（待订位）|[，、；]?(尚)?未订位(?=[。；，]|$)|[，、；]?未购票(?=[。；，]|$)|[，、；]?购票待确认/g;
-const cleanText=t=>TEXT_SHORT.reduce((s,[from,to])=>s.replace(from,to),String(t??'')).replace(BOOKING_STATUS,'').replace(/为待订位目标/g,'为目标').replace(/参考(?=\d|套餐|24小时)/g,'').replace(/[^，；。<>]*临行(复核|确认|再查|查询|按)[^，；。<>]*/g,'')
+const cleanText=t=>TEXT_SHORT.reduce((s,[from,to])=>s.replace(from,to),String(t??'')).replace(BOOKING_STATUS,'').replace(/为待订位目标/g,'为目标').replace(/参考(?=\d|套餐|24小时)/g,'').replace(/[^，；。<>]*于\d+\/\d+核实[^，；。<>]*/g,'').replace(/[^，；。<>]*临行(复核|确认|再查|查询|按)[^，；。<>]*/g,'')
  .split(/(?<=[。；])/).filter(keepSentence).join('')
  .replace(/([，；])[，；]+/g,'$1').replace(/[，；]+。/g,'。').replace(/。[，；]+/g,'。').replace(/^[，；\s]+/,'').replace(/[，；\s]+$/,'').replace(/^[。；，、\s]+$/,'');
 const cleanHTML=html=>String(html).replace(/>([^<]+)</g,(_,t)=>'>'+cleanText(t)+'<');
@@ -144,7 +144,7 @@ function setCheck(date,id,checked){const d=PLAN.days.find(x=>x.date===date);if(!
 // Hard times of each day: miss these and the plan changes. Each one is stated in the plan's own notes;
 // `decide` marks a check-point (decide whether to cut), `close` a door or counter that shuts.
 const HARD_STOPS={
- '2026-11-30':[['10:25','T2 值机截止（港时）','flight_out','close','hkt'],['11:05','登机口关闭（港时）','flight_out','close','hkt'],['21:00','Avanti 动漫店关门','avanti_shopping','close']],
+ '2026-11-30':[['10:25','T2 值机截止（港时）','flight_out','close','hkt'],['11:05','登机口关闭（港时）','flight_out','close','hkt'],['21:00','Animate 关门（Roselia 盘）','avanti_roselia_cd','close']],
  '2026-12-01':[['11:00','中村藤吉过久弃吃','uji_parfait','decide'],['14:40','未到登山口取消大吉山','daikichi_visit','decide']],
  '2026-12-02':[['17:45','高台寺未入场改晚饭','kodaiji_night','decide'],['20:00','おめん最后点餐','gion_dinner','close']],
  '2026-12-04':[['20:00','Animate 关门','anime_shopping','close']],
@@ -175,7 +175,7 @@ function nowState(d,minutes){
 
 /* ---------- Activities ---------- */
 // Times the plan cannot move: flights, timetable trains, the reservation target. Everything else is a planning slot.
-const fixedTime=ev=>ev.category==='flight'||['booked','current_timetable_candidate'].includes(ev.time_status)||/^意向/.test(ev.time_label||'');
+const fixedTime=ev=>ev.category==='flight'||['booked','current_timetable_candidate','verified_timetable'].includes(ev.time_status)||/^意向/.test(ev.time_label||'');
 // "25分钟" for a connector, read from its own window.
 function spanText(ev){const m=/(\d{1,2}):(\d{2})\D+?(\d{1,2}):(\d{2})/.exec(ev.time_label||'');if(!m)return '';const min=(m[3]*60+ +m[4])-(m[1]*60+ +m[2]);return min>0?(min<60?min+'分钟':Math.floor(min/60)+'小时'+(min%60?min%60+'分':'')):'';}
 const passedConnector=(d,ev)=>{const events=effectiveEvents(d),next=events.slice(events.findIndex(x=>x.id===ev.id)+1).find(x=>isMajorEvent(d,x));return !!next&&activityState(d.date,next.id)==='done';};
@@ -388,7 +388,7 @@ const TODOS=TODO_LIST.map(t=>t.text),TODO_IDS=TODO_LIST.map(t=>t.id);
 const TODO_WHEN=Object.fromEntries(TODO_LIST.filter(t=>t.when).map(t=>[t.id,t.when]));
 const TODO_WHEN_LABEL={'2026-11-30':'11/30 晚','2026-12-02':'12/2 午','2026-12-03':'12/3 晚','2026-12-04':'12/4 晚','2026-12-05':'12/5 晚','2026-12-06':'12/6 晚'};
 const TODO_PREFIX=/^12\/\d+(前夜|前|晚)?/;
-const TODO_SHORT={'weather':'查叶况与天气','restaurants':'核对餐厅营业与菜单','return-travel':'核对航班通知与回程南海时刻',
+const TODO_SHORT={'weather':'查叶况与天气','restaurants':'核对餐厅营业与菜单','return-travel':'临行前看回程航班通知',
  'transport-tickets':'备好IC卡与HARUKA订单','uji-cafes':'确认宇治店铺营业与候位','rally-account':'登录集章账户、开定位',
  'kodaiji-weather':'查高台寺天气与排队','nara-cash-20261019':'备大佛殿现金，查日本桥临休','himeji-20261108':'查姬路城、好古园开放与点灯',
  'kobe-1205-20261019':'收好行李，查CD店临休','packing':'整理行李、证件和次晨早餐'};
