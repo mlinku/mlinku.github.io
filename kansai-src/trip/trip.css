@@ -606,42 +606,47 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .todo.on .box {background:var(--ink); border-color:var(--ink); color:var(--card)}
 .todo.on > span:last-child {color:var(--muted); text-decoration:line-through}
 .flights {display:flex; flex-direction:column; gap:14px}
-.bp {position:relative; border-radius:var(--r-md); background:var(--card); border:1px solid color-mix(in srgb, var(--line) 82%, var(--line-2)); box-shadow:0 1px 2px rgba(40,52,18,.04), 0 8px 18px -12px rgba(40,52,18,.14); overflow:hidden}
-.bp::before {content:''; display:block; height:2.5px; background:linear-gradient(90deg, var(--moegi), color-mix(in srgb, var(--accent) 72%, var(--moegi)))}
-.bp.back::before {background:linear-gradient(90deg, color-mix(in srgb, var(--plum) 38%, var(--card)), color-mix(in srgb, var(--plum) 74%, var(--card)))}
-.bp-head {display:flex; align-items:center; gap:8px; padding:10px 15px 9px; font-size:12.5px; background:linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 52%, var(--card)), color-mix(in srgb, var(--accent-soft) 16%, var(--card))); border-bottom:1px solid color-mix(in srgb, var(--line) 68%, transparent)}
-.bp.back .bp-head {background:linear-gradient(180deg, color-mix(in srgb, var(--plum-soft) 82%, var(--card)), color-mix(in srgb, var(--plum-soft) 22%, var(--card)))}
-.bp-leg {display:inline-flex; align-items:center; padding:1px 8px; border-radius:999px; background:var(--card); color:var(--accent); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--accent) 26%, transparent); font:700 11.5px/1.6 var(--serif); letter-spacing:.1em}
-.bp.back .bp-leg {color:var(--plum); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--plum) 26%, transparent)}
-.bp-date {color:var(--ink-2); font-weight:650; font-variant-numeric:tabular-nums; letter-spacing:.02em}
-.bp-flight {margin-left:auto; color:var(--muted); font-size:12px; white-space:nowrap}
-.bp-flight b {color:var(--ink-2); font-weight:750; letter-spacing:.05em}
-.bp-route {display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px; padding:13px 15px 15px; background:var(--card)}
+.bp {--bp-bg:color-mix(in srgb, var(--accent-soft) 36%, var(--card)); --bp-edge:color-mix(in srgb, var(--accent) 22%, var(--line)); position:relative; border-radius:var(--r-md); background:var(--bp-bg); border:1px solid var(--bp-edge); box-shadow:0 2px 6px rgba(40,52,18,.05), 0 10px 22px -14px rgba(40,52,18,.18); overflow:hidden}
+.bp.back {--bp-bg:color-mix(in srgb, var(--plum-soft) 52%, var(--card)); --bp-edge:color-mix(in srgb, var(--plum) 22%, var(--line))}
+.bp::before {content:''; display:block; height:3px; background:linear-gradient(90deg, var(--accent), var(--moegi))}
+.bp.back::before {background:linear-gradient(90deg, var(--plum), color-mix(in srgb, var(--plum) 42%, var(--card)))}
+.bp-head {display:flex; align-items:center; gap:8px; padding:10px 15px 9px; font-size:12.5px; background:linear-gradient(135deg, var(--wash-moegi), var(--accent-soft)); border-bottom:1px solid color-mix(in srgb, var(--accent) 14%, transparent)}
+.bp.back .bp-head {background:linear-gradient(135deg, var(--wash-plum), var(--plum-soft)); border-bottom-color:color-mix(in srgb, var(--plum) 14%, transparent)}
+.bp-leg {display:inline-flex; align-items:center; padding:1px 9px; border-radius:999px; background:var(--accent); color:var(--card); font:700 11.5px/1.6 var(--serif); letter-spacing:.1em}
+.bp.back .bp-leg {background:var(--plum)}
+.bp-date {color:var(--ink); font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:.02em}
+.bp-flight {margin-left:auto; color:var(--ink-2); font-size:12px; white-space:nowrap}
+.bp-flight b {color:var(--ink); font-weight:800; letter-spacing:.05em}
+.bp-route {display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px; padding:14px 15px 15px; background:var(--bp-bg)}
 .bp-end {display:flex; flex-direction:column; align-items:flex-start; gap:4px; min-width:0}
 .bp-end:last-child {align-items:flex-end; text-align:right}
 .bp-place {font-size:12px; color:var(--muted); letter-spacing:.03em; white-space:nowrap}
-.bp-place b {color:var(--ink); font-size:13px; font-weight:800; letter-spacing:.08em}
-.bp-time {font-size:26px; line-height:1.06; font-weight:750; color:var(--ink); font-variant-numeric:tabular-nums; letter-spacing:-.015em}
-.bp-term {display:inline-block; margin-top:1px; padding:1px 8px; border-radius:999px; background:color-mix(in srgb, var(--accent-soft) 55%, var(--card)); border:1px solid color-mix(in srgb, var(--accent) 16%, transparent); font-size:11px; font-weight:650; color:var(--ink-2); letter-spacing:.03em; white-space:nowrap}
-.bp.back .bp-term {background:color-mix(in srgb, var(--plum-soft) 75%, var(--card)); border-color:color-mix(in srgb, var(--plum) 18%, transparent)}
-.bp-mid {display:flex; flex-direction:column; align-items:center; gap:3px; min-width:78px; padding:0 4px}
-.bp-dur {font-size:11.5px; font-weight:650; color:var(--ink-2); font-variant-numeric:tabular-nums; letter-spacing:.02em; white-space:nowrap}
-.bp-track {position:relative; width:100%; display:grid; place-items:center; height:20px; color:var(--accent)}
+.bp-place b {color:var(--ink); font-size:13.5px; font-weight:800; letter-spacing:.08em}
+.bp-time {font-size:27px; line-height:1.05; font-weight:800; color:var(--ink); font-variant-numeric:tabular-nums; letter-spacing:-.015em}
+.bp-term {display:inline-block; margin-top:2px; padding:1px 8px; border-radius:999px; background:var(--accent-soft); border:1px solid color-mix(in srgb, var(--accent) 24%, transparent); font-size:11px; font-weight:700; color:var(--accent); letter-spacing:.03em; white-space:nowrap}
+.bp.back .bp-term {background:var(--plum-soft); border-color:color-mix(in srgb, var(--plum) 24%, transparent); color:var(--plum)}
+.bp-mid {display:flex; flex-direction:column; align-items:center; gap:3px; min-width:80px; padding:0 4px}
+.bp-dur {font-size:11.5px; font-weight:700; color:var(--ink-2); font-variant-numeric:tabular-nums; letter-spacing:.02em; white-space:nowrap}
+.bp-track {position:relative; width:100%; display:grid; place-items:center; height:22px; color:var(--accent)}
 .bp.back .bp-track {color:var(--plum)}
-.bp-track::before {content:''; position:absolute; left:4px; right:4px; top:50%; border-top:1px dashed color-mix(in srgb, var(--line-2) 52%, transparent)}
-.bp-track::after {content:''; position:absolute; left:0; right:0; top:50%; height:4px; margin-top:-2px; background:radial-gradient(circle at 2px 2px, color-mix(in srgb, var(--accent) 45%, var(--line)) 2px, transparent 2.1px), radial-gradient(circle at calc(100% - 2px) 2px, color-mix(in srgb, var(--accent) 45%, var(--line)) 2px, transparent 2.1px)}
-.bp.back .bp-track::after {background:radial-gradient(circle at 2px 2px, color-mix(in srgb, var(--plum) 42%, var(--line)) 2px, transparent 2.1px), radial-gradient(circle at calc(100% - 2px) 2px, color-mix(in srgb, var(--plum) 42%, var(--line)) 2px, transparent 2.1px)}
-.bp-track .icon {position:relative; z-index:1; width:22px; height:18px; padding:0 3px; background:var(--card); stroke-width:1.6; transform:rotate(90deg)}
+.bp-track::before {content:''; position:absolute; left:5px; right:5px; top:50%; border-top:1.5px dashed color-mix(in srgb, var(--accent) 38%, var(--line))}
+.bp.back .bp-track::before {border-top-color:color-mix(in srgb, var(--plum) 36%, var(--line))}
+.bp-track::after {content:''; position:absolute; left:0; right:0; top:50%; height:6px; margin-top:-3px; background:radial-gradient(circle at 3px 3px, var(--accent) 2px, color-mix(in srgb, var(--accent) 24%, transparent) 3px, transparent 3.1px), radial-gradient(circle at calc(100% - 3px) 3px, var(--accent) 2px, color-mix(in srgb, var(--accent) 24%, transparent) 3px, transparent 3.1px)}
+.bp.back .bp-track::after {background:radial-gradient(circle at 3px 3px, var(--plum) 2px, color-mix(in srgb, var(--plum) 24%, transparent) 3px, transparent 3.1px), radial-gradient(circle at calc(100% - 3px) 3px, var(--plum) 2px, color-mix(in srgb, var(--plum) 24%, transparent) 3px, transparent 3.1px)}
+.bp-track .icon {position:relative; z-index:1; width:24px; height:20px; padding:0 3px; background:var(--bp-bg); fill:color-mix(in srgb, var(--accent) 18%, transparent); stroke-width:1.7; transform:rotate(90deg)}
+.bp.back .bp-track .icon {fill:color-mix(in srgb, var(--plum) 18%, transparent)}
 .bp-tz {font-size:10.5px; color:var(--muted); font-variant-numeric:tabular-nums; letter-spacing:.02em; white-space:nowrap}
-.bp-foot {position:relative; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 15px; border-top:1px dashed color-mix(in srgb, var(--line-2) 46%, var(--line)); background:color-mix(in srgb, var(--paper) 34%, var(--card))}
-.bp-foot::before, .bp-foot::after {content:''; position:absolute; top:-7px; width:13px; height:13px; border-radius:50%; background:var(--card); border:1px solid color-mix(in srgb, var(--line) 82%, var(--line-2))}
-.bp-foot::before {left:-7px}
-.bp-foot::after {right:-7px}
-.bp-stub {font-size:12px; color:var(--muted); line-height:1.45; min-width:0}
-.bp-copy {flex:none; display:inline-flex; align-items:center; gap:4px; min-height:30px; padding:0 10px; border-radius:999px; border:1px solid color-mix(in srgb, var(--line-2) 48%, var(--line)); background:var(--card); box-shadow:0 1px 2px rgba(40,52,18,.04); color:var(--ink-2); font-size:11.5px; font-weight:700; letter-spacing:.04em; transition:background-color .2s ease, border-color .2s ease, color .2s ease, transform .15s var(--ease-out)}
+.bp-foot {position:relative; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 15px; border-top:1.5px dashed color-mix(in srgb, var(--accent) 26%, var(--line)); background:color-mix(in srgb, var(--accent-soft) 65%, var(--card))}
+.bp.back .bp-foot {border-top-color:color-mix(in srgb, var(--plum) 26%, var(--line)); background:color-mix(in srgb, var(--plum-soft) 92%, var(--card))}
+.bp-foot::before, .bp-foot::after {content:''; position:absolute; top:-8px; width:14px; height:14px; border-radius:50%; background:var(--card); border:1px solid var(--bp-edge)}
+.bp-foot::before {left:-8px}
+.bp-foot::after {right:-8px}
+.bp-stub {font-size:12px; color:var(--ink-2); line-height:1.45; min-width:0}
+.bp-copy {flex:none; display:inline-flex; align-items:center; gap:4px; min-height:30px; padding:0 10px; border-radius:999px; border:1px solid color-mix(in srgb, var(--accent) 32%, var(--line)); background:var(--card); box-shadow:0 1px 2px rgba(40,52,18,.05); color:var(--accent); font-size:11.5px; font-weight:750; letter-spacing:.04em; transition:background-color .2s ease, border-color .2s ease, color .2s ease, transform .15s var(--ease-out)}
+.bp.back .bp-copy {border-color:color-mix(in srgb, var(--plum) 32%, var(--line)); color:var(--plum)}
 .bp-copy .icon {width:13px; height:13px}
-.bp-copy:active {transform:scale(.96); background:var(--accent-soft); color:var(--accent); border-color:var(--accent)}
-.bp.back .bp-copy:active {background:var(--plum-soft); color:var(--plum); border-color:var(--plum)}
+.bp-copy:active {transform:scale(.96); background:var(--accent-soft); border-color:var(--accent)}
+.bp.back .bp-copy:active {background:var(--plum-soft); border-color:var(--plum)}
 .hotel + .hotel {margin-top:16px; padding-top:16px; border-top:1px dashed var(--line)}
 .copy-line {display:flex; align-items:center; justify-content:space-between; gap:8px; border-top:1px dashed var(--line)}
 
