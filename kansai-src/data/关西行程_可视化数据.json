@@ -1412,26 +1412,15 @@
           "condition": "站前广场拍《魔女的夜宴》玻璃幕墙，随后穿南北自由通路去八条口。"
         },
         {
-          "id": "avanti_roselia_cd",
-          "time_label": "19:55—20:20",
-          "time_status": "planning_window",
-          "title": "Animate CD 区找《Lehre der Rose》未拆封初回",
-          "place_ids": [
-            "kyoto_avanti"
-          ],
-          "category": "shopping",
-          "condition": "八条口即达 Avanti 6F，先直奔 Animate CD 区找 Roselia《Lehre der Rose》未拆封初回，买完再逛周边；21:00 关门。"
-        },
-        {
           "id": "avanti_shopping",
-          "time_label": "20:20—20:50",
+          "time_label": "19:55—20:50",
           "time_status": "planning_window",
-          "title": "Avanti 6F · 指南针 / 顺逛周边",
+          "title": "Avanti 6F · Animate & 指南针",
           "place_ids": [
             "kyoto_avanti"
           ],
           "category": "shopping",
-          "condition": "买完盘后同层顺逛指南针与 Animate 周边；21:00 关门，晚到可省。"
+          "condition": "八条口即达，6F 先去 Animate CD 区找《Lehre der Rose》未拆封初回，买完再顺逛同层指南针；21:00 关门，晚到只选一家。"
         },
         {
           "id": "dinner_arrival",

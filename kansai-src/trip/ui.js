@@ -140,7 +140,7 @@ function dayScreen(){
  }).join('')}</section>
  <nav class="pager" aria-label="相邻日期">${i>0?`<a href="#day/${PLAN.days[i-1].date}">${icon('back')}<span>${dateLabel(PLAN.days[i-1].date)} ${e(dayPresentation(PLAN.days[i-1]).short)}</span></a>`:'<span></span>'}${i<PLAN.days.length-1?`<a class="next" href="#day/${PLAN.days[i+1].date}"><span>${dateLabel(PLAN.days[i+1].date)} ${e(dayPresentation(PLAN.days[i+1]).short)}</span>${icon('chevron')}</a>`:''}</nav>`;
 }
-const ROW_SUB={arrival_transfer:'17:16 或 17:46 班次',avanti_roselia_cd:'CD 区 ·《Lehre der Rose》未拆封初回'};
+const ROW_SUB={arrival_transfer:'17:16 或 17:46 班次'};
 function row(d,ev,now,phaseFirst=false){
  const major=isMajorEvent(d,ev),done=major&&activityState(d.date,ev.id)==='done',start=eventStart(ev),flags=[];
  if(noticeParts(d,ev).notice)flags.push('<span class="flag warn">注意</span>');

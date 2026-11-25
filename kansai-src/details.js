@@ -20,11 +20,10 @@ const DETAILS = {
         ]
       ],
       [
-        "夜间 · 买盘与晚饭",
+        "夜间 · 逛店与晚饭",
         [
           "checkin_kyoto",
           "kyoto_station_visit",
-          "avanti_roselia_cd",
           "avanti_shopping",
           "dinner_arrival",
           "skyway_visit",
@@ -80,7 +79,7 @@ const DETAILS = {
       ]
     ],
     "cityLabel": "抵达京都",
-    "summary": "机场 → 酒店 → Roselia 买盘 → 拉面小路",
+    "summary": "机场 → 酒店 → Avanti → 拉面小路",
     "eventDetails": {
       "flight_out": {
         "title": "值机与登机",
@@ -95,25 +94,16 @@ const DETAILS = {
           }
         ]
       },
-      "avanti_roselia_cd": {
-        "title": "买盘重点",
-        "items": [
-          {
-            "text": "Animate 京都 Avanti 店：6F，10:00—21:00。先直奔 CD 区找 Roselia《Lehre der Rose》未拆封初回，买完再看谷子。",
-            "url": "https://www.animate.co.jp/shop/kyoto/"
-          }
-        ]
-      },
       "avanti_shopping": {
         "title": "6F 店铺营业",
         "items": [
           {
-            "text": "指南针（らしんばん）京都店：同层 6F，10:00—21:00，中古周边与谷子。",
-            "url": "https://www.lashinbang.com/store/kyoto/"
+            "text": "Animate 京都 Avanti 店：6F，10:00—21:00，进店先去 CD 区找《Lehre der Rose》未拆封初回。",
+            "url": "https://www.animate.co.jp/shop/kyoto/"
           },
           {
-            "text": "Animate 京都 Avanti 店：同层 6F，10:00—21:00。",
-            "url": "https://www.animate.co.jp/shop/kyoto/"
+            "text": "指南针（らしんばん）京都店：同层 6F，10:00—21:00，中古周边与谷子。",
+            "url": "https://www.lashinbang.com/store/kyoto/"
           }
         ]
       }

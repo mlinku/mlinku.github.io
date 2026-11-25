@@ -23,7 +23,7 @@ for(const date of unchanged)assert.deepEqual(protectedDay(plan.days.find(d=>d.da
 {const d0=plan.days[0],o0=old.days[0];
  assert.deepEqual(d0.timeline.slice(0,2).map(e=>e.id),o0.timeline.slice(0,2).map(e=>e.id),'11/30航班与HARUKA保留');
  assert.ok(d0.timeline[1].time_label.includes('17:16')&&d0.timeline[1].time_label.includes('17:46'),'11/30 HARUKA 按 17:16 / 17:46 排');
- assert.ok(['kyoto_station_visit','avanti_roselia_cd','avanti_shopping','dinner_arrival','skyway_visit'].every(id=>d0.timeline.some(e=>e.id===id)),'11/30晚间巡礼、Roselia买盘、Avanti、拉面小路与空中径路已展开');}
+ assert.ok(['kyoto_station_visit','avanti_shopping','dinner_arrival','skyway_visit'].every(id=>d0.timeline.some(e=>e.id===id)),'11/30晚间巡礼、Avanti、拉面小路与空中径路已展开');}
 {const d7=plan.days[7],o7=old.days[7];
  assert.deepEqual(d7.timeline.map(e=>e.id),o7.timeline.map(e=>e.id),'12/7活动ID不变');
  assert.equal(d7.departure_target,'06:25—06:35','12/7 约06:30离店');

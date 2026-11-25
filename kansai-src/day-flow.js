@@ -11,7 +11,7 @@ function dayPresentation(d){
 }
 
 // The overview's one-line highlights: at most three, short.
-const DAY_HIGHLIGHTS={'2026-11-30':'抵达、Roselia买盘、拉面小路','2026-12-01':'抹茶、京吹巡礼','2026-12-02':'玉子巡礼、清水寺、夜枫','2026-12-03':'稻荷、京都塔集章、道顿堀',
+const DAY_HIGHLIGHTS={'2026-11-30':'抵达、Avanti、拉面小路','2026-12-01':'抹茶、京吹巡礼','2026-12-02':'玉子巡礼、清水寺、夜枫','2026-12-03':'稻荷、京都塔集章、道顿堀',
  '2026-12-04':'大佛殿、二月堂、日本桥','2026-12-05':'姬路城、好古园','2026-12-06':'巡礼、元町CD、和牛','2026-12-07':'南海 → 机场 → 香港'};
 function dayHighlights(d){if(d.date==='2026-12-02'&&choice(d).kodaijiPlan==='skip')return '玉子巡礼、清水寺、东山';return DAY_HIGHLIGHTS[d.date]||dayPresentation(d).summary;}
 

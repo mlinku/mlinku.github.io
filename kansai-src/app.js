@@ -144,7 +144,7 @@ function selectedShops(c){return[c.shop1,c.shop2].filter(x=>x&&x!=='none');}
 // Transfers read start → end; the stations between are in the sheet.
 const EVENT_TITLES={
  flight_out:'HX618 香港 → 关西',arrival_transfer:'入境 → HARUKA',checkin_kyoto:'入住 TUNE STAY',
- kyoto_station_visit:'京都站中央口',avanti_roselia_cd:'Animate 买 Roselia 盘',avanti_shopping:'Avanti 6F 顺逛指南针',dinner_arrival:'京都拉面小路',
+ kyoto_station_visit:'京都站中央口',avanti_shopping:'Avanti 6F 动漫店',dinner_arrival:'京都拉面小路',
  skyway_visit:'空中径路夜景',kyoto_arrival_return:'回酒店',
  uji_transfer:'京都 → 中村藤吉',uji_parfait:'中村藤吉',uji_approach:'平等院表参道',agata_stamp:'縣神社',
  uji_lunch:'きく咖喱',uji_pilgrimage:'宇治川巡礼',uji_shrines:'宇治两神社',daikichi_visit:'大吉山展望台',
