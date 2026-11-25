@@ -76,7 +76,7 @@ function passHTML(b,from,to,showLeg=true){
 function dayLine(){
  const today=todayIndex();
  return `<ol class="days">${PLAN.days.map((d,i)=>{const info=dayPresentation(d),p=progress(d);
-  return `<li class="${i===today?'now':''}${p.done&&p.done===p.total?' done':''}"><a class="day-link" href="#day/${d.date}"><span class="dl-date"><b>${dateLabel(d.date)}</b><small>${i===today?'今天':e(d.weekday)}</small></span><span class="dl-thumb">${img(info.cover,false,true)||dayDoodle(d.date)}</span><span class="dl-main"><b>${e(info.short)}</b><small>${e(dayHighlights(d))}</small></span>${p.done?(p.done===p.total?seal(' small'):`<span class="dl-done">${p.done}/${p.total}</span>`):`<span class="dl-go" aria-hidden="true">${icon('chevron')}</span>`}</a></li>`;}).join('')}</ol>`;
+  return `<li class="${i===today?'now':''}${p.done&&p.done===p.total?' done':''}"><a class="day-link" href="#day/${d.date}"><span class="dl-date"><b>${dateLabel(d.date)}</b><small>${i===today?'今天':e(d.weekday)}</small></span><span class="dl-thumb">${img(info.cover,false,true)||dayDoodle(d.date)}</span><span class="dl-main"><b>${e(info.short)}</b></span>${p.done?(p.done===p.total?seal(' small'):`<span class="dl-done">${p.done}/${p.total}</span>`):`<span class="dl-go" aria-hidden="true">${icon('chevron')}</span>`}</a></li>`;}).join('')}</ol>`;
 }
 
 /* ---------- 现在 ---------- */
