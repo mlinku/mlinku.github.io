@@ -49,6 +49,15 @@ const DETAILS = {
       [
         "晚餐",
         "备选",
+        "京都拉麺小路（京都駅ビル 10F）",
+        "¥1,000–1,500",
+        "京都站大楼 10 楼",
+        "逛完 Avanti 后上 10F 吃拉面（11:00—22:00，末单约 21:30），吃完顺便免费走同层空中径路看京都塔夜景。",
+        "https://www.kyoto-ramen-koji.com/"
+      ],
+      [
+        "晚餐",
+        "备选",
         "名代とんかつ かつくら 京都ポルタ店",
         "¥2,500以内",
         "京都站大楼 11 楼",
@@ -69,6 +78,23 @@ const DETAILS = {
           {
             "text": "T2香港航空Q行段值机、托运；本次白天出发，在T2完成安检与出境，再乘APM到T1中场客运廊（T1M）。按登机牌和现场指引找登机口。",
             "url": "https://www.hongkongairlines.com/webfile/static/pdf/Check-in%20counter%20relcoation%20to%20T2%20FAQ%20-%20EN.pdf?siteId=6"
+          }
+        ]
+      },
+      "dinner_arrival": {
+        "title": "晚间顺路路线（约 19:30–21:30）",
+        "items": [
+          {
+            "text": "JR 京都站中央口：《魔女的夜宴》取景地顺手打卡（出酒店步行约 5–6 分钟，在站前广场拍玻璃幕墙外立面）。",
+            "url": "https://www.google.com/maps/search/?api=1&query=34.985849,135.758767"
+          },
+          {
+            "text": "京都アバンティ（Avanti）6F：穿过京都站南北自由通路到八条口即达（营业至 21:00），同层一次逛完 Animate 京都 Avanti 店与指南针（らしんばん）；如果 20:15 后才到可优先挑一家。",
+            "url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E3%82%A2%E3%83%90%E3%83%B3%E3%83%86%E3%82%A3"
+          },
+          {
+            "text": "京都站大楼 10F 拉面小路 & 空中径路：逛完回站内上 10F 吃拉面（营业至 22:00，末单约 21:30），吃完免费走同层「空中径路」玻璃廊桥俯瞰京都塔夜景，之后步行约 5 分钟回 TUNE STAY（全程不绕路，约 21:30 前后回房）。",
+            "url": "https://www.kyoto-ramen-koji.com/"
           }
         ]
       }
@@ -1115,6 +1141,8 @@ const WORK_NAMES = [
   "たまこまーけっと／たまこラブストーリー",
   "名探偵コナン",
   "千恋＊万花",
+  "サノバウィッチ",
+  "RIDDLE JOKER",
   "サマータイムレンダ",
   "SEKIRO: SHADOWS DIE TWICE"
 ];

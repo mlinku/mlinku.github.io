@@ -7,7 +7,7 @@
 const EVENT_BRIEF={
  flight_out:'',
  checkin_kyoto:'入住确认12/3退房后的行李寄存位置。',
- dinner_arrival:'酒店附近简餐。',
+ dinner_arrival:'酒店附近简餐，或顺路打卡京都站并逛 Avanti 6F 与拉面小路。',
  uji_parfait:'不接受预约；75分钟含取号与用餐，11:00判断能否11:45前吃完。',
  uji_approach:'沿街拍照，不进收费区。',
  uji_pilgrimage:'久美子椅多留片刻，桥上顺拍。',

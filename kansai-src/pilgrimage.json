@@ -2,6 +2,54 @@
   "checked_on": "2026-10-19",
   "points": [
     {
+      "id": "witch-kyoto-station",
+      "place_ids": [
+        "kyoto_station"
+      ],
+      "date": "2026-11-30",
+      "event_id": "dinner_arrival",
+      "title": "JR 京都站中央口 · 站前广场",
+      "work": "魔女的夜宴／サノバウィッチ",
+      "scene": "游戏中的大型玻璃车站广场背景，标志性斜网格玻璃幕墙与站前广场直接取材自 JR 京都站中央口。",
+      "shooting_note": "入住 TUNE STAY 后步行约 5 分钟到京都站中央口前广场（京都塔一侧），面向车站玻璃幕墙外立面拍一张，再穿南北自由通路去 Avanti 6F。",
+      "coordinates": {
+        "lat": 34.985849,
+        "lng": 135.758767,
+        "precision": "JR 京都站中央口广场参考点；非精确摄影站位",
+        "source_url": "https://azusairi.com/?p=2549"
+      },
+      "real": {
+        "local": "assets/pilgrimage/kyoto/witch_kyoto_r.jpg",
+        "source_url": "https://azusairi.com/?p=2549",
+        "image_url": "https://azusairi.com/wp-content/uploads/2023/11/IMG_E8071-1024x576.jpg",
+        "credit": "アズサイリ（JR 京都站中央口实拍）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "visual_verified": true,
+        "width": 1024,
+        "height": 576
+      },
+      "anime": {
+        "local": "assets/pilgrimage/kyoto/witch_kyoto_a.jpg",
+        "source_url": "https://azusairi.com/?p=2549",
+        "image_url": "https://azusairi.com/wp-content/uploads/2023/11/サノバウィッチ-290.png",
+        "credit": "游戏画面 © YUZUSOFT/JUNOS INC.；对照：アズサイリ",
+        "license": "版权所有；个人行程中的场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 683,
+        "height": 384
+      },
+      "sources": [
+        {
+          "title": "玩家作品与实景对照：サノバウィッチ（京都站）",
+          "url": "https://azusairi.com/?p=2549"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-11-25",
+      "match_note": "玩家实景同机位对照，非官方认定；晚间亮灯氛围更佳。",
+      "name_ja": "JR京都駅 中央口"
+    },
+    {
       "id": "eupho_uji_bridge",
       "place_ids": [
         "uji_bridge"
@@ -1023,6 +1071,197 @@
       "status": "已目视核对成对图片；作品关联为玩家对照，非官方认证",
       "match_note": "玩家实地对照；作品有改绘，不代表官方认定或精确摄影站位。",
       "name_ja": "二寧坂"
+    },
+    {
+      "id": "senren-kodaiji-lane",
+      "place_ids": [
+        "nene",
+        "kodaiji"
+      ],
+      "date": "2026-12-02",
+      "event_id": "higashiyama_walk",
+      "title": "高台寺旁石墙弯道 · 穗织古街",
+      "work": "千恋＊万花",
+      "scene": "穗织町石墙弯道背景，石垣、瓦檐与弧形坡道与高台寺南侧通道高度一致。",
+      "shooting_note": "从二年坂走向宁宁之道与高台寺南侧时，找右侧高石垣、瓦顶与缓弯石板路顺拍，不需折返。",
+      "coordinates": {
+        "lat": 35.00018,
+        "lng": 135.78067,
+        "precision": "高台寺南侧街段参考点；未实测精确相机站位",
+        "source_url": "https://gaogaogao.hatenablog.com/entry/2018/09/02/111931"
+      },
+      "real": {
+        "local": "assets/pilgrimage/kyoto/senren_kodaiji_r.jpg",
+        "source_url": "https://gaogaogao.hatenablog.com/entry/2018/09/02/111931",
+        "image_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/k/kake0325/20180825/20180825111425.jpg",
+        "credit": "kake0325 / gaogaogao（高台寺旁石墙弯道实拍）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "visual_verified": true,
+        "width": 1024,
+        "height": 576
+      },
+      "anime": {
+        "local": "assets/pilgrimage/kyoto/senren_kodaiji_a.jpg",
+        "source_url": "https://gaogaogao.hatenablog.com/entry/2018/09/02/111931",
+        "image_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/k/kake0325/20180825/20180825110815.png",
+        "credit": "游戏画面 © YUZUSOFT；对照来源 kake0325",
+        "license": "版权所有；个人行程中的场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 1024,
+        "height": 576
+      },
+      "sources": [
+        {
+          "title": "玩家实地画面对照：千恋＊万花（京都东山・祇园）",
+          "url": "https://gaogaogao.hatenablog.com/entry/2018/09/02/111931"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-11-25",
+      "match_note": "玩家实景同机位对照，非官方认定；作品细节有改绘。",
+      "name_ja": "高台寺南側 石垣の道"
+    },
+    {
+      "id": "senren-hanamikoji",
+      "place_ids": [
+        "hanamikoji"
+      ],
+      "date": "2026-12-02",
+      "event_id": "gion_dinner",
+      "title": "花见小路 · 穗织主街",
+      "work": "千恋＊万花",
+      "scene": "穗织温泉街主街（一力亭与町屋茶屋街景），红壳格子、犬矢来与石板街道为主要对应。",
+      "shooting_note": "从高台寺／八坂神社步行往四条先斗町吃晚饭途中经过花见小路南段，对照两侧茶屋格栅与街道纵深；主干道可拍，切勿进入标有禁止拍摄的私人小巷。",
+      "coordinates": {
+        "lat": 35.00297,
+        "lng": 135.77512,
+        "precision": "花见小路南段参考点；未实测精确相机站位",
+        "source_url": "https://gaogaogao.hatenablog.com/entry/2018/09/02/111931"
+      },
+      "real": {
+        "local": "assets/pilgrimage/kyoto/senren_hanamikoji_r.jpg",
+        "source_url": "https://gaogaogao.hatenablog.com/entry/2018/09/02/111931",
+        "image_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/k/kake0325/20180902/20180902103419.jpg",
+        "credit": "kake0325 / gaogaogao（祇园花见小路实拍）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "visual_verified": true,
+        "width": 1024,
+        "height": 576
+      },
+      "anime": {
+        "local": "assets/pilgrimage/kyoto/senren_hanamikoji_a.jpg",
+        "source_url": "https://gaogaogao.hatenablog.com/entry/2018/09/02/111931",
+        "image_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/k/kake0325/20180902/20180902103356.png",
+        "credit": "游戏画面 © YUZUSOFT；对照来源 kake0325",
+        "license": "版权所有；个人行程中的场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 1024,
+        "height": 576
+      },
+      "sources": [
+        {
+          "title": "玩家实地画面对照：千恋＊万花（京都东山・祇园）",
+          "url": "https://gaogaogao.hatenablog.com/entry/2018/09/02/111931"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-11-25",
+      "match_note": "玩家实景同机位对照，非官方认定；仅在公共主道拍摄，遵守祇园私道禁拍规定。",
+      "name_ja": "花見小路通"
+    },
+    {
+      "id": "senren-shirakawa",
+      "place_ids": [
+        "shirakawa"
+      ],
+      "date": "2026-12-02",
+      "event_id": "gion_dinner",
+      "title": "白川南通 · 垂柳河岸",
+      "work": "千恋＊万花",
+      "scene": "穗织河岸与石桥背景，石板路、木栅栏、巽桥旁水岸与町屋形成直接对应。",
+      "shooting_note": "从花见小路向北多走约 3 分钟到白川南通，沿石板步道对照木栅栏、河道与对面町屋，拍完顺路过四条大桥去先斗町吃晚饭。",
+      "coordinates": {
+        "lat": 35.00547,
+        "lng": 135.77465,
+        "precision": "祇园白川南通参考点；未实测精确相机站位",
+        "source_url": "https://gaogaogao.hatenablog.com/entry/2018/09/02/111931"
+      },
+      "real": {
+        "local": "assets/pilgrimage/kyoto/senren_shirakawa_r.jpg",
+        "source_url": "https://gaogaogao.hatenablog.com/entry/2018/09/02/111931",
+        "image_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/k/kake0325/20180902/20180902103030.jpg",
+        "credit": "kake0325 / gaogaogao（祇园白川南通实拍）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "visual_verified": true,
+        "width": 1024,
+        "height": 576
+      },
+      "anime": {
+        "local": "assets/pilgrimage/kyoto/senren_shirakawa_a.jpg",
+        "source_url": "https://gaogaogao.hatenablog.com/entry/2018/09/02/111931",
+        "image_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/k/kake0325/20180902/20180902102426.png",
+        "credit": "游戏画面 © YUZUSOFT；对照来源 kake0325",
+        "license": "版权所有；个人行程中的场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 1024,
+        "height": 576
+      },
+      "sources": [
+        {
+          "title": "玩家实地画面对照：千恋＊万花（京都东山・祇园）",
+          "url": "https://gaogaogao.hatenablog.com/entry/2018/09/02/111931"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-11-25",
+      "match_note": "玩家实景同机位对照，非官方认定；12月初冬季垂柳较稀疏。",
+      "name_ja": "祇園白川南通"
+    },
+    {
+      "id": "rj-shinkyogoku",
+      "place_ids": [],
+      "date": "2026-12-02",
+      "event_id": "gion_dinner",
+      "title": "新京极商店街 · 拱廊转角",
+      "work": "RIDDLE JOKER",
+      "scene": "游戏中的拱廊商店街日常背景，对应新京极商店街与六角通交汇处（ろっくんプラザ旁）。",
+      "shooting_note": "在先斗町或四条河原町吃晚饭后向北步行约 5 分钟进新京极拱廊，在ろっくんプラザ（六角通）旁对照拱顶钢架、吊灯与十字路口结构。",
+      "coordinates": {
+        "lat": 35.00674,
+        "lng": 135.76734,
+        "precision": "新京极商店街六角通交汇处参考点；未实测精确相机站位",
+        "source_url": "https://gaogaogao.hatenablog.com/entry/2018/08/31/111826"
+      },
+      "real": {
+        "local": "assets/pilgrimage/kyoto/rj_shinkyogoku_r.jpg",
+        "source_url": "https://gaogaogao.hatenablog.com/entry/2018/08/31/111826",
+        "image_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/k/kake0325/20180831/20180831101401.jpg",
+        "credit": "kake0325 / gaogaogao（新京极商店街实拍）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "visual_verified": true,
+        "width": 1024,
+        "height": 576
+      },
+      "anime": {
+        "local": "assets/pilgrimage/kyoto/rj_shinkyogoku_a.jpg",
+        "source_url": "https://gaogaogao.hatenablog.com/entry/2018/08/31/111826",
+        "image_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/k/kake0325/20180831/20180831101348.png",
+        "credit": "游戏画面 © YUZUSOFT/JUNOS INC.；对照来源 kake0325",
+        "license": "版权所有；个人行程中的场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 1024,
+        "height": 576
+      },
+      "sources": [
+        {
+          "title": "玩家实地画面对照：RIDDLE JOKER（新京极商店街）",
+          "url": "https://gaogaogao.hatenablog.com/entry/2018/08/31/111826"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-11-25",
+      "match_note": "玩家实景同机位对照，非官方认定；商户招牌随年份更替。",
+      "name_ja": "新京極商店街（ろっくんプラザ前）"
     },
     {
       "id": "conan-tsutenkaku",
