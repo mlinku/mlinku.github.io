@@ -93,7 +93,7 @@ const checked=run(`
   for(const t of [...m.transport,...m.placeNotes,m.fullNote,m.line,...m.details.flatMap(x=>x.items.map(it=>it.text))])assert.ok(!/按登机牌和现场指引|以航司最新通知|请询问店员|不锁定车次/.test(t),'无效提醒已删除 '+ev.id);
   assert.ok(!DROP_DETAILS.has(ev.id)||!m.details.some(x=>x.title!=='参拜详情'),'机场手续说明不再重复 '+ev.id);
  }
- assert.ok(sheetHTML('2026-11-30','flight_out').includes('10:25')&&sheetHTML('2026-11-30','flight_out').includes('T1M'),'去程保留截止时间与登机航站楼');
+ assert.ok(sheetHTML('2026-11-30','flight_out').includes('10:25')&&sheetHTML('2026-11-30','flight_out').includes('小火车'),'去程保留截止时间与机场小火车提示');
  assert.ok(sheetHTML('2026-12-07','airport_checkin').includes('09:10'),'回程保留值机截止');
  assert.ok(sheetHTML('2026-12-07','airport_train').replace(/<[^>]+>/g,'').includes('不要误进JR闸机'),'保留易错提醒');
 

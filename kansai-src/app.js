@@ -171,25 +171,25 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
   const booking=PLAN.bookings.find(b=>b.id===ev.id);if(!booking)continue;
   const from=flightLocal(booking,'departure'),to=flightLocal(booking,'arrival');
   ev.time_label=from.time+' '+from.region+'起飞 → '+to.time+' '+to.region+'抵达';
-  ev.title=booking.flight_number+' · '+from.city+' → '+to.city;
+  ev.title=booking.flight_number+' '+from.city+' → '+to.city;
   ev.condition=[flightTerminals(booking),ev.condition].filter(Boolean).join(' ');
  }
  if(d.date==='2026-12-02'){
-  by('gion_rest').title='高台寺附近休息';
-  by('gion_dinner_walk').title='前往晚饭地点';
+  by('gion_rest').title='高台寺附近歇脚';
+  by('gion_dinner_walk').title='前往晚饭';
   delete by('gion_dinner_walk').condition;
-  by('gion_dinner').title='晚餐 · 祇园／河原町';
+  by('gion_dinner').title='祇园／河原町晚餐';
   delete by('gion_dinner').condition; // The last-order reminder is shown once by executionNotice.
-  by('kyoto_night_return').title='回酒店休息';
+  by('kyoto_night_return').title='回酒店';
   if(c.kodaijiPlan==='skip'){
    events=events.filter(x=>x.id!=='kodaiji_night');
-   by('gion_dinner_walk').time_label='休息后';by('gion_dinner_walk').title='直接前往晚饭地点';by('gion_dinner_walk').condition='步行预留约30分钟。';
-   by('gion_dinner').time_label='到店后 · 不等到19:00';by('gion_dinner').title='晚餐 · 祇园／河原町';
-   by('kyoto_night_return').time_label='饭后返店';by('kyoto_night_return').title='回酒店休息';
+   by('gion_dinner_walk').time_label='休息后';by('gion_dinner_walk').title='直接去晚饭';by('gion_dinner_walk').condition='步行预留约30分钟。';
+   by('gion_dinner').time_label='到店后 · 不等到19:00';by('gion_dinner').title='祇园／河原町晚餐';
+   by('kyoto_night_return').time_label='饭后返店';by('kyoto_night_return').title='回酒店';
   }else{
    by('kodaiji_night').title='高台寺夜枫';
    delete by('kodaiji_night').condition;
-   if(c.yasakaBrief){by('gion_dinner_walk').title='八坂神社 → 晚餐';by('gion_dinner_walk').place_ids=['yasaka_shrine'];by('gion_dinner_walk').condition='八坂神社短停与前往餐厅共用30分钟；夜枫延迟或步行余量不足时，直接去吃饭。';}
+   if(c.yasakaBrief){by('gion_dinner_walk').title='八坂神社 → 晚饭';by('gion_dinner_walk').place_ids=['yasaka_shrine'];by('gion_dinner_walk').condition='八坂神社短停与去餐厅共用30分钟；时间紧直接去吃饭。';}
   }
  }
  if(d.date==='2026-12-04'){

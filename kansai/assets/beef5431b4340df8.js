@@ -197,8 +197,8 @@ const DETAILS = {
     "transport": [
       "京都站乘JR奈良线到JR宇治，出站步行去中村藤吉本店。09:30离店，到店前含酒店到站、候车与步行，具体班次临行确认。",
       "午饭后从西岸久美子椅出发，经喜撰桥、塔之岛、朝雾桥到东岸，依次短看宇治神社、宇治上神社，再去大吉山登山口。",
-      "大吉山原路下山后，沿公共道路去水管桥东岸河川敷；先完成河岸拍照，再去アル・プラザ宇治東3F的平和书店，不走上水管桥。",
-      "萨莉亚晚饭后步行到JR宇治，乘JR奈良线往京都；出站后从中央口一侧上4F室町小路广场拍《宝岛》舞台，再步行回TUNE。不要在京阪宇治站乘车。"
+      "下山沿大路去水管桥东岸河滩拍照领章（别上桥），歇会儿再去平和书店。",
+      "饭后走去JR宇治回京都（不要在京阪宇治站乘车）。到站从中央口上4F拍《宝岛》舞台再回酒店。"
     ],
     "meals": [
       [
@@ -279,7 +279,7 @@ const DETAILS = {
             "url": "https://www.keihan.co.jp/euphonium/"
           },
           {
-            "text": "先看闸机外展示；进入付费区前，用站内对讲机询问入场方式，不直接刷IC卡进出。",
+            "text": "先看闸机外展示；进站别直接刷IC卡（同站进出会报错），按对讲机问站员。",
             "url": "https://www.keihan.co.jp/traffic/station/310/info.html"
           },
           {
@@ -361,8 +361,8 @@ const DETAILS = {
     ],
     "transport": [
       "京都站地铁烏丸线，国际会馆方向→今出川，再步行去出町。从酒店出发约45—55分钟。",
-      "京阪出町柳为地下车站，与地上叡山电铁分开识别；选停清水五条的普通／准急等合适列车。",
-      "清水寺导航设「清水寺 仁王門」，按正式参道进入；部分地图道路不能入寺。",
+      "京阪出町柳在地下（别坐错地上叡山电铁），乘停清水五条的普通/准急。",
+      "导航搜「清水寺 仁王門」走正门，部分地图小路进不去。",
       "三年坂→八坂通短拍→二年坂→宁宁之道，在高台寺附近休息。",
       "回程可阪急京都河原町→烏丸，步行换地铁四条→京都；累了打车。"
     ],
@@ -492,12 +492,12 @@ const DETAILS = {
       "夜间"
     ],
     "transport": [
-      "退房寄存后步行到京都站，乘JR奈良线一站到稻荷，确认列车停靠稻荷。",
+      "退房寄行李后去京都站，搭JR奈良线普通车1站到稻荷（快车不停）。",
       "稻荷乘JR奈良线回京都站，午饭后步行到京都塔。",
-      "京都塔后步行回TUNE前台取齐寄存行李。",
-      "取箱后京都站JR新快速→大阪，换环状线至JR新今宫，再拖箱步行到酒店；酒店15:00起入住。",
-      "南海新今宫乘往难波的列车，一站到难波，出站步行到戎桥约10分钟；也可从酒店步行约25分钟。",
-      "饭后步行回南海难波，乘南海到新今宫，再步行回酒店；不去JR难波。"
+      "从京都塔走回TUNE前台取行李。",
+      "拿行李从京都站坐JR新快速到大阪，换环状线到新今宫再走去酒店（15:00起入住）。",
+      "南海新今宫坐1站到难波，出站走约10分钟到戎桥（或从酒店直走25分钟）。",
+      "饭后走去南海难波坐1站回新今宫（不去JR难波），走回酒店。"
     ],
     "meals": [
       [
@@ -631,10 +631,10 @@ const DETAILS = {
       "夜间"
     ],
     "transport": [
-      "南海新今宫乘往难波的列车到南海难波，出站步行换乘近铁大阪难波站，乘奈良线往近铁奈良；勿上大阪线往伊势。门到近铁奈良约70分钟，含步行与候车。",
-      "回程乘大阪难波方向且停近铁日本桥的列车，出站直接去逛店。",
-      "近铁日本桥站沿东侧街道向南到Animate，再沿御宅路向北到骏河屋动漫·Hobby馆；骏河屋也有CD区。",
-      "饭后步行到南海难波，乘南海到新今宫，再步行回酒店；不去JR难波。"
+      "坐南海1站到难波，出站换「近铁大阪难波站」搭奈良线去奈良（勿上大阪线往伊势）。门到近铁奈良约70分钟，含步行与候车。",
+      "回程乘停「近铁日本桥」的列车，出站直接逛店。",
+      "近铁日本桥向南先去Animate，再沿御宅路向北去骏河屋（3F有CD区）。",
+      "饭后走去南海难波坐1站回新今宫（不去JR难波），走回酒店。"
     ],
     "meals": [
       [
@@ -685,7 +685,7 @@ const DETAILS = {
         "title": "大佛殿参观与闭门时间",
         "items": [
           {
-            "text": "11月至3月大佛殿08:00—17:00。成人单一堂¥800、两人¥1,600，仅现金；不是所有收费堂的通票。",
+            "text": "08:00—17:00；单买大佛殿¥800/人（两人¥1,600，只收现金）。",
             "url": "https://www.todaiji.or.jp/information/haikan/"
           },
           {
@@ -850,7 +850,7 @@ const DETAILS = {
         "title": "灯饰",
         "items": [
           {
-            "text": "「あたら夜」17:00—22:00点灯；大街免费，三之丸广场是否收费未写明。",
+            "text": "大手前通「あたら夜」灯饰 17:00—22:00 免费看。",
             "url": "https://sp.jorudan.co.jp/illumi/news/jrd_260903_2.html"
           }
         ]
@@ -928,7 +928,7 @@ const DETAILS = {
       "新今宫乘JR环状线到大阪，换JR神户线新快速到三ノ宮，再步行至生田神社；门到神社预留约75分钟。",
       "生田神社→北野，上坡预留20分钟；午饭后沿北野坂下坡至三宫，预留20分钟。",
       "北野下坡到三宫逛前三家，再沿商店街向西步行约10分钟到元町。",
-      "从元町步行回三宫，到Port Liner三宫站乘车至中公園，步行约8分钟到北公园；拍摄后原路回三宫。全段约90分钟含候车与步行，16:30前回到三宫，不锁定车次。",
+      "走回三宫搭海滨轻轨（Port Liner）到「中公園」，走8分钟到北公园，拍完原路回。全段约90分钟含候车与步行，16:30前回到三宫，不锁定车次。",
       "晚餐后步行回JR三ノ宮，乘JR神户线到大阪，换停靠新今宫的环状线列车；含到站、候车、换乘及回酒店步行，预留75—90分钟。"
     ],
     "meals": [
@@ -1033,7 +1033,7 @@ const DETAILS = {
     ],
     "transport": [
       "12/6晚把证件、钱包、交通卡、随身物品与早餐单独准备好。",
-      "去南海新今宫，认「関西空港」方向；不要误进JR闸机。05:47空港急行无需特急券；具体班次临行复核。",
+      "进南海新今宫站（不要误进JR闸机），认「関西空港」方向坐05:47急行，直接刷卡；具体班次临行复核。",
       "若选择Rapi:t，需相应特急座席票，按最终确认的列车购票。",
       "抵达机场站后前往T1值机、托运、安检和出境；HX617于09:50日本时间起飞，现行柜台截止09:10，登机时限看登机牌。"
     ],
@@ -1304,25 +1304,25 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
   const booking=PLAN.bookings.find(b=>b.id===ev.id);if(!booking)continue;
   const from=flightLocal(booking,'departure'),to=flightLocal(booking,'arrival');
   ev.time_label=from.time+' '+from.region+'起飞 → '+to.time+' '+to.region+'抵达';
-  ev.title=booking.flight_number+' · '+from.city+' → '+to.city;
+  ev.title=booking.flight_number+' '+from.city+' → '+to.city;
   ev.condition=[flightTerminals(booking),ev.condition].filter(Boolean).join(' ');
  }
  if(d.date==='2026-12-02'){
-  by('gion_rest').title='高台寺附近休息';
-  by('gion_dinner_walk').title='前往晚饭地点';
+  by('gion_rest').title='高台寺附近歇脚';
+  by('gion_dinner_walk').title='前往晚饭';
   delete by('gion_dinner_walk').condition;
-  by('gion_dinner').title='晚餐 · 祇园／河原町';
+  by('gion_dinner').title='祇园／河原町晚餐';
   delete by('gion_dinner').condition; // The last-order reminder is shown once by executionNotice.
-  by('kyoto_night_return').title='回酒店休息';
+  by('kyoto_night_return').title='回酒店';
   if(c.kodaijiPlan==='skip'){
    events=events.filter(x=>x.id!=='kodaiji_night');
-   by('gion_dinner_walk').time_label='休息后';by('gion_dinner_walk').title='直接前往晚饭地点';by('gion_dinner_walk').condition='步行预留约30分钟。';
-   by('gion_dinner').time_label='到店后 · 不等到19:00';by('gion_dinner').title='晚餐 · 祇园／河原町';
-   by('kyoto_night_return').time_label='饭后返店';by('kyoto_night_return').title='回酒店休息';
+   by('gion_dinner_walk').time_label='休息后';by('gion_dinner_walk').title='直接去晚饭';by('gion_dinner_walk').condition='步行预留约30分钟。';
+   by('gion_dinner').time_label='到店后 · 不等到19:00';by('gion_dinner').title='祇园／河原町晚餐';
+   by('kyoto_night_return').time_label='饭后返店';by('kyoto_night_return').title='回酒店';
   }else{
    by('kodaiji_night').title='高台寺夜枫';
    delete by('kodaiji_night').condition;
-   if(c.yasakaBrief){by('gion_dinner_walk').title='八坂神社 → 晚餐';by('gion_dinner_walk').place_ids=['yasaka_shrine'];by('gion_dinner_walk').condition='八坂神社短停与前往餐厅共用30分钟；夜枫延迟或步行余量不足时，直接去吃饭。';}
+   if(c.yasakaBrief){by('gion_dinner_walk').title='八坂神社 → 晚饭';by('gion_dinner_walk').place_ids=['yasaka_shrine'];by('gion_dinner_walk').condition='八坂神社短停与去餐厅共用30分钟；时间紧直接去吃饭。';}
   }
  }
  if(d.date==='2026-12-04'){
@@ -1424,7 +1424,6 @@ function navigationStops(ev,d,includeMeal=false){
 const NAVIGATION_PATHS={
  demachi_transfer:['hotel_kyoto',['京都站地铁烏丸线','京都駅 地下鉄 烏丸線'],['今出川站','今出川駅'],'demachi'],
  inari_transfer:['kyoto_station',['JR稻荷站','稲荷駅 JR'],'inari'],
- luggage_pickup:[['JR稻荷站','稲荷駅 JR'],['京都站中央口','京都駅 中央口'],'hotel_kyoto'],
  kyoto_night_return:[['阪急京都河原町站','京都河原町駅 阪急'],['阪急烏丸站','烏丸駅 阪急'],['地铁四条站','四条駅 地下鉄'],'hotel_kyoto'],
  kobe_bridge_visit:[['Port Liner三宫站','三宮駅 ポートライナー'],['Port Liner中公园站','中公園駅 ポートライナー'],'kobe_bridge']
 };
@@ -1434,10 +1433,10 @@ const NANKAI_TIMETABLE='https://www.nankai.co.jp/tc_railway/access-timetable';
 const NANKAI_STATION='https://www.nankai.co.jp/traffic/station/shinimamiya.html';
 function executionNotice(d,ev){
  const content={
-  flight_out:'当前11:05关闭登机口（香港时间）；以航司最新通知及登机牌为准。',
+  flight_out:'11:05停止登机（香港时间），具体登机口看登机牌。',
   agata_stamp:'登录活动网站并开启定位，确认领章成功再离开。',
-  daikichi_visit:'14:40仍未到登山口、雨天或明显疲劳时取消登山。',
-  kodaiji_night:'17:45仍未入场、预计排队超过30分钟，或天气差、疲劳时，直接吃晚饭。稍有延迟时18:45前离寺，省去八坂神社并顺延晚餐。',
+  daikichi_visit:'14:40还没到登山口、下雨或累了就不爬。',
+  kodaiji_night:'17:45还没排进、队超30分钟，或下雨/累了直接吃晚饭；18:45前离寺。',
   gion_dinner:'おめん20:00最后点餐；晚到或长队时换简餐。',
   kada_transfer:`${external('南海时刻表 ↗',NANKAI_TIMETABLE)}`,
   kada_day_return:`${external('南海时刻表 ↗',NANKAI_TIMETABLE)}`,
@@ -1456,7 +1455,7 @@ const EVENT_BRIEF={
  flight_out:'',
  checkin_kyoto:'入住确认12/3退房后的行李寄存位置。',
  dinner_arrival:'京都站 10F 拉面小路；延迟或累了直接去酒店旁すき家。',
- uji_parfait:'不接受预约；75分钟含取号与用餐，11:00判断能否11:45前吃完。',
+ uji_parfait:'到店先取号（不能预约），11:00看11:45前吃不完就放弃。',
  uji_approach:'沿街拍照，不进收费区。',
  uji_pilgrimage:'久美子椅多留片刻，桥上顺拍。',
  daikichi_visit:'',
@@ -1469,13 +1468,13 @@ const EVENT_BRIEF={
  delta_visit:'河岸拍照约25分钟，优先《玉子》高野川侧，《轻音》仅有余量时拍。',
  kodaiji_night:'排队超30分钟或疲劳直接吃晚饭；18:45前离寺顺延晚餐。',
  gion_dinner_walk:'夜枫准时结束且有余量时短停八坂神社。',
- kyoto_tower_visit:'展望室5层领台纸，收费区集齐7处章再出场，不长时间挑周边。',
+ kyoto_tower_visit:'展望室5楼领集章纸，盖齐7个章再出来（出去不能重进），别逛太久。',
  inari_transfer:'',
  osaka_transfer:'',
  nara_transfer:'',
  nara_visit:'仅现金；大佛殿内部约30—40分钟。',
  kobe_bridge_visit:'从北公园拍红桥，16:30前回三宫；大风雨或疲劳取消。',
- sannomiya_dinner:'不预约直接Walk-in（16:00开门），满座走1分钟换焼肉あらし或牛角。',
+ sannomiya_dinner:'不用预约直接去（Walk-in，16:00开门），满座走1分钟换隔壁两家。',
  anime_shopping:'重点1—2家，先逛早关门的小店，晚到只选一家。',
  checkout_osaka:'离店前或抵机场后吃早餐。',
  airport_checkin:''
@@ -1501,10 +1500,11 @@ const TEXT_SHORT=[
 const compactFallback=t=>FALLBACK_SHORT.reduce((s,[from,to])=>s.replace(from,to),String(t||''));
 // Transport notes that spell out airport routine; the short form keeps every time and the one non-obvious fact.
 const TRANSPORT_SHORT=[
- ['去程建议08:25抵达香港T2；当前10:25停止值机。T2值机、安检和出境后，乘APM前往T1中场客运廊（T1M）登机。','建议08:25到香港T2，10:25停止值机；T2出境后乘APM到T1M登机。'],
- ['关西T1入境、取行李后，按Railway／鉄道指引到车站；按订单兑换或使用已购HARUKA票，依入境进度选班次。','HARUKA按订单兑换，依入境进度选班次。'],
+ ['去程建议08:25抵达香港T2；当前10:25停止值机。T2值机、安检和出境后，乘APM前往T1中场客运廊（T1M）登机。','永东大巴到T2三楼(09-10柜台)，直接上楼值机出境(10:25截止)，再搭机场小火车去登机口。'],
+ ['关西T1入境、取行李后，按Railway／鉄道指引到车站；按订单兑换或使用已购HARUKA票，依入境进度选班次。','拿完行李换HARUKA车票，赶上哪班坐哪班。'],
+ ['京都站认中央口／京都塔侧。酒店官方的约 5 分钟步行不包含站台到出口。','京都站从中央口（京都塔侧）出站走去酒店。'],
  ['入住时确认 12/3 退房寄存位置；两间酒店均不含早餐。',''],
- ['抵达机场站后前往T1值机、托运、安检和出境；HX617于09:50日本时间起飞，现行柜台截止09:10，登机时限看登机牌。','HX617 09:50起飞；T1柜台09:10停止值机。']
+ ['抵达机场站后前往T1值机、托运、安检和出境；HX617于09:50日本时间起飞，现行柜台截止09:10，登机时限看登机牌。','到T1办值机托运和出境，09:10停值机（09:50飞）。']
 ];
 // Reminders a seasoned traveller does not need — airport routine, "以现场为准" disclaimers, verification notes —
 // and planning sentences that only restate the card's short line. Dropped sentence by sentence wherever copy is
@@ -1654,7 +1654,7 @@ function transportNotes(d,ev){
  return notes.map(n=>cleanText(TRANSPORT_SHORT.reduce((s,[from,to])=>s.replace(from,to),n))).filter(Boolean).map(n=>/[。！？）」]$/.test(n)?n:n+'。');
 }
 // The mistakes that cost a train: shown in bold wherever the note appears.
-const TRANSIT_CAUTION=/(不要在京阪宇治站乘车|勿上大阪线往伊势|不要误进JR闸机|不去JR难波|认中央口／京都塔侧|认「関西空港」方向|部分地图道路不能入寺)/g;
+const TRANSIT_CAUTION=/(不要在京阪宇治站乘车|勿上大阪线往伊势|不要误进JR闸机|不去JR难波|中央口（京都塔侧）|认「関西空港」方向|部分地图小路进不去)/g;
 
 function mealRows(d,ev){
  const name=['gion_rest','uji_parfait'].includes(ev.id)?'茶歇':ev.category==='meal'?(/dinner/.test(ev.id)?'晚餐':/lunch/.test(ev.id)?'午餐':'早餐'):'';

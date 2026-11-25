@@ -8,7 +8,7 @@ const EVENT_BRIEF={
  flight_out:'',
  checkin_kyoto:'入住确认12/3退房后的行李寄存位置。',
  dinner_arrival:'京都站 10F 拉面小路；延迟或累了直接去酒店旁すき家。',
- uji_parfait:'不接受预约；75分钟含取号与用餐，11:00判断能否11:45前吃完。',
+ uji_parfait:'到店先取号（不能预约），11:00看11:45前吃不完就放弃。',
  uji_approach:'沿街拍照，不进收费区。',
  uji_pilgrimage:'久美子椅多留片刻，桥上顺拍。',
  daikichi_visit:'',
@@ -21,13 +21,13 @@ const EVENT_BRIEF={
  delta_visit:'河岸拍照约25分钟，优先《玉子》高野川侧，《轻音》仅有余量时拍。',
  kodaiji_night:'排队超30分钟或疲劳直接吃晚饭；18:45前离寺顺延晚餐。',
  gion_dinner_walk:'夜枫准时结束且有余量时短停八坂神社。',
- kyoto_tower_visit:'展望室5层领台纸，收费区集齐7处章再出场，不长时间挑周边。',
+ kyoto_tower_visit:'展望室5楼领集章纸，盖齐7个章再出来（出去不能重进），别逛太久。',
  inari_transfer:'',
  osaka_transfer:'',
  nara_transfer:'',
  nara_visit:'仅现金；大佛殿内部约30—40分钟。',
  kobe_bridge_visit:'从北公园拍红桥，16:30前回三宫；大风雨或疲劳取消。',
- sannomiya_dinner:'不预约直接Walk-in（16:00开门），满座走1分钟换焼肉あらし或牛角。',
+ sannomiya_dinner:'不用预约直接去（Walk-in，16:00开门），满座走1分钟换隔壁两家。',
  anime_shopping:'重点1—2家，先逛早关门的小店，晚到只选一家。',
  checkout_osaka:'离店前或抵机场后吃早餐。',
  airport_checkin:''
@@ -53,10 +53,11 @@ const TEXT_SHORT=[
 const compactFallback=t=>FALLBACK_SHORT.reduce((s,[from,to])=>s.replace(from,to),String(t||''));
 // Transport notes that spell out airport routine; the short form keeps every time and the one non-obvious fact.
 const TRANSPORT_SHORT=[
- ['去程建议08:25抵达香港T2；当前10:25停止值机。T2值机、安检和出境后，乘APM前往T1中场客运廊（T1M）登机。','建议08:25到香港T2，10:25停止值机；T2出境后乘APM到T1M登机。'],
- ['关西T1入境、取行李后，按Railway／鉄道指引到车站；按订单兑换或使用已购HARUKA票，依入境进度选班次。','HARUKA按订单兑换，依入境进度选班次。'],
+ ['去程建议08:25抵达香港T2；当前10:25停止值机。T2值机、安检和出境后，乘APM前往T1中场客运廊（T1M）登机。','永东大巴到T2三楼(09-10柜台)，直接上楼值机出境(10:25截止)，再搭机场小火车去登机口。'],
+ ['关西T1入境、取行李后，按Railway／鉄道指引到车站；按订单兑换或使用已购HARUKA票，依入境进度选班次。','拿完行李换HARUKA车票，赶上哪班坐哪班。'],
+ ['京都站认中央口／京都塔侧。酒店官方的约 5 分钟步行不包含站台到出口。','京都站从中央口（京都塔侧）出站走去酒店。'],
  ['入住时确认 12/3 退房寄存位置；两间酒店均不含早餐。',''],
- ['抵达机场站后前往T1值机、托运、安检和出境；HX617于09:50日本时间起飞，现行柜台截止09:10，登机时限看登机牌。','HX617 09:50起飞；T1柜台09:10停止值机。']
+ ['抵达机场站后前往T1值机、托运、安检和出境；HX617于09:50日本时间起飞，现行柜台截止09:10，登机时限看登机牌。','到T1办值机托运和出境，09:10停值机（09:50飞）。']
 ];
 // Reminders a seasoned traveller does not need — airport routine, "以现场为准" disclaimers, verification notes —
 // and planning sentences that only restate the card's short line. Dropped sentence by sentence wherever copy is
@@ -206,7 +207,7 @@ function transportNotes(d,ev){
  return notes.map(n=>cleanText(TRANSPORT_SHORT.reduce((s,[from,to])=>s.replace(from,to),n))).filter(Boolean).map(n=>/[。！？）」]$/.test(n)?n:n+'。');
 }
 // The mistakes that cost a train: shown in bold wherever the note appears.
-const TRANSIT_CAUTION=/(不要在京阪宇治站乘车|勿上大阪线往伊势|不要误进JR闸机|不去JR难波|认中央口／京都塔侧|认「関西空港」方向|部分地图道路不能入寺)/g;
+const TRANSIT_CAUTION=/(不要在京阪宇治站乘车|勿上大阪线往伊势|不要误进JR闸机|不去JR难波|中央口（京都塔侧）|认「関西空港」方向|部分地图小路进不去)/g;
 
 function mealRows(d,ev){
  const name=['gion_rest','uji_parfait'].includes(ev.id)?'茶歇':ev.category==='meal'?(/dinner/.test(ev.id)?'晚餐':/lunch/.test(ev.id)?'午餐':'早餐'):'';
