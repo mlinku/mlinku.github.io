@@ -226,15 +226,15 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .nav-big .nav-text b {font-size:17px}
 .nav-big .nav-text small {overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12.5px; font-weight:600; opacity:.8}
 .nav-big .icon {width:22px; height:22px}
-.check {display:grid; place-items:center; width:52px; height:52px; flex:none; color:transparent}
-.check > .icon {grid-area:1/1; width:16px; height:16px; stroke-width:3}
-.check:not(.on)::before {content:''; grid-area:1/1; width:28px; height:28px; border-radius:50%; border:2.5px solid var(--line-2); background:var(--card)}
+.check {display:grid; place-items:center; width:46px; height:46px; flex:none; color:transparent}
+.check > .icon {grid-area:1/1; width:15px; height:15px; stroke-width:3}
+.check:not(.on)::before {content:''; grid-area:1/1; width:22px; height:22px; border-radius:50%; border:1.5px solid color-mix(in srgb, var(--line-2) 78%, var(--line)); background:var(--card); transition:border-color .2s ease, background-color .2s ease}
 .check:not(.on):active::before {border-color:var(--ok); background:var(--ok-soft)}
 .check.check-big {flex:1; color:var(--ink); border:2px solid var(--line-2); background:var(--card)}
 .check.check-big::before {content:none}
 .check.check-big > .icon {width:22px; height:22px; color:var(--ok)}
 .check.check-big.on {border-color:var(--ok); color:var(--ok); background:var(--ok-soft)}
-.done-face {position:relative; grid-area:1/1; width:34px; height:34px; border-radius:50%; background:url(@src/trip/assets/murasame-done.jpg) center/cover, var(--sunk); box-shadow:0 0 0 2px var(--card), 0 0 0 3.5px var(--moegi), 0 4px 10px -3px var(--press)}
+.done-face {position:relative; grid-area:1/1; width:30px; height:30px; border-radius:50%; background:url(@src/trip/assets/murasame-done.jpg) center/cover, var(--sunk); box-shadow:0 0 0 2px var(--card), 0 0 0 3px var(--moegi), 0 3px 8px -3px var(--press)}
 .check-big .done-face {width:30px; height:30px; flex:none}
 .pop-in {animation:pop .55s var(--ease-spring) both}
 .pop-in::after {content:''; position:absolute; inset:-4px; border-radius:50%; border:2px solid var(--moegi); animation:ring .7s .1s ease-out both}
@@ -277,11 +277,11 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 /* ---------- The train line: one rail for every ordered list ---------- */
 .line {position:relative}
 .line > li {position:relative}
-.line > li::before {content:''; position:absolute; z-index:0; left:var(--rail); top:0; bottom:0; width:2px; margin-left:-1px; background:var(--line-2); opacity:.55}
+.line > li::before {content:''; position:absolute; z-index:0; left:var(--rail); top:0; bottom:0; width:1.5px; margin-left:-.75px; background:var(--line)}
 .line > li:first-child::before {top:var(--rail-y,50%)}
 .line > li:last-child::before {bottom:calc(100% - var(--rail-y,50%))}
 .line > li:only-child::before {display:none}
-.node {position:relative; z-index:1; flex:none; display:grid; place-items:center; width:12px; height:12px; border-radius:50%; background:var(--card); border:2.5px solid var(--line-2)}
+.node {position:relative; z-index:1; flex:none; display:grid; place-items:center; width:10px; height:10px; border-radius:50%; background:var(--card); border:1.5px solid var(--line-2)}
 
 /* ---------- 现在 ---------- */
 .now-head {display:flex; align-items:flex-start; justify-content:space-between; gap:14px}
@@ -322,14 +322,15 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .alert-line {display:flex; align-items:center; gap:6px; margin-top:4px !important; padding:6px 0; color:var(--danger); font-weight:700; font-size:15px}
 .alert-line .icon {flex:none; width:16px; height:16px}
 .alert-line .icon:last-child {margin-left:auto; opacity:.75}
-.mini {--t:3.1rem; --rail:calc(var(--t) + 12px + 8px)}
+.mini {--t:3rem; --rail:calc(var(--t) + 12px + 5px)}
 .mini li {display:flex; align-items:center}
-.mini-row {flex:1; min-width:0; display:flex; align-items:center; gap:12px; min-height:52px}
-.mini-row .t {flex:none; width:var(--t); font-size:1rem; font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap}
-.mini-row .node {width:16px; height:16px}
-.mini .major .node {border-color:var(--ink-2)}
+.mini li + li {border-top:1px dashed color-mix(in srgb, var(--line) 75%, transparent)}
+.mini-row {flex:1; min-width:0; display:flex; align-items:center; gap:12px; min-height:48px}
+.mini-row .t {flex:none; width:var(--t); font-size:.95rem; font-weight:750; font-variant-numeric:tabular-nums; white-space:nowrap}
+.mini-row .node {width:9px; height:9px; box-shadow:0 0 0 2px var(--card)}
+.mini .major .node {background:var(--accent); border-color:var(--accent)}
 .mini-title {overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-.mini .minor .mini-title {color:var(--ink-2); font-size:15px}
+.mini .minor .mini-title {color:var(--ink-2); font-size:14.5px}
 .timetable li {border-top:1px dashed var(--line)}
 .timetable li:first-child {border-top:0}
 .stop-btn {display:grid; grid-template-columns:3.6rem minmax(0,1fr) auto; gap:0 10px; align-items:baseline; width:100%; min-height:48px; padding:10px 4px; border-radius:var(--r-sm); text-align:left; transition:background-color .2s ease}
@@ -362,17 +363,23 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .cover-back {position:absolute; z-index:2; top:12px; left:12px; display:inline-flex; align-items:center; gap:4px; min-height:44px; padding:0 14px 0 10px; border-radius:999px; color:#fff; font-size:14px; font-weight:700; background:rgba(0,0,0,.25); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px)}
 .cover-back .icon {width:18px; height:18px}
 .cover > .icon-btn {position:absolute; z-index:2; top:10px; right:10px; color:#fff; background:rgba(0,0,0,.25); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px)}
-.days {--d:3.3rem; --rail:calc(var(--d) + 12px + 26px)}
-.day-link {display:grid; grid-template-columns:var(--d) 52px minmax(0,1fr) auto; gap:12px; align-items:center; min-height:68px; padding:6px 0; color:var(--ink)}
-.dl-date b {display:block; font-size:1.05rem; font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap}
-.dl-date small, .dl-main small {display:block; font-size:13px; color:var(--muted)}
-.dl-main b {font:700 17px/1.35 var(--serif)}
-.node.photo {width:52px; height:52px; border:3px solid var(--card); overflow:hidden; box-shadow:0 0 0 1.5px var(--line-2)}
-.node.photo img {width:100%; height:100%; object-fit:cover}
-.days li.now .node.photo {box-shadow:0 0 0 2.5px var(--accent), 0 0 0 7px var(--accent-soft)}
-.days li.now .dl-date small {color:var(--accent); font-weight:800}
-.days li.done .node.photo img {filter:grayscale(.7); opacity:.75}
-.dl-done {font-size:13px; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums}
+.days li + li {border-top:1px dashed var(--line)}
+.day-link {display:grid; grid-template-columns:3rem 54px minmax(0,1fr) auto; gap:12px; align-items:center; min-height:64px; padding:10px 2px; border-radius:var(--r-sm); color:var(--ink); transition:background-color .2s ease}
+.days li:first-child .day-link {padding-top:4px}
+.days li:last-child .day-link {padding-bottom:4px}
+.day-link:active {background:var(--sunk)}
+.dl-date b {display:block; font-size:.98rem; font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink)}
+.dl-date small, .dl-main small {display:block; font-size:12.5px; color:var(--muted)}
+.dl-main b {display:block; font:700 16.5px/1.35 var(--serif)}
+.dl-thumb {width:54px; height:40px; border-radius:7px; overflow:hidden; background:var(--sunk); box-shadow:0 1px 3px rgba(40,52,18,.12)}
+.dl-thumb img {width:100%; height:100%; object-fit:cover}
+.dl-thumb .doodle {width:100%; height:100%; padding:5px; color:var(--ink-2); background:var(--accent-soft)}
+.days li.now .dl-thumb {box-shadow:0 0 0 2px var(--card), 0 0 0 3.5px var(--accent)}
+.days li.now .dl-date b, .days li.now .dl-date small {color:var(--accent); font-weight:800}
+.days li.done .dl-thumb img {filter:grayscale(.65); opacity:.75}
+.dl-done {font-size:12.5px; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums}
+.dl-go {color:var(--muted); opacity:.45; display:grid; place-items:center}
+.dl-go .icon {width:15px; height:15px}
 
 /* ---------- 行程 ---------- */
 .strip {
@@ -407,7 +414,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .hero-over .display {font-size:clamp(25px,7.2vw,31px); text-shadow:0 2px 12px rgba(0,0,0,.45)}
 .hero-over p:last-child {font-size:14.5px; opacity:.95; text-shadow:0 1px 5px rgba(0,0,0,.55)}
 .day-hero .day-seal {position:absolute; z-index:1; right:18px; bottom:18px; background:rgba(255,254,244,.94); box-shadow:inset 0 0 0 3px rgba(255,254,244,.94), inset 0 0 0 4px #b23e2a; color:#b23e2a; border-color:#b23e2a}
-.ticket-facts {position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:2px dashed var(--line)}
+.ticket-facts {position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1.5px dashed var(--line)}
 .ticket-facts::before, .ticket-facts::after {content:''; position:absolute; z-index:2; top:-11px; width:20px; height:20px; border-radius:50%; background:var(--paper)}
 .ticket-facts::before {left:-10px}
 .ticket-facts::after {right:-10px}
@@ -420,59 +427,54 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .dots i.on {background:var(--ink)}
 .day-key {position:relative; padding:4px 0 4px 16px; font:600 17px/1.7 var(--serif); color:var(--ink)}
 .day-key::before {content:''; position:absolute; left:0; top:6px; bottom:6px; width:3px; border-radius:3px; background:linear-gradient(var(--moegi), var(--plum))}
-.chips {display:flex; flex-wrap:wrap; gap:6px}
-.chip {display:inline-flex; align-items:center; gap:5px; flex:none; min-height:44px; padding:0 11px; border-radius:999px; background:var(--card); box-shadow:var(--shadow); color:var(--ink); font-size:14.5px; font-weight:600; white-space:nowrap}
-.chip .icon {flex:none; width:18px; height:18px; color:var(--muted)}
-.chip.warn {color:var(--warn); box-shadow:inset 0 0 0 1.5px var(--warn)}
+.chips {display:flex; flex-wrap:wrap; gap:8px}
+.chip {display:inline-flex; align-items:center; gap:5px; flex:none; min-height:42px; padding:0 12px; border-radius:999px; background:var(--card); border:1px solid var(--line); box-shadow:0 1px 2px rgba(40,52,18,.04); color:var(--ink-2); font-size:13.5px; font-weight:600; white-space:nowrap}
+.chip .icon {flex:none; width:16px; height:16px; color:var(--muted)}
+.chip.warn {color:var(--warn); border-color:color-mix(in srgb, var(--warn) 42%, var(--line))}
 .chip.warn .icon {color:var(--warn)}
-.chip.locate {background:var(--accent-soft); color:var(--tab-on-ink); box-shadow:inset 0 0 0 1px var(--fill-edge)}
+.chip.locate {background:var(--accent-soft); border-color:color-mix(in srgb, var(--accent) 30%, transparent); color:var(--tab-on-ink)}
 .chip.locate .icon {color:var(--accent)}
 .day-progress {display:flex; align-items:center; gap:12px; font-size:14px; color:var(--muted)}
 .day-progress b {color:var(--ink); font-variant-numeric:tabular-nums}
 .bar {flex:1; height:6px; border-radius:6px; background:var(--line); overflow:hidden}
 .bar i {display:block; height:100%; border-radius:6px; background:linear-gradient(90deg, var(--moegi), var(--accent))}
-.phase {margin-top:26px !important}
-.phase-title {display:flex; align-items:baseline; gap:10px; padding:0 4px 10px}
-.phase-name {font:900 20px/1 var(--serif); letter-spacing:.12em; padding:0 3px; margin-left:-3px; border-radius:3px 8px 4px 10px;
-  background:linear-gradient(176deg, transparent 56%, var(--wash-moegi) 57%, var(--wash-moegi) 93%, transparent 94%)}
-.phase-title small {font-size:14px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-.phase-title .range {margin-left:auto; font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
-.rows {--t:3.1rem; --rail:calc(8px + var(--t) + 10px + 20px); --rail-y:30px; padding:6px; border-radius:var(--r); background:var(--card); box-shadow:var(--shadow)}
-.row {display:flex; align-items:flex-start; border-radius:var(--r-md)}
-.row-open {flex:1; min-width:0; display:flex; align-items:flex-start; gap:10px; min-height:60px; padding:10px 0 10px 8px; border-radius:var(--r-md)}
+.day-plan {padding:16px 14px 14px}
+.phase + .phase {margin-top:16px; padding-top:16px; border-top:1px dashed var(--line)}
+.phase-title {display:flex; align-items:baseline; gap:8px; padding:0 4px 8px}
+.phase-name {font:700 16px/1.3 var(--serif); letter-spacing:.08em; color:var(--accent)}
+.phase-title small {font-size:13px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.phase-title .range {margin-left:auto; font-size:12.5px; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
+.rows {--t:2.95rem; --rail:calc(4px + var(--t) + 10px + 6px); --rail-y:23px}
+.row.minor:first-child, .row.minor:last-child {--rail-y:21px}
+.row {display:flex; align-items:flex-start; border-radius:var(--r-sm)}
+.row + .row {border-top:1px dashed color-mix(in srgb, var(--line) 72%, transparent)}
+.row-open {flex:1; min-width:0; display:flex; align-items:flex-start; gap:10px; min-height:48px; padding:10px 0 10px 4px; border-radius:var(--r-sm)}
 .row-open:active {background:var(--sunk)}
-.row-time {flex:none; width:var(--t); height:40px; padding-top:2px; display:flex; align-items:center; font-size:.95rem; font-weight:650; color:var(--ink-2); font-variant-numeric:tabular-nums; white-space:nowrap}
+.row-time {flex:none; width:var(--t); padding-top:2px; font-size:.9rem; font-weight:650; color:var(--ink-2); font-variant-numeric:tabular-nums; white-space:nowrap; line-height:22px}
 .row-time.fixed {font-weight:800; color:var(--ink)}
-.rows .node {width:40px; height:40px; background:none; border:0}
-.rows .node::after {content:''; width:10px; height:10px; border-radius:50%; background:var(--card); border:2.5px solid var(--line-2)}
-.rows .node.big::after, .rows .node.photo::after {content:none}
-.rows .node.big {width:34px; height:34px; margin:3px; border-radius:50%; background:var(--card); border:2px solid var(--ink-2); color:var(--ink-2)}
-.rows .node.big .icon {width:16px; height:16px}
-/* Opaque behind the photo: a ticked row fades the photo, and the rail must not show through it. */
-.rows .node.photo {width:40px; height:40px; background:var(--card); border:2.5px solid var(--card); box-shadow:0 0 0 1.5px var(--line-2)}
-.row-text {flex:1; min-width:0; display:flex; flex-wrap:wrap; align-items:center; gap:2px 6px; padding-top:8px}
-.row-title > .icon {display:inline-block; width:15px; height:15px; margin-right:6px; vertical-align:-2px; color:var(--muted)}
-.row-title {font-size:16px; font-weight:700; line-height:23px}
-.row-meta {flex-basis:100%; display:flex; flex-wrap:wrap; gap:4px 8px; font-size:12.5px; color:var(--muted)}
-.flag {padding:0 6px; border-radius:5px; background:var(--sunk); color:var(--ink-2); font-weight:600}
+.rows .node {width:12px; height:22px; margin-top:2px; background:none; border:0}
+.rows .node::after {content:''; width:7px; height:7px; border-radius:50%; background:var(--card); border:1.5px solid var(--line-2); box-shadow:0 0 0 2.5px var(--card)}
+.rows .node.big::after {width:8px; height:8px; background:var(--accent); border-color:var(--accent)}
+.row-text {flex:1; min-width:0; display:flex; flex-wrap:wrap; align-items:center; gap:3px 6px}
+.row-title > .icon {display:inline-block; width:14px; height:14px; margin-right:5px; vertical-align:-2px; color:var(--muted)}
+.row-title {font-size:15.5px; font-weight:700; line-height:23px; color:var(--ink)}
+.row-meta {flex-basis:100%; display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; font-size:12.5px; color:var(--muted)}
+.flag {padding:0 7px; border-radius:999px; background:var(--accent-soft); color:var(--accent); font-size:11.5px; font-weight:650}
 .flag.warn {background:var(--warn-soft); color:var(--warn)}
-.row .check {margin-top:4px}
+.row .check {margin-top:0}
+.row.minor .row-open {min-height:44px; padding:8px 0 8px 4px}
 .row.minor .row-time {font-weight:600; color:var(--muted)}
-.row.minor .row-text {padding-top:9px}
-.row.minor .row-title {font-weight:500; font-size:14.5px; line-height:21px; color:var(--ink-2)}
-.row.now {background:var(--accent-soft)}
+.row.minor .row-title {font-weight:500; font-size:14px; line-height:21px; color:var(--ink-2)}
+.row.now {background:color-mix(in srgb, var(--accent-soft) 58%, transparent); box-shadow:inset 2.5px 0 0 var(--accent)}
 .row.flash {animation:row-flash 1.1s var(--ease-out)}
 @keyframes row-flash {0%,25% {box-shadow:inset 0 0 0 2px var(--accent)} 100% {box-shadow:inset 0 0 0 2px transparent}}
 .row.now .row-time {color:var(--accent)}
-.row.now .node.big, .row.now .node.photo {box-shadow:0 0 0 2.5px var(--accent), 0 0 0 7px var(--card)}
-.row.now .node::after {border-color:var(--accent); background:var(--accent)}
+.row.now .node::after {border-color:var(--accent); background:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
 .row.done .row-title, .row.done .row-time {color:var(--muted)}
 .row.done .row-title {text-decoration:line-through; text-decoration-color:var(--line-2)}
-.row.done .node.photo img {filter:grayscale(.85); opacity:.5}
-.row.done .node.big {border-color:var(--line-2); color:var(--muted)}
-.row.done .node::after {border-color:var(--line)}
-.pager {display:flex; justify-content:space-between; gap:12px; margin-top:26px !important}
-.pager a {display:flex; align-items:center; gap:6px; min-height:52px; padding:0 16px; border-radius:var(--r); background:var(--card); box-shadow:var(--shadow); color:var(--ink); font:700 15px var(--serif); min-width:0}
+.row.done .node::after {border-color:var(--line); background:var(--card)}
+.pager {display:flex; justify-content:space-between; gap:10px; margin-top:20px !important}
+.pager a {display:flex; align-items:center; gap:6px; min-height:48px; padding:0 14px; border-radius:var(--r-md); background:var(--card); border:1px solid var(--line); box-shadow:0 1px 2px rgba(40,52,18,.04); color:var(--ink-2); font:700 14px var(--serif); min-width:0}
 .pager a span {overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .pager .next {margin-left:auto}
 
@@ -579,7 +581,8 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .shot-missing small {color:var(--muted)}
 .shot-note {margin-top:10px; font-size:15px}
 .shot-note b {display:inline-block; margin-right:8px; padding:0 7px; border-radius:5px; background:var(--accent-soft); color:var(--accent); font-size:12.5px; letter-spacing:.08em}
-.shot-toggle.on {border-color:var(--shu); background:var(--shu-soft); color:var(--shu)}
+.shot-toggle.on {color:var(--shu)}
+.shot-toggle.on .icon {color:var(--shu)}
 .shot.done .pair {opacity:.8}
 .rally .title {font-size:20px; margin:2px 0 6px}
 .rally-spot {padding-top:12px; border-top:1px dashed var(--line)}
