@@ -6,7 +6,10 @@ const DETAILS = {
     "key": "HX618抵达关西T1，取箱后乘HARUKA去京都。",
     "cover": "kyoto_station",
     "photos": [
-      "kyoto_station"
+      "kyoto_station",
+      "kyoto_avanti",
+      "kyoto_ramen_koji",
+      "kyoto_skyway"
     ],
     "phases": [
       [
@@ -17,16 +20,25 @@ const DETAILS = {
         ]
       ],
       [
-        "夜间 · 入住休息",
+        "夜间 · 打卡、动漫店与晚饭",
         [
           "checkin_kyoto",
-          "dinner_arrival"
+          "kyoto_station_visit",
+          "avanti_shopping",
+          "dinner_arrival",
+          "skyway_visit",
+          "kyoto_arrival_return"
         ]
       ]
     ],
     "routePhases": [
       "抵达",
       "抵达",
+      "抵达",
+      "夜间",
+      "夜间",
+      "夜间",
+      "夜间",
       "夜间",
       "夜间"
     ],
@@ -40,20 +52,21 @@ const DETAILS = {
       [
         "晚餐",
         "首选",
+        "京都拉麺小路（京都駅ビル 10F）",
+        "¥1,000–1,500",
+        "京都站大楼 10 楼",
+        "11:00—22:00（末单21:30）；吃完顺走同层免费空中径路看京都塔。",
+        "https://www.kyoto-ramen-koji.com/",
+        "kyoto_ramen_koji"
+      ],
+      [
+        "晚餐",
+        "备选",
         "すき家 烏丸七条店",
         "¥700–1,200",
         "真苧屋町 197",
         "牛丼／定食；参考营业 04:00—次日03:00。",
         "https://maps.sukiya.jp/jp/detail/970"
-      ],
-      [
-        "晚餐",
-        "备选",
-        "京都拉麺小路（京都駅ビル 10F）",
-        "¥1,000–1,500",
-        "京都站大楼 10 楼",
-        "11:00—22:00（末单21:30）；吃完顺走同层免费空中径路看京都塔。",
-        "https://www.kyoto-ramen-koji.com/"
       ],
       [
         "晚餐",
@@ -66,7 +79,7 @@ const DETAILS = {
       ]
     ],
     "cityLabel": "抵达京都",
-    "summary": "机场 → 酒店",
+    "summary": "机场 → 酒店 → Avanti → 拉面小路",
     "eventDetails": {
       "flight_out": {
         "title": "值机与登机",
@@ -81,20 +94,16 @@ const DETAILS = {
           }
         ]
       },
-      "dinner_arrival": {
-        "title": "晚间顺路路线（19:30–21:30）",
+      "avanti_shopping": {
+        "title": "6F 店铺营业",
         "items": [
           {
-            "text": "JR 京都站中央口：站前广场拍《魔女的夜宴》玻璃幕墙（酒店步行 5 分钟）。",
-            "url": "https://www.google.com/maps/search/?api=1&query=34.985849,135.758767"
+            "text": "Animate 京都 Avanti 店：6F，10:00—21:00。",
+            "url": "https://www.animate.co.jp/shop/kyoto/"
           },
           {
-            "text": "Avanti 6F：穿南北自由通路到八条口即达，同层逛 Animate 与指南针（至 21:00；晚到只选一家）。",
-            "url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E3%82%A2%E3%83%90%E3%83%B3%E3%83%86%E3%82%A3"
-          },
-          {
-            "text": "京都站 10F 拉面小路 & 空中径路：回站上 10F 吃拉面（末单 21:30），免费走玻璃廊桥看京都塔后步行回酒店。",
-            "url": "https://www.kyoto-ramen-koji.com/"
+            "text": "指南针（らしんばん）京都店：同层 6F，10:00—21:00，中古周边与谷子。",
+            "url": "https://www.lashinbang.com/store/kyoto/"
           }
         ]
       }

@@ -168,8 +168,8 @@ const checked=run(`
  const arrive=PLAN.days[0];ui.day=0;state.checks[arrive.date+':checkin_kyoto']='done';
  assert.ok(!/class="row minor done" id="row-arrival_transfer"/.test(dayScreen()),'旧版留在交通行上的勾选不再划线');
  assert.equal(nowState(arrive,17*60).focus.id,'arrival_transfer','旧勾选不让「现在」跳过交通');
- setCheck(arrive.date,'dinner_arrival',true);assert.ok(/class="row minor done" id="row-arrival_transfer"/.test(dayScreen()),'下一项主活动完成后交通行才划线');
- delete state.checks[arrive.date+':checkin_kyoto'];setCheck(arrive.date,'dinner_arrival',false);
+ setCheck(arrive.date,'kyoto_station_visit',true);assert.ok(/class="row minor done" id="row-arrival_transfer"/.test(dayScreen()),'下一项主活动完成后交通行才划线');
+ delete state.checks[arrive.date+':checkin_kyoto'];setCheck(arrive.date,'kyoto_station_visit',false);
  assert.ok(TODO_IDS.every(id=>TODO_SHORT[id]),'每条待办都有一行标题');
  ui.tab='prep';assert.ok(text(prepScreen()).includes(TODOS[0]),'待办全文仍可展开');
  // Day 1 HK timezone: 10:30 JST = 09:30 HKT -> 10:25 HKT check-in close has 55 min left, flight_out not yet started.

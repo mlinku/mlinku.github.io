@@ -18,8 +18,11 @@ assert.deepEqual(plan.bookings,old.bookings,'全部机酒和HARUKA状态保持�
 assert.equal(plan.plan_id,old.plan_id);assert.notEqual(plan.revision,old.revision,'使用新的revision');
 const timeNumbers=text=>(text||'').match(/\d{1,2}:\d{2}|\d+[—–]\d+分钟/g)||[];
 const protectedDay=d=>({date:d.date,departure:d.departure_target,return:d.hotel_return_target,route:d.route_stop_ids,routeEvents:d.route_event_ids,optional:d.optional,events:d.timeline.map(e=>({id:e.id,category:e.category,places:e.place_ids,time:timeNumbers(e.time_label),timeStatus:e.time_status}))});
-const unchanged=['2026-11-30','2026-12-02','2026-12-07'];
+const unchanged=['2026-12-02','2026-12-07'];
 for(const date of unchanged)assert.deepEqual(protectedDay(plan.days.find(d=>d.date===date)),protectedDay(old.days.find(d=>d.date===date)),'未改日期的时刻、活动、路线和可选安排不变 '+date);
+{const d0=plan.days[0],o0=old.days[0];
+ assert.deepEqual(d0.timeline.slice(0,2).map(e=>e.id),o0.timeline.slice(0,2).map(e=>e.id),'11/30航班与HARUKA保留');
+ assert.ok(['kyoto_station_visit','avanti_shopping','dinner_arrival','skyway_visit'].every(id=>d0.timeline.some(e=>e.id===id)),'11/30晚间巡礼、Avanti、拉面小路与空中径路已展开');}
 assert.deepEqual(plan.days.map(d=>d.date),old.days.map(d=>d.date),'仍是8天');
 
 const RETIRED=['usj','osaka_castle','morinomiya','jr_tsuruhashi','kintetsu_tsuruhashi','spaworld','nintendo_osaka','pokemon_osaka','umeda_sky','coco_umeda','tofukuji','kada_station','awashima_shrine','wakayama_castle','wakayamashi_station'];

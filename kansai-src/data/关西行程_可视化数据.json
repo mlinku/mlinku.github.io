@@ -1300,6 +1300,42 @@
       "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E6%89%8B%E5%89%8D%E9%80%9A%E3%82%8A%20%E5%A7%AB%E8%B7%AF",
       "coordinates": null,
       "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "kyoto_avanti",
+      "name": "京都Avanti",
+      "name_ja": "京都アバンティ 6F",
+      "city": "京都",
+      "category": "shopping",
+      "address_ja": "京都市南区東九条西山王町31 6F",
+      "map_query": "京都アバンティ 京都市南区東九条西山王町31",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E3%82%A2%E3%83%90%E3%83%B3%E3%83%86%E3%82%A3",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "kyoto_ramen_koji",
+      "name": "京都拉面小路",
+      "name_ja": "京都拉麺小路（京都駅ビル 10F）",
+      "city": "京都",
+      "category": "restaurant",
+      "address_ja": "京都市下京区烏丸通塩小路下ル東塩小路町901 京都駅ビル10F",
+      "map_query": "京都拉麺小路 京都駅ビル",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E6%8B%89%E9%BA%BA%E5%B0%8F%E8%B7%AF",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "kyoto_skyway",
+      "name": "空中径路",
+      "name_ja": "京都駅ビル 空中径路",
+      "city": "京都",
+      "category": "viewpoint",
+      "address_ja": "京都駅ビル 10F–11F",
+      "map_query": "京都駅ビル 空中径路",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E9%A7%85%E3%83%93%E3%83%AB%20%E7%A9%BA%E4%B8%AD%E5%BE%84%E8%B7%AF",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded"
     }
   ],
   "days": [
@@ -1320,6 +1356,11 @@
         "hkg",
         "kix",
         "kyoto_station",
+        "hotel_kyoto",
+        "kyoto_station",
+        "kyoto_avanti",
+        "kyoto_ramen_koji",
+        "kyoto_skyway",
         "hotel_kyoto"
       ],
       "timeline": [
@@ -1349,7 +1390,7 @@
         },
         {
           "id": "checkin_kyoto",
-          "time_label": "约19:00—20:00",
+          "time_label": "约19:00—19:40",
           "time_status": "planning_window",
           "title": "入住 · TUNE STAY KYOTO",
           "place_ids": [
@@ -1359,15 +1400,58 @@
           "condition": "入住时确认12/3退房后的行李寄存与领取位置。"
         },
         {
-          "id": "dinner_arrival",
-          "time_label": "入住后",
+          "id": "kyoto_station_visit",
+          "time_label": "19:40—19:55",
           "time_status": "planning_window",
-          "title": "京都站附近简餐、买次日早餐",
+          "title": "京都站中央口 · 巡礼",
           "place_ids": [
             "kyoto_station"
           ],
+          "category": "visit",
+          "condition": "站前广场拍《魔女的夜宴》玻璃幕墙，随后穿南北自由通路去八条口。"
+        },
+        {
+          "id": "avanti_shopping",
+          "time_label": "19:55—20:50",
+          "time_status": "planning_window",
+          "title": "Avanti 6F · Animate & 指南针",
+          "place_ids": [
+            "kyoto_avanti"
+          ],
+          "category": "shopping",
+          "condition": "八条口即达，6F 同层逛 Animate 与指南针；21:00 关门，晚到只选一家。"
+        },
+        {
+          "id": "dinner_arrival",
+          "time_label": "20:50—21:30",
+          "time_status": "planning_window",
+          "title": "晚餐 · 京都拉面小路",
+          "place_ids": [
+            "kyoto_ramen_koji"
+          ],
           "category": "meal",
-          "condition": "默认在酒店附近吃简餐；到得早且无需久等时再选京都站餐厅。"
+          "condition": "京都站 10F 拉面小路；延迟或累了直接去酒店旁すき家。"
+        },
+        {
+          "id": "skyway_visit",
+          "time_label": "21:30—21:40",
+          "time_status": "planning_window",
+          "title": "空中径路 · 京都塔夜景",
+          "place_ids": [
+            "kyoto_skyway"
+          ],
+          "category": "visit",
+          "condition": "同层免费玻璃廊桥，俯瞰京都塔夜景，之后步行约 5 分钟回酒店。"
+        },
+        {
+          "id": "kyoto_arrival_return",
+          "time_label": "21:40—21:50",
+          "time_status": "planning_window",
+          "title": "回酒店休息",
+          "place_ids": [
+            "hotel_kyoto"
+          ],
+          "category": "rest"
         }
       ],
       "meals": {

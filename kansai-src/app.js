@@ -143,7 +143,7 @@ function selectedShops(c){return[c.shop1,c.shop2].filter(x=>x&&x!=='none');}
 // Titles name the activity; routes, restaurant details and planning notes retain the specifics.
 // Transfers read start → end; the stations between are in the sheet.
 const EVENT_TITLES={
- arrival_transfer:'入境 → HARUKA去京都',dinner_arrival:'晚餐 · 京都站附近',
+ arrival_transfer:'入境 → HARUKA去京都',dinner_arrival:'晚餐 · 京都拉面小路',
  uji_transfer:'京都 → 中村藤吉',agata_stamp:'縣神社 · 集章',suikan_stamp:'水管桥河岸',keihan_uji_visit:'京阪宇治站 · 立牌',station_stage:'京都站《宝岛》舞台',
  uji_pilgrimage:'宇治川巡礼',
  demachi_transfer:'前往出町',demachi_visit:'出町桝形商店街',demachi_lunch:'午餐 · 出町',delta_visit:'鸭川三角洲',
