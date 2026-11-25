@@ -434,6 +434,12 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .chip.warn .icon {color:var(--warn)}
 .chip.locate {background:var(--accent-soft); border-color:color-mix(in srgb, var(--accent) 30%, transparent); color:var(--tab-on-ink)}
 .chip.locate .icon {color:var(--accent)}
+.ticket-actions {margin-top:0; border-top:1px dashed var(--line); padding:0 2px}
+.ticket-actions > * {flex:1 0 auto; gap:4px; padding:0 5px; font-size:12.5px}
+.ticket-actions .icon {width:14px; height:14px}
+.ticket-actions .warn {color:var(--warn)}
+.ticket-actions .warn .icon {color:var(--warn)}
+.ticket-actions .locate {color:var(--accent); font-weight:700}
 .day-progress {display:flex; align-items:center; gap:12px; font-size:14px; color:var(--muted)}
 .day-progress b {color:var(--ink); font-variant-numeric:tabular-nums}
 .bar {flex:1; height:6px; border-radius:6px; background:var(--line); overflow:hidden}
@@ -444,25 +450,27 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .phase-name {font:700 16px/1.3 var(--serif); letter-spacing:.08em; color:var(--accent)}
 .phase-title small {font-size:13px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .phase-title .range {margin-left:auto; font-size:12.5px; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
-.rows {--t:2.95rem; --rail:calc(4px + var(--t) + 10px + 6px); --rail-y:23px}
-.row.minor:first-child, .row.minor:last-child {--rail-y:21px}
+.rows {--t:2.95rem; --rail:calc(4px + var(--t) + 10px + 6px); --rail-y:21.5px}
+.row.minor:first-child, .row.minor:last-child {--rail-y:18.5px}
 .row {display:flex; align-items:flex-start; border-radius:var(--r-sm)}
 .row + .row {border-top:1px dashed color-mix(in srgb, var(--line) 72%, transparent)}
-.row-open {flex:1; min-width:0; display:flex; align-items:flex-start; gap:10px; min-height:48px; padding:10px 0 10px 4px; border-radius:var(--r-sm)}
+.row-open {flex:1; min-width:0; display:flex; align-items:flex-start; gap:10px; min-height:44px; padding:10px 0 10px 4px; border-radius:var(--r-sm)}
 .row-open:active {background:var(--sunk)}
-.row-time {flex:none; width:var(--t); padding-top:2px; font-size:.9rem; font-weight:650; color:var(--ink-2); font-variant-numeric:tabular-nums; white-space:nowrap; line-height:22px}
+.row-time {flex:none; width:var(--t); height:23px; font-size:.9rem; font-weight:650; color:var(--ink-2); font-variant-numeric:tabular-nums; white-space:nowrap; line-height:23px}
 .row-time.fixed {font-weight:800; color:var(--ink)}
-.rows .node {width:12px; height:22px; margin-top:2px; background:none; border:0}
+.rows .node {width:12px; height:23px; background:none; border:0}
 .rows .node::after {content:''; width:7px; height:7px; border-radius:50%; background:var(--card); border:1.5px solid var(--line-2); box-shadow:0 0 0 2.5px var(--card)}
 .rows .node.big::after {width:8px; height:8px; background:var(--accent); border-color:var(--accent)}
-.row-text {flex:1; min-width:0; display:flex; flex-wrap:wrap; align-items:center; gap:3px 6px}
+.row-text {flex:1; min-width:0; display:flex; flex-wrap:wrap; align-items:center; gap:2px 6px}
 .row-title > .icon {display:inline-block; width:14px; height:14px; margin-right:5px; vertical-align:-2px; color:var(--muted)}
 .row-title {font-size:15.5px; font-weight:700; line-height:23px; color:var(--ink)}
-.row-meta {flex-basis:100%; display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; font-size:12.5px; color:var(--muted)}
-.flag {padding:0 7px; border-radius:999px; background:var(--accent-soft); color:var(--accent); font-size:11.5px; font-weight:650}
-.flag.warn {background:var(--warn-soft); color:var(--warn)}
-.row .check {margin-top:0}
-.row.minor .row-open {min-height:44px; padding:8px 0 8px 4px}
+.row-meta {flex-basis:100%; display:flex; flex-wrap:wrap; align-items:center; gap:2px 6px; font-size:12.5px; color:var(--muted)}
+.row-meta > * + *::before {content:'·'; margin-right:6px; color:var(--line-2); font-weight:400}
+.flag {font-size:12px; font-weight:700; color:var(--accent); letter-spacing:.03em}
+.flag.warn {color:var(--warn)}
+.row .check {width:44px; height:43px; margin-top:0}
+.row.minor .row-open {min-height:40px; padding:8px 0 8px 4px}
+.row.minor .row-time, .row.minor .node {height:21px; line-height:21px}
 .row.minor .row-time {font-weight:600; color:var(--muted)}
 .row.minor .row-title {font-weight:500; font-size:14px; line-height:21px; color:var(--ink-2)}
 .row.now {background:color-mix(in srgb, var(--accent-soft) 58%, transparent); box-shadow:inset 2.5px 0 0 var(--accent)}
