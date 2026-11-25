@@ -319,11 +319,12 @@ const SHOT_COPY={
 };
 const SIMP_TRAD={'桥':'橋','雾':'霧','见':'見','阁':'閣','站':'駅','姬':'姫','园':'園'};
 const normPlaceName=s=>String(s||'').replace(/[\s·]/g,'').replace(/通$/,'').replace(/^祇[园園]/,'').replace(/^JR/i,'').replace(/大天守$/,'天守').replace(/./g,c=>SIMP_TRAD[c]||c);
+const shortWork=w=>String(w||'').replace(/／サノバウィッチ$/,'').replace(/\s*(·\s*誓言的终章|2|第1季)$/,'').replace(/：.*$/,'');
 function shotModel(p){
  const copy=SHOT_COPY[p.id]||{},d=PLAN.days.find(x=>x.date===p.date),ev=d&&p.event_id?effectiveEvents(d).find(x=>x.id===p.event_id):null;
  const start=ev?eventStart(ev):null,title=copy.title||p.title,rawJa=p.name_ja||PLACE[p.place_ids[0]]?.name_ja||title;
  return {id:p.id,date:p.date,eventId:p.event_id,hasEvent:!!ev,eventTitle:ev?.title||'',eventTime:ev?(start!==null?clock(start):compactTime(ev.time_label)):'',
-  work:p.work,title,optional:!!p.option,reference:!!p.reference,nameJa:normPlaceName(rawJa)===normPlaceName(title)?'':rawJa,
+  work:shortWork(p.work),title,optional:!!p.option,reference:!!p.reference,nameJa:normPlaceName(rawJa)===normPlaceName(title)?'':rawJa,
   scene:cleanText(copy.scene||p.scene),note:cleanText(copy.note||p.shooting_note),caption:cleanText(copy.caption||p.match_note),map:pointMap(p),done:!!state.checks[shotKey(p)],
   coords:p.coordinates||null,images:p.comparison?[['comparison','作品 × 实景']]:p.anime?[['anime','作品画面'],['real','实景']]:[['real','实景']],point:p};
 }

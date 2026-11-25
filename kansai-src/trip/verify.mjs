@@ -189,9 +189,9 @@ const checked=run(`
  assert.deepEqual(roundTrip.todos,sample.todos);
  assert.deepEqual(roundTrip.choices,sample.choices);
  assert.throws(()=>decodeProgress('invalid'),'无效进度码被拒绝');
- // Pilgrimage back-link & hide-done filter.
+ // Pilgrimage header stays compact (no .shot-event pill) & hide-done filter works.
  ui.shotsDay=1;const shot1=shotsScreen();
- assert.ok(shot1.includes('class="shot-event"')&&shot1.includes('data-key="uji_parfait"'),'巡礼卡显示对应活动时间并可点开');
+ assert.ok(!shot1.includes('class="shot-event"')&&shot1.includes('id="shot-eupho_uji_bridge"'),'巡礼卡去掉冗余跳转胶囊，直出对照图');
  const firstPt=dayShots(PLAN.days[1]).main[0];state.checks[shotKey(firstPt)]=true;ui.hideDoneShots=true;
  const filtered=shotsScreen();
  assert.ok(filtered.includes('data-action="toggle-hide-shots"')&&!filtered.includes('id="shot-'+firstPt.id+'"'),'只看未拍过滤已拍点位');
