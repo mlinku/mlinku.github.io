@@ -10,9 +10,10 @@ const EVENT_BRIEF={
  dinner_arrival:'京都站 10F 拉面小路；延迟或累了直接去酒店旁すき家。',
  uji_parfait:'到店先取号（不能预约），11:00看11:45前吃不完就放弃。',
  uji_approach:'沿街拍照，不进收费区。',
+ uji_lunch:'长队换附近简餐。',
  uji_pilgrimage:'久美子椅多留片刻，桥上顺拍。',
  daikichi_visit:'',
- suikan_stamp:'河岸拍照，坐下休息约10分钟。',
+ suikan_stamp:'',
  heiwa_visit:'商场3F，逛30—40分钟。',
  keihan_uji_visit:'站内看展示约10分钟。',
  uji_dinner_walk:'',
@@ -29,7 +30,9 @@ const EVENT_BRIEF={
  kobe_bridge_visit:'从北公园拍红桥，16:30前回三宫；大风雨或疲劳取消。',
  sannomiya_dinner:'不用预约直接去（Walk-in，16:00开门），满座走1分钟换隔壁两家。',
  anime_shopping:'重点1—2家，先逛早关门的小店，晚到只选一家。',
- checkout_osaka:'离店前或抵机场后吃早餐。',
+ skyway_visit:'同层免费玻璃廊桥，俯瞰京都塔夜景。',
+ kokoen_visit:'逛庭园，日落约16:45后点灯（红叶可能已到尾声）。',
+ checkout_osaka:'离店前或到机场吃早餐。',
  airport_checkin:''
 };
 // Shorter wording for 情况有变时. Each source must still occur in the planning notes (trip/verify.mjs checks this);
@@ -54,8 +57,8 @@ const compactFallback=t=>FALLBACK_SHORT.reduce((s,[from,to])=>s.replace(from,to)
 // Transport notes that spell out airport routine; the short form keeps every time and the one non-obvious fact.
 const TRANSPORT_SHORT=[
  ['去程建议08:25抵达香港T2；当前10:25停止值机。T2值机、安检和出境后，乘APM前往T1中场客运廊（T1M）登机。','永东大巴到T2三楼(09-10柜台)，直接上楼值机出境(10:25截止)，再搭机场小火车去登机口。'],
- ['关西T1入境、取行李后，按Railway／鉄道指引到车站；按订单兑换或使用已购HARUKA票，依入境进度选班次。','拿完行李换HARUKA车票，赶上哪班坐哪班。'],
- ['京都站认中央口／京都塔侧。酒店官方的约 5 分钟步行不包含站台到出口。','京都站从中央口（京都塔侧）出站走去酒店。'],
+ ['关西T1入境、取行李后，按Railway／鉄道指引到车站；按订单兑换或使用已购HARUKA票，依入境进度选班次。','拿完行李换HARUKA车票。'],
+ ['京都站认中央口／京都塔侧。酒店官方的约 5 分钟步行不包含站台到出口。','京都站从中央口（京都塔侧）出站。'],
  ['入住时确认 12/3 退房寄存位置；两间酒店均不含早餐。',''],
  ['抵达机场站后前往T1值机、托运、安检和出境；HX617于09:50日本时间起飞，现行柜台截止09:10，登机时限看登机牌。','到T1办值机托运和出境，09:10停值机（09:50飞）。']
 ];
@@ -89,6 +92,7 @@ const DROP_SENTENCES=new Set([
  '南海难波到近铁大阪难波需步行，含进站候车','多看会顺延回店，不压缩下坡与返程步行',
  '大风雨或疲劳取消，不挤晚饭','中公園站步行约8分钟，不安排全程步行跨桥','当前120分钟软饮和牛约5000/人，预算上限6000','含结账及75—90分钟返程','保留午餐、咖啡、休息与外观巡礼','酒店官方的约 5 分钟步行不包含站台到出口',
  '按登机牌时限到登机口',
+ '香港T2值机 → T1登机','建议08:25抵达香港T2','坐下用餐','下山后前往东岸河川敷，拍照并休息约10分钟','先在收费区集完章再出场','不长时间挑周边','白天看庭园和红叶，园内坐坐，日落约16:45后点灯','满座则走1分钟换焼肉あらし或牛角',
  '到站后前往T1，办理值机、托运、安检与出境','当前值机截止09:10日本时间','早餐前晚备好，离店前或抵达机场后吃'
 ]);
 // Whole detail panels that only repeat the airport routine already covered by 怎么走 and 关键时间.
@@ -297,7 +301,7 @@ const SHOT_COPY={
  'eupho_sawarabi':{title:'早蕨之道'},
  'eupho_daikichi':{title:'大吉山展望台',note:'对照栏杆转角与树木；白天上山、天黑前下山。'},
  'eupho_saizeriya_uji':{note:'公共通道顺拍二层窗户与店招，避让停车场车辆。'},
- 'eupho_jr_uji':{title:'茶壶邮筒',note:'JR 宇治站前找茶壶造型邮筒，拍完乘车回京都。'},
+ 'eupho_jr_uji':{title:'茶壶邮筒',note:'JR 宇治站前找茶壶造型邮筒。'},
  'kyoto-stage-stairs':{title:'室町小路大阶梯',scene:'第7集车站音乐会，《宝岛》演出广场。',note:'中央口一侧上4F室町小路广场，对照大阶梯、扶梯和红色时钟。无需登顶；遇活动占用时在允许通行处拍摄。'},
  'kyoto-stage-clock':{title:'大阶梯红框时钟',note:'在4F广场抬头找红色方框时钟与钢架；别与红色雕塑「朱甲舞」混淆。'},
  'demachi-west-gate':{title:'商店街西入口',scene:'宣传PV里的商店街西入口；招牌与建筑有改绘。',note:'从寺町通一侧仰拍入口招牌与左侧建筑。'},

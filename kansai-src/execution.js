@@ -32,7 +32,7 @@ const NANKAI_TIMETABLE='https://www.nankai.co.jp/tc_railway/access-timetable';
 const NANKAI_STATION='https://www.nankai.co.jp/traffic/station/shinimamiya.html';
 function executionNotice(d,ev){
  const content={
-  flight_out:'11:05停止登机（香港时间），具体登机口看登机牌。',
+  flight_out:'11:05停止登机（香港时间）。',
   agata_stamp:'登录活动网站并开启定位，确认领章成功再离开。',
   daikichi_visit:'14:40还没到登山口、下雨或累了就不爬。',
   kodaiji_night:'17:45还没排进、队超30分钟，或下雨/累了直接吃晚饭；18:45前离寺。',
