@@ -1503,7 +1503,7 @@ const TEXT_SHORT=[
 const compactFallback=t=>FALLBACK_SHORT.reduce((s,[from,to])=>s.replace(from,to),String(t||''));
 // Transport notes that spell out airport routine; the short form keeps every time and the one non-obvious fact.
 const TRANSPORT_SHORT=[
- ['去程建议08:25抵达香港T2；当前10:25停止值机。T2值机、安检和出境后，乘APM前往T1中场客运廊（T1M）登机。','永东大巴到T2三楼(09-10柜台)，直接上楼值机出境(10:25截止)，再搭机场小火车去登机口。'],
+ ['去程建议08:25抵达香港T2；当前10:25停止值机。T2值机、安检和出境后，乘APM前往T1中场客运廊（T1M）登机。','永东大巴到 T2 三楼（09-10 柜台），直接上楼值机出境（10:25 截止），再搭机场小火车去登机口。'],
  ['关西T1入境、取行李后，按Railway／鉄道指引到车站；按订单兑换或使用已购HARUKA票，依入境进度选班次。','拿完行李换HARUKA车票。'],
  ['京都站认中央口／京都塔侧。酒店官方的约 5 分钟步行不包含站台到出口。','京都站从中央口（京都塔侧）出站。'],
  ['入住时确认 12/3 退房寄存位置；两间酒店均不含早餐。',''],
@@ -2093,7 +2093,7 @@ function mealHTML(m){return `<article class="meal${m.primary?' primary':''}"><p 
 function foodHTML(item){const p=PLACE[item.place];return `<section class="sec"><h3>${e(item.label)}</h3><article class="meal">${photoSrc(item.place)&&!item.hidePhoto?`<button type="button" class="photo wide" data-action="zoom-photo" data-place="${item.place}">${img(item.place)}</button>`:''}<h4>${e(item.title)}</h4><p class="ja" lang="ja" translate="no">${e(p.name_ja)}</p><p>${e(cleanText(item.text))}</p><p class="muted">${e(cleanText(item.budget))}</p><div class="actions">${external(icon('pin')+'<span>地图</span>',p.map_search_url,'btn')}${external('<span>店铺资料 ↗</span>',item.source,'btn ghost')}</div></article></section>`;}
 function eventSheet(d,ev){
  const m=eventModel(d,ev),cover=m.photos[0]||'',rest=m.photos.slice(1);
- return `${sheetHead(`${e((m.timeHint?m.timeHint+' ':'')+m.time)}${m.status?` · <span class="tag">${e(m.status)}</span>`:''}`,e(m.title))}
+ return `${sheetHead(`<span>${e((m.timeHint?m.timeHint+' ':'')+m.time)}</span>${m.status?`<span class="tag">${e(m.status)}</span>`:''}`,e(m.title))}
  <div class="sheet-body">
  ${cover?`<button type="button" class="sheet-cover" data-action="zoom-photo" data-place="${cover}" aria-label="放大${e(PLACE[cover].name)}照片">${img(cover,true)}<span>${e(PLACE[cover].name)}</span></button>`:''}
  ${m.line?`<p class="lead">${e(m.line)}</p>`:''}

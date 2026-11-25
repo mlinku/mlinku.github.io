@@ -151,7 +151,7 @@ function mealHTML(m){return `<article class="meal${m.primary?' primary':''}"><p 
 function foodHTML(item){const p=PLACE[item.place];return `<section class="sec"><h3>${e(item.label)}</h3><article class="meal">${photoSrc(item.place)&&!item.hidePhoto?`<button type="button" class="photo wide" data-action="zoom-photo" data-place="${item.place}">${img(item.place)}</button>`:''}<h4>${e(item.title)}</h4><p class="ja" lang="ja" translate="no">${e(p.name_ja)}</p><p>${e(cleanText(item.text))}</p><p class="muted">${e(cleanText(item.budget))}</p><div class="actions">${external(icon('pin')+'<span>地图</span>',p.map_search_url,'btn')}${external('<span>店铺资料 ↗</span>',item.source,'btn ghost')}</div></article></section>`;}
 function eventSheet(d,ev){
  const m=eventModel(d,ev),cover=m.photos[0]||'',rest=m.photos.slice(1);
- return `${sheetHead(`${e((m.timeHint?m.timeHint+' ':'')+m.time)}${m.status?` · <span class="tag">${e(m.status)}</span>`:''}`,e(m.title))}
+ return `${sheetHead(`<span>${e((m.timeHint?m.timeHint+' ':'')+m.time)}</span>${m.status?`<span class="tag">${e(m.status)}</span>`:''}`,e(m.title))}
  <div class="sheet-body">
  ${cover?`<button type="button" class="sheet-cover" data-action="zoom-photo" data-place="${cover}" aria-label="放大${e(PLACE[cover].name)}照片">${img(cover,true)}<span>${e(PLACE[cover].name)}</span></button>`:''}
  ${m.line?`<p class="lead">${e(m.line)}</p>`:''}
