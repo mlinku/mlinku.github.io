@@ -464,12 +464,7 @@ const DETAILS = {
           "dotonbori_transfer",
           "glico_photo",
           "dotonbori_walk",
-          "dotonbori_dinner"
-        ]
-      ],
-      [
-        "夜间",
-        [
+          "dotonbori_dinner",
           "osaka_evening_return"
         ]
       ]
@@ -606,21 +601,11 @@ const DETAILS = {
         ]
       ],
       [
-        "下午 · 日本桥",
+        "下午 · 日本桥晚饭",
         [
           "nara_return_train",
-          "anime_shopping"
-        ]
-      ],
-      [
-        "傍晚",
-        [
-          "nippombashi_dinner"
-        ]
-      ],
-      [
-        "夜间",
-        [
+          "anime_shopping",
+          "nippombashi_dinner",
           "nara_day_return"
         ]
       ]
@@ -756,35 +741,20 @@ const DETAILS = {
     ],
     "phases": [
       [
-        "上午 · 去姬路",
+        "上午 · 姬路城",
         [
-          "himeji_transfer"
-        ]
-      ],
-      [
-        "午间 · 姬路城",
-        [
+          "himeji_transfer",
           "himeji_lunch",
           "himeji_walk",
           "himeji_castle_visit"
         ]
       ],
       [
-        "下午",
+        "下午 · 好古园晚饭",
         [
-          "kokoen_visit"
-        ]
-      ],
-      [
-        "傍晚 · 灯饰晚饭",
-        [
+          "kokoen_visit",
           "himeji_lights",
-          "himeji_dinner"
-        ]
-      ],
-      [
-        "夜间 · 回大阪",
-        [
+          "himeji_dinner",
           "himeji_return"
         ]
       ]
@@ -924,12 +894,7 @@ const DETAILS = {
         "傍晚 · 和牛",
         [
           "sannomiya_evening",
-          "sannomiya_dinner"
-        ]
-      ],
-      [
-        "夜间 · 回大阪",
-        [
+          "sannomiya_dinner",
           "last_evening_return"
         ]
       ]

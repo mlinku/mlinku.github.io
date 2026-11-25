@@ -465,12 +465,7 @@ const DETAILS = {
           "dotonbori_transfer",
           "glico_photo",
           "dotonbori_walk",
-          "dotonbori_dinner"
-        ]
-      ],
-      [
-        "夜间",
-        [
+          "dotonbori_dinner",
           "osaka_evening_return"
         ]
       ]
@@ -607,21 +602,11 @@ const DETAILS = {
         ]
       ],
       [
-        "下午 · 日本桥",
+        "下午 · 日本桥晚饭",
         [
           "nara_return_train",
-          "anime_shopping"
-        ]
-      ],
-      [
-        "傍晚",
-        [
-          "nippombashi_dinner"
-        ]
-      ],
-      [
-        "夜间",
-        [
+          "anime_shopping",
+          "nippombashi_dinner",
           "nara_day_return"
         ]
       ]
@@ -757,35 +742,20 @@ const DETAILS = {
     ],
     "phases": [
       [
-        "上午 · 去姬路",
+        "上午 · 姬路城",
         [
-          "himeji_transfer"
-        ]
-      ],
-      [
-        "午间 · 姬路城",
-        [
+          "himeji_transfer",
           "himeji_lunch",
           "himeji_walk",
           "himeji_castle_visit"
         ]
       ],
       [
-        "下午",
+        "下午 · 好古园晚饭",
         [
-          "kokoen_visit"
-        ]
-      ],
-      [
-        "傍晚 · 灯饰晚饭",
-        [
+          "kokoen_visit",
           "himeji_lights",
-          "himeji_dinner"
-        ]
-      ],
-      [
-        "夜间 · 回大阪",
-        [
+          "himeji_dinner",
           "himeji_return"
         ]
       ]
@@ -925,12 +895,7 @@ const DETAILS = {
         "傍晚 · 和牛",
         [
           "sannomiya_evening",
-          "sannomiya_dinner"
-        ]
-      ],
-      [
-        "夜间 · 回大阪",
-        [
+          "sannomiya_dinner",
           "last_evening_return"
         ]
       ]
@@ -1767,32 +1732,46 @@ const shotKey=p=>p.date+':shot:'+p.id;
 function pointEnabled(p){return !p.reference&&(!p.option||choice(PLAN.days.find(d=>d.date===p.date)).ujiExtra===p.option);}
 function pointMap(p){return p.coordinates?mapURL(p.coordinates.lat+','+p.coordinates.lng):(p.map_url||PLACE[p.place_ids[0]]?.map_search_url);}
 function shotProgress(date){const points=pilgrimageDay(date).filter(pointEnabled);return {done:points.filter(p=>state.checks[shotKey(p)]).length,total:points.length};}
-// Concise field notes; the original descriptions stay under 场景与来源.
+// Concise field notes & short titles; the original descriptions stay under 场景与来源.
 const SHOT_COPY={
- 'eupho_uji_bridge':{scene:'第一季第12集，久美子抒发心情的宇治桥。',note:'在行人通道对照桥栏与河景。'},
- 'eupho_omotesando':{scene:'京阪官方巡礼地图第6点：平等院表参道。',note:'午饭后经过表参道，沿街对照取景。'},
- 'eupho_uji_shrine':{note:'朝雾桥东侧找临河鸟居与台阶（机位在入口）。'},
- 'eupho_daikichi':{note:'对照栏杆转角与树木；白天上山、天黑前下山。'},
+ 'witch-kyoto-station':{title:'JR 京都站中央口'},
+ 'eupho_uji_bridge':{title:'宇治桥',scene:'第一季第12集，久美子抒发心情的宇治桥。',note:'在行人通道对照桥栏与河景。'},
+ 'eupho_omotesando':{title:'平等院表参道',scene:'京阪官方巡礼地图第6点：平等院表参道。',note:'午饭后经过表参道，沿街对照取景。'},
+ 'eupho_bench':{title:'久美子长椅'},
+ 'eupho_kisen':{title:'喜撰桥'},
+ 'eupho_asagiri':{title:'朝雾桥'},
+ 'eupho_uji_shrine':{title:'宇治神社',note:'朝雾桥东侧找临河鸟居与台阶（机位在入口）。'},
+ 'eupho_sawarabi':{title:'早蕨之道'},
+ 'eupho_daikichi':{title:'大吉山展望台',note:'对照栏杆转角与树木；白天上山、天黑前下山。'},
  'eupho_saizeriya_uji':{note:'公共通道顺拍二层窗户与店招，避让停车场车辆。'},
- 'eupho_jr_uji_post':{note:'JR 宇治站前找茶壶造型邮筒，拍完乘车回京都。'},
- 'kyoto-stage-stairs':{scene:'第7集车站音乐会，《宝岛》演出广场。',note:'中央口一侧上4F室町小路广场，对照大阶梯、扶梯和红色时钟。无需登顶；遇活动占用时在允许通行处拍摄。'},
- 'kyoto-stage-clock':{note:'在4F广场抬头找红色方框时钟与钢架；别与红色雕塑「朱甲舞」混淆。'},
- 'demachi-west-gate':{scene:'宣传PV里的商店街西入口；招牌与建筑有改绘。',note:'从寺町通一侧仰拍入口招牌与左侧建筑。'},
- 'demachi-fish':{scene:'官方主视觉里的商店街吊鱼与拱廊。',note:'进拱廊后找吊鱼和屋顶纵深。'},
- 'delta-tamako':{note:'找东侧高野川的飞石与下河台阶，对照石块排列。雨天或水量大时留在岸边拍。'},
- 'delta-kon':{note:'从贺茂川侧飞石朝东拍中洲，与《玉子》告白位置分开。余量不足就省此机位。'},
- 'kiyomizu-conan':{scene:'第927—928集清水寺与新兰剧情；亦见于《迷宫的十字路》。',note:'在本堂舞台对照屋顶与木栏杆；定位为本堂参考点。',caption:'官方上映会宣传视觉，非动画单帧；两图视角不同。'},
- 'senren-sannenzaka':{note:'在玩家标点附近，沿街对照石板路与两侧屋檐；店名有改写。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
- 'senren-ninenzaka':{note:'在二年坂南端附近找右侧店铺转角、屋檐与弯路；别只在台阶中央找。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
- 'conan-tsutenkaku':{note:'路过时从地面辨认塔体即可。',caption:'同建筑、不同视角；用于辨认塔体。'},
- 'conan-ebisubashi':{scene:'第763—764集《恋爱的暗号》，平次在戎桥调查。',note:'桥面找弧形栏杆与南侧店招；动画有改绘。'},
- 'senren-ikuta':{note:'在拝殿前稍侧处对照屋顶、红柱与狛犬；游戏将楼房改绘为树木。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'}
+ 'eupho_jr_uji':{title:'茶壶邮筒',note:'JR 宇治站前找茶壶造型邮筒，拍完乘车回京都。'},
+ 'kyoto-stage-stairs':{title:'室町小路大阶梯',scene:'第7集车站音乐会，《宝岛》演出广场。',note:'中央口一侧上4F室町小路广场，对照大阶梯、扶梯和红色时钟。无需登顶；遇活动占用时在允许通行处拍摄。'},
+ 'kyoto-stage-clock':{title:'大阶梯红框时钟',note:'在4F广场抬头找红色方框时钟与钢架；别与红色雕塑「朱甲舞」混淆。'},
+ 'demachi-west-gate':{title:'商店街西入口',scene:'宣传PV里的商店街西入口；招牌与建筑有改绘。',note:'从寺町通一侧仰拍入口招牌与左侧建筑。'},
+ 'demachi-fish':{title:'商店街吊鱼拱廊',scene:'官方主视觉里的商店街吊鱼与拱廊。',note:'进拱廊后找吊鱼和屋顶纵深。'},
+ 'delta-tamako':{title:'高野川飞石',note:'找东侧高野川的飞石与下河台阶，对照石块排列。雨天或水量大时留在岸边拍。'},
+ 'delta-kon':{title:'贺茂川飞石',note:'从贺茂川侧飞石朝东拍中洲，与《玉子》告白位置分开。余量不足就省此机位。'},
+ 'kiyomizu-conan':{title:'清水舞台',scene:'第927—928集清水寺与新兰剧情；亦见于《迷宫的十字路》。',note:'在本堂舞台对照屋顶与木栏杆；定位为本堂参考点。',caption:'官方上映会宣传视觉，非动画单帧；两图视角不同。'},
+ 'senren-sannenzaka':{title:'三年坂',note:'在玩家标点附近，沿街对照石板路与两侧屋檐；店名有改写。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
+ 'senren-ninenzaka':{title:'二年坂',note:'在二年坂南端附近找右侧店铺转角、屋檐与弯路；别只在台阶中央找。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
+ 'senren-kodaiji-lane':{title:'高台寺旁石墙弯道'},
+ 'senren-hanamikoji':{title:'花见小路'},
+ 'senren-shirakawa':{title:'白川南通'},
+ 'rj-shinkyogoku':{title:'新京极商店街'},
+ 'conan-tsutenkaku':{title:'通天阁',note:'路过时从地面辨认塔体即可。',caption:'同建筑、不同视角；用于辨认塔体。'},
+ 'conan-ebisubashi':{title:'戎桥',scene:'第763—764集《恋爱的暗号》，平次在戎桥调查。',note:'桥面找弧形栏杆与南侧店招；动画有改绘。'},
+ 'senren-ikuta':{title:'生田神社',note:'在拝殿前稍侧处对照屋顶、红柱与狛犬；游戏将楼房改绘为树木。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
+ 'witch-kitano':{title:'北野物语馆'},
+ 'fate-kobe-bridge':{title:'神户大桥'},
+ 'sekiro-himeji-keep':{title:'姬路城天守'}
 };
+const SIMP_TRAD={'桥':'橋','雾':'霧','见':'見','阁':'閣','站':'駅','姬':'姫','园':'園'};
+const normPlaceName=s=>String(s||'').replace(/[\s·]/g,'').replace(/通$/,'').replace(/^祇[园園]/,'').replace(/^JR/i,'').replace(/大天守$/,'天守').replace(/./g,c=>SIMP_TRAD[c]||c);
 function shotModel(p){
  const copy=SHOT_COPY[p.id]||{},d=PLAN.days.find(x=>x.date===p.date),ev=d&&p.event_id?effectiveEvents(d).find(x=>x.id===p.event_id):null;
- const start=ev?eventStart(ev):null;
+ const start=ev?eventStart(ev):null,title=copy.title||p.title,rawJa=p.name_ja||PLACE[p.place_ids[0]]?.name_ja||title;
  return {id:p.id,date:p.date,eventId:p.event_id,hasEvent:!!ev,eventTitle:ev?.title||'',eventTime:ev?(start!==null?clock(start):compactTime(ev.time_label)):'',
-  work:p.work,title:p.title,optional:!!p.option,reference:!!p.reference,nameJa:p.name_ja||PLACE[p.place_ids[0]]?.name_ja||p.title,
+  work:p.work,title,optional:!!p.option,reference:!!p.reference,nameJa:normPlaceName(rawJa)===normPlaceName(title)?'':rawJa,
   scene:cleanText(copy.scene||p.scene),note:cleanText(copy.note||p.shooting_note),caption:cleanText(copy.caption||p.match_note),map:pointMap(p),done:!!state.checks[shotKey(p)],
   coords:p.coordinates||null,images:p.comparison?[['comparison','作品 × 实景']]:p.anime?[['anime','作品画面'],['real','实景']]:[['real','实景']],point:p};
 }
@@ -1849,7 +1828,7 @@ const TODO_LIST=[...PLAN.pending_checks,...(PLAN.additional_checks||[])].filter(
 const TODOS=TODO_LIST.map(t=>t.text),TODO_IDS=TODO_LIST.map(t=>t.id);
 // When each task is due. Tasks without a trip date belong before departure.
 const TODO_WHEN=Object.fromEntries(TODO_LIST.filter(t=>t.when).map(t=>[t.id,t.when]));
-const TODO_WHEN_LABEL={'2026-11-30':'抵达当晚','2026-12-02':'12/2 当天下午','2026-12-03':'12/3 晚上 · 奈良前一晚','2026-12-04':'12/4 晚上 · 姬路前一晚','2026-12-05':'12/5 晚上 · 神户前一晚','2026-12-06':'12/6 晚上 · 回程前一晚'};
+const TODO_WHEN_LABEL={'2026-11-30':'11/30 晚','2026-12-02':'12/2 午','2026-12-03':'12/3 晚','2026-12-04':'12/4 晚','2026-12-05':'12/5 晚','2026-12-06':'12/6 晚'};
 const TODO_PREFIX=/^12\/\d+(前夜|前|晚)?/;
 const TODO_SHORT={'weather':'查叶况与天气','restaurants':'核对餐厅营业与菜单','return-travel':'核对航班通知与回程南海时刻',
  'transport-tickets':'备好IC卡与HARUKA订单','uji-cafes':'确认宇治店铺营业与候位','rally-account':'登录集章账户、开定位',
@@ -2080,7 +2059,7 @@ function dayScreen(){
  <dl class="ticket-facts"><div><dt>${doodle('sun').replace('class="doodle"','class="doodle dt-mark"')}${e(leave[0])}</dt><dd>${e(leave[1])}</dd></div><div><dt>${doodle('moon').replace('class="doodle"','class="doodle dt-mark"')}${e(back[0])}</dt><dd>${e(back[1]).replace(' – ',' – ')}</dd></div><div><dt>强度</dt><dd title="${e(level.full)}"><span class="dots" aria-hidden="true">${[1,2,3,4].map(n=>`<i${n<=level.level?' class="on"':''}></i>`).join('')}</span>${e(level.label)}</dd></div></dl></article>
  <div class="chips">${today&&now?.focus?`<button type="button" class="chip locate" data-action="locate-now" data-row="row-${e(now.focus.id)}">${icon('clock')}<span>跳到当前</span></button>`:''}${notes.length?openButton(d.date,'notes',`${icon('alert')}<span>情况有变时 · ${notes.length}</span>`,'chip warn'):''}${d.overnight?openButton(d.date,'stay',`${icon('bed')}<span>酒店</span>`,'chip'):''}${shots.total?`<a class="chip" href="#shots/${d.date}">${icon('camera')}<span>巡礼 ${shots.done}/${shots.total}</span></a>`:''}</div>
  ${deadlines(d,today?s.minutes:null,kita(flow.done===flow.total?'grin':'peek','in-title'))}
- <div class="day-progress"><span>已完成 <b>${flow.done}/${flow.total}</b></span><div class="bar" role="progressbar" aria-label="当天完成进度" aria-valuemin="0" aria-valuemax="${flow.total}" aria-valuenow="${flow.done}"><i style="width:${flow.done/flow.total*100}%"></i></div></div>
+ ${today||flow.done>0?`<div class="day-progress"><span>已完成 <b>${flow.done}/${flow.total}</b></span><div class="bar" role="progressbar" aria-label="当天完成进度" aria-valuemin="0" aria-valuemax="${flow.total}" aria-valuenow="${flow.done}"><i style="width:${flow.done/flow.total*100}%"></i></div></div>`:''}
  ${flow.sections.map(section=>{
   const [label,...rest]=section.name.split(' · ');
   const clocks=section.events.flatMap(ev=>[...compactTime(ev.time_label).matchAll(/\d{1,2}:\d{2}/g)].map(x=>x[0])),range=clocks.length?clocks[0]+(clocks.length>1?' – '+clocks.at(-1):''):'';
@@ -2184,7 +2163,7 @@ function shotHTML(p,n){
  const s=shotModel(p);
  return `<article class="shot${s.done?' done':''}" id="shot-${e(s.id)}">
  ${s.done?seal(ui.justDone==='shot:'+s.id?' shot-seal stamp-in':' shot-seal'):''}
- <header><p class="kicker">${n?`<span class="shot-n">${String(n).padStart(2,'0')}</span>`:''}${e(s.work)}${s.optional?' · 可选':s.reference?' · 参考':''}</p><h2 class="title">${e(s.title)}</h2><p class="ja" lang="ja" translate="no">${e(s.nameJa)}</p>${s.hasEvent&&!s.reference?`<button type="button" class="shot-event" data-action="open" data-date="${s.date}" data-key="${e(s.eventId)}" aria-label="查看对应行程：${e(s.eventTitle)}">${icon('clock')}<span>${e(s.eventTime?s.eventTime+' · '+s.eventTitle:s.eventTitle)}</span>${icon('chevron')}</button>`:''}</header>
+ <header><p class="kicker">${n?`<span class="shot-n">${String(n).padStart(2,'0')}</span>`:''}${e(s.work)}${s.optional?' · 可选':s.reference?' · 参考':''}</p><h2 class="title">${e(s.title)}</h2>${s.nameJa?`<p class="ja" lang="ja" translate="no">${e(s.nameJa)}</p>`:''}${s.hasEvent&&!s.reference?`<button type="button" class="shot-event" data-action="open" data-date="${s.date}" data-key="${e(s.eventId)}" aria-label="查看对应行程：${e(s.eventTitle)}">${icon('clock')}<span>${e(s.eventTime?s.eventTime+' · '+s.eventTitle:s.eventTitle)}</span>${icon('chevron')}</button>`:''}</header>
  <div class="pair${s.images.length===1?' single':''}">${s.images.map(([kind,label])=>shotImage(p,kind,label)).join('')}</div>
  ${s.note?`<p class="shot-note"><b>站位</b>${e(s.note)}</p>`:''}
  <div class="actions">${external(icon('pin')+'<span>地图</span>',s.map,'btn')}${s.reference?'':`<button type="button" class="btn shot-toggle${s.done?' on':''}" data-action="shot" data-shot="${e(s.id)}" aria-pressed="${s.done}">${icon('check')}<span>${s.done?'已拍':'标记已拍'}</span></button>`}</div>
@@ -2219,10 +2198,11 @@ function shotsScreen(){
 /* ---------- 准备 ---------- */
 const todoRow=t=>`<button type="button" class="todo${t.done?' on':''}" data-action="todo" data-todo="${e(t.id)}" aria-pressed="${t.done}"><span class="box">${icon('check')}</span><span>${e(t.short||t.text)}</span></button>`;
 function prepScreen(){
- const g=todoGroups(),open=openPurchases();
+ const g=todoGroups(),open=openPurchases(),tripItems=g.trip.flatMap(x=>x.items.map(t=>({...t,short:`${x.label} · ${t.short||t.text}`})));
+ const tripDone=tripItems.filter(t=>t.done).length,during=tripStatus().phase==='during';
  return `<header class="screen-head"><div><p class="kicker">出发前与旅途中</p><h1 class="display">准备${doodle('clipboard').replace('class="doodle"','class="doodle head-mark"')}</h1></div>${themeButton()}</header>
  <section class="block tickets-block"><span class="corner-sketch">${doodle('ticket')}</span><h2 class="block-title">票务</h2><ul class="tickets">${open.map(t=>`<li class="ticket ${t.tone}"><button type="button" class="ticket-tap" data-action="todo" data-todo="${e(t.id)}" aria-pressed="${t.done}" aria-label="${e(t.item)}：${e(t.label)}，点按${t.done?'取消':'标记已办'}"><span class="ticket-main"><b>${e(t.item)}</b><small>${t.qty?'×'+t.qty+' · ':''}${e(t.date)} 使用${t.budget?' · '+e(t.budget):''}</small></span><span class="ticket-state">${t.done?icon('check'):''}${e(t.label)}</span></button></li>`).join('')}</ul></section>
- <section class="block todos"><h2 class="block-title">待办 <small>${todoDone()} / ${TODOS.length}</small>${kita('sit-happy','in-title')}</h2><h3 class="sub">出发前完成</h3>${g.before.map(todoRow).join('')}<h3 class="sub">旅途中再确认</h3>${g.trip.map(x=>`<p class="when">${e(x.label)}</p>${x.items.map(todoRow).join('')}`).join('')}<details class="fold"><summary>展开全文</summary><ul class="plain">${[...g.before,...g.trip.flatMap(x=>x.items)].map(t=>`<li>${e(t.text)}</li>`).join('')}</ul></details></section>
+ <section class="block todos"><h2 class="block-title">待办 <small>${todoDone()} / ${TODOS.length}</small>${kita('sit-happy','in-title')}</h2><h3 class="sub">出发前完成</h3>${g.before.map(todoRow).join('')}<details class="fold"${during?' open':''}><summary>旅途中再确认 · ${tripDone}/${tripItems.length}</summary>${tripItems.map(todoRow).join('')}</details><details class="fold"><summary>展开全文</summary><ul class="plain">${[...g.before,...g.trip.flatMap(x=>x.items)].map(t=>`<li>${e(t.text)}</li>`).join('')}</ul></details></section>
  <section class="block sketched"><span class="corner-sketch">${doodle('plane')}</span><h2 class="block-title">航班 · 当地时间</h2>${PLAN.bookings.filter(b=>b.type==='flight').map(b=>`<div class="flight"><p class="kicker">${b.from==='hkg'?'去程':'回程'}</p>${passHTML(b,flightLocal(b,'departure'),flightLocal(b,'arrival'))}</div>`).join('')}</section>
  <section class="block sketched"><span class="corner-sketch">${doodle('inn')}</span><h2 class="block-title">酒店</h2>${PLAN.bookings.filter(b=>b.type==='hotel').map(b=>{const p=PLACE[b.place_id];return `<div class="hotel"><p class="kicker">${b.place_id==='hotel_kyoto'?'京都':'大阪'} · ${dateLabel(b.checkin_date)}—${dateLabel(b.checkout_date)}</p><p class="ja big" lang="ja" translate="no">${e(p.name_ja)}</p>${p.address_ja?`<p class="ja" lang="ja" translate="no">${e(p.address_ja)}</p>`:''}<div class="actions">${external(icon('pin')+'<span>地图</span>',p.map_search_url,'btn')}${p.address_ja?`<button type="button" class="btn" data-action="copy" data-copy="${e(p.address_ja)}">${icon('copy')}<span>复制地址</span></button><button type="button" class="btn" data-action="taxi-card" data-place="${p.id}">${icon('card')}<span>出示给司机</span></button>`:''}</div></div>`;}).join('')}</section>
  <details class="fold block"><summary>参考资料</summary>

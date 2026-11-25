@@ -284,32 +284,46 @@ const shotKey=p=>p.date+':shot:'+p.id;
 function pointEnabled(p){return !p.reference&&(!p.option||choice(PLAN.days.find(d=>d.date===p.date)).ujiExtra===p.option);}
 function pointMap(p){return p.coordinates?mapURL(p.coordinates.lat+','+p.coordinates.lng):(p.map_url||PLACE[p.place_ids[0]]?.map_search_url);}
 function shotProgress(date){const points=pilgrimageDay(date).filter(pointEnabled);return {done:points.filter(p=>state.checks[shotKey(p)]).length,total:points.length};}
-// Concise field notes; the original descriptions stay under 场景与来源.
+// Concise field notes & short titles; the original descriptions stay under 场景与来源.
 const SHOT_COPY={
- 'eupho_uji_bridge':{scene:'第一季第12集，久美子抒发心情的宇治桥。',note:'在行人通道对照桥栏与河景。'},
- 'eupho_omotesando':{scene:'京阪官方巡礼地图第6点：平等院表参道。',note:'午饭后经过表参道，沿街对照取景。'},
- 'eupho_uji_shrine':{note:'朝雾桥东侧找临河鸟居与台阶（机位在入口）。'},
- 'eupho_daikichi':{note:'对照栏杆转角与树木；白天上山、天黑前下山。'},
+ 'witch-kyoto-station':{title:'JR 京都站中央口'},
+ 'eupho_uji_bridge':{title:'宇治桥',scene:'第一季第12集，久美子抒发心情的宇治桥。',note:'在行人通道对照桥栏与河景。'},
+ 'eupho_omotesando':{title:'平等院表参道',scene:'京阪官方巡礼地图第6点：平等院表参道。',note:'午饭后经过表参道，沿街对照取景。'},
+ 'eupho_bench':{title:'久美子长椅'},
+ 'eupho_kisen':{title:'喜撰桥'},
+ 'eupho_asagiri':{title:'朝雾桥'},
+ 'eupho_uji_shrine':{title:'宇治神社',note:'朝雾桥东侧找临河鸟居与台阶（机位在入口）。'},
+ 'eupho_sawarabi':{title:'早蕨之道'},
+ 'eupho_daikichi':{title:'大吉山展望台',note:'对照栏杆转角与树木；白天上山、天黑前下山。'},
  'eupho_saizeriya_uji':{note:'公共通道顺拍二层窗户与店招，避让停车场车辆。'},
- 'eupho_jr_uji_post':{note:'JR 宇治站前找茶壶造型邮筒，拍完乘车回京都。'},
- 'kyoto-stage-stairs':{scene:'第7集车站音乐会，《宝岛》演出广场。',note:'中央口一侧上4F室町小路广场，对照大阶梯、扶梯和红色时钟。无需登顶；遇活动占用时在允许通行处拍摄。'},
- 'kyoto-stage-clock':{note:'在4F广场抬头找红色方框时钟与钢架；别与红色雕塑「朱甲舞」混淆。'},
- 'demachi-west-gate':{scene:'宣传PV里的商店街西入口；招牌与建筑有改绘。',note:'从寺町通一侧仰拍入口招牌与左侧建筑。'},
- 'demachi-fish':{scene:'官方主视觉里的商店街吊鱼与拱廊。',note:'进拱廊后找吊鱼和屋顶纵深。'},
- 'delta-tamako':{note:'找东侧高野川的飞石与下河台阶，对照石块排列。雨天或水量大时留在岸边拍。'},
- 'delta-kon':{note:'从贺茂川侧飞石朝东拍中洲，与《玉子》告白位置分开。余量不足就省此机位。'},
- 'kiyomizu-conan':{scene:'第927—928集清水寺与新兰剧情；亦见于《迷宫的十字路》。',note:'在本堂舞台对照屋顶与木栏杆；定位为本堂参考点。',caption:'官方上映会宣传视觉，非动画单帧；两图视角不同。'},
- 'senren-sannenzaka':{note:'在玩家标点附近，沿街对照石板路与两侧屋檐；店名有改写。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
- 'senren-ninenzaka':{note:'在二年坂南端附近找右侧店铺转角、屋檐与弯路；别只在台阶中央找。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
- 'conan-tsutenkaku':{note:'路过时从地面辨认塔体即可。',caption:'同建筑、不同视角；用于辨认塔体。'},
- 'conan-ebisubashi':{scene:'第763—764集《恋爱的暗号》，平次在戎桥调查。',note:'桥面找弧形栏杆与南侧店招；动画有改绘。'},
- 'senren-ikuta':{note:'在拝殿前稍侧处对照屋顶、红柱与狛犬；游戏将楼房改绘为树木。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'}
+ 'eupho_jr_uji':{title:'茶壶邮筒',note:'JR 宇治站前找茶壶造型邮筒，拍完乘车回京都。'},
+ 'kyoto-stage-stairs':{title:'室町小路大阶梯',scene:'第7集车站音乐会，《宝岛》演出广场。',note:'中央口一侧上4F室町小路广场，对照大阶梯、扶梯和红色时钟。无需登顶；遇活动占用时在允许通行处拍摄。'},
+ 'kyoto-stage-clock':{title:'大阶梯红框时钟',note:'在4F广场抬头找红色方框时钟与钢架；别与红色雕塑「朱甲舞」混淆。'},
+ 'demachi-west-gate':{title:'商店街西入口',scene:'宣传PV里的商店街西入口；招牌与建筑有改绘。',note:'从寺町通一侧仰拍入口招牌与左侧建筑。'},
+ 'demachi-fish':{title:'商店街吊鱼拱廊',scene:'官方主视觉里的商店街吊鱼与拱廊。',note:'进拱廊后找吊鱼和屋顶纵深。'},
+ 'delta-tamako':{title:'高野川飞石',note:'找东侧高野川的飞石与下河台阶，对照石块排列。雨天或水量大时留在岸边拍。'},
+ 'delta-kon':{title:'贺茂川飞石',note:'从贺茂川侧飞石朝东拍中洲，与《玉子》告白位置分开。余量不足就省此机位。'},
+ 'kiyomizu-conan':{title:'清水舞台',scene:'第927—928集清水寺与新兰剧情；亦见于《迷宫的十字路》。',note:'在本堂舞台对照屋顶与木栏杆；定位为本堂参考点。',caption:'官方上映会宣传视觉，非动画单帧；两图视角不同。'},
+ 'senren-sannenzaka':{title:'三年坂',note:'在玩家标点附近，沿街对照石板路与两侧屋檐；店名有改写。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
+ 'senren-ninenzaka':{title:'二年坂',note:'在二年坂南端附近找右侧店铺转角、屋檐与弯路；别只在台阶中央找。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
+ 'senren-kodaiji-lane':{title:'高台寺旁石墙弯道'},
+ 'senren-hanamikoji':{title:'花见小路'},
+ 'senren-shirakawa':{title:'白川南通'},
+ 'rj-shinkyogoku':{title:'新京极商店街'},
+ 'conan-tsutenkaku':{title:'通天阁',note:'路过时从地面辨认塔体即可。',caption:'同建筑、不同视角；用于辨认塔体。'},
+ 'conan-ebisubashi':{title:'戎桥',scene:'第763—764集《恋爱的暗号》，平次在戎桥调查。',note:'桥面找弧形栏杆与南侧店招；动画有改绘。'},
+ 'senren-ikuta':{title:'生田神社',note:'在拝殿前稍侧处对照屋顶、红柱与狛犬；游戏将楼房改绘为树木。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
+ 'witch-kitano':{title:'北野物语馆'},
+ 'fate-kobe-bridge':{title:'神户大桥'},
+ 'sekiro-himeji-keep':{title:'姬路城天守'}
 };
+const SIMP_TRAD={'桥':'橋','雾':'霧','见':'見','阁':'閣','站':'駅','姬':'姫','园':'園'};
+const normPlaceName=s=>String(s||'').replace(/[\s·]/g,'').replace(/通$/,'').replace(/^祇[园園]/,'').replace(/^JR/i,'').replace(/大天守$/,'天守').replace(/./g,c=>SIMP_TRAD[c]||c);
 function shotModel(p){
  const copy=SHOT_COPY[p.id]||{},d=PLAN.days.find(x=>x.date===p.date),ev=d&&p.event_id?effectiveEvents(d).find(x=>x.id===p.event_id):null;
- const start=ev?eventStart(ev):null;
+ const start=ev?eventStart(ev):null,title=copy.title||p.title,rawJa=p.name_ja||PLACE[p.place_ids[0]]?.name_ja||title;
  return {id:p.id,date:p.date,eventId:p.event_id,hasEvent:!!ev,eventTitle:ev?.title||'',eventTime:ev?(start!==null?clock(start):compactTime(ev.time_label)):'',
-  work:p.work,title:p.title,optional:!!p.option,reference:!!p.reference,nameJa:p.name_ja||PLACE[p.place_ids[0]]?.name_ja||p.title,
+  work:p.work,title,optional:!!p.option,reference:!!p.reference,nameJa:normPlaceName(rawJa)===normPlaceName(title)?'':rawJa,
   scene:cleanText(copy.scene||p.scene),note:cleanText(copy.note||p.shooting_note),caption:cleanText(copy.caption||p.match_note),map:pointMap(p),done:!!state.checks[shotKey(p)],
   coords:p.coordinates||null,images:p.comparison?[['comparison','作品 × 实景']]:p.anime?[['anime','作品画面'],['real','实景']]:[['real','实景']],point:p};
 }
@@ -366,7 +380,7 @@ const TODO_LIST=[...PLAN.pending_checks,...(PLAN.additional_checks||[])].filter(
 const TODOS=TODO_LIST.map(t=>t.text),TODO_IDS=TODO_LIST.map(t=>t.id);
 // When each task is due. Tasks without a trip date belong before departure.
 const TODO_WHEN=Object.fromEntries(TODO_LIST.filter(t=>t.when).map(t=>[t.id,t.when]));
-const TODO_WHEN_LABEL={'2026-11-30':'抵达当晚','2026-12-02':'12/2 当天下午','2026-12-03':'12/3 晚上 · 奈良前一晚','2026-12-04':'12/4 晚上 · 姬路前一晚','2026-12-05':'12/5 晚上 · 神户前一晚','2026-12-06':'12/6 晚上 · 回程前一晚'};
+const TODO_WHEN_LABEL={'2026-11-30':'11/30 晚','2026-12-02':'12/2 午','2026-12-03':'12/3 晚','2026-12-04':'12/4 晚','2026-12-05':'12/5 晚','2026-12-06':'12/6 晚'};
 const TODO_PREFIX=/^12\/\d+(前夜|前|晚)?/;
 const TODO_SHORT={'weather':'查叶况与天气','restaurants':'核对餐厅营业与菜单','return-travel':'核对航班通知与回程南海时刻',
  'transport-tickets':'备好IC卡与HARUKA订单','uji-cafes':'确认宇治店铺营业与候位','rally-account':'登录集章账户、开定位',
