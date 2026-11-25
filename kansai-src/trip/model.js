@@ -7,7 +7,7 @@
 const EVENT_BRIEF={
  flight_out:'',
  checkin_kyoto:'入住确认12/3退房后的行李寄存位置。',
- dinner_arrival:'酒店附近简餐，或顺路打卡京都站并逛 Avanti 6F 与拉面小路。',
+ dinner_arrival:'酒店附近简餐，或顺逛 Avanti 6F 与 10F 拉面小路。',
  uji_parfait:'不接受预约；75分钟含取号与用餐，11:00判断能否11:45前吃完。',
  uji_approach:'沿街拍照，不进收费区。',
  uji_pilgrimage:'久美子椅多留片刻，桥上顺拍。',
@@ -18,17 +18,17 @@ const EVENT_BRIEF={
  uji_dinner_walk:'',
  station_stage:'上4F室町小路广场，拍大阶梯和红色时钟。',
  demachi_visit:'拍入口、吊鱼与拱廊；小吃只排短队。',
- delta_visit:'河岸拍照约25分钟，优先《玉子》高野川侧。',
+ delta_visit:'河岸拍照约25分钟，优先《玉子》高野川侧，《轻音》仅有余量时拍。',
  kodaiji_night:'排队超30分钟或疲劳直接吃晚饭；18:45前离寺顺延晚餐。',
  gion_dinner_walk:'夜枫准时结束且有余量时短停八坂神社。',
- kyoto_tower_visit:'展望室5层领台纸，集齐7处章再出场。',
+ kyoto_tower_visit:'展望室5层领台纸，收费区集齐7处章再出场，不长时间挑周边。',
  inari_transfer:'',
  osaka_transfer:'',
  nara_transfer:'',
  nara_visit:'仅现金；大佛殿内部约30—40分钟。',
- kobe_bridge_visit:'16:30前回三宫；大风雨或疲劳就取消。',
- sannomiya_dinner:'不预约，回三宫直接Walk-in（16:00开门）；满座换隔壁备选。',
- anime_shopping:'重点1—2家，晚到只选一家。',
+ kobe_bridge_visit:'从北公园拍红桥，16:30前回三宫；大风雨或疲劳取消。',
+ sannomiya_dinner:'不预约直接Walk-in（16:00开门），满座走1分钟换焼肉あらし或牛角。',
+ anime_shopping:'重点1—2家，先逛早关门的小店，晚到只选一家。',
  checkout_osaka:'离店前或抵机场后吃早餐。',
  airport_checkin:''
 };
@@ -47,9 +47,6 @@ const TEXT_SHORT=[
  ['；画面有改绘，不到车道上追机位。','；画面有改绘。'],
  ['；不必走完整座桥。','。'],
  ['；作品为夏祭场景，与12月现场不同。','；作品为夏祭场景。'],
- ['按现场单价；',''],
- ['，官方未规定盖章顺序。','。'],
- ['导航到Port Island北公园，从桥南侧拍红色桥梁。','从北公园、桥南侧拍红色桥梁。'],
  ['可改在JR宇治站或京都站吃简餐；若回京都后才吃，返店相应顺延，仍保留4F《宝岛》舞台15—20分钟。','JR宇治站或京都站简餐。'],
  ['DELTA满座时，11:40—12:50改为先拍鸭川，再到站旁汉堡店午餐；约13:00乘京阪，不再重复河岸段。','DELTA满座时改这里，先拍鸭川再吃。']
 ];
@@ -87,7 +84,7 @@ const DROP_SENTENCES=new Set([
  '坐下吃饭并休息','优先能及时入座的店','购物后吃饭','地图为餐饮片区，餐厅现场选择','回店后就近吃简餐，再收主要行李','附近找座位休息30分钟',
  '无座位就保留外观短拍，下坡找有座位的简餐','二月堂有坡阶、浮见堂需跨区步行，只能替换公园或大佛殿的部分时间，不同时追加',
  '《魔女的夜宴》七绪咖啡店关联为玩家实景对照，非官方认定','官方建议庭园、御桥与天守往返至少90分钟','25分钟含河岸短拍与前往京阪站','营业16:00—23:00，末单22:30','取号与用餐75分钟为预算，不保证等位','11:00左右判断不能11:45前吃完则放弃堂食','09:30离店，到店前含酒店到站、候车与步行',
- '天气、路况与体力合适才登山','往返与停留预留75分钟，白天完成','京都塔叠印与12/1宇治GPS数字集章是不同活动','先完成收费区章点再出场是减少折返的安排',
+ '天气、路况与体力合适才登山','往返与停留预留75分钟，白天完成','45分钟含步行与拍照，长椅多留片刻，桥上顺拍','搜索名称为井川用水機場前','导航到Port Island北公园，从桥南侧拍红色桥梁',
  '南海难波到近铁大阪难波需步行，含进站候车','多看会顺延回店，不压缩下坡与返程步行',
  '大风雨或疲劳取消，不挤晚饭','中公園站步行约8分钟，不安排全程步行跨桥','当前120分钟软饮和牛约5000/人，预算上限6000','含结账及75—90分钟返程','保留午餐、咖啡、休息与外观巡礼','酒店官方的约 5 分钟步行不包含站台到出口',
  '按登机牌时限到登机口',
@@ -224,9 +221,11 @@ function mealMap(d,r){if(r[7]&&PLACE[r[7]])return PLACE[r[7]].map_search_url;let
 function mealModel(d,r,said){
  const notes=mealNotes(r);
  const where=(r[4]||'').replace(' · Louie’s N.Y. Pizza Parlor','').replace(/，.*$/,'').trim();
- const conditions=cleanText(dropSaid(String(notes.conditions||'').replace(/参考(营业)?\s*|；?定休日现场确认/g,''),said));
- return {kind:r[0],rank:r[1],primary:r[1]==='首选',name:r[2],budget:r[3]&&!/为准$/.test(r[3])?r[3]+(r[3].includes('菜单')?'':' / 人'):'',
-  hint:[where,conditions,notes.suggestion&&'点餐：'+notes.suggestion].filter(Boolean).join(' · '),
+ const conditions=cleanText(dropSaid(String(notes.conditions||'').replace(/参考(营业)?\s*|；?定休日现场确认/g,''),said)).replace(/[。；]+$/,'');
+ const suggestion=notes.suggestion.replace(/[。；]+$/,'');
+ const rawBudget=String(r[3]||'').replace(/^预算不超过\s*/,'上限 ').replace(/^预算\s*/,'');
+ return {kind:r[0],rank:r[1],primary:r[1]==='首选',name:r[2],budget:rawBudget&&!/为准$/.test(rawBudget)?rawBudget+(rawBudget.includes('菜单')?'':' / 人'):'',
+  hint:[where,conditions,suggestion].filter(Boolean).join(' · '),
   map:r[0]!=='早餐'?mealMap(d,r):'',mapLabel:r[8]?.pending?'片区地图':'地图',source:r[6]||''};
 }
 
@@ -289,6 +288,10 @@ function shotProgress(date){const points=pilgrimageDay(date).filter(pointEnabled
 const SHOT_COPY={
  'eupho_uji_bridge':{scene:'第一季第12集，久美子抒发心情的宇治桥。',note:'在行人通道对照桥栏与河景。'},
  'eupho_omotesando':{scene:'京阪官方巡礼地图第6点：平等院表参道。',note:'午饭后经过表参道，沿街对照取景。'},
+ 'eupho_uji_shrine':{note:'朝雾桥东侧找临河鸟居与台阶（机位在入口）。'},
+ 'eupho_daikichi':{note:'对照栏杆转角与树木；白天上山、天黑前下山。'},
+ 'eupho_saizeriya_uji':{note:'公共通道顺拍二层窗户与店招，避让停车场车辆。'},
+ 'eupho_jr_uji_post':{note:'JR 宇治站前找茶壶造型邮筒，拍完乘车回京都。'},
  'kyoto-stage-stairs':{scene:'第7集车站音乐会，《宝岛》演出广场。',note:'中央口一侧上4F室町小路广场，对照大阶梯、扶梯和红色时钟。无需登顶；遇活动占用时在允许通行处拍摄。'},
  'kyoto-stage-clock':{note:'在4F广场抬头找红色方框时钟与钢架；别与红色雕塑「朱甲舞」混淆。'},
  'demachi-west-gate':{scene:'宣传PV里的商店街西入口；招牌与建筑有改绘。',note:'从寺町通一侧仰拍入口招牌与左侧建筑。'},
@@ -348,7 +351,7 @@ function eventModel(d,ev){
   status:ev.time_status==='booked'?'当地时间':ticket?ticket.label:pending?'待确认':'',ticket,
   done:activityState(d.date,ev.id)==='done',line,optionNote:ev.optionNote||'',notice,links,transport,
   hotels:(ev.category==='hotel'||ev.id==='luggage_pickup'?ev.place_ids.filter(id=>id.startsWith('hotel_')):[]).filter(id=>!ev.title.includes(PLACE[id].name_ja)).map(id=>PLACE[id]),
-  meals:rows.map(r=>mealModel(d,r,line+noticeText)),nav:ev.category==='rest'&&!major?null:navTarget(ev,stops),via:stops.length>1?stops:[],
+  meals:rows.map(r=>mealModel(d,r,line+noticeText)),nav:ev.category==='rest'&&!major?null:navTarget(ev,stops),via:stops.length>2&&!['meal','flight'].includes(ev.category)?stops:[],
   photos,details,facts:EVENT_EXTRA[ev.id]?.facts||'',
   food:foodSuggestionsForEvent(d,ev.id),placeNotes,fullNote,shots,rally:!!ev.rally_spot,choices:optionalControls(d,ev.id)
  };
