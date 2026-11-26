@@ -809,6 +809,16 @@ noscript p {padding:40px; text-align:center}
   .display {font-size:34px}
   .strip {margin-left:0; margin-right:0; border-radius:0 0 var(--r) var(--r)}
   .cover {height:280px}
+  .screen {padding-bottom:calc(var(--tabbar) + 52px)}
+  .tabbar {
+    left:50%; right:auto; bottom:16px; transform:translateX(-50%);
+    width:min(460px, calc(100vw - 32px)); padding:6px 8px; gap:4px;
+    border-radius:999px; border:1px solid var(--line);
+    box-shadow:0 2px 6px rgba(34,42,68,.06), 0 14px 34px -10px rgba(34,42,68,.18);
+  }
+  .tab {min-height:50px; border-radius:999px}
+  .tab.on::before {top:2px; width:18px; height:2.5px; margin-left:-9px; border-radius:99px}
+  #toast {bottom:calc(var(--tabbar) + 32px)}
   .zoom-stage.split {grid-template-columns:minmax(0,1fr) minmax(0,1fr); grid-template-rows:minmax(0,1fr); padding:10px 18px}
   .zoom-stage.split figure:first-child {align-self:center; justify-self:end}
   .zoom-stage.split figure:last-child {align-self:center; justify-self:start}
@@ -817,6 +827,7 @@ noscript p {padding:40px; text-align:center}
   .btn:hover {border-color:var(--accent)}
   .btn.primary:hover, .nav-big:hover {filter:brightness(.96)}
   .row-open:hover, .mini-row:hover, .stop-btn:hover, .icon-btn:hover, .strip-day:not(.on):hover, .tab:not(.on):hover {background:var(--sunk)}
+  .cover > .icon-btn:hover, .cover-back:hover {background:rgba(0,0,0,.44); color:#fff}
   .day-link:hover .dl-main b, .link-row:hover, .pager a:hover {color:var(--accent)}
   .chip:hover {transform:translateY(-1px)}
   .ticket-tap:hover {background:color-mix(in srgb, var(--line) 45%, transparent)}
