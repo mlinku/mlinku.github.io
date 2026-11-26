@@ -159,12 +159,12 @@ function row(d,ev,now,phaseFirst=false){
 // The title takes focus when the sheet opens, so a screen reader announces it and no button shows a focus ring.
 const murasame=(mood,cls='')=>`<span class="murasame-face ${mood} ${cls}" aria-hidden="true"></span>`;
 const sheetHead=(kicker,title,mark='')=>`<header class="sheet-head">${mark}<div>${kicker?`<p class="kicker">${kicker}</p>`:''}<h2 class="title" tabindex="-1" autofocus>${title}</h2></div><button type="button" class="icon-btn" data-action="close-sheet" aria-label="关闭">${icon('close')}</button></header>`;
+const sheetWrap=(head,content,foot='')=>`<div class="sheet-body">${head}<div class="sheet-content">${content}</div>${foot}</div>`;
 function mealHTML(m){return `<article class="meal${m.primary?' primary':''}"><p class="meal-rank"><span class="tag${m.primary?' ok':''}">${e(m.rank)}</span>${m.budget?`<span>${e(m.budget)}</span>`:''}</p><h4 lang="ja" translate="no">${e(m.name)}</h4>${m.hint?`<p class="muted">${fmt(m.hint)}</p>`:''}<div class="inline-actions">${m.map?external(icon('map')+`<span>${m.mapLabel}</span>`,m.map):''}<button type="button" data-action="copy" data-copy="${e(m.name)}">${icon('copy')}<span>复制店名</span></button>${m.source?external('<span>官网 ↗</span>',m.source):''}</div></article>`;}
 function foodHTML(item){const p=PLACE[item.place];return `<section class="sec"><h3>${e(item.label)}</h3><article class="meal">${photoSrc(item.place)&&!item.hidePhoto?`<button type="button" class="photo wide" data-action="zoom-photo" data-place="${item.place}">${img(item.place)}</button>`:''}<h4>${e(item.title)}</h4><p class="ja" lang="ja" translate="no">${e(p.name_ja)}</p><p>${fmt(cleanText(item.text))}</p><p class="muted">${e(cleanText(item.budget))}</p><div class="inline-actions">${external(icon('pin')+'<span>地图</span>',p.map_search_url)}${external('<span>店铺资料 ↗</span>',item.source)}</div></article></section>`;}
 function eventSheet(d,ev){
  const m=eventModel(d,ev),cover=m.photos[0]||'',rest=m.photos.slice(1);
- return `${sheetHead(`<span>${e((m.timeHint?m.timeHint+' ':'')+m.time)}</span>${m.status?`<span class="tag">${e(m.status)}</span>`:''}`,e(m.title))}
- <div class="sheet-body">
+ return sheetWrap(sheetHead(`<span>${e((m.timeHint?m.timeHint+' ':'')+m.time)}</span>${m.status?`<span class="tag">${e(m.status)}</span>`:''}`,e(m.title)),`
  ${cover?`<button type="button" class="sheet-cover" data-action="zoom-photo" data-place="${cover}" aria-label="放大${e(PLACE[cover].name)}照片">${img(cover,true)}<span>${e(PLACE[cover].name)}</span></button>`:''}
  ${m.line?`<p class="lead">${fmt(m.line)}</p>`:''}
  ${m.optionNote?`<p class="note">${fmt(m.optionNote)}</p>`:''}
@@ -182,13 +182,12 @@ function eventSheet(d,ev){
  ${m.food.map(foodHTML).join('')}
  ${m.placeNotes.length?`<section class="sec"><h3>地点说明</h3>${m.placeNotes.map(t=>`<p>${fmt(t)}</p>`).join('')}</section>`:''}
  ${m.fullNote?`<details class="fold"><summary>完整说明</summary><p>${fmt(m.fullNote)}</p></details>`:''}
- </div>
- ${m.nav||m.major?`<footer class="sheet-foot">${m.nav?navButton(m.nav,true):''}${m.major?checkButton(d.date,ev,true):''}</footer>`:''}`;
+ `,m.nav||m.major?`<footer class="sheet-foot">${m.nav?navButton(m.nav,true):''}${m.major?checkButton(d.date,ev,true):''}</footer>`:'');
 }
 function sheetHTML(date,key){
  const i=PLAN.days.findIndex(x=>x.date===date),d=PLAN.days[i];if(!d)return '';
- if(key==='notes')return `${sheetHead(dateLabel(date)+' · 延误或天气变化时','情况有变时',murasame('shock','in-sheet'))}<div class="sheet-body"><ul class="plain roomy">${fieldNotes(d).map(t=>`<li>${fmt(t)}</li>`).join('')}</ul></div>`;
- if(key==='stay'&&d.overnight){const p=PLACE[d.overnight];return `${sheetHead(dateLabel(date)+' · 今晚住',e(p.name))}<div class="sheet-body">${photoSrc(p.id)?`<button type="button" class="sheet-cover" data-action="zoom-photo" data-place="${p.id}">${img(p.id,true)}</button>`:''}<p class="ja big" lang="ja" translate="no">${e(p.name_ja)}</p>${p.address_ja?`<p class="ja" lang="ja" translate="no">${e(p.address_ja)}</p>`:''}${PLACE_LOCATIONS[p.id]?`<p class="muted">${e(PLACE_LOCATIONS[p.id])}</p>`:''}${PLACE_DETAILS[p.id]?`<p>${fmt(cleanText(PLACE_DETAILS[p.id]))}</p>`:''}${p.address_ja?`<div class="actions"><button type="button" class="btn" data-action="taxi-card" data-place="${p.id}">${icon('card')}<span>大图出示给司机</span></button></div>`:''}</div><footer class="sheet-foot">${external(icon('pin')+'<span>酒店地图</span>',p.map_search_url,'nav nav-big')}${p.address_ja?`<button type="button" class="check-big copy" data-action="copy" data-copy="${e(p.address_ja)}">${icon('copy')}<span>复制地址</span></button>`:''}</footer>`;}
+ if(key==='notes')return sheetWrap(sheetHead(dateLabel(date)+' · 延误或天气变化时','情况有变时',murasame('shock','in-sheet')),`<ul class="plain roomy">${fieldNotes(d).map(t=>`<li>${fmt(t)}</li>`).join('')}</ul>`);
+ if(key==='stay'&&d.overnight){const p=PLACE[d.overnight];return sheetWrap(sheetHead(dateLabel(date)+' · 今晚住',e(p.name)),`${photoSrc(p.id)?`<button type="button" class="sheet-cover" data-action="zoom-photo" data-place="${p.id}">${img(p.id,true)}</button>`:''}<p class="ja big" lang="ja" translate="no">${e(p.name_ja)}</p>${p.address_ja?`<p class="ja" lang="ja" translate="no">${e(p.address_ja)}</p>`:''}${PLACE_LOCATIONS[p.id]?`<p class="muted">${e(PLACE_LOCATIONS[p.id])}</p>`:''}${PLACE_DETAILS[p.id]?`<p>${fmt(cleanText(PLACE_DETAILS[p.id]))}</p>`:''}${p.address_ja?`<div class="actions"><button type="button" class="btn" data-action="taxi-card" data-place="${p.id}">${icon('card')}<span>大图出示给司机</span></button></div>`:''}`,`<footer class="sheet-foot">${external(icon('pin')+'<span>酒店地图</span>',p.map_search_url,'nav nav-big')}${p.address_ja?`<button type="button" class="check-big copy" data-action="copy" data-copy="${e(p.address_ja)}">${icon('copy')}<span>复制地址</span></button>`:''}</footer>`);}
  const ev=effectiveEvents(d).find(x=>x.id===key);
  return ev?eventSheet(d,ev):'';
 }
@@ -237,7 +236,7 @@ function shotImage(p,kind,label){
 function shotHTML(p,n){
  const s=shotModel(p);
  return `<article class="shot${s.done?' done':''}" id="shot-${e(s.id)}">
- ${s.done?seal(ui.justDone==='shot:'+s.id?' shot-seal stamp-in':' shot-seal'):''}
+ ${s.reference?'':seal(' shot-seal')}
  <header><p class="kicker">${n?`<span class="shot-n">${String(n).padStart(2,'0')}</span>`:''}${e(s.work)}${s.optional?' · 可选':s.reference?' · 参考':''}</p><h2 class="title">${e(s.title)}</h2>${s.nameJa?`<p class="ja" lang="ja" translate="no">${e(s.nameJa)}</p>`:''}</header>
  <div class="pair${s.images.length===1?' single':''}">${s.images.map(([kind,label])=>shotImage(p,kind,label)).join('')}</div>
  ${s.note?`<p class="shot-note"><b>站位</b>${e(s.note)}</p>`:''}
@@ -256,16 +255,11 @@ const shotDays=()=>PLAN.days.map((_,i)=>i).filter(i=>pilgrimageDay(PLAN.days[i].
 function shotsScreen(){
  const days=shotDays();
  if(!days.includes(ui.shotsDay)){const t=todayIndex();ui.shotsDay=days.includes(t)?t:days.includes(ui.day)?ui.day:days[0];}
- const d=PLAN.days[ui.shotsDay],{main,optional,reference}=dayShots(d),pg=shotProgress(d.date);
- if(ui.target&&ui.hideDoneShots)ui.hideDoneShots=false;
- const numbered=main.map((p,n)=>[p,n+1]),shown=ui.hideDoneShots?numbered.filter(([p])=>!state.checks[shotKey(p)]):numbered;
- const filterBar=pg.done>0&&main.length>1?`<div class="chips shot-filter"><button type="button" class="chip${ui.hideDoneShots?' locate':''}" data-action="toggle-hide-shots" aria-pressed="${ui.hideDoneShots}">${icon('check')}<span>${ui.hideDoneShots?`显示全部 · 已隐藏 ${pg.done}`:`只看未拍 · 剩 ${pg.total-pg.done}`}</span></button></div>`:'';
- const listHTML=shown.length?shown.map(([p,n])=>shotHTML(p,n)).join(''):(main.length?`<section class="block shot-all-done"><p class="lead">今天 ${pg.total} 处巡礼已全部拍完！</p><div class="actions"><button type="button" class="btn" data-action="toggle-hide-shots">查看全部已拍</button></div></section>`:'');
+ const d=PLAN.days[ui.shotsDay],{main,optional,reference}=dayShots(d),pg=shotProgress(d.date),markName=pg.total&&pg.done===pg.total?'sparkle':'camera';
  return `${strip(days.map(i=>['#shots/'+PLAN.days[i].date,i,i===todayIndex()?'今天':DETAILS[PLAN.days[i].date].cityLabel]),ui.shotsDay)}
- <header class="screen-head"><div><p class="kicker">${doodle(pg.total&&pg.done===pg.total?'sparkle':'camera').replace('class="doodle"','class="doodle kicker-mark"')}${dateLabel(d.date)} · 实景 × 作品</p><h1 class="display">巡礼对照</h1></div>${kita('side','in-head')}<p class="count"><b>${pg.done}</b><span>/ ${pg.total} 已拍</span></p></header>
- ${filterBar}
+ <header class="screen-head"><div><p class="kicker">${doodle(markName).replace('class="doodle"',`class="doodle kicker-mark" data-doodle="${markName}"`)}${dateLabel(d.date)} · 实景 × 作品</p><h1 class="display">巡礼对照</h1></div>${kita('side','in-head')}<p class="count"><b>${pg.done}</b><span>/ ${pg.total} 已拍</span></p></header>
  ${rallyHTML(d)}
- ${listHTML}
+ ${main.map((p,n)=>shotHTML(p,n+1)).join('')}
  ${optional.length?`<details class="fold block"><summary>可选点位 · ${optional.length}</summary><p class="hint">时间有余时顺路拍，默认不安排。</p>${optional.map(p=>shotHTML(p,0)).join('')}</details>`:''}
  ${reference.length?`<details class="fold block"><summary>参考资料 · ${reference.length}</summary><p class="hint">不在当天路线，不计入巡礼进度。</p>${reference.map(p=>shotHTML(p,0)).join('')}</details>`:''}`;
 }
@@ -290,7 +284,7 @@ function prepScreen(){
 }
 
 /* ---------- Shell ---------- */
-const ui={tab:'now',day:Math.max(0,todayIndex()),shotsDay:null,target:'',justDone:'',moved:'',hideDoneShots:false};
+const ui={tab:'now',day:Math.max(0,todayIndex()),shotsDay:null,target:'',justDone:'',moved:''};
 const TABS=[['now','clock'],['day','calendar'],['shots','camera'],['prep','bag']];
 const TAB_LABEL={day:'行程',shots:'巡礼',prep:'准备'};
 function tabHref(id){return id==='day'?'#day/'+PLAN.days[ui.day].date:id==='shots'?'#shots'+(ui.shotsDay!=null?'/'+PLAN.days[ui.shotsDay].date:''):'#'+id;}
@@ -314,15 +308,21 @@ function parseHash(){
  if(parts[0]==='shots'){ui.tab='shots';const p=parts[2]&&pilgrimagePoints.find(x=>x.id===parts[2]);if(p)ui.shotsDay=at(p.date);else if(at(parts[1])>=0)ui.shotsDay=at(parts[1]);if(parts[2])ui.target='shot-'+parts[2];return '';}
  ui.tab=parts[0]==='prep'?'prep':'now';return '';
 }
-function renderMain(){
+let lastTabHTML='';
+function renderMain(liveImgs){
  const main=$('#main'),stripWas=main.querySelector('.strip')?.scrollLeft;
  main.className='screen screen-'+ui.tab; // drops .enter, so a refresh never replays the entrance
  main.innerHTML=(storageOK?'':`<p class="banner" role="alert">${murasame('shock','in-banner')}<span>浏览器未允许本机保存，关闭后勾选可能丢失。</span></p>`)+SCREENS[ui.tab]();
- const phase=tripStatus().phase;
- $('.tabbar').innerHTML=TABS.map(([id,ico])=>`<a href="${tabHref(id)}" class="tab${ui.tab===id?' on':''}"${ui.tab===id?' aria-current="page"':''}>${icon(ico)}<span>${id==='now'?PHASE_LABEL[phase]:TAB_LABEL[id]}</span></a>`).join('');
+ if(liveImgs?.size)main.querySelectorAll('img').forEach(im=>{
+  const k=im.getAttribute('src')+'|'+im.className,old=liveImgs.get(k);
+  if(old?.complete&&old.naturalWidth){liveImgs.delete(k);old.alt=im.alt;im.replaceWith(old);}
+ });
+ const phase=tripStatus().phase,bar=$('.tabbar');
+ const tabHTML=TABS.map(([id,ico])=>`<a href="${tabHref(id)}" class="tab${ui.tab===id?' on':''}"${ui.tab===id?' aria-current="page"':''}>${icon(ico)}<span>${id==='now'?PHASE_LABEL[phase]:TAB_LABEL[id]}</span></a>`).join('');
+ if(bar&&(tabHTML!==lastTabHTML||!bar.innerHTML)){bar.innerHTML=tabHTML;lastTabHTML=tabHTML;}
  const rail=main.querySelector('.strip'),on=rail?.querySelector('.on');
- // The date strip glides from where it was to the chosen day instead of jumping.
- if(rail&&on){const left=on.offsetLeft-rail.clientWidth/2+on.clientWidth/2;if(stripWas!=null&&motionOK()){rail.scrollLeft=stripWas;rail.scrollTo({left,behavior:'smooth'});}else rail.scrollLeft=left;}
+ // The date strip glides from where it was to the chosen day instead of jumping; in-place refreshes keep its exact scrollLeft.
+ if(rail&&on){const left=on.offsetLeft-rail.clientWidth/2+on.clientWidth/2;if(liveImgs&&stripWas!=null)rail.scrollLeft=stripWas;else if(stripWas!=null&&motionOK()){rail.scrollLeft=stripWas;rail.scrollTo({left,behavior:'smooth'});}else rail.scrollLeft=left;}
  document.title=(ui.tab==='day'?dateLabel(PLAN.days[ui.day].date)+' '+dayPresentation(PLAN.days[ui.day]).short:ui.tab==='shots'?'巡礼对照':ui.tab==='prep'?'准备':PHASE_LABEL[phase])+' · 关西秋日手帖';
 }
 // app.js's page tools call render() after recording a completion.
@@ -346,9 +346,11 @@ function route(){
 // Re-render in place, keeping the reading position and every open fold. A fresh 丛雨 / 済 mark plays once, then stays still.
 const foldKey=el=>(el.closest('[id]')?.id||'')+'|'+el.querySelector('summary')?.textContent;
 function refresh(){
- const y=scrollY,open=new Set([...$('#main').querySelectorAll('details[open]')].map(foldKey));
- renderMain();
- $('#main').querySelectorAll('details').forEach(el=>{if(open.has(foldKey(el)))el.open=true;});
+ const mainEl=$('#main'),y=scrollY,open=new Set([...mainEl.querySelectorAll('details[open]')].map(foldKey));
+ const liveImgs=new Map();
+ mainEl.querySelectorAll('img').forEach(im=>{const k=im.getAttribute('src')+'|'+im.className;if(!liveImgs.has(k))liveImgs.set(k,im);});
+ renderMain(liveImgs);
+ mainEl.querySelectorAll('details').forEach(el=>{if(open.has(foldKey(el)))el.open=true;});
  window.scrollTo({top:y,behavior:'instant'});refreshSheet();
  if(ui.justDone)setTimeout(()=>{ui.justDone='';},700);
 }
@@ -368,9 +370,21 @@ function toggleCheck(date,id){
 function toggleShot(id){
  const p=pilgrimagePoints.find(x=>x.id===id);if(!p)return;
  const key=shotKey(p),now=!state.checks[key];state.checks[key]=now;save();
- if(now)ui.justDone='shot:'+id;
- refresh();
- if(zoomState?.type==='shot'&&zoomState.id===id&&$('#zoom')?.open)zoomShot(id,zoomState.kind);
+ try{if(now)navigator.vibrate?.(10);}catch{}
+ const card=ui.tab==='shots'&&typeof document.getElementById==='function'?document.getElementById('shot-'+id):null;
+ if(card){
+  card.classList.toggle('done',now);
+  const btn=card.querySelector('.shot-toggle');
+  if(btn){btn.classList.toggle('on',now);btn.setAttribute('aria-pressed',String(now));const sp=btn.querySelector('span');if(sp)sp.textContent=now?'已拍':'标记已拍';}
+  const pg=shotProgress(p.date),markName=pg.total&&pg.done===pg.total?'sparkle':'camera';
+  const countB=$('#main .screen-head .count b');if(countB)countB.textContent=pg.done;
+  const mark=$('#main .screen-head .kicker-mark');
+  if(mark&&mark.dataset?.doodle!==markName)mark.outerHTML=doodle(markName).replace('class="doodle"',`class="doodle kicker-mark" data-doodle="${markName}"`);
+ }else refresh();
+ if(zoomState?.type==='shot'&&zoomState.id===id&&$('#zoom')?.open){
+  const zBtn=$('#zoom .zoom-shot-btn');
+  if(zBtn){zBtn.classList.toggle('on',now);zBtn.setAttribute('aria-pressed',String(now));const sp=zBtn.querySelector('span');if(sp)sp.textContent=now?'已拍':'标记已拍';}
+ }
 }
 function toggleTodo(id){state.todos[id]=!state.todos[id];save();refresh();}
 const COLOR_MODE_KEY='user-color-scheme';
@@ -528,7 +542,6 @@ function boot(){
   else if(act==='zoom-shot')zoomShot(t.dataset.shot,t.dataset.kind);
   else if(act==='zoom-toggle')toggleZoomScale();
   else if(act==='zoom-close')closeZoom();
-  else if(act==='toggle-hide-shots'){ui.hideDoneShots=!ui.hideDoneShots;refresh();}
   else if(act==='taxi-card')openTaxiCard(t.dataset.place);
   else if(act==='export-state')copyText(encodeProgress());
   else if(act==='import-state')openImportDialog();

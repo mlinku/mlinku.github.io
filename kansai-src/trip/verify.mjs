@@ -190,13 +190,13 @@ const checked=run(`
  assert.deepEqual(roundTrip.todos,sample.todos);
  assert.deepEqual(roundTrip.choices,sample.choices);
  assert.throws(()=>decodeProgress('invalid'),'无效进度码被拒绝');
- // Pilgrimage header stays compact (no .shot-event pill) & hide-done filter works.
+ // Pilgrimage header stays compact (no .shot-event or filter pills) & stamping keeps all shots visible.
  ui.shotsDay=1;const shot1=shotsScreen();
- assert.ok(!shot1.includes('class="shot-event"')&&shot1.includes('id="shot-eupho_uji_bridge"'),'巡礼卡去掉冗余跳转胶囊，直出对照图');
- const firstPt=dayShots(PLAN.days[1]).main[0];state.checks[shotKey(firstPt)]=true;ui.hideDoneShots=true;
- const filtered=shotsScreen();
- assert.ok(filtered.includes('data-action="toggle-hide-shots"')&&!filtered.includes('id="shot-'+firstPt.id+'"'),'只看未拍过滤已拍点位');
- delete state.checks[shotKey(firstPt)];ui.hideDoneShots=false;
+ assert.ok(!shot1.includes('class="shot-event"')&&!shot1.includes('toggle-hide-shots')&&shot1.includes('id="shot-eupho_uji_bridge"'),'巡礼卡去掉冗余胶囊，直出对照图');
+ const firstPt=dayShots(PLAN.days[1]).main[0];state.checks[shotKey(firstPt)]=true;
+ const stamped=shotsScreen();
+ assert.ok(!stamped.includes('toggle-hide-shots')&&stamped.includes('id="shot-'+firstPt.id+'"'),'勾选已拍后不出现多余过滤按钮，点位保持原位');
+ delete state.checks[shotKey(firstPt)];
  location.search='';
  ({sheets,screens:screens.length,days:PLAN.days.length});
 `);
