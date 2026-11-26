@@ -210,7 +210,7 @@ function compactTime(value){
   '意向17:00—19:00':'17:00–19:00',
   '19:00后至约20:20—20:45':'19:00后 · 20:20–20:45到店'
  };
- return String(windows[value]||value).replace(/^目标|^争取/,'').replace(/到店$/,'抵达').replace(/左右$/,'').replace(/^当前候选/,'').replace(/^候选(?=\d)/,'候选 ').replace(/约(?=\d)/g,'').replace('，临行复核',' · 待复核').replace('到店后 · 不等到19:00','到店后').replace(/(\d{1,2}:\d{2})\s*[—–]\s*(?=\d{1,2}:\d{2})/g,'$1 – ').replace(/(\d)—(?=\d)/g,'$1–');
+ return String(windows[value]||value).replace(/^目标|^争取/,'').replace(/到店$/,'抵达').replace(/左右$/,'').replace(/^当前候选/,'').replace(/^候选(?=\d)/,'候选 ').replace(/约(?=\d)/g,'').replace('，临行复核',' · 待复核').replace('到店后 · 不等到19:00','到店后').replace(/(\d{1,2}:\d{2})\s*[—–]\s*(?=\d{1,2}:\d{2})/g,'$1 – ').replace(/(\d{1,2}:\d{2})\s*→\s*(?=\d{1,2}:\d{2})/g,'$1 → ').replace(/(\d)—(?=\d)/g,'$1–');
 }
 function effectiveRoute(d){const c=choice(d);let nodes=d.route_stop_ids.map((id,i)=>({id,phase:DETAILS[d.date].routePhases[i],original:i+1,optional:false}));
  if(d.date==='2026-12-02'){if(c.kodaijiPlan==='skip')nodes=nodes.filter(n=>n.id!=='kodaiji');else if(c.yasakaBrief)nodes.splice(nodes.length-1,0,{id:'yasaka_shrine',phase:'夜间',optional:true});}
