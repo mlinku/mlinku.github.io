@@ -1,29 +1,32 @@
-/* 出行版 · trip.css — 旅のしおり in the colours of 千恋＊万花: 丛雨's yellow-green hair, the purple of her ribbons and
-   butterfly, cream washi, a faint 菱 lattice at the top of the page and five-petal 花 marks, as in the game's art.
-   Serif headings (Noto Serif SC cut, see assets/fonts/OFL.txt); photos lead each day; the day is drawn as a train line;
-   each day header is one ticket (photo, perforation, stub).
-   Colour carries meaning: 常磐 green = tappable or "where you are"; 朱 = seals; plum and gold = decoration only (gold is
-   never text); red = deadline or danger, always with an icon or word; amber = caution. Text ≥ 4.5:1 and control
-   outlines ≥ 3:1 in both themes; touch targets ≥ 44px. Night (夜の穂織) only swaps the variables; shares
-   data-user-color-scheme with the blog. */
+/* 出行版 · trip.css — 旅のしおり in crisp white stationery accented with the four Kessoku Band colours:
+   Ryo blue (primary/transit), Bocchi pink (pilgrimage/return), Kita coral-red (seals/deadlines), Nijika cream-yellow
+   (caution washes/doodles), with whisper-soft four-corner ambient glow and a 1px silk hairline above the tabbar.
+   Text ≥ 4.5:1 and control outlines ≥ 3:1 in both themes; touch targets ≥ 44px; shares data-user-color-scheme with the blog. */
 @font-face {font-family:'Trip Serif'; src:url("1abe39485657769a.woff") format('woff'); font-weight:400 799; font-display:swap}
 @font-face {font-family:'Trip Serif'; src:url("46dac65480f3e837.woff") format('woff'); font-weight:800 900; font-display:swap}
 :root {
-  --paper: #f2f2e1; --card: #fffef4; --sunk: #ecefd8;
-  --ink: #22271b; --ink-2: #464d39; --muted: #5c634e;
-  --line: #dfe3c7; --line-2: #879070;
-  --accent: #3a7040; --accent-fill: #a8d27a; --accent-pale: #d8eab6; --nav-fill: #c9e4a3; --accent-ink: #1f3a17; --tab-on-ink: #1f3a17; --accent-soft: #e9f3d6; --fill-edge: rgba(31,58,23,.16);
-  --moegi: #a8d27a; --plum: #6f4385; --plum-soft: rgba(111,67,133,.09); --gold: #c9a33a;
-  --shu: #b23e2a; --shu-soft: rgba(178,62,42,.08);
-  --danger: #a01d18; --danger-soft: #f8e3dc;
-  --warn: #6c4800; --warn-soft: #f7ebc2;
-  --ok: #3a7040; --ok-soft: #e9f3d6;
-  --wash-shu: rgba(178,62,42,.16); --wash-moegi: rgba(150,200,90,.28); --wash-plum: rgba(111,67,133,.14); --wash-gold: rgba(201,163,58,.26); --wash-accent: rgba(58,112,64,.13); --tape-a: rgba(150,200,90,.5); --tape-b: rgba(222,188,84,.45);
-  --glow: rgba(214,236,168,.7); --lattice: rgba(118,146,64,.085);
-  --scrim: rgba(16,26,10,.66); --press: rgba(108,158,66,.5);
-  --shadow: 0 1px 1px rgba(40,52,18,.05), 0 8px 24px -8px rgba(40,52,18,.16);
-  --lift: 0 2px 4px rgba(40,52,18,.06), 0 18px 40px -12px rgba(40,52,18,.26);
-  --toast-bg: #22271b; --toast-ink: #fffef4; --toast-action: #c9e69a;
+  --bocchi: #c85a7d; --bocchi-l: #f3a6c0; --bocchi-soft: #fcf1f5;
+  --kita: #c84b49;   --kita-l: #e96c6d;   --kita-soft: #fdf0f0;
+  --nijika: #9e6e00; --nijika-l: #fbe18c; --nijika-soft: #fef9e4;
+  --ryo: #416496;    --ryo-l: #5e89c2;    --ryo-soft: #eff4fb;
+
+  --paper: #fafafd; --card: #ffffff; --sunk: #f2f4f8;
+  --ink: #1f222a; --ink-2: #484e5c; --muted: #6c7384;
+  --line: #e7eaf2; --line-2: #9ea6b6;
+  --accent: var(--ryo); --accent-fill: var(--ryo-l); --accent-pale: #e0ebf8; --nav-fill: #d3e3f6; --accent-ink: #1d3557; --tab-on-ink: #294873; --accent-soft: var(--ryo-soft); --fill-edge: rgba(65,100,150,.16);
+  --moegi: var(--ryo-l); --plum: var(--bocchi); --plum-soft: rgba(200,90,125,.09); --gold: var(--nijika-l);
+  --shu: var(--kita); --shu-soft: rgba(200,75,73,.08);
+  --danger: #c44342; --danger-soft: var(--kita-soft);
+  --warn: var(--nijika); --warn-soft: var(--nijika-soft);
+  --ok: var(--ryo); --ok-soft: var(--ryo-soft);
+  --wash-shu: rgba(233,108,109,.22); --wash-moegi: rgba(251,225,140,.38); --wash-plum: rgba(243,166,192,.30); --wash-gold: rgba(251,225,140,.44); --wash-accent: rgba(94,137,194,.20); --tape-a: rgba(251,225,140,.58); --tape-b: rgba(233,108,109,.36);
+  --glow-tl: rgba(251,225,140,.17); --glow-tr: rgba(94,137,194,.13); --glow-bl: rgba(233,108,109,.11); --glow-br: rgba(243,166,192,.16);
+  --lattice: rgba(94,137,194,.045);
+  --scrim: rgba(15,18,28,.64); --press: rgba(65,100,150,.32);
+  --shadow: 0 1px 2px rgba(34,42,68,.04), 0 8px 22px -12px rgba(34,42,68,.11);
+  --lift: 0 2px 6px rgba(34,42,68,.05), 0 16px 34px -14px rgba(34,42,68,.16);
+  --toast-bg: #1f222a; --toast-ink: #ffffff; --toast-action: #f3a6c0;
+  --kessoku-line: linear-gradient(90deg, #fbe18c, #e96c6d 34%, #f3a6c0 68%, #5e89c2);
   --serif: 'Trip Serif', 'Songti SC', 'Noto Serif CJK SC', 'Source Han Serif SC', 'STSong', 'SimSun', serif;
   --sans: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', system-ui, sans-serif;
   --tabbar: 66px; --r-xl: 24px; --r: 18px; --r-md: 14px; --r-sm: 10px;
@@ -33,40 +36,52 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-user-color-scheme="light"]) {
-    --paper: #0f150f; --card: #162017; --sunk: #1d281e;
-    --ink: #eef2e1; --ink-2: #cdd6bb; --muted: #a2ab8f;
-    --line: #28352a; --line-2: #6e7a62;
-    --accent: #b7dc8c; --accent-fill: #b7dc8c; --accent-pale: #b7dc8c; --nav-fill: #b7dc8c; --accent-ink: #12200f; --tab-on-ink: #d9f0ba; --accent-soft: rgba(183,220,140,.14); --fill-edge: transparent;
-    --moegi: #b7dc8c; --plum: #d0a8e0; --plum-soft: rgba(208,168,224,.12); --gold: #e2c46a;
-    --shu: #f0906f; --shu-soft: rgba(240,144,111,.1);
-    --danger: #ff9b90; --danger-soft: rgba(255,155,144,.13);
-    --warn: #f1c26f; --warn-soft: rgba(241,194,111,.12);
-    --ok: #b7dc8c; --ok-soft: rgba(183,220,140,.14);
-    --wash-shu: rgba(240,144,111,.36); --wash-moegi: rgba(183,220,140,.2); --wash-plum: rgba(208,168,224,.2); --wash-gold: rgba(226,196,106,.32); --wash-accent: rgba(183,220,140,.12); --tape-a: rgba(183,220,140,.34); --tape-b: rgba(226,196,106,.36);
-    --glow: rgba(150,200,110,.08); --lattice: rgba(183,220,140,.05);
-    --scrim: rgba(5,9,4,.72); --press: rgba(0,0,0,.5);
+    --bocchi: #ff9ec2; --bocchi-l: #ff9ec2; --bocchi-soft: rgba(255,158,194,.14);
+    --kita: #ff7e75;   --kita-l: #ff7e75;   --kita-soft: rgba(255,126,117,.14);
+    --nijika: #f8d86c; --nijika-l: #f8d86c; --nijika-soft: rgba(248,216,108,.14);
+    --ryo: #8cc2ff;    --ryo-l: #8cc2ff;    --ryo-soft: rgba(140,194,255,.15);
+
+    --paper: #0e1017; --card: #151822; --sunk: #1d2230;
+    --ink: #eef1f8; --ink-2: #c5ccdb; --muted: #939cb0;
+    --line: #262c3d; --line-2: #5b657d;
+    --accent: var(--ryo); --accent-fill: var(--ryo); --accent-pale: var(--ryo); --nav-fill: var(--ryo); --accent-ink: #0e1c30; --tab-on-ink: #c7e0ff; --accent-soft: var(--ryo-soft); --fill-edge: transparent;
+    --moegi: var(--ryo); --plum: var(--bocchi); --plum-soft: var(--bocchi-soft); --gold: var(--nijika);
+    --shu: var(--kita); --shu-soft: var(--kita-soft);
+    --danger: #ff867e; --danger-soft: var(--kita-soft);
+    --warn: var(--nijika); --warn-soft: var(--nijika-soft);
+    --ok: var(--ryo); --ok-soft: var(--ryo-soft);
+    --wash-shu: rgba(255,126,117,.26); --wash-moegi: rgba(248,216,108,.22); --wash-plum: rgba(255,158,194,.22); --wash-gold: rgba(248,216,108,.26); --wash-accent: rgba(140,194,255,.16); --tape-a: rgba(248,216,108,.36); --tape-b: rgba(255,126,117,.32);
+    --glow-tl: rgba(248,216,108,.07); --glow-tr: rgba(140,194,255,.08); --glow-bl: rgba(255,126,117,.06); --glow-br: rgba(255,158,194,.08);
+    --lattice: rgba(140,194,255,.04);
+    --scrim: rgba(5,7,14,.72); --press: rgba(0,0,0,.5);
     --shadow: 0 1px 1px rgba(0,0,0,.3), 0 8px 24px -8px rgba(0,0,0,.6);
     --lift: 0 2px 4px rgba(0,0,0,.3), 0 18px 40px -12px rgba(0,0,0,.7);
-    --toast-bg: #eef2e1; --toast-ink: #162017; --toast-action: #2d5c38;
+    --toast-bg: #eef1f8; --toast-ink: #151822; --toast-action: #416496;
     color-scheme: dark;
   }
 }
 :root[data-user-color-scheme="dark"] {
-  --paper: #0f150f; --card: #162017; --sunk: #1d281e;
-  --ink: #eef2e1; --ink-2: #cdd6bb; --muted: #a2ab8f;
-  --line: #28352a; --line-2: #6e7a62;
-  --accent: #b7dc8c; --accent-fill: #b7dc8c; --accent-pale: #b7dc8c; --nav-fill: #b7dc8c; --accent-ink: #12200f; --tab-on-ink: #d9f0ba; --accent-soft: rgba(183,220,140,.14); --fill-edge: transparent;
-  --moegi: #b7dc8c; --plum: #d0a8e0; --plum-soft: rgba(208,168,224,.12); --gold: #e2c46a;
-  --shu: #f0906f; --shu-soft: rgba(240,144,111,.1);
-  --danger: #ff9b90; --danger-soft: rgba(255,155,144,.13);
-  --warn: #f1c26f; --warn-soft: rgba(241,194,111,.12);
-  --ok: #b7dc8c; --ok-soft: rgba(183,220,140,.14);
-  --wash-shu: rgba(240,144,111,.36); --wash-moegi: rgba(183,220,140,.2); --wash-plum: rgba(208,168,224,.2); --wash-gold: rgba(226,196,106,.32); --wash-accent: rgba(183,220,140,.12); --tape-a: rgba(183,220,140,.34); --tape-b: rgba(226,196,106,.36);
-    --glow: rgba(150,200,110,.08); --lattice: rgba(183,220,140,.05);
-  --scrim: rgba(5,9,4,.72); --press: rgba(0,0,0,.5);
+  --bocchi: #ff9ec2; --bocchi-l: #ff9ec2; --bocchi-soft: rgba(255,158,194,.14);
+  --kita: #ff7e75;   --kita-l: #ff7e75;   --kita-soft: rgba(255,126,117,.14);
+  --nijika: #f8d86c; --nijika-l: #f8d86c; --nijika-soft: rgba(248,216,108,.14);
+  --ryo: #8cc2ff;    --ryo-l: #8cc2ff;    --ryo-soft: rgba(140,194,255,.15);
+
+  --paper: #0e1017; --card: #151822; --sunk: #1d2230;
+  --ink: #eef1f8; --ink-2: #c5ccdb; --muted: #939cb0;
+  --line: #262c3d; --line-2: #5b657d;
+  --accent: var(--ryo); --accent-fill: var(--ryo); --accent-pale: var(--ryo); --nav-fill: var(--ryo); --accent-ink: #0e1c30; --tab-on-ink: #c7e0ff; --accent-soft: var(--ryo-soft); --fill-edge: transparent;
+  --moegi: var(--ryo); --plum: var(--bocchi); --plum-soft: var(--bocchi-soft); --gold: var(--nijika);
+  --shu: var(--kita); --shu-soft: var(--kita-soft);
+  --danger: #ff867e; --danger-soft: var(--kita-soft);
+  --warn: var(--nijika); --warn-soft: var(--nijika-soft);
+  --ok: var(--ryo); --ok-soft: var(--ryo-soft);
+  --wash-shu: rgba(255,126,117,.26); --wash-moegi: rgba(248,216,108,.22); --wash-plum: rgba(255,158,194,.22); --wash-gold: rgba(248,216,108,.26); --wash-accent: rgba(140,194,255,.16); --tape-a: rgba(248,216,108,.36); --tape-b: rgba(255,126,117,.32);
+  --glow-tl: rgba(248,216,108,.07); --glow-tr: rgba(140,194,255,.08); --glow-bl: rgba(255,126,117,.06); --glow-br: rgba(255,158,194,.08);
+  --lattice: rgba(140,194,255,.04);
+  --scrim: rgba(5,7,14,.72); --press: rgba(0,0,0,.5);
   --shadow: 0 1px 1px rgba(0,0,0,.3), 0 8px 24px -8px rgba(0,0,0,.6);
   --lift: 0 2px 4px rgba(0,0,0,.3), 0 18px 40px -12px rgba(0,0,0,.7);
-  --toast-bg: #eef2e1; --toast-ink: #162017; --toast-action: #2d5c38;
+  --toast-bg: #eef1f8; --toast-ink: #151822; --toast-action: #416496;
   color-scheme: dark;
 }
 
@@ -74,7 +89,12 @@
 *, *::before, *::after {box-sizing:border-box}
 html {-webkit-text-size-adjust:100%; -webkit-tap-highlight-color:transparent}
 body {margin:0; min-height:100dvh; color:var(--ink); font:15.5px/1.65 var(--sans); text-autospace:normal; -webkit-font-smoothing:antialiased;
-  background: radial-gradient(120% 60% at 50% -10%, var(--glow), transparent 60%) fixed, var(--paper)}
+  background:
+    radial-gradient(56% 30% at 0% 0%, var(--glow-tl), transparent 72%) fixed,
+    radial-gradient(54% 30% at 100% 2%, var(--glow-tr), transparent 72%) fixed,
+    radial-gradient(52% 28% at 0% 96%, var(--glow-bl), transparent 72%) fixed,
+    radial-gradient(58% 32% at 100% 100%, var(--glow-br), transparent 72%) fixed,
+    var(--paper)}
 body::before {content:''; position:fixed; z-index:-1; left:0; right:0; top:0; height:380px; pointer-events:none;
   background:repeating-linear-gradient(45deg, transparent 0 17px, var(--lattice) 17px 18px), repeating-linear-gradient(-45deg, transparent 0 17px, var(--lattice) 17px 18px);
   -webkit-mask-image:linear-gradient(#000, transparent); mask-image:linear-gradient(#000, transparent)}
@@ -120,14 +140,23 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
   display: flex; justify-content: center; gap: 2px;
   padding: 6px max(10px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px));
   background: var(--card);
-  background: color-mix(in srgb, var(--card) 90%, transparent);
+  background: color-mix(in srgb, var(--card) 92%, transparent);
   -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
   box-shadow: 0 -1px 0 var(--line);
 }
+.tabbar::before {content:''; position:absolute; left:0; right:0; top:0; height:1px; background:var(--kessoku-line); opacity:.55; pointer-events:none}
 .tab {position:relative; flex:1; max-width:140px; min-height:54px; padding:6px 0 3px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; border-radius:var(--r-md); color:var(--muted); font-size:11.5px; font-weight:700; letter-spacing:.06em}
 .tab .icon {width:23px; height:23px; stroke-width:1.7}
 .tab.on {color:var(--tab-on-ink); background:var(--accent-soft)}
 .tab.on::before {content:''; position:absolute; top:0; left:50%; width:20px; height:2.5px; margin-left:-10px; border-radius:0 0 3px 3px; background:var(--accent)}
+.tab:nth-child(1).on {background:var(--kita-soft); color:var(--kita)}
+.tab:nth-child(1).on::before {background:var(--kita-l)}
+.tab:nth-child(2).on {background:var(--ryo-soft); color:var(--ryo)}
+.tab:nth-child(2).on::before {background:var(--ryo-l)}
+.tab:nth-child(3).on {background:var(--bocchi-soft); color:var(--bocchi)}
+.tab:nth-child(3).on::before {background:var(--bocchi-l)}
+.tab:nth-child(4).on {background:var(--nijika-soft); color:var(--nijika)}
+.tab:nth-child(4).on::before {background:var(--nijika-l)}
 .tab:active {background:var(--sunk)}
 .screen-head {display:flex; align-items:flex-end; justify-content:space-between; gap:12px}
 .screen-head .count {display:flex; align-items:baseline; gap:6px; white-space:nowrap; color:var(--muted); font-size:14px}
@@ -154,7 +183,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .doodle.scene .soft {stroke-width:1.4}
 .now-marks {display:flex; align-items:flex-end; gap:2px; flex:none}
 .now-marks .doodle {width:58px; height:58px; color:var(--ink-2); margin-bottom:-4px}
-.day-sticker {position:absolute; z-index:1; top:12px; right:12px; display:grid; place-items:center; width:62px; height:62px; border-radius:50%; background:rgba(255,254,244,.94); color:#22271b; box-shadow:0 4px 12px -4px rgba(0,0,0,.4); transform:rotate(7deg)}
+.day-sticker {position:absolute; z-index:1; top:12px; right:12px; display:grid; place-items:center; width:62px; height:62px; border-radius:50%; background:rgba(255,255,255,.95); color:#1f222a; box-shadow:0 4px 12px -4px rgba(0,0,0,.35); transform:rotate(7deg)}
 .day-sticker .doodle {width:46px; height:46px}
 .scene-band {padding:14px 18px 0; color:var(--ink-2)}
 .block .doodle.scene {margin:-4px 0 6px; color:var(--ink-2)}
@@ -296,9 +325,9 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .band.plain {height:118px}
 .band.plain > .doodle {width:78px; height:78px; color:var(--ink-2); margin-top:-18px}
 .band-over {position:absolute; z-index:1; left:0; right:0; bottom:0; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 16px}
-.live-pill {flex:none; white-space:nowrap; display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:999px; background:rgba(255,254,244,.94); color:#22271b; font-size:13px; font-weight:800; letter-spacing:.06em}
-.live-pill.on::before {content:''; width:8px; height:8px; border-radius:50%; background:#5d9a3a; box-shadow:0 0 0 3px rgba(93,154,58,.25); animation:pulse 2s ease-in-out infinite}
-@keyframes pulse {50% {box-shadow:0 0 0 6px rgba(93,154,58,0)}}
+.live-pill {flex:none; white-space:nowrap; display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:999px; background:rgba(255,255,255,.95); color:#1f222a; font-size:13px; font-weight:800; letter-spacing:.06em}
+.live-pill.on::before {content:''; width:8px; height:8px; border-radius:50%; background:#416496; box-shadow:0 0 0 3px rgba(65,100,150,.26); animation:pulse 2s ease-in-out infinite}
+@keyframes pulse {50% {box-shadow:0 0 0 6px rgba(65,100,150,0)}}
 .band-time {color:#fff; font-size:14.5px; font-weight:700; font-variant-numeric:tabular-nums; text-align:right; word-break:keep-all; text-shadow:0 1px 3px rgba(0,0,0,.5)}
 .nowrap {white-space:nowrap}
 .focus-body {padding:16px 18px 10px}
@@ -410,10 +439,10 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .day-hero::after {content:''; position:absolute; inset:0; background:linear-gradient(180deg, transparent 28%, rgba(16,26,10,.38) 62%, rgba(16,26,10,.78))}
 .hero-over {position:absolute; z-index:1; left:20px; right:84px; bottom:16px; color:#fff}
 .hero-over .kicker {color:rgba(255,255,255,.92); text-shadow:0 1px 5px rgba(0,0,0,.55)}
-.hero-over .kicker em {color:#fff; background:#b23e2a; padding:1px 6px; border-radius:4px; text-shadow:none}
+.hero-over .kicker em {color:#fff; background:#c84b49; padding:1px 6px; border-radius:4px; text-shadow:none}
 .hero-over .display {font-size:clamp(25px,7.2vw,31px); text-shadow:0 2px 12px rgba(0,0,0,.45)}
 .hero-over p:last-child {font-size:14.5px; opacity:.95; text-shadow:0 1px 5px rgba(0,0,0,.55)}
-.day-hero .day-seal {position:absolute; z-index:1; right:18px; bottom:18px; background:rgba(255,254,244,.94); box-shadow:inset 0 0 0 3px rgba(255,254,244,.94), inset 0 0 0 4px #b23e2a; color:#b23e2a; border-color:#b23e2a}
+.day-hero .day-seal {position:absolute; z-index:1; right:18px; bottom:18px; background:rgba(255,255,255,.95); box-shadow:inset 0 0 0 3px rgba(255,255,255,.95), inset 0 0 0 4px #c84b49; color:#c84b49; border-color:#c84b49}
 .ticket-facts {position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1.5px dashed var(--line)}
 .ticket-facts::before, .ticket-facts::after {content:''; position:absolute; z-index:2; top:-11px; width:20px; height:20px; border-radius:50%; background:var(--paper)}
 .ticket-facts::before {left:-10px}
@@ -426,7 +455,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .dots i {width:6px; height:6px; border-radius:50%; background:var(--line)}
 .dots i.on {background:var(--ink)}
 .day-key {position:relative; padding:4px 0 4px 16px; font:600 17px/1.7 var(--serif); color:var(--ink)}
-.day-key::before {content:''; position:absolute; left:0; top:6px; bottom:6px; width:3px; border-radius:3px; background:linear-gradient(var(--moegi), var(--plum))}
+.day-key::before {content:''; position:absolute; left:0; top:6px; bottom:6px; width:3px; border-radius:3px; background:linear-gradient(180deg, #fbe18c, #e96c6d, #f3a6c0, #5e89c2)}
 .chips {display:flex; flex-wrap:wrap; gap:8px}
 .chip {display:inline-flex; align-items:center; gap:5px; flex:none; min-height:42px; padding:0 12px; border-radius:999px; background:var(--card); border:1px solid var(--line); box-shadow:0 1px 2px rgba(40,52,18,.04); color:var(--ink-2); font-size:13.5px; font-weight:600; white-space:nowrap}
 .chip .icon {flex:none; width:16px; height:16px; color:var(--muted)}
@@ -443,7 +472,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .day-progress {display:flex; align-items:center; gap:12px; font-size:14px; color:var(--muted)}
 .day-progress b {color:var(--ink); font-variant-numeric:tabular-nums}
 .bar {flex:1; height:6px; border-radius:6px; background:var(--line); overflow:hidden}
-.bar i {display:block; height:100%; border-radius:6px; background:linear-gradient(90deg, var(--moegi), var(--accent))}
+.bar i {display:block; height:100%; border-radius:6px; background:var(--kessoku-line)}
 .day-plan {padding:16px 14px 12px}
 .phase + .phase {margin-top:16px; padding-top:14px; border-top:1px dashed var(--line)}
 .phase-title {display:flex; align-items:baseline; gap:8px; padding:0 4px 8px}
@@ -464,7 +493,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .row-title {font-size:16px; font-weight:700; line-height:24px; color:var(--ink)}
 .row-meta {display:inline-flex; flex-wrap:wrap; align-items:baseline; gap:2px 6px; font-size:12px; color:var(--muted)}
 .row-meta > * + *::before {content:'·'; margin-right:6px; color:var(--line-2); font-weight:400}
-.flag {font-size:12px; font-weight:650; color:var(--accent); letter-spacing:.02em}
+.flag {font-size:12px; font-weight:650; color:var(--bocchi); letter-spacing:.02em}
 .flag.warn {color:var(--warn)}
 .row .check {width:44px; height:44px; margin-top:-2px}
 .row.minor .row-open {min-height:34px; padding:5px 8px 5px 4px}
@@ -573,20 +602,20 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .shot-all-done .actions {justify-content:center}
 .pair {display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:12px -8px 0}
 .pair.single {grid-template-columns:1fr; margin:12px 0 0}
-.shot-img {position:relative; display:block; padding:3px 3px 20px; border-radius:5px; background:#fffef4; box-shadow:0 1px 2px rgba(0,0,0,.11), 0 6px 14px -6px rgba(0,0,0,.22)}
+.shot-img {position:relative; display:block; padding:3px 3px 20px; border-radius:5px; background:#ffffff; box-shadow:0 1px 2px rgba(34,42,68,.09), 0 6px 14px -6px rgba(34,42,68,.18)}
 .pair .shot-img:nth-child(1) {transform:rotate(-.45deg)}
 .pair .shot-img:nth-child(2) {transform:rotate(.4deg)}
 .pair.single .shot-img {transform:none}
 .shot-img::before {content:''; position:absolute; z-index:1; top:-7px; left:50%; width:50px; height:14px; margin-left:-25px; transform:rotate(-4deg); border-radius:1px; opacity:.88;
   background:repeating-linear-gradient(135deg, var(--tape-a) 0 5px, var(--tape-b) 5px 10px); box-shadow:0 1px 1px rgba(0,0,0,.05)}
-.pair .shot-img:nth-child(2)::before {transform:rotate(4deg); background:repeating-linear-gradient(45deg, var(--wash-plum) 0 5px, var(--tape-a) 5px 10px)}
+.pair .shot-img:nth-child(2)::before {transform:rotate(4deg); background:repeating-linear-gradient(45deg, rgba(94,137,194,.42) 0 5px, rgba(243,166,192,.48) 5px 10px)}
 .shot-img img {width:100%; aspect-ratio:3/2; object-fit:cover; border-radius:2px; background:#0c0f16}
 .pair.single .shot-img img {aspect-ratio:auto}
-.shot-img span {position:absolute; left:7px; bottom:3px; color:#464d39; font:700 11px var(--serif); letter-spacing:.08em}
+.shot-img span {position:absolute; left:7px; bottom:3px; color:#484e5c; font:700 11px var(--serif); letter-spacing:.08em}
 .shot-missing {display:flex; flex-direction:column; justify-content:center; gap:2px; padding:10px; border-radius:var(--r-sm); background:var(--sunk); font-size:14px; min-height:96px}
 .shot-missing small {color:var(--muted)}
 .shot-note {margin-top:12px; font-size:14.5px; color:var(--ink-2)}
-.shot-note b {display:inline-block; margin-right:6px; color:var(--accent); font:700 13px var(--serif); letter-spacing:.08em}
+.shot-note b {display:inline-block; margin-right:6px; color:var(--bocchi); font:700 13px var(--serif); letter-spacing:.08em}
 .shot-toggle.on {color:var(--shu)}
 .shot-toggle.on .icon {color:var(--shu)}
 .shot.done .pair {opacity:.8}
@@ -655,10 +684,10 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .zoom-top {display:flex; align-items:center; gap:8px; padding:calc(6px + env(safe-area-inset-top,0px)) 6px 6px 18px}
 .zoom-top h2 {flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font:700 17px var(--serif)}
 .zoom-top .icon-btn {color:#fff}
-.zoom-mag[aria-pressed="true"] {background:rgba(183,220,140,.22); color:#c9e69a}
+.zoom-mag[aria-pressed="true"] {background:rgba(140,194,255,.22); color:#8cc2ff}
 .zoom-shot-btn {display:inline-flex; align-items:center; gap:5px; min-height:38px; padding:0 12px; border-radius:999px; border:1.5px solid rgba(255,255,255,.32); color:#fff; font-size:13.5px; font-weight:700; flex:none; transition:background-color .2s, border-color .2s, color .2s}
 .zoom-shot-btn .icon {width:16px; height:16px}
-.zoom-shot-btn.on {background:rgba(240,144,111,.22); border-color:#f0906f; color:#ffb49b}
+.zoom-shot-btn.on {background:rgba(255,126,117,.22); border-color:#ff7e75; color:#ffb1ab}
 .zoom-stage {flex:1; min-height:0; display:grid; place-items:center; padding:0 4px; overflow:hidden}
 .zoom-stage img {max-width:100%; max-height:100%; object-fit:contain; user-select:none; -webkit-user-drag:none}
 .zoom-stage.single img {cursor:zoom-in; transition:transform .24s var(--ease-out); touch-action:none}
@@ -669,22 +698,22 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .zoom-stage.split img {width:100%; height:100%; object-fit:contain}
 .zoom-stage.split figcaption {position:absolute; left:8px; top:8px; padding:2px 8px; border-radius:6px; background:rgba(7,8,11,.72); color:#fff; font:700 12px var(--serif); letter-spacing:.08em}
 .zoom-stance {display:flex; align-items:baseline; gap:8px; max-width:640px; margin:8px auto 0; padding:8px 14px; border-radius:var(--r-sm); background:rgba(255,255,255,.09); color:rgba(255,255,255,.92); font-size:14px; line-height:1.5}
-.zoom-stance b {flex:none; padding:0 6px; border-radius:4px; background:rgba(183,220,140,.22); color:#c9e69a; font-size:12px; letter-spacing:.06em}
+.zoom-stance b {flex:none; padding:0 6px; border-radius:4px; background:rgba(255,158,194,.22); color:#ff9ec2; font-size:12px; letter-spacing:.06em}
 .zoom-switch {display:flex; justify-content:center; gap:4px; margin:10px auto; padding:4px; border-radius:999px; background:rgba(255,255,255,.12)}
 .zoom-switch button {min-height:44px; min-width:92px; padding:0 14px; border-radius:999px; color:#fff; font-size:14.5px; font-weight:700}
 .zoom-switch button[aria-pressed="true"] {background:#fff; color:#07080b}
 .zoom-credit {padding:4px 18px calc(12px + env(safe-area-inset-bottom,0px)); font-size:12px; color:rgba(255,255,255,.65); text-align:center}
-.zoom-credit a {color:#c9e69a}
-.zoom.card-mode {background:#f2f2e1; color:#22271b}
-.zoom.card-mode::backdrop {background:#f2f2e1}
-.zoom.card-mode .zoom-top .icon-btn {color:#22271b}
+.zoom-credit a {color:#8cc2ff}
+.zoom.card-mode {background:#fafafd; color:#1f222a}
+.zoom.card-mode::backdrop {background:#fafafd}
+.zoom.card-mode .zoom-top .icon-btn {color:#1f222a}
 .taxi-stage {padding:16px 20px calc(24px + env(safe-area-inset-bottom,0px))}
-.taxi-card {width:min(540px,100%); padding:28px 24px; border-radius:var(--r-xl); background:#fffef4; color:#1a1f14; box-shadow:0 2px 6px rgba(40,52,18,.08), 0 18px 40px -12px rgba(40,52,18,.22); border-top:6px solid #3a7040; text-align:left}
-.taxi-lead {font-size:16px; font-weight:700; color:#3a7040; letter-spacing:.08em}
-.taxi-name {margin-top:12px; font-size:clamp(26px,7vw,36px); font-weight:800; line-height:1.25; color:#1a1f14; overflow-wrap:anywhere}
-.taxi-addr {margin-top:16px; padding-top:16px; border-top:2px dashed #dfe3c7; font-size:clamp(20px,5.2vw,26px); font-weight:700; line-height:1.5; color:#22271b; overflow-wrap:anywhere}
-.taxi-sub {margin-top:10px; font-size:15px; color:#5c634e}
-.taxi-tip {margin-top:22px; font-size:13px; color:#879070; text-align:center}
+.taxi-card {width:min(540px,100%); padding:28px 24px; border-radius:var(--r-xl); background:#ffffff; color:#1f222a; box-shadow:0 2px 6px rgba(34,42,68,.06), 0 18px 40px -12px rgba(34,42,68,.18); border-top:6px solid #416496; text-align:left}
+.taxi-lead {font-size:16px; font-weight:700; color:#416496; letter-spacing:.08em}
+.taxi-name {margin-top:12px; font-size:clamp(26px,7vw,36px); font-weight:800; line-height:1.25; color:#1f222a; overflow-wrap:anywhere}
+.taxi-addr {margin-top:16px; padding-top:16px; border-top:2px dashed #e7eaf2; font-size:clamp(20px,5.2vw,26px); font-weight:700; line-height:1.5; color:#1f222a; overflow-wrap:anywhere}
+.taxi-sub {margin-top:10px; font-size:15px; color:#484e5c}
+.taxi-tip {margin-top:22px; font-size:13px; color:#6c7384; text-align:center}
 #toast {
   position: fixed; z-index: 60; left: 50%; bottom: calc(var(--tabbar) + 18px + env(safe-area-inset-bottom,0px));
   display: flex; align-items: center; gap: 14px; max-width: min(92vw,520px); padding: 6px 8px 6px 18px; min-height: 52px;

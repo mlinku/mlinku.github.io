@@ -377,7 +377,7 @@ const systemColorMode=()=>typeof matchMedia==='function'&&matchMedia('(prefers-c
 function syncThemeColor(){
  if(typeof document==='undefined'||!document.head)return;
  const mode=document.documentElement.getAttribute('data-user-color-scheme')||systemColorMode();
- const color=mode==='dark'?'#0f150f':'#f2f2e1';
+ const color=mode==='dark'?'#0e1017':'#fafafd';
  let meta=document.getElementById('theme-color-live');
  if(!meta){meta=document.createElement('meta');meta.id='theme-color-live';meta.name='theme-color';document.head.append(meta);}
  meta.content=color;
