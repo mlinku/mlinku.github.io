@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>配色并排对比 · 关西秋日手帖</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font: 14px/1.45 -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: #eef0f4; color: #1f2329;
+    display: flex; flex-direction: column; min-height: 100dvh;
+  }
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(255,255,255,.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #e2e5ec;
+    padding: calc(10px + env(safe-area-inset-top, 0px)) 14px 10px;
+  }
+  .topbar-inner {
+    max-width: 860px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px;
+  }
+  .brand { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; }
+  .swatches { display: inline-flex; gap: 4px; }
+  .swatches i { width: 8px; height: 8px; border-radius: 50%; display: block; }
+  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .tabs, .modes { display: inline-flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+  .btn {
+    border: 1px solid #dce0e8; background: #fff; color: #3c4350;
+    padding: 5px 11px; border-radius: 999px; font: 600 12.5px/1.3 inherit; cursor: pointer;
+    transition: all .16s ease; white-space: nowrap;
+  }
+  .btn.on { background: #1e2229; border-color: #1e2229; color: #fff; }
+  .btn.old.on { background: #3a7040; border-color: #3a7040; color: #fff; }
+  .btn.new.on { background: #2f669e; border-color: #2f669e; color: #fff; }
+  .mobile-only { display: none; }
+
+  .stage {
+    flex: 1; display: grid;
+    grid-template-columns: repeat(2, 390px);
+    justify-content: center; align-content: start;
+    gap: 28px; padding: 18px 16px 32px;
+  }
+  .col { display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 0; }
+  .label {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 13px; font-weight: 700; color: #333a45; white-space: nowrap;
+  }
+  .tag { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+  .tag.old { background: #e9f3d6; color: #3a7040; }
+  .tag.new { background: #eef5fc; color: #2f669e; }
+  .phone {
+    width: 390px; height: 780px; border-radius: 28px; overflow: hidden;
+    background: #fff; border: 6px solid #1e2229;
+    box-shadow: 0 20px 50px -18px rgba(20,30,50,.26);
+  }
+  .phone iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  /* Mobile layout: full-screen single-frame toggle by default, plus optional side-by-side split! */
+  @media (max-width: 840px) {
+    .mobile-only { display: inline-flex; }
+    .topbar { padding: calc(8px + env(safe-area-inset-top, 0px)) 10px 8px; }
+    .topbar-inner { gap: 6px; }
+    .brand { font-size: 13.5px; }
+    .btn { padding: 5px 9px; font-size: 12px; }
+
+    .stage {
+      display: block; padding: 0; flex: 1; position: relative;
+    }
+    .col { width: 100%; height: 100%; gap: 0; }
+    .col .label { display: none; }
+    .phone {
+      width: 100%; height: calc(100dvh - 86px); border: 0; border-radius: 0; box-shadow: none;
+    }
+    body[data-mobile="old"] .col.new { display: none; }
+    body[data-mobile="new"] .col.old { display: none; }
+
+    /* Side-by-side comparison mode on mobile */
+    body[data-mobile="split"] .stage {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px 6px 14px;
+    }
+    body[data-mobile="split"] .col { display: flex; gap: 6px; }
+    body[data-mobile="split"] .col .label { display: inline-flex; font-size: 11px; gap: 4px; }
+    body[data-mobile="split"] .col .label .desc { display: none; }
+    body[data-mobile="split"] .phone {
+      width: 100%; height: calc(100dvh - 122px);
+      border: 2px solid #2b313d; border-radius: 14px; overflow: hidden;
+      position: relative;
+    }
+    body[data-mobile="split"] .phone iframe {
+      width: 390px; height: 200%;
+      transform-origin: 0 0;
+      transform: scale(var(--split-scale, 0.47));
+    }
+  }
+</style>
+</head>
+<body data-mobile="new">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        配色对比
+        <span class="swatches" aria-hidden="true">
+          <i style="background:#c9547c"></i>
+          <i style="background:#c83e37"></i>
+          <i style="background:#e5b532"></i>
+          <i style="background:#2f669e"></i>
+        </span>
+      </div>
+      <div class="controls">
+        <div class="modes mobile-only" id="modes">
+          <button type="button" class="btn old" data-mode="old">原版绿</button>
+          <button type="button" class="btn new on" data-mode="new">白底四色</button>
+          <button type="button" class="btn" data-mode="split">并排</button>
+        </div>
+        <div class="tabs" id="tabs">
+          <button type="button" class="btn on" data-hash="#now">总览</button>
+          <button type="button" class="btn" data-hash="#day/2026-12-02">12/2 行程</button>
+          <button type="button" class="btn" data-hash="#shots/2026-12-02">12/2 巡礼</button>
+          <button type="button" class="btn" data-hash="#prep">准备</button>
+        </div>
+        <button type="button" class="btn" id="scheme-btn" aria-label="切换日间或夜间">夜间</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="stage">
+    <section class="col old">
+      <div class="label"><span class="tag old">当前</span><span class="desc">和纸米白 · 常磐绿 & 梅紫</span></div>
+      <div class="phone"><iframe id="f-old" src="../index.html#now" title="当前和纸绿"></iframe></div>
+    </section>
+    <section class="col new">
+      <div class="label"><span class="tag new">新方案</span><span class="desc">极净白底 · 粉红黄蓝淡彩</span></div>
+      <div class="phone"><iframe id="f-new" src="../index.html#now" title="新方案白底四色"></iframe></div>
+    </section>
+  </main>
+
+  <script>
+    const PASTEL4_CSS = `
+:root[data-palette='pastel4'] {
+  --paper: #f6f7fa; --card: #ffffff; --sunk: #eff2f7;
+  --ink: #1e2229; --ink-2: #464d59; --muted: #697282;
+  --line: #e5e8ef; --line-2: #9ba3b4;
+  --accent: #2f669e; --accent-fill: #7bb0e3; --accent-pale: #ddebfa; --nav-fill: #cde2f7;
+  --accent-ink: #163659; --tab-on-ink: #1d4875; --accent-soft: #eef5fc; --fill-edge: rgba(47,102,158,.16);
+  --moegi: #7bb0e3; --plum: #c9547c; --plum-soft: rgba(201,84,124,.09); --gold: #e5b532;
+  --shu: #c83e37; --shu-soft: rgba(200,62,55,.08);
+  --danger: #bf2e2a; --danger-soft: #fdeceb;
+  --warn: #946200; --warn-soft: #fef5d6;
+  --ok: #2f669e; --ok-soft: #eef5fc;
+  --wash-shu: rgba(218,78,70,.18); --wash-moegi: rgba(242,200,75,.28); --wash-plum: rgba(232,122,160,.20);
+  --wash-gold: rgba(242,200,75,.34); --wash-accent: rgba(92,152,218,.16);
+  --tape-a: rgba(242,200,75,.45); --tape-b: rgba(232,132,166,.38);
+  --glow: rgba(116,168,232,.12); --lattice: rgba(92,134,188,.055);
+  --press: rgba(59,118,184,.34);
+  --shadow: 0 1px 2px rgba(24,34,58,.04), 0 8px 22px -12px rgba(24,34,58,.12);
+  --lift: 0 2px 4px rgba(24,34,58,.05), 0 16px 36px -14px rgba(24,34,58,.18);
+  --toast-bg: #1e2229; --toast-ink: #ffffff; --toast-action: #8cc2f5;
+}
+:root[data-palette='pastel4'] .flag:not(.warn) { color: var(--plum); }
+:root[data-palette='pastel4'] .shot-note b { color: var(--plum); }
+:root[data-palette='pastel4'] .pair .shot-img:nth-child(2)::before {
+  background: repeating-linear-gradient(45deg, rgba(116,168,232,.40) 0 5px, rgba(232,132,166,.36) 5px 10px);
+}
+:root[data-palette='pastel4'] .shot-img { background: #ffffff; }
+:root[data-palette='pastel4'][data-user-color-scheme='dark'] {
+  --paper: #0f1218; --card: #161b24; --sunk: #1e2532;
+  --ink: #edf1f7; --ink-2: #c5cdd9; --muted: #939eae;
+  --line: #273040; --line-2: #5b677d;
+  --accent: #8cc2f5; --accent-fill: #8cc2f5; --accent-pale: #8cc2f5; --nav-fill: #8cc2f5;
+  --accent-ink: #102033; --tab-on-ink: #c6e1fb; --accent-soft: rgba(140,194,245,.14); --fill-edge: transparent;
+  --moegi: #8cc2f5; --plum: #f29ab7; --plum-soft: rgba(242,154,183,.13); --gold: #f2cc63;
+  --shu: #f27c75; --shu-soft: rgba(242,124,117,.12);
+  --danger: #ff8e88; --danger-soft: rgba(255,142,136,.14);
+  --warn: #f2cc63; --warn-soft: rgba(242,204,99,.14);
+  --ok: #8cc2f5; --ok-soft: rgba(140,194,245,.14);
+  --wash-shu: rgba(242,124,117,.30); --wash-moegi: rgba(242,204,99,.22); --wash-plum: rgba(242,154,183,.22);
+  --wash-gold: rgba(242,204,99,.28); --wash-accent: rgba(140,194,245,.16);
+  --glow: rgba(116,168,232,.08); --lattice: rgba(140,194,245,.045);
+  --toast-bg: #edf1f7; --toast-ink: #161b24; --toast-action: #2f669e;
+}`;
+
+    const fOld = document.getElementById('f-old'), fNew = document.getElementById('f-new');
+    let scheme = 'light';
+
+    function styleNewFrame() {
+      try {
+        const doc = fNew.contentDocument;
+        if (!doc || !doc.head) return;
+        if (!doc.getElementById('pastel4-style')) {
+          const st = doc.createElement('style');
+          st.id = 'pastel4-style';
+          st.textContent = PASTEL4_CSS;
+          doc.head.appendChild(st);
+        }
+        doc.documentElement.setAttribute('data-palette', 'pastel4');
+        doc.documentElement.setAttribute('data-user-color-scheme', scheme);
+      } catch (e) {}
+    }
+    function styleOldFrame() {
+      try {
+        const doc = fOld.contentDocument;
+        if (!doc || !doc.documentElement) return;
+        doc.documentElement.removeAttribute('data-palette');
+        doc.documentElement.setAttribute('data-user-color-scheme', scheme);
+      } catch (e) {}
+    }
+
+    fNew.addEventListener('load', styleNewFrame);
+    fOld.addEventListener('load', styleOldFrame);
+    styleNewFrame();
+    styleOldFrame();
+
+    document.getElementById('tabs').addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-hash]');
+      if (!btn) return;
+      document.querySelectorAll('#tabs .btn').forEach(b => b.classList.toggle('on', b === btn));
+      const h = btn.dataset.hash;
+      try { fOld.contentWindow.location.hash = h; fNew.contentWindow.location.hash = h; }
+      catch { fOld.src = '../index.html' + h; fNew.src = '../index.html' + h; }
+    });
+
+    document.getElementById('modes').addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-mode]');
+      if (!btn) return;
+      document.querySelectorAll('#modes .btn').forEach(b => b.classList.toggle('on', b === btn));
+      document.body.setAttribute('data-mobile', btn.dataset.mode);
+      updateSplitScale();
+    });
+
+    const schemeBtn = document.getElementById('scheme-btn');
+    schemeBtn.addEventListener('click', () => {
+      scheme = scheme === 'light' ? 'dark' : 'light';
+      schemeBtn.textContent = scheme === 'dark' ? '日间' : '夜间';
+      schemeBtn.classList.toggle('on', scheme === 'dark');
+      styleOldFrame();
+      styleNewFrame();
+    });
+
+    function updateSplitScale() {
+      if (window.innerWidth > 840) return;
+      const phoneW = (window.innerWidth - 18) / 2 - 4;
+      const scale = Math.max(0.35, Math.min(1, phoneW / 390));
+      document.documentElement.style.setProperty('--split-scale', scale.toFixed(4));
+      const phones = document.querySelectorAll('.phone iframe');
+      phones.forEach(fr => {
+        if (document.body.getAttribute('data-mobile') === 'split') {
+          fr.style.height = Math.round(100 / scale) + '%';
+        } else {
+          fr.style.height = '100%';
+        }
+      });
+    }
+    window.addEventListener('resize', updateSplitScale);
+    updateSplitScale();
+  </script>
+</body>
+</html>
