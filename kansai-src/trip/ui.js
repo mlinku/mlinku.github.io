@@ -64,7 +64,7 @@ function passHTML(b,from,to,showLeg=true){
  const isOut=b.from==='hkg';
  const mins=Math.round((Date.parse(b.arrival)-Date.parse(b.departure))/6e4);
  const span=`${Math.floor(mins/60)}h ${String(mins%60).padStart(2,'0')}m`;
- const tz=isOut?'+1h 时差':'-1h 时差';
+ const tz=isOut?'+1h 时差':'−1h 时差';
  const fromTerm=b.departure_terminal_role==='check_in'?`${from.terminal} 值机`:`${from.terminal} 出发`;
  const toTerm=`${to.terminal} 抵达`;
  const dayObj=PLAN.days.find(d=>d.date===(isOut?'2026-11-30':'2026-12-07'));
@@ -83,7 +83,7 @@ function dayLine(){
 function nowScreen(){
  const s=tripStatus();
  if(s.phase==='before')return beforeScreen(s);
- if(s.phase==='after')return `${coverHero('旅程已结束','2026.11.30 — 12.07 · 辛苦了')}<section class="block">${scene('home')}<h2 class="block-title">回看 8 天${kita('cheer','in-title')}</h2>${dayLine()}</section>`;
+ if(s.phase==='after')return `${coverHero('旅程已结束','2026.11.30 – 12.07 · 辛苦了')}<section class="block">${scene('home')}<h2 class="block-title">回看 8 天${kita('cheer','in-title')}</h2>${dayLine()}</section>`;
  const d=PLAN.days[s.index],info=dayPresentation(d),st=nowState(d,s.minutes),p=progress(d),notes=fieldNotes(d);
  const clockLabel=d.date==='2026-11-30'&&s.minutes<16*60?`<span class="nowrap">香港 <b>${clock(s.minutes-60)}</b></span> · <span class="nowrap">日本 ${clock(s.minutes)}</span>`:`日本时间 <b>${clock(s.minutes)}</b>`;
  return `<header class="now-head"><div><p class="kicker">${dateLabel(d.date)} ${e(d.weekday)} · ${clockLabel}</p><h1 class="display">${e(info.short)}</h1><p class="muted">${e(info.eyebrow)}</p></div><div class="now-marks">${dayDoodle(d.date)}${daySeal(s.index+1)}</div></header>
@@ -117,7 +117,7 @@ function coverHero(title,sub){
 function beforeScreen(s){
  const open=openPurchases().filter(p=>p.tone==='danger'&&!p.done),g=todoGroups(),beforeDone=g.before.filter(t=>t.done).length;
  const todoLine=beforeDone===g.before.length?'出发前待办已齐':`出发前待办 ${beforeDone} / ${g.before.length}`;
- return `${coverHero('关西秋日手帖','2026.11.30 — 12.07 · 8 天 7 晚')}
+ return `${coverHero('关西秋日手帖','2026.11.30 – 12.07 · 8 天 7 晚')}
  <section class="focus countdown"><div class="scene-band">${scene('depart')}</div><div class="focus-body">${kita('cheer','on-countdown')}<p class="count"><b>${s.days}</b><span>天后出发</span></p><p class="lead">${todoLine}</p>${open.map(p=>`<a class="alert-line" href="#prep">${icon('alert')}<span>${e(p.item)} · ${e(p.label)}</span>${icon('chevron')}</a>`).join('')}<div class="focus-actions"><a class="btn primary" href="#prep">去准备</a><a class="btn" href="#day/${PLAN.days[0].date}">看第 1 天</a></div></div></section>
  
  <section class="block"><h2 class="block-title">8 天行程</h2>${dayLine()}</section>`;
@@ -278,7 +278,7 @@ function prepScreen(){
  <section class="block tickets-block"><span class="corner-sketch">${doodle('ticket')}</span><h2 class="block-title">票务</h2><ul class="tickets">${open.map(t=>`<li class="ticket ${t.tone}"><button type="button" class="ticket-tap" data-action="todo" data-todo="${e(t.id)}" aria-pressed="${t.done}" aria-label="${e(t.item)}：${e(t.label)}，点按${t.done?'取消':'标记已办'}"><span class="ticket-main"><b>${e(t.item)}</b><small>${t.qty?'×'+t.qty+' · ':''}${e(t.date)} 使用${t.budget?' · '+e(t.budget):''}</small></span><span class="ticket-state">${t.done?icon('check'):''}${e(t.label)}</span></button></li>`).join('')}</ul></section>
  <section class="block todos"><h2 class="block-title">待办 <small>${todoDone()} / ${TODOS.length}</small>${kita('sit-happy','in-title')}</h2><h3 class="sub">出发前完成</h3>${g.before.map(todoRow).join('')}<details class="fold"${during?' open':''}><summary>旅途中再确认 · ${tripDone}/${tripItems.length}</summary>${tripItems.map(todoRow).join('')}</details><details class="fold"><summary>展开全文</summary><ul class="plain">${[...g.before,...g.trip.flatMap(x=>x.items)].map(t=>`<li>${e(t.text)}</li>`).join('')}</ul></details></section>
  <section class="block sketched"><span class="corner-sketch">${doodle('plane')}</span><h2 class="block-title">航班</h2>${PLAN.bookings.filter(b=>b.type==='flight').map(b=>passHTML(b,flightLocal(b,'departure'),flightLocal(b,'arrival'))).join('')}</section>
- <section class="block sketched"><span class="corner-sketch">${doodle('inn')}</span><h2 class="block-title">酒店</h2>${PLAN.bookings.filter(b=>b.type==='hotel').map(b=>{const p=PLACE[b.place_id],isKyoto=b.place_id==='hotel_kyoto',nights=Math.round((Date.parse(b.checkout_date)-Date.parse(b.checkin_date))/864e5);return `<div class="hotel${isKyoto?'':' osaka'}"><div class="hotel-top"><span class="kicker"><b>${isKyoto?'京都':'大阪'}</b> · ${dateLabel(b.checkin_date)} — ${dateLabel(b.checkout_date)}</span><span class="hotel-nights">${nights} 晚</span></div><p class="hotel-name" lang="ja" translate="no">${e(p.name_ja)}</p>${p.address_ja?`<p class="hotel-addr" lang="ja" translate="no">${e(p.address_ja)}</p>`:''}<div class="inline-actions">${external(icon('pin')+'<span>地图</span>',p.map_search_url)}${p.address_ja?`<button type="button" data-action="copy" data-copy="${e(p.address_ja)}">${icon('copy')}<span>复制地址</span></button><button type="button" data-action="taxi-card" data-place="${p.id}">${icon('card')}<span>出示给司机</span></button>`:''}</div></div>`;}).join('')}</section>
+ <section class="block sketched"><span class="corner-sketch">${doodle('inn')}</span><h2 class="block-title">酒店</h2>${PLAN.bookings.filter(b=>b.type==='hotel').map(b=>{const p=PLACE[b.place_id],isKyoto=b.place_id==='hotel_kyoto',nights=Math.round((Date.parse(b.checkout_date)-Date.parse(b.checkin_date))/864e5);return `<div class="hotel${isKyoto?'':' osaka'}"><div class="hotel-top"><span class="kicker"><b>${isKyoto?'京都':'大阪'}</b> · ${dateLabel(b.checkin_date)} – ${dateLabel(b.checkout_date)}</span><span class="hotel-nights">${nights} 晚</span></div><p class="hotel-name" lang="ja" translate="no">${e(p.name_ja)}</p>${p.address_ja?`<p class="hotel-addr" lang="ja" translate="no">${e(p.address_ja)}</p>`:''}<div class="inline-actions">${external(icon('pin')+'<span>地图</span>',p.map_search_url)}${p.address_ja?`<button type="button" data-action="copy" data-copy="${e(p.address_ja)}">${icon('copy')}<span>复制地址</span></button><button type="button" data-action="taxi-card" data-place="${p.id}">${icon('card')}<span>出示给司机</span></button>`:''}</div></div>`;}).join('')}</section>
  <details class="fold block"><summary>参考资料</summary>
   <h3 class="sub">作品日文名</h3>${WORK_NAMES.map(t=>`<p class="copy-line"><span lang="ja" translate="no">${e(t)}</span><button type="button" class="icon-btn small" data-action="copy" data-copy="${e(t)}" aria-label="复制${e(t)}">${icon('copy')}</button></p>`).join('')}
   <h3 class="sub">预算</h3><p>普通正餐每人¥1,000—2,500；12/6和牛自助现价¥5,000/人、上限¥6,000/人。</p><p>门票（两人）：${PLAN.visit_budget.filter(v=>!v.item).map(v=>e(({kodaiji:'高台寺',kyoto_tower:'京都塔',todaiji:'大佛殿',himeji_castle:'姬路城＋好古园'})[v.place_id]||PLACE[v.place_id].name)+' ¥'+v.two_adults_jpy.toLocaleString('en-US')).join('、')}；清水寺与购物另计。</p>

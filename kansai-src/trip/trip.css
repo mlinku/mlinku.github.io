@@ -608,10 +608,12 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .caution {padding:0 4px; border-radius:4px; background:var(--warn-soft); color:var(--warn); -webkit-box-decoration-break:clone; box-decoration-break:clone}
 .caution .ln {background:var(--warn); color:var(--card)}
 .meal {padding:0}
-.meal + .meal {margin-top:14px; padding-top:14px; border-top:1px dashed var(--line)}
+.meal + .meal {margin-top:10px; padding-top:14px; border-top:1px dashed var(--line)}
 .meal-rank {display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums}
-.meal h4 {font-size:17px; line-height:1.4; margin:5px 0 2px}
+.meal h4 {font-size:16.5px; font-weight:650; line-height:1.38; margin:5px 0 2px; color:var(--ink)}
 .meal .muted {font-size:14px}
+.meal .inline-actions {margin-top:6px; border-top:0}
+.meal:last-child .inline-actions {margin-bottom:-6px}
 .choices .option-row {display:grid; grid-template-columns:auto 1fr; column-gap:10px; align-items:start; padding:12px 14px; border-radius:var(--r-md); background:var(--sunk); box-shadow:inset 0 0 0 1.5px var(--line); font-weight:600; cursor:pointer}
 .choices .option-row + .option-row, .choices fieldset + .option-row {margin-top:8px}
 .choices .option-row input {width:20px; height:20px; margin:3px 0 0; accent-color:var(--accent)}
@@ -708,33 +710,36 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .todo .box .icon {width:16px; height:16px; stroke-width:3}
 .todo.on .box {background:var(--bocchi); border-color:var(--bocchi); color:#ffffff}
 .todo.on > span:last-child {color:var(--muted); text-decoration:line-through}
-.pass-top {display:flex; align-items:baseline; justify-content:space-between; gap:10px}
-.pass-top .kicker b {color:var(--ryo); font-weight:800}
+.pass-top, .hotel-top {display:flex; align-items:baseline; justify-content:space-between; gap:10px}
+.pass-top .kicker, .hotel-top .kicker {font-size:13px; letter-spacing:.03em}
+.pass-top .kicker b {color:var(--ryo); font-weight:750}
 .flight.back .pass-top .kicker b {color:var(--bocchi)}
-.pass-no {display:inline-flex; align-items:center; min-height:40px; margin:-8px -6px; padding:0 6px; font-size:12.5px; color:var(--muted); white-space:nowrap; letter-spacing:.03em}
-.pass-no b {color:var(--ink-2); font-weight:750; letter-spacing:.04em}
+.pass-no {display:inline-flex; align-items:center; gap:4px; min-height:40px; margin:-8px -6px; padding:0 6px; font-size:12.5px; color:var(--muted); white-space:nowrap; letter-spacing:.02em; font-variant-numeric:tabular-nums}
+.pass-no b {color:var(--ink-2); font-weight:700; letter-spacing:.03em}
 .pass-no:active {color:var(--accent)}
-.pass {display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:14px; margin:6px 0 8px}
-.pass-end {display:flex; flex-direction:column; align-items:flex-start; gap:1px}
+.pass {display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:16px; margin:8px 0 10px}
+.pass-end {display:flex; flex-direction:column; align-items:flex-start; gap:2px}
 .pass-end:last-child {align-items:flex-end; text-align:right}
-.pass-end small {font-size:12.5px; color:var(--muted); letter-spacing:.08em}
-.pass-end b {font-size:30px; line-height:1.08; font-weight:800; color:var(--ink); font-variant-numeric:tabular-nums; letter-spacing:-.01em}
-.pass-term {font-size:12px; color:var(--ink-2); font-weight:600; letter-spacing:.03em}
+.pass-end small {font-size:12.5px; color:var(--muted); letter-spacing:.04em}
+.pass-end b {font:700 28px/1.1 var(--serif); color:var(--ink); font-variant-numeric:tabular-nums; letter-spacing:.01em}
+.pass-term {font-size:12.5px; color:var(--ink-2); font-weight:600; letter-spacing:.02em}
 .pass-mid {display:flex; flex-direction:column; align-items:center; gap:2px; padding:0 4px}
-.pass-dur {font-size:11.5px; font-weight:650; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
-.pass-line {position:relative; width:100%; display:grid; place-items:center; height:22px; color:var(--accent)}
+.pass-dur, .pass-tz {font-size:12px; font-weight:600; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
+.pass-tz {font-weight:500}
+.pass-line {position:relative; width:100%; display:grid; place-items:center; height:20px; color:var(--accent)}
 .flight.back .pass-line {color:var(--plum)}
 .pass-line::before {content:''; position:absolute; left:0; right:0; top:50%; border-top:1.5px dashed var(--line-2)}
-.pass-line .icon {position:relative; z-index:1; transform:rotate(90deg); padding:0 4px; background:var(--card); width:28px; height:20px}
-.pass-tz {font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap; opacity:.85}
-.pass-note {font-size:13px; color:var(--muted)}
-.hotel-top {display:flex; align-items:baseline; justify-content:space-between; gap:10px}
-.hotel-top .kicker b {color:var(--kita); font-weight:800}
+.pass-line .icon {position:relative; z-index:1; transform:rotate(90deg); padding:0 4px; background:var(--card); width:26px; height:18px}
+.pass-note {padding-left:9px; border-left:2px solid var(--ryo-edge); font-size:13px; line-height:1.45; color:var(--ink-2); font-variant-numeric:tabular-nums}
+.flight.back .pass-note {border-left-color:var(--bocchi-edge)}
+.hotel-top .kicker b {color:var(--kita); font-weight:750}
 .hotel.osaka .hotel-top .kicker b {color:var(--bocchi)}
 .hotel-nights {font-size:12.5px; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
-.hotel-name {margin-top:5px; font-size:19px; font-weight:800; line-height:1.28; color:var(--ink); letter-spacing:-.01em}
-.hotel-addr {margin-top:3px; font-size:13px; color:var(--muted); line-height:1.5}
-.flight + .flight, .hotel + .hotel {margin-top:18px; padding-top:18px; border-top:1px dashed var(--line)}
+.hotel-name {margin-top:5px; font:700 17.5px/1.34 var(--serif); color:var(--ink); letter-spacing:.01em}
+.hotel-addr {margin-top:3px; font-size:13.5px; color:var(--muted); line-height:1.5}
+.hotel .inline-actions {margin-top:6px; border-top:0}
+.flight + .flight {margin-top:16px; padding-top:16px; border-top:1px dashed var(--line)}
+.hotel + .hotel {margin-top:10px; padding-top:16px; border-top:1px dashed var(--line)}
 .copy-line {display:flex; align-items:center; justify-content:space-between; gap:8px; padding:4px 0; border-top:1px dashed var(--line)}
 .copy-line span {min-width:0; line-height:1.5; text-wrap:balance}
 

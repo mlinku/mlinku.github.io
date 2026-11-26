@@ -21,10 +21,10 @@ export function headingText(){
   out.push(...PLAN.places.map(p=>p.name),...pilgrimagePoints.map(p=>shotModel(p).title+p.title+p.work),...(PILGRIMAGE.rally?.spots||[]).map(p=>p.title));
   // Serif lines outside titles: day headlines, detail and food section titles, ticket names, hotels, work names.
   for(const d of PLAN.days){const info=DETAILS[d.date];out.push(info.key,...Object.values(info.eventDetails||{}).map(x=>x.title),...[...(info.foodIdeas||[]),...Object.values(info.eventFood||{}).flat()].flatMap(x=>[x.label,x.title]));}
-  out.push(...Object.values(EVENT_EXTRA).map(x=>x.detail?.title||''),...(PLAN.unconfirmed_purchases||[]).map(p=>p.item),...Object.values(PURCHASE_DONE),...PLAN.bookings.map(b=>PLACE[b.place_id]?.name||''),...WORK_NAMES);
+  out.push(...Object.values(EVENT_EXTRA).map(x=>x.detail?.title||''),...(PLAN.unconfirmed_purchases||[]).map(p=>p.item),...Object.values(PURCHASE_DONE),...PLAN.bookings.flatMap(b=>[PLACE[b.place_id]?.name||'',PLACE[b.place_id]?.name_ja||'']),...WORK_NAMES);
   return out.join('');})()`,scope)+read('trip/ui.js').match(/[\u3000-\u9FFF\uFF00-\uFFEF]/g).join('');
 }
-export const SERIF_EXTRA=' 0123456789/:·→—–-+×／（）《》「」、，。：・済日第天';
+export const SERIF_EXTRA=' 0123456789/:·→—–−-+×／（）《》「」、，。：・済日第天';
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  const chars=[...new Set([...headingText()+SERIF_EXTRA].filter(ch=>ch.trim()||ch===' '))].sort().join('');
  const file=path.join(root,'assets/fonts/trip-serif-chars.txt');
