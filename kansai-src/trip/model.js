@@ -33,6 +33,7 @@ const EVENT_BRIEF={
  skyway_visit:'同层免费玻璃廊桥，俯瞰京都塔夜景。',
  kokoen_visit:'逛庭园，日落约16:45后点灯（红叶可能已到尾声）。',
  checkout_osaka:'离店前或到机场吃早餐。',
+ airport_train:'',
  airport_checkin:''
 };
 // Shorter wording for 情况有变时. Each source must still occur in the planning notes (trip/verify.mjs checks this);
@@ -104,7 +105,7 @@ const BOOKING_STATUS=/（待订位）|[，、；]?(尚)?未订位(?=[。；，]|
 const cleanText=t=>TEXT_SHORT.reduce((s,[from,to])=>s.replace(from,to),String(t??'')).replace(BOOKING_STATUS,'').replace(/为待订位目标/g,'为目标').replace(/参考(?=\d|套餐|24小时)/g,'').replace(/[^，；。<>]*于\d+\/\d+核实[^，；。<>]*/g,'').replace(/[^，；。<>]*临行(复核|确认|再查|查询|按)[^，；。<>]*/g,'')
  .split(/(?<=[。；])/).filter(keepSentence).join('')
  .replace(/([，；])[，；]+/g,'$1').replace(/[，；]+。/g,'。').replace(/。[，；]+/g,'。').replace(/^[，；\s]+/,'').replace(/[，；\s]+$/,'').replace(/^[。；，、\s]+$/,'');
-const cleanHTML=html=>String(html).replace(/>([^<]+)</g,(_,t)=>'>'+cleanText(t)+'<');
+const cleanHTML=html=>String(html).replace(/>([^<]+)</g,(_,t)=>{const c=cleanText(t);if(!c)return '><';return '>'+(/^\s/.test(t)?' ':'')+c+(/\s$/.test(t)?' ':'')+'<';});
 
 /* ---------- Clock ---------- */
 // "Today" and "now" follow Japan time; they only point at what to read, never mark anything done.

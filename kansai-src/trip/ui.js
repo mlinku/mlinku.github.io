@@ -388,7 +388,9 @@ function toggleTheme(){
  try{if(next===systemColorMode())localStorage.removeItem(COLOR_MODE_KEY);else localStorage.setItem(COLOR_MODE_KEY,next);}catch{}
  syncThemeColor();
 }
-let zoomState=null,zoomPan={scale:1,x:0,y:0};
+let zoomState=null,zoomPan={scale:1,x:0,y:0},zoomPushed=false;
+function hideZoom(){closeDialog($('#zoom'));zoomPushed=false;}
+function closeZoom(){if(zoomPushed){zoomPushed=false;history.back();return;}hideZoom();}
 function resetZoomPan(){
  zoomPan={scale:1,x:0,y:0};
  const stage=$('#zoom .zoom-stage.single'),imgEl=stage?.querySelector('img');
@@ -422,6 +424,7 @@ function toggleZoomScale(clientX,clientY){
 }
 function openZoom(title,image,{switcher='',stance='',topAction='',stageHTML='',creditHTML='',cardMode=false}={}){
  const z=$('#zoom');
+ const wasOpen=z.open&&!exiting.has(z);
  z.classList.toggle('card-mode',cardMode);
  const isSingle=!stageHTML;
  const stage=stageHTML||`<div class="zoom-stage single"><img src="${image.src}" alt="${e(image.alt||title)}" draggable="false"></div>`;
@@ -430,6 +433,11 @@ function openZoom(title,image,{switcher='',stance='',topAction='',stageHTML='',c
  z.innerHTML=`<div class="zoom-top"><h2>${e(title)}</h2>${topAction}${zoomBtn}<button type="button" class="icon-btn" data-action="zoom-close" aria-label="关闭">${icon('close')}</button></div>${stage}${stance}${switcher}${credit}`;
  zoomPan={scale:1,x:0,y:0};
  showDialog(z);
+ if(!wasOpen&&!zoomPushed){
+  const prevSheet=sheetState?{date:sheetState.date,key:sheetState.key}:null;
+  history.pushState({zoom:true,sheet:prevSheet},'',location.href);
+  zoomPushed=true;
+ }
 }
 function zoomShot(id,kind){
  const p=pilgrimagePoints.find(x=>x.id===id)||PILGRIMAGE.rally?.spots.find(x=>x.id===id);if(!p)return;
@@ -518,7 +526,7 @@ function boot(){
   else if(act==='zoom-photo')zoomPhoto(t.dataset.place);
   else if(act==='zoom-shot')zoomShot(t.dataset.shot,t.dataset.kind);
   else if(act==='zoom-toggle')toggleZoomScale();
-  else if(act==='zoom-close')closeDialog($('#zoom'));
+  else if(act==='zoom-close')closeZoom();
   else if(act==='toggle-hide-shots'){ui.hideDoneShots=!ui.hideDoneShots;refresh();}
   else if(act==='taxi-card')openTaxiCard(t.dataset.place);
   else if(act==='export-state')copyText(encodeProgress());
@@ -540,8 +548,8 @@ function boot(){
  bindSheetDrag(sheetEl);
  sheetEl.addEventListener('cancel',ev=>{ev.preventDefault();closeSheet();});
  sheetEl.addEventListener('click',ev=>{if(ev.target.id==='sheet')closeSheet();});
- zoomEl.addEventListener('click',ev=>{if((ev.target.id==='zoom'||ev.target.classList.contains('zoom-stage'))&&zoomPan.scale===1)closeDialog(zoomEl);});
- zoomEl.addEventListener('cancel',ev=>{ev.preventDefault();closeDialog(zoomEl);});
+ zoomEl.addEventListener('click',ev=>{if((ev.target.id==='zoom'||ev.target.classList.contains('zoom-stage'))&&zoomPan.scale===1)closeZoom();});
+ zoomEl.addEventListener('cancel',ev=>{ev.preventDefault();closeZoom();});
  zoomEl.addEventListener('dblclick',ev=>{if(ev.target.closest('.zoom-stage.single img'))toggleZoomScale(ev.clientX,ev.clientY);});
  let swipeX=0,swipeY=0,panStartX=0,panStartY=0,panBaseX=0,panBaseY=0,panning=false,lastTap=0,lastTapX=0,lastTapY=0;
  zoomEl.addEventListener('touchstart',ev=>{
@@ -575,8 +583,13 @@ function boot(){
  window.addEventListener('mousemove',ev=>{if(!panning||!zoomEl.open)return;zoomPan.x=panBaseX+(ev.clientX-panStartX);zoomPan.y=panBaseY+(ev.clientY-panStartY);applyZoomPan(false);});
  window.addEventListener('mouseup',()=>{panning=false;});
  document.addEventListener('keydown',ev=>{if(!zoomEl.open)return;if(ev.key==='ArrowLeft'&&zoomPan.scale===1)stepZoomMode(-1);else if(ev.key==='ArrowRight'&&zoomPan.scale===1)stepZoomMode(1);});
- window.addEventListener('popstate',ev=>{const s=ev.state?.sheet;if(s)openSheet(s.date,s.key,{push:false,pushed:true});else hideSheet();});
- window.addEventListener('hashchange',()=>{if(location.hash!=='#main'){if(zoomEl.open)closeDialog(zoomEl);if(sheetEl.open)hideSheet();route();}}); // #main is the skip link
+ window.addEventListener('popstate',ev=>{
+  if(!ev.state?.zoom&&zoomEl.open)hideZoom();
+  const s=ev.state?.sheet;
+  if(s){if(!sheetState||sheetState.date!==s.date||sheetState.key!==s.key)openSheet(s.date,s.key,{push:false,pushed:true});}
+  else if(sheetState)hideSheet();
+ });
+ window.addEventListener('hashchange',()=>{if(location.hash!=='#main'){if(zoomEl.open)hideZoom();if(sheetEl.open)hideSheet();route();}}); // #main is the skip link
  window.addEventListener('storage',ev=>{
   if(ev.key===COLOR_MODE_KEY){if(ev.newValue)document.documentElement.setAttribute('data-user-color-scheme',ev.newValue);else document.documentElement.removeAttribute('data-user-color-scheme');syncThemeColor();return;}
   if(ev.key===STORAGE_KEY){try{const next=JSON.parse(ev.newValue);if(next?.checks&&next?.todos&&next?.choices){state=next;refresh();}}catch{}}

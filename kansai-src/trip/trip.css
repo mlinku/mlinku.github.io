@@ -5,9 +5,9 @@
 @font-face {font-family:'Trip Serif'; src:url(@font/trip-serif-700.woff) format('woff'); font-weight:400 799; font-display:swap}
 @font-face {font-family:'Trip Serif'; src:url(@font/trip-serif-900.woff) format('woff'); font-weight:800 900; font-display:swap}
 :root {
-  --bocchi: #cf4f7c; --bocchi-l: #f59bbd; --bocchi-soft: #fff0f6; --bocchi-edge: rgba(245,155,189,.36);
+  --bocchi: #bf3f6d; --bocchi-l: #f59bbd; --bocchi-soft: #fff0f6; --bocchi-edge: rgba(245,155,189,.36);
   --kita: #d1454a;   --kita-l: #f0676c;   --kita-soft: #fff0f1;   --kita-edge: rgba(240,103,108,.30);
-  --nijika: #b37800; --nijika-l: #fad961; --nijika-soft: #fff8dc; --nijika-edge: rgba(235,192,64,.44);
+  --nijika: #9c6700; --nijika-l: #fad961; --nijika-soft: #fff8dc; --nijika-edge: rgba(235,192,64,.44);
   --ryo: #3866a3;    --ryo-l: #5c91d4;    --ryo-soft: #edf4fc;    --ryo-edge: rgba(92,145,212,.30);
 
   --paper: #fafafd; --card: #ffffff; --sunk: #f2f4f8;
@@ -526,7 +526,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .phase-title small {font-size:12.5px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .phase-title .range {margin-left:auto; font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
 .rows {--t:2.75rem; --rail:calc(4px + var(--t) + 10px + 6px); --rail-y:20px}
-.row.minor:first-child, .row.minor:last-child {--rail-y:15.5px}
+.row.minor:first-child, .row.minor:last-child {--rail-y:17.5px}
 .row {display:flex; align-items:flex-start; border-radius:var(--r-sm)}
 .row-open {flex:1; min-width:0; display:flex; align-items:flex-start; gap:10px; min-height:42px; padding:8px 4px 8px 4px; border-radius:var(--r-sm)}
 .row-open:active {background:var(--sunk)}
@@ -542,7 +542,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .flag {font-size:12px; font-weight:650; color:var(--bocchi); letter-spacing:.02em}
 .flag.warn {color:var(--warn)}
 .row .check {width:44px; height:44px; margin-top:-2px}
-.row.minor .row-open {min-height:34px; padding:5px 8px 5px 4px}
+.row.minor .row-open {min-height:40px; padding:7px 8px 7px 4px}
 .row.minor .row-time, .row.minor .node {height:21px; line-height:21px}
 .row.minor .row-time {font-weight:500; color:var(--muted)}
 .row.minor .row-title {font-weight:500; font-size:13.5px; line-height:21px; color:var(--muted)}
@@ -597,7 +597,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .sec > p + p {margin-top:6px}
 .notice {display:flex; gap:10px; padding:12px 14px; border-radius:var(--r-md); background:var(--warn-soft); border:1px solid var(--nijika-edge); color:var(--warn); font-weight:600; font-size:15px}
 .notice .icon {margin-top:2px}
-.notice a {color:inherit; text-decoration:underline}
+.notice a {color:inherit; text-decoration:underline; white-space:nowrap}
 .transport {padding:2px 0 2px 14px; border-left:2.5px solid var(--ryo-l)}
 .transport li {font-size:15px; line-height:1.7; color:var(--ink)}
 .transport li + li {margin-top:8px; padding-top:8px; border-top:1px dashed var(--line)}
@@ -669,7 +669,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .shot-img::before {content:''; position:absolute; z-index:1; top:-7px; left:50%; width:50px; height:14px; margin-left:-25px; transform:rotate(-4deg); border-radius:1px; opacity:.88;
   background:repeating-linear-gradient(135deg, var(--tape-a) 0 5px, var(--tape-b) 5px 10px); box-shadow:0 1px 1px rgba(0,0,0,.05)}
 .pair .shot-img:nth-child(2)::before {transform:rotate(4deg); background:repeating-linear-gradient(45deg, rgba(94,137,194,.42) 0 5px, rgba(243,166,192,.48) 5px 10px)}
-.shot-img img {width:100%; aspect-ratio:3/2; object-fit:cover; border-radius:2px; background:#0c0f16}
+.shot-img img {width:100%; aspect-ratio:3/2; object-fit:cover; border-radius:2px; background:var(--sunk)}
 .pair.single .shot-img img {aspect-ratio:auto}
 .shot-img span {position:absolute; left:7px; bottom:3px; color:#484e5c; font:700 11px var(--serif); letter-spacing:.08em}
 .shot-missing {display:flex; flex-direction:column; justify-content:center; gap:2px; padding:10px; border-radius:var(--r-sm); background:var(--sunk); font-size:14px; min-height:96px}
@@ -701,14 +701,14 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .sub {font:700 14px var(--serif); letter-spacing:.1em; color:var(--muted); margin:16px 0 4px}
 .when {font-size:13px; font-weight:700; color:var(--bocchi); margin:12px 0 2px}
 .todo {display:flex; align-items:flex-start; gap:12px; width:100%; min-height:48px; padding:10px 0; font-size:15px; border-top:1px dashed var(--line)}
-.todo .box {flex:none; display:grid; place-items:center; width:26px; height:26px; margin-top:1px; border-radius:8px; border:2px solid var(--bocchi-edge); color:transparent}
+.todo .box {flex:none; display:grid; place-items:center; width:26px; height:26px; margin-top:1px; border-radius:8px; border:2px solid color-mix(in srgb, var(--line-2) 84%, var(--line)); color:transparent}
 .todo .box .icon {width:16px; height:16px; stroke-width:3}
 .todo.on .box {background:var(--bocchi); border-color:var(--bocchi); color:#ffffff}
 .todo.on > span:last-child {color:var(--muted); text-decoration:line-through}
 .pass-top {display:flex; align-items:baseline; justify-content:space-between; gap:10px}
 .pass-top .kicker b {color:var(--ryo); font-weight:800}
 .flight.back .pass-top .kicker b {color:var(--bocchi)}
-.pass-no {font-size:12.5px; color:var(--muted); white-space:nowrap; letter-spacing:.03em; padding:2px 0}
+.pass-no {display:inline-flex; align-items:center; min-height:40px; margin:-8px -6px; padding:0 6px; font-size:12.5px; color:var(--muted); white-space:nowrap; letter-spacing:.03em}
 .pass-no b {color:var(--ink-2); font-weight:750; letter-spacing:.04em}
 .pass-no:active {color:var(--accent)}
 .pass {display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:14px; margin:6px 0 8px}
@@ -755,7 +755,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .zoom-top h2 {flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font:700 17px var(--serif); color:var(--ink)}
 .zoom-top .icon-btn {color:var(--ink-2)}
 .zoom-mag[aria-pressed="true"] {background:var(--ryo-soft); color:var(--ryo)}
-.zoom-shot-btn {display:inline-flex; align-items:center; justify-content:center; text-align:center; gap:5px; min-height:36px; padding:0 12px; border-radius:999px; border:1px solid var(--line-2); background:var(--card); color:var(--ink-2); font-size:13px; font-weight:700; flex:none; box-shadow:0 1px 2px rgba(34,42,68,.05); transition:background-color .2s, border-color .2s, color .2s}
+.zoom-shot-btn {display:inline-flex; align-items:center; justify-content:center; text-align:center; gap:5px; min-height:42px; padding:0 13px; border-radius:999px; border:1px solid var(--line-2); background:var(--card); color:var(--ink-2); font-size:13px; font-weight:700; flex:none; box-shadow:0 1px 2px rgba(34,42,68,.05); transition:background-color .2s, border-color .2s, color .2s}
 .zoom-shot-btn .icon {width:15px; height:15px}
 .zoom-shot-btn.on {background:var(--kita-soft); border-color:color-mix(in srgb, var(--kita) 42%, transparent); color:var(--kita)}
 .zoom-stage {flex:1; min-height:0; display:grid; place-items:center; padding:8px 14px; overflow:hidden}
@@ -776,7 +776,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name, .day-key {text-
 .zoom-switch button {display:inline-flex; align-items:center; justify-content:center; text-align:center; min-height:40px; min-width:88px; padding:0 14px; border-radius:999px; color:var(--muted); font-size:14px; font-weight:700; transition:background-color .2s, color .2s, box-shadow .2s}
 .zoom-switch button[aria-pressed="true"] {background:var(--card); color:var(--bocchi); box-shadow:0 1px 4px rgba(34,42,68,.12)}
 .zoom-credit {padding:2px 18px calc(12px + env(safe-area-inset-bottom,0px)); font-size:12px; color:var(--muted); text-align:center; text-wrap:balance}
-.zoom-credit a {color:var(--ryo); white-space:nowrap}
+.zoom-credit a {color:var(--ryo); white-space:nowrap; padding:2px 3px}
 .zoom.card-mode {background:#fafafd; color:#1f222a}
 .zoom.card-mode::backdrop {background:#fafafd}
 .zoom.card-mode .zoom-top h2, .zoom.card-mode .zoom-top .icon-btn {color:#1f222a}
