@@ -104,16 +104,16 @@
       <div class="brand">
         配色对比
         <span class="swatches" aria-hidden="true">
-          <i style="background:#c9547c"></i>
-          <i style="background:#c83e37"></i>
-          <i style="background:#e5b532"></i>
-          <i style="background:#2f669e"></i>
+          <i style="background:#f995bb"></i>
+          <i style="background:#eb665e"></i>
+          <i style="background:#f6d25a"></i>
+          <i style="background:#5c96e0"></i>
         </span>
       </div>
       <div class="controls">
         <div class="modes mobile-only" id="modes">
           <button type="button" class="btn old" data-mode="old">原版绿</button>
-          <button type="button" class="btn new on" data-mode="new">白底四色</button>
+          <button type="button" class="btn new on" data-mode="new">结束乐队</button>
           <button type="button" class="btn" data-mode="split">并排</button>
         </div>
         <div class="tabs" id="tabs">
@@ -133,55 +133,135 @@
       <div class="phone"><iframe id="f-old" src="../index.html#now" title="当前和纸绿"></iframe></div>
     </section>
     <section class="col new">
-      <div class="label"><span class="tag new">新方案</span><span class="desc">极净白底 · 粉红黄蓝淡彩</span></div>
-      <div class="phone"><iframe id="f-new" src="../index.html#now" title="新方案白底四色"></iframe></div>
+      <div class="label"><span class="tag new">结束乐队</span><span class="desc">纯白和纸 · 四色柔光微炫边</span></div>
+      <div class="phone"><iframe id="f-new" src="../index.html#now" title="结束乐队白底四色"></iframe></div>
     </section>
   </main>
 
   <script>
     const PASTEL4_CSS = `
 :root[data-palette='pastel4'] {
-  --paper: #f6f7fa; --card: #ffffff; --sunk: #eff2f7;
-  --ink: #1e2229; --ink-2: #464d59; --muted: #697282;
-  --line: #e5e8ef; --line-2: #9ba3b4;
-  --accent: #2f669e; --accent-fill: #7bb0e3; --accent-pale: #ddebfa; --nav-fill: #cde2f7;
-  --accent-ink: #163659; --tab-on-ink: #1d4875; --accent-soft: #eef5fc; --fill-edge: rgba(47,102,158,.16);
-  --moegi: #7bb0e3; --plum: #c9547c; --plum-soft: rgba(201,84,124,.09); --gold: #e5b532;
-  --shu: #c83e37; --shu-soft: rgba(200,62,55,.08);
-  --danger: #bf2e2a; --danger-soft: #fdeceb;
-  --warn: #946200; --warn-soft: #fef5d6;
-  --ok: #2f669e; --ok-soft: #eef5fc;
-  --wash-shu: rgba(218,78,70,.18); --wash-moegi: rgba(242,200,75,.28); --wash-plum: rgba(232,122,160,.20);
-  --wash-gold: rgba(242,200,75,.34); --wash-accent: rgba(92,152,218,.16);
-  --tape-a: rgba(242,200,75,.45); --tape-b: rgba(232,132,166,.38);
-  --glow: rgba(116,168,232,.12); --lattice: rgba(92,134,188,.055);
-  --press: rgba(59,118,184,.34);
-  --shadow: 0 1px 2px rgba(24,34,58,.04), 0 8px 22px -12px rgba(24,34,58,.12);
-  --lift: 0 2px 4px rgba(24,34,58,.05), 0 16px 36px -14px rgba(24,34,58,.18);
-  --toast-bg: #1e2229; --toast-ink: #ffffff; --toast-action: #8cc2f5;
+  --bocchi: #e04e84; --bocchi-l: #f995bb; --bocchi-soft: #fdf0f5;
+  --kita: #d63b38;   --kita-l: #eb665e;   --kita-soft: #fdeeed;
+  --nijika: #9a6700; --nijika-l: #f6d25a; --nijika-soft: #fef7dc;
+  --ryo: #2e61ad;    --ryo-l: #5c96e0;    --ryo-soft: #edf4fd;
+
+  --paper: #fafafd; --card: #ffffff; --sunk: #f2f4f9;
+  --ink: #1e212a; --ink-2: #464c5c; --muted: #697184;
+  --line: #e6e9f2; --line-2: #9ba3b5;
+
+  --accent: var(--ryo); --accent-fill: var(--ryo-l); --accent-pale: #dceafb; --nav-fill: #cde2fa;
+  --accent-ink: #153563; --tab-on-ink: #1c4782; --accent-soft: var(--ryo-soft); --fill-edge: rgba(46,97,173,.16);
+  --moegi: var(--ryo-l); --plum: var(--bocchi); --plum-soft: rgba(224,78,132,.09); --gold: var(--nijika-l);
+  --shu: var(--kita); --shu-soft: rgba(214,59,56,.08);
+  --danger: #cc3330; --danger-soft: var(--kita-soft);
+  --warn: var(--nijika); --warn-soft: var(--nijika-soft);
+  --ok: var(--ryo); --ok-soft: var(--ryo-soft);
+
+  --wash-shu: rgba(235,102,94,.22); --wash-moegi: rgba(246,210,90,.32); --wash-plum: rgba(249,149,187,.28);
+  --wash-gold: rgba(246,210,90,.38); --wash-accent: rgba(92,150,224,.20);
+  --tape-a: rgba(246,210,90,.48); --tape-b: rgba(249,149,187,.44);
+  --glow: transparent; --lattice: rgba(92,150,224,.045);
+  --press: rgba(60,111,184,.34);
+  --shadow: 0 2px 6px rgba(34,42,68,.04), 0 10px 26px -14px rgba(46,97,173,.14);
+  --lift: 0 3px 8px rgba(34,42,68,.05), 0 18px 38px -14px rgba(46,97,173,.18);
+  --toast-bg: #1e212a; --toast-ink: #ffffff; --toast-action: #f995bb;
+  --kessoku-rim: linear-gradient(135deg, rgba(246,210,90,.62), rgba(92,150,224,.46) 36%, rgba(249,149,187,.62) 70%, rgba(235,102,94,.46));
+  --kessoku-line: linear-gradient(90deg, #f6d25a, #eb665e 34%, #f995bb 68%, #5c96e0);
 }
-:root[data-palette='pastel4'] .flag:not(.warn) { color: var(--plum); }
-:root[data-palette='pastel4'] .shot-note b { color: var(--plum); }
-:root[data-palette='pastel4'] .pair .shot-img:nth-child(2)::before {
-  background: repeating-linear-gradient(45deg, rgba(116,168,232,.40) 0 5px, rgba(232,132,166,.36) 5px 10px);
+:root[data-palette='pastel4'] body {
+  background:
+    radial-gradient(58% 32% at 0% 0%, rgba(246,210,90,.28), transparent 72%) fixed,
+    radial-gradient(56% 32% at 100% 2%, rgba(92,150,224,.22), transparent 72%) fixed,
+    radial-gradient(54% 30% at 0% 96%, rgba(235,102,94,.18), transparent 72%) fixed,
+    radial-gradient(60% 34% at 100% 100%, rgba(249,149,187,.28), transparent 72%) fixed,
+    var(--paper);
 }
+:root[data-palette='pastel4'] .block,
+:root[data-palette='pastel4'] .shot,
+:root[data-palette='pastel4'] .focus,
+:root[data-palette='pastel4'] .day-ticket,
+:root[data-palette='pastel4'] .link-row {
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    var(--kessoku-rim) border-box;
+  border: 1px solid transparent;
+}
+:root[data-palette='pastel4'] .focus.live {
+  box-shadow: 0 0 0 2px rgba(92,150,224,.45), var(--lift);
+}
+:root[data-palette='pastel4'] .tabbar {
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  box-shadow: 0 -1px 0 rgba(230,233,242,.7);
+}
+:root[data-palette='pastel4'] .tabbar::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1.5px;
+  background: var(--kessoku-line); opacity: .78; pointer-events: none;
+}
+:root[data-palette='pastel4'] .bar i { background: var(--kessoku-line); }
+:root[data-palette='pastel4'] .tab:nth-child(1).on { background: var(--kita-soft); color: var(--kita); }
+:root[data-palette='pastel4'] .tab:nth-child(1).on::before { background: var(--kita-l); }
+:root[data-palette='pastel4'] .tab:nth-child(2).on { background: var(--ryo-soft); color: var(--ryo); }
+:root[data-palette='pastel4'] .tab:nth-child(2).on::before { background: var(--ryo-l); }
+:root[data-palette='pastel4'] .tab:nth-child(3).on { background: var(--bocchi-soft); color: var(--bocchi); }
+:root[data-palette='pastel4'] .tab:nth-child(3).on::before { background: var(--bocchi-l); }
+:root[data-palette='pastel4'] .tab:nth-child(4).on { background: var(--nijika-soft); color: var(--nijika); }
+:root[data-palette='pastel4'] .tab:nth-child(4).on::before { background: var(--nijika-l); }
+:root[data-palette='pastel4'] .flag:not(.warn) { color: var(--bocchi); }
+:root[data-palette='pastel4'] .shot-note b { color: var(--bocchi); }
 :root[data-palette='pastel4'] .shot-img { background: #ffffff; }
+:root[data-palette='pastel4'] .pair .shot-img:nth-child(1)::before {
+  background: repeating-linear-gradient(135deg, rgba(246,210,90,.55) 0 5px, rgba(235,102,94,.42) 5px 10px);
+}
+:root[data-palette='pastel4'] .pair .shot-img:nth-child(2)::before {
+  background: repeating-linear-gradient(45deg, rgba(92,150,224,.48) 0 5px, rgba(249,149,187,.52) 5px 10px);
+}
+:root[data-palette='pastel4'] .day-key::before {
+  background: linear-gradient(180deg, #f6d25a, #eb665e, #f995bb, #5c96e0);
+}
+:root[data-palette='pastel4'] .strip-day.on {
+  background: linear-gradient(135deg, #edf4fd, #fdf0f5);
+  color: var(--ryo);
+  box-shadow: inset 0 0 0 1px rgba(92,150,224,.35);
+}
+:root[data-palette='pastel4'] .strip-day.on small { color: var(--bocchi); opacity: .95; }
 :root[data-palette='pastel4'][data-user-color-scheme='dark'] {
-  --paper: #0f1218; --card: #161b24; --sunk: #1e2532;
-  --ink: #edf1f7; --ink-2: #c5cdd9; --muted: #939eae;
-  --line: #273040; --line-2: #5b677d;
-  --accent: #8cc2f5; --accent-fill: #8cc2f5; --accent-pale: #8cc2f5; --nav-fill: #8cc2f5;
-  --accent-ink: #102033; --tab-on-ink: #c6e1fb; --accent-soft: rgba(140,194,245,.14); --fill-edge: transparent;
-  --moegi: #8cc2f5; --plum: #f29ab7; --plum-soft: rgba(242,154,183,.13); --gold: #f2cc63;
-  --shu: #f27c75; --shu-soft: rgba(242,124,117,.12);
-  --danger: #ff8e88; --danger-soft: rgba(255,142,136,.14);
-  --warn: #f2cc63; --warn-soft: rgba(242,204,99,.14);
-  --ok: #8cc2f5; --ok-soft: rgba(140,194,245,.14);
-  --wash-shu: rgba(242,124,117,.30); --wash-moegi: rgba(242,204,99,.22); --wash-plum: rgba(242,154,183,.22);
-  --wash-gold: rgba(242,204,99,.28); --wash-accent: rgba(140,194,245,.16);
-  --glow: rgba(116,168,232,.08); --lattice: rgba(140,194,245,.045);
-  --toast-bg: #edf1f7; --toast-ink: #161b24; --toast-action: #2f669e;
-}`;
+  --bocchi: #ff9ec2; --bocchi-l: #ff9ec2; --bocchi-soft: rgba(255,158,194,.14);
+  --kita: #ff7e75;   --kita-l: #ff7e75;   --kita-soft: rgba(255,126,117,.14);
+  --nijika: #f8d86c; --nijika-l: #f8d86c; --nijika-soft: rgba(248,216,108,.14);
+  --ryo: #8cc2ff;    --ryo-l: #8cc2ff;    --ryo-soft: rgba(140,194,255,.15);
+
+  --paper: #0e1017; --card: #151822; --sunk: #1d2230;
+  --ink: #eef1f8; --ink-2: #c5ccdb; --muted: #939cb0;
+  --line: #262c3d; --line-2: #5b657d;
+
+  --accent: var(--ryo); --accent-fill: var(--ryo); --accent-pale: var(--ryo); --nav-fill: var(--ryo);
+  --accent-ink: #0e1c30; --tab-on-ink: #c7e0ff; --accent-soft: var(--ryo-soft); --fill-edge: transparent;
+  --moegi: var(--ryo); --plum: var(--bocchi); --plum-soft: var(--bocchi-soft); --gold: var(--nijika);
+  --shu: var(--kita); --shu-soft: var(--kita-soft);
+  --danger: #ff867e; --danger-soft: var(--kita-soft);
+  --warn: var(--nijika); --warn-soft: var(--nijika-soft);
+  --ok: var(--ryo); --ok-soft: var(--ryo-soft);
+  --wash-shu: rgba(255,126,117,.28); --wash-moegi: rgba(248,216,108,.24); --wash-plum: rgba(255,158,194,.24);
+  --wash-gold: rgba(248,216,108,.28); --wash-accent: rgba(140,194,255,.18);
+  --lattice: rgba(140,194,255,.04);
+  --toast-bg: #eef1f8; --toast-ink: #151822; --toast-action: #2e61ad;
+  --kessoku-rim: linear-gradient(135deg, rgba(248,216,108,.36), rgba(140,194,255,.32) 36%, rgba(255,158,194,.36) 70%, rgba(255,126,117,.30));
+}
+:root[data-palette='pastel4'][data-user-color-scheme='dark'] body {
+  background:
+    radial-gradient(58% 32% at 0% 0%, rgba(248,216,108,.11), transparent 72%) fixed,
+    radial-gradient(56% 32% at 100% 2%, rgba(140,194,255,.12), transparent 72%) fixed,
+    radial-gradient(54% 30% at 0% 96%, rgba(255,126,117,.10), transparent 72%) fixed,
+    radial-gradient(60% 34% at 100% 100%, rgba(255,158,194,.12), transparent 72%) fixed,
+    var(--paper);
+}
+:root[data-palette='pastel4'][data-user-color-scheme='dark'] .strip-day.on {
+  background: linear-gradient(135deg, rgba(140,194,255,.22), rgba(255,158,194,.20));
+  color: #eef1f8;
+  box-shadow: inset 0 0 0 1px rgba(140,194,255,.35);
+}
+:root[data-palette='pastel4'][data-user-color-scheme='dark'] .strip-day.on small { color: var(--bocchi); }`;
 
     const fOld = document.getElementById('f-old'), fNew = document.getElementById('f-new');
     let scheme = 'light';
