@@ -133,7 +133,7 @@
       <div class="phone"><iframe id="f-old" src="../index.html#now" title="当前和纸绿"></iframe></div>
     </section>
     <section class="col new">
-      <div class="label"><span class="tag new">结束乐队</span><span class="desc">纯白和纸 · 四色柔光微炫边</span></div>
+      <div class="label"><span class="tag new">结束乐队</span><span class="desc">纯白手帖 · 四角轻微光</span></div>
       <div class="phone"><iframe id="f-new" src="../index.html#now" title="结束乐队白底四色"></iframe></div>
     </section>
   </main>
@@ -164,40 +164,29 @@
   --tape-a: rgba(251,225,140,.56); --tape-b: rgba(243,166,192,.48);
   --glow: transparent; --lattice: rgba(94,137,194,.045);
   --press: rgba(65,100,150,.32);
-  --shadow: 0 2px 6px rgba(34,42,68,.04), 0 10px 26px -14px rgba(65,100,150,.14);
-  --lift: 0 3px 8px rgba(34,42,68,.05), 0 18px 38px -14px rgba(65,100,150,.18);
+  --shadow: 0 1px 2px rgba(34,42,68,.04), 0 8px 22px -12px rgba(34,42,68,.11);
+  --lift: 0 2px 6px rgba(34,42,68,.05), 0 16px 34px -14px rgba(34,42,68,.16);
   --toast-bg: #1f222a; --toast-ink: #ffffff; --toast-action: #f3a6c0;
-  --kessoku-rim: linear-gradient(135deg, rgba(251,225,140,.72), rgba(94,137,194,.46) 36%, rgba(243,166,192,.66) 70%, rgba(233,108,109,.48));
   --kessoku-line: linear-gradient(90deg, #fbe18c, #e96c6d 34%, #f3a6c0 68%, #5e89c2);
 }
 :root[data-palette='pastel4'] body {
   background:
-    radial-gradient(58% 32% at 0% 0%, rgba(251,225,140,.34), transparent 72%) fixed,
-    radial-gradient(56% 32% at 100% 2%, rgba(94,137,194,.22), transparent 72%) fixed,
-    radial-gradient(54% 30% at 0% 96%, rgba(233,108,109,.19), transparent 72%) fixed,
-    radial-gradient(60% 34% at 100% 100%, rgba(243,166,192,.30), transparent 72%) fixed,
+    radial-gradient(56% 30% at 0% 0%, rgba(251,225,140,.17), transparent 72%) fixed,
+    radial-gradient(54% 30% at 100% 2%, rgba(94,137,194,.13), transparent 72%) fixed,
+    radial-gradient(52% 28% at 0% 96%, rgba(233,108,109,.11), transparent 72%) fixed,
+    radial-gradient(58% 32% at 100% 100%, rgba(243,166,192,.16), transparent 72%) fixed,
     var(--paper);
 }
-:root[data-palette='pastel4'] .block,
-:root[data-palette='pastel4'] .shot,
-:root[data-palette='pastel4'] .focus,
-:root[data-palette='pastel4'] .day-ticket,
-:root[data-palette='pastel4'] .link-row {
-  background:
-    linear-gradient(var(--card), var(--card)) padding-box,
-    var(--kessoku-rim) border-box;
-  border: 1px solid transparent;
-}
 :root[data-palette='pastel4'] .focus.live {
-  box-shadow: 0 0 0 2px rgba(94,137,194,.45), var(--lift);
+  box-shadow: 0 0 0 2px rgba(94,137,194,.38), var(--lift);
 }
 :root[data-palette='pastel4'] .tabbar {
   background: color-mix(in srgb, var(--card) 92%, transparent);
   box-shadow: 0 -1px 0 rgba(231,234,242,.7);
 }
 :root[data-palette='pastel4'] .tabbar::before {
-  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1.5px;
-  background: var(--kessoku-line); opacity: .82; pointer-events: none;
+  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: var(--kessoku-line); opacity: .55; pointer-events: none;
 }
 :root[data-palette='pastel4'] .bar i { background: var(--kessoku-line); }
 :root[data-palette='pastel4'] .tab:nth-child(1).on { background: var(--kita-soft); color: var(--kita); }
@@ -212,20 +201,14 @@
 :root[data-palette='pastel4'] .shot-note b { color: var(--bocchi); }
 :root[data-palette='pastel4'] .shot-img { background: #ffffff; }
 :root[data-palette='pastel4'] .pair .shot-img:nth-child(1)::before {
-  background: repeating-linear-gradient(135deg, rgba(251,225,140,.62) 0 5px, rgba(233,108,109,.40) 5px 10px);
+  background: repeating-linear-gradient(135deg, rgba(251,225,140,.58) 0 5px, rgba(233,108,109,.36) 5px 10px);
 }
 :root[data-palette='pastel4'] .pair .shot-img:nth-child(2)::before {
-  background: repeating-linear-gradient(45deg, rgba(94,137,194,.46) 0 5px, rgba(243,166,192,.54) 5px 10px);
+  background: repeating-linear-gradient(45deg, rgba(94,137,194,.42) 0 5px, rgba(243,166,192,.48) 5px 10px);
 }
 :root[data-palette='pastel4'] .day-key::before {
   background: linear-gradient(180deg, #fbe18c, #e96c6d, #f3a6c0, #5e89c2);
 }
-:root[data-palette='pastel4'] .strip-day.on {
-  background: linear-gradient(135deg, #eff4fb, #fcf1f5);
-  color: var(--ryo);
-  box-shadow: inset 0 0 0 1px rgba(94,137,194,.34);
-}
-:root[data-palette='pastel4'] .strip-day.on small { color: var(--bocchi); opacity: .95; }
 :root[data-palette='pastel4'][data-user-color-scheme='dark'] {
   --bocchi: #ff9ec2; --bocchi-l: #ff9ec2; --bocchi-soft: rgba(255,158,194,.14);
   --kita: #ff7e75;   --kita-l: #ff7e75;   --kita-soft: rgba(255,126,117,.14);
@@ -243,26 +226,19 @@
   --danger: #ff867e; --danger-soft: var(--kita-soft);
   --warn: var(--nijika); --warn-soft: var(--nijika-soft);
   --ok: var(--ryo); --ok-soft: var(--ryo-soft);
-  --wash-shu: rgba(255,126,117,.28); --wash-moegi: rgba(248,216,108,.24); --wash-plum: rgba(255,158,194,.24);
-  --wash-gold: rgba(248,216,108,.28); --wash-accent: rgba(140,194,255,.18);
+  --wash-shu: rgba(255,126,117,.26); --wash-moegi: rgba(248,216,108,.22); --wash-plum: rgba(255,158,194,.22);
+  --wash-gold: rgba(248,216,108,.26); --wash-accent: rgba(140,194,255,.16);
   --lattice: rgba(140,194,255,.04);
-  --toast-bg: #eef1f8; --toast-ink: #151822; --toast-action: #2e61ad;
-  --kessoku-rim: linear-gradient(135deg, rgba(248,216,108,.36), rgba(140,194,255,.32) 36%, rgba(255,158,194,.36) 70%, rgba(255,126,117,.30));
+  --toast-bg: #eef1f8; --toast-ink: #151822; --toast-action: #416496;
 }
 :root[data-palette='pastel4'][data-user-color-scheme='dark'] body {
   background:
-    radial-gradient(58% 32% at 0% 0%, rgba(248,216,108,.11), transparent 72%) fixed,
-    radial-gradient(56% 32% at 100% 2%, rgba(140,194,255,.12), transparent 72%) fixed,
-    radial-gradient(54% 30% at 0% 96%, rgba(255,126,117,.10), transparent 72%) fixed,
-    radial-gradient(60% 34% at 100% 100%, rgba(255,158,194,.12), transparent 72%) fixed,
+    radial-gradient(56% 30% at 0% 0%, rgba(248,216,108,.07), transparent 72%) fixed,
+    radial-gradient(54% 30% at 100% 2%, rgba(140,194,255,.08), transparent 72%) fixed,
+    radial-gradient(52% 28% at 0% 96%, rgba(255,126,117,.06), transparent 72%) fixed,
+    radial-gradient(58% 32% at 100% 100%, rgba(255,158,194,.08), transparent 72%) fixed,
     var(--paper);
-}
-:root[data-palette='pastel4'][data-user-color-scheme='dark'] .strip-day.on {
-  background: linear-gradient(135deg, rgba(140,194,255,.22), rgba(255,158,194,.20));
-  color: #eef1f8;
-  box-shadow: inset 0 0 0 1px rgba(140,194,255,.35);
-}
-:root[data-palette='pastel4'][data-user-color-scheme='dark'] .strip-day.on small { color: var(--bocchi); }`;
+}`;
 
     const fOld = document.getElementById('f-old'), fNew = document.getElementById('f-new');
     let scheme = 'light';
