@@ -2518,7 +2518,7 @@ function boot(){
  window.addEventListener('mouseup',()=>{panning=false;});
  document.addEventListener('keydown',ev=>{if(!zoomEl.open)return;if(ev.key==='ArrowLeft'&&zoomPan.scale===1)stepZoomMode(-1);else if(ev.key==='ArrowRight'&&zoomPan.scale===1)stepZoomMode(1);});
  window.addEventListener('popstate',ev=>{const s=ev.state?.sheet;if(s)openSheet(s.date,s.key,{push:false,pushed:true});else hideSheet();});
- window.addEventListener('hashchange',()=>{if(location.hash!=='#main')route();}); // #main is the skip link
+ window.addEventListener('hashchange',()=>{if(location.hash!=='#main'){if(zoomEl.open)closeDialog(zoomEl);if(sheetEl.open)hideSheet();route();}}); // #main is the skip link
  window.addEventListener('storage',ev=>{
   if(ev.key===COLOR_MODE_KEY){if(ev.newValue)document.documentElement.setAttribute('data-user-color-scheme',ev.newValue);else document.documentElement.removeAttribute('data-user-color-scheme');syncThemeColor();return;}
   if(ev.key===STORAGE_KEY){try{const next=JSON.parse(ev.newValue);if(next?.checks&&next?.todos&&next?.choices){state=next;refresh();}}catch{}}
