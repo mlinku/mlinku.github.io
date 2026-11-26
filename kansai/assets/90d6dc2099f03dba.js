@@ -2088,7 +2088,7 @@ function row(d,ev,now,phaseFirst=false){
  if(noticeParts(d,ev).notice)flags.push('<span class="flag warn">注意</span>');
  if(ev.optional)flags.push('<span class="flag">可选</span>');
  const ticket=major?eventTicket(d,ev):null;if(ticket&&!ticket.done&&ticket.tone!=='plain')flags.push(`<span class="flag ${ticket.tone==='danger'?'warn':''}">${e(ticket.label)}</span>`);
- const shots=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p)).length;if(shots)flags.push(`<span class="flag">巡礼 ${shots}</span>`);
+ const shots=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p)).length;if(shots)flags.push(`<span class="flag">${shots} 处巡礼</span>`);
  // Each phase's first row keeps its clock even when it is a transfer or check-in, so the phase start reads cleanly.
  const fixed=fixedTime(ev),showClock=major||fixed||phaseFirst||effectiveEvents(d)[0]?.id===ev.id||now?.current?.id===ev.id,passed=!major&&passedConnector(d,ev);
  const words=ROW_SUB[ev.id]||(showClock?(start===null?compactTime(ev.time_label):(!major&&!fixed?spanText(ev):'')):spanText(ev));
