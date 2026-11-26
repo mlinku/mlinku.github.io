@@ -77,7 +77,8 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false,styleFiles=
  }
  // Heading fonts ship with the site: assets/ next to the stylesheet online, data URIs offline.
  // Stylesheets name bundled files as url(@font/<file>) or url(@src/<path under kansai-src>); the stylesheet itself sits in assets/ online.
- const cssURL=local=>`url("${offline?media(local).src:media(local).src.replace(/^assets\//,'')}")`;
+ const shellAssets=new Set();
+ const cssURL=local=>{const m=media(local);if(!offline)shellAssets.add(m.src);return `url("${offline?m.src:m.src.replace(/^assets\//,'')}")`;};
  const css=styleFiles.map(read).join('\n').replace(/url\(@font\/([\w-]+\.woff)\)/g,(_,name)=>cssURL('assets/fonts/'+name)).replace(/url\(@src\/([\w\/.-]+)\)/g,(_,local)=>cssURL(local));
  let app=scriptFiles.map(read).join('\n');
  if(!offline)app=app.replace("const BLOG_HOME='https://mlinku.github.io/';","const BLOG_HOME='../';");
@@ -88,12 +89,39 @@ export function buildSite({sourceDir,dataDir,outputDir,offline=false,styleFiles=
   fs.writeFileSync(path.join(assetDir,name),content);used.add(name);return 'assets/'+name;
  }
  // No web fonts: Google Fonts is often unreachable for readers in mainland China and would block rendering.
- const styleTag=offline?`<style>${css}</style>`:`<link rel="stylesheet" href="${resource(css,'css')}">`;
- const scriptTag=offline?`<script>${script}</script>`:`<script defer src="${resource(script,'js')}"></script>`;
+ const styleHref=offline?'':resource(css,'css'),scriptHref=offline?'':resource(script,'js');
+ const styleTag=offline?`<style>${css}</style>`:`<link rel="stylesheet" href="${styleHref}">`;
+ const scriptTag=offline?`<script>${script}</script>`:`<script defer src="${scriptHref}"></script>`;
  const appIcon=media('trip/assets/app-icon.png').src;
+ const manifestLink=offline?'':'<link rel="manifest" href="manifest.webmanifest">';
  const favicon=`data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" rx="10" fill="#ffffff" stroke="#f0676c" stroke-opacity=".42" stroke-width="1.5"/><text x="20" y="25.5" text-anchor="middle" fill="#d1454a" font-family="serif" font-weight="900" font-size="21">旅</text><circle cx="11" cy="33.5" r="2.1" fill="#fad961"/><circle cx="17" cy="33.5" r="2.1" fill="#5c91d4"/><circle cx="23" cy="33.5" r="2.1" fill="#f0676c"/><circle cx="29" cy="33.5" r="2.1" fill="#f59bbd"/></svg>`)}`;
- const html=`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">${(Array.isArray(themeColor)?themeColor:[themeColor]).map((c,i,all)=>`<meta name="theme-color" content="${c}"${all.length>1?` media="(prefers-color-scheme: ${i?'dark':'light'})"`:''}>`).join('')}<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="关西手帖"><script id="color-mode">try{var m=localStorage.getItem('user-color-scheme'),s=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light',a=m||s;if(m&&m!==s)document.documentElement.setAttribute('data-user-color-scheme',m);if(m){var t=document.createElement('meta');t.id='theme-color-live';t.name='theme-color';t.content=a==='dark'?'#0e1017':'#fafafd';document.head.appendChild(t);}}catch(e){}</script><meta name="description" content="2026关西旅行：8天行程、路线定位、餐饮与动漫巡礼对照。"><title>关西秋日手帖 · 2026</title><link rel="icon" type="image/svg+xml" href="${favicon}"><link rel="apple-touch-icon" sizes="180x180" href="${appIcon}">${styleTag}</head><body><a class="skip" href="#main">跳到主要内容</a><div id="app"></div><div id="toast" role="status" aria-live="polite"></div><noscript><p>请启用JavaScript查看行程。</p></noscript>${scriptTag}</body></html>`;
+ const html=`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">${(Array.isArray(themeColor)?themeColor:[themeColor]).map((c,i,all)=>`<meta name="theme-color" content="${c}"${all.length>1?` media="(prefers-color-scheme: ${i?'dark':'light'})"`:''}>`).join('')}<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="关西手帖"><script id="color-mode">try{var m=localStorage.getItem('user-color-scheme'),s=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(m&&m!==s){document.documentElement.setAttribute('data-user-color-scheme',m);var t=document.createElement('meta');t.id='theme-color-live';t.name='theme-color';t.content=m==='dark'?'#0e1017':'#fafafd';document.head.insertBefore(t,document.head.firstChild);}}catch(e){}</script><meta name="description" content="2026关西旅行：8天行程、路线定位、餐饮与动漫巡礼对照。"><title>关西秋日手帖 · 2026</title><link rel="icon" type="image/svg+xml" href="${favicon}"><link rel="apple-touch-icon" sizes="180x180" href="${appIcon}">${manifestLink}${styleTag}</head><body><a class="skip" href="#main">跳到主要内容</a><div id="app"></div><div id="toast" popover="manual" role="status" aria-live="polite"></div><noscript><p>请启用JavaScript查看行程。</p></noscript>${scriptTag}</body></html>`;
  fs.writeFileSync(path.join(outputDir,'index.html'),html);
+ if(!offline){
+  const icon192=media('trip/assets/app-icon-192.png').src,icon512=media('trip/assets/app-icon-512.png').src;
+  const manifest={name:'关西秋日手帖 · 2026',short_name:'关西手帖',description:'2026关西旅行：8天行程、路线定位、餐饮与动漫巡礼对照。',lang:'zh-CN',start_url:'./',scope:'./',display:'standalone',background_color:'#fafafd',theme_color:'#fafafd',
+   icons:[{src:icon192,sizes:'192x192',type:'image/png',purpose:'any maskable'},{src:icon512,sizes:'512x512',type:'image/png',purpose:'any maskable'}]};
+  fs.writeFileSync(path.join(outputDir,'manifest.webmanifest'),JSON.stringify(manifest,null,2));
+  const core=['./','./index.html','./manifest.webmanifest',styleHref,scriptHref,appIcon,icon192,icon512,...shellAssets];
+  const warm=[...new Set([...Object.values(photos).flatMap(p=>[p.tiny,p.thumbnail]),...illustratedPoints.flatMap(p=>[p.real,p.anime,p.comparison]).filter(Boolean).map(p=>p.thumbnail)].filter(Boolean))];
+  const buildHash=crypto.createHash('sha256').update(html).digest('hex').slice(0,12);
+  const sw=`const CACHE='kansai-${buildHash}',CORE=${JSON.stringify(core)},WARM=${JSON.stringify(warm)};
+let warming=null;
+self.addEventListener('install',ev=>{ev.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
+self.addEventListener('activate',ev=>{ev.waitUntil((async()=>{for(const k of await caches.keys())if(k.startsWith('kansai-')&&k!==CACHE)await caches.delete(k);await self.clients.claim();})());});
+self.addEventListener('message',ev=>{if(ev.data?.type!=='WARM'||warming)return;ev.waitUntil(warming=(async()=>{const c=await caches.open(CACHE);for(let i=0;i<WARM.length;i+=6)await Promise.all(WARM.slice(i,i+6).map(async u=>{try{if(!(await c.match(u))){const r=await fetch(u);if(r.ok&&!r.redirected)await c.put(u,r);}}catch{}}));})().finally(()=>{warming=null;}));});
+self.addEventListener('fetch',ev=>{
+ const req=ev.request;if(req.method!=='GET')return;
+ const url=new URL(req.url);if(url.origin!==self.location.origin)return;
+ const scope=new URL('./',self.location).pathname;if(!url.pathname.startsWith(scope))return;
+ if(req.mode==='navigate'||url.pathname===scope||url.pathname.endsWith('/index.html')||url.pathname.endsWith('/manifest.webmanifest')){
+  ev.respondWith((async()=>{const c=await caches.open(CACHE),ctrl=new AbortController(),t=setTimeout(()=>ctrl.abort(),3500);try{const res=await fetch(req.mode==='navigate'?req.url:req,{cache:'no-cache',signal:ctrl.signal});if(res.ok&&!res.redirected){ev.waitUntil(c.put(req.mode==='navigate'?'./index.html':req,res.clone()).catch(()=>{}));return res;}}catch{}finally{clearTimeout(t);}return (await c.match(req))||(await c.match('./index.html'))||(await c.match('./'))||Response.error();})());
+  return;
+ }
+ if(url.pathname.includes('/assets/'))ev.respondWith((async()=>{const c=await caches.open(CACHE),hit=await c.match(req);if(hit)return hit;try{const res=await fetch(req);if(res.ok&&!res.redirected)ev.waitUntil(c.put(req,res.clone()).catch(()=>{}));return res;}catch{const thumb=req.url.replace(/\\.(?:jpe?g|png|webp)(?=$|\\?)/i,'-640q82.jpg');return (thumb!==req.url&&await c.match(thumb))||Response.error();}})());
+});\n`;
+  fs.writeFileSync(path.join(outputDir,'sw.js'),sw);
+ }
  // Hashed files from earlier builds are never referenced again; keep the published folder to the current set.
  let removed=0;
  if(!offline)for(const file of fs.readdirSync(assetDir))if(!used.has(file)){fs.unlinkSync(path.join(assetDir,file));removed++;}

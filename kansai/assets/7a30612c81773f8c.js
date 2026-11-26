@@ -1254,7 +1254,15 @@ const NIPPOMBASHI_SHOPS=['animate','surugaya','potato','surugaya_main'];
 const choice=d=>{const c={ujiExtra:'none',byodoinInterior:false,kodaijiPlan:'night',yasakaBrief:false,shop1:'animate',shop2:'surugaya',...state.choices[d.date]};if(d.date==='2026-12-01'){c.ujiExtra='none';c.byodoinInterior=false;delete c.skipByodoin;}if(!NIPPOMBASHI_SHOPS.includes(c.shop1))c.shop1='animate';if(c.shop2!=='none'&&(!NIPPOMBASHI_SHOPS.includes(c.shop2)||c.shop2===c.shop1))c.shop2='none';if(d.date==='2026-12-02'){if(!['night','skip'].includes(c.kodaijiPlan))c.kodaijiPlan='night';c.yasakaBrief=c.kodaijiPlan==='night'&&c.yasakaBrief===true;}return c;};
 function activityState(date,id){const value=state.checks[date+':'+id];return value===true||value==='done'?'done':'pending';}
 function save(){try{preserveLegacyRecord();localStorage.setItem(STORAGE_KEY,JSON.stringify(state));storageOK=true;return true;}catch{storageOK=false;toast('本次修改未保存；请允许浏览器存储后重试，刷新或关闭可能丢失。');return false;}}
-function toast(message,undo){clearTimeout(toastTimer);undoAction=undo||null;$('#toast').innerHTML=e(message)+(undo?'<button data-action="undo">撤销</button>':'');$('#toast').classList.add('show');toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),undo?8500:3500);}
+let toastHideTimer;
+function toast(message,undo){
+ clearTimeout(toastTimer);clearTimeout(toastHideTimer);undoAction=undo||null;
+ const el=$('#toast');if(!el)return;
+ el.innerHTML=e(message)+(undo?'<button data-action="undo">撤销</button>':'');
+ try{el.hidePopover?.();el.showPopover?.();}catch{}
+ el.classList.add('show');
+ toastTimer=setTimeout(()=>{el.classList.remove('show');toastHideTimer=setTimeout(()=>{try{el.hidePopover?.();}catch{}},260);},undo?8500:3500);
+}
 function openManualCopy(value){
  let dlg=document.getElementById('copy-dialog');
  if(!dlg){dlg=document.createElement('dialog');dlg.id='copy-dialog';dlg.className='copy-dialog';dlg.setAttribute('aria-labelledby','copy-title');document.body.append(dlg);}
@@ -1571,7 +1579,7 @@ function tripStatus(){
  return {phase:'during',index:PLAN.days.findIndex(d=>d.date===now.date),minutes:now.minutes};
 }
 const todayIndex=()=>{const s=tripStatus();return s.phase==='during'?s.index:-1;};
-const eventStart=ev=>{const m=/(\d{1,2}):(\d{2})/.exec(ev.time_label||'');return m?Number(m[1])*60+Number(m[2]):null;};
+const eventStart=ev=>{const m=/(\d{1,2}):(\d{2})/.exec(compactTime(ev.time_label||''));return m?Number(m[1])*60+Number(m[2]):null;};
 // Hong Kong departure times are UTC+8 (60 min behind Japan time); compare against tokyoNow() in JST.
 const isHKTime=t=>/^\d{1,2}:\d{2}\s*香港/.test(String(t||''));
 const eventStartJST=ev=>{const s=eventStart(ev);return s===null?null:s+(isHKTime(ev.time_label)?60:0);};
@@ -1684,7 +1692,7 @@ function mealModel(d,r,said){
 
 // Sentence-level overlap check so a fact said once on the page is not printed again.
 const bigrams=t=>{t=String(t).replace(/[\s，。；、·：:（）()「」《》]/g,'');const out=new Set();for(let i=0;i<t.length-1;i++)out.add(t.slice(i,i+2));return out;};
-function alreadySaid(sentence,pool){const a=bigrams(sentence);if(a.size<4){const word=String(sentence).replace(/[s，。；、·：:]/g,'');return word.length>0&&String(pool).includes(word);}const b=bigrams(pool);let n=0;for(const x of a)if(b.has(x))n++;return n/a.size>=.6;}
+function alreadySaid(sentence,pool){const a=bigrams(sentence);if(a.size<4){const word=String(sentence).replace(/[\s，。；、·：:]/g,'');return word.length>0&&String(pool).includes(word);}const b=bigrams(pool);let n=0;for(const x of a)if(b.has(x))n++;return n/a.size>=.6;}
 function dropSaid(text,pool){return String(text).split(/(?<=[。；])/).filter(s=>s.trim()&&!alreadySaid(s,pool)).join('').replace(/；$/,'。');}
 
 function dayFallbacks(d){const c=choice(d);return d.fallback_rules.flatMap(t=>{
@@ -1801,7 +1809,8 @@ function eventModel(d,ev){
  const brief=ev.condition&&Object.hasOwn(EVENT_BRIEF,ev.id)?EVENT_BRIEF[ev.id]:null;
  const line=cleanText(brief??ev.condition??'');
  // A photo belongs to the first activity that shows one; a walk or transfer through the same place does not claim it.
- const seen=new Set(earlier.filter(x=>isMajorEvent(d,x)).flatMap(eventPhotoIds)),photos=major?eventPhotoIds(ev).filter(id=>!seen.has(id)):[];
+ const seen=new Set(earlier.filter(x=>isMajorEvent(d,x)).flatMap(eventPhotoIds)),seenSrc=new Set([...seen].map(photoSrc));
+ const photos=major?eventPhotoIds(ev).filter(id=>{const s=photoSrc(id);if(seen.has(id)||seenSrc.has(s))return false;seenSrc.add(s);return true;}):[];
  const transport=transportNotes(d,ev);
  const stops=navigationStops(ev,d,!!(first&&first[0]!=='早餐'));
  const {notice,links}=noticeParts(d,ev),noticeText=notice.replace(/<[^>]+>/g,'');
@@ -1872,7 +1881,7 @@ function decodeProgress(raw){
  const bin=atob(text.slice(7).replace(/\s+/g,''));
  const bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
  const data=JSON.parse(new TextDecoder().decode(bytes));
- if(!data||typeof data!=='object'||typeof data.c!=='object'||Array.isArray(data.c)||typeof data.t!=='object'||Array.isArray(data.t)||typeof data.o!=='object'||Array.isArray(data.o))throw Error('进度码格式无效');
+ if(!data||typeof data!=='object'||!data.c||typeof data.c!=='object'||Array.isArray(data.c)||!data.t||typeof data.t!=='object'||Array.isArray(data.t)||!data.o||typeof data.o!=='object'||Array.isArray(data.o))throw Error('进度码格式无效');
  return {schemaVersion:3,planRevision:typeof data.r==='string'?data.r:PLAN.revision,checks:data.c,todos:data.t,choices:data.o};
 }
 
@@ -2092,10 +2101,10 @@ function row(d,ev,now,phaseFirst=false){
  const ticket=major?eventTicket(d,ev):null;if(ticket&&!ticket.done&&ticket.tone!=='plain')flags.push(`<span class="flag ${ticket.tone==='danger'?'warn':''}">${e(ticket.label)}</span>`);
  const shots=pilgrimageDay(d.date).filter(p=>p.event_id===ev.id&&pointEnabled(p)).length;if(shots)flags.push(`<span class="flag">${shots} 处巡礼</span>`);
  // Each phase's first row keeps its clock even when it is a transfer or check-in, so the phase start reads cleanly.
- const fixed=fixedTime(ev),showClock=major||fixed||phaseFirst||effectiveEvents(d)[0]?.id===ev.id||now?.current?.id===ev.id,passed=!major&&passedConnector(d,ev);
+ const fixed=fixedTime(ev),showClock=major||fixed||phaseFirst||effectiveEvents(d)[0]?.id===ev.id||now?.focus?.id===ev.id,passed=!major&&passedConnector(d,ev);
  const words=ROW_SUB[ev.id]||(showClock?(start===null?compactTime(ev.time_label):(!major&&!fixed?spanText(ev):'')):spanText(ev));
  const node=`<span class="node${major?' big':''}" aria-hidden="true"></span>`;
- return `<li class="row ${major?'major':'minor'}${done||passed?' done':''}${now?.current?.id===ev.id?' now':''}" id="row-${e(ev.id)}">${openButton(d.date,ev.id,`<span class="row-time${fixed?' fixed':''}">${showClock?(start===null?'随后':clock(start)):''}</span>${node}<span class="row-text"><span class="row-title">${e(ev.title)}</span>${words||flags.length?`<span class="row-meta">${words?`<span>${e(words)}</span>`:''}${flags.join('')}</span>`:''}</span>`,'row-open')}${major?checkButton(d.date,ev):''}</li>`;
+ return `<li class="row ${major?'major':'minor'}${done||passed?' done':''}${now?.focus?.id===ev.id?' now':''}" id="row-${e(ev.id)}">${openButton(d.date,ev.id,`<span class="row-time${fixed?' fixed':''}">${showClock?(start===null?'随后':clock(start)):''}</span>${node}<span class="row-text"><span class="row-title">${e(ev.title)}</span>${words||flags.length?`<span class="row-meta">${words?`<span>${e(words)}</span>`:''}${flags.join('')}</span>`:''}</span>`,'row-open')}${major?checkButton(d.date,ev):''}</li>`;
 }
 
 /* ---------- Sheets ---------- */
@@ -2158,16 +2167,33 @@ function openSheet(date,key,{push=true,pushed=push}={}){
 function hideSheet(){closeDialog($('#sheet'));sheetState=null;}
 function closeSheet(){
  if(!sheetState)return hideSheet();
- if(sheetState.pushed){history.back();return;}
+ if(sheetState.pushed){sheetState.pushed=false;history.back();return;}
  // Opened from a deep link: there is no entry to go back to, so drop the activity from the address instead.
  const date=sheetState.date;hideSheet();
  if(/^#day\/[^/]+\/./.test(location.hash))history.replaceState(null,'','#day/'+date);
 }
+const foldKey=el=>(el.closest('[id]')?.id||'')+'|'+(el.querySelector('summary')?.textContent||'').replace(/\s+\d+\s*站|\s*·\s*\d+(?:\/\d+)?/g,'');
+function swapLiveImages(root,liveImgs){
+ if(!liveImgs?.size)return;
+ root.querySelectorAll('img').forEach(im=>{
+  const k=im.getAttribute('src')+'|'+im.className,old=liveImgs.get(k);
+  if(old?.complete&&old.naturalWidth){liveImgs.delete(k);old.alt=im.alt;im.replaceWith(old);}
+ });
+}
+function collectLiveImages(root){
+ const map=new Map();
+ root.querySelectorAll('img').forEach(im=>{const k=im.getAttribute('src')+'|'+im.className;if(!map.has(k))map.set(k,im);});
+ return map;
+}
 function refreshSheet(){
  if(!sheetState)return;
- const body=$('#sheet .sheet-body'),y=body?.scrollTop||0,html=sheetHTML(sheetState.date,sheetState.key);
+ const dlg=$('#sheet'),body=dlg.querySelector('.sheet-body'),y=body?.scrollTop||0;
+ const open=new Set([...dlg.querySelectorAll('details[open]')].map(foldKey)),liveImgs=collectLiveImages(dlg);
+ const html=sheetHTML(sheetState.date,sheetState.key);
  if(!html)return closeSheet();
- $('#sheet').innerHTML=html;$('#sheet .sheet-body')?.scrollTo(0,y);
+ dlg.innerHTML=html;swapLiveImages(dlg,liveImgs);
+ dlg.querySelectorAll('details').forEach(el=>{el.open=open.has(foldKey(el));});
+ dlg.querySelector('.sheet-body')?.scrollTo(0,y);
 }
 
 /* ---------- 巡礼 ---------- */
@@ -2184,7 +2210,7 @@ function shotHTML(p,n){
  <div class="pair${s.images.length===1?' single':''}">${s.images.map(([kind,label])=>shotImage(p,kind,label)).join('')}</div>
  ${s.note?`<p class="shot-note"><b>站位</b>${e(s.note)}</p>`:''}
  <div class="inline-actions">${external(icon('pin')+'<span>地图</span>',s.map)}${s.reference?'':`<button type="button" class="shot-toggle${s.done?' on':''}" data-action="shot" data-shot="${e(s.id)}" aria-pressed="${s.done}">${icon('check')}<span>${s.done?'已拍':'标记已拍'}</span></button>`}</div>
- <details class="fold"><summary>场景与来源</summary>${s.scene?`<p>${fmt(s.scene)}</p>`:''}${s.caption?`<p class="muted">${fmt(s.caption)}</p>`:''}${s.coords?`<p class="muted">${s.coords.lat}, ${s.coords.lng} · ${e(String(s.coords.precision||'').split(/[，,；]/).filter(x=>!/^s*(不是|非)/.test(x)).join('，'))} <button type="button" class="link" data-action="copy" data-copy="${s.coords.lat}, ${s.coords.lng}">复制坐标</button>${s.coords.source_url?' · '+external('定位依据 ↗',s.coords.source_url,'nowrap'):''}</p>`:''}${p.real?.source_url?`<p class="muted">实景：${e(String(p.real.credit||'原作者').replace(/^实景[：:]\s*/,''))} · ${external('来源 ↗',p.real.source_url,'nowrap')}</p>`:''}${p.anime?.source_url?`<p class="muted">作品画面：${e(p.anime.credit||'作品权利方')} · ${external('来源 ↗',p.anime.source_url,'nowrap')}</p>`:''}${p.comparison?`<p class="muted">${e(p.comparison.credit)} · ${external('对照原图 ↗',p.comparison.source_url,'nowrap')}</p>`:''}${(p.sources||[]).map(x=>`<p class="muted">${external(e(x.title)+' ↗',x.url)}</p>`).join('')}</details>
+ <details class="fold"><summary>场景与来源</summary>${s.scene?`<p>${fmt(s.scene)}</p>`:''}${s.caption?`<p class="muted">${fmt(s.caption)}</p>`:''}${s.coords?`<p class="muted">${s.coords.lat}, ${s.coords.lng} · ${e(String(s.coords.precision||'').split(/[，,；]/).filter(x=>!/^\s*(不是|非)/.test(x)).join('，'))} <button type="button" class="link" data-action="copy" data-copy="${s.coords.lat}, ${s.coords.lng}">复制坐标</button>${s.coords.source_url?' · '+external('定位依据 ↗',s.coords.source_url,'nowrap'):''}</p>`:''}${p.real?.source_url?`<p class="muted">实景：${e(String(p.real.credit||'原作者').replace(/^实景[：:]\s*/,''))} · ${external('来源 ↗',p.real.source_url,'nowrap')}</p>`:''}${p.anime?.source_url?`<p class="muted">作品画面：${e(p.anime.credit||'作品权利方')} · ${external('来源 ↗',p.anime.source_url,'nowrap')}</p>`:''}${p.comparison?`<p class="muted">${e(p.comparison.credit)} · ${external('对照原图 ↗',p.comparison.source_url,'nowrap')}</p>`:''}${(p.sources||[]).map(x=>`<p class="muted">${external(e(x.title)+' ↗',x.url)}</p>`).join('')}</details>
  </article>`;
 }
 function rallyHTML(d){
@@ -2251,15 +2277,13 @@ function parseHash(){
  if(parts[0]==='shots'){ui.tab='shots';const p=parts[2]&&pilgrimagePoints.find(x=>x.id===parts[2]);if(p)ui.shotsDay=at(p.date);else if(at(parts[1])>=0)ui.shotsDay=at(parts[1]);if(parts[2])ui.target='shot-'+parts[2];return '';}
  ui.tab=parts[0]==='prep'?'prep':'now';return '';
 }
-let lastTabHTML='';
+let lastTabHTML='',lastClockKey='';
+const clockKey=()=>{const n=tokyoNow();return ui.tab==='now'||(ui.tab==='day'&&todayIndex()===ui.day)?n.date+':'+n.minutes:n.date;};
 function renderMain(liveImgs){
  const main=$('#main'),stripWas=main.querySelector('.strip')?.scrollLeft;
  main.className='screen screen-'+ui.tab; // drops .enter, so a refresh never replays the entrance
  main.innerHTML=(storageOK?'':`<p class="banner" role="alert">${murasame('shock','in-banner')}<span>浏览器未允许本机保存，关闭后勾选可能丢失。</span></p>`)+SCREENS[ui.tab]();
- if(liveImgs?.size)main.querySelectorAll('img').forEach(im=>{
-  const k=im.getAttribute('src')+'|'+im.className,old=liveImgs.get(k);
-  if(old?.complete&&old.naturalWidth){liveImgs.delete(k);old.alt=im.alt;im.replaceWith(old);}
- });
+ swapLiveImages(main,liveImgs);
  const phase=tripStatus().phase,bar=$('.tabbar');
  const tabHTML=TABS.map(([id,ico])=>`<a href="${tabHref(id)}" class="tab${ui.tab===id?' on':''}"${ui.tab===id?' aria-current="page"':''}>${icon(ico)}<span>${id==='now'?PHASE_LABEL[phase]:TAB_LABEL[id]}</span></a>`).join('');
  if(bar&&(tabHTML!==lastTabHTML||!bar.innerHTML)){bar.innerHTML=tabHTML;lastTabHTML=tabHTML;}
@@ -2267,6 +2291,7 @@ function renderMain(liveImgs){
  // The date strip glides from where it was to the chosen day instead of jumping; in-place refreshes keep its exact scrollLeft.
  if(rail&&on){const left=on.offsetLeft-rail.clientWidth/2+on.clientWidth/2;if(liveImgs&&stripWas!=null)rail.scrollLeft=stripWas;else if(stripWas!=null&&motionOK()){rail.scrollLeft=stripWas;rail.scrollTo({left,behavior:'smooth'});}else rail.scrollLeft=left;}
  document.title=(ui.tab==='day'?dateLabel(PLAN.days[ui.day].date)+' '+dayPresentation(PLAN.days[ui.day]).short:ui.tab==='shots'?'巡礼对照':ui.tab==='prep'?'准备':PHASE_LABEL[phase])+' · 关西秋日手帖';
+ lastClockKey=clockKey();
 }
 // app.js's page tools call render() after recording a completion.
 function render(){renderMain();refreshSheet();}
@@ -2286,15 +2311,12 @@ function route(){
  else if(kept)openSheet(kept.date,kept.key,{push:false,pushed:true});
  else hideSheet();
 }
-// Re-render in place, keeping the reading position and every open fold. A fresh 丛雨 / 済 mark plays once, then stays still.
-const foldKey=el=>(el.closest('[id]')?.id||'')+'|'+el.querySelector('summary')?.textContent;
-function refresh(){
+// Re-render in place, keeping the reading position and every open fold. A fresh 丛雨 mark plays once, then stays still.
+function refresh(withSheet=true){
  const mainEl=$('#main'),y=scrollY,open=new Set([...mainEl.querySelectorAll('details[open]')].map(foldKey));
- const liveImgs=new Map();
- mainEl.querySelectorAll('img').forEach(im=>{const k=im.getAttribute('src')+'|'+im.className;if(!liveImgs.has(k))liveImgs.set(k,im);});
- renderMain(liveImgs);
- mainEl.querySelectorAll('details').forEach(el=>{if(open.has(foldKey(el)))el.open=true;});
- window.scrollTo({top:y,behavior:'instant'});refreshSheet();
+ renderMain(collectLiveImages(mainEl));
+ mainEl.querySelectorAll('details').forEach(el=>{el.open=open.has(foldKey(el));});
+ window.scrollTo({top:y,behavior:'instant'});if(withSheet)refreshSheet();
  if(ui.justDone)setTimeout(()=>{ui.justDone='';},700);
 }
 
@@ -2334,11 +2356,12 @@ const COLOR_MODE_KEY='user-color-scheme';
 const systemColorMode=()=>typeof matchMedia==='function'&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 function syncThemeColor(){
  if(typeof document==='undefined'||!document.head)return;
- const mode=document.documentElement.getAttribute('data-user-color-scheme')||systemColorMode();
- const color=mode==='dark'?'#0e1017':'#fafafd';
+ const manual=document.documentElement.getAttribute('data-user-color-scheme');
  let meta=document.getElementById('theme-color-live');
- if(!meta){meta=document.createElement('meta');meta.id='theme-color-live';meta.name='theme-color';document.head.append(meta);}
- meta.content=color;
+ if(!manual){meta?.remove();return;}
+ if(!meta){meta=document.createElement('meta');meta.id='theme-color-live';meta.name='theme-color';}
+ meta.content=manual==='dark'?'#0e1017':'#fafafd';
+ if(document.head.firstChild!==meta)document.head.insertBefore(meta,document.head.firstChild);
 }
 function toggleTheme(){
  const root=document.documentElement,next=(root.getAttribute('data-user-color-scheme')||systemColorMode())==='dark'?'light':'dark';
@@ -2346,28 +2369,29 @@ function toggleTheme(){
  try{if(next===systemColorMode())localStorage.removeItem(COLOR_MODE_KEY);else localStorage.setItem(COLOR_MODE_KEY,next);}catch{}
  syncThemeColor();
 }
-let zoomState=null,zoomPan={scale:1,x:0,y:0},zoomPushed=false;
-function hideZoom(){closeDialog($('#zoom'));zoomPushed=false;}
+let zoomState=null,zoomPan={scale:1,x:0,y:0},zoomPushed=false,wheelTimer=0;
+function hideZoom(){clearTimeout(wheelTimer);closeDialog($('#zoom'));zoomPushed=false;}
 function closeZoom(){if(zoomPushed){zoomPushed=false;history.back();return;}hideZoom();}
 function resetZoomPan(){
- zoomPan={scale:1,x:0,y:0};
+ clearTimeout(wheelTimer);zoomPan={scale:1,x:0,y:0};
  const stage=$('#zoom .zoom-stage.single'),imgEl=stage?.querySelector('img');
  if(imgEl)imgEl.style.transform='';
  stage?.classList.remove('zoomed','panning');
  const btn=$('#zoom [data-action="zoom-toggle"]');
  if(btn){btn.setAttribute('aria-pressed','false');btn.setAttribute('aria-label','放大查看细节');}
 }
-function applyZoomPan(animate=false){
+function applyZoomPan(animate=false,gesturing=false){
  const stage=$('#zoom .zoom-stage.single'),imgEl=stage?.querySelector('img');if(!imgEl)return;
  const maxX=Math.max(0,(imgEl.offsetWidth*zoomPan.scale-stage.clientWidth)/2+24);
  const maxY=Math.max(0,(imgEl.offsetHeight*zoomPan.scale-stage.clientHeight)/2+24);
  zoomPan.x=Math.max(-maxX,Math.min(maxX,zoomPan.x));
  zoomPan.y=Math.max(-maxY,Math.min(maxY,zoomPan.y));
- stage.classList.toggle('zoomed',zoomPan.scale>1);
- stage.classList.toggle('panning',!animate&&zoomPan.scale>1);
- imgEl.style.transform=zoomPan.scale>1?`translate3d(${zoomPan.x}px,${zoomPan.y}px,0) scale(${zoomPan.scale})`:'';
+ const zoomed=zoomPan.scale>1.01;
+ stage.classList.toggle('zoomed',zoomed);
+ stage.classList.toggle('panning',gesturing||(!animate&&zoomed));
+ imgEl.style.transform=zoomed||gesturing?`translate3d(${zoomPan.x}px,${zoomPan.y}px,0) scale(${zoomPan.scale})`:'';
  const btn=$('#zoom [data-action="zoom-toggle"]');
- if(btn){btn.setAttribute('aria-pressed',String(zoomPan.scale>1));btn.setAttribute('aria-label',zoomPan.scale>1?'还原大小':'放大查看细节');}
+ if(btn){btn.setAttribute('aria-pressed',String(zoomed));btn.setAttribute('aria-label',zoomed?'还原大小':'放大查看细节');}
 }
 function toggleZoomScale(clientX,clientY){
  const stage=$('#zoom .zoom-stage.single'),imgEl=stage?.querySelector('img');if(!imgEl)return;
@@ -2409,7 +2433,7 @@ function zoomShot(id,kind){
  const switcher=modes.length?`<div class="zoom-switch" role="group" aria-label="切换对照图片">${modes.map(k=>`<button type="button" data-action="zoom-shot" data-shot="${e(p.id)}" data-kind="${k}" aria-pressed="${mode===k}">${labels[k]}</button>`).join('')}</div>`:'';
  const stance=s?.note?`<p class="zoom-stance"><b>站位</b><span>${e(s.note)}</span></p>`:'';
  const topAction=s&&!s.reference?`<button type="button" class="zoom-shot-btn${s.done?' on':''}" data-action="shot" data-shot="${e(p.id)}" aria-pressed="${s.done}">${icon('check')}<span>${s.done?'已拍':'标记已拍'}</span></button>`:'';
- const stageHTML=mode==='split'?`<div class="zoom-stage split"><figure><img src="${p.anime.src}" alt="${e(p.title)} · 作品画面"><figcaption>作品画面</figcaption></figure><figure><img src="${p.real.src}" alt="${e(p.title)} · 实景"><figcaption>实景</figcaption></figure></div>`:'';
+ const stageHTML=mode==='split'?`<div class="zoom-stage split"><figure data-action="zoom-shot" data-shot="${e(p.id)}" data-kind="anime" role="button" tabindex="0" aria-label="放大${e(p.title)}作品画面"><img src="${p.anime.src}" alt="${e(p.title)} · 作品画面" draggable="false"><figcaption>作品画面</figcaption></figure><figure data-action="zoom-shot" data-shot="${e(p.id)}" data-kind="real" role="button" tabindex="0" aria-label="放大${e(p.title)}实景"><img src="${p.real.src}" alt="${e(p.title)} · 实景" draggable="false"><figcaption>实景</figcaption></figure></div>`:'';
  const creditHTML=mode==='split'?`<p class="zoom-credit">${[p.anime.credit,p.real.credit].filter(Boolean).map(e).join(' · ')}</p>`:'';
  openZoom(p.title,{...image,alt:p.title,credit:image.credit},{switcher,stance,topAction,stageHTML,creditHTML});
 }
@@ -2422,7 +2446,7 @@ function openTaxiCard(placeId){
 function openImportDialog(){
  let dlg=document.getElementById('import-dialog');
  if(!dlg){dlg=document.createElement('dialog');dlg.id='import-dialog';dlg.className='copy-dialog';dlg.setAttribute('aria-labelledby','import-title');document.body.append(dlg);}
- dlg.innerHTML=`<div class="dialog-top"><h2 id="import-title">导入进度码</h2><button type="button" class="btn icon-button" data-action="import-close" aria-label="关闭">${icon('close')}</button></div><div class="dialog-body"><p>粘贴从另一台设备或页面复制的进度码（以 KANSAI: 开头）。导入前会自动备份本机当前记录。</p><textarea id="import-input" aria-label="进度码" placeholder="KANSAI:..."></textarea><div class="actions"><button type="button" class="btn primary" data-action="import-apply">确认导入</button><button type="button" class="btn" data-action="import-close">取消</button></div></div>`;
+ dlg.innerHTML=`<div class="dialog-top"><h2 id="import-title">导入进度码</h2><button type="button" class="btn icon-button" data-action="import-close" aria-label="关闭">${icon('close')}</button></div><div class="dialog-body"><p>粘贴从另一台设备或页面复制的进度码（以 KANSAI: 开头）。导入前会自动备份本机当前记录。</p><textarea id="import-input" aria-label="进度码" placeholder="KANSAI:..."></textarea><p id="import-err" class="import-err" role="alert"></p><div class="actions"><button type="button" class="btn primary" data-action="import-apply">确认导入</button><button type="button" class="btn" data-action="import-close">取消</button></div></div>`;
  showDialog(dlg);dlg.querySelector('textarea')?.focus();
 }
 function applyImportedProgress(raw){
@@ -2431,7 +2455,11 @@ function applyImportedProgress(raw){
   try{localStorage.setItem(STORAGE_KEY+'-before-import-'+Date.now(),JSON.stringify(state));}catch{}
   state=next;migrateFinalPlan();save();
   $('#import-dialog')?.close();refresh();toast('已导入进度');
- }catch(err){toast(err?.message||'进度码无效，未修改当前进度');}
+ }catch(err){
+  const msg=err?.message||'进度码无效，未修改当前进度',errEl=$('#import-err');
+  if(errEl)errEl.textContent=msg;
+  toast(msg);
+ }
 }
 function stepZoomMode(dir){
  if(zoomState?.type!=='shot'||!zoomState.modes?.length||!$('#zoom')?.open)return;
@@ -2505,23 +2533,56 @@ function boot(){
  bindSheetDrag(sheetEl);
  sheetEl.addEventListener('cancel',ev=>{ev.preventDefault();closeSheet();});
  sheetEl.addEventListener('click',ev=>{if(ev.target.id==='sheet')closeSheet();});
- zoomEl.addEventListener('click',ev=>{if((ev.target.id==='zoom'||ev.target.classList.contains('zoom-stage'))&&zoomPan.scale===1)closeZoom();});
+ zoomEl.addEventListener('click',ev=>{if((ev.target.id==='zoom'||ev.target.classList.contains('zoom-stage'))&&zoomPan.scale<=1.01&&Date.now()-pinchEndAt>260)closeZoom();});
  zoomEl.addEventListener('cancel',ev=>{ev.preventDefault();closeZoom();});
  zoomEl.addEventListener('dblclick',ev=>{if(ev.target.closest('.zoom-stage.single img'))toggleZoomScale(ev.clientX,ev.clientY);});
  let swipeX=0,swipeY=0,panStartX=0,panStartY=0,panBaseX=0,panBaseY=0,panning=false,lastTap=0,lastTapX=0,lastTapY=0;
+ let pinching=false,wasPinching=false,pinchDist=1,pinchStartScale=1,pinchStartX=0,pinchStartY=0,pinchMidX=0,pinchMidY=0,pinchEndAt=0;
  zoomEl.addEventListener('touchstart',ev=>{
+  if(ev.touches.length===2&&ev.target.closest('.zoom-stage.single')){
+   panning=false;lastTap=0;pinching=true;wasPinching=true;
+   const [a,b]=ev.touches;pinchDist=Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY)||1;
+   pinchMidX=(a.clientX+b.clientX)/2;pinchMidY=(a.clientY+b.clientY)/2;
+   pinchStartScale=zoomPan.scale;pinchStartX=zoomPan.x;pinchStartY=zoomPan.y;return;
+  }
   if(ev.touches.length!==1)return;
+  wasPinching=false;
   const t=ev.touches[0];swipeX=t.clientX;swipeY=t.clientY;
-  if(zoomPan.scale>1&&ev.target.closest('.zoom-stage.single')){panning=true;panStartX=t.clientX;panStartY=t.clientY;panBaseX=zoomPan.x;panBaseY=zoomPan.y;}
+  if(zoomPan.scale>1.01&&ev.target.closest('.zoom-stage.single')){panning=true;panStartX=t.clientX;panStartY=t.clientY;panBaseX=zoomPan.x;panBaseY=zoomPan.y;}
  },{passive:true});
  zoomEl.addEventListener('touchmove',ev=>{
+  if(pinching&&ev.touches.length===2){
+   ev.preventDefault();
+   const stage=$('#zoom .zoom-stage.single');if(!stage)return;
+   const [a,b]=ev.touches,dist=Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY)||1;
+   const midX=(a.clientX+b.clientX)/2,midY=(a.clientY+b.clientY)/2;
+   const next=Math.max(1,Math.min(4,pinchStartScale*(dist/pinchDist)));
+   const rect=stage.getBoundingClientRect(),cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
+   zoomPan.scale=next;
+   zoomPan.x=(midX-cx)-(pinchMidX-cx-pinchStartX)*(next/pinchStartScale);
+   zoomPan.y=(midY-cy)-(pinchMidY-cy-pinchStartY)*(next/pinchStartScale);
+   applyZoomPan(false,true);return;
+  }
   if(!panning||ev.touches.length!==1)return;
   ev.preventDefault();
   zoomPan.x=panBaseX+(ev.touches[0].clientX-panStartX);
   zoomPan.y=panBaseY+(ev.touches[0].clientY-panStartY);
   applyZoomPan(false);
  },{passive:false});
+ const finishPinch=ev=>{
+  if(!pinching)return false;
+  pinchEndAt=Date.now();
+  if(ev.touches.length===1){
+   pinching=false;const r=ev.touches[0];swipeX=panStartX=r.clientX;swipeY=panStartY=r.clientY;
+   panBaseX=zoomPan.x;panBaseY=zoomPan.y;panning=zoomPan.scale>1.02;return true;
+  }
+  pinching=false;wasPinching=false;panning=false;
+  if(zoomPan.scale<=1.03)resetZoomPan();else applyZoomPan(true);
+  return true;
+ };
  zoomEl.addEventListener('touchend',ev=>{
+  if(finishPinch(ev))return;
+  if(wasPinching){wasPinching=false;panning=false;pinchEndAt=Date.now();if(zoomPan.scale<=1.03)resetZoomPan();else applyZoomPan(true);return;}
   if(!ev.changedTouches.length)return;
   const t=ev.changedTouches[0],dx=t.clientX-swipeX,dy=t.clientY-swipeY;
   const wasPanning=panning;panning=false;
@@ -2530,30 +2591,53 @@ function boot(){
    if(now-lastTap<300&&Math.hypot(t.clientX-lastTapX,t.clientY-lastTapY)<36){lastTap=0;toggleZoomScale(t.clientX,t.clientY);return;}
    lastTap=now;lastTapX=t.clientX;lastTapY=t.clientY;return;
   }
-  if(wasPanning||zoomPan.scale>1)return;
+  if(wasPanning||zoomPan.scale>1.01)return;
   if(Math.abs(dx)>48&&Math.abs(dx)>Math.abs(dy)*1.4)stepZoomMode(dx<0?1:-1);
  },{passive:true});
+ zoomEl.addEventListener('touchcancel',finishPinch,{passive:true});
+ zoomEl.addEventListener('wheel',ev=>{
+  const stage=ev.target.closest('.zoom-stage.single');if(!stage)return;
+  ev.preventDefault();
+  const next=Math.max(1,Math.min(4,zoomPan.scale*Math.exp(-ev.deltaY*(ev.ctrlKey?0.01:0.0025))));
+  if(next<=1.02){resetZoomPan();return;}
+  const rect=stage.getBoundingClientRect(),cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
+  zoomPan.x=(ev.clientX-cx)-(ev.clientX-cx-zoomPan.x)*(next/zoomPan.scale);
+  zoomPan.y=(ev.clientY-cy)-(ev.clientY-cy-zoomPan.y)*(next/zoomPan.scale);
+  zoomPan.scale=next;applyZoomPan(false,true);
+  clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>stage.classList.remove('panning'),120);
+ },{passive:false});
  zoomEl.addEventListener('mousedown',ev=>{
-  if(zoomPan.scale<=1||!ev.target.closest('.zoom-stage.single img'))return;
+  if(zoomPan.scale<=1.01||!ev.target.closest('.zoom-stage.single img'))return;
   ev.preventDefault();panning=true;panStartX=ev.clientX;panStartY=ev.clientY;panBaseX=zoomPan.x;panBaseY=zoomPan.y;
  });
  window.addEventListener('mousemove',ev=>{if(!panning||!zoomEl.open)return;zoomPan.x=panBaseX+(ev.clientX-panStartX);zoomPan.y=panBaseY+(ev.clientY-panStartY);applyZoomPan(false);});
  window.addEventListener('mouseup',()=>{panning=false;});
- document.addEventListener('keydown',ev=>{if(!zoomEl.open)return;if(ev.key==='ArrowLeft'&&zoomPan.scale===1)stepZoomMode(-1);else if(ev.key==='ArrowRight'&&zoomPan.scale===1)stepZoomMode(1);});
+ document.addEventListener('keydown',ev=>{
+  if(!zoomEl.open)return;
+  if((ev.key==='Enter'||ev.key===' ')&&ev.target.matches?.('.zoom-stage.split figure[data-action="zoom-shot"]')){ev.preventDefault();zoomShot(ev.target.dataset.shot,ev.target.dataset.kind);return;}
+  if(ev.key==='ArrowLeft'&&zoomPan.scale<=1.01)stepZoomMode(-1);else if(ev.key==='ArrowRight'&&zoomPan.scale<=1.01)stepZoomMode(1);
+ });
  window.addEventListener('popstate',ev=>{
   if(!ev.state?.zoom&&zoomEl.open)hideZoom();
   const s=ev.state?.sheet;
   if(s){if(!sheetState||sheetState.date!==s.date||sheetState.key!==s.key)openSheet(s.date,s.key,{push:false,pushed:true});}
-  else if(sheetState)hideSheet();
+  else if(sheetState?.pushed)hideSheet();
  });
  window.addEventListener('hashchange',()=>{if(location.hash!=='#main'){if(zoomEl.open)hideZoom();if(sheetEl.open)hideSheet();route();}}); // #main is the skip link
  window.addEventListener('storage',ev=>{
   if(ev.key===COLOR_MODE_KEY){if(ev.newValue)document.documentElement.setAttribute('data-user-color-scheme',ev.newValue);else document.documentElement.removeAttribute('data-user-color-scheme');syncThemeColor();return;}
-  if(ev.key===STORAGE_KEY){try{const next=JSON.parse(ev.newValue);if(next?.checks&&next?.todos&&next?.choices){state=next;refresh();}}catch{}}
+  if(ev.key===STORAGE_KEY){try{const next=JSON.parse(ev.newValue);if(next&&typeof next==='object'&&next.checks&&typeof next.checks==='object'&&!Array.isArray(next.checks)&&next.todos&&typeof next.todos==='object'&&!Array.isArray(next.todos)&&next.choices&&typeof next.choices==='object'&&!Array.isArray(next.choices)){state=next;refresh();}}catch{}}
  });
- // The 现在 screen follows the clock: refresh each minute and whenever the phone comes back to the page.
- setInterval(()=>{if(ui.tab==='now'&&!document.hidden)refresh();},60000);
- document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
+ // Only re-render on timer/wakeup when the Tokyo minute (on 现在 / today's 行程) or date actually advanced.
+ setInterval(()=>{if(!document.hidden&&clockKey()!==lastClockKey)refresh(false);},30000);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&clockKey()!==lastClockKey)refresh(false);});
+ if(isWeb&&typeof navigator!=='undefined'&&'serviceWorker' in navigator&&typeof window!=='undefined'&&/^https?:$/.test(location.protocol)){
+  const warmSW=()=>{if(!navigator.connection?.saveData)navigator.serviceWorker.ready.then(r=>r.active?.postMessage({type:'WARM'})).catch(()=>{});};
+  navigator.serviceWorker.addEventListener?.('controllerchange',warmSW,{once:true});
+  window.addEventListener('load',()=>{
+   navigator.serviceWorker.register('./sw.js').then(()=>setTimeout(warmSW,2200)).catch(()=>{});
+  },{once:true});
+ }
  if('scrollRestoration' in history)history.scrollRestoration='manual';
  route();
 }

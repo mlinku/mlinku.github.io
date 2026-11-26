@@ -190,6 +190,10 @@ const checked=run(`
  assert.deepEqual(roundTrip.todos,sample.todos);
  assert.deepEqual(roundTrip.choices,sample.choices);
  assert.throws(()=>decodeProgress('invalid'),'无效进度码被拒绝');
+ assert.throws(()=>decodeProgress('KANSAI:'+btoa('{"v":3,"c":null,"t":{},"o":{}}')),'空子对象进度码被拒绝');
+ state.choices['2026-12-02']={kodaijiPlan:'skip'};
+ assert.equal(eventStart(effectiveEvents(PLAN.days[2]).find(ev=>ev.id==='gion_dinner')),null,'跳过高台寺时晚饭不误标19:00');
+ delete state.choices['2026-12-02'];
  // Pilgrimage header stays compact (no .shot-event or filter pills) & stamping keeps all shots visible.
  ui.shotsDay=1;const shot1=shotsScreen();
  assert.ok(!shot1.includes('class="shot-event"')&&!shot1.includes('toggle-hide-shots')&&shot1.includes('id="shot-eupho_uji_bridge"'),'巡礼卡去掉冗余胶囊，直出对照图');

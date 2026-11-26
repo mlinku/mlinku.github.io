@@ -124,7 +124,7 @@ function tripStatus(){
  return {phase:'during',index:PLAN.days.findIndex(d=>d.date===now.date),minutes:now.minutes};
 }
 const todayIndex=()=>{const s=tripStatus();return s.phase==='during'?s.index:-1;};
-const eventStart=ev=>{const m=/(\d{1,2}):(\d{2})/.exec(ev.time_label||'');return m?Number(m[1])*60+Number(m[2]):null;};
+const eventStart=ev=>{const m=/(\d{1,2}):(\d{2})/.exec(compactTime(ev.time_label||''));return m?Number(m[1])*60+Number(m[2]):null;};
 // Hong Kong departure times are UTC+8 (60 min behind Japan time); compare against tokyoNow() in JST.
 const isHKTime=t=>/^\d{1,2}:\d{2}\s*香港/.test(String(t||''));
 const eventStartJST=ev=>{const s=eventStart(ev);return s===null?null:s+(isHKTime(ev.time_label)?60:0);};
@@ -237,7 +237,7 @@ function mealModel(d,r,said){
 
 // Sentence-level overlap check so a fact said once on the page is not printed again.
 const bigrams=t=>{t=String(t).replace(/[\s，。；、·：:（）()「」《》]/g,'');const out=new Set();for(let i=0;i<t.length-1;i++)out.add(t.slice(i,i+2));return out;};
-function alreadySaid(sentence,pool){const a=bigrams(sentence);if(a.size<4){const word=String(sentence).replace(/[s，。；、·：:]/g,'');return word.length>0&&String(pool).includes(word);}const b=bigrams(pool);let n=0;for(const x of a)if(b.has(x))n++;return n/a.size>=.6;}
+function alreadySaid(sentence,pool){const a=bigrams(sentence);if(a.size<4){const word=String(sentence).replace(/[\s，。；、·：:]/g,'');return word.length>0&&String(pool).includes(word);}const b=bigrams(pool);let n=0;for(const x of a)if(b.has(x))n++;return n/a.size>=.6;}
 function dropSaid(text,pool){return String(text).split(/(?<=[。；])/).filter(s=>s.trim()&&!alreadySaid(s,pool)).join('').replace(/；$/,'。');}
 
 function dayFallbacks(d){const c=choice(d);return d.fallback_rules.flatMap(t=>{
@@ -354,7 +354,8 @@ function eventModel(d,ev){
  const brief=ev.condition&&Object.hasOwn(EVENT_BRIEF,ev.id)?EVENT_BRIEF[ev.id]:null;
  const line=cleanText(brief??ev.condition??'');
  // A photo belongs to the first activity that shows one; a walk or transfer through the same place does not claim it.
- const seen=new Set(earlier.filter(x=>isMajorEvent(d,x)).flatMap(eventPhotoIds)),photos=major?eventPhotoIds(ev).filter(id=>!seen.has(id)):[];
+ const seen=new Set(earlier.filter(x=>isMajorEvent(d,x)).flatMap(eventPhotoIds)),seenSrc=new Set([...seen].map(photoSrc));
+ const photos=major?eventPhotoIds(ev).filter(id=>{const s=photoSrc(id);if(seen.has(id)||seenSrc.has(s))return false;seenSrc.add(s);return true;}):[];
  const transport=transportNotes(d,ev);
  const stops=navigationStops(ev,d,!!(first&&first[0]!=='早餐'));
  const {notice,links}=noticeParts(d,ev),noticeText=notice.replace(/<[^>]+>/g,'');
@@ -425,6 +426,6 @@ function decodeProgress(raw){
  const bin=atob(text.slice(7).replace(/\s+/g,''));
  const bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
  const data=JSON.parse(new TextDecoder().decode(bytes));
- if(!data||typeof data!=='object'||typeof data.c!=='object'||Array.isArray(data.c)||typeof data.t!=='object'||Array.isArray(data.t)||typeof data.o!=='object'||Array.isArray(data.o))throw Error('进度码格式无效');
+ if(!data||typeof data!=='object'||!data.c||typeof data.c!=='object'||Array.isArray(data.c)||!data.t||typeof data.t!=='object'||Array.isArray(data.t)||!data.o||typeof data.o!=='object'||Array.isArray(data.o))throw Error('进度码格式无效');
  return {schemaVersion:3,planRevision:typeof data.r==='string'?data.r:PLAN.revision,checks:data.c,todos:data.t,choices:data.o};
 }

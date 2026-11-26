@@ -1,0 +1,25 @@
+{
+  "name": "关西秋日手帖 · 2026",
+  "short_name": "关西手帖",
+  "description": "2026关西旅行：8天行程、路线定位、餐饮与动漫巡礼对照。",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fafafd",
+  "theme_color": "#fafafd",
+  "icons": [
+    {
+      "src": "assets/a82db4f0685fc77b.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/451550cfa05b0ada.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

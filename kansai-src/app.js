@@ -121,7 +121,15 @@ const NIPPOMBASHI_SHOPS=['animate','surugaya','potato','surugaya_main'];
 const choice=d=>{const c={ujiExtra:'none',byodoinInterior:false,kodaijiPlan:'night',yasakaBrief:false,shop1:'animate',shop2:'surugaya',...state.choices[d.date]};if(d.date==='2026-12-01'){c.ujiExtra='none';c.byodoinInterior=false;delete c.skipByodoin;}if(!NIPPOMBASHI_SHOPS.includes(c.shop1))c.shop1='animate';if(c.shop2!=='none'&&(!NIPPOMBASHI_SHOPS.includes(c.shop2)||c.shop2===c.shop1))c.shop2='none';if(d.date==='2026-12-02'){if(!['night','skip'].includes(c.kodaijiPlan))c.kodaijiPlan='night';c.yasakaBrief=c.kodaijiPlan==='night'&&c.yasakaBrief===true;}return c;};
 function activityState(date,id){const value=state.checks[date+':'+id];return value===true||value==='done'?'done':'pending';}
 function save(){try{preserveLegacyRecord();localStorage.setItem(STORAGE_KEY,JSON.stringify(state));storageOK=true;return true;}catch{storageOK=false;toast('本次修改未保存；请允许浏览器存储后重试，刷新或关闭可能丢失。');return false;}}
-function toast(message,undo){clearTimeout(toastTimer);undoAction=undo||null;$('#toast').innerHTML=e(message)+(undo?'<button data-action="undo">撤销</button>':'');$('#toast').classList.add('show');toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),undo?8500:3500);}
+let toastHideTimer;
+function toast(message,undo){
+ clearTimeout(toastTimer);clearTimeout(toastHideTimer);undoAction=undo||null;
+ const el=$('#toast');if(!el)return;
+ el.innerHTML=e(message)+(undo?'<button data-action="undo">撤销</button>':'');
+ try{el.hidePopover?.();el.showPopover?.();}catch{}
+ el.classList.add('show');
+ toastTimer=setTimeout(()=>{el.classList.remove('show');toastHideTimer=setTimeout(()=>{try{el.hidePopover?.();}catch{}},260);},undo?8500:3500);
+}
 function openManualCopy(value){
  let dlg=document.getElementById('copy-dialog');
  if(!dlg){dlg=document.createElement('dialog');dlg.id='copy-dialog';dlg.className='copy-dialog';dlg.setAttribute('aria-labelledby','copy-title');document.body.append(dlg);}
