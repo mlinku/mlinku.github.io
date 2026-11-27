@@ -224,6 +224,56 @@
       "name_ja": "井川用水機場前 ベンチ"
     },
     {
+      "id": "eupho_uji_center",
+      "place_ids": [],
+      "date": "2026-12-01",
+      "event_id": "uji_pilgrimage",
+      "title": "宇治市观光中心 · 交流站与船着场",
+      "name_ja": "宇治市観光センター",
+      "work": "吹响！上低音号 · 誓言的终章",
+      "scene": "久美子长椅南侧即宇治市观光中心，馆内有京吹交流笔记本、等身立牌与探访地图；门前船着场为《誓言的终章》河岸夜景取景地。",
+      "shooting_note": "09:00—17:00免费入馆看立牌、翻交流本与领地图；船着场河景可从喜撰桥北望宇治川屋形船。",
+      "match_note": "同机位对照：门前宇治川船着场河岸；作品与示例实景为夜景，本次白天经过。",
+      "coordinates": {
+        "lat": 34.88864,
+        "lng": 135.80912,
+        "precision": "宇治市观光中心正门参考点；非精确摄影站位",
+        "source_url": "https://www.city.uji.kyoto.jp/soshiki/72/4433.html"
+      },
+      "real": {
+        "local": "assets/pilgrimage/uji/eupho_ujicenter_r.jpg",
+        "source_url": "https://aurakaze.blog/eupho-jyunrei2/",
+        "image_url": "https://aurakaze.blog/wp-content/uploads/2024/03/3akQM33.webp",
+        "credit": "Aura Kaze（宇治川船着场实拍）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "visual_verified": true,
+        "width": 1000,
+        "height": 529
+      },
+      "anime": {
+        "local": "assets/pilgrimage/uji/eupho_ujicenter_a.jpg",
+        "source_url": "https://aurakaze.blog/eupho-jyunrei2/",
+        "image_url": "https://aurakaze.blog/wp-content/uploads/2024/03/3akQM33.webp",
+        "credit": "©武田綾乃・宝島社／「響け！」製作委員会 · 对照图 Aura Kaze",
+        "license": "版权所有；个人行程中的场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 1000,
+        "height": 536
+      },
+      "sources": [
+        {
+          "title": "宇治市观光中心官方介绍（09:00–17:00）",
+          "url": "https://www.city.uji.kyoto.jp/soshiki/72/4433.html"
+        },
+        {
+          "title": "Aura Kaze 宇治圣地巡礼对照",
+          "url": "https://aurakaze.blog/eupho-jyunrei2/"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-11-27"
+    },
+    {
       "id": "eupho_kisen",
       "place_ids": [
         "kisen"
@@ -921,6 +971,52 @@
       "name_ja": "鴨川デルタ"
     },
     {
+      "id": "conan-gojobashi",
+      "place_ids": [],
+      "date": "2026-12-02",
+      "event_id": "kiyomizu_transfer",
+      "title": "五条大桥 · 牛若丸与弁庆像",
+      "name_ja": "五条大橋（牛若丸と弁慶の像）",
+      "work": "名侦探柯南：迷宫的十字路",
+      "scene": "剧场版中柯南与服部平次会合的五条大桥，桥西端立有源义经（牛若丸）与弁庆石像。",
+      "shooting_note": "京阪清水五条站出站即五条大桥，往西走2分钟看中央分隔带石像与五条大桥路牌，顺路拍完再上清水寺；过马路注意车流。",
+      "match_note": "同机位对照：桥西端石像与后方时钟柱；车辆与周边招牌随年份变化。",
+      "coordinates": {
+        "lat": 34.99603,
+        "lng": 135.76901,
+        "precision": "五条大桥西端石像参考点；非精确摄影站位",
+        "source_url": "https://conan-diary.com/%e5%90%8d%e6%8e%a2%e5%81%b5%e3%82%b3%e3%83%8a%e3%83%b3%e3%80%8c%e8%bf%b7%e5%ae%ae%e3%81%ae%e5%8d%81%e5%ad%97%e8%b7%af%e3%80%8d%e8%81%96%e5%9c%b0%e5%b7%a1%e7%a4%bc%e3%80%90%e4%ba%ac%e9%83%bd%e5%b8%82/"
+      },
+      "real": {
+        "local": "assets/pilgrimage/kyoto/conan_gojobashi_r.jpg",
+        "source_url": "https://conan-diary.com/%e5%90%8d%e6%8e%a2%e5%81%b5%e3%82%b3%e3%83%8a%e3%83%b3%e3%80%8c%e8%bf%b7%e5%ae%ae%e3%81%ae%e5%8d%81%e5%ad%97%e8%b7%af%e3%80%8d%e8%81%96%e5%9c%b0%e5%b7%a1%e7%a4%bc%e3%80%90%e4%ba%ac%e9%83%bd%e5%b8%82/",
+        "image_url": "https://conan-diary.com/wp-content/uploads/2022/08/%E7%89%9B%E8%8B%A5%E4%B8%B8%E3%81%A8%E5%BC%81%E6%85%B6.jpg",
+        "credit": "名探偵コナンの捜査日誌（五条大桥牛若丸与弁庆像实拍）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "visual_verified": true,
+        "width": 600,
+        "height": 450
+      },
+      "anime": {
+        "local": "assets/pilgrimage/kyoto/conan_gojobashi_a.jpg",
+        "source_url": "https://anitabi.cn/map?bangumiId=2973",
+        "image_url": "https://image.anitabi.cn/user/1073/bangumi/2973/points/rgagu2qgo-1735589833200.jpg",
+        "credit": "电影画面 © 青山剛昌／小学館・読売テレビ・TMS 2003；标点整理 Anitabi",
+        "license": "版权所有；个人行程中的场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 1000,
+        "height": 559
+      },
+      "sources": [
+        {
+          "title": "名探偵コナンの捜査日誌：迷宫的十字路京都巡礼",
+          "url": "https://conan-diary.com/%e5%90%8d%e6%8e%a2%e5%81%b5%e3%82%b3%e3%83%8a%e3%83%b3%e3%80%8c%e8%bf%b7%e5%ae%ae%e3%81%ae%e5%8d%81%e5%ad%97%e8%b7%af%e3%80%8d%e8%81%96%e5%9c%b0%e5%b7%a1%e7%a4%bc%e3%80%90%e4%ba%ac%e9%83%bd%e5%b8%82/"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-11-27"
+    },
+    {
       "id": "kiyomizu-conan",
       "place_ids": [
         "kiyomizu"
@@ -1218,6 +1314,52 @@
       "name_ja": "祇園白川南通"
     },
     {
+      "id": "conan-pontocho",
+      "place_ids": [],
+      "date": "2026-12-02",
+      "event_id": "gion_dinner",
+      "title": "先斗町 · 樱屋花街小巷",
+      "name_ja": "先斗町通",
+      "work": "名侦探柯南：迷宫的十字路",
+      "scene": "剧场版中小五郎赴宴的茶屋「樱屋」与夜间花街以先斗町石板窄巷为原型。",
+      "shooting_note": "晚饭首选「名代おめん 四条先斗町店」就在巷内，饭前饭后沿石板小路顺拍灯笼、格子门与竹矢来。",
+      "match_note": "同街区氛围对照：茶屋「樱屋」为架空店名，取景自先斗町传统町屋街景。",
+      "coordinates": {
+        "lat": 35.00568,
+        "lng": 135.77092,
+        "precision": "先斗町通参考点；非精确摄影站位",
+        "source_url": "https://conan-diary.com/%e5%90%8d%e6%8e%a2%e5%81%b5%e3%82%b3%e3%83%8a%e3%83%b3%e3%80%8c%e8%bf%b7%e5%ae%ae%e3%81%ae%e5%8d%81%e5%ad%97%e8%b7%af%e3%80%8d%e8%81%96%e5%9c%b0%e5%b7%a1%e7%a4%bc%e3%80%90%e4%ba%ac%e9%83%bd%e5%b8%82/"
+      },
+      "real": {
+        "local": "assets/pilgrimage/kyoto/conan_pontocho_r.jpg",
+        "source_url": "https://conan-diary.com/%e5%90%8d%e6%8e%a2%e5%81%b5%e3%82%b3%e3%83%8a%e3%83%b3%e3%80%8c%e8%bf%b7%e5%ae%ae%e3%81%ae%e5%8d%81%e5%ad%97%e8%b7%af%e3%80%8d%e8%81%96%e5%9c%b0%e5%b7%a1%e7%a4%bc%e3%80%90%e4%ba%ac%e9%83%bd%e5%b8%82/",
+        "image_url": "https://conan-diary.com/wp-content/uploads/2022/08/%E5%85%88%E6%96%97%E7%94%BA.jpg",
+        "credit": "名探偵コナンの捜査日誌（先斗町实拍）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "visual_verified": true,
+        "width": 600,
+        "height": 450
+      },
+      "anime": {
+        "local": "assets/pilgrimage/kyoto/conan_pontocho_a.jpg",
+        "source_url": "https://anitabi.cn/map?bangumiId=2973",
+        "image_url": "https://image.anitabi.cn/user/2104/bangumi/2973/points/v0lf35jly-1745644424862.jpg",
+        "credit": "电影画面 © 青山剛昌／小学館・読売テレビ・TMS 2003；标点整理 Anitabi",
+        "license": "版权所有；个人行程中的场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 1000,
+        "height": 562
+      },
+      "sources": [
+        {
+          "title": "名探偵コナンの捜査日誌：迷宫的十字路京都巡礼",
+          "url": "https://conan-diary.com/%e5%90%8d%e6%8e%a2%e5%81%b5%e3%82%b3%e3%83%8a%e3%83%b3%e3%80%8c%e8%bf%b7%e5%ae%ae%e3%81%ae%e5%8d%81%e5%ad%97%e8%b7%af%e3%80%8d%e8%81%96%e5%9c%b0%e5%b7%a1%e7%a4%bc%e3%80%90%e4%ba%ac%e9%83%bd%e5%b8%82/"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-11-27"
+    },
+    {
       "id": "rj-shinkyogoku",
       "place_ids": [],
       "date": "2026-12-02",
@@ -1262,6 +1404,52 @@
       "checked_on": "2026-11-25",
       "match_note": "玩家实景同机位对照，非官方认定；商户招牌随年份更替。",
       "name_ja": "新京極商店街（ろっくんプラザ前）"
+    },
+    {
+      "id": "witch-sanjo",
+      "place_ids": [],
+      "date": "2026-12-02",
+      "event_id": "gion_dinner",
+      "title": "三条名店街 · 商店街拱廊",
+      "name_ja": "三条名店街（リプトン三条本店前）",
+      "work": "魔女的夜宴／サノバウィッチ",
+      "scene": "日常商店街与名台词拉面店段落背景，取景自三条名店街 Sir Thomas LIPTON 三条本店前拱廊。",
+      "shooting_note": "从新京极商店街北端走1—2分钟直连；面向 LIPTON 拱门与圆拱顶顺拍，同街可顺路看《轻音》老牌乐器店 JEUGIA 三条本店。",
+      "match_note": "玩家实景同机位对照，非官方认定；画面店铺招牌有改绘。",
+      "coordinates": {
+        "lat": 35.00881,
+        "lng": 135.76818,
+        "precision": "三条名店街 LIPTON 三条本店前参考点；非精确摄影站位",
+        "source_url": "https://azusairi.com/?p=2549"
+      },
+      "real": {
+        "local": "assets/pilgrimage/kyoto/witch_sanjo_r.jpg",
+        "source_url": "https://azusairi.com/?p=2549",
+        "image_url": "https://azusairi.com/wp-content/uploads/2023/11/IMG_3489-1024x576.jpg",
+        "credit": "アズサイリ（三条名店街实拍）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "visual_verified": true,
+        "width": 1000,
+        "height": 562
+      },
+      "anime": {
+        "local": "assets/pilgrimage/kyoto/witch_sanjo_a.jpg",
+        "source_url": "https://azusairi.com/?p=2549",
+        "image_url": "https://azusairi.com/wp-content/uploads/2023/11/%E3%82%B5%E3%83%8E%E3%83%90%E3%82%A6%E3%82%A3%E3%83%83%E3%83%81-1075.png",
+        "credit": "游戏画面 © YUZUSOFT/JUNOS INC.；对照：アズサイリ",
+        "license": "版权所有；个人行程中的场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 683,
+        "height": 384
+      },
+      "sources": [
+        {
+          "title": "玩家作品与实景对照：サノバウィッチ（京都市篇）",
+          "url": "https://azusairi.com/?p=2549"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-11-27"
     },
     {
       "id": "conan-tsutenkaku",
@@ -1466,6 +1654,56 @@
           "url": "https://azusairi.com/?p=2576"
         }
       ]
+    },
+    {
+      "id": "fate-kazamidori",
+      "place_ids": [],
+      "date": "2026-12-06",
+      "event_id": "kitano_lunch",
+      "title": "风见鸡馆 · 远坂凛宅外观",
+      "name_ja": "風見鶏の館（旧トーマス住宅）",
+      "work": "Fate/stay night",
+      "scene": "远坂凛宅邸外观原型，标志性红砖外墙、凸窗与双烟囱取景自神户北野风见鸡馆。",
+      "shooting_note": "从北野星巴克沿北野坂再往上走5—8分钟即达（2025/7已修缮重开，09:00—17:00），门前广场仰拍红砖外立面；隔壁1分钟即萌黄之馆。",
+      "match_note": "同机位对照：正面凸窗与双烟囱构图一致；右侧尖顶塔楼在作品中有改绘。",
+      "coordinates": {
+        "lat": 34.70163,
+        "lng": 135.18974,
+        "precision": "风见鸡馆门前广场参考点；非精确摄影站位",
+        "source_url": "https://aurakaze.blog/fate-jyunreihyogo/"
+      },
+      "real": {
+        "local": "assets/pilgrimage/kobe/fate_kazamidori_r.jpg",
+        "source_url": "https://aurakaze.blog/fate-jyunreihyogo/",
+        "image_url": "https://aurakaze.blog/wp-content/uploads/2023/11/7-4-scaled.jpeg",
+        "credit": "Aura Kaze（风见鸡馆外立面实拍）",
+        "license": "原作者版权，未标注开放许可；仅本机私人对照引用",
+        "visual_verified": true,
+        "width": 1000,
+        "height": 735
+      },
+      "anime": {
+        "local": "assets/pilgrimage/kobe/fate_kazamidori_a.jpg",
+        "source_url": "https://aurakaze.blog/fate-jyunreihyogo/",
+        "image_url": "https://aurakaze.blog/wp-content/uploads/2023/11/7-4-scaled.jpeg",
+        "credit": "游戏画面 © TYPE-MOON；对照图 Aura Kaze",
+        "license": "版权所有；个人行程中的场景对照引用，非开放许可",
+        "visual_verified": true,
+        "width": 1000,
+        "height": 750
+      },
+      "sources": [
+        {
+          "title": "风见鸡馆官方网站（营业与开放信息）",
+          "url": "https://www.kobe-kazamidori.com/"
+        },
+        {
+          "title": "Fate 神户圣地巡礼对照：Aura Kaze",
+          "url": "https://aurakaze.blog/fate-jyunreihyogo/"
+        }
+      ],
+      "status": "ready",
+      "checked_on": "2026-11-27"
     },
     {
       "id": "fate-kobe-bridge",

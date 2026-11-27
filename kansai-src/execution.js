@@ -24,6 +24,7 @@ const NAVIGATION_PATHS={
  demachi_transfer:['hotel_kyoto',['京都站地铁烏丸线','京都駅 地下鉄 烏丸線'],['今出川站','今出川駅'],'demachi'],
  inari_transfer:['kyoto_station',['JR稻荷站','稲荷駅 JR'],'inari'],
  kyoto_night_return:[['阪急京都河原町站','京都河原町駅 阪急'],['阪急烏丸站','烏丸駅 阪急'],['地铁四条站','四条駅 地下鉄'],'hotel_kyoto'],
+ shinsaibashi_transfer:[['地铁难波站（御堂筋线）','なんば駅 御堂筋線'],['心斋桥站（南改札直连大丸）','心斎橋駅 大丸'],'pokemon_osaka_dx'],
  kobe_bridge_visit:[['Port Liner三宫站','三宮駅 ポートライナー'],['Port Liner中公园站','中公園駅 ポートライナー'],'kobe_bridge']
 };
 function activityPlaceIds(ev){return ev.place_ids;}

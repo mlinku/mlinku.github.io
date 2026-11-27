@@ -50,7 +50,7 @@
       "作品巡礼与联动集章",
       "京都红叶与高台寺一次夜枫",
       "奈良大佛殿与二月堂",
-      "日本桥重点1—2家动漫店",
+      "日本桥动漫购物与宝可梦中心大阪DX",
       "姬路城与好古园",
       "生田神社、北野物语馆与神户大桥巡礼",
       "元町两家CD店"
@@ -395,6 +395,32 @@
       "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E9%A6%99%E6%B8%AF%20Hong%20Kong%20International%20Airport",
       "coordinates": null,
       "coordinate_status": "not_geocoded"
+    },
+    {
+      "id": "hokkyokusei_shinsaibashi",
+      "name": "北极星 心斋桥本店",
+      "name_ja": "北極星 心斎橋本店",
+      "city": "大阪",
+      "category": "restaurant",
+      "address_ja": "大阪市中央区西心斎橋2-7-27",
+      "map_query": "北極星 心斎橋本店 大阪市中央区西心斎橋2-7-27",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%A5%B5%E6%98%9F%20%E5%BF%83%E6%96%8E%E6%A9%8B%E6%9C%AC%E5%BA%97%20%E5%A4%A7%E9%98%AA%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E8%A5%BF%E5%BF%83%E6%96%8E%E6%A9%8B2-7-27",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "source_url": "https://www.hokkyokusei.online/shinsaibashi"
+    },
+    {
+      "id": "pokemon_osaka_dx",
+      "name": "宝可梦中心大阪DX（大丸心斋桥本馆9F）",
+      "name_ja": "ポケモンセンターオーサカDX",
+      "city": "大阪",
+      "category": "shop",
+      "address_ja": "大阪市中央区心斎橋筋1-7-1 大丸心斎橋店 本館9F",
+      "map_query": "ポケモンセンターオーサカDX 大丸心斎橋店本館9F",
+      "map_search_url": "https://www.google.com/maps/search/?api=1&query=%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E3%82%AA%E3%83%BC%E3%82%B5%E3%82%ABDX%20%E5%A4%A7%E4%B8%B8%E5%BF%83%E6%96%8E%E6%A9%8B%E5%BA%97%E6%9C%AC%E9%A4%A89F",
+      "coordinates": null,
+      "coordinate_status": "not_geocoded",
+      "source_url": "https://www.pokemon.co.jp/shop/pokecen/osakadx/"
     },
     {
       "id": "hotel_kyoto",
@@ -2431,10 +2457,10 @@
     {
       "date": "2026-12-04",
       "weekday": "周五",
-      "title": "奈良 · 日本桥",
+      "title": "奈良 · 日本桥 · 心斋桥",
       "departure_target": "09:30",
-      "hotel_return_target": "20:00—20:30",
-      "intensity": "中等",
+      "hotel_return_target": "约20:45—21:00",
+      "intensity": "中等偏高",
       "cities": [
         "大阪",
         "奈良"
@@ -2526,32 +2552,57 @@
         },
         {
           "id": "anime_shopping",
-          "time_label": "16:00—18:30",
+          "time_label": "16:00—18:05",
           "time_status": "planning_window",
-          "title": "日本桥动漫购物 · 重点1—2家",
+          "title": "日本桥动漫购物",
           "place_ids": [
             "animate",
-            "surugaya"
+            "surugaya",
+            "potato",
+            "surugaya_main"
           ],
           "category": "shopping",
-          "condition": "先逛关门早的小店，再去Animate、骏河屋；晚到只选一家。"
+          "condition": "御宅路一带自由逛，想逛哪家去哪家，18:05左右出发去心斋桥。"
+        },
+        {
+          "id": "shinsaibashi_transfer",
+          "time_label": "18:05—18:30",
+          "time_status": "planning_window",
+          "title": "前往大丸心斋桥",
+          "place_ids": [
+            "pokemon_osaka_dx"
+          ],
+          "category": "transport"
+        },
+        {
+          "id": "pokemon_dx_visit",
+          "time_label": "18:30—19:25",
+          "time_status": "planning_window",
+          "title": "宝可梦中心大阪DX（大丸心斋桥本馆9F）",
+          "place_ids": [
+            "pokemon_osaka_dx"
+          ],
+          "category": "shopping",
+          "condition": "大丸本馆9F（20:00关门），拍三神鸟买周边，19:25前结账离场。"
         },
         {
           "id": "nippombashi_dinner",
-          "time_label": "18:30—19:30",
+          "time_label": "19:30—20:30",
           "time_status": "planning_window",
-          "title": "晚餐 · 日本桥／难波",
+          "title": "晚餐 · 道顿堀",
           "place_ids": [
-            "namba_area"
+            "hokkyokusei_shinsaibashi",
+            "dotonbori"
           ],
           "category": "meal"
         },
         {
           "id": "nara_day_return",
-          "time_label": "约20:00—20:30到店",
+          "time_label": "20:30—20:55",
           "time_status": "planning_window",
           "title": "返回大阪酒店",
           "place_ids": [
+            "dotonbori",
             "nankai_namba",
             "nankai_shinimamiya",
             "hotel_osaka"
@@ -2573,7 +2624,11 @@
         "kintetsu_nippombashi",
         "animate",
         "surugaya",
-        "namba_area",
+        "potato",
+        "surugaya_main",
+        "pokemon_osaka_dx",
+        "hokkyokusei_shinsaibashi",
+        "dotonbori",
         "nankai_namba",
         "nankai_shinimamiya",
         "hotel_osaka"
@@ -2581,24 +2636,15 @@
       "transport_notes": [
         "南海新今宫乘往难波的列车到南海难波，出站步行换乘近铁大阪难波站，乘奈良线往近铁奈良；勿上大阪线往伊势。门到近铁奈良约70分钟，含步行与候车。",
         "回程乘大阪难波方向且停近铁日本桥的列车，出站直接去逛店。",
-        "近铁日本桥站沿东侧街道向南到Animate，再沿御宅路向北到骏河屋动漫·Hobby馆；骏河屋也有CD区。",
-        "饭后步行到南海难波，乘南海到新今宫，再步行回酒店；不去JR难波。"
+        "近铁日本桥站出站向南即到御宅路商圈，几家店彼此步行2—5分钟，按兴趣顺路逛即可。",
+        "道顿堀饭后向南步行约8分钟到南海难波，乘南海到新今宫再步行回酒店；不去JR难波。",
+        "逛完日本桥步行到地铁难波站，搭御堂筋线1站到心斋桥站，从南改札地下直连大丸本馆乘电梯上9F（比步行省腿力）。"
       ],
       "fallback_rules": [
-        "延误先缩短二月堂停留；晚到大阪就日本桥只逛一家，保留晚饭。"
+        "延误先缩短二月堂停留；晚到大阪就按兴趣挑日本桥最想逛的店，18:05出发保大丸20:00关门前逛完。",
+        "周五傍晚若大丸9F限流发整理券或腿累，直接跳过宝可梦中心，去道顿堀吃晚饭早点回酒店。"
       ],
-      "optional": [
-        {
-          "id": "shop_replacement",
-          "title": "替换一家动漫店",
-          "event_id": "anime_shopping",
-          "place_ids": [
-            "potato",
-            "surugaya_main"
-          ],
-          "rule": "总数仍不超过两家；只逛一家时按作品偏好选，不保证中古库存。"
-        }
-      ],
+      "optional": [],
       "route_event_ids": [
         "nara_transfer",
         "nara_transfer",
@@ -2613,6 +2659,10 @@
         "anime_shopping",
         "anime_shopping",
         "anime_shopping",
+        "anime_shopping",
+        "anime_shopping",
+        "pokemon_dx_visit",
+        "nippombashi_dinner",
         "nippombashi_dinner",
         "nara_day_return",
         "nara_day_return",
@@ -2624,15 +2674,10 @@
           "budget": "¥1,000–1,600",
           "where": "雑司町406-1（二月堂下）"
         },
-        "tea": {
-          "primary": "日本橋周辺のカフェ",
-          "budget": "¥500–1,000",
-          "where": "近铁日本桥站至御宅路一带"
-        },
         "dinner": {
-          "primary": "かつ丼吉兵衛 なんば道具屋筋店",
-          "budget": "¥900–1,400",
-          "where": "難波千日前14-2"
+          "primary": "北極星 心斎橋本店",
+          "budget": "¥1,100–1,600",
+          "where": "西心斎橋2-7-27（近道顿堀·大丸南走7分钟）"
         }
       },
       "dining_recommendations": {
@@ -2640,41 +2685,24 @@
           [
             "午餐",
             "首选",
-            "奈良公園周辺の飲食店",
-            "预算 ¥1,000–2,500",
-            "东大寺南大门至近铁奈良一带",
-            "坐下吃饭并休息；优先能及时入座的店，未订位。",
+            "東大寺絵馬堂茶屋",
+            "¥1,000–1,600",
+            "雑司町406-1（二月堂下）",
+            "二月堂山下顺路乌冬、荞麦面与简餐；未订位，满座换附近茶屋。",
             "",
             "nara_park",
-            {
-              "pending": true
-            }
-          ],
-          [
-            "茶歇",
-            "首选",
-            "日本橋周辺のカフェ",
-            "¥500–1,000",
-            "近铁日本桥站至御宅路一带",
-            "找有座位的咖啡店坐下休息；不指定店铺，满座就换一家。",
-            "",
-            "kintetsu_nippombashi",
-            {
-              "pending": true
-            }
+            {}
           ],
           [
             "晚餐",
             "首选",
-            "日本橋・難波周辺の飲食店",
-            "预算 ¥1,000–2,500",
-            "日本桥／难波一带",
-            "购物后吃饭；地图为餐饮片区，餐厅现场选择，未订位。",
+            "北極星 心斎橋本店",
+            "¥1,100–1,600",
+            "西心斎橋2-7-27（近道顿堀·大丸南走7分钟）",
+            "蛋包饭老铺，传统和室座敷；11:30–21:30（末单21:00），排队超20分钟改备选。",
             "",
-            "namba_area",
-            {
-              "pending": true
-            }
+            "hokkyokusei_shinsaibashi",
+            {}
           ]
         ],
         "optional": [],
@@ -2728,6 +2756,20 @@
               "text": "骏河屋大阪日本桥本馆：日本桥4-11-3，参考10:00—21:00。",
               "url": "https://www.suruga-ya.jp/feature/realstore/nihonbashi_main/index.html",
               "place_id": "surugaya_main"
+            }
+          ]
+        },
+        "pokemon_dx_visit": {
+          "title": "大丸9F 营业与同层",
+          "items": [
+            {
+              "text": "ポケモンセンターオーサカDX：大丸心斋桥店本馆9F，10:00—20:00；门口有三神鸟纪念雕像，周五或发售日可能发整理券。",
+              "url": "https://www.pokemon.co.jp/shop/pokecen/osakadx/",
+              "place_id": "pokemon_osaka_dx"
+            },
+            {
+              "text": "同层可顺看 JUMP SHOP、Kirby Café THE STORE；Pokémon Cafe 为完全预约制，不现场排队。",
+              "url": "https://www.daimaru.co.jp/shinsaibashi/floor/9f.html"
             }
           ]
         }
@@ -3905,7 +3947,7 @@
       "source": "https://fufutei-44.owst.jp/courses"
     }
   ],
-  "revision_note": "修订：12/3先稻荷后京都塔；12/4奈良加二月堂、直接逛日本桥；12/5改去姬路城与好古园，在姬路吃晚饭；12/6三宫动漫店快速看后去元町CD店。机酒与HARUKA不变。",
+  "revision_note": "修订：12/3先稻荷后京都塔；12/4奈良加二月堂、逛日本桥与心斋桥宝可梦中心DX、道顿堀晚饭；12/5改去姬路城与好古园，在姬路吃晚饭；12/6三宫动漫店快速看后去元町CD店。机酒与HARUKA不变。",
   "excluded_default": [
     "USJ",
     "大阪城",
@@ -3955,9 +3997,9 @@
       },
       {
         "time": "20:00",
-        "event_id": "anime_shopping",
+        "event_id": "pokemon_dx_visit",
         "type": "official_close",
-        "text": "Animate关门；主线18:30已结束"
+        "text": "大丸心斋桥关门；主线19:25前结账离场"
       }
     ],
     "2026-12-05": [

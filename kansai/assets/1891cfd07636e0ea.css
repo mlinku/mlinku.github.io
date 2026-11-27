@@ -2,8 +2,8 @@
    Ryo blue (primary/transit), Bocchi pink (pilgrimage/return), Kita coral-red (seals/deadlines), Nijika cream-yellow
    (caution washes/doodles), with whisper-soft four-corner ambient glow and a 1px silk hairline above the tabbar.
    Text ≥ 4.5:1 and control outlines ≥ 3:1 in both themes; touch targets ≥ 44px; shares data-user-color-scheme with the blog. */
-@font-face {font-family:'Trip Serif'; src:url("7817f24469102dbd.woff") format('woff'); font-weight:400 799; font-display:swap}
-@font-face {font-family:'Trip Serif'; src:url("94d298467d644a1a.woff") format('woff'); font-weight:800 900; font-display:swap}
+@font-face {font-family:'Trip Serif'; src:url("6b42f07f45c20c4f.woff") format('woff'); font-weight:400 799; font-display:swap}
+@font-face {font-family:'Trip Serif'; src:url("84d5d59d5e8b3c57.woff") format('woff'); font-weight:800 900; font-display:swap}
 :root {
   --bocchi: #bf3f6d; --bocchi-l: #f59bbd; --bocchi-soft: #fff0f6; --bocchi-edge: rgba(245,155,189,.36);
   --kita: #d1454a;   --kita-l: #f0676c;   --kita-soft: #fff0f1;   --kita-edge: rgba(240,103,108,.30);

@@ -116,7 +116,7 @@ function flightDeparture(id){const b=PLAN.bookings.find(b=>b.id===id),f=flightLo
 function flightTerminals(b){const from=flightLocal(b,'departure'),to=flightLocal(b,'arrival');return from.city+(b.departure_terminal_role==='check_in'?from.terminal+'值机 → '+(b.boarding_terminal||'航站楼待确认')+'登机':from.terminal+'出发')+'；'+to.city+to.terminal+'抵达。';}
 const photoSrc=id=>PHOTOS[id]?.src||'';
 const dateLabel=d=>String(Number(d.slice(5,7)))+'/'+String(Number(d.slice(8)));
-// 日本桥 stores on 12/4: Animate and 骏河屋 by default, or a swap from shop_replacement; never more than two.
+// Legacy 日本桥 store IDs kept for saved-choice compatibility on 12/4.
 const NIPPOMBASHI_SHOPS=['animate','surugaya','potato','surugaya_main'];
 const choice=d=>{const c={ujiExtra:'none',byodoinInterior:false,kodaijiPlan:'night',yasakaBrief:false,shop1:'animate',shop2:'surugaya',...state.choices[d.date]};if(d.date==='2026-12-01'){c.ujiExtra='none';c.byodoinInterior=false;delete c.skipByodoin;}if(!NIPPOMBASHI_SHOPS.includes(c.shop1))c.shop1='animate';if(c.shop2!=='none'&&(!NIPPOMBASHI_SHOPS.includes(c.shop2)||c.shop2===c.shop1))c.shop2='none';if(d.date==='2026-12-02'){if(!['night','skip'].includes(c.kodaijiPlan))c.kodaijiPlan='night';c.yasakaBrief=c.kodaijiPlan==='night'&&c.yasakaBrief===true;}return c;};
 function activityState(date,id){const value=state.checks[date+':'+id];return value===true||value==='done'?'done':'pending';}
@@ -167,7 +167,7 @@ const EVENT_TITLES={
  dotonbori_transfer:'新今宫 → 戎桥',glico_photo:'戎桥格力高',dotonbori_walk:'道顿堀／法善寺',dotonbori_dinner:'道顿堀晚餐',osaka_evening_return:'回酒店',
  nara_transfer:'新今宫 → 近铁奈良',nara_park_walk:'步行至南大门',nara_visit:'东大寺大佛殿',nara_lunch:'绘马堂午餐',
  nigatsudo_visit:'二月堂',nara_station_walk:'回近铁奈良站',nara_return_train:'近铁奈良 → 日本桥',
- anime_shopping:'日本桥逛店',nippombashi_dinner:'难波晚餐',nara_day_return:'回酒店',
+ anime_shopping:'日本桥逛店',shinsaibashi_transfer:'日本桥 → 心斋桥',pokemon_dx_visit:'宝可梦中心大阪DX',nippombashi_dinner:'道顿堀晚餐',nara_day_return:'回酒店',
  himeji_lunch:'穴子饭午餐',kokoen_visit:'好古园夜枫',himeji_lights:'大手前通 → 姬路站',himeji_dinner:'姬路站晚餐',
  kobe_transfer:'前往生田神社',ikuta_visit:'生田神社',kitano_lunch:'北野星巴克',
  motomachi_cd_shopping:'三宫＆元町CD',sannomiya_rest:'休息回三宫',kobe_bridge_visit:'神户大桥',
@@ -200,12 +200,6 @@ function effectiveEvents(d){const c=choice(d);let events=d.timeline.map(x=>({...
    if(c.yasakaBrief){by('gion_dinner_walk').title='八坂神社 → 晚饭';by('gion_dinner_walk').place_ids=['yasaka_shrine'];by('gion_dinner_walk').condition='八坂神社短停与去餐厅共用30分钟；时间紧直接去吃饭。';}
   }
  }
- if(d.date==='2026-12-04'){
-  const shopping=by('anime_shopping'),shops=selectedShops(c);
-  shopping.place_ids=shops;
-  if(shops.length===1){shopping.title='日本桥 · 一家重点店';shopping.condition='只逛'+PLACE[shops[0]].name+'，按兴趣慢逛，含结账。';}
-  else if(shops.join()!=='animate,surugaya')shopping.condition=PLACE[shops[0]].name+'先，'+PLACE[shops[1]].name+'后，含移动和结账；晚到只选一家。';
- }
  return events;
 }
 function returnTarget(d){if(d.date==='2026-12-02')return choice(d).kodaijiPlan==='skip'?'饭后':'20:45—21:15';return (d.hotel_return_target||'').split('；')[0].replace(/^(争取|约)/,'').replace(/\s*目标入住.*/,'');}
@@ -222,16 +216,13 @@ function compactTime(value){
 }
 function effectiveRoute(d){const c=choice(d);let nodes=d.route_stop_ids.map((id,i)=>({id,phase:DETAILS[d.date].routePhases[i],original:i+1,optional:false}));
  if(d.date==='2026-12-02'){if(c.kodaijiPlan==='skip')nodes=nodes.filter(n=>n.id!=='kodaiji');else if(c.yasakaBrief)nodes.splice(nodes.length-1,0,{id:'yasaka_shrine',phase:'夜间',optional:true});}
- if(d.date==='2026-12-04'){const at=nodes.findIndex(x=>x.id==='animate'),{phase,original}=nodes[at];nodes.splice(at,2,...selectedShops(c).map(id=>({id,phase,original,optional:false})));}
  return nodes;
 }
 
 function optionalControls(d,eventId){if(!d.optional.length)return'';const c=choice(d),show=id=>!eventId||eventId===id;let fields='';
  if(d.date==='2026-12-02'&&show('gion_rest'))fields=`<fieldset class="night-options"><legend>夜间安排</legend>${[['night','高台寺夜枫','<span class="nowrap">17:15–18:30</span>参拜，<span class="nowrap">20:45–21:15</span>返店。'],['skip','晚餐后休息','高台寺附近休息半小时，再吃晚饭、返店。']].map(([value,label,note])=>`<label class="option-row"><input type="radio" name="kodaijiPlan" data-choice="kodaijiPlan" value="${value}" ${c.kodaijiPlan===value?'checked':''}>${label}<small>${note}</small></label>`).join('')}</fieldset><label class="option-row"><input type="checkbox" data-choice="yasakaBrief" ${c.yasakaBrief?'checked':''} ${c.kodaijiPlan==='skip'?'disabled':''}>八坂神社顺路短停<small>仅夜枫准时结束且体力有余；包含在晚饭前步行时段。</small></label>`;
- if(d.date==='2026-12-04'&&show('anime_shopping')){const stores=NIPPOMBASHI_SHOPS.map(id=>[id,PLACE[id].name]);fields=`<p class="small">总数不超过两家，晚到只留一家。</p><label class="small">第一家${select('shop1',c.shop1,stores)}</label><label class="small">第二家${select('shop2',c.shop2,[['none','不加第二家'],...stores.filter(([id])=>id!==c.shop1)])}</label>`;}
  return fields;
 }
-function select(key,value,options){return `<select class="option-select" data-choice="${key}" aria-label="${({shop1:'日本桥第一家店',shop2:'日本桥第二家店',umedaMain:'梅田重点店'})[key]||key}">${options.map(([v,l])=>`<option value="${v}" ${v===value?'selected':''}>${e(l)}</option>`).join('')}</select>`;}
 
 
 if(document.modelContext?.registerTool){

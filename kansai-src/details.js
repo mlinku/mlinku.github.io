@@ -95,15 +95,23 @@ const DETAILS = {
         ]
       },
       "avanti_shopping": {
-        "title": "6F 店铺营业",
+        "title": "6F 可逛店铺",
         "items": [
           {
-            "text": "Animate 京都 Avanti 店：6F，10:00—21:00，进店先去 CD 区找《Lehre der Rose》未拆封初回。",
-            "url": "https://www.animate.co.jp/shop/kyoto/"
+            "name": "Animate 京都 Avanti 店",
+            "copy": "アニメイト京都",
+            "loc": "京都 Avanti · 6F",
+            "text": "新品周边与 CD（进店先去 CD 区找《Lehre der Rose》未拆封初回）；10:00—21:00。",
+            "url": "https://www.animate.co.jp/shop/kyoto/",
+            "place_id": "kyoto_avanti"
           },
           {
-            "text": "指南针（らしんばん）京都店：同层 6F，10:00—21:00，中古周边与谷子。",
-            "url": "https://www.lashinbang.com/store/kyoto/"
+            "name": "指南针（らしんばん）京都店",
+            "copy": "らしんばん京都店",
+            "loc": "京都 Avanti · 6F",
+            "text": "同层中古周边与谷子；10:00—21:00。",
+            "url": "https://www.lashinbang.com/store/kyoto/",
+            "place_id": "kyoto_avanti"
           }
         ]
       }
@@ -571,17 +579,20 @@ const DETAILS = {
     }
   },
   "2026-12-04": {
-    "short": "奈良 · 日本桥",
-    "eyebrow": "大佛殿 → 二月堂 → 日本桥",
+    "short": "奈良 · 日本桥 · 心斋桥",
+    "eyebrow": "大佛殿 → 日本桥 → 宝可梦DX",
     "focus": "",
-    "key": "上午大佛殿，午饭后上二月堂，下午回大阪直接逛日本桥。",
+    "key": "上午东大寺与二月堂，下午日本桥自由逛店，傍晚大丸心斋桥9F宝可梦中心DX，道顿堀晚饭。",
     "cover": "todaiji",
     "photos": [
       "todaiji",
       "nigatsudo",
       "nara_park",
       "animate",
-      "surugaya"
+      "surugaya",
+      "pokemon_osaka_dx",
+      "hokkyokusei_shinsaibashi",
+      "dotonbori"
     ],
     "phases": [
       [
@@ -601,10 +612,22 @@ const DETAILS = {
         ]
       ],
       [
-        "下午 · 日本桥晚饭",
+        "下午 · 日本桥",
         [
           "nara_return_train",
-          "anime_shopping",
+          "anime_shopping"
+        ]
+      ],
+      [
+        "傍晚 · 心斋桥",
+        [
+          "shinsaibashi_transfer",
+          "pokemon_dx_visit"
+        ]
+      ],
+      [
+        "夜间 · 道顿堀晚饭",
+        [
           "nippombashi_dinner",
           "nara_day_return"
         ]
@@ -624,7 +647,11 @@ const DETAILS = {
       "下午",
       "下午",
       "下午",
+      "下午",
+      "下午",
       "傍晚",
+      "夜间",
+      "夜间",
       "夜间",
       "夜间",
       "夜间"
@@ -632,8 +659,9 @@ const DETAILS = {
     "transport": [
       "坐南海1站到难波，出站换「近铁大阪难波站」搭奈良线去奈良（勿上大阪线往伊势）。门到近铁奈良约70分钟，含步行与候车。",
       "乘停「近铁日本桥」的列车。",
-      "近铁日本桥向南先去Animate，再沿御宅路向北去骏河屋（3F有CD区）。",
-      "走去南海难波坐1站回新今宫（不去JR难波）。"
+      "近铁日本桥站出站向南即到御宅路商圈，几家店彼此步行2—5分钟，按兴趣顺路逛即可。",
+      "道顿堀饭后向南步行约8分钟到南海难波，坐1站回新今宫（不去JR难波）。",
+      "逛完日本桥步行到地铁难波站，搭御堂筋线1站到心斋桥站，从南改札地下直连大丸本馆乘电梯上9F（比步行省腿力）。"
     ],
     "meals": [
       [
@@ -657,10 +685,20 @@ const DETAILS = {
       [
         "晚餐",
         "首选",
+        "北極星 心斎橋本店",
+        "¥1,100–1,600",
+        "西心斎橋2-7-27（近道顿堀·大丸南走7分钟）",
+        "蛋包饭发源店，日式庭院老宅好歇脚；11:30—21:30（末单21:00），长队换吉兵卫。",
+        "https://www.hokkyokusei.online/shinsaibashi",
+        "hokkyokusei_shinsaibashi"
+      ],
+      [
+        "晚餐",
+        "备选",
         "かつ丼吉兵衛 なんば道具屋筋店",
         "¥900–1,400",
-        "難波千日前14-2",
-        "往南海难波顺路；出汁猪排饭出餐快，11:00—21:30（末单21:00）。",
+        "難波千日前14-2（往南海难波顺路）",
+        "出汁猪排饭出餐快，11:00—21:30（末单21:00）。",
         "https://www.yoshibei.co.jp/"
       ],
       [
@@ -669,7 +707,7 @@ const DETAILS = {
         "やよい軒 難波中2丁目店",
         "¥900–1,500",
         "難波中2-9-4",
-        "步行3分钟；热定食好歇脚，10:00—23:00。",
+        "热定食好歇脚，10:00—23:00。",
         "https://www.yayoiken.com/"
       ]
     ],
@@ -678,7 +716,7 @@ const DETAILS = {
     ],
     "foodIdeas": [],
     "cityLabel": "奈良·日本桥",
-    "summary": "东大寺大佛殿、二月堂、日本桥",
+    "summary": "大佛殿、二月堂、日本桥、宝可梦DX、道顿堀",
     "eventDetails": {
       "nara_visit": {
         "title": "大佛殿参观与闭门时间",
@@ -694,27 +732,40 @@ const DETAILS = {
         ]
       },
       "anime_shopping": {
-        "title": "店铺与关门时间",
+        "title": "可逛店铺",
         "items": [
           {
-            "text": "Animate大阪日本桥：日本桥西1-1-3池田大楼2号馆1—2楼；平日11:00—20:00。",
+            "text": "新品动漫周边、漫画与CD；平日 11:00—20:00。",
             "url": "https://www.animate.co.jp/shop/nipponbashi/",
             "place_id": "animate"
           },
           {
-            "text": "骏河屋御宅路动漫·Hobby馆：日本桥3-8-18平田大楼2—3楼，10:00—21:00；3楼有动漫、游戏与声优音乐CD。",
+            "text": "3F 动漫、游戏、声优音乐CD与毛绒，2F 模型；10:00—21:00。",
             "url": "https://www.suruga-ya.jp/feature/realstore/otaroad/index.html",
             "place_id": "surugaya"
           },
           {
-            "text": "Super Potato御宅路店：平田大楼1楼，复古游戏；营业以官网当日公告为准。",
+            "text": "复古游戏与怀旧周边（就在骏河屋楼下）；营业以官网当日公告为准。",
             "url": "https://www.superpotato.com/shop/otaroad/",
             "place_id": "potato"
           },
           {
-            "text": "骏河屋大阪日本桥本馆：日本桥4-11-3，参考10:00—21:00。",
+            "text": "综合大店，实体游戏、设定资料与中古周边；10:00—21:00。",
             "url": "https://www.suruga-ya.jp/feature/realstore/nihonbashi_main/index.html",
             "place_id": "surugaya_main"
+          }
+        ]
+      },
+      "pokemon_dx_visit": {
+        "title": "大丸9F 营业与同层",
+        "items": [
+          {
+            "text": "ポケモンセンターオーサカDX：大丸心斋桥店本馆9F，10:00—20:00；门口有三神鸟纪念雕像，周五或发售日可能发整理券。",
+            "url": "https://www.pokemon.co.jp/shop/pokecen/osakadx/"
+          },
+          {
+            "text": "同层可顺看 JUMP SHOP、Kirby Café THE STORE；Pokémon Cafe 为完全预约制，不现场排队。",
+            "url": "https://www.daimaru.co.jp/shinsaibashi/floor/9f.html"
           }
         ]
       },
@@ -978,24 +1029,32 @@ const DETAILS = {
     "summary": "生田神社、北野、元町CD店、神户大桥、和牛",
     "eventDetails": {
       "motomachi_cd_shopping": {
-        "title": "店铺营业",
+        "title": "可逛店铺（三宫 → 元町）",
         "items": [
           {
-            "text": "らしんばん：センタープラザ东馆2F，11:00—20:00。"
+            "text": "中古动漫周边与谷子；11:00—20:00。",
+            "url": "https://www.lashinbang.com/store/kobe/",
+            "place_id": "lashinbang_kobe"
           },
           {
-            "text": "骏河屋：さんプラザ3F，11:00—20:00。"
+            "text": "动漫CD、影像、毛绒与中古周边；11:00—20:00。",
+            "url": "https://www.suruga-ya.jp/feature/realstore/kobe_sannomiya/index.html",
+            "place_id": "surugaya_kobe"
           },
           {
-            "text": "BOOKOFF：グレースコウベ5F，10:00—20:00。"
+            "text": "二手音像、CD、漫画与游戏；10:00—20:00。",
+            "url": "https://www.bookoff.co.jp/shop/shop10822.html",
+            "place_id": "bookoff_kobe"
           },
           {
-            "text": "バナナレコード：新元町ビル4F，10:30—19:30。",
-            "url": "https://bananarecord.jp/shop_information/shop_kobe"
+            "text": "独立唱片店，中古 CD 与黑胶；10:30—19:30。",
+            "url": "https://bananarecord.jp/shop_information/shop_kobe",
+            "place_id": "kobe_banana_records"
           },
           {
-            "text": "りずむぼっくす：辰巳ビル2F，11:00—20:00，官网标年中无休。",
-            "url": "https://motomachirhythmbox.com/"
+            "text": "元町中古唱片店，CD 与音乐碟片；11:00—20:00，官网标年中无休。",
+            "url": "https://motomachirhythmbox.com/",
+            "place_id": "kobe_rhythmbox"
           }
         ]
       }
@@ -1066,8 +1125,8 @@ const DETAILS = {
 const PLACE_DETAILS = {
   "animate": "池田大楼2号馆1—2楼；新品周边，参考25—30分钟。平日11:00—20:00。",
   "surugaya": "平田大楼2—3楼；先3楼动漫周边、布偶、影音，再看2楼模型。参考50—60分钟；10:00—21:00。",
-  "potato": "平田大楼1楼；复古游戏，参考20—30分钟。替换一家，不增加第三家；营业以官网当日公告为准。",
-  "surugaya_main": "日本桥4-11-3；想找实体游戏、设定资料时替换一家。参考10:00—21:00；不保证库存。",
+  "potato": "平田大楼1楼；复古游戏，参考20—30分钟；营业以官网当日公告为准。",
+  "surugaya_main": "日本桥4-11-3；实体游戏、设定资料与中古周边，参考10:00—21:00；不保证库存。",
   "bench": "搜索名称为井川用水機場前；须结合宇治市巡礼图及现场标识核对机位，不把任意河边长椅当目标。",
   "daikichi": "天气、路况与体力合适才登山；往返与停留预留75分钟，白天完成。登山口须现场核对。",
   "ikuta": "巡礼重点是拝殿外观。参照爱好者实景记录，并非制作方认证原型；普通游客不可拍建筑内部。",
@@ -1082,12 +1141,15 @@ const PLACE_LOCATIONS = {
  "animate":"池田大楼2号馆 · 1–2F",
  "surugaya":"平田大楼 · 2–3F",
  "potato":"平田大楼 · 1F",
+ "surugaya_main":"日本桥 4-11-3",
  "lashinbang_kobe":"センタープラザ东馆 · 2F",
  "surugaya_kobe":"さんプラザ · 3F-2",
  "bookoff_kobe":"グレースコウベ · 5F",
  "kobe_banana_records":"新元町ビル · 4F",
  "kobe_rhythmbox":"辰巳ビル · 2F",
- "fufutei_kobe":"ファンタジービル · 3F"
+ "fufutei_kobe":"ファンタジービル · 3F",
+ "pokemon_osaka_dx":"大丸心斋桥本馆 · 9F",
+ "hokkyokusei_shinsaibashi":"西心斋桥 · 近道顿堀"
 };
 
 const WORK_NAMES = [
@@ -1129,3 +1191,4 @@ PLACE_DETAILS.kintetsu_osaka_namba = "南海难波出站后步行换乘；乘奈
 PLACE_DETAILS.kobe_banana_records = "元町通1-4-18新元町ビル4F，10:30—19:30；两家CD店之一。";
 PLACE_DETAILS.kobe_rhythmbox = "元町通1-13-19辰巳ビル2F，11:00—20:00，官网标年中无休。";
 PLACE_DETAILS.fufutei_kobe = "北長狭通2-11-6ファンタジービル3F，周日16:00—23:00；不预约直接Walk-in，满座换隔壁备选。";
+PLACE_DETAILS.pokemon_osaka_dx = "大丸心斋桥店本馆9F，10:00—20:00；门口有三神鸟纪念雕像，Pokémon Cafe 为完全预约制。";

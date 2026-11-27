@@ -127,14 +127,12 @@ const checked=run(`
  const kobe=PLAN.days.find(d=>d.date==='2026-12-06');
  assert.equal(String(effectiveEvents(kobe).find(ev=>ev.id==='motomachi_cd_shopping').place_ids),String(['lashinbang_kobe','surugaya_kobe','bookoff_kobe','kobe_banana_records','kobe_rhythmbox']),'三宫三店快速看，再去元町两家CD店');
  assert.ok(sheetHTML(kobe.date,'sannomiya_dinner').includes('Walk-in')&&sheetHTML(kobe.date,'sannomiya_dinner').includes('焼肉あらし')&&sheetHTML(kobe.date,'sannomiya_dinner').includes('牛角'),'三宫和牛Walk-in且含两家备选');
- // 12/4 shop choices: every pair walks in order on the route and never more than two stores.
+ // 12/4 日本桥 shops: all four stores listed in parallel without forced 1-2 shop dropdowns.
  const nara=PLAN.days.find(d=>d.date==='2026-12-04');
- for(const [shop1,shop2] of [['animate','surugaya'],['potato','surugaya_main'],['surugaya','none'],['surugaya_main','animate']]){
-  state.choices[nara.date]={shop1,shop2};const shops=[shop1,shop2].filter(x=>x!=='none');
-  assert.equal(String(effectiveEvents(nara).find(ev=>ev.id==='anime_shopping').place_ids),String(shops),'选店 '+shops);
-  assert.equal(String(effectiveRoute(nara).filter(n=>shops.includes(n.id)).map(n=>n.id)),String(shops),'路线含所选店 '+shops);
- }
- state.choices={};
+ const naraShops=['animate','surugaya','potato','surugaya_main'];
+ assert.equal(String(effectiveEvents(nara).find(ev=>ev.id==='anime_shopping').place_ids),String(naraShops),'日本桥四家店平行列出');
+ assert.equal(String(effectiveRoute(nara).filter(n=>naraShops.includes(n.id)).map(n=>n.id)),String(naraShops),'路线含日本桥四家店');
+ assert.ok(!sheetHTML(nara.date,'anime_shopping').includes('可调整'),'日本桥不再出现第一家/第二家下拉框');
  // 通天阁 is reference material only; 戎桥 moved to 12/3.
  assert.ok(!dayShots(PLAN.days[3]).main.some(p=>p.id==='conan-tsutenkaku')&&dayShots(PLAN.days[3]).reference.some(p=>p.id==='conan-tsutenkaku'),'通天阁只作参考');
  assert.equal(shotProgress('2026-12-03').total,1,'参考点不计进度');

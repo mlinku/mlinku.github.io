@@ -47,7 +47,7 @@ assert.ok(event(d3,'glico_photo')&&d3.route_stop_ids.includes('glico'),'戎桥�
 const order=id=>d3.timeline.findIndex(e=>e.id===id);
 assert.ok(order('inari_visit')<order('kyoto_lunch')&&order('kyoto_lunch')<order('kyoto_tower_visit'),'12/3先稻荷、京都站午饭，再京都塔');
 assert.equal(d3.route_stop_ids.filter(id=>id==='hotel_kyoto').length,2,'京都酒店寄存及取件都保留');
-assert.ok(event(d4,'nara_visit')&&event(d4,'nigatsudo_visit')&&event(d4,'anime_shopping')&&d4.optional.some(o=>o.id==='shop_replacement'),'12/4大佛殿、二月堂与日本桥，选店1—2家');
+assert.ok(event(d4,'nara_visit')&&event(d4,'nigatsudo_visit')&&event(d4,'anime_shopping')&&event(d4,'pokemon_dx_visit')&&event(d4,'anime_shopping').place_ids.length===4,'12/4大佛殿、二月堂、日本桥四店平行与宝可梦中心DX');
 assert.ok(!event(d4,'nippombashi_cafe')&&event(d4,'anime_shopping').time_label.startsWith('16:00'),'日本桥直接逛店');
 assert.ok(d4.transport_notes[0].includes('勿上大阪线往伊势'),'近铁换乘易错提醒');
 assert.equal(d5.departure_target,'10:00');
@@ -96,7 +96,7 @@ for(const id of ['kada_coast','awashima_shrine','wakayama_castle','wakayama_momi
 for(const [id,p] of Object.entries(photos))assert.ok(p.local&&fs.existsSync(path.join(src,p.local))&&(p.license||p.illustration||p.author),'照片文件与署名 '+id);
 
 const report={checkedAt:new Date().toISOString(),baseline:BASELINE,revision:plan.revision,bookingsUnchanged:true,unchangedDates:unchanged,
- final:{'12/3':'伏见稻荷 → 京都站午饭 → 京都塔 → 大阪 → 道顿堀','12/4':'大佛殿 → 二月堂 → 日本桥1—2家','12/5':'姬路城 → 好古园点灯 → 姬路站晚饭 → 约20:15返店','12/6':'三宫三店快速看 → 元町两家CD店；傍晚和牛Walk-in含备选'},
+ final:{'12/3':'伏见稻荷 → 京都站午饭 → 京都塔 → 大阪 → 道顿堀','12/4':'大佛殿 → 二月堂 → 日本桥逛店 → 宝可梦中心DX → 道顿堀晚饭','12/5':'姬路城 → 好古园点灯 → 姬路站晚饭 → 约20:15返店','12/6':'三宫三店快速看 → 元町两家CD店；傍晚和牛Walk-in含备选'},
  excluded:plan.excluded_default,tickets,pilgrimage:{points:pg.points.length}};
 fs.writeFileSync(path.join(src,'检查记录/修订计划-2026-11-08.json'),JSON.stringify(report,null,2));
 console.log(JSON.stringify(report));

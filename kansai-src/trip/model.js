@@ -28,8 +28,10 @@ const EVENT_BRIEF={
  nara_transfer:'',
  nara_visit:'仅现金；大佛殿内部约30—40分钟。',
  kobe_bridge_visit:'从北公园拍红桥，16:30前回三宫；大风雨或疲劳取消。',
+ motomachi_cd_shopping:'三宫到元町沿街 5 家店，按兴趣自由逛，14:20 左右收尾。',
  sannomiya_dinner:'不用预约直接去（Walk-in，16:00开门），满座走1分钟换隔壁两家。',
- anime_shopping:'重点1—2家，先逛早关门的小店，晚到只选一家。',
+ anime_shopping:'御宅路一带自由逛，想逛哪家去哪家，18:05左右出发去心斋桥。',
+ shinsaibashi_transfer:'',
  skyway_visit:'同层免费玻璃廊桥，俯瞰京都塔夜景。',
  kokoen_visit:'逛庭园，日落约16:45后点灯（红叶可能已到尾声）。',
  checkout_osaka:'离店前或到机场吃早餐。',
@@ -86,7 +88,7 @@ const DROP_SENTENCES=new Set([
  '冬季17:00闭门','往返与展望台75分钟',
  '12/1不能补前期章','前期9/1—10/31：井川用水機場前（久美子）、宇治桥（奏）、大吉山展望台（丽奈）','单点可领对应角色相框，后期三点完成可领三人集合相框',
  '参加免费，交通与流量另计','日本境外销售的部分机型可能不受支持','相框可用至2027/1/31','未取得前期3枚印章，仅12月一天不能满足6枚印章的抽奖条件','非地下街','长队时换简餐','等位较久时换附近简餐','附近简餐，优先有座位的店','未指定店铺','长队约20分钟就换店，保留坐下用餐',
- '坐下吃饭并休息','优先能及时入座的店','购物后吃饭','地图为餐饮片区，餐厅现场选择','回店后就近吃简餐，再收主要行李','附近找座位休息30分钟',
+ '回店后就近吃简餐，再收主要行李','附近找座位休息30分钟',
  '无座位就保留外观短拍，下坡找有座位的简餐','二月堂有坡阶、浮见堂需跨区步行，只能替换公园或大佛殿的部分时间，不同时追加',
  '《魔女的夜宴》七绪咖啡店关联为玩家实景对照，非官方认定','官方建议庭园、御桥与天守往返至少90分钟','25分钟含河岸短拍与前往京阪站','营业16:00—23:00，末单22:30','取号与用餐75分钟为预算，不保证等位','11:00左右判断不能11:45前吃完则放弃堂食','09:30离店，到店前含酒店到站、候车与步行',
  '天气、路况与体力合适才登山','往返与停留预留75分钟，白天完成','45分钟含步行与拍照，长椅多留片刻，桥上顺拍','搜索名称为井川用水機場前','导航到Port Island北公园，从桥南侧拍红色桥梁',
@@ -148,7 +150,7 @@ const HARD_STOPS={
  '2026-11-30':[['10:25','T2 值机截止（港时）','flight_out','close','hkt'],['11:05','登机口关闭（港时）','flight_out','close','hkt'],['21:00','Avanti 动漫店关门','avanti_shopping','close']],
  '2026-12-01':[['11:00','中村藤吉过久弃吃','uji_parfait','decide'],['14:40','未到登山口取消大吉山','daikichi_visit','decide']],
  '2026-12-02':[['17:45','高台寺未入场改晚饭','kodaiji_night','decide'],['20:00','おめん最后点餐','gion_dinner','close']],
- '2026-12-04':[['20:00','Animate 关门','anime_shopping','close']],
+ '2026-12-04':[['20:00','大丸心斋桥关门','pokemon_dx_visit','close']],
  '2026-12-05':[['16:00','姬路城停止入城','himeji_castle_visit','close']],
  '2026-12-06':[['14:20','元町停止购物','motomachi_cd_shopping','decide'],['15:00','出发去神户大桥','kobe_bridge_visit','decide']],
  '2026-12-07':[['09:10','关西 T1 值机截止','airport_checkin','close']]
@@ -199,15 +201,13 @@ const TRANSPORT_AT_EVENT={
  flight_out:[3],arrival_transfer:[0,1],checkin_kyoto:[2],uji_transfer:[0],uji_pilgrimage:[1],suikan_stamp:[2],uji_return:[3],
  demachi_transfer:[0],kiyomizu_transfer:[1,2],higashiyama_walk:[3],kyoto_night_return:[4],
  inari_transfer:[0],inari_return:[1],luggage_pickup:[2],osaka_transfer:[3],dotonbori_transfer:[4],osaka_evening_return:[5],
- nara_transfer:[0],nara_return_train:[1],nara_day_return:[3],
+ nara_transfer:[0],nara_return_train:[1],anime_shopping:[2],shinsaibashi_transfer:[4],nara_day_return:[3],
  himeji_transfer:[0],himeji_walk:[1],himeji_return:[2],
  kobe_transfer:[0],kitano_lunch:[1],motomachi_cd_shopping:[2],kobe_bridge_visit:[3],last_evening_return:[4],
  checkout_osaka:[0],airport_train:[1,2],airport_checkin:[3]
 };
 function transportNotes(d,ev){
  const notes=(TRANSPORT_AT_EVENT[ev.id]||[]).map(i=>DETAILS[d.date].transport[i]).filter(Boolean);
- // The walking order Animate → 骏河屋 only holds for the default pair.
- if(ev.id==='anime_shopping'&&selectedShops(choice(d)).join()==='animate,surugaya')notes.push(DETAILS[d.date].transport[2]);
  // A note whose tail was trimmed still ends as a sentence.
  return notes.map(n=>cleanText(TRANSPORT_SHORT.reduce((s,[from,to])=>s.replace(from,to),n))).filter(Boolean).map(n=>/[。！？）」]$/.test(n)?n:n+'。');
 }
@@ -263,10 +263,9 @@ function foodSuggestionsForEvent(d,eventId){
 }
 function activityDetails(d,id){
  const info=DETAILS[d.date].eventDetails?.[id];if(!info||DROP_DETAILS.has(id))return null;
- const selected=id==='anime_shopping'?selectedShops(choice(d)):null,said=dayNotes(d).join('');
+ const said=dayNotes(d).join('');
  const keep=item=>!(item.text.includes('小吃沿中央街自选')&&said.includes('小吃沿中央街自选'));
- const items=(selected?[...selected.map(placeId=>info.items.find(item=>item.place_id===placeId)).filter(Boolean),...info.items.filter(item=>!item.place_id)]:info.items).filter(keep);
- const kept=items.map(item=>({text:cleanText(item.text),url:item.url||''})).filter(item=>item.text);
+ const kept=info.items.filter(keep).map(item=>({text:cleanText(item.text),url:item.url||'',placeId:item.place_id||'',name:item.name||'',copy:item.copy||'',loc:item.loc||''})).filter(item=>item.text);
  return kept.length?{title:info.title,items:kept}:null;
 }
 // A notice whose words were all verification notes is only its links; those move out of the warning box.
@@ -296,6 +295,7 @@ const SHOT_COPY={
  'eupho_uji_bridge':{title:'宇治桥',scene:'第一季第12集，久美子抒发心情的宇治桥。',note:'在行人通道对照桥栏与河景。'},
  'eupho_omotesando':{title:'平等院表参道',scene:'京阪官方巡礼地图第6点：平等院表参道。',note:'午饭后经过表参道，沿街对照取景。'},
  'eupho_bench':{title:'久美子长椅'},
+ 'eupho_uji_center':{title:'宇治市观光中心'},
  'eupho_kisen':{title:'喜撰桥'},
  'eupho_asagiri':{title:'朝雾桥'},
  'eupho_uji_shrine':{title:'宇治神社',note:'朝雾桥东侧找临河鸟居与台阶（机位在入口）。'},
@@ -309,17 +309,21 @@ const SHOT_COPY={
  'demachi-fish':{title:'商店街吊鱼拱廊',scene:'官方主视觉里的商店街吊鱼与拱廊。',note:'进拱廊后找吊鱼和屋顶纵深。'},
  'delta-tamako':{title:'高野川飞石',note:'找东侧高野川的飞石与下河台阶，对照石块排列。雨天或水量大时留在岸边拍。'},
  'delta-kon':{title:'贺茂川飞石',note:'从贺茂川侧飞石朝东拍中洲，与《玉子》告白位置分开。余量不足就省此机位。'},
+ 'conan-gojobashi':{title:'五条大桥'},
  'kiyomizu-conan':{title:'清水舞台',scene:'第927—928集清水寺与新兰剧情；亦见于《迷宫的十字路》。',note:'在本堂舞台对照屋顶与木栏杆；定位为本堂参考点。',caption:'官方上映会宣传视觉，非动画单帧；两图视角不同。'},
  'senren-sannenzaka':{title:'三年坂',note:'在玩家标点附近，沿街对照石板路与两侧屋檐；店名有改写。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
  'senren-ninenzaka':{title:'二年坂',note:'在二年坂南端附近找右侧店铺转角、屋檐与弯路；别只在台阶中央找。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
  'senren-kodaiji-lane':{title:'高台寺旁石墙弯道'},
  'senren-hanamikoji':{title:'花见小路'},
  'senren-shirakawa':{title:'白川南通'},
+ 'conan-pontocho':{title:'先斗町'},
  'rj-shinkyogoku':{title:'新京极商店街'},
+ 'witch-sanjo':{title:'三条名店街'},
  'conan-tsutenkaku':{title:'通天阁',note:'路过时从地面辨认塔体即可。',caption:'同建筑、不同视角；用于辨认塔体。'},
  'conan-ebisubashi':{title:'戎桥',scene:'第763—764集《恋爱的暗号》，平次在戎桥调查。',note:'桥面找弧形栏杆与南侧店招；动画有改绘。'},
  'senren-ikuta':{title:'生田神社',note:'在拝殿前稍侧处对照屋顶、红柱与狛犬；游戏将楼房改绘为树木。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
  'witch-kitano':{title:'北野物语馆'},
+ 'fate-kazamidori':{title:'风见鸡馆'},
  'fate-kobe-bridge':{title:'神户大桥'},
  'sekiro-himeji-keep':{title:'姬路城天守'}
 };
@@ -373,7 +377,7 @@ function eventModel(d,ev){
   status:ev.time_status==='booked'?'当地时间':ticket?ticket.label:pending?'待确认':'',ticket,
   done:activityState(d.date,ev.id)==='done',line,optionNote:ev.optionNote||'',notice,links,transport,
   hotels:(ev.category==='hotel'||ev.id==='luggage_pickup'?ev.place_ids.filter(id=>id.startsWith('hotel_')):[]).filter(id=>!ev.title.includes(PLACE[id].name_ja)).map(id=>PLACE[id]),
-  meals:rows.map(r=>mealModel(d,r,line+noticeText)),nav:ev.category==='rest'&&!major?null:navTarget(ev,stops),via:stops.length>2&&!['meal','flight'].includes(ev.category)?stops:[],
+  meals:rows.map(r=>mealModel(d,r,line+noticeText)),nav:ev.category==='rest'&&!major?null:navTarget(ev,stops),via:stops.length>2&&!['meal','flight'].includes(ev.category)&&!details.some(x=>x.items.every(it=>it.placeId))?stops:[],
   photos,details,facts:EVENT_EXTRA[ev.id]?.facts||'',
   food:foodSuggestionsForEvent(d,ev.id),placeNotes,fullNote,shots,rally:!!ev.rally_spot,choices:optionalControls(d,ev.id)
  };
