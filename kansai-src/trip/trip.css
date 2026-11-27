@@ -10,7 +10,7 @@
   --nijika: #9c6700; --nijika-l: #fad961; --nijika-soft: #fff8dc; --nijika-edge: rgba(235,192,64,.44);
   --ryo: #3866a3;    --ryo-l: #5c91d4;    --ryo-soft: #edf4fc;    --ryo-edge: rgba(92,145,212,.30);
 
-  --paper: #fafafd; --card: #ffffff; --sunk: #f2f4f8;
+  --paper: #fafafd; --card: #ffffff; --sunk: #f2f4f8; --polaroid: #ffffff;
   --surface: rgba(255,255,255,.78); --surface-strong: rgba(255,255,255,.85); --surface-edge: inset 0 1px 0 rgba(255,255,255,.96);
   --glass: rgba(255,255,255,.74); --glass-paper: rgba(250,250,253,.78); --sheet-glass: rgba(255,255,255,.84); --glass-edge: rgba(255,255,255,.72); --glass-border: rgba(255,255,255,.72);
   --ink: #1f222a; --ink-2: #484e5c; --muted: #6c7384;
@@ -43,7 +43,7 @@
     --nijika: #f8d86c; --nijika-l: #f8d86c; --nijika-soft: rgba(248,216,108,.16); --nijika-edge: rgba(248,216,108,.24);
     --ryo: #8cc2ff;    --ryo-l: #8cc2ff;    --ryo-soft: rgba(140,194,255,.16);    --ryo-edge: rgba(140,194,255,.24);
 
-    --paper: #0e1017; --card: #151822; --sunk: #1d2230;
+    --paper: #0e1017; --card: #151822; --sunk: #1d2230; --polaroid: #f1eee7;
     --surface: rgba(21,24,34,.78); --surface-strong: rgba(21,24,34,.85); --surface-edge: inset 0 1px 0 rgba(255,255,255,.09);
     --glass: rgba(21,24,34,.74); --glass-paper: rgba(14,16,23,.76); --sheet-glass: rgba(21,24,34,.82); --glass-edge: rgba(255,255,255,.14); --glass-border: rgba(255,255,255,.12);
     --ink: #eef1f8; --ink-2: #c5ccdb; --muted: #939cb0;
@@ -70,7 +70,7 @@
   --nijika: #f8d86c; --nijika-l: #f8d86c; --nijika-soft: rgba(248,216,108,.16); --nijika-edge: rgba(248,216,108,.24);
   --ryo: #8cc2ff;    --ryo-l: #8cc2ff;    --ryo-soft: rgba(140,194,255,.16);    --ryo-edge: rgba(140,194,255,.24);
 
-  --paper: #0e1017; --card: #151822; --sunk: #1d2230;
+  --paper: #0e1017; --card: #151822; --sunk: #1d2230; --polaroid: #f1eee7;
   --surface: rgba(21,24,34,.78); --surface-strong: rgba(21,24,34,.85); --surface-edge: inset 0 1px 0 rgba(255,255,255,.09);
   --glass: rgba(21,24,34,.74); --glass-paper: rgba(14,16,23,.76); --sheet-glass: rgba(21,24,34,.82); --glass-edge: rgba(255,255,255,.14); --glass-border: rgba(255,255,255,.12);
   --ink: #eef1f8; --ink-2: #c5ccdb; --muted: #939cb0;
@@ -93,6 +93,7 @@
 
 /* ---------- Base ---------- */
 *, *::before, *::after {box-sizing:border-box}
+::selection {background:color-mix(in srgb, var(--ryo-l) 26%, transparent); color:var(--ink)}
 html {-webkit-text-size-adjust:100%; -webkit-tap-highlight-color:transparent}
 body {margin:0; min-height:100dvh; color:var(--ink); font:15.5px/1.65 var(--sans); text-autospace:normal; -webkit-font-smoothing:antialiased; background:var(--paper)}
 body::after {content:''; position:fixed; z-index:-2; inset:0; pointer-events:none; transform:translateZ(0); contain:strict;
@@ -503,7 +504,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name {text-wrap:prett
 .day-progress {display:flex; align-items:center; gap:12px; font-size:14px; color:var(--muted)}
 .day-progress b {color:var(--ink); font-variant-numeric:tabular-nums}
 .bar {flex:1; height:6px; border-radius:6px; background:var(--line); overflow:hidden}
-.bar i {display:block; height:100%; border-radius:6px; background:var(--bocchi-l)}
+.bar i {display:block; height:100%; border-radius:6px; background:var(--bocchi-l); transition:width .4s var(--ease-out)}
 .day-plan {padding:16px 14px 12px; border-color:var(--ryo-edge)}
 .phase + .phase {margin-top:16px; padding-top:14px; border-top:1px dashed var(--line)}
 .phase-title {display:flex; align-items:baseline; gap:8px; padding:0 4px 8px}
@@ -629,9 +630,9 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name {text-wrap:prett
 .plain li + li {margin-top:8px}
 .plain.roomy li {font-size:16px; color:var(--ink)}
 .plain.roomy li + li {margin-top:14px}
-.fold > summary {display:flex; align-items:center; gap:6px; min-height:48px; color:var(--accent); font-weight:600; font-size:15px; cursor:pointer; list-style:none}
+.fold > summary {display:flex; align-items:center; gap:6px; min-height:48px; color:var(--accent); font-weight:600; font-size:15px; cursor:pointer; list-style:none; transition:opacity .2s ease}
 .fold > summary::-webkit-details-marker {display:none}
-.fold > summary::after {content:''; width:7px; height:7px; margin-left:4px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:translateY(-2px) rotate(45deg)}
+.fold > summary::after {content:''; width:7px; height:7px; margin-left:4px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:translateY(-2px) rotate(45deg); transition:transform .22s var(--ease-out)}
 .fold[open] > summary::after {transform:translateY(2px) rotate(-135deg)}
 .fold > p {font-size:15px; color:var(--ink-2)}
 .fold > p + p {margin-top:6px}
@@ -658,7 +659,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name {text-wrap:prett
 .shot.done .shot-seal {opacity:1; transform:translateZ(0) scale(1) rotate(-12deg)}
 .pair {display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:12px -8px 0}
 .pair.single {grid-template-columns:1fr; margin:12px 0 0}
-.shot-img {position:relative; display:block; padding:3px 3px 20px; border-radius:5px; background:#ffffff; box-shadow:0 1px 2px rgba(34,42,68,.09), 0 6px 14px -6px rgba(34,42,68,.18)}
+.shot-img {position:relative; display:block; padding:3px 3px 20px; border-radius:5px; background:var(--polaroid); box-shadow:0 1px 2px rgba(34,42,68,.09), 0 6px 14px -6px rgba(34,42,68,.18); transition:transform .28s var(--ease-out), box-shadow .28s var(--ease-out)}
 .pair .shot-img:nth-child(1) {transform:rotate(-.45deg)}
 .pair .shot-img:nth-child(2) {transform:rotate(.4deg)}
 .pair.single .shot-img {transform:none}
@@ -684,29 +685,31 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name {text-wrap:prett
 .ticket-tap {display:flex; align-items:center; gap:12px; width:100%; min-height:54px; padding:10px 2px; border-radius:var(--r-sm); text-align:left; color:var(--ink); transition:background-color .2s ease}
 .tickets li:first-child .ticket-tap {padding-top:4px}
 .ticket-tap:active {background:var(--sunk)}
-.ticket.ok .ticket-state {color:var(--accent)}
+.ticket.ok .ticket-state {background:var(--ok-soft); border-color:var(--ryo-edge); color:var(--accent)}
 .ticket.ok .ticket-main b {color:var(--muted); text-decoration:line-through; text-decoration-color:var(--line-2)}
-.ticket-state .icon {width:14px; height:14px; margin-right:3px; vertical-align:-2px}
+.ticket-state .icon {width:13px; height:13px; margin-right:3px; flex:none}
 .ticket-main {flex:1; min-width:0; display:block}
 .ticket-main b {display:block; font:700 15.5px/1.35 var(--serif)}
 .ticket-main small {display:block; margin-top:1px; color:var(--muted); font-size:13px}
-.ticket-state {flex:none; white-space:nowrap; font-weight:750; font-size:13.5px; letter-spacing:.03em; text-align:right}
-.ticket.danger .ticket-state {color:var(--danger)}
-.ticket.warn .ticket-state {color:var(--warn)}
+.ticket-state {flex:none; display:inline-flex; align-items:center; justify-content:center; padding:3px 10px; border-radius:999px; background:var(--sunk); border:1px solid var(--line); white-space:nowrap; font-weight:750; font-size:12.5px; line-height:1.4; letter-spacing:.03em; text-align:center}
+.ticket.danger .ticket-state {background:var(--danger-soft); border-color:var(--kita-edge); color:var(--danger)}
+.ticket.warn .ticket-state {background:var(--warn-soft); border-color:var(--nijika-edge); color:var(--warn)}
 .sub {font:700 14px var(--serif); letter-spacing:.1em; color:var(--muted); margin:16px 0 4px}
 .when {font-size:13px; font-weight:700; color:var(--bocchi); margin:12px 0 2px}
-.todo {display:flex; align-items:flex-start; gap:12px; width:100%; min-height:48px; padding:10px 0; font-size:15px; border-top:1px dashed var(--line)}
-.todo .box {flex:none; display:grid; place-items:center; width:26px; height:26px; margin-top:1px; border-radius:8px; border:2px solid color-mix(in srgb, var(--line-2) 84%, var(--line)); color:transparent}
+.todo {display:flex; align-items:flex-start; gap:12px; width:calc(100% + 12px); margin:0 -6px; min-height:48px; padding:10px 6px; border-radius:var(--r-sm); font-size:15px; border-top:1px dashed var(--line)}
+.todo .box {flex:none; display:grid; place-items:center; width:26px; height:26px; margin-top:1px; border-radius:8px; border:2px solid color-mix(in srgb, var(--line-2) 84%, var(--line)); color:transparent; transition:background-color .22s ease, border-color .22s ease, color .2s ease, transform .28s var(--ease-spring)}
 .todo .box .icon {width:16px; height:16px; stroke-width:3}
+.todo:active .box {transform:scale(.9)}
 .todo.on .box {background:var(--bocchi); border-color:var(--bocchi); color:var(--card)}
 .todo.on > span:last-child {color:var(--muted); text-decoration:line-through}
 .pass-top, .hotel-top {display:flex; align-items:baseline; justify-content:space-between; gap:10px}
 .pass-top .kicker, .hotel-top .kicker {font-size:13px; letter-spacing:.03em}
 .pass-top .kicker b {color:var(--ryo); font-weight:750}
 .flight.back .pass-top .kicker b {color:var(--bocchi)}
-.pass-no {display:inline-flex; align-items:center; gap:4px; min-height:40px; margin:-8px -6px; padding:0 6px; font-size:12.5px; color:var(--muted); white-space:nowrap; letter-spacing:.02em; font-variant-numeric:tabular-nums}
+.pass-no {display:inline-flex; align-items:center; gap:5px; min-height:36px; margin:-6px -9px; padding:0 9px; border-radius:999px; font-size:12.5px; color:var(--muted); white-space:nowrap; letter-spacing:.02em; font-variant-numeric:tabular-nums; transition:background-color .2s ease, color .2s ease}
 .pass-no b {color:var(--ink-2); font-weight:700; letter-spacing:.03em}
-.pass-no:active {color:var(--accent)}
+.pass-no .icon {width:13px; height:13px; opacity:.52; transition:opacity .2s ease, color .2s ease}
+.pass-no:active {background:var(--sunk); color:var(--accent)}
 .pass {display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:16px; margin:8px 0 10px}
 .pass-end {display:flex; flex-direction:column; align-items:flex-start; gap:2px}
 .pass-end:last-child {align-items:flex-end; text-align:right}
@@ -828,16 +831,30 @@ noscript p {padding:40px; text-align:center}
   .zoom-stage.split figure:last-child {align-self:center; justify-self:start}
   .zoom-stage.split img {max-width:calc(50cqw - 18px); max-height:calc(100cqh - 12px)}
 }
+.cover-photos img, .day-hero > img, .sheet-cover img, .photo img {transition:transform .45s var(--ease-out)}
 @media (hover:hover) {
   .btn:hover {border-color:var(--accent)}
   .btn.primary:hover, .nav-big:hover {filter:brightness(.96)}
   .countdown .btn.primary:hover {border-color:var(--kita); filter:brightness(.97)}
-  .row-open:hover, .mini-row:hover, .stop-btn:hover, .icon-btn:hover, .strip-day:not(.on):hover, .tab:not(.on):hover {background:var(--sunk)}
+  .row-open:hover, .mini-row:hover, .stop-btn:hover, .icon-btn:hover, .strip-day:not(.on):hover, .tab:not(.on):hover, .inline-actions > *:hover {background:var(--sunk)}
+  .inline-actions > *:hover {color:var(--ink)}
   .cover > .icon-btn:hover, .cover-back:hover {background:rgba(0,0,0,.44); color:#fff}
+  .day-link:hover {background:color-mix(in srgb, var(--line) 34%, transparent)}
   .day-link:hover .dl-main b, .link-row:hover, .pager a:hover {color:var(--accent)}
-  .ticket-tap:hover {background:color-mix(in srgb, var(--line) 45%, transparent)}
-  .shot-img:hover {box-shadow:0 4px 16px -4px rgba(0,0,0,.3)}
+  .ticket-tap:hover, .todo:hover {background:color-mix(in srgb, var(--line) 42%, transparent)}
+  .pass-no:hover {background:var(--sunk); color:var(--accent)}
+  .pass-no:hover .icon {opacity:1; color:var(--accent)}
+  .fold > summary:hover {opacity:.82}
+  .shot-img:hover {transform:translateY(-2px) rotate(0deg); box-shadow:0 8px 22px -6px rgba(18,22,36,.28)}
+  .sheet-cover:hover img, .photo:hover img {transform:scale(1.03)}
   .alert-line:hover span {text-decoration:underline}
+}
+@media print {
+  body {background:#fff; color:#111}
+  body::before, body::after, .tabbar, .strip, .pager, .icon-btn, .cover-back, .inline-actions, .focus-actions, .actions, .sheet-foot, #toast, .kita, .day-sticker, .corner-sketch, dialog:not([open]) {display:none !important}
+  .screen {max-width:none; padding:0}
+  .block, .focus, .day-ticket, .shot {background:#fff; border-color:#d5dae4; box-shadow:none; break-inside:avoid}
+  .day-hero, .cover {box-shadow:none}
 }
 @media (prefers-reduced-motion:reduce) {
   *, *::before, *::after {animation:none !important; transition:none !important}
