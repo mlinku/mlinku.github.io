@@ -389,11 +389,11 @@ const TODOS=TODO_LIST.map(t=>t.text),TODO_IDS=TODO_LIST.map(t=>t.id);
 const TODO_WHEN=Object.fromEntries(TODO_LIST.filter(t=>t.when).map(t=>[t.id,t.when]));
 const TODO_WHEN_LABEL={'2026-11-30':'11/30 晚','2026-12-02':'12/2 午','2026-12-03':'12/3 晚','2026-12-04':'12/4 晚','2026-12-05':'12/5 晚','2026-12-06':'12/6 晚'};
 const TODO_PREFIX=/^12\/\d+(前夜|前|晚)?/;
-const TODO_SHORT={'weather':'查叶况与天气','restaurants':'核对餐厅营业与菜单','return-travel':'核对往返航班与南海时刻',
+const TODO_SHORT={'weather':'查叶况与天气','restaurants':'核对餐厅营业与菜单','return-travel':'核对往返航班通知',
  'transport-tickets':'备好交通 IC 卡与 HARUKA 订单','uji-cafes':'查宇治店铺营业与候位','rally-account':'登录集章账户、开定位',
  'kodaiji-weather':'查高台寺天气与排队','nara-cash-20261019':'备现金，查日本桥与宝可梦','himeji-20261108':'查姬路城与好古园开放',
  'kobe-1205-20261019':'先收主要行李，查元町 CD 店临休','packing':'整理行李证件、备次晨早餐'};
-const TODO_NOTE={'weather':'提前 2–3 天看降雨，随时调整户外项','return-travel':'确认值机截止；12/6 复核次晨南海列车',
+const TODO_NOTE={'weather':'提前 2–3 天看降雨，随时调整户外项','return-travel':'确认值机截止与航站楼',
  'transport-tickets':'保存兑换码','uji-cafes':'きく午市、中村藤吉候位、平和书店',
  'rally-account':'用 Safari / Chrome，勿用微信或无痕','nara-cash-20261019':'大佛殿仅现金；查 Animate/骏河屋临休与宝可梦 DX 限流',
  'himeji-20261108':'核对红叶点灯时段','packing':'复核 06:52 南海入口与时刻'};
