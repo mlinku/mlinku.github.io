@@ -1413,7 +1413,7 @@
             "kyoto_station"
           ],
           "category": "transport",
-          "condition": "16:00落地后入境取行李换票，乘 17:16（18:36到）或 17:46（19:06到）HARUKA 往京都站。"
+          "condition": "入境取行李换 HARUKA 票，搭 17:16 或 17:46 班次往京都站。"
         },
         {
           "id": "checkin_kyoto",
@@ -1446,7 +1446,7 @@
             "kyoto_avanti"
           ],
           "category": "shopping",
-          "condition": "八条口即达，6F 先去 Animate CD 区找《Lehre der Rose》未拆封初回，买完再顺逛同层指南针；21:00 关门，晚到只选一家，若超过 20:15 才出门则直接跳过保底拉面小路。"
+          "condition": "穿八条口直达 6F；晚到只逛一家，20:15 后出门直接跳过保底晚饭。"
         },
         {
           "id": "dinner_arrival",
@@ -1457,7 +1457,7 @@
             "kyoto_ramen_koji"
           ],
           "category": "meal",
-          "condition": "京都站 10F 拉面小路；延迟或累了直接去酒店旁すき家。"
+          "condition": "延误或累了直接换酒店旁すき家。"
         },
         {
           "id": "skyway_visit",
@@ -2195,7 +2195,7 @@
             "inari"
           ],
           "category": "visit",
-          "condition": "楼门→千本鸟居→奥社奉拜所，原路回；比中午人少，不登顶。"
+          "condition": "楼门 → 千本鸟居 → 奥社奉拜所后原路折返，不登顶。"
         },
         {
           "id": "inari_return",
@@ -2307,7 +2307,7 @@
             "hozenji"
           ],
           "category": "visit",
-          "condition": "沿运河看招牌和夜景；心斋桥筋南段只走一小段。"
+          "condition": "沿运河看霓虹招牌，顺拐进法善寺横丁；心斋桥南段仅短走。"
         },
         {
           "id": "dotonbori_dinner",
@@ -2493,7 +2493,7 @@
             "nara_nandaimon"
           ],
           "category": "walk",
-          "condition": "不买鹿饼，包拉好；鹿靠近就摊开空手走开。"
+          "condition": "不买鹿饼，拉好包；鹿靠近摊开空手走开。"
         },
         {
           "id": "nara_visit",
@@ -2505,7 +2505,7 @@
             "todaiji"
           ],
           "category": "visit",
-          "condition": "大佛殿成人800，仅现金；冬季17:00闭门。"
+          "condition": "殿内逛 30–40 分钟，入口购票仅收现金。"
         },
         {
           "id": "nara_lunch",
@@ -2526,7 +2526,7 @@
             "nigatsudo"
           ],
           "category": "visit",
-          "condition": "大佛殿后坡道约10分钟；顺路从外面看法华堂（三月堂）。"
+          "condition": "大佛殿后走坡道 10 分钟，顺看三月堂外观；免费登舞台俯瞰奈良。"
         },
         {
           "id": "nara_station_walk",
@@ -2562,7 +2562,7 @@
             "surugaya_main"
           ],
           "category": "shopping",
-          "condition": "御宅路一带自由逛，想逛哪家去哪家，18:05左右出发去心斋桥。"
+          "condition": "18:05 收尾转去心斋桥，按兴趣挑店逛。"
         },
         {
           "id": "shinsaibashi_transfer",
@@ -2583,7 +2583,7 @@
             "pokemon_osaka_dx"
           ],
           "category": "shopping",
-          "condition": "大丸本馆9F（20:00关门），拍三神鸟买周边，19:25前结账离场。"
+          "condition": "门口拍三神鸟后买周边，19:25 前结账去晚饭；咖啡厅需预约不排。"
         },
         {
           "id": "nippombashi_dinner",
@@ -2832,7 +2832,7 @@
             "himeji_castle"
           ],
           "category": "visit",
-          "condition": "城门→西之丸→天守；天守楼梯陡且周六可能排队，登楼须脱鞋拎袋（穿好穿脱的鞋＋厚袜子）。"
+          "condition": "城门 → 西之丸 → 天守；楼梯陡须脱鞋拎袋，穿好穿脱的鞋与厚袜子。"
         },
         {
           "id": "kokoen_visit",
@@ -2843,7 +2843,7 @@
             "kokoen"
           ],
           "category": "visit",
-          "condition": "约15:30—16:00入园看夕阳红叶衔接16:48日落点灯，17:30离园（免得干等天黑）；红叶可能已是尾声。"
+          "condition": "15:30–16:00 入园，17:30 离园；红叶已近尾声。"
         },
         {
           "id": "himeji_lights",
@@ -2855,7 +2855,7 @@
             "himeji_station"
           ],
           "category": "walk",
-          "condition": "经三之丸广场，沿「あたら夜」灯饰走回车站。"
+          "condition": "经三之丸广场，沿大手前通看「あたら夜」灯饰走回车站。"
         },
         {
           "id": "himeji_dinner",
@@ -3069,7 +3069,7 @@
           "place_ids": [
             "starbucks_kitano"
           ],
-          "condition": "午餐、咖啡和休息约50分钟；北野物语馆外观顺路短拍。"
+          "condition": "咖啡轻食歇 50 分钟，顺拍北野物语馆外观与风见鸡馆。"
         },
         {
           "id": "motomachi_cd_shopping",
@@ -3084,7 +3084,7 @@
             "kobe_rhythmbox"
           ],
           "category": "shopping",
-          "condition": "らしんばん、骏河屋各约10分钟，BOOKOFF看音像，重点放在元町两家CD店。"
+          "condition": "三宫到元町沿街 5 家店自由逛，重点留给元町两家 CD 店，14:05 收尾。"
         },
         {
           "id": "sannomiya_rest",
@@ -3133,7 +3133,7 @@
             "fufutei_kobe"
           ],
           "category": "meal",
-          "condition": "不预约，回三宫直接Walk-in（16:00开门）；满座则走1分钟换焼肉あらし或牛角。当前120分钟软饮和牛约5000/人，预算上限6000。",
+          "condition": "16:00 开门直接入店，满座步行 1 分钟换隔壁两家。",
           "booking_status": "walk_in"
         },
         {
@@ -3327,7 +3327,7 @@
             "kix"
           ],
           "category": "transport",
-          "condition": "南海空港急行 ¥970，刷 IC 卡直接上车免特急券；想更早可搭 05:47→06:28。"
+          "condition": "刷 IC 卡直上 06:52 空港急行（¥970 免特急券，07:33 到）；更早备选 05:47。"
         },
         {
           "id": "airport_checkin",

@@ -739,7 +739,11 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name {text-wrap:prett
 .todo .box .icon {width:16px; height:16px; stroke-width:3}
 .todo:active .box {transform:scale(.9)}
 .todo.on .box {background:var(--bocchi); border-color:var(--bocchi); color:var(--card)}
-.todo.on > span:last-child {color:var(--muted); text-decoration:line-through}
+.todo-text {display:flex; flex-direction:column; gap:2px; min-width:0; text-align:left}
+.todo-text b {font-weight:500; line-height:1.4}
+.todo-text small {font-size:12.5px; line-height:1.4; color:var(--muted)}
+.todo.on .todo-text b {color:var(--muted); text-decoration:line-through}
+.todo.on .todo-text small {opacity:.65}
 .pass-top, .hotel-top {display:flex; align-items:baseline; justify-content:space-between; gap:10px}
 .pass-top .kicker, .hotel-top .kicker {font-size:13px; letter-spacing:.03em}
 .pass-top .kicker b {color:var(--ryo); font-weight:750}

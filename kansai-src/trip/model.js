@@ -6,31 +6,27 @@
 // An empty string hides the line when 怎么走 already says the same thing.
 const EVENT_BRIEF={
  flight_out:'',
- checkin_kyoto:'入住确认12/3退房后的行李寄存位置。',
- dinner_arrival:'京都站 10F 拉面小路；延迟或累了直接去酒店旁すき家。',
- uji_parfait:'到店先取号（不能预约），11:00看11:45前吃不完就放弃。',
+ arrival_transfer:'',
+ checkin_kyoto:'入住确认 12/3 退房后行李寄存位置。',
+ uji_parfait:'不可预约，到店先取号；11:00 估 11:45 前吃不完就放弃。',
  uji_approach:'沿街拍照，不进收费区。',
  uji_lunch:'长队换附近简餐。',
  uji_pilgrimage:'久美子椅多留片刻，桥上顺拍。',
  daikichi_visit:'',
  suikan_stamp:'',
- heiwa_visit:'商场3F，逛30—40分钟。',
- keihan_uji_visit:'站内看展示约10分钟。',
+ heiwa_visit:'逛 30–40 分钟看京阿尼周边。',
+ keihan_uji_visit:'先看闸机外立牌；进站看贩售机勿刷 IC 卡，按对讲机找站员。',
  uji_dinner_walk:'',
- station_stage:'上4F室町小路广场，拍大阶梯和红色时钟。',
+ station_stage:'上 4F 室町小路广场，拍大阶梯与红框时钟。',
  demachi_visit:'拍入口、吊鱼与拱廊；小吃只排短队。',
- delta_visit:'河岸拍照约25分钟，优先《玉子》高野川侧，《轻音》仅有余量时拍。',
- kodaiji_night:'排队超30分钟或疲劳直接吃晚饭；18:45前离寺顺延晚餐。',
+ delta_visit:'优先《玉子》高野川侧，《轻音》仅有余量时拍。',
+ kodaiji_night:'排队超 30 分钟或疲劳直接吃晚饭；18:45 前离寺。',
  gion_dinner_walk:'夜枫准时结束且有余量时短停八坂神社。',
- kyoto_tower_visit:'展望室5楼领集章纸，盖齐7个章再出来（出去不能重进），别逛太久。',
+ kyoto_tower_visit:'上展望室 5F 领台纸，盖齐 7 章再出场（出场不可再入）。',
  inari_transfer:'',
  osaka_transfer:'',
  nara_transfer:'',
- nara_visit:'仅现金；大佛殿内部约30—40分钟。',
- kobe_bridge_visit:'从北公园拍红桥，16:30前回三宫；大风雨或疲劳取消。',
- motomachi_cd_shopping:'三宫到元町沿街 5 家店，按兴趣自由逛，14:05 左右收尾。',
- sannomiya_dinner:'不用预约直接去（Walk-in，16:00开门），满座走1分钟换隔壁两家。',
- anime_shopping:'御宅路一带自由逛，想逛哪家去哪家，18:05左右出发去心斋桥。',
+ kobe_bridge_visit:'北公园海边拍红桥，16:30 前回三宫；大风雨或累了取消。',
  shinsaibashi_transfer:'',
  skyway_visit:'同层免费玻璃廊桥，俯瞰京都塔夜景。',
  checkout_osaka:'离店前或到机场吃早餐。',
@@ -58,8 +54,8 @@ const TEXT_SHORT=[
 const compactFallback=t=>FALLBACK_SHORT.reduce((s,[from,to])=>s.replace(from,to),String(t||''));
 // Transport notes that spell out airport routine; the short form keeps every time and the one non-obvious fact.
 const TRANSPORT_SHORT=[
- ['去程建议08:25抵达香港T2；当前10:25停止值机。T2值机、安检和出境后，乘APM前往T1中场客运廊（T1M）登机。','永东大巴到 T2 三楼（09-10 柜台），直接上楼值机出境（10:25 截止），再搭机场小火车去登机口。'],
- ['关西T1入境、取行李后，按Railway／鉄道指引到车站；按订单兑换或使用已购HARUKA票，依入境进度选班次。','拿完行李换 HARUKA 车票，搭 17:16（18:36 到）或 17:46（19:06 到）班次。'],
+ ['去程建议08:25抵达香港T2；当前10:25停止值机。T2值机、安检和出境后，乘APM前往T1中场客运廊（T1M）登机。','永东大巴到 T2 三楼 09-10 柜台值机出境，搭小火车至登机口。'],
+ ['关西T1入境、取行李后，按Railway／鉄道指引到车站；按订单兑换或使用已购HARUKA票，依入境进度选班次。','入境取行李换 HARUKA 票，搭 17:16 或 17:46 班次往京都站。'],
  ['京都站认中央口／京都塔侧。酒店官方的约 5 分钟步行不包含站台到出口。','京都站从中央口（京都塔侧）出站。'],
  ['入住时确认 12/3 退房寄存位置；两间酒店均不含早餐。',''],
  ['抵达机场站后前往T1值机、托运、安检和出境；HX617于09:50日本时间起飞，现行柜台截止09:10，登机时限看登机牌。','到T1办值机托运和出境，09:10停值机（09:50飞）。']
@@ -92,9 +88,9 @@ const DROP_SENTENCES=new Set([
  '《魔女的夜宴》七绪咖啡店关联为玩家实景对照，非官方认定','官方建议庭园、御桥与天守往返至少90分钟','25分钟含河岸短拍与前往京阪站','营业16:00—23:00，末单22:30','取号与用餐75分钟为预算，不保证等位','11:00左右判断不能11:45前吃完则放弃堂食','09:30离店，到店前含酒店到站、候车与步行',
  '天气、路况与体力合适才登山','往返与停留预留75分钟，白天完成','45分钟含步行与拍照，长椅多留片刻，桥上顺拍','搜索名称为井川用水機場前','导航到Port Island北公园，从桥南侧拍红色桥梁',
  '南海难波到近铁大阪难波需步行，含进站候车','多看会顺延回店，不压缩下坡与返程步行',
- '大风雨或疲劳取消，不挤晚饭','中公園站步行约8分钟，不安排全程步行跨桥','当前120分钟软饮和牛约5000/人，预算上限6000','含结账及75—90分钟返程','保留午餐、咖啡、休息与外观巡礼','酒店官方的约 5 分钟步行不包含站台到出口',
+ '大风雨或疲劳取消，不挤晚饭','中公園站步行约8分钟，不安排全程步行跨桥','含结账及75—90分钟返程','保留午餐、咖啡、休息与外观巡礼','酒店官方的约 5 分钟步行不包含站台到出口',
  '按登机牌时限到登机口',
- '香港T2值机 → T1登机','建议08:25抵达香港T2','坐下用餐','下山后前往东岸河川敷，拍照并休息约10分钟','先在收费区集完章再出场','不长时间挑周边','满座则走1分钟换焼肉あらし或牛角',
+ '香港T2值机 → T1登机','建议08:25抵达香港T2','坐下用餐','下山后前往东岸河川敷，拍照并休息约10分钟','先在收费区集完章再出场','不长时间挑周边',
  '到站后前往T1，办理值机、托运、安检与出境','当前值机截止09:10日本时间','早餐前晚备好，离店前或抵达机场后吃'
 ]);
 // Whole detail panels that only repeat the airport routine already covered by 怎么走 and 关键时间.
@@ -290,11 +286,11 @@ function pointMap(p){return p.coordinates?mapURL(p.coordinates.lat+','+p.coordin
 function shotProgress(date){const points=pilgrimageDay(date).filter(pointEnabled);return {done:points.filter(p=>state.checks[shotKey(p)]).length,total:points.length};}
 // Concise field notes & short titles; the original descriptions stay under 场景与来源.
 const SHOT_COPY={
- 'witch-kyoto-station':{title:'JR 京都站中央口'},
+ 'witch-kyoto-station':{title:'JR 京都站中央口',scene:'《魔女的夜宴》车站广场背景出处。',note:'中央口站前广场（京都塔侧），仰拍斜网格玻璃幕墙。'},
  'eupho_uji_bridge':{title:'宇治桥',scene:'第一季第12集，久美子抒发心情的宇治桥。',note:'在行人通道对照桥栏与河景。'},
  'eupho_omotesando':{title:'平等院表参道',scene:'京阪官方巡礼地图第6点：平等院表参道。',note:'午饭后经过表参道，沿街对照取景。'},
  'eupho_bench':{title:'久美子长椅'},
- 'eupho_uji_center':{title:'宇治市观光中心'},
+ 'eupho_uji_center':{title:'宇治市观光中心',scene:'《誓言的终章》河岸夜景取景地。',note:'久美子椅南侧，09:00–17:00 免费入馆看立牌与交流本；门前船着场可从喜撰桥北望。'},
  'eupho_kisen':{title:'喜撰桥'},
  'eupho_asagiri':{title:'朝雾桥'},
  'eupho_uji_shrine':{title:'宇治神社',note:'朝雾桥东侧找临河鸟居与台阶（机位在入口）。'},
@@ -302,28 +298,28 @@ const SHOT_COPY={
  'eupho_daikichi':{title:'大吉山展望台',note:'对照栏杆转角与树木；白天上山、天黑前下山。'},
  'eupho_saizeriya_uji':{note:'公共通道顺拍二层窗户与店招，避让停车场车辆。'},
  'eupho_jr_uji':{title:'茶壶邮筒',note:'JR 宇治站前找茶壶造型邮筒。'},
- 'kyoto-stage-stairs':{title:'室町小路大阶梯',scene:'第7集车站音乐会，《宝岛》演出广场。',note:'中央口一侧上4F室町小路广场，对照大阶梯、扶梯和红色时钟。无需登顶；遇活动占用时在允许通行处拍摄。'},
- 'kyoto-stage-clock':{title:'大阶梯红框时钟',note:'在4F广场抬头找红色方框时钟与钢架；别与红色雕塑「朱甲舞」混淆。'},
+ 'kyoto-stage-stairs':{title:'室町小路大阶梯',scene:'第一季第7集车站音乐会，《宝岛》演出广场。',note:'中央口一侧上4F室町小路广场，对照大阶梯、扶梯和红色时钟。无需登顶；遇活动占用时在允许通行处拍摄。'},
+ 'kyoto-stage-clock':{title:'大阶梯红框时钟',scene:'第一季第7集车站音乐会段落。',note:'在4F广场抬头找红色方框时钟与钢架；别与红色雕塑「朱甲舞」混淆。'},
  'demachi-west-gate':{title:'商店街西入口',scene:'宣传PV里的商店街西入口；招牌与建筑有改绘。',note:'从寺町通一侧仰拍入口招牌与左侧建筑。'},
  'demachi-fish':{title:'商店街吊鱼拱廊',scene:'官方主视觉里的商店街吊鱼与拱廊。',note:'进拱廊后找吊鱼和屋顶纵深。'},
  'delta-tamako':{title:'高野川飞石',note:'找东侧高野川的飞石与下河台阶，对照石块排列。雨天或水量大时留在岸边拍。'},
  'delta-kon':{title:'贺茂川飞石',note:'从贺茂川侧飞石朝东拍中洲，与《玉子》告白位置分开。余量不足就省此机位。'},
- 'conan-gojobashi':{title:'五条大桥'},
+ 'conan-gojobashi':{title:'五条大桥',scene:'《迷宫的十字路》柯南与平次会合处，立有牛若丸与弁庆石像。',note:'清水五条站向西走 2 分钟看桥西端石像与路牌，过马路注意车流。'},
  'kiyomizu-conan':{title:'清水舞台',scene:'第927—928集清水寺与新兰剧情；亦见于《迷宫的十字路》。',note:'在本堂舞台对照屋顶与木栏杆；定位为本堂参考点。',caption:'官方上映会宣传视觉，非动画单帧；两图视角不同。'},
- 'senren-sannenzaka':{title:'三年坂',note:'在玩家标点附近，沿街对照石板路与两侧屋檐；店名有改写。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
- 'senren-ninenzaka':{title:'二年坂',note:'在二年坂南端附近找右侧店铺转角、屋檐与弯路；别只在台阶中央找。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
- 'senren-kodaiji-lane':{title:'高台寺旁石墙弯道'},
- 'senren-hanamikoji':{title:'花见小路'},
- 'senren-shirakawa':{title:'白川南通'},
- 'conan-pontocho':{title:'先斗町'},
- 'rj-shinkyogoku':{title:'新京极商店街'},
- 'witch-sanjo':{title:'三条名店街'},
+ 'senren-sannenzaka':{title:'三年坂',scene:'穗织商店街背景。',note:'在玩家标点附近，沿街对照石板路与两侧屋檐；店名有改写。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
+ 'senren-ninenzaka':{title:'二年坂',scene:'游戏中的售鱼店街角背景；实景对应とうふまんじゅう店外。',note:'在二年坂南端附近找右侧店铺转角、屋檐与弯路；别只在台阶中央找。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
+ 'senren-kodaiji-lane':{title:'高台寺旁石墙弯道',scene:'穗织町石墙弯道背景。'},
+ 'senren-hanamikoji':{title:'花见小路',scene:'穗织温泉街主街背景。'},
+ 'senren-shirakawa':{title:'白川南通',scene:'穗织河岸与石桥背景，对应巽桥旁水岸。'},
+ 'conan-pontocho':{title:'先斗町',scene:'《迷宫的十字路》茶屋「樱屋」与夜间花街原型。',note:'おめん 就在巷内，饭后沿石板窄巷顺拍灯笼、格子门与竹矢来。'},
+ 'rj-shinkyogoku':{title:'新京极商店街',scene:'拱廊商店街日常背景。'},
+ 'witch-sanjo':{title:'三条名店街',scene:'日常商店街与拉面店段落背景。',note:'从新京极北端走 1–2 分钟直连；面向 LIPTON 拱门顺拍，同街可看《轻音》JEUGIA 乐器店。'},
  'conan-tsutenkaku':{title:'通天阁',note:'路过时从地面辨认塔体即可。',caption:'同建筑、不同视角；用于辨认塔体。'},
  'conan-ebisubashi':{title:'戎桥',scene:'第763—764集《恋爱的暗号》，平次在戎桥调查。',note:'桥面找弧形栏杆与南侧店招；动画有改绘。'},
- 'senren-ikuta':{title:'生田神社',note:'在拝殿前稍侧处对照屋顶、红柱与狛犬；游戏将楼房改绘为树木。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
- 'witch-kitano':{title:'北野物语馆'},
- 'fate-kazamidori':{title:'风见鸡馆'},
- 'fate-kobe-bridge':{title:'神户大桥'},
+ 'senren-ikuta':{title:'生田神社',scene:'建实神社社殿正面背景。',note:'在拝殿前稍侧处对照屋顶、红柱与狛犬；游戏将楼房改绘为树木。',caption:'玩家对照，非官方认定；有改绘，定位非精确机位。'},
+ 'witch-kitano':{title:'北野物语馆',scene:'七绪的咖啡店 Schwarze Katze 外观背景。'},
+ 'fate-kazamidori':{title:'风见鸡馆',scene:'远坂凛宅邸外观原型。',note:'从北野星巴克沿北野坂上走 5–8 分钟即达（09:00–17:00），门前广场仰拍红砖立面。'},
+ 'fate-kobe-bridge':{title:'神户大桥',scene:'冬木大桥背景原型。',caption:'同机位日景对照：从港岛北公园海边仰望红色拱桥与水岸石墩，与 14:45–16:30 到访时段一致。'},
  'sekiro-himeji-keep':{title:'姬路城天守'}
 };
 const SIMP_TRAD={'桥':'橋','雾':'霧','见':'見','阁':'閣','站':'駅','姬':'姫','园':'園'};
@@ -393,15 +389,19 @@ const TODOS=TODO_LIST.map(t=>t.text),TODO_IDS=TODO_LIST.map(t=>t.id);
 const TODO_WHEN=Object.fromEntries(TODO_LIST.filter(t=>t.when).map(t=>[t.id,t.when]));
 const TODO_WHEN_LABEL={'2026-11-30':'11/30 晚','2026-12-02':'12/2 午','2026-12-03':'12/3 晚','2026-12-04':'12/4 晚','2026-12-05':'12/5 晚','2026-12-06':'12/6 晚'};
 const TODO_PREFIX=/^12\/\d+(前夜|前|晚)?/;
-const TODO_SHORT={'weather':'查叶况与天气','restaurants':'核对餐厅营业与菜单','return-travel':'临行前看回程航班通知',
- 'transport-tickets':'备好IC卡与HARUKA订单','uji-cafes':'确认宇治店铺营业与候位','rally-account':'登录集章账户、开定位',
- 'kodaiji-weather':'查高台寺天气与排队','nara-cash-20261019':'备大佛殿现金，查日本桥临休与宝可梦限流','himeji-20261108':'查姬路城、好古园开放与点灯',
- 'kobe-1205-20261019':'收好行李，查CD店临休','packing':'整理行李、证件和次晨早餐'};
+const TODO_SHORT={'weather':'查叶况与天气','restaurants':'核对餐厅营业与菜单','return-travel':'核对往返航班与南海时刻',
+ 'transport-tickets':'备好交通 IC 卡与 HARUKA 订单','uji-cafes':'查宇治店铺营业与候位','rally-account':'登录集章账户、开定位',
+ 'kodaiji-weather':'查高台寺天气与排队','nara-cash-20261019':'备现金，查日本桥与宝可梦','himeji-20261108':'查姬路城与好古园开放',
+ 'kobe-1205-20261019':'先收主要行李，查元町 CD 店临休','packing':'整理行李证件、备次晨早餐'};
+const TODO_NOTE={'weather':'提前 2–3 天看降雨，随时调整户外项','return-travel':'确认值机截止；12/6 复核次晨南海列车',
+ 'transport-tickets':'保存兑换码','uji-cafes':'きく午市、中村藤吉候位、平和书店',
+ 'rally-account':'用 Safari / Chrome，勿用微信或无痕','nara-cash-20261019':'大佛殿仅现金；查 Animate/骏河屋临休与宝可梦 DX 限流',
+ 'himeji-20261108':'核对红叶点灯时段','packing':'复核 06:52 南海入口与时刻'};
 // The traps on a transfer, for the 现在 card: the rest of the route is under 全部详情.
 const transitCautions=notes=>notes.flatMap(n=>n.split(/(?<=[。；])/)).filter(s=>new RegExp(TRANSIT_CAUTION.source).test(s)).map(s=>s.replace(/[；。]$/,''));
 const todoDone=()=>TODOS.filter((_,i)=>state.todos[TODO_IDS[i]]).length;
 function todoGroups(){
- const all=TODOS.map((text,i)=>({id:TODO_IDS[i],text,short:TODO_SHORT[TODO_IDS[i]]||'',when:TODO_WHEN[TODO_IDS[i]]||'',done:!!state.todos[TODO_IDS[i]]}));
+ const all=TODOS.map((text,i)=>({id:TODO_IDS[i],text,short:TODO_SHORT[TODO_IDS[i]]||'',note:TODO_NOTE[TODO_IDS[i]]||'',when:TODO_WHEN[TODO_IDS[i]]||'',done:!!state.todos[TODO_IDS[i]]}));
  const trip=all.filter(t=>t.when).sort((a,b)=>a.when.localeCompare(b.when)).map(t=>({...t,text:t.text.replace(TODO_PREFIX,'')}));
  return {before:all.filter(t=>!t.when),trip:[...new Set(trip.map(t=>t.when))].map(when=>({when,label:TODO_WHEN_LABEL[when]||dateLabel(when),items:trip.filter(t=>t.when===when)}))};
 }

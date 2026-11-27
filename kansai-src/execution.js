@@ -33,14 +33,14 @@ const NANKAI_TIMETABLE='https://www.nankai.co.jp/tc_railway/access-timetable';
 const NANKAI_STATION='https://www.nankai.co.jp/traffic/station/shinimamiya.html';
 function executionNotice(d,ev){
  const content={
-  flight_out:'11:05停止登机（香港时间）。',
+  flight_out:'10:25 值机截止 · 11:05 关闭登机口（港时）。',
   agata_stamp:'登录活动网站并开启定位，确认领章成功再离开。',
   daikichi_visit:'14:40还没到登山口、下雨或累了就不爬。',
-  kodaiji_night:'17:45还没排进、队超30分钟，或下雨/累了直接吃晚饭；18:45前离寺。',
-  gion_dinner:'先去先斗町吃おめん（不接受预约，20:00最后点餐），饭后再慢拍先斗町→新京极→三条夜景；晚到或长队时换简餐。',
+  kodaiji_night:'17:45 未入场、排队超 30 分钟或下雨/累了直接去晚饭；18:45 前离寺。',
+  gion_dinner:'先吃おめん（不可预约），饭后再拍先斗町 → 新京极 → 三条夜景；排队久换简餐。',
   kada_transfer:`${external('南海时刻表 ↗',NANKAI_TIMETABLE)}`,
   kada_day_return:`${external('南海时刻表 ↗',NANKAI_TIMETABLE)}`,
-  airport_train:`认准南海新今宫站（不要误进JR闸机），坐 06:52 空港急行免特急券。 ${external('南海时刻表 ↗',NANKAI_TIMETABLE)} · ${external('新今宫站入口图 ↗',NANKAI_STATION)}`
+  airport_train:`进南海新今宫站（不要误进JR闸机），认「関西空港」方向。 ${external('南海时刻表 ↗',NANKAI_TIMETABLE)} · ${external('新今宫站入口图 ↗',NANKAI_STATION)}`
  };
  return content[ev.id]?`<p class="execution-note">${content[ev.id]}</p>`:'';
 }

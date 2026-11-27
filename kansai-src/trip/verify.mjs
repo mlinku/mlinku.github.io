@@ -126,7 +126,7 @@ const checked=run(`
  assert.ok(openPurchases().some(p=>p.item.includes('和牛')&&p.label==='现场付款'),'和牛现场Walk-in付款');
  const kobe=PLAN.days.find(d=>d.date==='2026-12-06');
  assert.equal(String(effectiveEvents(kobe).find(ev=>ev.id==='motomachi_cd_shopping').place_ids),String(['lashinbang_kobe','surugaya_kobe','bookoff_kobe','kobe_banana_records','kobe_rhythmbox']),'三宫三店快速看，再去元町两家CD店');
- assert.ok(sheetHTML(kobe.date,'sannomiya_dinner').includes('Walk-in')&&sheetHTML(kobe.date,'sannomiya_dinner').includes('焼肉あらし')&&sheetHTML(kobe.date,'sannomiya_dinner').includes('牛角'),'三宫和牛Walk-in且含两家备选');
+ assert.ok(sheetHTML(kobe.date,'sannomiya_dinner').includes('直接入店')&&sheetHTML(kobe.date,'sannomiya_dinner').includes('焼肉あらし')&&sheetHTML(kobe.date,'sannomiya_dinner').includes('牛角'),'三宫和牛直接入店且含两家备选');
  // 12/4 日本桥 shops: all four stores listed in parallel without forced 1-2 shop dropdowns.
  const nara=PLAN.days.find(d=>d.date==='2026-12-04');
  const naraShops=['animate','surugaya','potato','surugaya_main'];
@@ -170,7 +170,7 @@ const checked=run(`
  setCheck(arrive.date,'kyoto_station_visit',true);assert.ok(/class="row minor done" id="row-arrival_transfer"/.test(dayScreen()),'下一项主活动完成后交通行才划线');
  delete state.checks[arrive.date+':checkin_kyoto'];setCheck(arrive.date,'kyoto_station_visit',false);
  assert.ok(TODO_IDS.every(id=>TODO_SHORT[id]),'每条待办都有一行标题');
- ui.tab='prep';assert.ok(text(prepScreen()).includes(TODOS[0]),'待办全文仍可展开');
+ ui.tab='prep';const prepHtml=prepScreen();assert.ok(!prepHtml.includes('展开全文')&&prepHtml.includes('Safari / Chrome'),'准备页去掉重复展开全文，细节放副标题');
  // Day 1 HK timezone: 10:30 JST = 09:30 HKT -> 10:25 HKT check-in close has 55 min left, flight_out not yet started.
  location.search='?now=2026-11-30T10:30';
  const d0=PLAN.days[0],hs0=hardStops(d0);
