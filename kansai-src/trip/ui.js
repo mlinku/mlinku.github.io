@@ -299,13 +299,14 @@ function fxOut(raw){
  const cny=num*fxRate()/100,txt=cny>=100?Math.round(cny).toLocaleString('en-US'):cny.toFixed(1).replace(/\.0$/,'');
  return `<span>¥</span><b>${txt}</b>`;
 }
+function fxBridgeInner(meta){
+ const live=!meta.manual&&!!meta.date,tag=meta.manual?'手动':live?'实时':'默认';
+ return `<em${live?' class="live"':''}>${tag}</em><span class="fx-eq-line" aria-hidden="true">≈</span><span class="fx-mult">× ${(meta.rate/100).toFixed(4)}</span>`;
+}
 function updateFxDom(){
- const out=$('#fx-cny'),pill=$('.fx-rate'),meta=fxMeta();
+ const out=$('#fx-cny'),mid=$('.fx-mid'),meta=fxMeta();
  if(out)out.innerHTML=fxOut(ui.fxJpy);
- if(pill){
-  const live=!meta.manual&&!!meta.date,tag=meta.manual?'手动':live?'实时':'默认';
-  pill.innerHTML=`100 円 ≈ <b>${meta.rate.toFixed(2)}</b> 元<em${live?' class="live"':''}>${tag}</em>`;
- }
+ if(mid)mid.innerHTML=fxBridgeInner(meta);
 }
 async function fetchLiveFx(force=false){
  if(fxLoading||typeof fetch!=='function')return;
@@ -336,9 +337,8 @@ const todoRow=t=>`<button type="button" class="todo${t.done?' on':''}" data-acti
 function prepScreen(){
  const g=todoGroups(),open=openPurchases(),tripItems=g.trip.flatMap(x=>x.items.map(t=>({...t,short:`${x.label} · ${t.short||t.text}`})));
  const tripDone=tripItems.filter(t=>t.done).length,during=tripStatus().phase==='during',meta=fxMeta(),rate=meta.rate;
- const fxLive=!meta.manual&&!!meta.date,fxTag=meta.manual?'手动':fxLive?'实时':'默认';
  return `<header class="screen-head"><div><p class="kicker">出发前与旅途中</p><h1 class="display">准备${doodle('clipboard').replace('class="doodle"','class="doodle head-mark"')}</h1></div>${themeButton()}</header>
- <section class="block fx-card"><h2 class="block-title">汇率速算<button type="button" class="fx-rate" data-action="fx-rate" aria-expanded="${!!ui.fxEdit}" aria-label="修改或刷新实时汇率">100 円 ≈ <b>${rate.toFixed(2)}</b> 元<em${fxLive?' class="live"':''}>${fxTag}</em></button></h2>${ui.fxEdit?`<div class="fx-edit"><label>100 円 = <input id="fx-rate-in" type="text" inputmode="decimal" value="${rate.toFixed(2)}" aria-label="100日元对应人民币"> 元</label><button type="button" class="btn primary" data-action="fx-rate-save">保存</button><button type="button" class="btn" data-action="fx-rate-sync">实时</button></div>`:''}<div class="fx-board"><label class="fx-side fx-in"><small>日元 JPY</small><span class="fx-val"><span>¥</span><input id="fx-jpy" type="text" inputmode="decimal" autocomplete="off" placeholder="0" value="${e(ui.fxJpy)}" aria-label="日元金额"></span></label><span class="fx-eq" aria-hidden="true">≈</span><div class="fx-side fx-res"><small>人民币 RMB</small><output id="fx-cny" class="fx-val fx-out" for="fx-jpy">${fxOut(ui.fxJpy)}</output></div></div><div class="fx-bar">${[500,1000,3000,5000,10000].map(n=>`<button type="button" data-action="fx-preset" data-jpy="${n}">¥${n.toLocaleString('en-US')}</button>`).join('')}<button type="button" class="fx-clear" data-action="fx-preset" data-jpy="">清零</button></div></section>
+ <section class="block fx-card"><h2 class="block-title">汇率速算</h2>${ui.fxEdit?`<div class="fx-edit"><label>100 円 = <input id="fx-rate-in" type="text" inputmode="decimal" value="${rate.toFixed(2)}" aria-label="100日元对应人民币"> 元</label><button type="button" class="btn primary" data-action="fx-rate-save">保存</button><button type="button" class="btn" data-action="fx-rate-sync">实时</button></div>`:''}<div class="fx-board"><label class="fx-side fx-in"><small>日元 JPY</small><span class="fx-val"><span>¥</span><input id="fx-jpy" type="text" inputmode="decimal" autocomplete="off" placeholder="0" value="${e(ui.fxJpy)}" aria-label="日元金额"></span></label><button type="button" class="fx-mid" data-action="fx-rate" aria-expanded="${!!ui.fxEdit}" aria-label="修改或刷新实时汇率（100日元约${rate.toFixed(2)}元）">${fxBridgeInner(meta)}</button><div class="fx-side fx-res"><small>人民币 RMB</small><output id="fx-cny" class="fx-val fx-out" for="fx-jpy">${fxOut(ui.fxJpy)}</output></div></div><div class="fx-bar">${[500,1000,3000,5000,10000].map(n=>`<button type="button" data-action="fx-preset" data-jpy="${n}">¥${n.toLocaleString('en-US')}</button>`).join('')}<button type="button" class="fx-clear" data-action="fx-preset" data-jpy="">清零</button></div></section>
  <section class="block tickets-block"><span class="corner-sketch">${doodle('ticket')}</span><h2 class="block-title">票务</h2><ul class="tickets">${open.map(t=>`<li class="ticket ${t.tone}"><button type="button" class="ticket-tap" data-action="todo" data-todo="${e(t.id)}" aria-pressed="${t.done}" aria-label="${e(t.item)}：${e(t.label)}，点按${t.done?'取消':'标记已办'}"><span class="ticket-main"><b>${e(t.item)}</b><small>${t.qty?'×'+t.qty+' · ':''}${e(t.date)} 使用${t.budget?' · '+e(t.budget):''}</small></span><span class="ticket-state">${t.done?icon('check'):''}${e(t.label)}</span></button></li>`).join('')}</ul></section>
  <section class="block todos"><h2 class="block-title">待办 <small>${todoDone()} / ${TODOS.length}</small>${kita('sit-happy','in-title')}</h2><h3 class="sub">出发前完成</h3>${g.before.map(todoRow).join('')}<details class="fold"${during?' open':''}><summary>旅途中再确认 · ${tripDone}/${tripItems.length}</summary>${tripItems.map(todoRow).join('')}</details><details class="fold"><summary>展开全文</summary><ul class="plain">${[...g.before,...g.trip.flatMap(x=>x.items)].map(t=>`<li>${fmt(t.text)}</li>`).join('')}</ul></details></section>
  <section class="block sketched"><span class="corner-sketch">${doodle('plane')}</span><h2 class="block-title">航班</h2>${PLAN.bookings.filter(b=>b.type==='flight').map(b=>passHTML(b,flightLocal(b,'departure'),flightLocal(b,'arrival'))).join('')}</section>
