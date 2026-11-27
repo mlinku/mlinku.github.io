@@ -2,8 +2,8 @@
    Ryo blue (primary/transit), Bocchi pink (pilgrimage/return), Kita coral-red (seals/deadlines), Nijika cream-yellow
    (caution washes/doodles), with whisper-soft four-corner ambient glow and a 1px silk hairline above the tabbar.
    Text ≥ 4.5:1 and control outlines ≥ 3:1 in both themes; touch targets ≥ 44px; shares data-user-color-scheme with the blog. */
-@font-face {font-family:'Trip Serif'; src:url("2943f72a4fa9b0e4.woff") format('woff'); font-weight:400 799; font-display:swap}
-@font-face {font-family:'Trip Serif'; src:url("83b0e1ad85cc62ae.woff") format('woff'); font-weight:800 900; font-display:swap}
+@font-face {font-family:'Trip Serif'; src:url("afd6a37221ce2768.woff") format('woff'); font-weight:400 799; font-display:swap}
+@font-face {font-family:'Trip Serif'; src:url("b65393461bf32e93.woff") format('woff'); font-weight:800 900; font-display:swap}
 :root {
   --bocchi: #bf3f6d; --bocchi-l: #f59bbd; --bocchi-soft: #fff0f6; --bocchi-edge: rgba(245,155,189,.36);
   --kita: #d1454a;   --kita-l: #f0676c;   --kita-soft: #fff0f1;   --kita-edge: rgba(240,103,108,.30);
@@ -166,6 +166,11 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name {text-wrap:prett
 .screen-head {display:flex; align-items:flex-end; justify-content:space-between; gap:12px}
 .screen-head .count {display:flex; align-items:baseline; gap:6px; white-space:nowrap; color:var(--muted); font-size:14px}
 .screen-head .count b {font:900 30px/1 var(--serif); color:var(--bocchi); font-variant-numeric:tabular-nums; min-width:1.1ch; text-align:right}
+.screen-head .count.jump-next {flex-direction:column; align-items:flex-end; gap:1px; padding:4px 8px; margin:-4px -8px; border-radius:var(--r-sm); transition:background-color .2s ease}
+.screen-head .count-num {display:flex; align-items:baseline; gap:5px}
+.screen-head .count.jump-next small {font-size:11.5px; font-weight:700; color:var(--bocchi); letter-spacing:.04em}
+.screen-head .count.jump-next.done small {color:var(--ok)}
+.screen-head .count.jump-next:active {background:var(--sunk)}
 .icon-btn {display:inline-grid; place-items:center; width:48px; height:48px; border-radius:var(--r-md); color:var(--ink-2); flex:none}
 .icon-btn:active {background:var(--sunk)}
 .icon-btn.small {width:44px; height:44px}
@@ -645,6 +650,7 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name {text-wrap:prett
 /* ---------- 巡礼 ---------- */
 .shot, #shot-rally, .row {scroll-margin-top:calc(78px + env(safe-area-inset-top,0px))}
 .shot {position:relative; padding:18px; border-radius:var(--r); background:var(--surface); border:1px solid var(--bocchi-edge); box-shadow:var(--surface-edge), var(--shadow)}
+.shot.flash {animation:row-flash 1.1s var(--ease-out)}
 .shot:nth-of-type(4n+1) {border-color:var(--bocchi-edge)}
 .shot:nth-of-type(4n+1) .shot-n {background:var(--bocchi-soft); color:var(--bocchi)}
 .shot:nth-of-type(4n+2) {border-color:var(--nijika-edge)}
@@ -680,6 +686,28 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name {text-wrap:prett
 .rally-spot h3 {font:700 17px var(--serif)}
 
 /* ---------- 准备 ---------- */
+.fx-rate {margin-left:auto; display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:999px; background:var(--sunk); border:1px solid var(--line); font:600 12px var(--sans); color:var(--muted); letter-spacing:0; font-variant-numeric:tabular-nums; transition:background-color .2s, color .2s, border-color .2s}
+.fx-rate b {color:var(--ink)}
+.fx-rate em {font-style:normal; font-size:11px; color:var(--ryo); margin-left:2px}
+.fx-edit {display:flex; align-items:center; gap:8px; margin-bottom:10px; padding:8px 10px; border-radius:var(--r-sm); background:var(--sunk); font-size:13.5px; color:var(--ink-2)}
+.fx-edit label {display:flex; align-items:center; gap:6px; flex:1}
+.fx-edit input {width:68px; min-height:36px; padding:0 8px; border-radius:8px; border:1px solid var(--line-2); background:var(--card); color:var(--ink); font:700 14px var(--sans); font-variant-numeric:tabular-nums; text-align:center}
+.fx-edit .btn {min-height:36px; padding:0 12px; font-size:13px}
+.fx-row {display:grid; grid-template-columns:minmax(0,1fr) auto auto; align-items:center; gap:10px}
+.fx-field {display:flex; align-items:center; gap:6px; min-height:46px; padding:0 12px; border-radius:var(--r-md); background:var(--sunk); border:1px solid var(--line); transition:border-color .2s, box-shadow .2s}
+.fx-field:focus-within {border-color:var(--ryo); box-shadow:0 0 0 3px var(--ryo-soft)}
+.fx-field span {font:700 16px var(--serif); color:var(--muted)}
+.fx-field input {width:100%; min-width:0; border:0; background:none; color:var(--ink); font:800 19px/1.2 var(--sans); font-variant-numeric:tabular-nums; outline:none}
+.fx-field input::placeholder {color:var(--muted); font-weight:500; font-size:14.5px}
+.fx-eq {color:var(--muted); font-weight:700}
+.fx-out {display:inline-flex; align-items:baseline; gap:3px; min-width:84px; justify-content:flex-end; font-variant-numeric:tabular-nums; white-space:nowrap}
+.fx-out span {font:700 14px var(--serif); color:var(--ryo)}
+.fx-out b {font:900 24px/1 var(--serif); color:var(--ink)}
+.fx-out small {font-size:11px; font-weight:700; color:var(--muted); letter-spacing:.04em; margin-left:1px}
+.fx-chips {display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
+.fx-chips button {min-height:34px; padding:0 10px; border-radius:999px; background:var(--sunk); border:1px solid var(--line); color:var(--ink-2); font-size:12.5px; font-weight:650; font-variant-numeric:tabular-nums; transition:background-color .2s, border-color .2s, color .2s, transform .1s}
+.fx-chips button:active {transform:scale(.96)}
+.fx-chips .fx-clear {margin-left:auto; background:none; border-color:transparent; color:var(--muted)}
 .tickets li {border-top:1px dashed var(--line)}
 .tickets li:first-child {border-top:0}
 .ticket-tap {display:flex; align-items:center; gap:12px; width:100%; min-height:54px; padding:10px 2px; border-radius:var(--r-sm); text-align:left; color:var(--ink); transition:background-color .2s ease}
@@ -774,6 +802,12 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name {text-wrap:prett
 .zoom-stage.split figure:last-child figcaption {color:var(--ryo); border-color:var(--ryo-edge)}
 .zoom-stance {display:flex; align-items:baseline; gap:8px; max-width:min(640px, calc(100vw - 28px)); margin:8px auto 0; padding:8px 14px; border-radius:var(--r-md); background:var(--glass); -webkit-backdrop-filter:blur(12px) saturate(1.5); backdrop-filter:blur(12px) saturate(1.5); border:1px solid var(--nijika-edge); color:var(--ink-2); font-size:13.5px; line-height:1.5; box-shadow:inset 0 1px 0 var(--glass-edge), 0 4px 12px -4px rgba(34,42,68,.08)}
 .zoom-stance b {flex:none; padding:1px 7px; border-radius:999px; background:var(--nijika-soft); color:var(--nijika); font-size:11.5px; font-weight:750; letter-spacing:.06em}
+.zoom-bar {display:flex; align-items:center; justify-content:center; gap:8px; margin:10px auto 6px; padding:0 12px; max-width:100%}
+.zoom-bar .zoom-switch {margin:0}
+.zoom-bar .zoom-switch button {min-width:74px; padding:0 10px; font-size:13px}
+.zoom-step {width:42px; height:42px; border-radius:999px; background:var(--glass); border:1px solid var(--glass-border); box-shadow:inset 0 1px 0 var(--glass-edge), 0 4px 12px -4px rgba(34,42,68,.12); color:var(--ink-2); -webkit-backdrop-filter:blur(12px) saturate(1.5); backdrop-filter:blur(12px) saturate(1.5)}
+.zoom-step-gap {width:42px; height:42px; flex:none}
+.zoom-pos {font-size:13px; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums; padding:0 8px}
 .zoom-switch {display:flex; justify-content:center; gap:4px; margin:10px auto 6px; padding:4px; border-radius:999px; background:color-mix(in srgb, var(--sunk) 64%, transparent); -webkit-backdrop-filter:blur(14px) saturate(1.6); backdrop-filter:blur(14px) saturate(1.6); border:1px solid var(--glass-border); box-shadow:inset 0 1px 0 var(--glass-edge), 0 4px 14px -4px rgba(34,42,68,.12)}
 .zoom-switch button {display:inline-flex; align-items:center; justify-content:center; text-align:center; min-height:40px; min-width:88px; padding:0 14px; border-radius:999px; color:var(--muted); font-size:14px; font-weight:700; transition:background-color .2s, color .2s, box-shadow .2s}
 .zoom-switch button[aria-pressed="true"] {background:var(--surface-strong); color:var(--bocchi); box-shadow:var(--surface-edge), 0 1px 4px rgba(34,42,68,.12)}
@@ -842,7 +876,9 @@ noscript p {padding:40px; text-align:center}
   .day-link:hover {background:color-mix(in srgb, var(--line) 34%, transparent)}
   .day-link:hover .dl-main b, .link-row:hover, .pager a:hover {color:var(--accent)}
   .ticket-tap:hover, .todo:hover {background:color-mix(in srgb, var(--line) 42%, transparent)}
-  .pass-no:hover {background:var(--sunk); color:var(--accent)}
+  .pass-no:hover, .fx-rate:hover, .fx-chips button:hover {background:var(--sunk); border-color:var(--ryo-edge); color:var(--accent)}
+  .screen-head .count.jump-next:hover {background:var(--sunk)}
+  .zoom-step:hover {border-color:var(--accent); color:var(--accent)}
   .pass-no:hover .icon {opacity:1; color:var(--accent)}
   .fold > summary:hover {opacity:.82}
   .shot-img:hover {transform:translateY(-2px) rotate(0deg); box-shadow:0 8px 22px -6px rgba(18,22,36,.28)}
@@ -851,7 +887,7 @@ noscript p {padding:40px; text-align:center}
 }
 @media print {
   body {background:#fff; color:#111}
-  body::before, body::after, .tabbar, .strip, .pager, .icon-btn, .cover-back, .inline-actions, .focus-actions, .actions, .sheet-foot, #toast, .kita, .day-sticker, .corner-sketch, dialog:not([open]) {display:none !important}
+  body::before, body::after, .tabbar, .strip, .pager, .icon-btn, .cover-back, .inline-actions, .focus-actions, .actions, .sheet-foot, #toast, .kita, .day-sticker, .corner-sketch, .fx-card, dialog:not([open]) {display:none !important}
   .screen {max-width:none; padding:0}
   .block, .focus, .day-ticket, .shot {background:#fff; border-color:#d5dae4; box-shadow:none; break-inside:avoid}
   .day-hero, .cover {box-shadow:none}

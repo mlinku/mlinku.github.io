@@ -2224,9 +2224,9 @@ const shotDays=()=>PLAN.days.map((_,i)=>i).filter(i=>pilgrimageDay(PLAN.days[i].
 function shotsScreen(){
  const days=shotDays();
  if(!days.includes(ui.shotsDay)){const t=todayIndex();ui.shotsDay=days.includes(t)?t:days.includes(ui.day)?ui.day:days[0];}
- const d=PLAN.days[ui.shotsDay],{main,optional,reference}=dayShots(d),pg=shotProgress(d.date),markName=pg.total&&pg.done===pg.total?'sparkle':'camera';
+ const d=PLAN.days[ui.shotsDay],{main,optional,reference}=dayShots(d),pg=shotProgress(d.date),markName=pg.total&&pg.done===pg.total?'sparkle':'camera',allDone=pg.total>0&&pg.done===pg.total;
  return `${strip(days.map(i=>['#shots/'+PLAN.days[i].date,i,i===todayIndex()?'今天':DETAILS[PLAN.days[i].date].cityLabel]),ui.shotsDay)}
- <header class="screen-head"><div><p class="kicker">${doodle(markName).replace('class="doodle"',`class="doodle kicker-mark" data-doodle="${markName}"`)}${dateLabel(d.date)} · 实景 × 作品</p><h1 class="display">巡礼对照</h1></div>${kita('side','in-head')}<p class="count"><b>${pg.done}</b><span>/ ${pg.total} 已拍</span></p></header>
+ <header class="screen-head"><div><p class="kicker">${doodle(markName).replace('class="doodle"',`class="doodle kicker-mark" data-doodle="${markName}"`)}${dateLabel(d.date)} · 实景 × 作品</p><h1 class="display">巡礼对照</h1></div>${kita('side','in-head')}<button type="button" class="count jump-next${allDone?' done':''}" data-action="next-unshot" aria-label="${allDone?'当天巡礼已全部拍完':'跳到下一处未拍巡礼'}"><span class="count-num"><b>${pg.done}</b><span>/ ${pg.total} 已拍</span></span><small>${allDone?'全部拍完':'下一处 ↓'}</small></button></header>
  ${rallyHTML(d)}
  ${main.map((p,n)=>shotHTML(p,n+1)).join('')}
  ${optional.length?`<details class="fold block"><summary>可选点位 · ${optional.length}</summary><p class="hint">时间有余时顺路拍，默认不安排。</p>${optional.map(p=>shotHTML(p,0)).join('')}</details>`:''}
@@ -2234,11 +2234,63 @@ function shotsScreen(){
 }
 
 /* ---------- 准备 ---------- */
+const FX_KEY='kansai-fx-v2',FX_DEFAULT=4.19;
+let fxLoading=false;
+function fxMeta(){
+ try{
+  const raw=localStorage.getItem(FX_KEY);
+  if(raw){const o=JSON.parse(raw);if(o&&o.rate>0.5&&o.rate<30)return o;}
+ }catch{}
+ return {rate:FX_DEFAULT,date:'',manual:false,fetchedAt:0};
+}
+function saveFx(meta){try{localStorage.setItem(FX_KEY,JSON.stringify(meta));}catch{}}
+const fxRate=()=>fxMeta().rate;
+function fxOut(raw){
+ const num=parseFloat(String(raw||'').replace(/,/g,''));
+ if(!Number.isFinite(num)||num<=0)return '<span>¥</span><b>0</b><small>RMB</small>';
+ const cny=num*fxRate()/100,txt=cny>=100?Math.round(cny).toLocaleString('en-US'):cny.toFixed(1).replace(/\.0$/,'');
+ return `<span>¥</span><b>${txt}</b><small>RMB</small>`;
+}
+function updateFxDom(){
+ const out=$('#fx-cny'),pill=$('.fx-rate'),meta=fxMeta();
+ if(out)out.innerHTML=fxOut(ui.fxJpy);
+ if(pill){
+  const tag=meta.manual?'手动':meta.date?dateLabel(meta.date)+' 实时':'默认';
+  pill.innerHTML=`100 円 ≈ <b>${meta.rate.toFixed(2)}</b> 元<em>${tag}</em>`;
+ }
+}
+async function fetchLiveFx(force=false){
+ if(fxLoading||typeof fetch!=='function')return;
+ const cur=fxMeta(),today=tokyoNow().date;
+ if(!force&&(cur.manual||(cur.date===today&&Date.now()-(cur.fetchedAt||0)<6*3600e3)))return;
+ fxLoading=true;
+ const pull=async url=>{
+  const ctl=typeof AbortController==='function'?new AbortController():null;
+  const tm=ctl?setTimeout(()=>ctl.abort(),5000):0;
+  try{
+   const res=await fetch(url,{cache:'no-store',signal:ctl?.signal});
+   if(!res.ok)return null;
+   const d=await res.json(),r=Number(d?.rates?.CNY);
+   return r>0.005&&r<0.3?{rate:Math.round(r*10000)/100,date:d.date||today}:null;
+  }catch{return null;}finally{clearTimeout(tm);}
+ };
+ const live=await pull('https://open.er-api.com/v6/latest/JPY')||await pull('https://api.frankfurter.app/latest?from=JPY&to=CNY');
+ fxLoading=false;
+ if(live){
+  saveFx({rate:live.rate,date:live.date,manual:false,fetchedAt:Date.now()});
+  if(ui.tab==='prep'){updateFxDom();const ri=$('#fx-rate-in');if(ri)ri.value=live.rate.toFixed(2);}
+  if(force)toast('已更新当日汇率：100 円 ≈ '+live.rate.toFixed(2)+' 元');
+ }else if(force){
+  toast('离线或网络受限，沿用上次汇率');
+ }
+}
 const todoRow=t=>`<button type="button" class="todo${t.done?' on':''}" data-action="todo" data-todo="${e(t.id)}" aria-pressed="${t.done}"><span class="box">${icon('check')}</span><span>${e(t.short||t.text)}</span></button>`;
 function prepScreen(){
  const g=todoGroups(),open=openPurchases(),tripItems=g.trip.flatMap(x=>x.items.map(t=>({...t,short:`${x.label} · ${t.short||t.text}`})));
- const tripDone=tripItems.filter(t=>t.done).length,during=tripStatus().phase==='during';
+ const tripDone=tripItems.filter(t=>t.done).length,during=tripStatus().phase==='during',meta=fxMeta(),rate=meta.rate;
+ const fxTag=meta.manual?'手动':meta.date?dateLabel(meta.date)+' 实时':'默认';
  return `<header class="screen-head"><div><p class="kicker">出发前与旅途中</p><h1 class="display">准备${doodle('clipboard').replace('class="doodle"','class="doodle head-mark"')}</h1></div>${themeButton()}</header>
+ <section class="block fx-card"><h2 class="block-title">汇率速算<button type="button" class="fx-rate" data-action="fx-rate" aria-expanded="${!!ui.fxEdit}" aria-label="修改或刷新实时汇率">100 円 ≈ <b>${rate.toFixed(2)}</b> 元<em>${fxTag}</em></button></h2>${ui.fxEdit?`<div class="fx-edit"><label>100 円 = <input id="fx-rate-in" type="text" inputmode="decimal" value="${rate.toFixed(2)}" aria-label="100日元对应人民币"> 元</label><button type="button" class="btn primary" data-action="fx-rate-save">保存</button><button type="button" class="btn" data-action="fx-rate-sync">实时</button></div>`:''}<div class="fx-row"><label class="fx-field"><span>¥</span><input id="fx-jpy" type="text" inputmode="decimal" autocomplete="off" placeholder="输入日元" value="${e(ui.fxJpy)}" aria-label="日元金额"></label><span class="fx-eq" aria-hidden="true">≈</span><output id="fx-cny" class="fx-out" for="fx-jpy">${fxOut(ui.fxJpy)}</output></div><div class="fx-chips">${[500,1000,3000,5000,10000].map(n=>`<button type="button" data-action="fx-preset" data-jpy="${n}">¥${n.toLocaleString('en-US')}</button>`).join('')}<button type="button" class="fx-clear" data-action="fx-preset" data-jpy="">清零</button></div></section>
  <section class="block tickets-block"><span class="corner-sketch">${doodle('ticket')}</span><h2 class="block-title">票务</h2><ul class="tickets">${open.map(t=>`<li class="ticket ${t.tone}"><button type="button" class="ticket-tap" data-action="todo" data-todo="${e(t.id)}" aria-pressed="${t.done}" aria-label="${e(t.item)}：${e(t.label)}，点按${t.done?'取消':'标记已办'}"><span class="ticket-main"><b>${e(t.item)}</b><small>${t.qty?'×'+t.qty+' · ':''}${e(t.date)} 使用${t.budget?' · '+e(t.budget):''}</small></span><span class="ticket-state">${t.done?icon('check'):''}${e(t.label)}</span></button></li>`).join('')}</ul></section>
  <section class="block todos"><h2 class="block-title">待办 <small>${todoDone()} / ${TODOS.length}</small>${kita('sit-happy','in-title')}</h2><h3 class="sub">出发前完成</h3>${g.before.map(todoRow).join('')}<details class="fold"${during?' open':''}><summary>旅途中再确认 · ${tripDone}/${tripItems.length}</summary>${tripItems.map(todoRow).join('')}</details><details class="fold"><summary>展开全文</summary><ul class="plain">${[...g.before,...g.trip.flatMap(x=>x.items)].map(t=>`<li>${fmt(t.text)}</li>`).join('')}</ul></details></section>
  <section class="block sketched"><span class="corner-sketch">${doodle('plane')}</span><h2 class="block-title">航班</h2>${PLAN.bookings.filter(b=>b.type==='flight').map(b=>passHTML(b,flightLocal(b,'departure'),flightLocal(b,'arrival'))).join('')}</section>
@@ -2253,7 +2305,7 @@ function prepScreen(){
 }
 
 /* ---------- Shell ---------- */
-const ui={tab:'now',day:Math.max(0,todayIndex()),shotsDay:null,target:'',justDone:'',moved:''};
+const ui={tab:'now',day:Math.max(0,todayIndex()),shotsDay:null,target:'',justDone:'',moved:'',fxJpy:'',fxEdit:false};
 const TABS=[['now','clock'],['day','calendar'],['shots','camera'],['prep','bag']];
 const TAB_LABEL={day:'行程',shots:'巡礼',prep:'准备'};
 function tabHref(id){return id==='day'?'#day/'+PLAN.days[ui.day].date:id==='shots'?'#shots'+(ui.shotsDay!=null?'/'+PLAN.days[ui.shotsDay].date:''):'#'+id;}
@@ -2292,6 +2344,7 @@ function renderMain(liveImgs){
  if(rail&&on){const left=on.offsetLeft-rail.clientWidth/2+on.clientWidth/2;if(liveImgs&&stripWas!=null)rail.scrollLeft=stripWas;else if(stripWas!=null&&motionOK()){rail.scrollLeft=stripWas;rail.scrollTo({left,behavior:'smooth'});}else rail.scrollLeft=left;}
  document.title=(ui.tab==='day'?dateLabel(PLAN.days[ui.day].date)+' '+dayPresentation(PLAN.days[ui.day]).short:ui.tab==='shots'?'巡礼对照':ui.tab==='prep'?'准备':PHASE_LABEL[phase])+' · 关西秋日手帖';
  lastClockKey=clockKey();
+ if(ui.tab==='prep')fetchLiveFx();
 }
 // app.js's page tools call render() after recording a completion.
 function render(){renderMain();refreshSheet();}
@@ -2341,8 +2394,15 @@ function toggleShot(id){
   card.classList.toggle('done',now);
   const btn=card.querySelector('.shot-toggle');
   if(btn){btn.classList.toggle('on',now);btn.setAttribute('aria-pressed',String(now));const sp=btn.querySelector('span');if(sp)sp.textContent=now?'已拍':'标记已拍';}
-  const pg=shotProgress(p.date),markName=pg.total&&pg.done===pg.total?'sparkle':'camera';
-  const countB=$('#main .screen-head .count b');if(countB)countB.textContent=pg.done;
+  const pg=shotProgress(p.date),markName=pg.total&&pg.done===pg.total?'sparkle':'camera',allDone=pg.total>0&&pg.done===pg.total;
+  const countBtn=$('#main .screen-head .count');
+  if(countBtn){
+   countBtn.classList.toggle('done',allDone);
+   countBtn.setAttribute('aria-label',allDone?'当天巡礼已全部拍完':'跳到下一处未拍巡礼');
+   const countB=countBtn.querySelector('b'),countSm=countBtn.querySelector('small');
+   if(countB)countB.textContent=pg.done;
+   if(countSm)countSm.textContent=allDone?'全部拍完':'下一处 ↓';
+  }
   const mark=$('#main .screen-head .kicker-mark');
   if(mark&&mark.dataset?.doodle!==markName)mark.outerHTML=doodle(markName).replace('class="doodle"',`class="doodle kicker-mark" data-doodle="${markName}"`);
  }else refresh();
@@ -2421,21 +2481,25 @@ function openZoom(title,image,{switcher='',stance='',topAction='',stageHTML='',c
   zoomPushed=true;
  }
 }
+const preferredShotKind=(pt,prefer)=>{const hasBoth=!!(pt.anime?.src&&pt.real?.src);if(prefer==='split'&&hasBoth)return 'split';if(pt[prefer]?.src)return prefer;return pt.comparison?.src?'comparison':hasBoth?'split':pt.real?.src?'real':'anime';};
 function zoomShot(id,kind){
  const p=pilgrimagePoints.find(x=>x.id===id)||PILGRIMAGE.rally?.spots.find(x=>x.id===id);if(!p)return;
  const hasBoth=!!(p.anime?.src&&p.real?.src);
  const mode=kind==='split'&&hasBoth?'split':kind;
  const image=mode==='split'?p.real:p?.[mode];if(!image?.src)return;
- const s=pilgrimagePoints.some(x=>x.id===id)?shotModel(p):null;
+ const isMain=pilgrimagePoints.some(x=>x.id===id),s=isMain?shotModel(p):null;
  const modes=mode==='comparison'||!hasBoth?[]:['anime','real','split'];
  zoomState={type:'shot',id,kind:mode,modes};
  const labels={anime:'作品画面',real:'实景',split:'并排对照'};
  const switcher=modes.length?`<div class="zoom-switch" role="group" aria-label="切换对照图片">${modes.map(k=>`<button type="button" data-action="zoom-shot" data-shot="${e(p.id)}" data-kind="${k}" aria-pressed="${mode===k}">${labels[k]}</button>`).join('')}</div>`:'';
+ const dayObj=isMain?PLAN.days.find(x=>x.date===p.date):null,dayList=dayObj?dayShots(dayObj).main:[],shotIdx=dayList.findIndex(x=>x.id===id);
+ const prevShot=shotIdx>0?dayList[shotIdx-1]:null,nextShot=shotIdx>=0&&shotIdx<dayList.length-1?dayList[shotIdx+1]:null;
+ const navBar=(prevShot||nextShot)?`<div class="zoom-bar">${prevShot?`<button type="button" class="icon-btn small zoom-step" data-action="zoom-shot" data-shot="${e(prevShot.id)}" data-kind="${preferredShotKind(prevShot,mode)}" aria-label="上一处：${e(shotModel(prevShot).title)}">${icon('back')}</button>`:'<span class="zoom-step-gap" aria-hidden="true"></span>'}${switcher||`<span class="zoom-pos">${shotIdx+1} / ${dayList.length}</span>`}${nextShot?`<button type="button" class="icon-btn small zoom-step" data-action="zoom-shot" data-shot="${e(nextShot.id)}" data-kind="${preferredShotKind(nextShot,mode)}" aria-label="下一处：${e(shotModel(nextShot).title)}">${icon('chevron')}</button>`:'<span class="zoom-step-gap" aria-hidden="true"></span>'}</div>`:switcher;
  const stance=s?.note?`<p class="zoom-stance"><b>站位</b><span>${e(s.note)}</span></p>`:'';
  const topAction=s&&!s.reference?`<button type="button" class="zoom-shot-btn${s.done?' on':''}" data-action="shot" data-shot="${e(p.id)}" aria-pressed="${s.done}">${icon('check')}<span>${s.done?'已拍':'标记已拍'}</span></button>`:'';
  const stageHTML=mode==='split'?`<div class="zoom-stage split"><figure data-action="zoom-shot" data-shot="${e(p.id)}" data-kind="anime" role="button" tabindex="0" aria-label="放大${e(p.title)}作品画面"><img src="${p.anime.src}" alt="${e(p.title)} · 作品画面" draggable="false"><figcaption>作品画面</figcaption></figure><figure data-action="zoom-shot" data-shot="${e(p.id)}" data-kind="real" role="button" tabindex="0" aria-label="放大${e(p.title)}实景"><img src="${p.real.src}" alt="${e(p.title)} · 实景" draggable="false"><figcaption>实景</figcaption></figure></div>`:'';
  const creditHTML=mode==='split'?`<p class="zoom-credit">${[p.anime.credit,p.real.credit].filter(Boolean).map(e).join(' · ')}</p>`:'';
- openZoom(p.title,{...image,alt:p.title,credit:image.credit},{switcher,stance,topAction,stageHTML,creditHTML});
+ openZoom(p.title,{...image,alt:p.title,credit:image.credit},{switcher:navBar,stance,topAction,stageHTML,creditHTML});
 }
 function zoomPhoto(id){zoomState={type:'photo'};const p=PHOTOS[id];if(p?.src)openZoom(PLACE[id].name,{src:p.src,alt:p.sight,credit:[p.sight,p.author,p.date].filter(Boolean).join(' · '),source_url:p.sourcePage});}
 function openTaxiCard(placeId){
@@ -2519,6 +2583,29 @@ function boot(){
   else if(act==='import-close')$('#import-dialog')?.close();
   else if(act==='import-apply')applyImportedProgress($('#import-input')?.value);
   else if(act==='locate-now'){const row=document.getElementById(t.dataset.row);if(row){row.scrollIntoView({behavior:motionOK()?'smooth':'instant',block:'center'});row.classList.remove('flash');void row.offsetWidth;row.classList.add('flash');}}
+  else if(act==='next-unshot'){
+   const card=document.querySelector('#main .shot:not(.done)');
+   if(card){card.scrollIntoView({behavior:motionOK()?'smooth':'instant',block:'start'});card.classList.remove('flash');void card.offsetWidth;card.classList.add('flash');}
+   else toast('当天巡礼已全部拍完');
+  }
+  else if(act==='fx-preset'){
+   ui.fxJpy=t.dataset.jpy||'';
+   const inp=$('#fx-jpy'),out=$('#fx-cny');
+   if(inp)inp.value=ui.fxJpy;
+   if(out)out.innerHTML=fxOut(ui.fxJpy);
+  }
+  else if(act==='fx-rate'){ui.fxEdit=!ui.fxEdit;refresh(false);if(ui.fxEdit)$('#fx-rate-in')?.focus();}
+  else if(act==='fx-rate-save'){
+   const v=parseFloat(String($('#fx-rate-in')?.value||'').replace(/,/g,''));
+   if(v>0.5&&v<30){saveFx({rate:Math.round(v*100)/100,date:tokyoNow().date,manual:true,fetchedAt:Date.now()});ui.fxEdit=false;refresh(false);toast('汇率已手动设为 '+v.toFixed(2));}
+   else toast('请输入合理汇率（如 4.19）');
+  }
+  else if(act==='fx-rate-sync'){ui.fxEdit=false;refresh(false);fetchLiveFx(true);}
+ });
+ document.addEventListener('input',ev=>{
+  if(ev.target.id!=='fx-jpy')return;
+  ui.fxJpy=ev.target.value;
+  const out=$('#fx-cny');if(out)out.innerHTML=fxOut(ui.fxJpy);
  });
  document.addEventListener('change',ev=>{
   const input=ev.target;if(!input.dataset?.choice||!sheetState)return;
