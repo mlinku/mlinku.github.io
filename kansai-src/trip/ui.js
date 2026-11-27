@@ -17,7 +17,8 @@ Object.assign(icons,{
  plane:'<path d="M21 15.5 13.5 11V5a1.5 1.5 0 0 0-3 0v6L3 15.5V18l7.5-2.5V19L8 21v1l4-1 4 1v-1l-2.5-2v-3.5L21 18z"/>',
  sparkle:'<path d="M12 3v4m0 10v4M3 12h4m10 0h4M6 6l2.5 2.5m7 7L18 18M18 6l-2.5 2.5m-7 7L6 18"/>',
  card:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h6M7 14h10"/>',
- zoom:'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/>'
+ zoom:'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/>',
+ yen:'<path d="m7 5 5 7 5-7M12 12v7M8 12.5h8M8 16h8"/>'
 });
 
 /* ---------- Small parts ---------- */
@@ -185,6 +186,7 @@ function eventSheet(d,ev){
  `,m.nav||m.major?`<footer class="sheet-foot">${m.nav?navButton(m.nav,true):''}${m.major?checkButton(d.date,ev,true):''}</footer>`:'');
 }
 function sheetHTML(date,key){
+ if(key==='fx')return fxSheet();
  const i=PLAN.days.findIndex(x=>x.date===date),d=PLAN.days[i];if(!d)return '';
  if(key==='notes')return sheetWrap(sheetHead(dateLabel(date)+' · 延误或天气变化时','情况有变时',murasame('shock','in-sheet')),`<ul class="plain roomy">${fieldNotes(d).map(t=>`<li>${fmt(t)}</li>`).join('')}</ul>`);
  if(key==='stay'&&d.overnight){const p=PLACE[d.overnight];return sheetWrap(sheetHead(dateLabel(date)+' · 今晚住',e(p.name)),`${photoSrc(p.id)?`<button type="button" class="sheet-cover" data-action="zoom-photo" data-place="${p.id}">${img(p.id,true)}</button>`:''}<p class="ja big" lang="ja" translate="no">${e(p.name_ja)}</p>${p.address_ja?`<p class="ja" lang="ja" translate="no">${e(p.address_ja)}</p>`:''}${PLACE_LOCATIONS[p.id]?`<p class="muted">${e(PLACE_LOCATIONS[p.id])}</p>`:''}${PLACE_DETAILS[p.id]?`<p>${fmt(cleanText(PLACE_DETAILS[p.id]))}</p>`:''}${p.address_ja?`<div class="actions"><button type="button" class="btn" data-action="taxi-card" data-place="${p.id}">${icon('card')}<span>大图出示给司机</span></button></div>`:''}`,`<footer class="sheet-foot">${external(icon('pin')+'<span>酒店地图</span>',p.map_search_url,'nav nav-big')}${p.address_ja?`<button type="button" class="check-big copy" data-action="copy" data-copy="${e(p.address_ja)}">${icon('copy')}<span>复制地址</span></button>`:''}</footer>`);}
@@ -293,20 +295,42 @@ function fxMeta(){
 }
 function saveFx(meta){try{localStorage.setItem(FX_KEY,JSON.stringify(meta));}catch{}}
 const fxRate=()=>fxMeta().rate;
+const fxClean=raw=>{
+ let s=String(raw||'').replace(/[^\d.]/g,'');
+ const dot=s.indexOf('.');
+ if(dot>=0)s=s.slice(0,dot+1)+s.slice(dot+1).replace(/\./g,'').slice(0,2);
+ return s.slice(0,9);
+};
+function fxFormatCny(jpy){
+ const cny=jpy*fxRate()/100;
+ return cny>=100?Math.round(cny).toLocaleString('en-US'):cny.toFixed(1).replace(/\.0$/,'');
+}
 function fxOut(raw){
  const num=parseFloat(String(raw||'').replace(/,/g,''));
  if(!Number.isFinite(num)||num<=0)return '<span>¥</span><b>0</b>';
- const cny=num*fxRate()/100,txt=cny>=100?Math.round(cny).toLocaleString('en-US'):cny.toFixed(1).replace(/\.0$/,'');
- return `<span>¥</span><b>${txt}</b>`;
+ return `<span>¥</span><b>${fxFormatCny(num)}</b>`;
 }
-function fxBridgeInner(meta){
- const live=!meta.manual&&!!meta.date,tag=meta.manual?'手动':live?'实时':'默认';
- return `<em${live?' class="live"':''}>${tag}</em><span class="fx-eq-line" aria-hidden="true">≈</span><span class="fx-mult">× ${(meta.rate/100).toFixed(4)}</span>`;
+function fxKickerHTML(meta){
+ const live=!meta.manual&&!!meta.date,tag=meta.manual?'手动':live?(meta.date?dateLabel(meta.date)+' ':'')+'实时':'参考';
+ return `<span>100 円 ≈ <b>${meta.rate.toFixed(2)}</b> 元</span><span class="fx-tag${live?' live':''}">${tag}</span>`;
+}
+function fxSheet(){
+ const meta=fxMeta(),rate=meta.rate;
+ return sheetWrap(sheetHead(fxKickerHTML(meta),'汇率速算'),`
+ <div class="fx-calc${ui.fxJpy?' has-val':''}">
+  <label class="fx-row fx-in"><span class="fx-cur"><b>日元</b><small>JPY</small></span><span class="fx-input-wrap"><span>¥</span><span class="fx-sizer" data-val="${e(ui.fxJpy||'输入金额')}"><input id="fx-jpy" type="text" inputmode="decimal" size="1" maxlength="9" autocomplete="off" placeholder="输入金额" value="${e(ui.fxJpy)}" aria-label="日元金额"></span></span>${ui.fxJpy?`<button type="button" class="icon-btn small fx-x" data-action="fx-preset" data-jpy="" aria-label="清零">${icon('close')}</button>`:''}</label>
+  <div class="fx-row fx-out-row"><span class="fx-cur"><b>人民币</b><small>CNY</small></span><output id="fx-cny" class="fx-out-val" for="fx-jpy">${fxOut(ui.fxJpy)}</output></div>
+ </div>
+ <details class="fold"><summary>调整参考汇率</summary><div class="fx-edit"><label>100 円 = <input id="fx-rate-in" type="text" inputmode="decimal" value="${rate.toFixed(2)}" aria-label="100日元对应人民币"> 元</label><button type="button" class="btn primary" data-action="fx-rate-save">保存</button><button type="button" class="btn" data-action="fx-rate-sync">实时</button></div><p class="hint">联网时自动更新当日汇率，离线沿用上次缓存。</p></details>
+ `);
 }
 function updateFxDom(){
- const out=$('#fx-cny'),mid=$('.fx-mid'),meta=fxMeta();
- if(out)out.innerHTML=fxOut(ui.fxJpy);
- if(mid)mid.innerHTML=fxBridgeInner(meta);
+ if(sheetState?.key!=='fx')return;
+ const dlg=$('#sheet');if(!dlg?.open)return;
+ const meta=fxMeta();
+ const kicker=dlg.querySelector('.sheet-head .kicker');if(kicker)kicker.innerHTML=fxKickerHTML(meta);
+ const out=dlg.querySelector('#fx-cny');if(out)out.innerHTML=fxOut(ui.fxJpy);
+ const ri=dlg.querySelector('#fx-rate-in');if(ri&&document.activeElement!==ri)ri.value=meta.rate.toFixed(2);
 }
 async function fetchLiveFx(force=false){
  if(fxLoading||typeof fetch!=='function')return;
@@ -327,7 +351,7 @@ async function fetchLiveFx(force=false){
  fxLoading=false;
  if(live){
   saveFx({rate:live.rate,date:live.date,manual:false,fetchedAt:Date.now()});
-  if(ui.tab==='prep'){updateFxDom();const ri=$('#fx-rate-in');if(ri)ri.value=live.rate.toFixed(2);}
+  updateFxDom();
   if(force)toast('已更新当日汇率：100 円 ≈ '+live.rate.toFixed(2)+' 元');
  }else if(force){
   toast('离线或网络受限，沿用上次汇率');
@@ -336,9 +360,8 @@ async function fetchLiveFx(force=false){
 const todoRow=t=>`<button type="button" class="todo${t.done?' on':''}" data-action="todo" data-todo="${e(t.id)}" aria-pressed="${t.done}"><span class="box">${icon('check')}</span><span>${e(t.short||t.text)}</span></button>`;
 function prepScreen(){
  const g=todoGroups(),open=openPurchases(),tripItems=g.trip.flatMap(x=>x.items.map(t=>({...t,short:`${x.label} · ${t.short||t.text}`})));
- const tripDone=tripItems.filter(t=>t.done).length,during=tripStatus().phase==='during',meta=fxMeta(),rate=meta.rate;
- return `<header class="screen-head"><div><p class="kicker">出发前与旅途中</p><h1 class="display">准备${doodle('clipboard').replace('class="doodle"','class="doodle head-mark"')}</h1></div>${themeButton()}</header>
- <section class="block fx-card"><h2 class="block-title">汇率速算</h2>${ui.fxEdit?`<div class="fx-edit"><label>100 円 = <input id="fx-rate-in" type="text" inputmode="decimal" value="${rate.toFixed(2)}" aria-label="100日元对应人民币"> 元</label><button type="button" class="btn primary" data-action="fx-rate-save">保存</button><button type="button" class="btn" data-action="fx-rate-sync">实时</button></div>`:''}<div class="fx-board"><label class="fx-side fx-in"><small>日元 JPY</small><span class="fx-val"><span>¥</span><input id="fx-jpy" type="text" inputmode="decimal" autocomplete="off" placeholder="0" value="${e(ui.fxJpy)}" aria-label="日元金额"></span></label><button type="button" class="fx-mid" data-action="fx-rate" aria-expanded="${!!ui.fxEdit}" aria-label="修改或刷新实时汇率（100日元约${rate.toFixed(2)}元）">${fxBridgeInner(meta)}</button><div class="fx-side fx-res"><small>人民币 RMB</small><output id="fx-cny" class="fx-val fx-out" for="fx-jpy">${fxOut(ui.fxJpy)}</output></div></div><div class="fx-bar">${[500,1000,3000,5000,10000].map(n=>`<button type="button" data-action="fx-preset" data-jpy="${n}">¥${n.toLocaleString('en-US')}</button>`).join('')}<button type="button" class="fx-clear" data-action="fx-preset" data-jpy="">清零</button></div></section>
+ const tripDone=tripItems.filter(t=>t.done).length,during=tripStatus().phase==='during';
+ return `<header class="screen-head"><div><p class="kicker">出发前与旅途中</p><h1 class="display">准备${doodle('clipboard').replace('class="doodle"','class="doodle head-mark"')}</h1></div><div class="head-tools"><button type="button" class="icon-btn" data-action="fx-open" aria-label="汇率速算">${icon('yen')}</button>${themeButton()}</div></header>
  <section class="block tickets-block"><span class="corner-sketch">${doodle('ticket')}</span><h2 class="block-title">票务</h2><ul class="tickets">${open.map(t=>`<li class="ticket ${t.tone}"><button type="button" class="ticket-tap" data-action="todo" data-todo="${e(t.id)}" aria-pressed="${t.done}" aria-label="${e(t.item)}：${e(t.label)}，点按${t.done?'取消':'标记已办'}"><span class="ticket-main"><b>${e(t.item)}</b><small>${t.qty?'×'+t.qty+' · ':''}${e(t.date)} 使用${t.budget?' · '+e(t.budget):''}</small></span><span class="ticket-state">${t.done?icon('check'):''}${e(t.label)}</span></button></li>`).join('')}</ul></section>
  <section class="block todos"><h2 class="block-title">待办 <small>${todoDone()} / ${TODOS.length}</small>${kita('sit-happy','in-title')}</h2><h3 class="sub">出发前完成</h3>${g.before.map(todoRow).join('')}<details class="fold"${during?' open':''}><summary>旅途中再确认 · ${tripDone}/${tripItems.length}</summary>${tripItems.map(todoRow).join('')}</details><details class="fold"><summary>展开全文</summary><ul class="plain">${[...g.before,...g.trip.flatMap(x=>x.items)].map(t=>`<li>${fmt(t.text)}</li>`).join('')}</ul></details></section>
  <section class="block sketched"><span class="corner-sketch">${doodle('plane')}</span><h2 class="block-title">航班</h2>${PLAN.bookings.filter(b=>b.type==='flight').map(b=>passHTML(b,flightLocal(b,'departure'),flightLocal(b,'arrival'))).join('')}</section>
@@ -636,24 +659,38 @@ function boot(){
    if(card){card.scrollIntoView({behavior:motionOK()?'smooth':'instant',block:'start'});card.classList.remove('flash');void card.offsetWidth;card.classList.add('flash');}
    else toast('当天巡礼已全部拍完');
   }
+  else if(act==='fx-open'){openSheet('','fx');fetchLiveFx();}
   else if(act==='fx-preset'){
    ui.fxJpy=t.dataset.jpy||'';
    const inp=$('#fx-jpy'),out=$('#fx-cny');
-   if(inp)inp.value=ui.fxJpy;
+   if(inp){inp.value=ui.fxJpy;if(inp.parentElement)inp.parentElement.dataset.val=ui.fxJpy||'输入金额';}
    if(out)out.innerHTML=fxOut(ui.fxJpy);
+   const wrap=inp?.closest('.fx-in'),hasX=!!wrap?.querySelector('.fx-x');
+   if(wrap&&!!ui.fxJpy!==hasX)refreshSheet();
   }
-  else if(act==='fx-rate'){ui.fxEdit=!ui.fxEdit;refresh(false);if(ui.fxEdit)$('#fx-rate-in')?.focus();}
   else if(act==='fx-rate-save'){
    const v=parseFloat(String($('#fx-rate-in')?.value||'').replace(/,/g,''));
-   if(v>0.5&&v<30){saveFx({rate:Math.round(v*100)/100,date:tokyoNow().date,manual:true,fetchedAt:Date.now()});ui.fxEdit=false;refresh(false);toast('汇率已手动设为 '+v.toFixed(2));}
+   if(v>0.5&&v<30){saveFx({rate:Math.round(v*100)/100,date:tokyoNow().date,manual:true,fetchedAt:Date.now()});updateFxDom();toast('汇率已手动设为 '+v.toFixed(2));}
    else toast('请输入合理汇率（如 4.19）');
   }
-  else if(act==='fx-rate-sync'){ui.fxEdit=false;refresh(false);fetchLiveFx(true);}
+  else if(act==='fx-rate-sync'){fetchLiveFx(true);}
  });
  document.addEventListener('input',ev=>{
   if(ev.target.id!=='fx-jpy')return;
-  ui.fxJpy=ev.target.value;
+  const had=!!ui.fxJpy,clean=fxClean(ev.target.value);
+  if(ev.target.value!==clean)ev.target.value=clean;
+  ui.fxJpy=clean;
+  if(ev.target.parentElement)ev.target.parentElement.dataset.val=ui.fxJpy||'输入金额';
   const out=$('#fx-cny');if(out)out.innerHTML=fxOut(ui.fxJpy);
+  if(had!==!!ui.fxJpy){
+   const wrap=ev.target.closest('.fx-in'),calc=ev.target.closest('.fx-calc');
+   if(calc)calc.classList.toggle('has-val',!!ui.fxJpy);
+   if(wrap){
+    const x=wrap.querySelector('.fx-x');
+    if(ui.fxJpy&&!x)wrap.insertAdjacentHTML('beforeend',`<button type="button" class="icon-btn small fx-x" data-action="fx-preset" data-jpy="" aria-label="清零">${icon('close')}</button>`);
+    else if(!ui.fxJpy&&x)x.remove();
+   }
+  }
  });
  document.addEventListener('change',ev=>{
   const input=ev.target;if(!input.dataset?.choice||!sheetState)return;
