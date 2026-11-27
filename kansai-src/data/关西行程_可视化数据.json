@@ -1446,7 +1446,7 @@
             "kyoto_avanti"
           ],
           "category": "shopping",
-          "condition": "八条口即达，6F 先去 Animate CD 区找《Lehre der Rose》未拆封初回，买完再顺逛同层指南针；21:00 关门，晚到只选一家。"
+          "condition": "八条口即达，6F 先去 Animate CD 区找《Lehre der Rose》未拆封初回，买完再顺逛同层指南针；21:00 关门，晚到只选一家，若超过 20:15 才出门则直接跳过保底拉面小路。"
         },
         {
           "id": "dinner_arrival",
@@ -2780,7 +2780,7 @@
       "weekday": "周六",
       "title": "姬路城 · 好古园",
       "departure_target": "10:00",
-      "hotel_return_target": "约20:15",
+      "hotel_return_target": "约20:30",
       "intensity": "中等；天守台阶陡",
       "cities": [
         "姬路",
@@ -2825,29 +2825,29 @@
         },
         {
           "id": "himeji_castle_visit",
-          "time_label": "12:35—14:45",
+          "time_label": "12:35—15:15",
           "time_status": "planning_window",
           "title": "姬路城",
           "place_ids": [
             "himeji_castle"
           ],
           "category": "visit",
-          "condition": "城门→西之丸→天守；天守楼梯陡，周六可能排队。"
+          "condition": "城门→西之丸→天守；天守楼梯陡且周六可能排队，登楼须脱鞋拎袋（穿好穿脱的鞋＋厚袜子）。"
         },
         {
           "id": "kokoen_visit",
-          "time_label": "14:50—17:15",
+          "time_label": "15:30—17:30",
           "time_status": "planning_window",
           "title": "好古园 · 红叶点灯",
           "place_ids": [
             "kokoen"
           ],
           "category": "visit",
-          "condition": "白天看庭园和红叶，园内坐坐，日落约16:45后点灯；红叶可能已是尾声。"
+          "condition": "约15:30—16:00入园看夕阳红叶衔接16:48日落点灯，17:30离园（免得干等天黑）；红叶可能已是尾声。"
         },
         {
           "id": "himeji_lights",
-          "time_label": "17:15—17:45",
+          "time_label": "17:30—18:00",
           "time_status": "planning_window",
           "title": "大手前通灯饰 → 姬路站",
           "place_ids": [
@@ -2859,7 +2859,7 @@
         },
         {
           "id": "himeji_dinner",
-          "time_label": "17:45—18:45",
+          "time_label": "18:00—19:00",
           "time_status": "planning_window",
           "title": "晚餐 · 姬路站附近",
           "place_ids": [
@@ -2869,7 +2869,7 @@
         },
         {
           "id": "himeji_return",
-          "time_label": "约18:50—20:15",
+          "time_label": "约19:05—20:30",
           "time_status": "planning_window",
           "title": "姬路 → 酒店",
           "place_ids": [
@@ -3073,7 +3073,7 @@
         },
         {
           "id": "motomachi_cd_shopping",
-          "time_label": "13:00—14:20",
+          "time_label": "13:00—14:05",
           "time_status": "planning_window",
           "title": "三宫动漫店 · 元町CD",
           "place_ids": [
@@ -3088,7 +3088,7 @@
         },
         {
           "id": "sannomiya_rest",
-          "time_label": "14:20—15:00",
+          "time_label": "14:05—14:45",
           "time_status": "planning_window",
           "title": "坐下休息，再返回三宫Port Liner",
           "place_ids": [
@@ -3100,7 +3100,7 @@
         },
         {
           "id": "kobe_bridge_visit",
-          "time_label": "15:00—16:30",
+          "time_label": "14:45—16:30",
           "time_status": "planning_window",
           "title": "神户大桥巡礼，含三宫往返",
           "place_ids": [
@@ -3180,11 +3180,11 @@
         "新今宫乘JR环状线到大阪，换JR神户线新快速到三ノ宮，再步行至生田神社；门到神社预留约75分钟。",
         "生田神社→北野，上坡预留20分钟；午饭后沿北野坂下坡至三宫，预留20分钟。",
         "北野下坡到三宫，先看らしんばん、骏河屋和BOOKOFF，再沿商店街向西到元町约10分钟；バナナレコード在新元町ビル4F，りずむぼっくす在辰巳ビル2F。",
-        "从元町步行回三宫，到Port Liner三宫站乘车至中公園，步行约8分钟到北公园；拍摄后原路回三宫。全段约90分钟含候车与步行，16:30前回到三宫，不锁定车次。",
+        "从元町步行回三宫，到Port Liner三宫站乘车至中公園，步行约8分钟到北公园；拍摄后原路回三宫。全段预留约105分钟含候车与步行，16:30前回到三宫，不锁定车次。",
         "晚餐后步行回JR三ノ宮，乘JR神户线到大阪，换停靠新今宫的环状线列车；含到站、候车、换乘及回酒店步行，预留75—90分钟。"
       ],
       "fallback_rules": [
-        "14:20停购物，不回头补店。",
+        "14:05停购物，不回头补店。",
         "北野无座位保留外观后换简餐；天气或疲劳不适合大桥则在三宫休息。"
       ],
       "optional": [],
@@ -3438,7 +3438,7 @@
     {
       "id": "nara-cash-20261019",
       "when": "2026-12-03",
-      "text": "12/4前备好大佛殿现金（两人¥1,600），查Animate与骏河屋临休。"
+      "text": "12/4前备好大佛殿现金（两人¥1,600），查Animate、骏河屋临休及宝可梦中心DX限流公告。"
     },
     {
       "id": "himeji-20261108",
@@ -4012,13 +4012,13 @@
     ],
     "2026-12-06": [
       {
-        "time": "14:20",
+        "time": "14:05",
         "event_id": "motomachi_cd_shopping",
         "type": "planning_decision",
         "text": "停止购物，留休息与回三宫时间"
       },
       {
-        "time": "15:00",
+        "time": "14:45",
         "event_id": "kobe_bridge_visit",
         "type": "planning_decision",
         "text": "从三宫去大桥，不压晚饭"

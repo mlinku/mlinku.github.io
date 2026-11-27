@@ -37,7 +37,7 @@ function executionNotice(d,ev){
   agata_stamp:'登录活动网站并开启定位，确认领章成功再离开。',
   daikichi_visit:'14:40还没到登山口、下雨或累了就不爬。',
   kodaiji_night:'17:45还没排进、队超30分钟，或下雨/累了直接吃晚饭；18:45前离寺。',
-  gion_dinner:'おめん20:00最后点餐；晚到或长队时换简餐。',
+  gion_dinner:'先去先斗町吃おめん（不接受预约，20:00最后点餐），饭后再慢拍先斗町→新京极→三条夜景；晚到或长队时换简餐。',
   kada_transfer:`${external('南海时刻表 ↗',NANKAI_TIMETABLE)}`,
   kada_day_return:`${external('南海时刻表 ↗',NANKAI_TIMETABLE)}`,
   airport_train:`认准南海新今宫站（不要误进JR闸机），坐 06:52 空港急行免特急券。 ${external('南海时刻表 ↗',NANKAI_TIMETABLE)} · ${external('新今宫站入口图 ↗',NANKAI_STATION)}`

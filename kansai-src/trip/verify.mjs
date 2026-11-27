@@ -116,7 +116,7 @@ const checked=run(`
  const himeji=PLAN.days.find(d=>d.date==='2026-12-05');
  assert.ok(effectiveEvents(himeji).some(ev=>ev.id==='himeji_castle_visit')&&effectiveEvents(himeji).some(ev=>ev.id==='kokoen_visit'),'12/5姬路城与好古园');
  assert.ok(effectiveEvents(himeji).findIndex(ev=>ev.id==='himeji_dinner')<effectiveEvents(himeji).findIndex(ev=>ev.id==='himeji_return'),'晚饭在姬路吃完再回');
- assert.equal(returnTarget(himeji),'20:15','12/5约20:15返店');
+ assert.equal(returnTarget(himeji),'20:30','12/5约20:30返店');
  assert.equal(String(hardStops(himeji).map(t=>t.time)),String(['16:00']),'姬路城16:00停止入城');
  assert.ok(!/加太|和歌山|淡嶋/.test(everything),'不再出现加太与和歌山');
  assert.ok(text(prepScreen()).includes('姬路城＋好古园 ¥5,200'),'门票预算含姬路城＋好古园两人¥5,200');

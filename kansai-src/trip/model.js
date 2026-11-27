@@ -28,12 +28,11 @@ const EVENT_BRIEF={
  nara_transfer:'',
  nara_visit:'仅现金；大佛殿内部约30—40分钟。',
  kobe_bridge_visit:'从北公园拍红桥，16:30前回三宫；大风雨或疲劳取消。',
- motomachi_cd_shopping:'三宫到元町沿街 5 家店，按兴趣自由逛，14:20 左右收尾。',
+ motomachi_cd_shopping:'三宫到元町沿街 5 家店，按兴趣自由逛，14:05 左右收尾。',
  sannomiya_dinner:'不用预约直接去（Walk-in，16:00开门），满座走1分钟换隔壁两家。',
  anime_shopping:'御宅路一带自由逛，想逛哪家去哪家，18:05左右出发去心斋桥。',
  shinsaibashi_transfer:'',
  skyway_visit:'同层免费玻璃廊桥，俯瞰京都塔夜景。',
- kokoen_visit:'逛庭园，日落约16:45后点灯（红叶可能已到尾声）。',
  checkout_osaka:'离店前或到机场吃早餐。',
  airport_train:'',
  airport_checkin:''
@@ -95,7 +94,7 @@ const DROP_SENTENCES=new Set([
  '南海难波到近铁大阪难波需步行，含进站候车','多看会顺延回店，不压缩下坡与返程步行',
  '大风雨或疲劳取消，不挤晚饭','中公園站步行约8分钟，不安排全程步行跨桥','当前120分钟软饮和牛约5000/人，预算上限6000','含结账及75—90分钟返程','保留午餐、咖啡、休息与外观巡礼','酒店官方的约 5 分钟步行不包含站台到出口',
  '按登机牌时限到登机口',
- '香港T2值机 → T1登机','建议08:25抵达香港T2','坐下用餐','下山后前往东岸河川敷，拍照并休息约10分钟','先在收费区集完章再出场','不长时间挑周边','白天看庭园和红叶，园内坐坐，日落约16:45后点灯','满座则走1分钟换焼肉あらし或牛角',
+ '香港T2值机 → T1登机','建议08:25抵达香港T2','坐下用餐','下山后前往东岸河川敷，拍照并休息约10分钟','先在收费区集完章再出场','不长时间挑周边','满座则走1分钟换焼肉あらし或牛角',
  '到站后前往T1，办理值机、托运、安检与出境','当前值机截止09:10日本时间','早餐前晚备好，离店前或抵达机场后吃'
 ]);
 // Whole detail panels that only repeat the airport routine already covered by 怎么走 and 关键时间.
@@ -152,7 +151,7 @@ const HARD_STOPS={
  '2026-12-02':[['17:45','高台寺未入场改晚饭','kodaiji_night','decide'],['20:00','おめん最后点餐','gion_dinner','close']],
  '2026-12-04':[['20:00','大丸心斋桥关门','pokemon_dx_visit','close']],
  '2026-12-05':[['16:00','姬路城停止入城','himeji_castle_visit','close']],
- '2026-12-06':[['14:20','元町停止购物','motomachi_cd_shopping','decide'],['15:00','出发去神户大桥','kobe_bridge_visit','decide']],
+ '2026-12-06':[['14:05','元町停止购物','motomachi_cd_shopping','decide'],['14:45','出发去神户大桥','kobe_bridge_visit','decide']],
  '2026-12-07':[['09:10','关西 T1 值机截止','airport_checkin','close']]
 };
 function hardStops(d){
@@ -396,7 +395,7 @@ const TODO_WHEN_LABEL={'2026-11-30':'11/30 晚','2026-12-02':'12/2 午','2026-12
 const TODO_PREFIX=/^12\/\d+(前夜|前|晚)?/;
 const TODO_SHORT={'weather':'查叶况与天气','restaurants':'核对餐厅营业与菜单','return-travel':'临行前看回程航班通知',
  'transport-tickets':'备好IC卡与HARUKA订单','uji-cafes':'确认宇治店铺营业与候位','rally-account':'登录集章账户、开定位',
- 'kodaiji-weather':'查高台寺天气与排队','nara-cash-20261019':'备大佛殿现金，查日本桥临休','himeji-20261108':'查姬路城、好古园开放与点灯',
+ 'kodaiji-weather':'查高台寺天气与排队','nara-cash-20261019':'备大佛殿现金，查日本桥临休与宝可梦限流','himeji-20261108':'查姬路城、好古园开放与点灯',
  'kobe-1205-20261019':'收好行李，查CD店临休','packing':'整理行李、证件和次晨早餐'};
 // The traps on a transfer, for the 现在 card: the rest of the route is under 全部详情.
 const transitCautions=notes=>notes.flatMap(n=>n.split(/(?<=[。；])/)).filter(s=>new RegExp(TRANSIT_CAUTION.source).test(s)).map(s=>s.replace(/[；。]$/,''));
