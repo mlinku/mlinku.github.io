@@ -686,31 +686,35 @@ p, li, .title, .display, .row-title, .ticket-main b, .stay-name {text-wrap:prett
 .rally-spot h3 {font:700 17px var(--serif)}
 
 /* ---------- 准备 ---------- */
-.fx-rate {margin-left:auto; display:inline-flex; align-items:center; gap:4px; min-height:28px; padding:3px 10px; border-radius:999px; background:var(--card); border:1px solid color-mix(in srgb, var(--line-2) 38%, var(--line)); box-shadow:var(--surface-edge), 0 1px 3px rgba(34,42,68,.06); font:600 12px/1.2 var(--sans); color:var(--muted); letter-spacing:0; font-variant-numeric:tabular-nums; transition:background-color .2s, color .2s, border-color .2s, box-shadow .2s, transform .12s var(--ease-out)}
-.fx-rate:active {transform:scale(.96)}
-.fx-rate b {font:700 13px/1 var(--serif); color:var(--ink)}
-.fx-rate em {display:inline-flex; align-items:center; gap:4px; font-style:normal; font-size:11px; font-weight:650; color:var(--muted); margin-left:3px; padding-left:7px; border-left:1px solid var(--line)}
+.fx-rate {margin:-4px -6px -4px auto; display:inline-flex; align-items:center; gap:4px; min-height:32px; padding:0 6px; border-radius:7px; background:none; border:0; font:500 12px/1.2 var(--sans); color:var(--muted); letter-spacing:0; font-variant-numeric:tabular-nums; white-space:nowrap; transition:background-color .2s, color .2s}
+.fx-rate:active {background:var(--sunk); color:var(--accent)}
+.fx-rate b {font:700 13px/1 var(--sans); color:var(--ink)}
+.fx-rate em {display:inline-flex; align-items:center; gap:4px; font-style:normal; font-size:11px; font-weight:600; color:var(--muted); margin-left:3px; padding-left:7px; border-left:1px solid var(--line)}
 .fx-rate em.live {color:var(--ryo)}
 .fx-rate em.live::before {content:''; width:5px; height:5px; border-radius:50%; background:var(--ryo-l); box-shadow:0 0 0 2.5px var(--ryo-soft)}
-.fx-edit {display:flex; align-items:center; gap:8px; margin-bottom:10px; padding:8px 10px; border-radius:var(--r-sm); background:var(--sunk); font-size:13.5px; color:var(--ink-2)}
+.fx-edit {display:flex; align-items:center; gap:8px; margin-bottom:10px; padding:8px 10px; border-radius:var(--r-sm); background:var(--card); border:1px solid var(--line); font-size:13.5px; color:var(--ink-2)}
 .fx-edit label {display:flex; align-items:center; gap:6px; flex:1}
-.fx-edit input {width:68px; min-height:36px; padding:0 8px; border-radius:8px; border:1px solid var(--line-2); background:var(--card); color:var(--ink); font:700 14px var(--sans); font-variant-numeric:tabular-nums; text-align:center}
-.fx-edit .btn {min-height:36px; padding:0 12px; font-size:13px}
-.fx-row {display:grid; grid-template-columns:minmax(0,1fr) auto auto; align-items:center; gap:10px}
-.fx-field {display:flex; align-items:center; gap:6px; min-height:46px; padding:0 12px; border-radius:var(--r-md); background:var(--sunk); border:1px solid var(--line); transition:border-color .2s, box-shadow .2s}
-.fx-field:focus-within {border-color:var(--ryo); box-shadow:0 0 0 3px var(--ryo-soft)}
-.fx-field span {font:700 16px var(--serif); color:var(--muted)}
-.fx-field input {width:100%; min-width:0; border:0; background:none; color:var(--ink); font:800 19px/1.2 var(--sans); font-variant-numeric:tabular-nums; outline:none}
-.fx-field input::placeholder {color:var(--muted); font-weight:500; font-size:14.5px}
-.fx-eq {color:var(--muted); font-weight:700}
-.fx-out {display:inline-flex; align-items:baseline; gap:3px; min-width:84px; justify-content:flex-end; font-variant-numeric:tabular-nums; white-space:nowrap}
-.fx-out span {font:700 14px var(--serif); color:var(--ryo)}
-.fx-out b {font:900 24px/1 var(--serif); color:var(--ink)}
-.fx-out small {font-size:11px; font-weight:700; color:var(--muted); letter-spacing:.04em; margin-left:1px}
-.fx-chips {display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
-.fx-chips button {min-height:34px; padding:0 10px; border-radius:999px; background:var(--sunk); border:1px solid var(--line); color:var(--ink-2); font-size:12.5px; font-weight:650; font-variant-numeric:tabular-nums; transition:background-color .2s, border-color .2s, color .2s, transform .1s}
-.fx-chips button:active {transform:scale(.96)}
-.fx-chips .fx-clear {margin-left:auto; background:none; border-color:transparent; color:var(--muted)}
+.fx-edit input {width:68px; min-height:34px; padding:0 6px; border:0; border-bottom:1px solid var(--line-2); border-radius:4px 4px 0 0; background:var(--paper); color:var(--ink); font:700 14.5px var(--sans); font-variant-numeric:tabular-nums; text-align:center; outline:none}
+.fx-edit input:focus {border-bottom-color:var(--ryo)}
+.fx-edit .btn {min-height:34px; padding:0 11px; border-radius:7px; font-size:12.5px}
+.fx-board {display:grid; grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr); align-items:end; gap:8px; padding:4px 2px 6px}
+.fx-side {display:flex; flex-direction:column; gap:3px; min-width:0}
+.fx-res {align-items:flex-end; text-align:right}
+.fx-side small {font:500 12px/1.2 var(--sans); letter-spacing:.04em; color:var(--muted)}
+.fx-val {display:inline-flex; align-items:baseline; gap:4px; min-width:0; width:100%; padding-bottom:4px; border-bottom:1.5px solid transparent; font-variant-numeric:tabular-nums; transition:border-color .2s ease}
+.fx-in:focus-within .fx-val {border-bottom-color:var(--ryo-l)}
+.fx-res .fx-val {justify-content:flex-end}
+.fx-val span {font:600 15px var(--sans); color:var(--muted)}
+.fx-out span {color:var(--ryo)}
+.fx-in input {width:100%; min-width:0; border:0; padding:0; background:none; color:var(--ink); font:700 28px/1.1 var(--serif); font-variant-numeric:tabular-nums; outline:none}
+.fx-in input::placeholder {color:color-mix(in srgb, var(--muted) 42%, transparent)}
+.fx-out b {font:700 28px/1.1 var(--serif); color:var(--ink); white-space:nowrap}
+.fx-eq {display:grid; place-items:center; height:32px; margin-bottom:5px; color:var(--line-2); font:600 16px/1 var(--sans)}
+.fx-bar {display:flex; align-items:center; margin:8px -4px -6px; padding-top:4px; border-top:1px dashed var(--line)}
+.fx-bar button {position:relative; flex:1 1 auto; min-width:0; display:inline-flex; align-items:center; justify-content:center; text-align:center; min-height:38px; padding:0 4px; border-radius:7px; color:var(--ink-2); font:600 12px var(--sans); font-variant-numeric:tabular-nums; white-space:nowrap; transition:background-color .2s, color .2s}
+.fx-bar button + button::before {content:''; position:absolute; left:0; top:12px; bottom:12px; width:1px; background:var(--line)}
+.fx-bar button:active {background:var(--sunk); color:var(--ink)}
+.fx-bar .fx-clear {color:var(--muted); font-weight:500}
 .tickets li {border-top:1px dashed var(--line)}
 .tickets li:first-child {border-top:0}
 .ticket-tap {display:flex; align-items:center; gap:12px; width:100%; min-height:54px; padding:10px 2px; border-radius:var(--r-sm); text-align:left; color:var(--ink); transition:background-color .2s ease}
@@ -885,7 +889,9 @@ noscript p {padding:40px; text-align:center}
   .day-link:hover .dl-main b, .link-row:hover, .pager a:hover {color:var(--accent)}
   .ticket-tap:hover, .todo:hover {background:color-mix(in srgb, var(--line) 42%, transparent)}
   .ticket:not(.ok) .ticket-tap:hover .ticket-state {border-color:color-mix(in srgb, var(--bocchi) 52%, var(--bocchi-edge)); box-shadow:var(--surface-edge), 0 2px 6px -2px rgba(191,63,109,.18)}
-  .pass-no:hover, .fx-rate:hover, .fx-chips button:hover {background:var(--sunk); border-color:var(--ryo-edge); color:var(--accent)}
+  .pass-no:hover, .fx-bar button:hover {background:var(--sunk); color:var(--accent)}
+  .fx-rate:hover {background:var(--sunk); color:var(--ink)}
+  .fx-bar .fx-clear:hover {color:var(--ink)}
   .screen-head .count.jump-next:hover {background:var(--sunk)}
   .zoom-step:hover {border-color:var(--accent); color:var(--accent)}
   .pass-no:hover .icon {opacity:1; color:var(--accent)}
